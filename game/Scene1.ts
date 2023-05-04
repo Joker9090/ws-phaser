@@ -34,10 +34,11 @@ class Scene1 extends Phaser.Scene {
     }
 
     this.physics.add.collider(this.monchi, floor)
-    this.physics.add.collider(this.monchi, finishFloor)
+    //this.physics.add.collider(this.monchi, finishFloor)
     this.physics.collide(this.monchi, finishFloor, function () {
       finishedCircuit = true
     })
+
     this.physics.overlap(this.monchi, finishFloor,() => {finishedCircuit = true})
     this.cameras.main.startFollow(this.monchi)
 

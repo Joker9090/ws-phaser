@@ -8,7 +8,7 @@ class Map0 {
     h: number
   } = {
     w: 2000,
-    h: 500
+    h: 1000
   }
   constructor(scene: Phaser.Scene) {
     this.scene = scene
@@ -26,10 +26,15 @@ class Map0 {
   createMap() {
     const floor = this.scene.physics.add.group({ allowGravity: false, immovable: true }) 
     const p1 = this.scene.physics.add.sprite(100, 470, "plataformaA").setScale(0.7);
-    const p2 = this.scene.physics.add.sprite(400, 470, "plataformaA").setScale(0.3);
-    floor.addMultiple([p1,p2])
-
-    return floor; 
+    const p2 = this.scene.physics.add.sprite(400, 670, "plataformaB").setScale(0.5);
+    const p3 = this.scene.physics.add.sprite(600, 570, "plataformaA").setScale(0.6);
+    const p4 = this.scene.physics.add.sprite(900, 470, "plataformaB").setScale(0.7);
+    const p5 = this.scene.physics.add.sprite(1250, 370, "plataformaA").setScale(0.8);
+    const p6 = this.scene.physics.add.sprite(1650, 870, "plataformaA").setScale(0.8);
+    floor.addMultiple([p1,p2,p3,p4,p5,p6])
+    const finishFloor = this.scene.physics.add.group({allowGravity: false, immovable: true})
+    finishFloor.add(p6)
+    return [floor, finishFloor] ; 
     
   }
 

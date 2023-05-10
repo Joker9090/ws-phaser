@@ -1,38 +1,28 @@
 import Phaser from "phaser";
-
-class Map0 {
+class map0 {
   scene: Phaser.Scene
-  debugGraphics: Phaser.GameObjects.Graphics
+  debugGraphics?: Phaser.GameObjects.Graphics
   config: {
     w: number,
     h: number
-  } = {
-    w: 2000,
-    h: 500
-  }
+  } = { w: 2000, h: 600 }
   constructor(scene: Phaser.Scene) {
     this.scene = scene
-    
-    this.scene.physics.world.setBounds(0,0,this.config.w,this.config.h)
-
-    /* Debug */
-    this.debugGraphics = this.scene.add.graphics();
-    this.debugGraphics.fillStyle(0x00ff, 0.5);
-    this.debugGraphics.fillRect(0, 0, this.config.w, this.config.h);
-    /* Debug */
-
+    this.scene.physics.world.setBounds(0, 0, this.config.w, this.config.h)
   }
 
   createMap() {
-    const floor = this.scene.physics.add.group({ allowGravity: false, immovable: true }) 
-    const p1 = this.scene.physics.add.sprite(100, 470, "plataformaA").setScale(0.7);
-    const p2 = this.scene.physics.add.sprite(400, 470, "plataformaA").setScale(0.3);
-    floor.addMultiple([p1,p2])
+    const floor = this.scene.physics.add.group({ allowGravity: false, immovable: true })
 
-    return floor; 
-    
+    const finish = this.scene.physics.add.group({ allowGravity: false, immovable: true })
+    const p1 = this.scene.physics.add.sprite(240, 420, "plataforma1")
+    const p2 = this.scene.physics.add.sprite(520, 620, "plataforma2")
+    const p3 = this.scene.physics.add.sprite(725, 520, "plataforma1")
+    const p4 = this.scene.physics.add.sprite(1020, 620, "plataforma2")
+    const p5 = this.scene.physics.add.sprite(1435, 620, "plataforma1")
+    const f1 = this.scene.physics
+    floor?.addMultiple([p1, p2, p3, p4, p5])
+    return floor
   }
-
 }
-
-export default Map0;
+export default map0

@@ -22,8 +22,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
   createAnims(scene: Phaser.Scene) {
 
-    const monchiJumpFrames = scene.anims.generateFrameNumbers("character", { frames: [0, 1, 2, 3, 2, 1, 0] })
-    const monchiMoveFrames = scene.anims.generateFrameNumbers("character", { frames: [0, 1, 0, 1, 0] })
+    const monchiJumpFrames = scene.anims.generateFrameNumbers("character", { frames: [7, 8, 9, 10, 11, 12, 13, 12] })
+    const monchiMoveFrames = scene.anims.generateFrameNumbers("character", { frames: [0, 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1] })
     const monchiJumpConfig = {
       key: "monchiJump",
       frames: monchiJumpFrames,

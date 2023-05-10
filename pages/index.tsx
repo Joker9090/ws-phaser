@@ -35,7 +35,8 @@ export default function Home() {
           arcade: {
             overlapBias: 1000,
             gravity: { y: 900 },
-            debug: true
+            // el debug muestra los bordes de la img
+            debug: false
           }
         } 
       }

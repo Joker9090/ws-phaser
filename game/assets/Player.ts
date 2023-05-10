@@ -8,39 +8,54 @@ class player extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this)
         scene.physics.add.existing(this)
         this.createAnims(scene, texture)
+        this.setCollideWorldBounds(true)
+        if (this.body) {
+            const body = (this.body as Phaser.Physics.Arcade.Body)
+            body.onWorldBounds = true;
+            this.body.setSize(30, 85, true);
+        }
     }
     createAnims(scene: Phaser.Scene, texture: string) {
         const runAnimFrames = scene.anims.generateFrameNumbers(texture, { frames: [0, 1, 2, 3, 4, 5, 0] })
-        const idleAnimFrames = scene.anims.generateFrameNames(texture, { frames: [0] })
+        const idleAnimFrames = scene.anims.generateFrameNames(texture, { frames: [0, 1, 0] })
+        const jumpAnimFrames = scene.anims.generateFrameNames(texture, { frames: [0, 1, 2, 3, 4, 5, 0] })
 
-        const bersekerMoveConfig = {
+        const berserkMoveConfig = {
             key: "run",
             frames: runAnimFrames,
             frameRate: 10,
             repeat: -1,
         }
-        const bersekerIdleConfig = {
+        const berserkIdleConfig = {
             key: "idle",
-            frames: runAnimFrames,
+            frames: idleAnimFrames,
             frameRate: 10,
-            repeat: -1,
+            repeat: 0,
         }
-        scene.anims.create(bersekerMoveConfig)
+        const berserkJumpConfig = {
+            key: "jump",
+            frames: jumpAnimFrames,
+            frameRate: 12,
+            repeat: -1
+        }
+        scene.anims.create(berserkMoveConfig)
+        scene.anims.create(berserkIdleConfig)
+        scene.anims.create(berserkJumpConfig)
 
 
     }
 
     idle() {
         this.isJumping = false,
-            this.setVelocityX(0)
+        this.setVelocityX(0)
         this.setVelocityY(0)
         this.play("idle")
     }
     jump() {
         if (!this.isJumping) {
             this.isJumping = true
-            this.play("run")
-            this.setVelocityY(-530)
+            this.play("jump")
+            this.setVelocityY(-630)
             this.scene.time.delayedCall(600, this.idle, [], this);
         }
     }
@@ -67,6 +82,7 @@ class player extends Phaser.Physics.Arcade.Sprite {
             }
             if (up.isDown && this.body && this.body.touching.down) {
                 this.jump()
+                this.anims.play("jump", true)
                 console.log("jump")
             }
 

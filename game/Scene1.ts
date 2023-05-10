@@ -26,7 +26,13 @@ class Scene1 extends Phaser.Scene {
     const floor = this.map.createMap()
     this.monchi = new Player(this, 100, 100, "character", 2);
 
-    this.physics.add.collider(this.monchi, floor);
+    const checkFloor = (a: Player,b: Phaser.Physics.Arcade.Sprite ) => {
+      if(b.hasForce) a.setPosition(b.x,a.y);
+     
+    }
+
+    // @ts-ignore
+    this.physics.add.collider(this.monchi, floor, checkFloor);
     
     this.cameras.main.startFollow(this.monchi)
 

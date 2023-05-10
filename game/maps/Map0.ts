@@ -42,7 +42,7 @@ class Map0 {
     const p3 = this.scene.physics.add.sprite(700, 500, "plataformaA").setScale(0.3);
     const p4 = this.scene.physics.add.sprite(1200, 500, "plataformaA").setScale(0.3);
     const p5 = this.scene.physics.add.sprite(950, 300, "plataformaA").setScale(0.7);
-    const p6 = this.scene.physics.add.sprite(1600, 400, "plataformaA").setScale(0.3);
+    const p6 = this.scene.physics.add.sprite(200, 400, "plataformaA").setScale(0.3);
     const p7 = this.scene.physics.add.sprite(1750, 400, "plataformaA").setScale(0.7);
 
 
@@ -71,7 +71,7 @@ class Map0 {
 
     this.scene.tweens.add({
       targets: p6,
-      x: 1300,
+      x: "+=300",
       duration: 2000,
       repeat: -1,
       hold: 800,
@@ -79,6 +79,8 @@ class Map0 {
       repeatDelay: 500,
       ease: 'linear'
     });
+
+    p6.hasForce = true;
 
 
 

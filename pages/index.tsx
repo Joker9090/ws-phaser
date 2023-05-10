@@ -36,7 +36,7 @@ export default function Home() {
             overlapBias: 1000,
             gravity: { y: 900 },
             // el debug muestra los bordes de la img
-            debug: false
+            // debug: true
           }
         } 
       }

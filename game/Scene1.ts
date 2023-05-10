@@ -7,7 +7,7 @@ class Scene1 extends Phaser.Scene {
   monchi?: Player
   map?: Map0
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys 
-
+  cueva?: Phaser.GameObjects.Sprite
   preload(this: Scene1) {
     this.load.spritesheet("character", "/game/spritesheetCat.png", { frameWidth: 110, frameHeight: 200 });
     this.load.image("plataformaA", "/game/base1.png");
@@ -26,17 +26,20 @@ class Scene1 extends Phaser.Scene {
     this.map = new Map0(this);
     this.monchi = new Player(this, 0, 100, "character", 14).setDepth(10);
     
-    const floor = this.map.createMap()
 
+    const lose = () => {
+      this.scene.restart()
+    }
+
+    const [floor, cueva] = this.map.createMap()
+    this.cueva = cueva as Phaser.GameObjects.Sprite;
     this.physics.add.collider(this.monchi, floor);
+
     
     this.cameras.main.startFollow(this.monchi).postFX.addVignette(0.5, 0.5, 0.7)
 
     this.cursors = this.input.keyboard?.createCursorKeys()
 
-    const lose = () => {
-      this.scene.restart()
-    }
 
     this.physics.world.on('worldbounds', (body: Phaser.Physics.Arcade.Sprite,top: boolean,down: boolean,left: boolean,right: boolean) => {
       if(down) lose()
@@ -44,7 +47,12 @@ class Scene1 extends Phaser.Scene {
   }
 
   update(this: Scene1) {
-    if (this.monchi) this.monchi.checkMove(this.cursors)
+    if (this.monchi) {
+      this.monchi.checkMove(this.cursors)
+      if(this.cueva && Phaser.Geom.Rectangle.Overlaps(this.monchi.getBounds(), this.cueva.getBounds())) {
+        this.scene.restart()
+      } 
+    }
   }
 
 }

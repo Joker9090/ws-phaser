@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import Cueva from "../assets/Cueva";
 
 class Map0 {
   scene: Phaser.Scene
@@ -29,24 +30,29 @@ class Map0 {
     const floor = this.scene.physics.add.group({ allowGravity: false, immovable: true }) 
     const p1 = this.scene.physics.add.sprite(100, 520, "plataformaA").setScale(0.7).setDepth(9);
     const p2 = this.scene.physics.add.sprite(420, 700, "plataformaA").setScale(0.5).setDepth(9);
-    const p3 = this.scene.physics.add.sprite(750, 200, "plataformaA").setScale(1).setDepth(9);
-    const p4 = this.scene.add.sprite(760, 120, "cuevaArriba").setScale(0.25).setDepth(8);
     const background = this.scene.add.sprite(0, 250, "background").setScale(3).setDepth(1);
     const nubes1 = this.scene.add.sprite(300, 100, "nubes1").setScale(2).setDepth(2);
     const nubes2 = this.scene.add.sprite(180, 500, "nubes2").setScale(2).setDepth(2);
-    const cueva = this.scene.add.sprite(-650, 0, "cueva").setScale(1).setDepth(4);
+    const fondo = this.scene.add.sprite(-650, 100, "cueva").setScale(1).setDepth(4);
+    
+    const cueva = new Cueva(this.scene,750,400,"plataformaA","cuevaArriba")
+    
+    // const p4 = this.scene.add.sprite(760, 220, "cuevaArriba").setScale(0.25).setDepth(8);
+    //const p3 = this.scene.physics.add.sprite(750, 200, "plataformaA").setScale(1).setDepth(9);
 
-    floor.addMultiple([p1,p2, p3])
-    return floor; 
+    floor.addMultiple([p1,p2, cueva])
+    this.scene.tweens.add({
+        targets: p2,
+        duration:8000,
+        y: "-=400",
+        ease: 'Sine.inOut',
+        yoyo: true,
+        repeat: -1
+    });
+    return [floor, cueva.sprite]; 
   }
 
-//   this.tweens.add({
-//     targets: p2,
-//     y: 600,
-//     ease: 'Sine.inOut',
-//     yoyo: true,
-//     repeat: -1
-// });
+//   
   
 
 }

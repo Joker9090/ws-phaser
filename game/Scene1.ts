@@ -11,16 +11,20 @@ class Scene1 extends Phaser.Scene {
   preload(this: Scene1) {
     this.load.spritesheet("character", "/game/character.png", { frameWidth: 220, frameHeight: 162 });
     this.load.image("plataformaA", "/game/platform1.png");
-    this.load.image("this.player.setVelocityY(-330);plataformaB", "/game/platform1B.png");
+    this.load.image("sky", "/game/background.png");
+    this.load.image("nubee","/game/nube.png");
+    this.load.image("crystal" ,"/game/Yellow_crystal1.png");
+    this.load.image("tree","/game/tree.png");
+    //this.load.image("this.player.setVelocityY(-330);plataformaB", "/game/platform1B.png");
   }
 
 
   create(this: Scene1) {
 
     this.map = new Map0(this);
-    this.monchi = new Player(this, 100, 100, "character", 2);
     
     const floor = this.map.createMap()
+    this.monchi = new Player(this, 100, 100, "character", 2);
 
     this.physics.add.collider(this.monchi, floor);
     

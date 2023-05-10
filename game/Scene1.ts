@@ -6,15 +6,26 @@ class Scene1 extends Phaser.Scene {
   map?: Map0
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys
 
-
   preload(this: Scene1) {
-    this.load.spritesheet("run", "/public/assets/Run.png", { frameWidth: 128, frameHeight: 128 })
-    this.load.image("plataforma1", "/public/game/platform1.png")
-    this.load.image("plataforma2", "/public/game/platform1b.png")
+    this.load.spritesheet("run", "/game/Run.png", { frameWidth: 128, frameHeight: 128 })
+    this.load.image("plataforma1", "/game/platform1.png")
+    this.load.image("plataforma2", "/game/platform1B.png")
   }
   create(this: Scene1) {
     this.map = new Map0(this)
     const floor = this.map.createMap()
+    this.berserk = new player(this,240,220,"run",0)
+
+
+    this.physics.add.collider(this.berserk,floor)
+    this.cursors = this.input.keyboard?.createCursorKeys()
+
+    this.cameras.main.startFollow(this.berserk)
+
+  }
+
+  update() {
+    if (this.berserk) this.berserk.checkMove(this.cursors)
   }
 }
 

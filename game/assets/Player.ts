@@ -12,7 +12,7 @@ class player extends Phaser.Physics.Arcade.Sprite {
         if (this.body) {
             const body = (this.body as Phaser.Physics.Arcade.Body)
             body.onWorldBounds = true;
-            this.body.setSize(30, 85, true);
+            this.body.setSize(30, 125, true);
         }
     }
     createAnims(scene: Phaser.Scene, texture: string) {
@@ -65,25 +65,25 @@ class player extends Phaser.Physics.Arcade.Sprite {
             if (left.isDown) {
                 this.setVelocityX(-160)
                 this.setFlipX(true)
-                console.log("left")
+                // console.log("left")
                 if (!this.isJumping) { this.anims.play("run", true) }
             }
             else if (right.isDown) {
                 this.setVelocityX(160)
                 this.setFlipX(false)
-                console.log("right")
+                // console.log("right")
                 if (!this.isJumping) { this.anims.play("run", true) }
             }
             else {
                 this.setVelocityX(0)
                 this.setFlipX(false)
                 this.anims.play("idle", true)
-                console.log("idle")
+                // console.log("idle")
             }
             if (up.isDown && this.body && this.body.touching.down) {
                 this.jump()
                 this.anims.play("jump", true)
-                console.log("jump")
+                // console.log("jump")
             }
 
         }

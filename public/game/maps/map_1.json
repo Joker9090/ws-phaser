@@ -1,0 +1,150 @@
+{ "compressionlevel":0,
+ "height":5,
+ "infinite":false,
+ "layers":[
+        {
+         "data":[0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0],
+         "height":5,
+         "id":1,
+         "name":"floor",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":6,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "data":[0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0],
+         "height":5,
+         "id":6,
+         "name":"camera",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":6,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "data":[0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0],
+         "height":5,
+         "id":5,
+         "name":"player",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":6,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "data":[41, 0, 0, 0, 0, 41,
+            0, 0, 0, 0, 0, 0,
+            0, 0, 41, 41, 0, 0,
+            0, 0, 0, 0, 0, 0,
+            41, 0, 0, 0, 0, 41],
+         "height":5,
+         "id":2,
+         "name":"objects",
+         "opacity":1,
+         "properties":[
+                {
+                 "name":"center",
+                 "type":"string",
+                 "value":"0"
+                }, 
+                {
+                 "name":"zoom",
+                 "type":"string",
+                 "value":"2"
+                }],
+         "type":"tilelayer",
+         "visible":true,
+         "width":6,
+         "x":0,
+         "y":0
+        }],
+ "nextlayerid":7,
+ "nextobjectid":2,
+ "orientation":"orthogonal",
+ "properties":[
+        {
+         "name":"blocks",
+         "type":"string",
+         "value":"LEFT,RIGHT,BOTTOM,TOP,OVEN_ON,TIMER,OVEN_OFF"
+        }, 
+        {
+         "name":"maxBlocks",
+         "type":"int",
+         "value":7
+        }, 
+        {
+         "name":"modalMessage",
+         "type":"string",
+         "value":"Haz clic para ejecutar el c\u00f3digo y observa como el pastelero recoge los ingredientes y hornea el pastel."
+        }, 
+        {
+         "name":"startingBlocks",
+         "type":"string",
+         "value":"LEFT,BOTTOM,BOTTOM,OVEN_ON,TIMER,OVEN_OFF"
+        }, 
+        {
+         "name":"welcomeMessage",
+         "type":"string",
+         "value":"Para hacer el pastel recoge los ingredientes, pon el pastel en el horno y da tiempo a que se cocine antes de sacarlo. \u00a1Cuidado con los obst\u00e1culos!"
+        }, 
+        {
+         "name":"welcomeTitle",
+         "type":"string",
+         "value":"\u00a1Ayuda al pastelero a hornear el pastel!"
+        },
+    
+        {
+         "name":"winTitle",
+         "type":"string",
+         "value":"\u00a1A TRABAJAR!"
+        }, 
+        {
+         "name":"zoom",
+         "type":"float",
+         "value":0.1
+        }],
+ "renderorder":"left-down",
+ "tiledversion":"git",
+ "tileheight":98,
+ "tilesets":[
+        {
+         "columns":4,
+         "firstgid":1,
+         "image":"tilemaps.png",
+         "imageheight":900,
+         "imagewidth":400,
+         "margin":0,
+         "name":"tileset",
+         "spacing":0,
+         "tilecount":36,
+         "tileheight":100,
+         "tilewidth":100
+        }, 
+        {
+         "firstgid":37,
+         "source":"tilemaps.tsx"
+        }],
+ "tilewidth":98,
+ "type":"map",
+ "version":"1.10",
+ "width":6
+}

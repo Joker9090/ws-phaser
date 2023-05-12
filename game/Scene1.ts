@@ -1,67 +1,63 @@
 
 import Phaser from "phaser";
+import Player from "./assets/Player";
+import Mapa from "./maps/Mapa1";
+
 // Scene in class
 class Scene1 extends Phaser.Scene {
+  cursors?: Phaser.Types.Input.Keyboard.CursorKeys
+  monchi?: Player
+  graphics?: Phaser.GameObjects.Graphics
+  map?: Mapa
   preload(this: Phaser.Scene) {
+    /* Load assets for game */
     this.load.spritesheet("character", "/game/character.png", { frameWidth: 220, frameHeight: 162 });
+    this.load.image("background", "/game/background.png");
     this.load.image("plataformaA", "/game/platform1.png");
-    this.load.image("this.player.setVelocityY(-330);plataformaB", "/game/platform1B.png");
+    this.load.image("plataformaB", "/game/platform1B.png");
+    this.load.image("plataforma2", "/game/platform2.png");
+    this.load.image("cloud", "/game/cloud.png");
   }
 
 
-  create(this: Phaser.Scene) {
+  create(this: Scene1) {
+    this.map = new Mapa(this);
+    this.map.createMap();
+    const { x, y } = this.map.startingPoint;
+    this.monchi = new Player(this, x, y, "character", 2); // this.physics.add.sprite(100, 100, "character", 2).setScale(0.5);
 
-    const monchi = this.physics.add.sprite(100, 100, "character", 2).setScale(0.5);
-    const monchiForwardsFrames = this.anims.generateFrameNumbers("character", { frames: [0, 1, 2, 3, 2, 1, 0] })
-    const monchiForwardsConfig = {
-      key: "monchiForwards",
-      frames: monchiForwardsFrames,
-      frameRate: 10,
-      repeat: 0,
-    }
-    this.anims.create(monchiForwardsConfig)
+    /* Camera */
+    this.cameras.main.startFollow(this.monchi)
 
 
-    const plataforma1 = this.physics.add.sprite(100, 270, "plataformaA").setScale(0.7);
-    plataforma1.body.allowGravity = false;
-    plataforma1.body.setImmovable(true);
-
-    this.physics.add.collider(monchi, plataforma1);
-
-
-    const plataforma2 = this.physics.add.sprite(500, 570, "plataformaA").setScale(0.7);
-    plataforma2.body.allowGravity = false;
-    plataforma2.body.setImmovable(true);
-
-
-    const stop = () => {
-      monchi.setVelocityX(0);
+    const touch = () => {
+      if (this.monchi) this.monchi.idle()
     }
 
-    this.physics.add.collider(monchi, plataforma2, stop);
+    const lose = () => {
+      this.scene.restart()
+    }
 
-    const tween = this.tweens.add({
-      targets: plataforma2,
-      paused: false,
-      yoyo: true,
-      repeat: -1,
-      y: "-=200"
-    })
+    if (this.map.pisos) this.physics.add.collider(this.monchi, this.map.pisos, touch);
 
-    this.input.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
-      monchi.play("monchiForwards");
-      monchi.setVelocityX(150);
-      monchi.setVelocityY(-330);
-    })
+    this.physics.world.on('worldbounds', (body: Phaser.Physics.Arcade.Sprite, top: boolean, down: boolean, left: boolean, right: boolean) => {
+      if (down) lose()
+    }, this);
+    //  .on('worldbounds', lose, this)
 
-
+    /* Controls */
+    this.cursors = this.input.keyboard?.createCursorKeys()
 
   }
 
-  update(this: Phaser.Scene) {
+  update(this: Scene1) {
+    /* Attach controls to player */
+    if (this.monchi) {
+      this.monchi.checkMove(this.cursors)
+      if(this.map) this.map.animateBackground(this.monchi)
+    }
 
   }
-
 }
 
 export default Scene1 

@@ -15,7 +15,7 @@ export default function Home() {
     //Load phaser async when windows is ready
     import("phaser").then(setPhaser) 
     //Load scenes async when windows is ready
-    import("@/game/Scene3").then((scene1) => setScenes([scene1.default]))
+    import("@/game/Scene4").then((scene1) => setScenes([scene1.default]))
   }, [])
  
   React.useEffect(() => {

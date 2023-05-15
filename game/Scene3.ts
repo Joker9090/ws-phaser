@@ -1,14 +1,11 @@
 
 import Phaser from "phaser";
-import { pathToFileURL } from "url";
 import CloudGenerator, { CloudGeneratorConfig } from "./assets/CloudGenerator";
 import Player from "./assets/Player";
-import Mapa from "./maps/Mapa1";
 
 // Scene in class
 class Scene3 extends Phaser.Scene {
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys
-  monchi?: Player
   graphics?: Phaser.GameObjects.Graphics
   car?: Phaser.Physics.Arcade.Sprite;
   road?: Phaser.GameObjects.TileSprite;
@@ -40,21 +37,7 @@ class Scene3 extends Phaser.Scene {
   create(this: Scene3) {
     this.physics.add.world.gravity.set(0, 0)
     const { centerX, centerY } = this.physics.world.bounds
-    //const a = this.add.sprite(0,0,"road").setDepth(-1).setAlpha(0)
     const { width, height } = this.game.canvas;
-
-    /*
-    const rt = this.add.renderTexture(centerX, centerY, a.width, a.height)
-    
-    rt.setOrigin(0.5, 0.5);
-    rt.camera.setAngle(0);
-    rt.camera.setZoom(1);
-    rt.camera.setPosition(0, 0);
-    rt.setDepth(1)
-
-    rt.drawFrame('road');
-    */
-    // this.road = this.add.sprite(centerX,centerY,"road",0)
 
 
     this.road = this.add.tileSprite(centerX, centerY, Number(width), Number(height), "road")

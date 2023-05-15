@@ -12,7 +12,7 @@ class player extends Phaser.Physics.Arcade.Sprite {
         if (this.body) {
             const body = (this.body as Phaser.Physics.Arcade.Body)
             body.onWorldBounds = true;
-            this.body.setSize(30, 125, true);
+            this.body.setSize(30, 120, true);
         }
     }
     createAnims(scene: Phaser.Scene, texture: string) {

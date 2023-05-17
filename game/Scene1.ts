@@ -9,6 +9,7 @@ class Scene1 extends Phaser.Scene {
   monchi?: Player
   graphics?: Phaser.GameObjects.Graphics
   map?: Mapa
+  canWin: boolean = false
   preload(this: Phaser.Scene) {
     /* Load assets for game */
     this.load.spritesheet("character", "/game/character.png", { frameWidth: 220, frameHeight: 162 });
@@ -27,7 +28,7 @@ class Scene1 extends Phaser.Scene {
     this.map.createMap();
     const { x, y } = this.map.startingPoint;
     this.monchi = new Player(this, x, y, "character", 2); // this.physics.add.sprite(100, 100, "character", 2).setScale(0.5);
-    let canWin = false
+    this.canWin = false
     /* Camera */
     this.cameras.main.startFollow(this.monchi)
     if(this.map.portal) this.map.portal.setTint(0xff0000)
@@ -36,7 +37,11 @@ class Scene1 extends Phaser.Scene {
       if (this.monchi) this.monchi.idle()
     }
     const float = () => {
-      if (this.monchi) this.monchi.setGravityY(-1270)
+      if (this.monchi) {
+        // this.physics.world.gravity.set(0,-1200)
+        // this.monchi.setBounce()
+        this.monchi.setGravityY(-1270)
+      }
     }
     const noFloat = () => {
       if (this.monchi) this.monchi.setGravity(0)
@@ -44,10 +49,15 @@ class Scene1 extends Phaser.Scene {
     const lose = () => {
       this.scene.restart()
     }
+    const win = () => {
+      if(this.canWin){
+        //
+      }
+    }
     const coinCollected = () => {
       if (this.map?.coin) {
         this.map.portal?.setTint(0x00ff00);
-        canWin = true
+        this.canWin = true
         this.map.coin.setVisible(false);
       }
     }
@@ -55,7 +65,7 @@ class Scene1 extends Phaser.Scene {
     if (this.map.pisos2) this.physics.add.collider(this.monchi, this.map.pisos2, float);
     if (this.map.pisos3) this.physics.add.collider(this.monchi, this.map.pisos3, noFloat);
     if (this.map.coin) this.physics.add.overlap(this.monchi, this.map.coin, coinCollected);
-    if (this.map.portal && canWin) this.physics.add.overlap(this.monchi, this.map.portal, lose);
+    if (this.map.portal) this.physics.add.overlap(this.monchi, this.map.portal, win);
 
     this.physics.world.on('worldbounds', (body: Phaser.Physics.Arcade.Sprite, top: boolean, down: boolean, left: boolean, right: boolean) => {
       if (down || top) lose()

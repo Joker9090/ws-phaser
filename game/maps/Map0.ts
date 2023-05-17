@@ -45,7 +45,7 @@ class Map0 {
 
     // goal.addMultiple([star, star2, star3])
 
-    this.stars = this.scene.physics.add.group({ allowGravity: false, immovable: true })
+    this.stars = this.scene.add.group()
     this.swords = this.scene.physics.add.group({ allowGravity: false, immovable: true })
 
     this.stars.createMultiple([

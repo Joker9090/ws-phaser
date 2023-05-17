@@ -15,24 +15,24 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     scene.physics.add.existing(this)
 
     this.setCollideWorldBounds(true);
-    if(this.body) {
+    if (this.body) {
       const body = (this.body as Phaser.Physics.Arcade.Body)
       body.onWorldBounds = true;
-      this.body.setSize(35,80,true); // GOOOD!
-      
+      this.body.setSize(35, 80, true); // GOOOD!
+
     }
   }
 
   createAnims(scene: Phaser.Scene) {
 
-    const knightIdleFrames = scene.anims.generateFrameNumbers("knight",{start:0 , end: 3});
+    const knightIdleFrames = scene.anims.generateFrameNumbers("knight", { start: 0, end: 3 });
     //const knightJumpFrames = scene.anims.generateFrameNumbers("knight", {frames: [6,7,8,9,10,11]});
-    const knightJumpFrames = scene.anims.generateFrameNumbers("knight", {start: 6, end:11});
-    const knightMoveFrames = scene.anims.generateFrameNumbers("knight", { start:10 , end: 15 });
-    const knightDeadFrames = scene.anims.generateFrameNumbers("knight",{start:18 , end: 23});
-    const knightDmgFrames = scene.anims.generateFrameNumbers("knight",{start:19 , end: 20});
-    const knightDefFrames = scene.anims.generateFrameNumbers("knight",{start:24 , end: 28});
-    const knightAttackFrames = scene.anims.generateFrameNumbers("knight",{start:30 , end: 34});
+    const knightJumpFrames = scene.anims.generateFrameNumbers("knight", { start: 6, end: 11 });
+    const knightMoveFrames = scene.anims.generateFrameNumbers("knight", { start: 10, end: 15 });
+    const knightDeadFrames = scene.anims.generateFrameNumbers("knight", { start: 18, end: 23 });
+    const knightDmgFrames = scene.anims.generateFrameNumbers("knight", { start: 19, end: 20 });
+    const knightDefFrames = scene.anims.generateFrameNumbers("knight", { start: 24, end: 28 });
+    const knightAttackFrames = scene.anims.generateFrameNumbers("knight", { start: 30, end: 34 });
 
     const knightJumpConfig = {
       key: "knightJump",
@@ -92,37 +92,42 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     scene.anims.create(knightAttackFramesConfig)
 
     this.play("knightIdleFrames");
-    
+
   }
 
   idle() {
+    console.log("idle")
     this.isJumping = false;
-    this.isAttacking = false;
     this.setVelocityX(0);
     this.setVelocityY(0);
-    this.play("knightIdleFrames");
+    if (!this.isAttacking) this.play("knightIdleFrames");
   }
 
   jump() {
-    if(!this.isJumping) {
+    if (!this.isJumping) {
       this.isJumping = true;
-      this.play("knightJump",false);
+      this.play("knightJump", false);
       this.setVelocityY(-730);
       this.scene.time.delayedCall(600, this.idle, [], this);
     }
   }
   attack() {
-    //if(!this.isAttacking) {
+    if (!this.isAttacking) {
+      console.log("attack")
       this.isAttacking = true;
-      this.play("knightAttackFrames",true);
+      this.play("knightAttackFrames", true);
       //this.setVelocityY(-730);
-      this.scene.time.delayedCall(600, this.idle, [], this);
-    //}
+      this.scene.time.delayedCall(600, () => {
+        this.isAttacking = false;
+
+        // this.idle()
+      }, [], this);
+    }
   }
 
   checkMove(cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined) {
-    this.isAttacking = false;
     
+
     /* Keywords press */
     if (cursors) {
       const { left, right, up, space } = cursors;
@@ -132,7 +137,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.setFlipX(true)
 
         /* Play animation */
-        if(!this.isJumping) this.anims.play('knightMove', true);
+        if (!this.isJumping) this.anims.play('knightMove', true);
       }
 
       /* Right*/
@@ -141,8 +146,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.setFlipX(false)
 
         /* Play animation */
-        if(!this.isJumping) this.anims.play('knightMove', true);
-      }else if (space.isDown) {
+        if (!this.isJumping) this.anims.play('knightMove', true);
+      } else if (space.isDown) {
         this.attack();
 
       }
@@ -150,7 +155,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       /* Nothing */
       else {
         this.setVelocityX(0)
-        this.anims.play("knightIdleFrames",true);
+        if(!this.isAttacking) this.anims.play("knightIdleFrames", true);
       }
 
       /* Up / Juamp */
@@ -158,7 +163,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       if (up.isDown && this.body && this.body.touching.down) {
         /* Play animation */
         this.jump()
-      } 
+      }
     }
   }
 }

@@ -48,7 +48,7 @@ class Scene1 extends Phaser.Scene {
       this.skeleton?.play("skeletonDeadFrames");
       this.swordHitBox.x = 0;
       this.swordHitBox.y = 0;
-      if(this.skeleton)this.time.delayedCall(600, this.skeleton.idle, [], this);
+      if(this.skeleton) this.time.delayedCall(600, this.skeleton.idle, [], this.skeleton);
     }
 
 
@@ -66,7 +66,7 @@ class Scene1 extends Phaser.Scene {
       if(down) lose()
     },this);
 
-    this.swordHitBox = this.add.rectangle(100,100,32,64,0xffffff,0.5)as unknown as Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
+    this.swordHitBox = this.add.rectangle(100,100,32,64,0xffffff,0.5) as unknown as Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
     this.physics.add.existing(this.swordHitBox);
     this.swordHitBox.body.setAllowGravity(false);
     

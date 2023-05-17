@@ -24,8 +24,15 @@ class Scene1 extends Phaser.Scene {
     this.load.spritesheet("firework", "/game/firework.png", { frameWidth: 256, frameHeight: 256 });
   }
   
-  create(this: Scene1) {
+  destroyConfetti() {
 
+    if(this.confetti) {
+      this.confetti.destroy();
+      this.confetti = undefined;
+    }
+  }
+  create(this: Scene1) {
+    this.destroyConfetti();
     this.map = new Map0(this);
     //Posicion en la que arranca monchi
     this.monchi = new Player(this, 0, 0, "character", 14).setDepth(15);  
@@ -54,13 +61,18 @@ class Scene1 extends Phaser.Scene {
       this.monchi.checkMove(this.cursors)
       if(this.cueva && Phaser.Geom.Rectangle.Overlaps(this.monchi.getBounds(), this.cueva.getBounds()) && !this.confetti) {
         // Si llega a la cueva, reinicia
-        this.confetti = new Confetti(this, this.monchi.x, this.monchi.y, "firework").setDepth(14);
+        this.confetti = new Confetti(this, this.monchi.x, this.monchi.y, "firework")
+        this.confetti.playConfetti(() => this.destroyConfetti())
         console.log("flor, esta entrando aca AAAA");
         //this.confetti.destroy()
         //this.scene.restart()
         //cueva.disableBody(true, true);
 
       } 
+
+      if(this.confetti) {
+        this.confetti.setPosition(this.monchi.x, this.monchi.y)
+      }
     }
   }
 

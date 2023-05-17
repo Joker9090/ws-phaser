@@ -16,6 +16,7 @@ export default function Home() {
     import("phaser").then(setPhaser) 
     //Load scenes async when windows is ready
     import("@/game/Scene1").then((scene1) => setScenes([scene1.default]))
+    //import("@/game/Scene2").then((scene2) => setScenes([scene2.default]))
   }, [])
  
   React.useEffect(() => {
@@ -36,7 +37,7 @@ export default function Home() {
             overlapBias: 1000,
             gravity: { y: 900 },
             // el debug muestra los bordes de la img
-            // debug: true
+            debug: true
           }
         } 
       }

@@ -6,10 +6,10 @@ class Cueva extends Phaser.Physics.Arcade.Sprite {
     super(scene, x, y, texture)
 
     scene.add.existing(this)
-    // Agregar el Cueva al mundo fisico
+    // Agregar Cueva al mundo fisico
     scene.physics.add.existing(this)
 
-    this.setCollideWorldBounds(true);
+    //this.setCollideWorldBounds(true);
     this.setDepth(8);
     this.sprite = scene.add.sprite(x+10,y-70,textureB).setScale(0.2).setDepth(9)
   }

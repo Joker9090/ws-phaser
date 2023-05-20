@@ -7,7 +7,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     this.createAnims(scene);
 
-    this.setScale(1.5)
+    this.setScale(0.5)
     // Agregar el player al mundo visual
     scene.add.existing(this)
     // Agregar el player al mundo fisico
@@ -18,16 +18,17 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       const body = (this.body as Phaser.Physics.Arcade.Body)
       body.onWorldBounds = true;
       //tamaño que cropea la img con fisicas
-      //this.body.setSize(50,180,true);
+      this.body.setSize(50,160,true);
+      this.setOffset(60,-5);
     }
   }
 
   createAnims(scene: Phaser.Scene) {
     
     // const monchiMoveFrames = scene.anims.generateFrameNumbers("character", { frames: [0, 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1] })
-    const monchiJumpFrames = scene.anims.generateFrameNumbers("character", { start: 4, end: 11 })
-    const monchiMoveFrames = scene.anims.generateFrameNumbers("character", { start: 12, end: 17 })
-    const monchiIddleFrames = scene.anims.generateFrameNumbers("character", { start: 0, end: 3 })
+    const monchiJumpFrames = scene.anims.generateFrameNumbers("character", { start: 28, end: 44 })
+    const monchiMoveFrames = scene.anims.generateFrameNumbers("character", { start: 0, end: 19 })
+    const monchiIddleFrames = scene.anims.generateFrameNumbers("character", { start: 48, end: 57 })
     
     const monchiJumpConfig = {
       key: "monchiJump",
@@ -38,13 +39,13 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     const monchiMoveConfig = {
       key: "monchiMove",
       frames: monchiMoveFrames,
-      //frameRate: 10,
+      frameRate: 50,
       repeat: 0,
     }
     const monchiIddleConfig = {
       key: "monchiIddle",
       frames: monchiIddleFrames,
-      //frameRate: 12,
+      frameRate: 14,
       repeat: 0,
     }
     
@@ -78,7 +79,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       if (left.isDown) {
         this.setVelocityX(-160);
         this.setFlipX(true)
-        //this.setOffset(10,20);
+        this.setOffset(40,-5);
 
         /* Play animation */
         if(!this.isJumping) this.anims.play('monchiMove', true);
@@ -89,6 +90,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.setVelocityX(160);
         this.setFlipX(false)
         //this.setOffset(40,20);
+        this.setOffset(60,-5);
 
         /* Play animation */
         if(!this.isJumping) this.anims.play('monchiMove', true);
@@ -96,6 +98,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
       /* Nothing */
       else {
+        this.anims.play('monchiIddle', true);
         this.setVelocityX(0)
       }
 

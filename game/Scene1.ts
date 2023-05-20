@@ -11,15 +11,14 @@ class Scene1 extends Phaser.Scene {
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys 
   cueva?: Phaser.GameObjects.Sprite
   preload(this: Scene1) {
-    this.load.spritesheet("character", "/game/pinkMonster.png", { frameWidth: 32, frameHeight: 32 });
+    this.load.spritesheet("character", "/game/spritesheetKitty2.png", { frameWidth: 150, frameHeight: 162 });
     this.load.image("plataformaA", "/game/plataformaVioleta.png");
     // this.load.image("this.player.setVelocityY(-330);plataformaB", "/game/base2.png");
     this.load.image("plataformaB", "/game/base2.png");
-    this.load.image("background", '/game/background.png');
+    this.load.image("background", '/game/sky1.png');
+    this.load.image("sun", '/game/sun.png');
     this.load.image("nube", '/game/nube.png');
-    this.load.image("nubes1", '/game/sky2.png');
-    this.load.image("nubes2", '/game/backgroundClouds1.png');
-    this.load.image("cueva", '/game/cuevaVioleta.png');
+    this.load.image("cueva", '/game/templo.png');
     this.load.image("cuevaArriba", '/game/cuevaArriba.png');
     this.load.spritesheet("firework", "/game/firework.png", { frameWidth: 256, frameHeight: 256 });
   }
@@ -31,25 +30,28 @@ class Scene1 extends Phaser.Scene {
       this.confetti = undefined;
     }
   }
+
   create(this: Scene1) {
     this.destroyConfetti();
     this.map = new Map0(this);
     //Posicion en la que arranca monchi
-    this.monchi = new Player(this, 0, 0, "character", 14).setDepth(15);  
+    this.monchi = new Player(this, 100, 0, "character", 14).setDepth(15);  
 
     const lose = () => {
       this.scene.restart()
     }
 
     const [floor, cueva] = this.map.createMap()
+
     this.cueva = cueva as Phaser.GameObjects.Sprite;
+
+    // @ts-ignore
     this.physics.add.collider(this.monchi, floor);
 
     // viñeta
     this.cameras.main.startFollow(this.monchi).postFX.addVignette(0.5, 0.5, 0.8)
 
     this.cursors = this.input.keyboard?.createCursorKeys()
-
 
     this.physics.world.on('worldbounds', (body: Phaser.Physics.Arcade.Sprite,top: boolean,down: boolean,left: boolean,right: boolean) => {
       if(down) lose()
@@ -67,7 +69,6 @@ class Scene1 extends Phaser.Scene {
         //this.confetti.destroy()
         //this.scene.restart()
         //cueva.disableBody(true, true);
-
       } 
 
       if(this.confetti) {

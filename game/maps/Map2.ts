@@ -1,5 +1,8 @@
 import Phaser from "phaser";
 import LargeFloor, { LargeFloorConfig } from "../assets/LargeFloor";
+import CloudGenerator from "../assets/CloudGenerator";
+import LargeFloorIsland from "../assets/LargeFloorIsland";
+import Antorcha, { AntorchaConfig } from "../assets/Antorcha";
 
 class Map2 {
   scene: Phaser.Scene
@@ -31,6 +34,7 @@ class Map2 {
     // Based on your game size, it may "stretch" and distort.
     background.displayWidth = this.config.w;
     background.displayHeight = this.config.h;
+  
 
     //const nube1 = this.scene.add.image(200,200,"nubee").setScale(0.6).setOrigin(0.5,0.5);
 
@@ -42,21 +46,33 @@ class Map2 {
 
     
     const LargeFloorConfigg: LargeFloorConfig = {
-      textureA: "plataformaA",
-      textureB: "plataformaB",
-      large: 6,
+      textureA: "tile1",
+      textureB: "tile3",
+      large: 32,
       //width:576,
       //height:324, 
-      pos: {x: 120,y: 1000},
+      pos: {x: 20,y: 1000},
+      //scale: {width: 1,height: 1,},
+      //fix:-9,
+      
+    }
+
+    const LargeFloorConfigg3: LargeFloorConfig = {
+      textureA: "lava1",
+      textureB: "lava2",
+      large: 20,
+      //width:576,
+      //height:324, 
+      pos: {x: 1000,y: 1020},
       //scale: {width: 1,height: 1,},
       //fix:-9,
       
     }
 
     const LargeFloorConfigg2: LargeFloorConfig = {
-      textureA: "plataformaA",
-      textureB: "plataformaB",
-      large: 4,
+      textureA: "tile1",
+      textureB: "tile3",
+      large: 10,
       //width:576,
       //height:324, 
       pos: {x: 1600,y: 1000},
@@ -65,8 +81,56 @@ class Map2 {
       
     }
 
+
+    const LargeFloorIslandConfig = {
+      textureA: "islandA",
+      textureB: "islandB",
+      textureC: "islandC",
+      large: 10,
+      //width:576,
+      //height:324, 
+      pos: {x: 300,y: 800},
+      //scale: {width: 1,height: 1,},
+      //fix:-9,
+      
+    }
+
+    const LargeFloorIslandConfig2 = {
+      textureA: "islandA",
+      textureB: "islandB",
+      textureC: "islandC",
+      large: 10,
+      //width:576,
+      //height:324, 
+      pos: {x: 800,y: 800},
+      //scale: {width: 1,height: 1,},
+      //fix:-9,
+      
+    }
+
+    const CloudGeneratorConfig1 = {
+      texture: "neblina",
+      x:10,
+      y: 350,
+      delayed:1,
+      direction: 1,
+      randomnes: 0,
+      startWith: 1,
+    }
+
+    const AntorchaConfig: AntorchaConfig = {
+      x:110,
+      y:800,
+      sprite:"antorcha",
+    }
+    //const nubes = new CloudGenerator(this.scene, CloudGeneratorConfig1);
+    //nubes.start();
+    const newLava = new LargeFloor(this.scene,LargeFloorConfigg3,this.pisos)
+    const newIsland2 = new LargeFloorIsland(this.scene,LargeFloorIslandConfig2,this.pisos)
+    const newIsland = new LargeFloorIsland(this.scene,LargeFloorIslandConfig,this.pisos)
     const newFloor = new LargeFloor(this.scene,LargeFloorConfigg,this.pisos);
     const newFloor2 = new LargeFloor(this.scene,LargeFloorConfigg2,this.pisos);
+    //const newAntorcha = new Antorcha(this.scene,AntorchaConfig,this.pisos);
     //const p1 = this.scene.physics.add.sprite(100, 470, "plataformaA").setScale(0.7);
     //const p2 = this.scene.physics.add.sprite(400, 470, "plataformaA").setScale(0.3);
     //const p3 = this.scene.physics.add.sprite(700, 500, "plataformaA").setScale(0.3);
@@ -112,6 +176,9 @@ class Map2 {
 
     p6.hasForce = true; */
 
+    /**Darknes implementation */
+    background.setPipeline('Light2D');
+    
 
 
     

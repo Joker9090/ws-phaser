@@ -1,9 +1,10 @@
 import Phaser, { Physics } from "phaser";
 
 export type LargeFloorTween = Phaser.Tweens.Tween | Phaser.Types.Tweens.TweenBuilderConfig | Phaser.Types.Tweens.TweenChainBuilderConfig | Phaser.Tweens.TweenChain
-export type LargeFloorConfig = {
-  textureA: string 
-  textureB: string
+export type LargeFloorIslandConfig = {
+  textureA: string, 
+  textureB: string,
+  textureC: string,
   width?: number,
   height?: number,
   fix?: number,
@@ -18,24 +19,28 @@ export type LargeFloorConfig = {
   large: number,
 }
 // Scene in class
-class LargeFloor extends Phaser.GameObjects.Container {
+class LargeFloorIsland extends Phaser.GameObjects.Container {
   isJumping = false;
   scene: Phaser.Scene;
   group: Phaser.Physics.Arcade.Group;
   parts: Phaser.Physics.Arcade.Sprite[];
-  constructor(scene: Phaser.Scene, config: LargeFloorConfig, group: Phaser.Physics.Arcade.Group,  frame?: string | number | undefined) {
+  constructor(scene: Phaser.Scene, config: LargeFloorIslandConfig, group: Phaser.Physics.Arcade.Group,  frame?: string | number | undefined) {
     super(scene, config.pos.x, config.pos.y)
     this.parts = [];
     this.scene = scene;
     this.group = group;
-    const width = config.width ?? 30
-    const height = config.height ?? 25;
-    const fix = config.fix ?? 40
+    const width = config.width ?? 40
+    const height = config.height ?? 20;
+    const fix = config.fix ?? 25
+
+    
     for (let index = 0; index < config.large; index++) {
       const t = (index  % 2 == 0) ? config.textureA : config.textureB
       const s = scene.add.sprite(index * width,0,t)
+      const detail = scene.add.sprite(index * width,10,config.textureC)
       /**Darknes implementation */
       s.setPipeline('Light2D');
+      detail.setPipeline('Light2D');
       this.add(s)
       
     }
@@ -54,4 +59,4 @@ class LargeFloor extends Phaser.GameObjects.Container {
     
   }
 }
-export default LargeFloor
+export default LargeFloorIsland;

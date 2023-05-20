@@ -14,6 +14,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     // Agregar el player al mundo fisico
     scene.physics.add.existing(this)
 
+    /**Darknes implementation */
+    this.setPipeline('Light2D');
+
     this.setCollideWorldBounds(true);
     if (this.body) {
       const body = (this.body as Phaser.Physics.Arcade.Body)

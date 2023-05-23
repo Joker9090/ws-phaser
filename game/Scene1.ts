@@ -6,18 +6,20 @@ class Scene1 extends Phaser.Scene {
   berserk?: player
   map?: Map0
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys
-  stars?: any
+  diamonds?: any
   // goal?: Phaser.GameObjects.Sprite
   score?: any;
   scoreText?: any
   touchable: boolean = true
+  speed: number = 2000
   preload(this: Scene1) {
     this.load.spritesheet("run", "/game/Run.png", { frameWidth: 128, frameHeight: 128 })
     this.load.image("plataforma1", "/game/platform1.png")
-    this.load.image("plataforma2", "/game/platform1B .png")
-    this.load.image("sword", "/game/sword.png")
+    this.load.image("plataforma2", "/game/platform2.png")
+    this.load.image("plataforma3", "/game/platform1B.png")
+    this.load.image("saw", "/game/sierra5.png")
     this.load.image("background", "/game/background.png")
-    this.load.spritesheet("star", "/game/star.png", { frameWidth: 32, frameHeight: 32 })
+    this.load.image("diamond", "/game/diamante2.png")
   }
 
   collectStar(star: any) {
@@ -27,8 +29,11 @@ class Scene1 extends Phaser.Scene {
     // if (stars.countActive(true) === 0) {
     //   stars.children.iterate(function (child: any) { stars.ennableBody(true, true) })
     // }
+    this.speed += 1500
+    console.log(this.speed)
+
   }
-  
+
   lose() {
     console.log("lose", this.touchable)
     if (this.touchable == true && this.berserk !== undefined) {
@@ -40,7 +45,7 @@ class Scene1 extends Phaser.Scene {
       this.berserk?.setAlpha(0.5)
       this.touchable = false
       this.berserk.setPosition(x, y)
-
+      this.speed = 2000
       setTimeout(() => {
         this.berserk?.setAlpha(1)
         this.touchable = true
@@ -53,22 +58,22 @@ class Scene1 extends Phaser.Scene {
   }
 
   create(this: Scene1) {
-    this.map = new Map0(this)
+    this.map = new Map0(this, this.speed)
     this.add.image(1000, 400, "background").setScale(6)
     let x = 60
     let y = 220
     this.score = 0
     this.scoreText = this.add.text(20, 20, `points: ${this.score}`, { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', fontSize: 40 }).setDepth(1);
 
-    const [floor, stars, swords] = this.map.createMap()
-    this.stars = stars;
+    const [floor, diamonds, saws] = this.map.createMap()
+    this.diamonds = diamonds;
 
     this.berserk = new player(this, x, y, "run", 0)
 
 
 
     this.physics.add.collider(this.berserk, floor)
-    this.physics.add.collider(this.berserk, swords, () => this.lose())
+    this.physics.add.collider(this.berserk, saws, () => this.lose())
 
 
     this.cursors = this.input.keyboard?.createCursorKeys()
@@ -83,9 +88,12 @@ class Scene1 extends Phaser.Scene {
   update() {
     if (this.berserk) {
       this.berserk.checkMove(this.cursors)
-      this.stars.children.iterate((child: Phaser.GameObjects.Sprite) => { 
+      this.diamonds.children.iterate((child: Phaser.GameObjects.Sprite) => {
         if (child && this.berserk && Phaser.Geom.Rectangle.Overlaps(this.berserk.getBounds(), child.getBounds())) this.collectStar(child)
       })
+      if (this.diamonds.countActive(true) === 0) {
+
+      }
     }
   }
 }

@@ -1,10 +1,11 @@
 import Phaser from "phaser";
+import player from "../assets/Player";
 
 class Map0 {
   scene: Phaser.Scene
   debugGraphics: Phaser.GameObjects.Graphics
-  stars: any
   swords: any
+  speed: number
   config: {
     w: number,
     h: number
@@ -12,8 +13,9 @@ class Map0 {
       w: 2000,
       h: 1000
     }
-  constructor(scene: Phaser.Scene) {
+  constructor(scene: Phaser.Scene, speed: number) {
     this.scene = scene
+    this.speed = speed
     this.scene.physics.world.setBounds(0, 0, this.config.w, this.config.h)
     /* Debug */
     this.debugGraphics = this.scene.add.graphics();
@@ -26,107 +28,55 @@ class Map0 {
     var starX = Phaser.Math.Between(400, 1100);
     var starY = Phaser.Math.Between(350, 700)
     const floor = this.scene.physics.add.group({ allowGravity: false, immovable: true })
-    const swords = this.scene.physics.add.group({ allowGravity: false, immovable: true, allowRotation: true })
+    const saws = this.scene.physics.add.group({ allowGravity: false, immovable: true, allowRotation: true })
+    const diamonds = this.scene.physics.add.group({ allowGravity: false, immovable: true })
 
-    const p1 = this.scene.physics.add.sprite(100, 870, "plataforma1").setScale(0.7).setBodySize(240, 100)
-    const p2 = this.scene.physics.add.sprite(300, 870, "plataforma1").setScale(0.3).setBodySize(240, 100)
-    const p3 = this.scene.physics.add.sprite(600, 770, "plataforma2").setScale(0.6).setBodySize(240, 100)
-    const p4 = this.scene.physics.add.sprite(1000, 670, "plataforma1").setScale(1).setBodySize(240, 100)
-    const p5 = this.scene.physics.add.sprite(450, 770, "plataforma2").setScale(0.4).setBodySize(240, 100)
-    const p6 = this.scene.physics.add.sprite(1300, 560, "plataforma2").setScale(0.9).setBodySize(240, 100)
+    const p1 = this.scene.physics.add.sprite(100, 870, "plataforma1").setBodySize(240, 100)
+    const p2 = this.scene.physics.add.sprite(300, 870, "plataforma3").setBodySize(240, 100)
+    const p3 = this.scene.physics.add.sprite(800, 870, "plataforma2").setBodySize(240, 100)
+    const p4 = this.scene.physics.add.sprite(1200, 870, "plataforma2").setBodySize(240, 100).setDepth(1)
+    const p5 = this.scene.physics.add.sprite(1400, 870, "plataforma3").setBodySize(240, 100).setDepth(1)
+    const p13 = this.scene.physics.add.sprite(1590, 870, "plataforma1").setBodySize(240, 100).setDepth(0)
 
-    const s1 = this.scene.physics.add.sprite(680, 700, "sword").setScale(0.8)
-    const s2 = this.scene.physics.add.sprite(1200, 600, "sword").setScale(0.7)
-    const s3 = this.scene.physics.add.sprite(1600, 200, "sword").setScale(0.8)
-    const s4 = this.scene.physics.add.sprite(360, 100, "sword").setScale(0.8)
 
-    floor.addMultiple([p1, p2, p3, p4, p5, p6])
-    swords.addMultiple([s1, s2, s3, s4])
+    const p6 = this.scene.physics.add.sprite(1890, 870, "plataforma1").setBodySize(240, 100)
 
-    // goal.addMultiple([star, star2, star3])
 
-    this.stars = this.scene.add.group()
-    this.swords = this.scene.physics.add.group({ allowGravity: false, immovable: true })
+    const p7 = this.scene.physics.add.sprite(500, 390, "plataforma3").setBodySize(240, 100).setScale(1.3).setFlipY(true).setDepth(1)
+    const p8 = this.scene.physics.add.sprite(300, 390, "plataforma1").setBodySize(240, 100).setFlipY(true).setScale(1.3)
+    const p9 = this.scene.physics.add.sprite(600, 390, "plataforma1").setBodySize(240, 100).setFlipY(true).setScale(1.3)
 
-    this.stars.createMultiple([
-      { key: 'star', quantity: 1, setXY: { x: 800, y: 300, } },
-      { key: 'star', quantity: 2, setXY: { x: 600, y: 500, stepX: 1000 } }
-    ]);
-    // this.swords.createMultiple([
-    //   { key: 'sword', quantity: 3, setXY: { x: 750, y: 500, stepX: 400 } }
-    // ]);
-    this.swords.allowRotation
-    this.scene.tweens.add({
-      targets: p5,
-      y: "-=550",
-      duration: 2000,
-      repeat: -1,
-      hold: 500,
-      yoyo: true,
-      repeatDelay: 500,
-      ease: "circularInOut"
-    });
-    this.scene.tweens.add({
-      targets: s3,
-      x: "-=550",
-      duration: 1500,
-      repeat: -1,
-      hold: 100,
-      yoyo: true,
-      repeatDelay: 500,
-      ease: "circularInOut"
-    });
-    this.scene.tweens.add({
-      targets: s4,
-      x: "+=550",
-      duration: 1500,
-      repeat: -1,
-      hold: 100,
-      yoyo: true,
-      repeatDelay: 500,
-      ease: "circularInOut"
-    });
-    this.scene.tweens.add({
-      targets: s2,
-      y: "-=550",
-      duration: 1500,
-      repeat: -1,
-      hold: 100,
-      yoyo: true,
-      repeatDelay: 500,
-      ease: "circularInOut"
-    });
+    const p10 = this.scene.physics.add.sprite(1200, 390, "plataforma3").setBodySize(240, 100).setScale(1.3).setFlipY(true).setDepth(1)
+    const p11 = this.scene.physics.add.sprite(1000, 390, "plataforma1").setBodySize(240, 100).setFlipY(true).setScale(1.3)
+    const p12 = this.scene.physics.add.sprite(1300, 390, "plataforma1").setBodySize(240, 100).setFlipY(true).setScale(1.3)
+
+    const p14 = this.scene.physics.add.sprite(1900, 390, "plataforma3").setBodySize(240, 100).setScale(1.3).setFlipY(true).setDepth(1)
+    const p15 = this.scene.physics.add.sprite(1700, 390, "plataforma1").setBodySize(240, 100).setFlipY(true).setScale(1.3)
+    const p16 = this.scene.physics.add.sprite(2000, 390, "plataforma1").setBodySize(240, 100).setFlipY(true).setScale(1.3)
+
+    const d1 = this.scene.physics.add.sprite(300, 500, "diamond")
+    const d2 = this.scene.physics.add.sprite(800, 770, "diamond")
+
+    const s1 = this.scene.physics.add.image(200, 670, "saw").setScale(0.7).setBodySize(65, 65)
+
+
     this.scene.tweens.add({
       targets: s1,
-      y: "-=650",
-      duration: 2000,
-      repeat: -1,
-      hold: 500,
+      x: 2200,
+      duration: this.speed,
       yoyo: true,
-      repeatDelay: 500,
-      ease: 'linear'
-    });
-    this.scene.tweens.add({
-      targets: p6,
-      y: "-=250",
-      duration: 2000,
+      repeatDelay: 200,
       repeat: -1,
-      hold: 500,
-      yoyo: true,
-      repeatDelay: 500,
-      ease: 'linear'
-    });
-    this.scene.tweens.add({
-      targets: p3,
-      y: "-=500",
-      duration: 2500,
-      repeat: -1,
-      hold: 800,
-      yoyo: true,
-      repeatDelay: 500,
-      ease: 'linear'
-    });
-    return [floor, this.stars, swords];
+      ease: "circularInOut"
+    })
+
+    floor.addMultiple([p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12,p13,p14,p15,p16])
+    diamonds.addMultiple([d1, d2])
+    saws.addMultiple([s1])
+
+
+
+    return [floor, diamonds, saws];
 
   }
 

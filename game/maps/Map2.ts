@@ -118,11 +118,26 @@ class Map2 {
       startWith: 1,
     }
 
-    const AntorchaConfig: AntorchaConfig = {
+    //const AntorchaConfig: AntorchaConfig = {
+    //  x:110,
+    //  y:800,
+    //  sprite:"antorcha",
+    //}
+
+    const AntorchaConfig = {
       x:110,
       y:800,
       sprite:"antorcha",
     }
+    const AntorchaConfig2 = {
+      x:700,
+      y:650,
+      sprite:"antorcha",
+    }
+    const newAntorcha = new Antorcha(this.scene,AntorchaConfig);
+    const newAntorcha2 = new Antorcha(this.scene,AntorchaConfig2);
+    const lightOnAntorcha = this.scene.lights.addLight(newAntorcha.x,newAntorcha.y,200).setColor(0xdc9e7c).setIntensity(0.9);
+    const lightOnAntorcha2 = this.scene.lights.addLight(newAntorcha2.x,newAntorcha2.y,100).setColor(0xdc9e7c).setIntensity(0.9);
     //const nubes = new CloudGenerator(this.scene, CloudGeneratorConfig1);
     //nubes.start();
     const newLava = new LargeFloor(this.scene,LargeFloorConfigg3,this.pisos)

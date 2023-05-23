@@ -24,6 +24,7 @@ class Scene1 extends Phaser.Scene {
     this.load.spritesheet("antorcha", "/game/Antorcha.png", { frameWidth: 128, frameHeight: 128});
     this.load.image("plataformaA", "/game/platform1.png");
     this.load.image("plataformaB", "/game/platform1B.png");
+    this.load.image("particleFire", "/game/particleFire.png");
     this.load.image("islandA", "/game/islandA.png");
     this.load.image("islandB", "/game/islandB.png");
     this.load.image("islandC", "/game/islandC.png");
@@ -50,24 +51,12 @@ class Scene1 extends Phaser.Scene {
     const floor = this.map.createMap()
     this.monchi = new Player(this, 100, 950, "knight", 2);
     this.skeleton = new Enemy(this, 250, 950, "skeleton",1);
-    const AntorchaConfig = {
-      x:110,
-      y:800,
-      sprite:"antorcha",
-    }
-    const AntorchaConfig2 = {
-      x:700,
-      y:650,
-      sprite:"antorcha",
-    }
-    const newAntorcha = new Antorcha(this,AntorchaConfig);
-    const newAntorcha2 = new Antorcha(this,AntorchaConfig2);
+
 
     /**Darkness implementation */
     this.lights.enable().setAmbientColor(0x333333);
     this.lightOnPlayer = this.lights.addLight(this.monchi.x, this.monchi.y, 200).setColor(0xffffff).setIntensity(1);
-    const lightOnAntorcha = this.lights.addLight(newAntorcha.x,newAntorcha.y,200).setColor(0xdc9e7c).setIntensity(0.9);
-    const lightOnAntorcha2 = this.lights.addLight(newAntorcha2.x,newAntorcha2.y,100).setColor(0xdc9e7c).setIntensity(0.9);
+
 
 
     const checkFloor = (a: Player,b: Phaser.Physics.Arcade.Sprite ) => {
@@ -81,6 +70,7 @@ class Scene1 extends Phaser.Scene {
       this.skeleton?.play("skeletonDeadFrames");
       this.swordHitBox.x = 0;
       this.swordHitBox.y = 0;
+      this.swordHitBox.setActive(false);
       if(this.skeleton) this.time.delayedCall(1200, this.skeleton.idle, [], this.skeleton);
     }
 
@@ -116,7 +106,7 @@ class Scene1 extends Phaser.Scene {
     // @ts-ignore
     this.physics.add.collider(this.monchi, floor, checkFloor);
     this.physics.add.collider(this.skeleton, floor);
-    this.physics.add.overlap(this.swordHitBox,this.skeleton, hitPlayer);
+    this.physics.add.overlap(this.swordHitBox,this.skeleton, hitPlayer);// overlaps de grupos de enemigos??
 
     this.skeleton.patrolConfig = skeletonOnePatrol;
     this.skeleton.patrol(skeletonOnePatrol);
@@ -161,9 +151,13 @@ class Scene1 extends Phaser.Scene {
         //  
         //})
         if(this.monchi.flipX) { // esta girado?
-          this.swordHitBox.x = this.monchi.x - this.monchi.width * 0.25;  
-        }else this.swordHitBox.x = this.monchi.x + this.monchi.width * 0.25;
-        this.swordHitBox.y = this.monchi.y;
+          this.swordHitBox.x = this.monchi.x - this.monchi.width * 0.25;
+          //this.swordHitBox.setActive(false);  
+        }else {
+          this.swordHitBox.x = this.monchi.x + this.monchi.width * 0.25;
+          this.swordHitBox.y = this.monchi.y;
+          //this.swordHitBox.setActive(false);
+        }
       }
 
       

@@ -15,7 +15,8 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
   isPatrol: boolean = false;
   isEnemyInFront: boolean = false
   patrolConfig?: PatrolConfig;
-  constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame: number) {
+  life?:3;
+  constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame: number,life?: number) {
     super(scene, x, y, texture, frame)
 
     this.createAnims(scene);

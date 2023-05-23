@@ -30,7 +30,47 @@ class Antorcha extends Phaser.Physics.Arcade.Sprite {
     //  repeat: -1,
     //}
     //scene.anims.create(antorchaIdleFramesConfig)
-    //this.play("antorchaIdleFrames");
+    //this.play("antorchaIdleFrames");particleFire
+
+    //AnimaEmmiter #3
+    
+    const emitter = scene.add.particles(config.x, config.y-3, 'particleFire', {
+      speed: 30,
+      angle:{min:200,max:350},
+      frequency:400,
+      lifespan:1500,
+      scale: { start: 1, end: 0.25 },
+      gravityY:13,
+      blendMode: 'ADD'
+    });
+
+    //AnimEmmiter #2
+    /*const emitter = scene.add.particles(config.x, config.y-3, 'particleFire', {
+      speed: 30,
+      angle:{min:200,max:350},
+      scale: { start: 1, end: 0.25 },
+      blendMode: 'ADD'
+    });*/
+
+    //Anim emmiter #1
+    /*const emitter = scene.add.particles(config.x, config.y, 'particleFire', {
+      frame: 'particleFire',
+      frequency:450,
+      angle: { min: 220, max: 300 },
+      speed: { min: 100, max: 300 },
+      lifespan: 1200,
+      scale: { start: 1, end: 0.25 },
+      gravityY: 450
+    });
+    */
+    scene.tweens.add({
+        targets: emitter,
+        alpha: 0,
+        yoyo: true,
+        repeat: -1,
+        duration: 1000
+    });
+    //emmiter <-
     this.setPipeline('Light2D');
         
     

@@ -135,6 +135,11 @@ class Scene3 extends Phaser.Scene {
   }
 
   update(this: Scene3) {
+
+    /*
+    this.maxVelocity      =>   340
+    this.velocity         =>   x
+    */
     if (this.powerBarFull) this.powerBarFull.setCrop(0,0,340 * this.velocity / this.maxVelocity,140)
     const { height } = this.physics.world.bounds
     if (this.road) this.road.setTilePosition(0, this.road.tilePositionY - this.velocity)

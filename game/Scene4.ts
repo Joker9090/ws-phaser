@@ -2,13 +2,17 @@
 import Phaser from "phaser";
 import CloudGenerator, { CloudGeneratorConfig } from "./assets/CloudGenerator";
 
+declare global {
+  interface Window { PhaserAssets: any; }
+}
+
 // Scene in class
 class Scene4 extends Phaser.Scene {
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys
   road?: Phaser.GameObjects.TileSprite
   powerBarEmpty?: Phaser.GameObjects.TileSprite
   powerBarFull?: Phaser.GameObjects.TileSprite
-  velocity: number = 20
+  velocity: number = 120
   maxVelocity: number = 120
   car?: Phaser.Physics.Arcade.Sprite
   carEnemy?: Phaser.Physics.Arcade.Sprite
@@ -16,16 +20,12 @@ class Scene4 extends Phaser.Scene {
   graphics2?: Phaser.GameObjects.Graphics
   background1?: Phaser.GameObjects.TileSprite
   background2?: Phaser.GameObjects.TileSprite
-  preload(this: Phaser.Scene) {
-    this.load.image("car", "/game/carSide1.png");
-    this.load.image("carEnemy", "/game/carSide2.png");
-    this.load.image("roadSide", "/game/roadSide.png");
-    this.load.image("cloud", "/game/cloud.png");
-    this.load.image("powerBarFull", "/game/powerBarFull.png");
-    this.load.image("powerBarEmpty", "/game/powerBarEmpty.png");
-    this.load.image("nightSky", "/game/nightSky.png");
-    this.load.image("nightSkyTop", "/game/nightSkyTop.png");
+  constructor() {
+    super({ key: 'Scene4' })
   }
+  // preload(this: Phaser.Scene) {
+    
+  // }
 
   create(this: Scene4) {
     let songLoader = this.load.audio('song', ['sounds/PeterSpacey-Glorious.mp3'])

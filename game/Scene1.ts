@@ -2,6 +2,7 @@ import Phaser from "phaser"
 import Map0 from "./maps/Map0"
 import player from "./assets/Player"
 import { World } from "matter"
+import { setOriginalNode } from "typescript"
 class Scene1 extends Phaser.Scene {
   berserk?: player
   map?: Map0
@@ -12,6 +13,10 @@ class Scene1 extends Phaser.Scene {
   scoreText?: any
   touchable: boolean = true
   speed: number = 2000
+  life?: Phaser.GameObjects.TileSprite
+  lifeFilling?: Phaser.GameObjects.TileSprite
+  maxLife: number = 100
+  currentLife: number = 100
   preload(this: Scene1) {
     this.load.spritesheet("run", "/game/Run.png", { frameWidth: 128, frameHeight: 128 })
     this.load.image("plataforma1", "/game/platform1.png")
@@ -20,6 +25,8 @@ class Scene1 extends Phaser.Scene {
     this.load.image("saw", "/game/sierra5.png")
     this.load.image("background", "/game/background.png")
     this.load.image("diamond", "/game/diamante2.png")
+    this.load.image("life", "/game/life.png")
+    this.load.image("lifeFilling", "/game/lifeRelleno.png")
   }
 
   collectStar(star: any) {
@@ -36,26 +43,17 @@ class Scene1 extends Phaser.Scene {
 
   lose() {
     console.log("lose", this.touchable)
-    // if (this.touchable == true && this.berserk !== undefined) {
-    //   let x = 60
-    //   let y = 220
-    //   this.berserk?.setVelocityX(-300)
-    //   this.score -= 200
-    //   this.scoreText.setText("points: " + this.score)
-    //   this.berserk?.setAlpha(0.5)
-    //   this.touchable = false
-    //   this.berserk.setPosition(x, y)
-    //   this.speed = 2000
-    //   setTimeout(() => {
-    //     this.berserk?.setAlpha(1)
-    //     this.touchable = true
-    //   }, 2000)
-    // }
-    // if (this.score < 0) {
-    //   this.scoreText.setText("YOU LOSE")
-    //   setTimeout(() => { this.scene.restart }, 1000)
-    // }
-    this.scene.restart()
+    if (this.currentLife && this.touchable) {
+      this.touchable = false
+      this.currentLife -= 30
+      console.log(this.currentLife, "vida")
+      this.berserk?.setVelocityY(-100)
+      setTimeout(() => {
+        this.touchable = true
+      }, 3000)
+    }
+
+
   }
 
   create(this: Scene1) {
@@ -63,6 +61,7 @@ class Scene1 extends Phaser.Scene {
     this.add.image(1000, 400, "background").setScale(6)
     let x = 150
     let y = 620
+    const { width, height } = this.game.canvas
     this.score = 0
     this.scoreText = this.add.text(20, 20, `points: ${this.score}`, { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', fontSize: 40 }).setDepth(1);
 
@@ -71,11 +70,8 @@ class Scene1 extends Phaser.Scene {
 
     this.berserk = new player(this, x, y, "run", 0)
 
-
-
     this.physics.add.collider(this.berserk, floor)
     this.physics.add.collider(this.berserk, saws, () => this.lose())
-
 
     this.cursors = this.input.keyboard?.createCursorKeys()
 
@@ -85,9 +81,26 @@ class Scene1 extends Phaser.Scene {
     this.cameras.main.setBounds(0, 0, 2500, 1000);
     this.cameras.main.startFollow(this.berserk, true)
     this.cameras.main.setZoom(0.9);
+
+
+    this.life = this.add.tileSprite(width - 15, height - 82, 340, 140, "life").setOrigin(1, 0.5)
+    this.lifeFilling = this.add.tileSprite(width - 15, height - 82, 340, 140, "lifeFilling").setOrigin(1, 0.5)
+    this.lifeFilling.setCrop(0, 0, 0, 140)
+    const graphics = this.add.graphics()
+
+
   }
 
   update() {
+
+    if (this.lifeFilling) this.lifeFilling.setCrop(0, 0, 340 * this.currentLife / this.maxLife, 140)
+
+
+
+    if (this.currentLife === 0) {
+      this.scene.restart()
+    }
+
     if (this.berserk) {
       this.berserk.checkMove(this.cursors)
       this.diamonds.children.iterate((child: Phaser.GameObjects.Sprite) => {

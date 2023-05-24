@@ -15,7 +15,9 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
   isPatrol: boolean = false;
   isEnemyInFront: boolean = false
   patrolConfig?: PatrolConfig;
-  life?:3;
+  life:number = 3;
+  Onstate?: string = "pasive";
+
   constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame: number,life?: number) {
     super(scene, x, y, texture, frame)
 
@@ -46,9 +48,10 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     const skeletonWalkFrames = scene.anims.generateFrameNumbers("skeleton", {start: 6, end:11});
     const skeletonMoveFrames = scene.anims.generateFrameNumbers("skeleton", { start:10 , end: 15 });
     const skeletonDeadFrames = scene.anims.generateFrameNumbers("skeleton",{start:18 , end: 23});
-    const skeletonDmgFrames = scene.anims.generateFrameNumbers("skeleton",{start:19 , end: 20});
-    const skeletonDefFrames = scene.anims.generateFrameNumbers("skeleton",{start:24 , end: 28});
+    const skeletonDmgFrames = scene.anims.generateFrameNumbers("skeleton",{start:24 , end: 25});
+    const skeletonDefFrames = scene.anims.generateFrameNumbers("skeleton",{start:30 , end: 34});
     const skeletonAttackFrames = scene.anims.generateFrameNumbers("skeleton",{start:36 , end: 41});
+    const skeletonDeadFrame = scene.anims.generateFrameNumbers("skeleton",{frames:[22]})
 
     const skeletonWalkConfig = {
       key: "skeletonWalk",
@@ -79,6 +82,14 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
       repeat: 0,
     }
 
+    const skeletonDeadFrameConfig = {
+      key:"skeletonDeadFrame",
+      frames: skeletonDeadFrame,
+      //frameRate:15,
+      //repeat: -1,
+
+    }
+
     const skeletonDmgFramesConfig = {
       key: "skeletonDmgFrames",
       frames: skeletonDmgFrames,
@@ -100,15 +111,20 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
       repeat: 0,
     }
 
-    scene.anims.create(skeletonWalkConfig)
-    scene.anims.create(skeletonMoveConfig)
-    scene.anims.create(skeletonIdleFramesConfig)
-    scene.anims.create(skeletonDeadFramesConfig)
-    scene.anims.create(skeletonDmgFramesConfig)
-    scene.anims.create(skeletonDefFramesConfig)
-    scene.anims.create(skeletonAttackFramesConfig)
+    scene.anims.create(skeletonWalkConfig);
+    scene.anims.create(skeletonMoveConfig);
+    scene.anims.create(skeletonIdleFramesConfig);
+    scene.anims.create(skeletonDeadFramesConfig);
+    scene.anims.create(skeletonDmgFramesConfig);
+    scene.anims.create(skeletonDefFramesConfig);
+    scene.anims.create(skeletonAttackFramesConfig);
+    scene.anims.create(skeletonDeadFrameConfig);
 
-    this.play("skeletonIdleFrames");
+    if(this.Onstate !== "dead"){
+      this.play("skeletonIdleFrames");
+    } else if(this.Onstate === "dead") {
+      this.play("skeletonDeadFrame");
+    }
     
   }
 
@@ -129,6 +145,26 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
+  updateState(newState: string, config?:[]) {
+    switch (newState) {
+      case "idle":
+        
+        break;
+      case "attack":
+        
+        break;
+      case "patrol":
+        
+        break;
+      case "dead":
+        
+        break;
+    
+      default:
+        break;
+    }
+  }
+
   enemyAround(target:Player,maxRange: number) {
     const dx = this.x - target.x;
     console.log("enemy around dx value: "+dx);
@@ -146,38 +182,73 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
 
   }
 
+  corposeStay(){
+    this.anims.play('skeletonDeadFrame', true);
+  }
+
+
+
+  dead(){
+    this.setVelocityX(0);
+    this.anims.play('skeletonDeadFrames', true);
+    this.Onstate = "dead";
+  }
+  getRandomIntInclusive(min:number, max:number) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
+  receiveDamage() {
+    const posibility = this.getRandomIntInclusive(3,10);
+    console.log("posibility: "+posibility);
+    if(posibility <= 2) {
+      this.anims.play('skeletonDefFrames', true);
+      //this.scene.time.delayedCall(600, this.patrol, [this.patrolConfig], this);
+    }else {
+      this.anims.play('skeletonDmgFrames', true);
+      this.life= this.life - 1;
+      console.log("cantidad de vidas ske: "+this.life);
+      if(this.life == 0) {
+        this.dead();
+      }
+      //this.attack();skeletonDmgFrames
+    }
+
+  }
+
 
   patrol(_patrolConfig:PatrolConfig){
     console.log("patrol log: "+_patrolConfig.x+_patrolConfig.delay+_patrolConfig.flip);
-    this.isPatrol = true;
-    if(_patrolConfig.flip != null ||_patrolConfig.flip != undefined)this.flipX = _patrolConfig.flip;    
-    if(_patrolConfig.enemyDetect){
-      if(!this.isEnemyInFront){
-        if(!this.flipX) {
-          this.setVelocityX(_patrolConfig.x);
-          //_patrolConfig.flip = true;
-          const newPatrolConfig = _patrolConfig;
-          newPatrolConfig.flip = true;
-          this.anims.play('skeletonWalk', true);
-          this.scene.time.delayedCall(_patrolConfig.delay, this.patrol, [newPatrolConfig], this);
-        }else {
-          this.setVelocityX(-_patrolConfig.x);
-          this.flipX = true;
-          //_patrolConfig.flip = true;
-          const newPatrolConfig = _patrolConfig;
-          newPatrolConfig.flip = false;
-          this.anims.play('skeletonWalk', true);
-          this.scene.time.delayedCall(_patrolConfig.delay, this.patrol, [newPatrolConfig], this);
+    if(this.Onstate != "dead"){
+      this.isPatrol = true;
+      if(_patrolConfig.flip != null ||_patrolConfig.flip != undefined)this.flipX = _patrolConfig.flip;    
+      if(_patrolConfig.enemyDetect){
+        if(!this.isEnemyInFront){
+          if(!this.flipX) {
+            this.setVelocityX(_patrolConfig.x);
+            //_patrolConfig.flip = true;
+            const newPatrolConfig = _patrolConfig;
+            newPatrolConfig.flip = true;
+            this.anims.play('skeletonWalk', true);
+            this.scene.time.delayedCall(_patrolConfig.delay, this.patrol, [newPatrolConfig], this);
+          }else {
+            this.setVelocityX(-_patrolConfig.x);
+            this.flipX = true;
+            //_patrolConfig.flip = true;
+            const newPatrolConfig = _patrolConfig;
+            newPatrolConfig.flip = false;
+            this.anims.play('skeletonWalk', true);
+            this.scene.time.delayedCall(_patrolConfig.delay, this.patrol, [newPatrolConfig], this);
+          }
+        } else {
+          this.isPatrol = false;
+          this.attack();
+  
         }
-      } else {
-        this.isPatrol = false;
-        this.setVelocityX(0);
-        this.flipX = !this.flipX;
-        this.anims.play('skeletonAttackFrames', true);
-        this.scene.time.delayedCall(600, this.idle, [], this);
-
+      }else {
+  
       }
-    }else {
 
     }
 
@@ -185,8 +256,10 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
   attack() {
     //if(!this.isAttacking) {
       this.isAttacking = true;
-      this.play("skeletonAttackFrames",true);
+      this.setVelocityX(0);
+      this.flipX = !this.flipX;
       //this.setVelocityY(-730);
+      this.anims.play('skeletonAttackFrames', true);
       this.scene.time.delayedCall(600, this.idle, [], this);
     //}
   }

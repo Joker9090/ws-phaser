@@ -3,6 +3,7 @@ import LargeFloor, { LargeFloorConfig } from "../assets/LargeFloor";
 import CloudGenerator from "../assets/CloudGenerator";
 import LargeFloorIsland from "../assets/LargeFloorIsland";
 import Antorcha, { AntorchaConfig } from "../assets/Antorcha";
+import Health from "../assets/Health";
 
 class Map2 {
   scene: Phaser.Scene
@@ -134,10 +135,19 @@ class Map2 {
       y:650,
       sprite:"antorcha",
     }
+
+    const HealthConfig = {
+      x:150,
+      y: 750,
+      sprite:"heartFullUI",
+      quantity: 3,
+    }
     const newAntorcha = new Antorcha(this.scene,AntorchaConfig);
     const newAntorcha2 = new Antorcha(this.scene,AntorchaConfig2);
     const lightOnAntorcha = this.scene.lights.addLight(newAntorcha.x,newAntorcha.y,200).setColor(0xdc9e7c).setIntensity(0.9);
     const lightOnAntorcha2 = this.scene.lights.addLight(newAntorcha2.x,newAntorcha2.y,100).setColor(0xdc9e7c).setIntensity(0.9);
+
+    const healths = this.scene.add.group(new Health(this.scene,HealthConfig),);
     //const nubes = new CloudGenerator(this.scene, CloudGeneratorConfig1);
     //nubes.start();
     const newLava = new LargeFloor(this.scene,LargeFloorConfigg3,this.pisos)

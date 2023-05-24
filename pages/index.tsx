@@ -1,4 +1,5 @@
 import React from 'react';
+//import GameUI from "./assets/GameUI";
 export default function Home() {
   const [phaser, setPhaser] = React.useState<typeof Phaser | undefined>()
   const [game, setGame] = React.useState<Phaser.Game | undefined>()
@@ -16,6 +17,7 @@ export default function Home() {
     import("phaser").then(setPhaser) 
     //Load scenes async when windows is ready
     import("@/game/Scene1").then((scene1) => setScenes([scene1.default]))
+    //import("@/game/assets/GameUI").then((gameUI) => setScenes([gameUI.default]))
   }, [])
  
   React.useEffect(() => {

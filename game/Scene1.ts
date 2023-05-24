@@ -6,6 +6,7 @@ import Map2 from "./maps/Map2";
 import Enemy, { PatrolConfig } from "./assets/Enemy";
 import CloudGenerator from "./assets/CloudGenerator";
 import Antorcha from "./assets/Antorcha";
+import GameUI from "./assets/GameUI";
 // Scene in class
 class Scene1 extends Phaser.Scene {
   monchi?: Player;
@@ -22,6 +23,7 @@ class Scene1 extends Phaser.Scene {
     this.load.spritesheet("knight", "/game/Knight.png", { frameWidth: 86, frameHeight: 86});
     this.load.spritesheet("skeleton", "/game/skeleton.png", { frameWidth: 86, frameHeight: 86});
     this.load.spritesheet("antorcha", "/game/Antorcha.png", { frameWidth: 128, frameHeight: 128});
+    this.load.spritesheet("heartFullUI", "/game/UI/heart.png", { frameWidth: 32, frameHeight: 32});
     this.load.image("plataformaA", "/game/platform1.png");
     this.load.image("plataformaB", "/game/platform1B.png");
     this.load.image("particleFire", "/game/particleFire.png");
@@ -45,12 +47,16 @@ class Scene1 extends Phaser.Scene {
   create(this: Scene1) {
 
 
+
+    //this.scene.run('gameUI');
     this.map = new Map2(this);
     
     
     const floor = this.map.createMap()
     this.monchi = new Player(this, 100, 950, "knight", 2);
     this.skeleton = new Enemy(this, 250, 950, "skeleton",1);
+
+
 
 
     /**Darkness implementation */
@@ -67,11 +73,17 @@ class Scene1 extends Phaser.Scene {
     const hitPlayer = () => {
       //console.log("Player colision con enemigo");
       console.log("Player espada colision con enemigo");
-      this.skeleton?.play("skeletonDeadFrames");
+      this.skeleton?.receiveDamage();
       this.swordHitBox.x = 0;
       this.swordHitBox.y = 0;
       this.swordHitBox.setActive(false);
-      if(this.skeleton) this.time.delayedCall(1200, this.skeleton.idle, [], this.skeleton);
+      console.log("state skeleton: " + this.skeleton?.Onstate);
+      if(this.skeleton && this.skeleton.Onstate !== "dead") {
+        this.time.delayedCall(1200, this.skeleton.idle, [], this.skeleton);
+      }else if (this.skeleton?.Onstate === "dead") {
+        this.time.delayedCall(1200, this.skeleton.corposeStay, [], this.skeleton);
+        //this.skeleton.destroy();
+      }
     }
 
 
@@ -163,7 +175,8 @@ class Scene1 extends Phaser.Scene {
       
       
     }
-    if(this.skeleton && this.monchi) {
+    if(this.skeleton && this.monchi && this.skeleton.Onstate !== "dead") {
+      console.log("skeleton update");
       this.skeleton.enemyAround(this.monchi,50);
       if(!this.skeleton.isEnemyInFront && !this.skeleton.isPatrol && this.skeleton.patrolConfig && this.skeleton.patrolConfig != null && this.skeleton.patrolConfig != undefined) {
         this.skeleton.patrol(this.skeleton.patrolConfig);

@@ -62,12 +62,13 @@ class Map0 {
 
     this.scene.tweens.add({
       targets: s1,
-      x: 2200,
+      // x: 2200,
       duration: this.speed,
       yoyo: true,
       repeatDelay: 200,
       repeat: -1,
-      ease: "circularInOut"
+      ease: "circularInOut",
+      angle: -3600
     })
 
     floor.addMultiple([p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12,p13,p14,p15,p16])

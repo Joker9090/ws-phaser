@@ -103,6 +103,7 @@ class Scene4 extends Phaser.Scene {
     c3.start()
   }
 
+
   update(this: Scene4) {
     if (this.powerBarFull) this.powerBarFull.setCrop(0, 0, 340 * this.velocity / this.maxVelocity, 140)
     if (this.road) this.road.setTilePosition(this.road.tilePositionX + (this.velocity / 2), 0)

@@ -36,32 +36,33 @@ class Scene1 extends Phaser.Scene {
 
   lose() {
     console.log("lose", this.touchable)
-    if (this.touchable == true && this.berserk !== undefined) {
-      let x = 60
-      let y = 220
-      this.berserk?.setVelocityX(-300)
-      this.score -= 200
-      this.scoreText.setText("points: " + this.score)
-      this.berserk?.setAlpha(0.5)
-      this.touchable = false
-      this.berserk.setPosition(x, y)
-      this.speed = 2000
-      setTimeout(() => {
-        this.berserk?.setAlpha(1)
-        this.touchable = true
-      }, 2000)
-    }
-    if (this.score < 0) {
-      this.scoreText.setText("YOU LOSE")
-      setTimeout(() => { this.scene.restart }, 1000)
-    }
+    // if (this.touchable == true && this.berserk !== undefined) {
+    //   let x = 60
+    //   let y = 220
+    //   this.berserk?.setVelocityX(-300)
+    //   this.score -= 200
+    //   this.scoreText.setText("points: " + this.score)
+    //   this.berserk?.setAlpha(0.5)
+    //   this.touchable = false
+    //   this.berserk.setPosition(x, y)
+    //   this.speed = 2000
+    //   setTimeout(() => {
+    //     this.berserk?.setAlpha(1)
+    //     this.touchable = true
+    //   }, 2000)
+    // }
+    // if (this.score < 0) {
+    //   this.scoreText.setText("YOU LOSE")
+    //   setTimeout(() => { this.scene.restart }, 1000)
+    // }
+    this.scene.restart()
   }
 
   create(this: Scene1) {
     this.map = new Map0(this, this.speed)
     this.add.image(1000, 400, "background").setScale(6)
-    let x = 60
-    let y = 220
+    let x = 150
+    let y = 620
     this.score = 0
     this.scoreText = this.add.text(20, 20, `points: ${this.score}`, { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', fontSize: 40 }).setDepth(1);
 
@@ -79,10 +80,11 @@ class Scene1 extends Phaser.Scene {
     this.cursors = this.input.keyboard?.createCursorKeys()
 
     this.physics.world.on('worldbounds', (body: Phaser.Physics.Arcade.Sprite, top: boolean, down: boolean, left: boolean, right: boolean) => {
-      if (down) this.lose()
+      if (down || top) this.lose()
     }, this);
-
-    this.cameras.main.startFollow(this.berserk)
+    this.cameras.main.setBounds(0, 0, 2500, 1000);
+    this.cameras.main.startFollow(this.berserk, true)
+    this.cameras.main.setZoom(0.9);
   }
 
   update() {

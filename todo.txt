@@ -1,0 +1,10 @@
+Joaco {
+  1: hitbox prolijo,
+  2: Saltos prolijos
+  3: UI
+  4: Infinity Run,
+  5: enemies blem,
+  6: Controles mas dinamicos,
+  fix respawn (done)
+  7: camera fix https://labs.phaser.io/view.html?src=src/camera/follow%20zoom.js || https://labs.phaser.io/view.html?src=src/camera/follow%20zoom%20tilemap.js (DONE)
+}

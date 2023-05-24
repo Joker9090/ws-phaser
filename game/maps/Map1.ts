@@ -10,7 +10,7 @@ class Mapa {
   scene: Phaser.Scene;
   worldSize = {
     width: 10000,
-    height: 1000,
+    height: 1200,
   };
   pisos?: Phaser.Physics.Arcade.Group
   startingPoint = {

@@ -95,7 +95,6 @@ class scene3 extends Phaser.Scene {
         c.setVelocityY(this.velocity * 100)
         this.carsCrashed.push(c);
         this.time.delayedCall(this.dificulty, this.createCarCrashed, [], this);
-
     }
    
     

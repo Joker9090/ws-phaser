@@ -73,20 +73,20 @@ class player extends Phaser.Physics.Arcade.Sprite {
 
   up() {
     if (this && this._direction !== undefined) {
-      this.setVelocityY(this.initialVelocity * -1)
+      this.setVelocityY(this.initialVelocity * -0.3)
       this.setGravityY(this.gravityForce * -1)
       this._direction = "up"
       this.setFlipY(true)
-      if(this.body) this.body.setOffset(50, 0)
+      if (this.body) this.body.setOffset(50, 0)
     }
   }
   down() {
     if (this && this._direction === "up") {
-      this.setVelocityY(this.initialVelocity)
+      this.setVelocityY(this.initialVelocity * 0.3) 
       this.setGravityY(this.gravityForce)
       // setTimeout(() => { this.setGravityY(0) }, 200)
       this.setFlipY(false)
-      if(this.body) this.body.setOffset(50, 70)
+      if (this.body) this.body.setOffset(50, 70)
     }
   }
 
@@ -94,13 +94,12 @@ class player extends Phaser.Physics.Arcade.Sprite {
     if (cursors) {
       const { left, right, up, down, space } = cursors
       if (left.isDown) {
-        this.setVelocityX(-160)
+        this.setVelocityX(-600)
         this.setFlipX(true)
         // console.log("left")
         if (!this.isJumping) { this.anims.play("run", true) }
-      }
-      else if (right.isDown) {
-        this.setVelocityX(160)
+      } else if(right.isDown) {
+        this.setVelocityX(600)
         this.setFlipX(false)
         // console.log("right")
         if (!this.isJumping) { this.anims.play("run", true) }
@@ -110,9 +109,7 @@ class player extends Phaser.Physics.Arcade.Sprite {
         this.anims.play("idle", true)
         // console.log("idle")
       }
-      if (space.isDown) {
-        this.attack()
-      } else if (up.isDown) {
+      if (up.isDown) {
         this.up()
       } else if (down.isDown) {
         this.down()

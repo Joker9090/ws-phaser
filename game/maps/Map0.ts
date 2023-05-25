@@ -65,7 +65,7 @@ class Map0 {
 
     this.scene.tweens.add({
       targets: s1,
-      x: 2200,
+      // x: 2200,
       duration: this.speed,
       yoyo: true,
       repeatDelay: 200,

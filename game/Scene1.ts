@@ -17,6 +17,9 @@ class Scene1 extends Phaser.Scene {
   lifeFilling?: Phaser.GameObjects.TileSprite
   maxLife: number = 100
   currentLife: number = 100
+  x?: number
+  y?: number
+
   preload(this: Scene1) {
     this.load.spritesheet("run", "/game/Run.png", { frameWidth: 128, frameHeight: 128 })
     this.load.image("plataforma1", "/game/platform1.png")
@@ -27,30 +30,37 @@ class Scene1 extends Phaser.Scene {
     this.load.image("diamond", "/game/diamante2.png")
     this.load.image("life", "/game/life.png")
     this.load.image("lifeFilling", "/game/lifeRelleno.png")
+    this.load.image("close", "/game/close.png")
+
   }
 
   collectStar(star: any) {
-    this.score += 200
-    this.scoreText.setText("points: " + this.score)
     star.destroy()
-    // if (stars.countActive(true) === 0) {
-    //   stars.children.iterate(function (child: any) { stars.ennableBody(true, true) })
-    // }
+
     this.speed += 1500
     console.log(this.speed)
 
   }
-
   lose() {
+    this.scene.restart()
+  }
+  hitSaw() {
     console.log("lose", this.touchable)
-    if (this.currentLife && this.touchable) {
+    if (this.currentLife && this.touchable === true) {
       this.touchable = false
+      this.berserk?.setAlpha(0.5)
       this.currentLife -= 30
       console.log(this.currentLife, "vida")
       this.berserk?.setVelocityY(-100)
+      if (this.currentLife <= 0) {
+        this.lose()
+        this.currentLife = 100
+      }
+
       setTimeout(() => {
         this.touchable = true
-      }, 3000)
+        this.berserk?.setAlpha(1)
+      }, 400)
     }
 
 
@@ -59,19 +69,18 @@ class Scene1 extends Phaser.Scene {
   create(this: Scene1) {
     this.map = new Map0(this, this.speed)
     this.add.image(1000, 400, "background").setScale(6)
+
     let x = 150
     let y = 620
-    const { width, height } = this.game.canvas
-    this.score = 0
-    this.scoreText = this.add.text(20, 20, `points: ${this.score}`, { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', fontSize: 40 }).setDepth(1);
 
+    const { width, height } = this.game.canvas
     const [floor, diamonds, saws] = this.map.createMap()
     this.diamonds = diamonds;
 
     this.berserk = new player(this, x, y, "run", 0)
 
     this.physics.add.collider(this.berserk, floor)
-    this.physics.add.collider(this.berserk, saws, () => this.lose())
+    this.physics.add.collider(this.berserk, saws, () => this.hitSaw())
 
     this.cursors = this.input.keyboard?.createCursorKeys()
 
@@ -83,23 +92,21 @@ class Scene1 extends Phaser.Scene {
     this.cameras.main.setZoom(0.9);
 
 
-    this.life = this.add.tileSprite(width - 15, height - 82, 340, 140, "life").setOrigin(1, 0.5)
-    this.lifeFilling = this.add.tileSprite(width - 15, height - 82, 340, 140, "lifeFilling").setOrigin(1, 0.5)
-    this.lifeFilling.setCrop(0, 0, 0, 140)
+    this.life = this.add.tileSprite(width - 1610, height - 930, 0, 0, "life").setOrigin(1, 0.5).setScrollFactor(0).setScale(1.2)
+    this.lifeFilling = this.add.tileSprite(width - 1610, height - 916, -100, 0, "lifeFilling").setOrigin(1, 0.5).setScrollFactor(0).setScale(1.2)
+    // this.lifeFilling.setCrop(0, 0, 0, 140)
     const graphics = this.add.graphics()
 
 
   }
 
   update() {
-
+    this.x = this.berserk?.x
+    this.y = this.berserk?.y
+    // console.log(this.y, this.x)
     if (this.lifeFilling) this.lifeFilling.setCrop(0, 0, 340 * this.currentLife / this.maxLife, 140)
 
 
-
-    if (this.currentLife === 0) {
-      this.scene.restart()
-    }
 
     if (this.berserk) {
       this.berserk.checkMove(this.cursors)

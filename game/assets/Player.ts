@@ -93,6 +93,8 @@ class player extends Phaser.Physics.Arcade.Sprite {
   checkMove(cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined) {
     if (cursors) {
       const { left, right, up, down, space } = cursors
+
+      
       if (left.isDown) {
         this.setVelocityX(-600)
         this.setFlipX(true)

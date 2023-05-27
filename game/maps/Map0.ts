@@ -69,14 +69,21 @@ class Map0 {
         repeat: -1
     });
 
-  //   this.scene.tweens.add({
-  //     targets: p3,
-  //     duration:15000,
-  //     x: "-=400",
-  //     ease: 'Sine.inOut',
-  //     yoyo: true,
-  //     repeat: -1
-  // });
+    //   this.scene.tweens.add({
+    //     targets: p3,
+    //     duration:15000,
+    //     x: "-=400",
+    //     ease: 'Sine.inOut',
+    //     yoyo: true,
+    //     repeat: -1
+    // });
+
+    // MOUNTAINS
+
+    const mountain1 = this.scene.add.sprite(500, 0, "mountain1").setScale(1).setDepth(1);
+    const mountain2 = this.scene.add.sprite(500, 0, "mountain2").setScale(1).setDepth(1);
+    const mountain3 = this.scene.add.sprite(500, 0, "mountain3").setScale(1).setDepth(1);
+
 
     //NUBES
 
@@ -88,6 +95,7 @@ class Map0 {
       randomnes: 0.9,
       direction: 1,
       startWith: -300,
+      depth: 4,
     }
     const c1 = new CloudGenerator(this.scene, c1Config)
     c1.start()
@@ -100,6 +108,7 @@ class Map0 {
       randomnes: 0.2,
       direction: 0,
       startWith: -100,
+      depth: 1,
     }
     const c2 = new CloudGenerator(this.scene, c2Config)
     c2.start()
@@ -112,6 +121,7 @@ class Map0 {
       randomnes: 2,
       direction: 0,
       startWith: -200,
+      depth: 1,
     }
     const c3 = new CloudGenerator(this.scene, c3Config)
     c3.start()
@@ -124,6 +134,7 @@ class Map0 {
       randomnes: 0.9,
       direction: 1,
       startWith: -300,
+      depth: 1,
     }
     const c4 = new CloudGenerator(this.scene, c4Config)
     c4.start()
@@ -136,6 +147,7 @@ class Map0 {
       randomnes: 0.9,
       direction: 1,
       startWith: -300,
+      depth: 4,
     }
     const c5 = new CloudGenerator(this.scene, c5Config)
     c5.start()

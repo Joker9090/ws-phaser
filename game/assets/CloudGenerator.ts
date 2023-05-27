@@ -40,7 +40,7 @@ class CloudGenerator  {
   }
 
   randomTime() {
-    const delayedTime = Math.ceil(this.config.delayed * this.calcRandom())
+    const delayedTime = Math.ceil(this.config.delayed * this.calcRandom() + 10000)
     return delayedTime;
   }
 

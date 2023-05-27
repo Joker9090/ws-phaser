@@ -16,6 +16,9 @@ class Scene1 extends Phaser.Scene {
     // this.load.image("this.player.setVelocityY(-330);plataformaB", "/game/base2.png");
     this.load.image("plataformaB", "/game/base2.png");
     this.load.image("background", '/game/sky1.png');
+    this.load.image("mountain1", "/game/mountain1.png");
+    this.load.image("mountain2", "/game/mountain2.png");
+    this.load.image("mountain3", "/game/mountain4.png");
     this.load.image("sun", '/game/sun.png');
     this.load.image("nube", '/game/nube.png');
     this.load.image("cueva", '/game/templo.png');

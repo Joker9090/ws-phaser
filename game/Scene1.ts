@@ -13,7 +13,7 @@ class Scene1 extends Phaser.Scene {
   canRot: boolean = true
   normalito: boolean = true
   preload(this: Phaser.Scene) {
-    /* Load assets for game */
+    /* Load assets for game */ 
     this.load.spritesheet("character", "/game/character.png", { frameWidth: 220, frameHeight: 162 });
     this.load.image("background", "/game/background.png");
     this.load.image("plataformaA", "/game/platform1.png");

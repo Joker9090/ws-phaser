@@ -8,7 +8,7 @@ export type CloudGeneratorConfig = {
   direction: 0 | 1,
   randomnes: number,
   startWith: number,
-  depth?:number,
+  depth?: number,
 }
 // Scene in class
 class CloudGenerator  {

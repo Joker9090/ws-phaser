@@ -48,6 +48,8 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
 
     this.setImmovable(true)
 
+    this.setDepth(19)
+
     if(config.tween) {
         const tween = this.scene.tweens.add({
           ...config.tween,

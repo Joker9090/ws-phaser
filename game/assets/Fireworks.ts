@@ -16,7 +16,7 @@ class Fireworks extends Phaser.Physics.Arcade.Sprite {
 
   }
 
-  playConfetti(callback: Function) {
+  playFireworks(callback: Function) {
     this.play("fireworksAnim")
     this.scene.time.delayedCall(800, callback, [], this);
   }

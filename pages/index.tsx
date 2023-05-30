@@ -27,7 +27,7 @@ export default function Home() {
         height: "100%",
         parent: "game-container",
         scale: {
-          mode: window.Phaser.Scale.RESIZE
+          mode: window.Phaser.Scale.FIT
         },
       
         scene: scenes[0],

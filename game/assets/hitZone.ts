@@ -4,8 +4,10 @@ class hitZone extends Phaser.GameObjects.Rectangle {
     constructor(scene:Phaser.Scene , x: number, y: number, width: number, height: number, fillColor: number, fillAlpha: number) {
         super(scene,x,y,width,height,fillColor,fillAlpha);
 
-        this.scene.physics.add.existing(this);
+        //this.scene.physics.add.existing(this);
+        //this.scene.add(this);
         this.setActive(false);
+        scene.add.existing(this)
         
         //getBounds
 

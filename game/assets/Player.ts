@@ -108,11 +108,28 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   //  }
   //}
 
-  loseLife(dmgRecieved?: number) {
-    const dmg = 10;
-    dmg ? dmgRecieved : 10;
+  receivedDamage(dmgRecieved:number) {
 
-    this.life -= dmg;
+    this.loseLife(dmgRecieved);
+
+    this.scene.tweens.add({
+      targets: this,
+      duration: 100,
+      repeat: 3,
+      yoyo: true,
+      alpha: 0.5,
+      onComplete: () => {
+        this.setAlpha(1);
+      },
+    });
+  }
+
+  loseLife(dmgRecieved: number) {
+    //const dmg = 10;
+    //const dmg ? dmgRecieved : 10;
+
+    this.life -= dmgRecieved;
+    console.log("Vida del caballero: " + this.life);
 
   }
 

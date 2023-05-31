@@ -9,7 +9,7 @@ import LifeBar from "../assets/LifeBar";
 
 class Map2 {
   scene: Phaser.Scene
-  pisos?: Phaser.Physics.Arcade.Group
+  mapElements?: Phaser.Physics.Arcade.Group
   lifeBar?: LifeBar
   //debugGraphics: Phaser.GameObjects.Graphics
   config: {
@@ -46,7 +46,7 @@ class Map2 {
     //const tree = this.scene.add.image(1830,300,"tree").setOrigin(0.5,0.5).setScale(0.7);
     //const crystal = this.scene.add.image(1730,350,"crystal").setOrigin(0.5,0.5).setScale(0.7);
     
-    this.pisos = this.scene.physics.add.group({ allowGravity: false, immovable: true });
+    this.mapElements = this.scene.physics.add.group({ allowGravity: false, immovable: true });
 
     
     const LargeFloorConfigg: LargeFloorConfig = {
@@ -93,7 +93,7 @@ class Map2 {
       large: 10,
       //width:576,
       //height:324, 
-      pos: {x: 300,y: 800},
+      pos: {x: 300,y: 895},
       //scale: {width: 1,height: 1,},
       //fix:-9,
       
@@ -106,7 +106,7 @@ class Map2 {
       large: 10,
       //width:576,
       //height:324, 
-      pos: {x: 800,y: 800},
+      pos: {x: 800,y: 895},
       //scale: {width: 1,height: 1,},
       //fix:-9,
       
@@ -168,15 +168,15 @@ class Map2 {
 
     this.lifeBar = new LifeBar(this.scene,LifeConfig);
 
-    //const UI = new UiModel(this.scene,UIConfig,this.pisos);
+    //const UI = new UiModel(this.scene,UIConfig,this.mapElements);
     //const nubes = new CloudGenerator(this.scene, CloudGeneratorConfig1);
     //nubes.start();
-    const newLava = new LargeFloor(this.scene,LargeFloorConfigg3,this.pisos)
-    const newIsland2 = new LargeFloorIsland(this.scene,LargeFloorIslandConfig2,this.pisos)
-    const newIsland = new LargeFloorIsland(this.scene,LargeFloorIslandConfig,this.pisos)
-    const newFloor = new LargeFloor(this.scene,LargeFloorConfigg,this.pisos);
-    const newFloor2 = new LargeFloor(this.scene,LargeFloorConfigg2,this.pisos);
-    //const newAntorcha = new Antorcha(this.scene,AntorchaConfig,this.pisos);
+    const newLava = new LargeFloor(this.scene,LargeFloorConfigg3,this.mapElements)
+    const newIsland2 = new LargeFloorIsland(this.scene,LargeFloorIslandConfig2,this.mapElements)
+    const newIsland = new LargeFloorIsland(this.scene,LargeFloorIslandConfig,this.mapElements)
+    const newFloor = new LargeFloor(this.scene,LargeFloorConfigg,this.mapElements);
+    const newFloor2 = new LargeFloor(this.scene,LargeFloorConfigg2,this.mapElements);
+    //const newAntorcha = new Antorcha(this.scene,AntorchaConfig,this.mapElements);
     //const p1 = this.scene.physics.add.sprite(100, 470, "plataformaA").setScale(0.7);
     //const p2 = this.scene.physics.add.sprite(400, 470, "plataformaA").setScale(0.3);
     //const p3 = this.scene.physics.add.sprite(700, 500, "plataformaA").setScale(0.3);
@@ -229,9 +229,9 @@ class Map2 {
 
 
     
-    this.pisos.addMultiple([newFloor,newFloor2,this.lifeBar])
+    this.mapElements.addMultiple([newFloor,newFloor2,this.lifeBar])
 
-    return this.pisos; 
+    return this.mapElements; 
     
   }
 

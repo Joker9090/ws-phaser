@@ -22,6 +22,11 @@ const loadAssets = {
       ["image", "pisoA", "/game/pisoA.png"],
       ["image", "healthBarWithAlpha", "/game/UI/healthBarWithAlpha.png"],
       ["image", "greenBar", "/game/UI/greenBar.png"],
+      ["spritesheet", "character", "/game/character.png", { frameWidth: 220, frameHeight: 162}],
+      ["spritesheet", "knight", "/game/Knight.png", { frameWidth: 86, frameHeight: 86}],
+      ["spritesheet", "skeleton", "/game/skeleton.png", { frameWidth: 86, frameHeight: 86}],
+      ["spritesheet", "antorcha", "/game/Antorcha.png", { frameWidth: 128, frameHeight: 128}],
+      ["spritesheet", "heartFullUI", "/game/UI/heart.png", { frameWidth: 32, frameHeight: 32}],
     ]
   }
 }
@@ -89,9 +94,10 @@ class SceneLoader extends Phaser.Scene {
       percentText.destroy();
       assetText.destroy();
     });
-    loadAssets["Scene1"].assets.map(([type, name, src]: any) => {
+    loadAssets["Scene1"].assets.map(([type, name, src,config]: any) => {
       // @ts-checkts-ignore
-      this.load[type](name, src);
+      if(config)this.load[type](name, src, config);
+      else this.load[type](name, src);
     })
   }
 

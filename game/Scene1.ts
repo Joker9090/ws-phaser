@@ -9,6 +9,7 @@ import Antorcha from "./assets/Antorcha";
 import GameUI from "./assets/GameUI";
 import UiModel from "./assets/UIModel";
 import hitZone from "./assets/hitZone";
+import LifeBar from "./assets/LifeBar";
 
 // Scene in class
 class Scene1 extends Phaser.Scene {
@@ -19,6 +20,7 @@ class Scene1 extends Phaser.Scene {
   attackZone?: Phaser.GameObjects.Zone;
   lightOnPlayer?:Phaser.GameObjects.Light;
   swordHitBox!: hitZone;
+  checkPoint!:{x:number, y:number}
   //UIGame?: Phaser.GameObjects.Container;
   UIGame?: Phaser.GameObjects.Image;
   constructor() {
@@ -27,11 +29,11 @@ class Scene1 extends Phaser.Scene {
  
 
   preload(this: Scene1) {
-    this.load.spritesheet("character", "/game/character.png", { frameWidth: 220, frameHeight: 162 });
-    this.load.spritesheet("knight", "/game/Knight.png", { frameWidth: 86, frameHeight: 86});
-    this.load.spritesheet("skeleton", "/game/skeleton.png", { frameWidth: 86, frameHeight: 86});
-    this.load.spritesheet("antorcha", "/game/Antorcha.png", { frameWidth: 128, frameHeight: 128});
-    this.load.spritesheet("heartFullUI", "/game/UI/heart.png", { frameWidth: 32, frameHeight: 32});
+    //this.load.spritesheet("character", "/game/character.png", { frameWidth: 220, frameHeight: 162 });
+    //this.load.spritesheet("knight", "/game/Knight.png", { frameWidth: 86, frameHeight: 86});
+    //this.load.spritesheet("skeleton", "/game/skeleton.png", { frameWidth: 86, frameHeight: 86});
+    //this.load.spritesheet("antorcha", "/game/Antorcha.png", { frameWidth: 128, frameHeight: 128});
+    //this.load.spritesheet("heartFullUI", "/game/UI/heart.png", { frameWidth: 32, frameHeight: 32});
     //this.load.image("plataformaA", "/game/platform1.png");
     //this.load.image("plataformaB", "/game/platform1B.png");
     //this.load.image("particleFire", "/game/particleFire.png");
@@ -63,6 +65,7 @@ class Scene1 extends Phaser.Scene {
     const floor = this.map.createMap()
     this.monchi = new Player(this, 100, 950, "knight", 2);
     this.skeleton = new Enemy(this, 250, 950, "skeleton",1);
+    this.checkPoint = {x:100,y:950};
 
 
 
@@ -71,11 +74,11 @@ class Scene1 extends Phaser.Scene {
     this.lights.enable().setAmbientColor(0x000000); //333333 gray
     this.lightOnPlayer = this.lights.addLight(this.monchi.x, this.monchi.y, 190).setColor(0xffffff).setIntensity(1.2); // cambiar luces en bbase a la dificultad elegida
 
-    const UIConfig = {
-      textureA: "healthBarWithAlpha",
-      sceneWidth: Number(this.game.config.width) / 2,
-      sceneHeight: Number(this.game.config.height) / 2,
-    }
+    //const UIConfig = {
+    //  textureA: "healthBarWithAlpha",
+    //  sceneWidth: Number(this.game.config.width) / 2,
+    //  sceneHeight: Number(this.game.config.height) / 2,
+    //}
 
 
     
@@ -115,20 +118,37 @@ class Scene1 extends Phaser.Scene {
       //this.scene.start("SceneLoader",{level: actualLevel})
     }
 
+    const checkPoint = (player: Player) => {
+      player.x = this.checkPoint.x;
+      player.y = this.checkPoint.y;
+    }
+
 
     const lose = () => {
       this.scene.restart()
     }
 
     this.physics.world.on('worldbounds', (body: Phaser.Physics.Arcade.Sprite,top: boolean,down: boolean,left: boolean,right: boolean) => {
-      if(down) lose()
+      //if(down) lose()
+      if(down && this.monchi && this.map && this.map.lifeBar) {
+        this.monchi.receivedDamage(50);
+        this.map.lifeBar.updateBar(this,-50);
+        if(this.monchi.life <= 0) lose();
+        else checkPoint(this.monchi);
+      }
     },this);
 
     this.swordHitBox = new hitZone(this,100,100,32,64,0xffffff,0.5); //as unknown as Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
+    //this.swordHitBox = this.physics.add.existing(this.swordHitBox);
+    //this.matter.add.gameObject(this.swordHitBox);
+    //if(this.swordHitBox.body) {
+    //  this.swordHitBox.body.setImmovable(true);
+    //  this.swordHitBox.body.allowGravity = false;
+    //}
     //this.physics.add.existing(this.swordHitBox);
     
     //if(this.swordHitBox.body)this.swordHitBox.body.setAllowGravity(false);
-    if(this.map.lifeBar)this.map.lifeBar.updateBar(this,-20);
+    //if(this.map.lifeBar)this.map.lifeBar.updateBar(this,-20);
     
 
     const skeletonOnePatrol: PatrolConfig = {

@@ -13,7 +13,7 @@ class Scene1 extends Phaser.Scene {
   canRot: boolean = true
   normalito: boolean = true
   preload(this: Phaser.Scene) {
-    /* Load assets for game */ 
+    /* Load assets for game */
     this.load.spritesheet("character", "/game/character.png", { frameWidth: 220, frameHeight: 162 });
     this.load.image("background", "/game/background.png");
     this.load.image("plataformaA", "/game/platform1.png");
@@ -39,61 +39,73 @@ class Scene1 extends Phaser.Scene {
     this.cameras.main.startFollow(this.monchi)
 
 
-    const touch = () => {
-      if (this.monchi){this.monchi.idle()
-    }
-  }
-    const float = () => {
-      if(this.monchi?.body?.touching.down){
-      if (this.monchi) {
-        this.monchi.setBounce(0)
-        this.monchi.setGravityY(-2000)
-        this.time.delayedCall(1000, () => {
-          this.monchi?.setFlipY(true)
-          this.monchi?.body?.setOffset(70, 0)
-          this.monchi?.setBounceY(0)
-        })
+    const touch = (player, piso) => {
+      const { down, up, left, right } = player.body.touching;
+      const { down: _down, up: _up, left: _left, right: _right } = piso.body.touching
+      console.log("right && _left)", right,_left)
+      if (down && _up) {
+        console.log("COMUN")
+      } else if (right && _left) {
+        console.log("NO COMUN")
+        lose()
       }
-    }}
+      if (this.monchi) {
+        this.monchi.idle()
+      }
+    }
+    const float = () => {
+      if (this.monchi?.body?.touching.down) {
+        if (this.monchi) {
+          this.monchi.setBounce(0)
+          this.monchi.setGravityY(-2000)
+          this.time.delayedCall(1000, () => {
+            this.monchi?.setFlipY(true)
+            this.monchi?.body?.setOffset(70, 0)
+            this.monchi?.setBounceY(0)
+          })
+        }
+      }
+    }
 
     const rotateCam = () => {
-      if(this.monchi?.body?.touching.down){
-      this.normalito = false
-      // let allowed = true
-      if (this.canRot) {
-        let rotation = 0
-        for (let i = 0; i < 25; i++) {
-          this.time.delayedCall(10 * i, () => ((rotate) => {
-            this.cameras.main.setRotation(rotate)
-          })(3.1415 * i / 24))
-          if (i == 24) { this.canRot = false }
+      if (this.monchi?.body?.touching.down) {
+        this.normalito = false
+        // let allowed = true
+        if (this.canRot) {
+          let rotation = 0
+          for (let i = 0; i < 25; i++) {
+            this.time.delayedCall(10 * i, () => ((rotate) => {
+              this.cameras.main.setRotation(rotate)
+            })(3.1415 * i / 24))
+            if (i == 24) { this.canRot = false }
+          }
         }
-      }
-      else {
-        console.log("se escapo")
-        // this.cameras.main.setRotation(3.1415)
+        else {
+          console.log("se escapo")
+          // this.cameras.main.setRotation(3.1415)
 
-      }
-    }}
-    
-
-    const noFloat = () => {
-      if(this.monchi?.body?.touching.down){
-      this.normalito = true
-      if (this.monchi) {
-        this.monchi?.setGravity(0)
-        for (let i = 0; i < 25; i++) {
-          this.time.delayedCall(10 * i, () => ((rotate) => {
-            this.cameras.main.setRotation(rotate)
-          })(3.1415 + 3.1415*(i)/24))
         }
-        this.monchi?.setFlipY(false)
-        this.monchi?.body?.setOffset(70, 50)
-        this.monchi?.setBounceY(0)
-
       }
     }
-  }
+
+
+    const noFloat = () => {
+      if (this.monchi?.body?.touching.down) {
+        this.normalito = true
+        if (this.monchi) {
+          this.monchi?.setGravity(0)
+          for (let i = 0; i < 25; i++) {
+            this.time.delayedCall(10 * i, () => ((rotate) => {
+              this.cameras.main.setRotation(rotate)
+            })(3.1415 + 3.1415 * (i) / 24))
+          }
+          this.monchi?.setFlipY(false)
+          this.monchi?.body?.setOffset(70, 50)
+          this.monchi?.setBounceY(0)
+
+        }
+      }
+    }
     const lose = () => {
       this.scene.restart()
       this.normalito = true
@@ -104,12 +116,12 @@ class Scene1 extends Phaser.Scene {
       }
     }
     const movingFloorsGrav = () => {
-      if(this.monchi?.body?.touching.down){
+      if (this.monchi?.body?.touching.down) {
         this.monchi?.setVelocityY(300)
       }
     }
     const movingFloorsGravRot = () => {
-      if(this.monchi?.body?.touching.down){
+      if (this.monchi?.body?.touching.down) {
         this.monchi?.setVelocityY(-300)
       }
     }
@@ -144,12 +156,12 @@ class Scene1 extends Phaser.Scene {
 
   update(this: Scene1) {
     /* Attach controls to player */
-    if (this.monchi){
-      if(this.monchi?.body?.touching.down){this.monchi.idle()}
-      else if(this.monchi?.body?.touching.right) {this.monchi?.setVelocityX(-10)}
-      else if(this.monchi?.body?.touching.left) {this.monchi?.setVelocityX(10)}
-      else if(this.monchi.body?.touching.up) {this.monchi?.setVelocityY(10)}
-      else {}
+    if (this.monchi) {
+      if (this.monchi?.body?.touching.down) { this.monchi.idle() }
+      else if (this.monchi?.body?.touching.right) { this.monchi?.setVelocityX(-10) }
+      else if (this.monchi?.body?.touching.left) { this.monchi?.setVelocityX(10) }
+      else if (this.monchi.body?.touching.up) { this.monchi?.setVelocityY(10) }
+      else { }
     }
     if (this.monchi && this.normalito) {
       this.monchi.checkMove(this.cursors)

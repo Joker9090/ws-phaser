@@ -1,5 +1,5 @@
 
-import Phaser from "phaser";
+import Phaser, { DOWN } from "phaser";
 import Player from "./assets/Player";
 import Mapa from "./maps/Mapa1";
 
@@ -29,7 +29,6 @@ class Scene1 extends Phaser.Scene {
   create(this: Scene1) {
     /* Controls */
     this.cursors = this.input.keyboard?.createCursorKeys()
-
     this.map = new Mapa(this);
     this.map.createMap();
     const { x, y } = this.map.startingPoint;
@@ -41,9 +40,11 @@ class Scene1 extends Phaser.Scene {
 
 
     const touch = () => {
-      if (this.monchi) this.monchi.idle()
+      if (this.monchi){this.monchi.idle()
     }
+  }
     const float = () => {
+      if(this.monchi?.body?.touching.down){
       if (this.monchi) {
         this.monchi.setBounce(0)
         this.monchi.setGravityY(-2000)
@@ -53,18 +54,19 @@ class Scene1 extends Phaser.Scene {
           this.monchi?.setBounceY(0)
         })
       }
-    }
+    }}
 
     const rotateCam = () => {
+      if(this.monchi?.body?.touching.down){
       this.normalito = false
       // let allowed = true
       if (this.canRot) {
         let rotation = 0
-        for (let i = 0; i < 13; i++) {
-          this.time.delayedCall(100 * i, () => ((rotate) => {
+        for (let i = 0; i < 25; i++) {
+          this.time.delayedCall(10 * i, () => ((rotate) => {
             this.cameras.main.setRotation(rotate)
-          })(3.1415 * i / 12))
-          if (i == 12) { this.canRot = false }
+          })(3.1415 * i / 24))
+          if (i == 24) { this.canRot = false }
         }
       }
       else {
@@ -72,21 +74,26 @@ class Scene1 extends Phaser.Scene {
         // this.cameras.main.setRotation(3.1415)
 
       }
-    }
-
+    }}
+    
 
     const noFloat = () => {
+      if(this.monchi?.body?.touching.down){
       this.normalito = true
       if (this.monchi) {
-        this.time.delayedCall(100, () => {
-          this.monchi?.setGravity(0)
-          this.cameras.main.setRotation(0)
-          this.monchi?.setFlipY(false)
-          this.monchi?.body?.setOffset(70, 50)
-          this.monchi?.setBounceY(0)
-        })
+        this.monchi?.setGravity(0)
+        for (let i = 0; i < 25; i++) {
+          this.time.delayedCall(10 * i, () => ((rotate) => {
+            this.cameras.main.setRotation(rotate)
+          })(3.1415 + 3.1415*(i)/24))
+        }
+        this.monchi?.setFlipY(false)
+        this.monchi?.body?.setOffset(70, 50)
+        this.monchi?.setBounceY(0)
+
       }
     }
+  }
     const lose = () => {
       this.scene.restart()
       this.normalito = true
@@ -97,10 +104,14 @@ class Scene1 extends Phaser.Scene {
       }
     }
     const movingFloorsGrav = () => {
-      this.monchi?.setVelocityY(300)
+      if(this.monchi?.body?.touching.down){
+        this.monchi?.setVelocityY(300)
+      }
     }
     const movingFloorsGravRot = () => {
-      this.monchi?.setVelocityY(-300)
+      if(this.monchi?.body?.touching.down){
+        this.monchi?.setVelocityY(-300)
+      }
     }
     const coinCollected = () => {
       if (this.map?.coin) {
@@ -110,6 +121,7 @@ class Scene1 extends Phaser.Scene {
         this.map.coin.clear(true)
       }
     }
+
     if (this.map.portal) this.map.portal.setTint(0xff0000)
     if (this.map.pisos) this.physics.add.collider(this.monchi, this.map.pisos, touch);
     if (this.map.pisos2) this.physics.add.collider(this.monchi, this.map.pisos2, float);
@@ -117,9 +129,9 @@ class Scene1 extends Phaser.Scene {
     if (this.map.coin) this.physics.add.overlap(this.monchi, this.map.coin, coinCollected);
     if (this.map.portal) this.physics.add.overlap(this.monchi, this.map.portal, win);
     if (this.map.pisos4) this.physics.add.collider(this.monchi, this.map.pisos4, noFloat);
-    // if (this.map.movingFloor) this.physics.add.collider(this.monchi, this.map.movingFloor, movingFloorsGrav);
-    if (this.map.movingFloor) this.physics.add.collider(this.monchi, this.map.movingFloor, rotateCam);
+    if (this.map.movingFloor) this.physics.add.collider(this.monchi, this.map.movingFloor, movingFloorsGrav);
     if (this.map.movingFloorRot) this.physics.add.collider(this.monchi, this.map.movingFloorRot, movingFloorsGravRot);
+    //if (this.map.movingFloor) this.physics.add.collider(this.monchi, this.map.movingFloor, rotateCam);
 
 
     this.physics.world.on('worldbounds', (body: Phaser.Physics.Arcade.Sprite, top: boolean, down: boolean, left: boolean, right: boolean) => {
@@ -132,6 +144,13 @@ class Scene1 extends Phaser.Scene {
 
   update(this: Scene1) {
     /* Attach controls to player */
+    if (this.monchi){
+      if(this.monchi?.body?.touching.down){this.monchi.idle()}
+      else if(this.monchi?.body?.touching.right) {this.monchi?.setVelocityX(-10)}
+      else if(this.monchi?.body?.touching.left) {this.monchi?.setVelocityX(10)}
+      else if(this.monchi.body?.touching.up) {this.monchi?.setVelocityY(10)}
+      else {}
+    }
     if (this.monchi && this.normalito) {
       this.monchi.checkMove(this.cursors)
       if (this.map) this.map.animateBackground(this.monchi)

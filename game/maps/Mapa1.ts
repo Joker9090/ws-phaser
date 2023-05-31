@@ -22,8 +22,8 @@ class Mapa {
   movingFloorRot?:  Phaser.Physics.Arcade.Group
 
   startingPoint = {
-    x: 500,
-    y: 800,
+    x: 500, //500
+    y: 800, //800
   };
   background: Phaser.GameObjects.Image
   constructor(scene: Phaser.Scene) {
@@ -100,9 +100,9 @@ class Mapa {
 
     const p5Config: FloorConfig = {
       texture: "plataforma2",
-      pos: { x: 1100, y: 800, },
+      pos: { x: 700, y: 1000, }, // 1100 800
       scale: { width: 0.1, height: 0.1, },
-      width: 2400,
+      width: 2400, 
       height: 100,
     }
     const p5 = new Floor(this.scene, p5Config, this.pisos)

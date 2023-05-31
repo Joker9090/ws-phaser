@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import LifeBar from "./LifeBar";
 
 class Player extends Phaser.Physics.Arcade.Sprite {
   isJumping: boolean = false
@@ -114,10 +115,13 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     this.scene.tweens.add({
       targets: this,
-      duration: 100,
+      duration: 150,
       repeat: 3,
       yoyo: true,
       alpha: 0.5,
+      onStart: () => {
+        //this.setTint(0xffffff);
+      },
       onComplete: () => {
         this.setAlpha(1);
       },
@@ -133,10 +137,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
   }
 
-  takeLife() {
+  takeLife(lifeBar: LifeBar) {
     //const moreLife = 10;
     if(this.life < 100) this.life += 10;
     if(this.life > 100) this.life = 100;
+    lifeBar.setBar(this.life);
   }
 
   idle() {

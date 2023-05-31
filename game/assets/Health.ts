@@ -17,15 +17,33 @@ class Health extends Phaser.Physics.Arcade.Sprite {
     this.scene = scene;
     //this.group = group;
     scene.add.existing(this)
+
+    scene.physics.add.existing(this)
+    this.setCollideWorldBounds(true);
+    this.setGravity(0);
+    
+    if(this.body) {
+      let body = (this.body as Phaser.Physics.Arcade.Body)
+      //body.onWorldBounds = true;
+      body.setImmovable(true)
+      body.setGravity(0,0);
+      //body.onWorldBounds = true;
+      this.body.setSize(25,35,false); // GOOOD!
+      body.setOffset(0,15)
+      
+      
+    }
+    
     //const s = scene.add.sprite(config.x,config.y,config.sprite);
     /**Darknes implementation */
-    
+
     this.createAnims(scene,config);
-    const heartGroup = scene.add.group(this);
-    heartGroup.createMultiple({
-      key:config.sprite,
-      quantity: config.quantity,
-    })
+    //const heartGroup = scene.add.group(this);
+    //heartGroup.createMultiple({
+    //  key:config.sprite,
+    //  quantity: config.quantity,
+    //})
+    //const heart = this.scene.add.sprite(config.x, config.y, config.sprite);
     //const antorchaFrames = scene.anims.generateFrameNumbers("antorcha", { start: 0, end: 3 });
 
     //const antorchaIdleFramesConfig = {

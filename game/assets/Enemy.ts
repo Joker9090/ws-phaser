@@ -24,7 +24,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     this.createAnims(scene,sprite);
 
-    sprite = sprite;
+    this.sprite = sprite;
     this.setScale(1)
     // Agregar el player al mundo visual
     scene.add.existing(this)
@@ -167,11 +167,12 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
 
   enemyAround(target:Player,maxRange: number) {
     const dx = this.x - target.x;
-    console.log("enemy around dx value: "+dx);
+    //console.log("enemy around dx value: "+dx);
     if (Math.abs(dx) < maxRange) {
       //enemy.setVelocityX(Math.sign(dx) * SPEED);
       this.isEnemyInFront = true;
-      console.log("enemy around state from skeleton: "+this.isEnemyInFront);
+      this.setVelocityX(0);
+      //console.log("enemy around state from skeleton: "+this.isEnemyInFront);
     } else if(Math.abs(dx) > maxRange){
       this.isEnemyInFront = false;
       //if(this.patrolConfig) {

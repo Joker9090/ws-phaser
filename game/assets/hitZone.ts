@@ -1,13 +1,20 @@
 import Phaser from "phaser";
 
 class hitZone extends Phaser.GameObjects.Rectangle {
-    constructor(scene:Phaser.Scene , x: number, y: number, width: number, height: number, fillColor: number, fillAlpha: number) {
+    group: Phaser.Physics.Arcade.Group;
+    constructor(scene:Phaser.Scene , x: number, y: number, width: number, height: number, fillColor: number, fillAlpha: number,group: Phaser.Physics.Arcade.Group) {
         super(scene,x,y,width,height,fillColor,fillAlpha);
 
         //this.scene.physics.add.existing(this);
         //this.scene.add(this);
         this.setActive(false);
         scene.add.existing(this)
+        this.group = group;
+        this.group.add(this);
+        if(this.body) {
+            const body = (this.body as Phaser.Physics.Arcade.Body)
+            body.setImmovable(true);
+        }
         
         //getBounds
 

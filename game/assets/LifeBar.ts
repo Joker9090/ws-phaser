@@ -59,5 +59,11 @@ class LifeBar extends Phaser.Physics.Arcade.Sprite {
     }
 
   }
+
+  setBar(value: number){
+    if(this.lifeMask){
+      this.lifeMask.x = value;
+    }
+  }
 }
 export default LifeBar

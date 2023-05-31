@@ -8,9 +8,10 @@ import UiModel from "../assets/UIModel";
 import LifeBar from "../assets/LifeBar";
 
 class Map2 {
-  scene: Phaser.Scene
-  mapElements?: Phaser.Physics.Arcade.Group
-  lifeBar?: LifeBar
+  scene: Phaser.Scene;
+  mapElements?: Phaser.Physics.Arcade.Group;
+  lifeBar?: LifeBar;
+  healths?: Health;
   //debugGraphics: Phaser.GameObjects.Graphics
   config: {
     w: number,
@@ -141,7 +142,7 @@ class Map2 {
 
     const HealthConfig = {
       x:150,
-      y: 750,
+      y: 950,
       sprite:"heartFullUI",
       quantity: 3,
     }
@@ -164,9 +165,12 @@ class Map2 {
     const lightOnAntorcha = this.scene.lights.addLight(newAntorcha.x,newAntorcha.y,200).setColor(0xdc9e7c).setIntensity(1);
     const lightOnAntorcha2 = this.scene.lights.addLight(newAntorcha2.x,newAntorcha2.y,100).setColor(0xdc9e7c).setIntensity(1);
 
-    const healths = this.scene.add.group(new Health(this.scene,HealthConfig),);
+    const healths = new Health(this.scene,HealthConfig);
+    //this.mapElements.add(healths);
+    this.healths = healths;
 
     this.lifeBar = new LifeBar(this.scene,LifeConfig);
+    //if(this.lifeBar && this.lifeBar.body)this.lifeBar.body.immovable= true;
 
     //const UI = new UiModel(this.scene,UIConfig,this.mapElements);
     //const nubes = new CloudGenerator(this.scene, CloudGeneratorConfig1);
@@ -229,7 +233,7 @@ class Map2 {
 
 
     
-    this.mapElements.addMultiple([newFloor,newFloor2,this.lifeBar])
+    this.mapElements.addMultiple([newFloor,newFloor2,this.lifeBar,this.healths])
 
     return this.mapElements; 
     

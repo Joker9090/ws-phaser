@@ -22,6 +22,7 @@ class Scene1 extends Phaser.Scene {
   swordHitBox!: hitZone;
   checkPoint!:{x:number, y:number}
   //UIGame?: Phaser.GameObjects.Container;
+  hitZoneGroup?: Phaser.Physics.Arcade.Group;
   UIGame?: Phaser.GameObjects.Image;
   constructor() {
     super({key: 'Scene1'})
@@ -128,17 +129,25 @@ class Scene1 extends Phaser.Scene {
       this.scene.restart()
     }
 
+    const takeHealth = () => {
+      if(this.map?.lifeBar){
+        this.monchi?.takeLife(this.map.lifeBar);
+        console.log("entro takeHealth");
+        //this.map.lifeBar.updateBar(this,10);
+      }
+    }
+
     this.physics.world.on('worldbounds', (body: Phaser.Physics.Arcade.Sprite,top: boolean,down: boolean,left: boolean,right: boolean) => {
       //if(down) lose()
       if(down && this.monchi && this.map && this.map.lifeBar) {
         this.monchi.receivedDamage(50);
-        this.map.lifeBar.updateBar(this,-50);
+        this.map.lifeBar.updateBar(this,-35);
         if(this.monchi.life <= 0) lose();
         else checkPoint(this.monchi);
       }
     },this);
-
-    this.swordHitBox = new hitZone(this,100,100,32,64,0xffffff,0.5); //as unknown as Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
+    const hitZoneGroup = this.add.group() as Phaser.Physics.Arcade.Group;
+    this.swordHitBox = new hitZone(this,100,100,32,64,0xffffff,0.5,hitZoneGroup); //as unknown as Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
     //this.swordHitBox = this.physics.add.existing(this.swordHitBox);
     //this.matter.add.gameObject(this.swordHitBox);
     //if(this.swordHitBox.body) {
@@ -162,6 +171,7 @@ class Scene1 extends Phaser.Scene {
     this.physics.add.collider(this.monchi, floor, checkFloor);
     this.physics.add.collider(this.skeleton, floor);
     this.physics.add.overlap(this.swordHitBox,this.skeleton, hitPlayer);// overlaps de grupos de enemigos??
+    if(this.map.healths)this.physics.add.collider(this.monchi, this.map.healths, takeHealth);
 
     this.skeleton.patrolConfig = skeletonOnePatrol;
     this.skeleton.patrol(skeletonOnePatrol);

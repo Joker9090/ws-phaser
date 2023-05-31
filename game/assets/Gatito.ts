@@ -7,7 +7,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     this.createAnims(scene);
 
-    this.setScale(0.7)
+    this.setScale(0.5)
     // Agregar el player al mundo visual
     scene.add.existing(this)
     // Agregar el player al mundo fisico
@@ -17,18 +17,21 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     if(this.body) {
       const body = (this.body as Phaser.Physics.Arcade.Body)
       body.onWorldBounds = true;
-      //tamaño que cropea la img con fisicas
-      this.body.setSize(35,90,true);
-      this.setOffset(30,10);
+      //tamaño que cropea la img con fisicas monchi gatito
+      this.body.setSize(50,160,true);
+      this.setOffset(60,-5);
     }
   }
 
   createAnims(scene: Phaser.Scene) {
     
-    const monchiIddleFrames = scene.anims.generateFrameNumbers("character", { start: 40, end: 43 })
-    const monchiJumpFrames = scene.anims.generateFrameNumbers("character", { start: 48, end: 55 })
-    const monchiMoveFrames = scene.anims.generateFrameNumbers("character", { start: 80, end: 85 })
+    // const monchiMoveFrames = scene.anims.generateFrameNumbers("character", { frames: [0, 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1] })
     
+    // monchi gatito
+    const monchiJumpFrames = scene.anims.generateFrameNumbers("character", { start: 28, end: 44 })
+    const monchiMoveFrames = scene.anims.generateFrameNumbers("character", { start: 0, end: 19 })
+    const monchiIddleFrames = scene.anims.generateFrameNumbers("character", { start: 48, end: 57 })
+
     const monchiJumpConfig = {
       key: "monchiJump",
       frames: monchiJumpFrames,
@@ -78,8 +81,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       if (left.isDown) {
         this.setVelocityX(-160);
         this.setFlipX(true)
-        //this.setOffset(40,-5);
-        this.setOffset(30,10);
+        this.setOffset(40,-5);
 
         /* Play animation */
         if(!this.isJumping) this.anims.play('monchiMove', true);
@@ -89,8 +91,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       else if (right.isDown) {
         this.setVelocityX(160);
         this.setFlipX(false)
-        //this.setOffset(60,-5);
-        this.setOffset(30,10);
+        this.setOffset(60,-5);
 
         /* Play animation */
         if(!this.isJumping) this.anims.play('monchiMove', true);

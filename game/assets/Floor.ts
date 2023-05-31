@@ -23,14 +23,14 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
   isJumping = false;
   scene: Phaser.Scene;
   group: Phaser.Physics.Arcade.Group;
-  constructor(scene: Phaser.Scene, config: FloorConfig, group: Phaser.Physics.Arcade.Group,  frame?: string | number | undefined, velocityX?: number, velocityY?: number) {
+  constructor(scene: Phaser.Scene, config: FloorConfig, group: Phaser.Physics.Arcade.Group,  frame?: string | number | undefined) {
     super(scene,config.pos.x,config.pos.y,config.texture,config.velocityX)
     this.scene = scene;
     this.group = group;
     const width = config.width ?? 230
     const height = config.height ?? 40;
+    const velocityX = config.velocityX ?? 25
     const fix = config.fix ?? 25
-    const setVelocityX = config.velocityX
 
     if(config.scale) {
       this.setScale(config.scale.width, config.scale.height)
@@ -43,6 +43,7 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
     scene.add.existing(this);
     
     this.setSize(width,height).setOffset(fix,30)
+    this.setVelocityX(velocityX)
     
     this.group.add(this)
 

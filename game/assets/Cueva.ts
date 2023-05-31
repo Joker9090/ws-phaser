@@ -11,6 +11,8 @@ class Cueva extends Phaser.Physics.Arcade.Sprite {
 
     //this.setCollideWorldBounds(true);
     this.setDepth(8);
+    this.setSize(230, 40);
+    this.setOffset(30,30);
     this.sprite = scene.add.sprite(x+10,y-70,textureB).setScale(0.2).setDepth(9)
   }
 }

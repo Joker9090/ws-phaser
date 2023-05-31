@@ -15,8 +15,14 @@ export default function Home() {
     //Load phaser async when windows is ready
     import("phaser").then(setPhaser) 
     //Load scenes async when windows is ready
-    import("@/game/Scene1").then((scene1) => setScenes([scene1.default]))
-    //import("@/game/Scene2").then((scene2) => setScenes([scene2.default]))
+    //Asi la llamamos antes, de a una
+    //import("@/game/Scene1").then((scene1) => setScenes([scene1.default]))
+    
+    Promise.all([
+      import("@/game/SceneLoader"),
+      import("@/game/Scene1")]).then((scenes) => {
+      setScenes(scenes.map(s => s.default))
+    })
   }, [])
  
   React.useEffect(() => {
@@ -27,6 +33,7 @@ export default function Home() {
         width: "100%",
         height: "100%",
         parent: "game-container",
+        //pixelArt: true,
         scale: {
           mode: window.Phaser.Scale.FIT
         },
@@ -35,7 +42,7 @@ export default function Home() {
           default: "arcade",
           arcade: {
             overlapBias: 1000,
-            gravity: { y: 900 },
+            gravity: { y: 800 },
             // el debug muestra los bordes de la img
             debug: true
           }

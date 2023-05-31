@@ -9,6 +9,7 @@ class Scene1 extends Phaser.Scene {
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys
   diamonds?: any
   floor?: any
+  saw?: Phaser.GameObjects.Image
   // goal?: Phaser.GameObjects.Sprite
   score?: any;
   scoreText?: any
@@ -36,14 +37,11 @@ class Scene1 extends Phaser.Scene {
     this.load.image("close", "/game/close.png")
     this.load.image("spikes", "/game/spikes.png")
     this.load.image("fDspikes", "/game/faceDownSpikes.png")
-
-
   }
 
   collectStar(star: any) {
     star.destroy()
-
-    this.speed += 1500
+    this.speed -= 800
     console.log(this.speed)
 
   }
@@ -51,40 +49,20 @@ class Scene1 extends Phaser.Scene {
   lose() {
     this.scene.restart()
   }
-  hitSaw() {
-    console.log("lose", this.touchable)
-    if (this.currentLife && this.touchable === true) {
-      this.touchable = false
-      this.berserk?.setAlpha(0.5)
-      this.currentLife -= 30
-      console.log(this.currentLife, "vida")
-      this.berserk?.setVelocityY(-100)
-      if (this.currentLife <= 0) {
-        this.lose()
-        this.currentLife = 100
-      }
 
-      setTimeout(() => {
-        this.touchable = true
-        this.berserk?.setAlpha(1)
-      }, 400)
-    }
-
-
-  }
 
   create(this: Scene1) {
     // window.addEventListener('resize', this.resize);
     // this.resize();
     this.map = new Map0(this, this.speed)
     this.add.image(1000, 400, "background").setScale(6)
-
+    this.speed = 2000
     let x = 150
     let y = 620
 
 
     const { width, height } = this.game.canvas
-    const [floor, diamonds, saws] = this.map.createMap("plataforma1", "plataforma2", "plataforma3", "diamond", "saw", "spikes","fDspikes")
+    const [floor, diamonds, saws] = this.map.createMap(this.speed, "plataforma1", "plataforma2", "plataforma3", "diamond", "saw", "spikes", "fDspikes")
     this.diamonds = diamonds;
     this.floor = floor
     this.berserk = new player(this, x, y, "run", 0)
@@ -103,15 +81,35 @@ class Scene1 extends Phaser.Scene {
 
 
 
-    this.life = this.add.tileSprite(width / 7, height / 30, 0, 0, "life").setOrigin(1, 0.5).setScrollFactor(0).setScale(1.2)
-    this.lifeFilling = this.add.tileSprite(width / 7, height/20, -0, 0, "lifeFilling").setOrigin(1, 0.5).setScrollFactor(0).setScale(1.2)
+    this.life = this.add.tileSprite(width / 7, height / 22, 0, 0, "life").setOrigin(1, 0.5).setScrollFactor(0).setScale(1.2)
+    this.lifeFilling = this.add.tileSprite(width / 7, height / 16, -0, 0, "lifeFilling").setOrigin(1, 0.5).setScrollFactor(0).setScale(1.2)
     // this.lifeFilling.setCrop(0, 0, 0, 140)
     const graphics = this.add.graphics()
 
-   
+
 
   }
+  hitSaw() {
+    console.log("lose", this.touchable)
+    if (this.currentLife && this.touchable === true) {
+      this.touchable = false
+      this.berserk?.setAlpha(0.5)
+      this.currentLife -= 70
+      console.log(this.currentLife, "vida")
+      this.berserk?.setVelocityY(-100)
+      if (this.currentLife <= 0) {
+        this.lose()
+        this.currentLife = 100
+      }
 
+      setTimeout(() => {
+        this.touchable = true
+        this.berserk?.setAlpha(1)
+      }, 400)
+    }
+
+
+  }
 
 
 
@@ -129,7 +127,7 @@ class Scene1 extends Phaser.Scene {
     // })
 
 
- 
+
 
 
     if (this.berserk) {

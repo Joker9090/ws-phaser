@@ -5,7 +5,6 @@ import spikes, { spikesConfig } from "../assets/Spikes";
 class Map0 {
   scene: Phaser.Scene
   debugGraphics: Phaser.GameObjects.Graphics
-  speed: number
   spikes?: any
   fDSpikes?: any
   config: {
@@ -17,7 +16,6 @@ class Map0 {
     }
   constructor(scene: Phaser.Scene, speed: number) {
     this.scene = scene
-    this.speed = speed
     this.scene.physics.world.setBounds(0, 0, this.config.w, this.config.h)
     /* Debug */
     this.debugGraphics = this.scene.add.graphics();
@@ -26,7 +24,7 @@ class Map0 {
     /* Debug */
 
   }
-  createMap(plataforma1: string, plataforma2: string, plataforma3: string, diamond: string, saw: string, spikestxt: string, fDSpikestxt: string) {
+  createMap(speed: number, plataforma1: string, plataforma2: string, plataforma3: string, diamond: string, saw: string, spikestxt: string, fDSpikestxt: string) {
     var starX = Phaser.Math.Between(400, 1100);
     var starY = Phaser.Math.Between(350, 700)
     const floor = this.scene.physics.add.group({ allowGravity: false, immovable: true })
@@ -67,9 +65,9 @@ class Map0 {
 
     this.scene.tweens.add({
       targets: s1,
-      // x: 2200,
-      duration: this.speed,
-      // yoyo: true,
+      x: 2200,
+      duration: speed,
+      yoyo: true,
       repeatDelay: 200,
       repeat: -1,
       // ease: "circularInOut",
@@ -97,7 +95,7 @@ class Map0 {
       height: 100,
       large: 10,
       texture: spikestxt,
-      pos: { x: 1650, y: 1030, },
+      pos: { x: 1680, y: 1030, },
       scale: { width: 1, height: 1, }
     }
     const spikes2 = new spikes(this.scene, sp2Config, this.spikes)

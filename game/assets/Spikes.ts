@@ -5,7 +5,7 @@ export type spikeTween = Phaser.Tweens.Tween | Phaser.Types.Tweens.TweenChainBui
 
 export type spikesConfig = {
     texture: string
-    width: number ,
+    width: number,
     height: number,
     fix?: number,
     pos: {
@@ -17,7 +17,8 @@ export type spikesConfig = {
         height: number,
     },
     large: number,
-    quantity?: number
+    quantity?: number,
+    flip?: boolean
 }
 // Scene in class
 class spikes extends Phaser.GameObjects.Container {
@@ -54,6 +55,9 @@ class spikes extends Phaser.GameObjects.Container {
 
         }
 
+        if (config.flip) {
+            this.setScale(-1)
+        }
 
     }
 }

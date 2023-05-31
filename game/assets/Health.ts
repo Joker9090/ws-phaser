@@ -85,13 +85,13 @@ class Health extends Phaser.Physics.Arcade.Sprite {
     const HealthFrames = scene.anims.generateFrameNumbers(config.sprite, { start: 0, end: 9 });
 
     const HealthIdleFramesConfig = {
-      key: "HealthIdleFrames",
+      key: `${config.sprite}IdleFrames`,
       frames: HealthFrames,
       frameRate: 9,
       repeat: -1,
     }
     scene.anims.create(HealthIdleFramesConfig)
-    this.play("HealthIdleFrames");
+    this.play(`${config.sprite}IdleFrames`);
 
     /*     scene.tweens.add({
             targets: this,

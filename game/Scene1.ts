@@ -7,15 +7,23 @@ import Enemy, { PatrolConfig } from "./assets/Enemy";
 import CloudGenerator from "./assets/CloudGenerator";
 import Antorcha from "./assets/Antorcha";
 import GameUI from "./assets/GameUI";
+import UiModel from "./assets/UIModel";
+import hitZone from "./assets/hitZone";
+
 // Scene in class
 class Scene1 extends Phaser.Scene {
   monchi?: Player;
   skeleton?: Enemy;
-  map?: Map0;
+  map?: Map2;
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   attackZone?: Phaser.GameObjects.Zone;
   lightOnPlayer?:Phaser.GameObjects.Light;
-  swordHitBox!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
+  swordHitBox!: hitZone;
+  //UIGame?: Phaser.GameObjects.Container;
+  UIGame?: Phaser.GameObjects.Image;
+  constructor() {
+    super({key: 'Scene1'})
+  }
  
 
   preload(this: Scene1) {
@@ -24,22 +32,22 @@ class Scene1 extends Phaser.Scene {
     this.load.spritesheet("skeleton", "/game/skeleton.png", { frameWidth: 86, frameHeight: 86});
     this.load.spritesheet("antorcha", "/game/Antorcha.png", { frameWidth: 128, frameHeight: 128});
     this.load.spritesheet("heartFullUI", "/game/UI/heart.png", { frameWidth: 32, frameHeight: 32});
-    this.load.image("plataformaA", "/game/platform1.png");
-    this.load.image("plataformaB", "/game/platform1B.png");
-    this.load.image("particleFire", "/game/particleFire.png");
-    this.load.image("islandA", "/game/islandA.png");
-    this.load.image("islandB", "/game/islandB.png");
-    this.load.image("islandC", "/game/islandC.png");
-    this.load.image("lava1", "/game/lava1.png");
-    this.load.image("lava2", "/game/lava2.png");
-    this.load.image("tile1", "/game/tile1.png");
-    this.load.image("tile3", "/game/tile3.png");
-    this.load.image("sky", "/game/background.png");
-    this.load.image("nubee","/game/nube.png");
-    this.load.image("neblina","/game/myst.png");
-    this.load.image("crystal" ,"/game/Yellow_crystal1.png");
-    this.load.image("tree","/game/tree.png");
-    this.load.image("pisoA","/game/pisoA.png");
+    //this.load.image("plataformaA", "/game/platform1.png");
+    //this.load.image("plataformaB", "/game/platform1B.png");
+    //this.load.image("particleFire", "/game/particleFire.png");
+    //this.load.image("islandA", "/game/islandA.png");
+    //this.load.image("islandB", "/game/islandB.png");
+    //this.load.image("islandC", "/game/islandC.png");
+    //this.load.image("lava1", "/game/lava1.png");
+    //this.load.image("lava2", "/game/lava2.png");
+    //this.load.image("tile1", "/game/tile1.png");
+    //this.load.image("tile3", "/game/tile3.png");
+    //this.load.image("sky", "/game/background.png");
+    //this.load.image("nubee","/game/nube.png");
+    //this.load.image("neblina","/game/myst.png");
+    //this.load.image("crystal" ,"/game/Yellow_crystal1.png");
+    //this.load.image("tree","/game/tree.png");
+    //this.load.image("pisoA","/game/pisoA.png");
     //this.load.image("this.player.setVelocityY(-330);plataformaB", "/game/platform1B.png");
   }
 
@@ -60,10 +68,17 @@ class Scene1 extends Phaser.Scene {
 
 
     /**Darkness implementation */
-    this.lights.enable().setAmbientColor(0x333333);
-    this.lightOnPlayer = this.lights.addLight(this.monchi.x, this.monchi.y, 200).setColor(0xffffff).setIntensity(1);
+    this.lights.enable().setAmbientColor(0x000000); //333333 gray
+    this.lightOnPlayer = this.lights.addLight(this.monchi.x, this.monchi.y, 190).setColor(0xffffff).setIntensity(1.2); // cambiar luces en bbase a la dificultad elegida
+
+    const UIConfig = {
+      textureA: "healthBarWithAlpha",
+      sceneWidth: Number(this.game.config.width) / 2,
+      sceneHeight: Number(this.game.config.height) / 2,
+    }
 
 
+    
 
     const checkFloor = (a: Player,b: Phaser.Physics.Arcade.Sprite ) => {
       //if(b.hasForce) a.setPosition(b.x,a.y);
@@ -86,12 +101,19 @@ class Scene1 extends Phaser.Scene {
       }
     }
 
-
-    this.cameras.main.startFollow(this.monchi);
-    this.cameras.main.setZoom(1.5);
+    this.cameras.main.setBounds(0, 0, 3000, 1048);//tamaño del esceneario para poner limites
+    //this.physics.world.setBounds(0, 0, 3000, 1048);
+    this.cameras.main.startFollow(this.monchi,true,0.5,0.5);//seguimiento del personaje, apartir de q pixeles alrededor
+    this.cameras.main.setZoom(2);//zoom en la escene sobre lo que este apuntando la camara 3 , 0.5
 
     this.cursors = this.input.keyboard?.createCursorKeys()
     //const keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
+
+
+    const win = () => {
+      //this.scene.start("SceneLoader",{level: actualLevel})
+    }
 
 
     const lose = () => {
@@ -102,11 +124,12 @@ class Scene1 extends Phaser.Scene {
       if(down) lose()
     },this);
 
-    this.swordHitBox = this.add.rectangle(100,100,32,64,0xffffff,0.5) as unknown as Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
-    this.physics.add.existing(this.swordHitBox);
-    this.swordHitBox.body.setAllowGravity(false);
+    this.swordHitBox = new hitZone(this,100,100,32,64,0xffffff,0.5); //as unknown as Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
+    //this.physics.add.existing(this.swordHitBox);
     
-    console.log(this.swordHitBox.body);
+    //if(this.swordHitBox.body)this.swordHitBox.body.setAllowGravity(false);
+    if(this.map.lifeBar)this.map.lifeBar.updateBar(this,-20);
+    
 
     const skeletonOnePatrol: PatrolConfig = {
       x : 160,
@@ -162,21 +185,22 @@ class Scene1 extends Phaser.Scene {
         //this.monchi.on(Phaser.Animations.Events.ANIMATION_UPDATE, (anim:Phaser.Animations.Animation, frame:Phaser.Animations.AnimationFrame) => {
         //  
         //})
-        if(this.monchi.flipX) { // esta girado?
-          this.swordHitBox.x = this.monchi.x - this.monchi.width * 0.25;
+        //if(this.monchi.flipX) { // esta girado?
+          //this.swordHitBox.x = this.monchi.x - this.monchi.width * 0.25;
           //this.swordHitBox.setActive(false);  
-        }else {
-          this.swordHitBox.x = this.monchi.x + this.monchi.width * 0.25;
-          this.swordHitBox.y = this.monchi.y;
+        //}else {
+          //this.swordHitBox.x = this.monchi.x + this.monchi.width * 0.25;
+          //this.swordHitBox.y = this.monchi.y;
           //this.swordHitBox.setActive(false);
-        }
+        //}
+        this.swordHitBox.attackBox((this.monchi.x +10),(this.monchi.y),this.monchi.flipX)
       }
 
       
       
     }
     if(this.skeleton && this.monchi && this.skeleton.Onstate !== "dead") {
-      console.log("skeleton update");
+      //console.log("skeleton update");
       this.skeleton.enemyAround(this.monchi,50);
       if(!this.skeleton.isEnemyInFront && !this.skeleton.isPatrol && this.skeleton.patrolConfig && this.skeleton.patrolConfig != null && this.skeleton.patrolConfig != undefined) {
         this.skeleton.patrol(this.skeleton.patrolConfig);

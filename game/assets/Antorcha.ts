@@ -80,13 +80,13 @@ class Antorcha extends Phaser.Physics.Arcade.Sprite {
     const antorchaFrames = scene.anims.generateFrameNumbers(config.sprite, { start: 0, end: 3 });
 
     const antorchaIdleFramesConfig = {
-      key: "antorchaIdleFrames",
+      key: `${config.sprite}IdleFrames`,
       frames: antorchaFrames,
       frameRate: 8,
       repeat: -1,
     }
     scene.anims.create(antorchaIdleFramesConfig)
-    this.play("antorchaIdleFrames");
+    this.play(`${config.sprite}IdleFrames`);
 
     /*     scene.tweens.add({
             targets: this,

@@ -6,6 +6,7 @@ class hitZone extends Phaser.GameObjects.Rectangle {
 
         this.scene.physics.add.existing(this);
         this.setActive(false);
+        
         //getBounds
 
     }
@@ -37,3 +38,4 @@ class hitZone extends Phaser.GameObjects.Rectangle {
         
     }
 }
+export default hitZone;

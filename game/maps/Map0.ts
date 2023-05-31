@@ -80,7 +80,7 @@ class Map0 {
       ease: 'linear'
     });
 
-    p6.hasForce = true;
+    //p6.hasForce = true;
 
 
 

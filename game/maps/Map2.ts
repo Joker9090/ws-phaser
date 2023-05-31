@@ -4,10 +4,13 @@ import CloudGenerator from "../assets/CloudGenerator";
 import LargeFloorIsland from "../assets/LargeFloorIsland";
 import Antorcha, { AntorchaConfig } from "../assets/Antorcha";
 import Health from "../assets/Health";
+import UiModel from "../assets/UIModel";
+import LifeBar from "../assets/LifeBar";
 
 class Map2 {
   scene: Phaser.Scene
   pisos?: Phaser.Physics.Arcade.Group
+  lifeBar?: LifeBar
   //debugGraphics: Phaser.GameObjects.Graphics
   config: {
     w: number,
@@ -142,12 +145,30 @@ class Map2 {
       sprite:"heartFullUI",
       quantity: 3,
     }
+
+    const UIConfig = {
+      textureA: "heartFullUI",
+      sceneWidth: 800,
+      sceneHeight: 600,
+      large: 3,
+    }
+
+    const LifeConfig = {
+      x:this.scene.cameras.main.width / 2,
+      y:this.scene.cameras.main.height / 2,
+      sprite:"greenBar",
+      spriteContainer: "healthBarWithAlpha",
+    }
     const newAntorcha = new Antorcha(this.scene,AntorchaConfig);
     const newAntorcha2 = new Antorcha(this.scene,AntorchaConfig2);
-    const lightOnAntorcha = this.scene.lights.addLight(newAntorcha.x,newAntorcha.y,200).setColor(0xdc9e7c).setIntensity(0.9);
-    const lightOnAntorcha2 = this.scene.lights.addLight(newAntorcha2.x,newAntorcha2.y,100).setColor(0xdc9e7c).setIntensity(0.9);
+    const lightOnAntorcha = this.scene.lights.addLight(newAntorcha.x,newAntorcha.y,200).setColor(0xdc9e7c).setIntensity(1);
+    const lightOnAntorcha2 = this.scene.lights.addLight(newAntorcha2.x,newAntorcha2.y,100).setColor(0xdc9e7c).setIntensity(1);
 
     const healths = this.scene.add.group(new Health(this.scene,HealthConfig),);
+
+    this.lifeBar = new LifeBar(this.scene,LifeConfig);
+
+    //const UI = new UiModel(this.scene,UIConfig,this.pisos);
     //const nubes = new CloudGenerator(this.scene, CloudGeneratorConfig1);
     //nubes.start();
     const newLava = new LargeFloor(this.scene,LargeFloorConfigg3,this.pisos)
@@ -206,8 +227,9 @@ class Map2 {
     
 
 
+
     
-    this.pisos.addMultiple([newFloor,newFloor2])
+    this.pisos.addMultiple([newFloor,newFloor2,this.lifeBar])
 
     return this.pisos; 
     

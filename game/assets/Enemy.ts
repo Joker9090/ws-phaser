@@ -17,12 +17,14 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
   patrolConfig?: PatrolConfig;
   life:number = 3;
   Onstate?: string = "pasive";
+  sprite: string = '';
 
-  constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame: number,life?: number) {
-    super(scene, x, y, texture, frame)
+  constructor(scene: Phaser.Scene, x: number, y: number, sprite: string, frame: number,life?: number) {
+    super(scene, x, y, sprite, frame)
 
-    this.createAnims(scene);
+    this.createAnims(scene,sprite);
 
+    sprite = sprite;
     this.setScale(1)
     // Agregar el player al mundo visual
     scene.add.existing(this)
@@ -41,41 +43,41 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
-  createAnims(scene: Phaser.Scene) {
+  createAnims(scene: Phaser.Scene, sprite: string) {
 
-    const skeletonIdleFrames = scene.anims.generateFrameNumbers("skeleton",{start:0 , end: 5});
+    const skeletonIdleFrames = scene.anims.generateFrameNumbers(sprite,{start:0 , end: 5});
     //const skeletonWalkFrames = scene.anims.generateFrameNumbers("skeleton", {frames: [6,7,8,9,10,11]});
-    const skeletonWalkFrames = scene.anims.generateFrameNumbers("skeleton", {start: 6, end:11});
-    const skeletonMoveFrames = scene.anims.generateFrameNumbers("skeleton", { start:10 , end: 15 });
-    const skeletonDeadFrames = scene.anims.generateFrameNumbers("skeleton",{start:18 , end: 23});
-    const skeletonDmgFrames = scene.anims.generateFrameNumbers("skeleton",{start:24 , end: 25});
-    const skeletonDefFrames = scene.anims.generateFrameNumbers("skeleton",{start:30 , end: 34});
-    const skeletonAttackFrames = scene.anims.generateFrameNumbers("skeleton",{start:36 , end: 41});
-    const skeletonDeadFrame = scene.anims.generateFrameNumbers("skeleton",{frames:[22]})
+    const skeletonWalkFrames = scene.anims.generateFrameNumbers(sprite, {start: 6, end:11});
+    const skeletonMoveFrames = scene.anims.generateFrameNumbers(sprite, { start:10 , end: 15 });
+    const skeletonDeadFrames = scene.anims.generateFrameNumbers(sprite,{start:18 , end: 23});
+    const skeletonDmgFrames = scene.anims.generateFrameNumbers(sprite,{start:24 , end: 25});
+    const skeletonDefFrames = scene.anims.generateFrameNumbers(sprite,{start:30 , end: 34});
+    const skeletonAttackFrames = scene.anims.generateFrameNumbers(sprite,{start:36 , end: 41});
+    const skeletonDeadFrame = scene.anims.generateFrameNumbers(sprite,{frames:[22]})
 
     const skeletonWalkConfig = {
-      key: "skeletonWalk",
+      key: `${sprite}Walk`,
       frames: skeletonWalkFrames,
       frameRate: 10,
       repeat: -1,
     }
 
     const skeletonMoveConfig = {
-      key: "skeletonMove",
+      key: `${sprite}Move`,
       frames: skeletonMoveFrames,
       frameRate: 10,
       repeat: -1,
     }
 
     const skeletonIdleFramesConfig = {
-      key: "skeletonIdleFrames",
+      key: `${sprite}IdleFrames`,
       frames: skeletonIdleFrames,
       frameRate: 3,
       repeat: -1,
     }
 
     const skeletonDeadFramesConfig = {
-      key: "skeletonDeadFrames",
+      key: `${sprite}DeadFrames`,
       frames: skeletonDeadFrames,
       frameRate: 15,
       //duration:500,
@@ -83,7 +85,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
 
     const skeletonDeadFrameConfig = {
-      key:"skeletonDeadFrame",
+      key:`${sprite}DeadFrame`,
       frames: skeletonDeadFrame,
       //frameRate:15,
       //repeat: -1,
@@ -91,21 +93,21 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
 
     const skeletonDmgFramesConfig = {
-      key: "skeletonDmgFrames",
+      key: `${sprite}DmgFrames`,
       frames: skeletonDmgFrames,
       frameRate: 10,
       repeat: 0,
     }
 
     const skeletonDefFramesConfig = {
-      key: "skeletonDefFrames",
+      key: `${sprite}DefFrames`,
       frames: skeletonDefFrames,
       frameRate: 10,
       repeat: 0,
     }
 
     const skeletonAttackFramesConfig = {
-      key: "skeletonAttackFrames",
+      key: `${sprite}AttackFrames`,
       frames: skeletonAttackFrames,
       frameRate: 15,
       repeat: 0,
@@ -120,11 +122,9 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     scene.anims.create(skeletonAttackFramesConfig);
     scene.anims.create(skeletonDeadFrameConfig);
 
-    if(this.Onstate !== "dead"){
-      this.play("skeletonIdleFrames");
-    } else if(this.Onstate === "dead") {
-      this.play("skeletonDeadFrame");
-    }
+    
+    //this.play(`${sprite}IdleFrames`);
+ 
     
   }
 
@@ -133,13 +133,13 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     this.isAttacking = false;
     //this.setVelocityX(0);
     //this.setVelocityY(0);
-    this.play("skeletonIdleFrames");
+    this.play(`${this.sprite}IdleFrames`);
   }
 
   jump() {
     if(!this.isJumping) {
       this.isJumping = true;
-      this.play("skeletonWalk",false);
+      this.play(`${this.sprite}Walk`,false);
       this.setVelocityY(-730);
       this.scene.time.delayedCall(600, this.idle, [], this);
     }
@@ -183,14 +183,14 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
   }
 
   corposeStay(){
-    this.anims.play('skeletonDeadFrame', true);
+    this.anims.play(`${this.sprite}DeadFrame`, true);
   }
 
 
 
   dead(){
     this.setVelocityX(0);
-    this.anims.play('skeletonDeadFrames', true);
+    this.anims.play(`${this.sprite}DeadFrames`, true);
     this.Onstate = "dead";
   }
   getRandomIntInclusive(min:number, max:number) {
@@ -230,7 +230,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
             //_patrolConfig.flip = true;
             const newPatrolConfig = _patrolConfig;
             newPatrolConfig.flip = true;
-            this.anims.play('skeletonWalk', true);
+            this.anims.play(`${this.sprite}Walk`, true);
             this.scene.time.delayedCall(_patrolConfig.delay, this.patrol, [newPatrolConfig], this);
           }else {
             this.setVelocityX(-_patrolConfig.x);
@@ -238,7 +238,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
             //_patrolConfig.flip = true;
             const newPatrolConfig = _patrolConfig;
             newPatrolConfig.flip = false;
-            this.anims.play('skeletonWalk', true);
+            this.anims.play(`${this.sprite}Walk`, true);
             this.scene.time.delayedCall(_patrolConfig.delay, this.patrol, [newPatrolConfig], this);
           }
         } else {
@@ -247,7 +247,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
   
         }
       }else {
-  
+        this.anims.play(`${this.sprite}Walk`, true);
       }
 
     }
@@ -259,7 +259,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
       this.setVelocityX(0);
       this.flipX = !this.flipX;
       //this.setVelocityY(-730);
-      this.anims.play('skeletonAttackFrames', true);
+      this.anims.play(`${this.sprite}AttackFrames`, true);
       this.scene.time.delayedCall(600, this.idle, [], this);
     //}
   }
@@ -276,7 +276,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.setFlipX(true)
 
         /* Play animation */
-        if(!this.isJumping) this.anims.play('skeletonMove', true);
+        if(!this.isJumping) this.anims.play(`${this.sprite}Move`, true);
       }
 
       /* Right*/
@@ -285,7 +285,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.setFlipX(false)
 
         /* Play animation */
-        if(!this.isJumping) this.anims.play('skeletonMove', true);
+        if(!this.isJumping) this.anims.play(`${this.sprite}Move`, true);
       }else if (space.isDown) {
         this.attack();
 
@@ -294,7 +294,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
       /* Nothing */
       else {
         this.setVelocityX(0)
-        this.anims.play("skeletonIdleFrames",true);
+        this.anims.play(`${this.sprite}IdleFrames`,true);
       }
 
       /* Up / Juamp */

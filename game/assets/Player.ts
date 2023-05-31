@@ -3,10 +3,13 @@ import Phaser from "phaser";
 class Player extends Phaser.Physics.Arcade.Sprite {
   isJumping: boolean = false
   isAttacking: boolean = false
-  constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame: number) {
-    super(scene, x, y, texture, frame)
+  sprite: string = '';
+  life: number = 100;
+  constructor(scene: Phaser.Scene, x: number, y: number, sprite: string, frame: number) {
+    super(scene, x, y, sprite, frame)
 
-    this.createAnims(scene);
+    this.createAnims(scene,sprite);
+    this.sprite = sprite;
 
     this.setScale(1)
     // Agregar el player al mundo visual
@@ -26,61 +29,62 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
-  createAnims(scene: Phaser.Scene) {
+  createAnims(scene: Phaser.Scene,sprite:string ) {
 
-    const knightIdleFrames = scene.anims.generateFrameNumbers("knight", { start: 0, end: 3 });
+    const knightIdleFrames = scene.anims.generateFrameNumbers(sprite, { start: 0, end: 3 });
     //const knightJumpFrames = scene.anims.generateFrameNumbers("knight", {frames: [6,7,8,9,10,11]});
-    const knightJumpFrames = scene.anims.generateFrameNumbers("knight", { start: 6, end: 11 });
-    const knightMoveFrames = scene.anims.generateFrameNumbers("knight", { start: 10, end: 15 });
-    const knightDeadFrames = scene.anims.generateFrameNumbers("knight", { start: 18, end: 23 });
-    const knightDmgFrames = scene.anims.generateFrameNumbers("knight", { start: 19, end: 20 });
-    const knightDefFrames = scene.anims.generateFrameNumbers("knight", { start: 24, end: 28 });
-    const knightAttackFrames = scene.anims.generateFrameNumbers("knight", { start: 30, end: 34 });
+    const knightJumpFrames = scene.anims.generateFrameNumbers(sprite, { start: 5, end: 10 });
+    const knightMoveFrames = scene.anims.generateFrameNumbers(sprite, { start: 10, end: 14 });
+    const knightDeadFrames = scene.anims.generateFrameNumbers(sprite, { start: 18, end: 23 });
+    const knightDmgFrames = scene.anims.generateFrameNumbers(sprite, { start: 19, end: 20 });
+    const knightDefFrames = scene.anims.generateFrameNumbers(sprite, { start: 24, end: 28 });
+    const knightAttackFrames = scene.anims.generateFrameNumbers(sprite, { start: 30, end: 34 });
 
     const knightJumpConfig = {
-      key: "knightJump",
+      key: `${sprite}Jump`,
       frames: knightJumpFrames,
       frameRate: 6,
       repeat: 0,
     }
 
     const knightMoveConfig = {
-      key: "knightMove",
+      key: `${sprite}Move`,
       frames: knightMoveFrames,
       frameRate: 10,
       repeat: 0,
+      //yoyo: true,
     }
 
     const knightIdleFramesConfig = {
-      key: "knightIdleFrames",
+      key: `${sprite}IdleFrames`,
       frames: knightIdleFrames,
       frameRate: 3,
       repeat: -1,
     }
 
     const knightDeadFramesConfig = {
-      key: "knightDeadFrames",
+      key: `${sprite}DeadFrames`,
       frames: knightDeadFrames,
       frameRate: 10,
       repeat: 0,
     }
 
     const knightDmgFramesConfig = {
-      key: "knightDmgFrames",
+      key: `${sprite}DmgFrames`,
       frames: knightDmgFrames,
       frameRate: 10,
       repeat: 0,
     }
 
     const knightDefFramesConfig = {
-      key: "knightDefFrames",
+      key: `${sprite}DefFrames`,
       frames: knightDefFrames,
       frameRate: 10,
       repeat: 0,
     }
 
     const knightAttackFramesConfig = {
-      key: "knightAttackFrames",
+      key: `${sprite}AttackFrames`,
       frames: knightAttackFrames,
       frameRate: 15,
       repeat: 0,
@@ -94,8 +98,28 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     scene.anims.create(knightDefFramesConfig)
     scene.anims.create(knightAttackFramesConfig)
 
-    this.play("knightIdleFrames");
+    this.play(`${sprite}IdleFrames`);
 
+  }
+
+  //checkSignalVital() {
+  //  if(this.life <= 0) {
+  //    
+  //  }
+  //}
+
+  loseLife(dmgRecieved?: number) {
+    const dmg = 10;
+    dmg ? dmgRecieved : 10;
+
+    this.life -= dmg;
+
+  }
+
+  takeLife() {
+    //const moreLife = 10;
+    if(this.life < 100) this.life += 10;
+    if(this.life > 100) this.life = 100;
   }
 
   idle() {
@@ -103,22 +127,23 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.isJumping = false;
     this.setVelocityX(0);
     this.setVelocityY(0);
-    if (!this.isAttacking) this.play("knightIdleFrames");
+    if (!this.isAttacking) this.play(`${this.sprite}IdleFrames`);
   }
 
   jump() {
     if (!this.isJumping) {
       this.isJumping = true;
-      this.play("knightJump", false);
-      this.setVelocityY(-730);
-      this.scene.time.delayedCall(600, this.idle, [], this);
+      this.setVelocityY(-450);
+      this.setVelocityX(10);
+      this.play(`${this.sprite}Jump`, true);
+      this.scene.time.delayedCall(1000, this.idle, [], this);
     }
   }
   attack() {
     if (!this.isAttacking) {
       console.log("attack")
       this.isAttacking = true;
-      this.play("knightAttackFrames", true);
+      this.play(`${this.sprite}AttackFrames`, true);
       //this.setVelocityY(-730);
       this.scene.time.delayedCall(600, () => {
         this.isAttacking = false;
@@ -134,39 +159,45 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     /* Keywords press */
     if (cursors) {
       const { left, right, up, space } = cursors;
+
+      /* Up / Juamp */
+      if (up.isDown && this.body && this.body.touching.down) {
+        /* Play animation */
+        this.anims.play(`${this.sprite}Jump`, true);
+        this.jump()
+      }
+
+
       /* Left*/
       if (left.isDown) {
-        this.setVelocityX(-160);
+        this.setVelocityX(-170);
         this.setFlipX(true)
 
         /* Play animation */
-        if (!this.isJumping) this.anims.play('knightMove', true);
+        if (!this.isJumping) this.anims.play(`${this.sprite}Move`, true);
       }
 
       /* Right*/
       else if (right.isDown) {
-        this.setVelocityX(160);
+        this.setVelocityX(170);
         this.setFlipX(false)
 
         /* Play animation */
-        if (!this.isJumping) this.anims.play('knightMove', true);
+        if (!this.isJumping) this.anims.play(`${this.sprite}Move`, true);
       } else if (space.isDown) {
         this.attack();
 
       }
 
+
       /* Nothing */
       else {
         this.setVelocityX(0)
-        if(!this.isAttacking) this.anims.play("knightIdleFrames", true);
+        if(!this.isAttacking && !this.isJumping) this.anims.play(`${this.sprite}IdleFrames`, true);
       }
 
-      /* Up / Juamp */
 
-      if (up.isDown && this.body && this.body.touching.down) {
-        /* Play animation */
-        this.jump()
-      }
+
     }
   }
 }

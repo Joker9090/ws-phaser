@@ -18,7 +18,15 @@ export default function Home() {
     //Load scenes async when windows is ready
     import("@/game/Scene1").then((scene1) => setScenes([scene1.default]))
     //import("@/game/assets/GameUI").then((gameUI) => setScenes([gameUI.default]))
-  }, [])
+
+    Promise.all([
+      import("@/game/SceneLoader"),
+      import("@/game/Scene1")]).then((scenes) => {
+      setScenes(scenes.map(s => s.default))
+    })
+
+
+  }, []);
  
   React.useEffect(() => {
     // wait until phaser and scenes is ready and check for CLEAN OLD GAME IN DEVELOPMENT
@@ -31,7 +39,7 @@ export default function Home() {
         scale: {
           mode: window.Phaser.Scale.FIT
         },
-        scene: scenes[0],
+        scene: scenes,
         physics: {
           default: "arcade",
           arcade: {

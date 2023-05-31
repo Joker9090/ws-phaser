@@ -49,7 +49,7 @@ const moveBackgroundPlatform = (group: any, platformWidth: number, myTexture: "s
 };
 
 class game extends Phaser.Scene {
-    map?:Map0
+    map?: Map0
     secondTimer: number;
     healthTimer: number;
     missileScore: number;
@@ -62,10 +62,14 @@ class game extends Phaser.Scene {
     sawCreationTime?: Phaser.Time.TimerEvent;
     diamondCreationTime?: Phaser.Time.TimerEvent;
     diamonds!: Phaser.Physics.Arcade.Group;
-    birdGroup: any;
     jumpTimes!: number
     jump!: number
     createMissile: Function
+    x: number = 100
+    y: number = 620
+    upPlatformCreationTime!: Phaser.Time.TimerEvent;
+    downPlatformCreationTime!: Phaser.Time.TimerEvent;
+    text?: Phaser.GameObjects.Text
     constructor() {
         super({ key: 'Game' });
         // add timer
@@ -90,41 +94,51 @@ class game extends Phaser.Scene {
         this.load.image("close", "/game/close.png")
         this.load.image("spikes", "/game/spikes.png")
         this.load.image("fDspikes", "/game/faceDownSpikes.png")
-      }
+       
+    }
 
     create() {
-        this.health = 120
-        this.player = new player(this, 150, 620, "run", 0)
-        this.map = new Map0(this, 2)
+        this.health = 100
+        this.player = new player(this, this.x, this.y, "run", 0)
+        this.player.setGravity(0, 0)
+        this.text = this.add.text(10, 90, 'Score', {
+            fontFamily: 'guardians',
+            fontSize: '48px',
+            color: '#ffffff'
+          });
 
-        const [floor, diamonds, saws] = this.map.createMap(2, "plataforma1", "plataforma2", "plataforma3", "diamond", "saw", "spikes", "fDspikes")
 
-        this.physics.add.collider(this.player, this.groundGroup)
-        // this.player.setGravityY(800)
-        // this.player.setDepth(6)
-        this.player.setCollideWorldBounds(true)
-        this.player.setSize(this.player.width, this.player.height + 30)
-        this.player.setOffset(this.player.width / 2 - 15, -10)
+
+        this.add.image(1000, 400, "background").setScale(6).setScrollFactor(0).setDepth(-1)
         if (this.input.keyboard) {
             this.cursors = this.input.keyboard?.createCursorKeys();
         }
-        this.jumpTimes = 2;
-        this.jump = 0
+        this.physics.world.on('worldbounds', (body: Phaser.Physics.Arcade.Sprite, top: boolean, down: boolean, left: boolean, right: boolean) => {
+            if (down || top) this.scene.restart()
+        }, this);
+
+        // this.physics.add.collider(this.player, floor)
+
 
 
         // saws
         this.saws = this.physics.add.group();
 
         const createSaw = () => {
-            const y = Phaser.Math.Between(100, 700)
+            const y = Phaser.Math.Between(210, 880)
             const saw = this.saws.create(this.cameras.main.width + 100, y, "saw").setGravityY(0).setScale(0.7)
-            saw.setVelocityX(-100)
+            saw.setVelocityX(-300)
             saw.setDepth(6)
-            saw.setSize(saw.displayWidth - 10, saw.displayHeigh - 10)
-            console.log(saw, "saw")
+            saw.body.setSize(saw.displayWidth - 35, saw.displayHeight - 35)
+            // saw.setSize(saw.displayWidth - 10, saw.displayHeigh - 10)
+
+            this.tweens.add({
+                targets: saw,
+                angle: 3600,
+                yoyo: true,
+                repeat: -1
+            })
         }
-
-
         this.sawCreationTime = this.time.addEvent({
             callback: createSaw,
             delay: Phaser.Math.Between(1600, 2000),
@@ -136,119 +150,164 @@ class game extends Phaser.Scene {
 
         this.diamonds = this.physics.add.group()
         const createDiamond = () => {
-            const y = Phaser.Math.Between(100, 700)
+            const y = Phaser.Math.Between(210, 880)
             const diamond = this.diamonds.create(this.cameras.main.width + 100, y, "diamond").setGravityY(0).setScale(0.7)
-            diamond.setVelocityX(-100)
+            diamond.setVelocityX(-300)
             diamond.setDepth(6)
-            diamond.setSize(diamond.displayWidth - 10, diamond.displayHeigh - 10)
-            console.log(diamond, "diamond")
+            diamond.body.setSize(diamond.displayWidth + 35, diamond.displayHeight + 30)
+
         }
 
-        this.physics.add.overlap(this.player, this.diamonds, (player, singleDiamond) => {
-            singleDiamond.destroy();
-            gameState.score += 1;
-            this.health += 1
-        })
+
         this.diamondCreationTime = this.time.addEvent({
             callback: createDiamond,
-            delay: Phaser.Math.Between(16000, 20000),
+            delay: Phaser.Math.Between(2500, 2900),
+            callbackScope: this,
+            loop: true
+        })
+        this.physics.add.overlap(this.saws, this.diamonds, (saw, singleDiamond) => {
+            singleDiamond.destroy();
+            saw.destroy()
+        })
+
+
+        // platforms
+
+        this.groundGroup = this.physics.add.group()
+
+        const createUpPlatform = () => {
+            const y = 200
+            const upPlatform = this.groundGroup.create(this.cameras.main.width + 90, y, "plataforma3").setGravityY(0).setScale(0.7)
+            upPlatform.setVelocityX(Phaser.Math.Between(-300, -350))
+            upPlatform.setDepth(6)
+
+            upPlatform.body.setSize(upPlatform.displayWidth - 35, upPlatform.displayHeight - 35)
+
+        }
+        this.upPlatformCreationTime = this.time.addEvent({
+            callback: createUpPlatform,
+            delay: Phaser.Math.Between(1600, 2000),
             callbackScope: this,
             loop: true
         })
 
+        const createDownPlatform = () => {
+            const y = 890
+            const downPlatform = this.groundGroup.create(this.cameras.main.width + 90, y, "plataforma3").setGravityY(0).setScale(0.7)
+            downPlatform.setVelocityX(Phaser.Math.Between(-300, -250))
+            downPlatform.setDepth(6)
+            downPlatform.body.setSize(downPlatform.displayWidth - 35, downPlatform.displayHeight - 35)
 
-        this.diamondCreationTime = this.time.addEvent({
-            callback: createDiamond,
-            delay: Phaser.Math.Between(1000, 1700),
+        }
+        this.downPlatformCreationTime = this.time.addEvent({
+            callback: createDownPlatform,
+            delay: Phaser.Math.Between(1600, 2000),
             callbackScope: this,
-            loop: true,
+            loop: true
+        })
+        this.physics.add.overlap(this.saws, this.groundGroup, (saw, floor) => {
+            saw.destroy();
+        })
+        this.physics.add.overlap(this.diamonds, this.groundGroup, (diamond, floor) => {
+            diamond.destroy();
         })
 
+        if (this.player) {
+            this.physics.add.overlap(this.player, this.saws, (player, saw) => {
+                this.scene.restart()
+            })
+            this.physics.add.overlap(this.player, this.diamonds, (player, diamond) => {
+                gameState.score += 1
+                diamond.destroy()
+            })
+        }
+        // estos dos reducen vida progresivamente a -1 cada 500ms 
         const reduceHealthTimely = () => {
             this.health -= 1;
             this.healthTimer = 0;
+
         };
 
-        this.time.addEvent({
-            callback: reduceHealthTimely,
-            delay: 500,
-            loop: true,
-            callbackScope: this,
-        });
+
+        // this.time.addEvent({
+        //     callback: reduceHealthTimely,
+        //     delay: 500,
+        //     loop: true,
+        //     callbackScope: this,
+        // });
 
 
     }
 
-    // createBirdDrop(group: Phaser.GameObjects.Group, texture: string) {
-    //     if (this.birdGroup.getLength() >= 2) {
-    //         const child = this.birdGroup.getChildren()[Phaser.Math.Between(0,
-    //             this.birdGroup - 1)];
-    //         const drop = group.create(child.x, child.y, texture).setScale(0.05);
-    //         if (texture === 'spike') {
-    //             drop.setScale(0.1);
-    //         }
-    //         drop.setGravityY(700);
-    //         drop.setGravityX(0);
-    //         drop.setDepth(6);
-    //         drop.setBounce(1);
-    //         drop.setSize(drop.width - 200, drop.height - 200);
-    //     }
-    // }
+
 
     update(time: number, delta: number, cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined) {
-        if (cursors) {
-            const { left, right, up, down, space } = cursors
-            if (this.health <= 0) {
-                this.scene.stop()
-                this.scene.restart()
-            }
-            // this.player?.anims.play("run", true)
-
-            this.timer += delta;
-            // every four missiles you jump on +1 to health and back to misile score of 0
-            if (this.missileScore >= 1) {
-                this.health += 1;
-                this.missileScore -= 1;
-            }
-            // moves misile your way
-            //  this.missileGroup.children.iterate((child) => {
-            //    child.x -= 5;
-            // });
+        // if (this.health <= 0) {
+        //     this.scene.stop()
+        //   
+        //     this.scene.restart()
+        // }
 
 
-            // checks time and every 5 seconds triggers the create missile function
-            this.timer += delta;
-            if (this.timer >= 500) {
-                console.log("misile")
-                this.timer = 0;
-            }
+        // if (cursors) {
+        //     const { left, right, up, down, space } = cursors
+        //     console.log(cursors, "cursors")
+        //     // this.player?.anims.play("run", true)
 
 
-            // does the same with the second timer keeping two separate spawn rates
-            this.secondTimer += delta;
-            if (this.secondTimer >= 700) {
-                console.log("misile")
-                this.secondTimer = 0;
-            }
 
-            // checks the up key, makes you jump and changes the jump count acordingly
-            if (Phaser.Input.Keyboard.JustDown(up)) {
-                if (this.player.body?.touching.down || this.jump < this.jumpTimes && (this.jump > 0)) {
-                    this.player.setVelocityY(-400)
-                    this.jump += 1
-                    if (this.player.body?.touching.down) {
-                        this.jump = 0
-                    }
-                }
-            }
-            if (down.isDown) {
-                if (!this.player.body?.touching.down) {
-                    this.player.setGravityY(1300)
-                }
-            }
-            if (this.player.body?.touching.down) {
-                this.player.setGravityY(800)
-            }
+        //     this.timer += delta;
+        //     // every four missiles you jump on +1 to health and back to misile score of 0
+        //     if (this.missileScore >= 1) {
+        //         this.health += 1;
+        //         this.missileScore -= 1;
+        //     }
+        //     // moves misile your way
+        //     //  this.missileGroup.children.iterate((child) => {
+        //     //    child.x -= 5;
+        //     // });
+
+
+        //     // checks time and every 5 seconds triggers the create missile function
+        //     this.timer += delta;
+        //     if (this.timer >= 500) {
+
+        //         this.timer = 0;
+        //     }
+
+
+        //     // does the same with the second timer keeping two separate spawn rates
+        //     this.secondTimer += delta;
+        //     if (this.secondTimer >= 700) {
+
+        //         this.secondTimer = 0;
+        //     }
+
+        //     // checks the up key, makes you jump and changes the jump count acordingly
+        //     if (Phaser.Input.Keyboard.JustDown(up)) {
+        //         if (this.player.body?.touching.down || this.jump < this.jumpTimes && (this.jump > 0)) {
+        //             this.player.setVelocityY(-400)
+        //             this.jump += 1
+        //             if (this.player.body?.touching.down) {
+        //                 this.jump = 0
+        //             }
+        //         }
+        //     }
+        //     if (down.isDown) {
+        //         if (!this.player.body?.touching.down) {
+        //             this.player.setGravityY(1300)
+        //         }
+        //     }
+        //     if (this.player.body?.touching.down) {
+        //         this.player.setGravityY(800)
+        //     }
+        // }
+        if (this.player) {
+            this.player.checkMove(this.cursors)
+            this.physics.add.collider(this.groundGroup, this.player)
+        }
+        if (this.text) {
+        this.text.setText(`Score ${gameState.score}`)
         }
     }
 

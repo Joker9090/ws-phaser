@@ -87,6 +87,8 @@ class Scene1 extends Phaser.Scene {
     const graphics = this.add.graphics()
 
 
+    
+
 
   }
   hitSaw() {

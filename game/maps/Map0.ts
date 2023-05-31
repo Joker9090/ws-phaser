@@ -60,24 +60,24 @@ class Map0 {
     const d1 = this.scene.physics.add.sprite(300, 500, diamond)
     const d2 = this.scene.physics.add.sprite(800, 770, diamond)
 
-    const s1 = this.scene.physics.add.image(250, 670, saw).setScale(0.7).setBodySize(65, 65)
+    // const s1 = this.scene.physics.add.image(250, 670, saw).setScale(0.7).setBodySize(65, 65)
 
 
-    this.scene.tweens.add({
-      targets: s1,
-      x: 2200,
-      duration: speed,
-      yoyo: true,
-      repeatDelay: 200,
-      repeat: -1,
-      // ease: "circularInOut",
-      angle: 3600
-    })
+    // this.scene.tweens.add({
+    //   targets: s1,
+    //   x: 2200,
+    //   duration: speed,
+    //   yoyo: true,
+    //   repeatDelay: 200,
+    //   repeat: -1,
+    //   // ease: "circularInOut",
+    //   angle: 3600
+    // })
 
 
     floor.addMultiple([p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16])
     diamonds.addMultiple([d1, d2])
-    saws.addMultiple([s1])
+    // saws.addMultiple([s1])
 
     const sp1Config: spikesConfig = {
       width: 160,

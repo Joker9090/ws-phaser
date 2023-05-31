@@ -81,9 +81,10 @@ class player extends Phaser.Physics.Arcade.Sprite {
     }
   }
   down() {
-    if (this && this._direction === "up") {
+    if (this && this._direction !== undefined) {
       this.setVelocityY(this.initialVelocity * 0.3)
       this.setGravityY(this.gravityForce * 0.3)
+      this._direction = "down"
       // setTimeout(() => { this.setGravityY(0) }, 200)
       this.setFlipY(false)
       if (this.body) this.body.setOffset(50, 70)

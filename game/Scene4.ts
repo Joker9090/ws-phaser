@@ -215,6 +215,7 @@ class game extends Phaser.Scene {
         if (this.player) {
             this.physics.add.overlap(this.player, this.saws, (player, saw) => {
                 this.scene.restart()
+                gameState.score = 0
             })
             this.physics.add.overlap(this.player, this.diamonds, (player, diamond) => {
                 gameState.score += 1

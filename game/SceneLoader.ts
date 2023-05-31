@@ -7,9 +7,11 @@ const loadAssets = {
       ["image", "plataformaA", "/game/plataformaVioleta.png"],
       ["image", "plataformaB", "/game/base2.png"],
       ["image", "background", "/game/sky1.png"],
+      /*
       ["image", "mountain1", "/game/mountain1.png"],
       ["image", "mountain2", "/game/mountain2.png"],
       ["image", "mountain3", "/game/mountain4.png"],
+      */
       ["image", "sun", "/game/sun.png"],
       ["image", "nube", "/game/nube.png"],
       ["image", "templo", "/game/templo.png"],
@@ -21,6 +23,9 @@ const loadAssets = {
       ["image", "heartsEmpty", "/game/heartsEmpty.png"],
       ["image", "stars", "/game/stars.png"],
       ["image", "sea", "/game/sea.png"],
+      ["image", "sea", "/game/sea.png"],
+      ["spritesheet", "character", "/game/whiteMonster.png", { frameWidth: 100, frameHeight: 100 }],
+      ["spritesheet", "firework", "/game/firework.png", { frameWidth: 256, frameHeight: 256 }]
     ]
   }
 }
@@ -88,9 +93,12 @@ class SceneLoader extends Phaser.Scene {
       percentText.destroy();
       assetText.destroy();
     });
-    loadAssets["Scene1"].assets.map(([type, name, src]: any) => {
+    loadAssets["Scene1"].assets.map(([type, name, src, config]: any) => {
       // @ts-checkts-ignore
-      this.load[type](name, src);
+      if (config) this.load[type](name, src, config);
+      else this.load[type](name, src);
+
+
     })
   }
 

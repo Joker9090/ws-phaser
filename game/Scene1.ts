@@ -15,7 +15,7 @@ class Scene1 extends Phaser.Scene {
   map?: Map0
   fireworks?: Fireworks
   stars?: Stars
-  cursors?: Phaser.Types.Input.Keyboard.CursorKeys 
+  cursors?: Phaser.Types.Input.Keyboard.CursorKeys
   templo?: Phaser.GameObjects.Sprite
   wave1?: Phaser.GameObjects.TileSprite
   wave2?: Phaser.GameObjects.TileSprite
@@ -25,14 +25,14 @@ class Scene1 extends Phaser.Scene {
   velocity: number = 1
   heartsFull?: Phaser.GameObjects.TileSprite;
   heartsEmpty?: Phaser.GameObjects.TileSprite;
-  // constructor() {
-  //   super { { key: 'Scene1'} }
-  // }
+  constructor() {
+    super({ key: 'Scene1' })
+  }
 
   preload(this: Scene1) {
     //this.load.spritesheet("character", "/game/spritesheetKitty2.png", { frameWidth: 150, frameHeight: 162 });
-    this.load.spritesheet("character", "/game/whiteMonster.png", { frameWidth: 100, frameHeight: 100 });
-    this.load.spritesheet("firework", "/game/firework.png", { frameWidth: 256, frameHeight: 256 });
+    // this.load.spritesheet("character", "/game/whiteMonster.png", { frameWidth: 100, frameHeight: 100 });
+    // this.load.spritesheet("firework", "/game/firework.png", { frameWidth: 256, frameHeight: 256 });
     // this.load.image("this.player.setVelocityY(-330);plataformaB", "/game/base2.png");
     // this.load.image("plataformaA", "/game/plataformaVioleta.png");
     // this.load.image("plataformaB", "/game/base2.png");
@@ -52,9 +52,9 @@ class Scene1 extends Phaser.Scene {
     // this.load.image("stars", "/game/stars.png");
     // this.load.image("sea", "/game/sea.png");
   }
-  
+
   destroyFireworks() {
-    if(this.fireworks) {
+    if (this.fireworks) {
       this.fireworks.destroy();
       this.fireworks = undefined;
     }
@@ -65,9 +65,9 @@ class Scene1 extends Phaser.Scene {
     const { width, height } = this.game.canvas;
     console.log("flor", window.innerWidth, "x", window.innerHeight);
 
-    const pointX = (window.innerWidth - window.innerWidth) +10
-    const pointY = (window.innerHeight - window.innerHeight) +10
-    
+    const pointX = (window.innerWidth - window.innerWidth) + 10
+    const pointY = (window.innerHeight - window.innerHeight) + 10
+
     // Corazones
     // this.heartsEmpty = this.add.tileSprite(pointX, pointY, 340, 140, "heartsEmpty").setOrigin(1, 0.5).setDepth(30)
     // this.heartsFull = this.add.tileSprite(pointX, pointY, 340, 140, "heartsFull").setOrigin(1, 0.5).setDepth(30)
@@ -105,14 +105,14 @@ class Scene1 extends Phaser.Scene {
 
     this.cursors = this.input.keyboard?.createCursorKeys()
 
-    this.physics.world.on('worldbounds', (body: Phaser.Physics.Arcade.Sprite,top: boolean,down: boolean,left: boolean,right: boolean) => {
-      if(down) lose()
-    },this);
+    this.physics.world.on('worldbounds', (body: Phaser.Physics.Arcade.Sprite, top: boolean, down: boolean, left: boolean, right: boolean) => {
+      if (down) lose()
+    }, this);
   }
 
   update(this: Scene1) {
     if (this.heartsFull) {
-      this.heartsFull.setCrop(0,0, 500 ,200)
+      this.heartsFull.setCrop(0, 0, 500, 200)
     }
     if (this.wave1) this.wave1.setTilePosition(this.wave1.tilePositionX + (this.velocity / 2), 0)
     if (this.wave2) this.wave2.setTilePosition(this.wave2.tilePositionX - (this.velocity / 4), this.wave2.tilePositionY)
@@ -120,7 +120,7 @@ class Scene1 extends Phaser.Scene {
 
     if (this.monchi) {
       this.monchi.checkMove(this.cursors)
-      if(this.templo && Phaser.Geom.Rectangle.Overlaps(this.monchi.getBounds(), this.templo.getBounds()) && !this.fireworks) {
+      if (this.templo && Phaser.Geom.Rectangle.Overlaps(this.monchi.getBounds(), this.templo.getBounds()) && !this.fireworks) {
         // Si llega a la cueva, reinicia
         this.fireworks = new Fireworks(this, this.monchi.x, this.monchi.y, "firework")
         this.fireworks.playFireworks(() => this.destroyFireworks())
@@ -128,9 +128,9 @@ class Scene1 extends Phaser.Scene {
         //this.fireworks.destroy()
         //this.scene.restart()
         //cueva.disableBody(true, true);
-      } 
+      }
 
-      if(this.fireworks) {
+      if (this.fireworks) {
         this.fireworks.setPosition(this.monchi.x, this.monchi.y)
       }
     }

@@ -6,25 +6,25 @@ export default function Home() {
 
   React.useEffect(() => {
     // CLEAN OLD GAME IN DEVELOPMENT
-    if(game) {
+    if (game) {
       game.destroy(true)
       setGame(undefined)
-    }  
+    }
     // CLEAN OLD GAME IN DEVELOPMENT
 
     //Load phaser async when windows is ready
-    import("phaser").then(setPhaser) 
+    import("phaser").then(setPhaser)
     //Load scenes async when windows is ready
     //Asi la llamamos antes, de a una
     //import("@/game/Scene1").then((scene1) => setScenes([scene1.default]))
-    
+
     Promise.all([
       import("@/game/SceneLoader"),
       import("@/game/Scene1")]).then((scenes) => {
-      setScenes(scenes.map(s => s.default))
-    })
+        setScenes(scenes.map(s => s.default))
+      })
   }, [])
- 
+
   React.useEffect(() => {
     // wait until phaser and scenes is ready and check for CLEAN OLD GAME IN DEVELOPMENT
     if (phaser && scenes.length && !game) {
@@ -35,9 +35,9 @@ export default function Home() {
         parent: "game-container",
         //pixelArt: true,
         scale: {
-          mode: window.Phaser.Scale.FIT
+          mode: window.Phaser.Scale.RESIZE
         },
-        scene: scenes[0],
+        scene: scenes,
         physics: {
           default: "arcade",
           arcade: {
@@ -46,11 +46,11 @@ export default function Home() {
             // el debug muestra los bordes de la img
             debug: true
           }
-        } 
+        }
       }
       const game = new phaser.Game(config)
       setGame(game);
-    } 
+    }
   }, [phaser, scenes])
 
   return (

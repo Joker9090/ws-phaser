@@ -3,6 +3,7 @@ import Phaser from "phaser";
 import CloudGenerator, { CloudGeneratorConfig } from "../assets/CloudGenerator";
 import Floor, { FloorConfig } from "../assets/Floor";
 import LargeFloor, { LargeFloorConfig } from "../assets/LargeFloor";
+import UI, { UIConfig } from "../assets/UI";
 // Scene in class
 class Mapa {
   isJumping = false;
@@ -20,6 +21,7 @@ class Mapa {
   portal?: Phaser.Physics.Arcade.Group
   movingFloor?:  Phaser.Physics.Arcade.Group
   movingFloorRot?:  Phaser.Physics.Arcade.Group
+  UIg?: Phaser.GameObjects.Group
 
   startingPoint = {
     x: 500, //500
@@ -47,14 +49,7 @@ class Mapa {
     const calcDiffY = (y2 - y) / 1.2
 
     this.background.setPosition((x + calcDiffX),(y + calcDiffY))
-    /* 
-    const tween = this.scene.tweens.add({
-      duration: 500,
-      targets: this.background,
-      x: (x + calcDiffX),
-      y: (y + calcDiffY)
-    })
-    */
+ 
     
   }
 
@@ -67,6 +62,7 @@ class Mapa {
     this.coin = this.scene.physics.add.group({ allowGravity: false });
     this.portal = this.scene.physics.add.group({ allowGravity: false });
     this.pisos4 = this.scene.physics.add.group({ allowGravity: false });
+    this.UIg = this.scene.add.group()
 
     const p1Config: FloorConfig = {
       texture: "plataformaA",
@@ -100,10 +96,10 @@ class Mapa {
 
     const p5Config: FloorConfig = {
       texture: "plataforma2",
-      pos: { x: 700, y: 1000, }, // 1100 800
+      pos: { x: 1100, y: 800, }, // 1100 800
       scale: { width: 0.1, height: 0.1, },
       width: 2400, 
-      height: 100,
+      height: 300,
     }
     const p5 = new Floor(this.scene, p5Config, this.pisos)
     
@@ -305,6 +301,47 @@ class Mapa {
     }
     const c2 = new CloudGenerator(this.scene, c2Config)
     c2.start()
+
+    //UI
+    
+    const lifeConfig: UIConfig = {
+      texture: "heart",
+      pos: { x: 0, y: 600},
+      scale: .1
+    }
+    const lifes1 = new UI(this.scene, lifeConfig, this.UIg)
+    const lifeConfig2: UIConfig = {
+      texture: "heart",
+      pos: { x: 50, y: 600},
+      scale: .1
+    }
+    const lifes2 = new UI(this.scene, lifeConfig2, this.UIg)
+    const lifeConfig3: UIConfig = {
+      texture: "heart",
+      pos: { x: 100, y: 600},
+      scale: .1
+
+    }
+    const lifes3 = new UI(this.scene, lifeConfig3, this.UIg)
+
+    const coinConf: UIConfig = {
+      texture: "coin",
+      pos: { x: 200, y: 600},
+      scale: .1
+
+    }
+    const coinUI = new UI(this.scene, coinConf, this.UIg).setTint(Phaser.Display.Color.GetColor(0, 0, 0))
+
+    const arrowConfig: UIConfig = {
+      texture: "arrow",
+      pos: { x: 300, y: 600},
+      scale: .1
+
+    }
+    const arrow = new UI(this.scene, arrowConfig, this.UIg).setRotation(Math.PI/2)
+
+
+
   }
 
 }

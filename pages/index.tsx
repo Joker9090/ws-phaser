@@ -15,7 +15,12 @@ export default function Home() {
     //Load phaser async when windows is ready
     import("phaser").then(setPhaser) 
     //Load scenes async when windows is ready
-    import("@/game/Scene1").then((scene1) => setScenes([scene1.default]))
+    Promise.all([
+      import("@/game/SceneLoader"),
+      import("@/game/Menu"),
+      import("@/game/Scene1")]).then((scenes) => {
+        setScenes(scenes.map(s => s.default))
+      })
   }, [])
  
   React.useEffect(() => {
@@ -29,7 +34,7 @@ export default function Home() {
         scale: {
           mode: window.Phaser.Scale.FIT
         },
-        scene: scenes[0],
+        scene: scenes[2],
         physics: {
           default: "arcade",
           arcade: {

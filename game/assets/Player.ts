@@ -33,7 +33,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.body?.setSize(73,110)
     this.body?.setOffset(70,50)
     this.setScale(0.6)
-    this.setBounce(0);
+    this.setBounce(0.1);
     this.setDepth(10)
     /* Monchi add to scene */
     scene.add.existing(this);

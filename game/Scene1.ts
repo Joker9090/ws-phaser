@@ -6,6 +6,7 @@ import Floor from "./assets/Floor";
 
 // Scene in class
 class Scene1 extends Phaser.Scene {
+  
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys
   monchi?: Player
   graphics?: Phaser.GameObjects.Graphics
@@ -15,8 +16,12 @@ class Scene1 extends Phaser.Scene {
   normalito: boolean = true
   gravityDown: boolean = true
 
+  constructor() {
+    super({ key: 'Scene1' })
+  }
+  /*
   preload(this: Phaser.Scene) {
-    /* Load assets for game */ 
+  
     this.load.spritesheet("character", "/game/character.png", { frameWidth: 220, frameHeight: 162 })
     this.load.image("background", "/game/background.png")
     this.load.image("plataformaA", "/game/platform1.png")
@@ -29,7 +34,7 @@ class Scene1 extends Phaser.Scene {
     this.load.image("heart","/game/heart.png")
     this.load.image("arrow","/game/arrow.png")
   }
-
+  */
 
   create(this: Scene1) {
     /* Controls */
@@ -120,10 +125,10 @@ class Scene1 extends Phaser.Scene {
     const coinCollected = () => {
       if (this.map?.coin) {
         this.map.portal?.setTint(0x00ff00);
-        this.canWin = true
+        this.canWin = true;
         this.map.coin.setVisible(false);
-        this.map.coin.clear(true)
-        this.map.UIg?.getChildren()[3].clearTint()
+        this.map.coin.clear(true);
+       (this.map.UIg?.getChildren()[3] as Phaser.GameObjects.Image).clearTint();
       }
     }
 
@@ -149,13 +154,13 @@ class Scene1 extends Phaser.Scene {
   update(this: Scene1) {
       
       if (this.gravityDown===false){
-       this.map.UIg.getChildren()[4].setRotation(Math.PI*3/2)
-      } else {this.map.UIg.getChildren()[4].setRotation(Math.PI/2)}
+       (this.map?.UIg?.getChildren()[4] as Phaser.GameObjects.Image).setRotation(Math.PI*3/2);
+      } else {(this.map?.UIg?.getChildren()[4] as Phaser.GameObjects.Image).setRotation(Math.PI/2)};
   
     /* Attach controls to player */
     if (this.monchi && this.normalito) {
-      this.monchi.checkMove(this.cursors)
-      if (this.map) this.map.animateBackground(this.monchi)
+      this.monchi.checkMove(this.cursors);
+      if (this.map) this.map.animateBackground(this.monchi);
     }
     else if (this.monchi && this.normalito == false) {
       this.monchi?.checkMoveRot(this.cursors)
@@ -164,11 +169,11 @@ class Scene1 extends Phaser.Scene {
     if (this.map?.UIg && this.normalito == false){
       //console.log("entro")
       for (let i = 0 ; i < 4 ; i++){
-        this.map?.UIg?.getChildren()[i].setRotation(Math.PI)
+        (this.map?.UIg?.getChildren()[i] as Phaser.GameObjects.Image).setRotation(Math.PI)
         }
     } else {
       for (let i = 0 ; i < 4 ; i++){
-        this.map?.UIg?.getChildren()[i].setRotation(0)
+        (this.map?.UIg?.getChildren()[i] as Phaser.GameObjects.Image).setRotation(0)
         }
     }
     

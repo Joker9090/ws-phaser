@@ -21,6 +21,8 @@ const loadAssets = {
             ["image", "asteroid2", "/game/asteroid2.png"],
             ["image", "coin", "/game/coin.png"],
             ["image", "portal", "/game/portal.png"],
+            ["image", "heart", "/game/heart.png"],
+            ["image", "arrow", "/game/arrow.png"],
             ["spritesheet", "character", "/game/character.png", { frameWidth: 220, frameHeight: 162 }],
         ]
     }
@@ -105,10 +107,22 @@ class SceneLoader extends Phaser.Scene {
       
       
           })
+          loadAssets["Menu"].assets.map(([type, name, src, config]:any) => {
+            // @ts-checkts-ignore
+            if (config) {
+                this.load[type](name, src, config)
+            }
+            else {
+                this.load[type](name, src)
+            }
+      
+      
+          })
     }
 
     create(this: SceneLoader, { level }: any) {
-        this.scene.start("Scene1", { "data": 1 })
+        //this.scene.start("Scene1", { "data": 1 })
+        this.scene.start("Menu", { "data": 1 })
     }
 
     update(this: SceneLoader) {

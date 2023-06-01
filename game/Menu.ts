@@ -9,7 +9,7 @@ export default class MainMenuScene extends Phaser.Scene {
     monchi?: Phaser.GameObjects.Sprite
     progress?: number = 0
     constructor() {
-        super({ key: 'main-menu' })
+        super({ key: 'Menu' })
         
     }
 
@@ -51,7 +51,8 @@ export default class MainMenuScene extends Phaser.Scene {
         this.selectButton(0)
 
         playButton.on('selected', () => {
-            console.log('play')
+            this.scene.start("Scene1", { "data": 1 })
+            this.scene.remove()
         })
 
         settingsButton.on('selected', () => {
@@ -109,7 +110,7 @@ export default class MainMenuScene extends Phaser.Scene {
     }
 
     update() {
-        if(this.monchi){
+        if(this.monchi && this.progress){
             this.progress = this.progress + .0031415 
             this.monchi.x = this.monchi.x + .5
             this.monchi.y = this.monchi.y - .25

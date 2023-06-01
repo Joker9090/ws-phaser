@@ -94,13 +94,13 @@ class SceneLoader extends Phaser.Scene {
             assetText.destroy();
         });
 
-        loadAssets["Scene1"].assets.map(([obj, name, src, config]:any) => {
+        loadAssets["Scene1"].assets.map(([type, name, src, config]:any) => {
             // @ts-checkts-ignore
             if (config) {
-                this.load.obj(name, src, config)
+                this.load[type](name, src, config)
             }
             else {
-                this.load.obj(name, src)
+                this.load[type](name, src)
             }
       
       

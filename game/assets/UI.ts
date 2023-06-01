@@ -21,6 +21,7 @@ class UI extends Phaser.GameObjects.Image {
         this.setDepth(0)
         this.setScale(config.scale)
         this.group = group
+        this.group.add(this)
     }
 }
 

@@ -13,6 +13,7 @@ class Scene1 extends Phaser.Scene {
   canWin: boolean = false
   canRot: boolean = true
   normalito: boolean = true
+  gravityDown: boolean = true
 
   preload(this: Phaser.Scene) {
     /* Load assets for game */ 
@@ -57,6 +58,7 @@ class Scene1 extends Phaser.Scene {
         this.monchi.setGravityY(-2000)
         this.time.delayedCall(1000, () => {
           this.monchi?.setFlipY(true)
+          this.gravityDown=false 
           this.monchi?.body?.setOffset(70, 0)
           this.monchi?.setBounceY(0)
         })
@@ -87,6 +89,7 @@ class Scene1 extends Phaser.Scene {
           })(3.1415 + 3.1415*(i)/24))
         }
         this.monchi?.setFlipY(false)
+        this.gravityDown=true 
         this.monchi?.body?.setOffset(70, 50)
         this.monchi?.setBounceY(0)
       }
@@ -120,6 +123,7 @@ class Scene1 extends Phaser.Scene {
         this.canWin = true
         this.map.coin.setVisible(false);
         this.map.coin.clear(true)
+        this.map.UIg?.getChildren()[3].clearTint()
       }
     }
 
@@ -143,9 +147,11 @@ class Scene1 extends Phaser.Scene {
   }
 
   update(this: Scene1) {
-    if (this.map?.UIg){
-      //function to move UI with character
-    }
+      
+      if (this.gravityDown===false){
+       this.map.UIg.getChildren()[4].setRotation(Math.PI*3/2)
+      } else {this.map.UIg.getChildren()[4].setRotation(Math.PI/2)}
+  
     /* Attach controls to player */
     if (this.monchi && this.normalito) {
       this.monchi.checkMove(this.cursors)
@@ -155,6 +161,17 @@ class Scene1 extends Phaser.Scene {
       this.monchi?.checkMoveRot(this.cursors)
       if (this.map) this.map.animateBackground(this.monchi)
     }
+    if (this.map?.UIg && this.normalito == false){
+      //console.log("entro")
+      for (let i = 0 ; i < 4 ; i++){
+        this.map?.UIg?.getChildren()[i].setRotation(Math.PI)
+        }
+    } else {
+      for (let i = 0 ; i < 4 ; i++){
+        this.map?.UIg?.getChildren()[i].setRotation(0)
+        }
+    }
+    
   }
 }
 

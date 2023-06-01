@@ -56,12 +56,12 @@ class Mapa {
   createMap() {
     this.movingFloor = this.scene.physics.add.group({ allowGravity: false })
     this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false })
-    this.pisos = this.scene.physics.add.group({ allowGravity: false });
-    this.pisos2 = this.scene.physics.add.group({ allowGravity: false });
-    this.pisos3 = this.scene.physics.add.group({ allowGravity: false });
-    this.coin = this.scene.physics.add.group({ allowGravity: false });
-    this.portal = this.scene.physics.add.group({ allowGravity: false });
-    this.pisos4 = this.scene.physics.add.group({ allowGravity: false });
+    this.pisos = this.scene.physics.add.group({ allowGravity: false })
+    this.pisos2 = this.scene.physics.add.group({ allowGravity: false })
+    this.pisos3 = this.scene.physics.add.group({ allowGravity: false })
+    this.coin = this.scene.physics.add.group({ allowGravity: false })
+    this.portal = this.scene.physics.add.group({ allowGravity: false })
+    this.pisos4 = this.scene.physics.add.group({ allowGravity: false })
     this.UIg = this.scene.add.group()
 
     const p1Config: FloorConfig = {
@@ -304,42 +304,59 @@ class Mapa {
 
     //UI
     
+    
+
     const lifeConfig: UIConfig = {
       texture: "heart",
-      pos: { x: 0, y: 600},
+      pos: { x: 100, y: 100},
       scale: .1
     }
     const lifes1 = new UI(this.scene, lifeConfig, this.UIg)
+    .setScrollFactor(0, 0)
+
+
     const lifeConfig2: UIConfig = {
       texture: "heart",
-      pos: { x: 50, y: 600},
+      pos: { x: 150, y: 100},
       scale: .1
     }
     const lifes2 = new UI(this.scene, lifeConfig2, this.UIg)
+    .setScrollFactor(0, 0)
+
+
     const lifeConfig3: UIConfig = {
       texture: "heart",
-      pos: { x: 100, y: 600},
+      pos: { x: 200, y: 100},
       scale: .1
 
     }
     const lifes3 = new UI(this.scene, lifeConfig3, this.UIg)
+    .setScrollFactor(0, 0)
+
+
 
     const coinConf: UIConfig = {
       texture: "coin",
-      pos: { x: 200, y: 600},
+      pos: { x: 300, y: 100},
       scale: .1
 
     }
-    const coinUI = new UI(this.scene, coinConf, this.UIg).setTint(Phaser.Display.Color.GetColor(0, 0, 0))
+    const coinUI = new UI(this.scene, coinConf, this.UIg)
+    .setTint(Phaser.Display.Color.GetColor(0, 0, 0))
+    .setScrollFactor(0, 0)
+
 
     const arrowConfig: UIConfig = {
       texture: "arrow",
-      pos: { x: 300, y: 600},
+      pos: { x: 400 , y: 100},
       scale: .1
 
     }
-    const arrow = new UI(this.scene, arrowConfig, this.UIg).setRotation(Math.PI/2)
+    const arrow = new UI(this.scene, arrowConfig, this.UIg)
+    .setRotation(Math.PI/2)
+    .setScrollFactor(0, 0)
 
+    this.UIg.setDepth(10)
 
 
   }

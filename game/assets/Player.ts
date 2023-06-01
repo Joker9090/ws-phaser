@@ -1,11 +1,13 @@
 import Phaser from "phaser";
 import LifeBar from "./LifeBar";
+import hitZone from "./hitZone";
 
 class Player extends Phaser.Physics.Arcade.Sprite {
   isJumping: boolean = false
   isAttacking: boolean = false
   sprite: string = '';
   life: number = 100;
+  swordHitBox: hitZone;
   constructor(scene: Phaser.Scene, x: number, y: number, sprite: string, frame: number) {
     super(scene, x, y, sprite, frame)
 
@@ -25,9 +27,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     if (this.body) {
       const body = (this.body as Phaser.Physics.Arcade.Body)
       body.onWorldBounds = true;
-      this.body.setSize(35, 80, true); // GOOOD!
+      this.body.setSize(35, 64, true); // GOOOD!
+      this.body.setOffset(20, 20);
 
     }
+    this.swordHitBox = new hitZone(scene,100,100,32,64,0xffffff,0.5);
   }
 
   createAnims(scene: Phaser.Scene,sprite:string ) {
@@ -163,7 +167,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   }
   attack() {
     if (!this.isAttacking) {
-      console.log("attack")
+      console.log("attack");
+      this.swordHitBox.attackBox((this.x),(this.y),this.flipX, 10)
       this.isAttacking = true;
       this.play(`${this.sprite}AttackFrames`, true);
       //this.setVelocityY(-730);

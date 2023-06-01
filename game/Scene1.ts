@@ -19,7 +19,7 @@ class Scene1 extends Phaser.Scene {
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   attackZone?: Phaser.GameObjects.Zone;
   lightOnPlayer?:Phaser.GameObjects.Light;
-  swordHitBox!: hitZone;
+  //swordHitBox!: hitZone;
   checkPoint!:{x:number, y:number}
   //UIGame?: Phaser.GameObjects.Container;
   hitZoneGroup?: Phaser.Physics.Arcade.Group;
@@ -64,6 +64,7 @@ class Scene1 extends Phaser.Scene {
     
     
     const floor = this.map.createMap()
+    
     this.monchi = new Player(this, 100, 950, "knight", 2);
     this.skeleton = new Enemy(this, 250, 950, "skeleton",1);
     this.checkPoint = {x:100,y:950};
@@ -93,9 +94,12 @@ class Scene1 extends Phaser.Scene {
       //console.log("Player colision con enemigo");
       console.log("Player espada colision con enemigo");
       this.skeleton?.receiveDamage();
-      this.swordHitBox.x = 0;
-      this.swordHitBox.y = 0;
-      this.swordHitBox.setActive(false);
+      if (this.monchi && this.monchi.swordHitBox){
+        this.monchi.swordHitBox.x = 0;
+        this.monchi.swordHitBox.y = 0;
+        this.monchi.swordHitBox.setActive(false);
+
+      }
       console.log("state skeleton: " + this.skeleton?.Onstate);
       if(this.skeleton && this.skeleton.Onstate !== "dead") {
         this.time.delayedCall(1200, this.skeleton.idle, [], this.skeleton);
@@ -130,6 +134,7 @@ class Scene1 extends Phaser.Scene {
     }
 
     const takeHealth = () => {
+      console.log("entro takeHealth");
       if(this.map?.lifeBar){
         this.monchi?.takeLife(this.map.lifeBar);
         console.log("entro takeHealth");
@@ -146,8 +151,8 @@ class Scene1 extends Phaser.Scene {
         else checkPoint(this.monchi);
       }
     },this);
-    const hitZoneGroup = this.add.group() as Phaser.Physics.Arcade.Group;
-    this.swordHitBox = new hitZone(this,100,100,32,64,0xffffff,0.5,hitZoneGroup); //as unknown as Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
+    //const hitZoneGroup = this.add.group() as Phaser.Physics.Arcade.Group;
+    //this.swordHitBox = new hitZone(this,100,100,32,64,0xffffff,0.5,hitZoneGroup); //as unknown as Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
     //this.swordHitBox = this.physics.add.existing(this.swordHitBox);
     //this.matter.add.gameObject(this.swordHitBox);
     //if(this.swordHitBox.body) {
@@ -170,9 +175,15 @@ class Scene1 extends Phaser.Scene {
     // @ts-ignore
     this.physics.add.collider(this.monchi, floor, checkFloor);
     this.physics.add.collider(this.skeleton, floor);
-    this.physics.add.overlap(this.swordHitBox,this.skeleton, hitPlayer);// overlaps de grupos de enemigos??
-    if(this.map.healths)this.physics.add.collider(this.monchi, this.map.healths, takeHealth);
+    this.physics.add.overlap(this.monchi.swordHitBox,this.skeleton, hitPlayer);// overlaps de grupos de enemigos??
+    //if(this.map.healths)this.physics.add.collider(this.monchi, this.map.healths, takeHealth);
+    if(this.map.healths) {
+      //this.physics.add.collider(this.map.healths, this.monchi);
+      this.physics.add.overlap(this.monchi, this.map.healths, takeHealth);
 
+    }
+
+    
     this.skeleton.patrolConfig = skeletonOnePatrol;
     this.skeleton.patrol(skeletonOnePatrol);
     //this.physics.add.collider(this.monchi,this.skeleton, hitPlayer); // colision entre el player y el esqueleto
@@ -211,20 +222,6 @@ class Scene1 extends Phaser.Scene {
         this.lightOnPlayer.y= this.monchi.y
       }
       this.monchi.checkMove(this.cursors)
-      if(this.monchi.isAttacking) { // esta atacando? apreto espacio ?
-        //this.monchi.on(Phaser.Animations.Events.ANIMATION_UPDATE, (anim:Phaser.Animations.Animation, frame:Phaser.Animations.AnimationFrame) => {
-        //  
-        //})
-        //if(this.monchi.flipX) { // esta girado?
-          //this.swordHitBox.x = this.monchi.x - this.monchi.width * 0.25;
-          //this.swordHitBox.setActive(false);  
-        //}else {
-          //this.swordHitBox.x = this.monchi.x + this.monchi.width * 0.25;
-          //this.swordHitBox.y = this.monchi.y;
-          //this.swordHitBox.setActive(false);
-        //}
-        this.swordHitBox.attackBox((this.monchi.x +10),(this.monchi.y),this.monchi.flipX)
-      }
 
       
       

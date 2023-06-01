@@ -38,8 +38,9 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     if(this.body) {
       const body = (this.body as Phaser.Physics.Arcade.Body)
       body.onWorldBounds = true;
-      this.body.setSize(35,80,true); // GOOOD!
-      
+      //this.body.setSize(35,80,true); // GOOOD!
+      this.body.setSize(35, 65, true); // GOOOD!
+      this.body.setOffset(20, 20);
     }
   }
 
@@ -167,13 +168,14 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
 
   enemyAround(target:Player,maxRange: number) {
     const dx = this.x - target.x;
+    const dy = this.y - target.y;
     //console.log("enemy around dx value: "+dx);
-    if (Math.abs(dx) < maxRange) {
+    if (Math.abs(dx) < maxRange && Math.abs(dy) < 20) {
       //enemy.setVelocityX(Math.sign(dx) * SPEED);
       this.isEnemyInFront = true;
       this.setVelocityX(0);
       //console.log("enemy around state from skeleton: "+this.isEnemyInFront);
-    } else if(Math.abs(dx) > maxRange){
+    } else if(Math.abs(dx) > maxRange&& Math.abs(dy) > 20){
       this.isEnemyInFront = false;
       //if(this.patrolConfig) {
         //this.patrolConfig.flip = this.flipX;

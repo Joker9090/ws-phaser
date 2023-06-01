@@ -142,7 +142,7 @@ class Map2 {
 
     const HealthConfig = {
       x:150,
-      y: 950,
+      y: 965,
       sprite:"heartFullUI",
       quantity: 3,
     }
@@ -233,7 +233,7 @@ class Map2 {
 
 
     
-    this.mapElements.addMultiple([newFloor,newFloor2,this.lifeBar,this.healths])
+    this.mapElements.addMultiple([newFloor,newFloor2,this.lifeBar])
 
     return this.mapElements; 
     

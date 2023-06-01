@@ -18,21 +18,21 @@ class Health extends Phaser.Physics.Arcade.Sprite {
     //this.group = group;
     scene.add.existing(this)
 
-    scene.physics.add.existing(this)
-    this.setCollideWorldBounds(true);
-    this.setGravity(0);
+    scene.physics.add.existing(this, true)
+    //this.setCollideWorldBounds(true);
+    //this.setGravity(0);
     
-    if(this.body) {
+    /* if(this.body) {
       let body = (this.body as Phaser.Physics.Arcade.Body)
-      //body.onWorldBounds = true;
+      body.onWorldBounds = true;
       body.setImmovable(true)
-      body.setGravity(0,0);
-      //body.onWorldBounds = true;
-      this.body.setSize(25,35,false); // GOOOD!
-      body.setOffset(0,15)
+      //body.setGravity(0,0);
+      body.onWorldBounds = true;
+      //this.body.setSize(this.x,this.y,true); // GOOOD!
+      //body.setOffset(0,15)
       
       
-    }
+    } */
     
     //const s = scene.add.sprite(config.x,config.y,config.sprite);
     /**Darknes implementation */

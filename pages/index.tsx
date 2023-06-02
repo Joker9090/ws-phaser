@@ -18,7 +18,9 @@ export default function Home() {
     Promise.all([
       import("@/game/SceneLoader"),
       import("@/game/Menu"),
-      import("@/game/Scene1")]).then((scenes) => {
+      import("@/game/Scene1"),
+      import("@/game/Won"),
+      import("@/game/GameOver")]).then((scenes) => {
         setScenes(scenes.map(s => s.default))
       })
   }, [])

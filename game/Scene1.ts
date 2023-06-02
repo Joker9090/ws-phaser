@@ -6,20 +6,24 @@ import Floor from "./assets/Floor";
 
 // Scene in class
 class Scene1 extends Phaser.Scene {
-  
-  cursors?: Phaser.Types.Input.Keyboard.CursorKeys
-  monchi?: Player
-  graphics?: Phaser.GameObjects.Graphics
-  map?: Mapa
-  canWin: boolean = false
-  canRot: boolean = true
-  normalito: boolean = true
-  gravityDown: boolean = true
+  cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
+  monchi?: Player;
+  graphics?: Phaser.GameObjects.Graphics;
+  map?: Mapa;
+  canWin: boolean = false;
+  canRot: boolean = true;
+  normalito: boolean = true;
+  gravityDown: boolean = true;
+  lifes: number = 3;
+  startingPoint = {
+    x: 500, 
+    y: 800, 
+  };
 
   constructor() {
-    super({ key: 'Scene1' })
-  }
-  /*
+    super({ key: 'Scene1' });
+  };
+  
   preload(this: Phaser.Scene) {
   
     this.load.spritesheet("character", "/game/character.png", { frameWidth: 220, frameHeight: 162 })
@@ -34,93 +38,115 @@ class Scene1 extends Phaser.Scene {
     this.load.image("heart","/game/heart.png")
     this.load.image("arrow","/game/arrow.png")
   }
-  */
+  
 
   create(this: Scene1) {
     /* Controls */
-    this.cursors = this.input.keyboard?.createCursorKeys()
-    this.map = new Mapa(this)
-    this.map.createMap()
+    this.cursors = this.input.keyboard?.createCursorKeys();
+    this.map = new Mapa(this);
+    this.map.createMap();
     const { x, y } = this.map.startingPoint;
-    this.monchi = new Player(this, x, y, "character", 2)
-    this.canWin = false
-    this.canRot = true
+    this.monchi = new Player(this, x, y, "character", 2);
+    this.canWin = false;
+    this.canRot = true;
     /* Camera */
-    this.cameras.main.startFollow(this.monchi)
+    this.cameras.main.startFollow(this.monchi);
    
 
 
     const touch = () => {
       if (this.monchi) {
-        this.monchi.idle()
-      }
-    }
+        this.monchi.idle();
+      };
+    };
     
   
     const float = () => {
       if (this.monchi) {
-        this.monchi.setBounce(0.1)
-        this.monchi.setGravityY(-2000)
+        this.monchi.setBounce(0.1);
+        this.monchi.setGravityY(-2000);
         this.time.delayedCall(1000, () => {
-          this.monchi?.setFlipY(true)
-          this.gravityDown=false 
-          this.monchi?.body?.setOffset(70, 0)
-          this.monchi?.setBounceY(0)
-        })
-    }}
+          this.monchi?.setFlipY(true);
+          this.gravityDown=false ;
+          this.monchi?.body?.setOffset(70, 0);
+          this.monchi?.setBounceY(0);
+        });
+    }};
 
     const rotateCam = () => {
-      this.normalito = false
-      // let allowed = true
+      this.normalito = false;
       if (this.canRot) {
-        let rotation = 0
+        let rotation = 0;
         for (let i = 0; i < 25; i++) {
           this.time.delayedCall(10 * i, () => ((rotate) => {
-            this.cameras.main.setRotation(rotate)
-          })(3.1415 * i / 24))
-          if (i == 24) { this.canRot = false }
-        }
-      }
-    }
+            this.cameras.main.setRotation(rotate);
+          })(3.1415 * i / 24));
+          if (i == 24) { this.canRot = false };
+        };
+      };
+    };
     
 
     const noFloat = () => {
-      this.normalito = true
+      this.normalito = true;
       if (this.monchi) {
-        this.monchi?.setGravity(0)
+        this.monchi?.setGravity(0);
         for (let i = 0; i < 25; i++) {
           this.time.delayedCall(10 * i, () => ((rotate) => {
-            this.cameras.main.setRotation(rotate)
-          })(3.1415 + 3.1415*(i)/24))
-        }
-        this.monchi?.setFlipY(false)
-        this.gravityDown=true 
-        this.monchi?.body?.setOffset(70, 50)
-        this.monchi?.setBounceY(0)
-      }
+            this.cameras.main.setRotation(rotate);
+          })(3.1415 + 3.1415*(i)/24));
+        };
+        this.monchi?.setFlipY(false);
+        this.gravityDown=true ;
+        this.monchi?.body?.setOffset(70, 50);
+        this.monchi?.setBounceY(0);
+      };
     
-  }
+  };
 
+    const gameOver = () => {
+      this.lifes=3
+      this.normalito = true;
+      this.scene.restart();
+      this.scene.switch("GameOver");
+    };
+   
     const lose = () => {
-      this.scene.restart()
-      this.normalito = true
-    }
+      this.monchi?.setFlipY(false);
+      this.monchi?.setBounceY(0);
+      this.gravityDown=true ;
+      this.monchi?.body?.setOffset(70, 50);
+      this.cameras.main.setRotation(0);
+      this.monchi?.setGravity(0);
+      this.normalito = true;
+      this.lifes -= 1;
+      if (this.lifes != 0){
+        if(this.monchi){
+          this.monchi.x = this.startingPoint.x;
+          this.monchi.y = this.startingPoint.y;
+          (this.map?.UIg?.getChildren()[this.lifes-1] as Phaser.GameObjects.Image)
+          .setVisible(false);
+        };
+      } else if (this.lifes == 0){
+        gameOver();
+      };
+    };
 
     const win = () => {
-      if (this.canWin) {
+      if (this.canWin && this.monchi) {
         this.scene.restart()
-      }
-    }
+        this.scene.switch("Won");
+      
+      };
+    };
 
     const movingFloorsGrav = () => {
-        this.monchi?.setVelocityY(300)
-      
-    }
+        this.monchi?.setVelocityY(300);
+    };
 
     const movingFloorsGravRot = () => {
-        this.monchi?.setVelocityY(-300)
-      
-    }
+        this.monchi?.setVelocityY(-300);
+    };
 
     const coinCollected = () => {
       if (this.map?.coin) {
@@ -129,11 +155,11 @@ class Scene1 extends Phaser.Scene {
         this.map.coin.setVisible(false);
         this.map.coin.clear(true);
        (this.map.UIg?.getChildren()[3] as Phaser.GameObjects.Image).clearTint();
-      }
-    }
+      };
+    };
 
     //colliders
-    if (this.map.portal) this.map.portal.setTint(0xff0000)
+    if (this.map.portal) this.map.portal.setTint(0xff0000);
     if (this.map.pisos) this.physics.add.collider(this.monchi, this.map.pisos, touch);
     if (this.map.pisos2) this.physics.add.collider(this.monchi, this.map.pisos2, float);
     if (this.map.pisos3) this.physics.add.collider(this.monchi, this.map.pisos3, rotateCam);
@@ -143,16 +169,12 @@ class Scene1 extends Phaser.Scene {
     if (this.map.movingFloor) this.physics.add.collider(this.monchi, this.map.movingFloor, movingFloorsGrav);
     if (this.map.movingFloorRot) this.physics.add.collider(this.monchi, this.map.movingFloorRot, movingFloorsGravRot);
 
-
-
     this.physics.world.on('worldbounds', (body: Phaser.Physics.Arcade.Sprite, top: boolean, down: boolean, left: boolean, right: boolean) => {
-      if (down || top) lose()
+      if (down || top || left || right) lose();
     }, this);
-
-  }
+  };
 
   update(this: Scene1) {
-      
       if (this.gravityDown===false){
        (this.map?.UIg?.getChildren()[4] as Phaser.GameObjects.Image).setRotation(Math.PI*3/2);
       } else {(this.map?.UIg?.getChildren()[4] as Phaser.GameObjects.Image).setRotation(Math.PI/2)};
@@ -163,21 +185,22 @@ class Scene1 extends Phaser.Scene {
       if (this.map) this.map.animateBackground(this.monchi);
     }
     else if (this.monchi && this.normalito == false) {
-      this.monchi?.checkMoveRot(this.cursors)
-      if (this.map) this.map.animateBackground(this.monchi)
-    }
+      this.monchi?.checkMoveRot(this.cursors);
+      if (this.map) this.map.animateBackground(this.monchi);
+    };
     if (this.map?.UIg && this.normalito == false){
       //console.log("entro")
       for (let i = 0 ; i < 4 ; i++){
-        (this.map?.UIg?.getChildren()[i] as Phaser.GameObjects.Image).setRotation(Math.PI)
-        }
+        (this.map?.UIg?.getChildren()[i] as Phaser.GameObjects.Image)
+        .setRotation(Math.PI);
+        };
     } else {
       for (let i = 0 ; i < 4 ; i++){
-        (this.map?.UIg?.getChildren()[i] as Phaser.GameObjects.Image).setRotation(0)
-        }
-    }
-    
-  }
-}
+        (this.map?.UIg?.getChildren()[i] as Phaser.GameObjects.Image)
+        .setRotation(0);
+        };
+    };
+  };
+};
 
 export default Scene1 

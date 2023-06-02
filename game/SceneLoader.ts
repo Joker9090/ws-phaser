@@ -1,6 +1,5 @@
 import Phaser from "phaser"
-import Scene1 from "./Scene1"
-import Menu from "./Menu"
+
 
 const loadAssets = {
     "Menu": {
@@ -9,6 +8,16 @@ const loadAssets = {
             ["image", "glass", "game/glass.png"],
             ["image", "cursor", "game/cursor.png"],
             ["spritesheet", "monchi", "game/character.png", { frameWidth: 220, frameHeight: 162 }],
+        ]
+    },
+    "GameOver": {
+        assets: [
+            ["image", "background", "game/background.png"],
+        ]
+    },
+    "Won": {
+        assets: [
+            ["image", "background", "game/background.png"],
         ]
     },
     "Scene1": {
@@ -95,7 +104,8 @@ class SceneLoader extends Phaser.Scene {
             percentText.destroy();
             assetText.destroy();
         });
-
+        const scenesTitles = ["Menu","Scene1","Won","GameOver"]
+        for(let i = 0;i<scenesTitles.length;i++){ 
         loadAssets["Scene1"].assets.map(([type, name, src, config]:any) => {
             // @ts-checkts-ignore
             if (config) {
@@ -104,20 +114,8 @@ class SceneLoader extends Phaser.Scene {
             else {
                 this.load[type](name, src)
             }
-      
-      
-          })
-          loadAssets["Menu"].assets.map(([type, name, src, config]:any) => {
-            // @ts-checkts-ignore
-            if (config) {
-                this.load[type](name, src, config)
-            }
-            else {
-                this.load[type](name, src)
-            }
-      
-      
-          })
+          })}
+          
     }
 
     create(this: SceneLoader, { level }: any) {

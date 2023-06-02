@@ -19,10 +19,10 @@ export default class GameOver extends Phaser.Scene {
 
     create() {
         this.add.image(900,500,"background").setScale(.7);
-        this.add.text(625, 300, "You've lose! Very mal culiao!!")
+        this.add.text(this.cameras.main.width/2, this.cameras.main.height/2, "You've lose! Very mal culiao!!",{fontSize: '32px'})
         .setOrigin(0.5)
-        .setScale(2);
-        this.add.text(625, 500, "Press SPACE to play again")
+        .setScale(1);
+        this.add.text(this.cameras.main.width/2, this.cameras.main.height/2 + 200, "Press SPACE to play again",{fontSize: '22px'})
         .setOrigin(0.5)
         .setScale(1);
     };
@@ -32,6 +32,7 @@ export default class GameOver extends Phaser.Scene {
             const space = this.cursors.space;
             /*Space*/
             if (space.isDown) {
+                this.scene.sleep()
                 this.scene.switch("Menu");
             };
         };

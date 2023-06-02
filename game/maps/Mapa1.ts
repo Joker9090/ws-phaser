@@ -302,7 +302,7 @@ class Mapa {
 
     const lifeConfig: UIConfig = {
       texture: "heart",
-      pos: { x: 150, y: 100},
+      pos: { x: 150, y: 50},
       scale: .1
     };
     const lifes1 = new UI(this.scene, lifeConfig, this.UIg)
@@ -311,7 +311,7 @@ class Mapa {
 
     const lifeConfig2: UIConfig = {
       texture: "heart",
-      pos: { x: 200, y: 100},
+      pos: { x: 200, y: 50},
       scale: .1
     };
     const lifes2 = new UI(this.scene, lifeConfig2, this.UIg)
@@ -320,7 +320,7 @@ class Mapa {
 
     const lifeConfig3: UIConfig = {
       texture: "heart",
-      pos: { x: 100, y: 100},
+      pos: { x: 100, y: 50},
       scale: .1
 
     };
@@ -331,7 +331,7 @@ class Mapa {
 
     const coinConf: UIConfig = {
       texture: "coin",
-      pos: { x: 300, y: 100},
+      pos: { x: 300, y: 50},
       scale: .1
 
     };
@@ -342,7 +342,7 @@ class Mapa {
 
     const arrowConfig: UIConfig = {
       texture: "arrow",
-      pos: { x: 400 , y: 100},
+      pos: { x: 400 , y: 50},
       scale: .1
 
     };

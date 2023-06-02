@@ -22,6 +22,7 @@ const loadAssets = {
     },
     "Scene1": {
         assets: [
+            ["audio", "song", 'sounds/monchiSpace.mp3'],
             ["image", "background", "/game/background.png"],
             ["image", "plataformaA", "/game/platform1.png"],
             ["image", "plataformaB", "/game/platform1B.png"],

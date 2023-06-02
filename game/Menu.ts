@@ -25,6 +25,10 @@ export default class MainMenuScene extends Phaser.Scene {
     };
 
     create() {
+        /* Audio */
+        //let songLoader = this.load.audio('song', ['sounds/monchiSpace.mp3'])
+        //songLoader.on('filecomplete', () => this.sound.add('song').play())
+        //songLoader.start()
         this.add.image(900,500,"background").setScale(.7);
         this.monchi = this.add.sprite(100,700,"monchi",1).setScale(.5);
         const { width, height } = this.scale;
@@ -51,6 +55,7 @@ export default class MainMenuScene extends Phaser.Scene {
         this.selectButton(0);
 
         playButton.on('selected', () => {
+            this.scene.sleep();
             this.scene.start("Scene1");
             this.selectedButtonIndex = 0
         });

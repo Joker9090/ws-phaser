@@ -19,10 +19,10 @@ export default class WonScene extends Phaser.Scene {
 
     create() {
         this.add.image(900,500,"background").setScale(.7);
-        this.add.text(625, 300, "You've won! Bien weonaso!!")
+        this.add.text(this.cameras.main.width/2, this.cameras.main.height/2, "You've won! Muy bien champan",{fontSize: '35px'})
         .setOrigin(0.5)
-        .setScale(2);
-        this.add.text(625, 500, "Press SPACE to play again")
+        .setScale(1);
+        this.add.text(this.cameras.main.width/2, this.cameras.main.height/2 + 200, "Press SPACE to play again",{fontSize: '22px'})
         .setOrigin(0.5)
         .setScale(1);
     };

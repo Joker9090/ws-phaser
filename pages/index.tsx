@@ -20,7 +20,8 @@ export default function Home() {
       import("@/game/Menu"),
       import("@/game/Scene1"),
       import("@/game/Won"),
-      import("@/game/GameOver")]).then((scenes) => {
+      import("@/game/GameOver"),
+      import("@/game/Scene2")]).then((scenes) => {
         setScenes(scenes.map(s => s.default))
       })
   }, [])
@@ -36,7 +37,7 @@ export default function Home() {
         scale: {
           mode: window.Phaser.Scale.FIT
         },
-        scene: scenes,
+        scene: scenes[5],
         physics: {
           default: "arcade",
           arcade: {

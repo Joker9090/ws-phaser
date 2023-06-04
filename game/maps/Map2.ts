@@ -233,7 +233,7 @@ class Map2 {
 
 
     
-    this.mapElements.addMultiple([newFloor,newFloor2,this.lifeBar])
+    this.mapElements.addMultiple([newFloor,newFloor2])
 
     return this.mapElements; 
     

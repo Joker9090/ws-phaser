@@ -9,13 +9,14 @@ export type LifeBarConfig = {
 
 }
 // Scene in class
-class LifeBar extends Phaser.Physics.Arcade.Sprite {
+class LifeBar extends Phaser.GameObjects.Container {
   scene: Phaser.Scene;
   lifeMask?:Phaser.GameObjects.Image;
+  fullBar?: number;
   //group: Phaser.Physics.Arcade.Group;
   
   constructor(scene: Phaser.Scene, config: LifeBarConfig,group?: Phaser.Physics.Arcade.Group , frame?: string | number | undefined) {
-    super(scene, config.x, config.y, config.sprite)
+    super(scene, config.x, config.y)
     this.scene = scene;
     //this.group = group;
     
@@ -39,7 +40,9 @@ class LifeBar extends Phaser.Physics.Arcade.Sprite {
     //greenBar.scaleX = 0.03
     //greenBar.setOrigin(1.1,0.5)
     greenBar.mask = new Phaser.Display.Masks.BitmapMask(this.scene, greenBarMask);
+    
     this.lifeMask = greenBarMask;
+    this.fullBar = this.lifeMask.x;
     //greenBarMask.x -= 35;
     //greenBarMask.x= 200;
 
@@ -62,6 +65,7 @@ class LifeBar extends Phaser.Physics.Arcade.Sprite {
 
   setBar(value: number){
     if(this.lifeMask){
+      console.log("lifemask value default:",this.lifeMask.x)
       this.lifeMask.x = value;
     }
   }

@@ -24,6 +24,7 @@ class Scene1 extends Phaser.Scene {
   //UIGame?: Phaser.GameObjects.Container;
   hitZoneGroup?: Phaser.Physics.Arcade.Group;
   UIGame?: Phaser.GameObjects.Image;
+  lifePlayer?: LifeBar;
   constructor() {
     super({key: 'Scene1'})
   }
@@ -54,6 +55,25 @@ class Scene1 extends Phaser.Scene {
     //this.load.image("this.player.setVelocityY(-330);plataformaB", "/game/platform1B.png");
   }
 
+  hitPlayer = (monchi: Player, skeleton: Enemy, scene:Phaser.Scene) => {
+    //console.log("Player colision con enemigo");
+    console.log("Player espada colision con enemigo");
+    skeleton?.receiveDamage();
+    if (monchi && monchi.swordHitBox){
+      monchi.swordHitBox.x = 0;
+      monchi.swordHitBox.y = 0;
+      monchi.swordHitBox.setActive(false);
+
+    }
+    console.log("state skeleton: " + skeleton?.Onstate);
+    if(skeleton && skeleton.Onstate !== "dead") {
+      scene.time.delayedCall(1200, skeleton.idle, [], skeleton);
+    }else if (skeleton?.Onstate === "dead") {
+      scene.time.delayedCall(1200, skeleton.corposeStay, [], skeleton);
+      //this.skeleton.destroy();
+    }
+  }
+
 
   create(this: Scene1) {
 
@@ -61,7 +81,7 @@ class Scene1 extends Phaser.Scene {
 
     //this.scene.run('gameUI');
     this.map = new Map2(this);
-    
+    this.lifePlayer = this.map.lifeBar;
     
     const floor = this.map.createMap()
     
@@ -90,7 +110,7 @@ class Scene1 extends Phaser.Scene {
      
     }
 
-    const hitPlayer = () => {
+/*     const hitPlayer = (monchi: Player, skeleton: Enemy) => {
       //console.log("Player colision con enemigo");
       console.log("Player espada colision con enemigo");
       this.skeleton?.receiveDamage();
@@ -107,7 +127,7 @@ class Scene1 extends Phaser.Scene {
         this.time.delayedCall(1200, this.skeleton.corposeStay, [], this.skeleton);
         //this.skeleton.destroy();
       }
-    }
+    } */
 
     this.cameras.main.setBounds(0, 0, 3000, 1048);//tamaño del esceneario para poner limites
     //this.physics.world.setBounds(0, 0, 3000, 1048);
@@ -138,6 +158,9 @@ class Scene1 extends Phaser.Scene {
       if(this.map?.lifeBar){
         this.monchi?.takeLife(this.map.lifeBar);
         console.log("entro takeHealth");
+        this.map.healths?.setInteractive(false);
+        this.map.healths?.setActive(false);
+        this.map.healths?.destroy();
         //this.map.lifeBar.updateBar(this,10);
       }
     }
@@ -175,7 +198,7 @@ class Scene1 extends Phaser.Scene {
     // @ts-ignore
     this.physics.add.collider(this.monchi, floor, checkFloor);
     this.physics.add.collider(this.skeleton, floor);
-    this.physics.add.overlap(this.monchi.swordHitBox,this.skeleton, hitPlayer);// overlaps de grupos de enemigos??
+    //this.physics.add.overlap(this.monchi.swordHitBox,this.skeleton, hitPlayer);// overlaps de grupos de enemigos??
     //if(this.map.healths)this.physics.add.collider(this.monchi, this.map.healths, takeHealth);
     if(this.map.healths) {
       //this.physics.add.collider(this.map.healths, this.monchi);
@@ -222,11 +245,23 @@ class Scene1 extends Phaser.Scene {
         this.lightOnPlayer.y= this.monchi.y
       }
       this.monchi.checkMove(this.cursors)
-
+      if(this.monchi.isAttacking && this.skeleton) {
+        if (Phaser.Geom.Rectangle.Overlaps(this.monchi.swordHitBox.getBounds(), this.skeleton?.getBounds()))
+            {
+                //this.graphics.strokeRectShape(this.rectangles[i]);
+                this.hitPlayer(this.monchi,this.skeleton,this);
+            }
+      }
       
       
     }
     if(this.skeleton && this.monchi && this.skeleton.Onstate !== "dead") {
+      if(this.lifePlayer &&this.skeleton.isAttacking && this.monchi && Phaser.Geom.Rectangle.Overlaps(this.skeleton.newHitBox.getBounds(), this.monchi?.getBounds())){
+        this.monchi.receivedDamage(50);
+        this.lifePlayer.updateBar(this,-35);
+        if(this.monchi.life <= 0) this.scene.restart();
+
+      }
       //console.log("skeleton update");
       this.skeleton.enemyAround(this.monchi,50);
       if(!this.skeleton.isEnemyInFront && !this.skeleton.isPatrol && this.skeleton.patrolConfig && this.skeleton.patrolConfig != null && this.skeleton.patrolConfig != undefined) {

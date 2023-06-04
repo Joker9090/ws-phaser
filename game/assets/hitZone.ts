@@ -10,6 +10,9 @@ class hitZone extends Phaser.GameObjects.Rectangle {
         this.setActive(false);
         scene.add.existing(this)
         this.scene.physics.add.existing(this,true);
+        this.setDepth(1);
+        
+        
         //this.group = group;
         //this.group.add(this);
         //if(this.body) {
@@ -23,7 +26,7 @@ class hitZone extends Phaser.GameObjects.Rectangle {
 
 
     moveBox(x:number,y:number,flipX:boolean, magicNumber: number){
-        console.log("entro bartoo movebox");
+        console.log("entro bartoo movebox ",this.depth);
         if(flipX) {
             this.x = x - magicNumber;
         } else {
@@ -31,26 +34,19 @@ class hitZone extends Phaser.GameObjects.Rectangle {
         }
         //this.x = x;//flipX ? this.x + x : this.x + x;
         this.y = y;
-    }
-
-    disableBox() {
-        this.setActive(false);
-    }
-
-    activeBox() {
         this.setActive(true);
+        //this.setInteractive(true);
     }
 
 
-    attackBox(x:number,y:number,flipX:boolean,magicNumber: number ,callbackFn?: Function) {
+
+    attackBox(x:number,y:number,flipX:boolean,magicNumber: number) {
 
         this.moveBox(x,y,flipX,magicNumber);
-        this.activeBox();
+        this.setActive(false);
+        console.log("estado de active: ", this.active);
         const actionDef = "Ataco";
-        //callbackFn(actionDef);
-        setTimeout(() => {
-            this.disableBox();
-        },200)
+
         
     }
 }

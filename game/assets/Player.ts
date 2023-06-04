@@ -32,6 +32,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     }
     this.swordHitBox = new hitZone(scene,100,100,32,64,0xffffff,0.5);
+
   }
 
   createAnims(scene: Phaser.Scene,sprite:string ) {
@@ -143,9 +144,19 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
   takeLife(lifeBar: LifeBar) {
     //const moreLife = 10;
-    if(this.life < 100) this.life += 10;
-    if(this.life > 100) this.life = 100;
-    lifeBar.setBar(this.life);
+    if(lifeBar.fullBar) {
+      if(this.life < 100) {
+        this.life += 10;
+        if(lifeBar.x + 10 > 100) {
+          lifeBar.setBar(lifeBar.fullBar)
+        }else lifeBar.setBar(lifeBar.x + 10);
+      }else if(this.life >= 100) {
+        //this.life = 99;
+        //lifeBar.setBar(this.life);
+      }
+      console.log("takelife : " + this.life);
+
+    }
   }
 
   idle() {

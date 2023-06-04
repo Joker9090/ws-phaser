@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import Player from "./Player";
+import hitZone from "./hitZone";
 
 export type PatrolConfig = {
   x:number,
@@ -18,6 +19,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
   life:number = 3;
   Onstate?: string = "pasive";
   sprite: string = '';
+  newHitBox: hitZone;
 
   constructor(scene: Phaser.Scene, x: number, y: number, sprite: string, frame: number,life?: number) {
     super(scene, x, y, sprite, frame)
@@ -42,6 +44,8 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
       this.body.setSize(35, 65, true); // GOOOD!
       this.body.setOffset(20, 20);
     }
+
+    this.newHitBox = new hitZone(scene,150,150,32,64,0xfafa,0.5);
   }
 
   createAnims(scene: Phaser.Scene, sprite: string) {
@@ -167,6 +171,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
   }
 
   enemyAround(target:Player,maxRange: number) {
+    console.log("depth esqueleto ",this.depth);
     const dx = this.x - target.x;
     const dy = this.y - target.y;
     //console.log("enemy around dx value: "+dx);
@@ -257,14 +262,18 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
 
   }
   attack() {
-    //if(!this.isAttacking) {
+    if (!this.isAttacking) {
+      console.log("attack skeleton");
+      this.newHitBox.attackBox((this.x),(this.y),!this.flipX, 20)
       this.isAttacking = true;
-      this.setVelocityX(0);
-      this.flipX = !this.flipX;
+      this.play(`${this.sprite}AttackFrames`, true);
       //this.setVelocityY(-730);
-      this.anims.play(`${this.sprite}AttackFrames`, true);
-      this.scene.time.delayedCall(600, this.idle, [], this);
-    //}
+      this.scene.time.delayedCall(600, () => {
+        this.isAttacking = false;
+
+        // this.idle()
+      }, [], this);
+    }
   }
 
   checkMove(cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined) {

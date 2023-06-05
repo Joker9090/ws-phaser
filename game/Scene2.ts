@@ -36,7 +36,7 @@ class Scene2 extends Phaser.Scene {
     this.load.image("portal", "/game/portal.png")
     this.load.image("heart", "/game/heart.png")
     this.load.image("arrow", "/game/arrow.png")
-    this.load.audio("song" , 'sounds/monchiSpace.mp3')
+    this.load.audio("song", 'sounds/monchiSpace.mp3')
   }
 
 
@@ -52,7 +52,7 @@ class Scene2 extends Phaser.Scene {
     this.physics.world.gravity.y = 0;
 
     /* Controls */
-    
+
     this.cursors = this.input.keyboard?.createCursorKeys();
     this.map = new Mapa(this);
     this.map.createMap();
@@ -81,7 +81,7 @@ class Scene2 extends Phaser.Scene {
       this.lifes -= 1;
       if (this.lifes == 0) {
         gameOver();
-      } else if(this.lifes != 0 && this.checkPoint == 0 && this.monchi){
+      } else if (this.lifes != 0 && this.checkPoint == 0 && this.monchi) {
         this.monchi?.setFlipY(false);
         this.monchi?.setBounceY(0);
         this.monchi?.body?.setOffset(70, 50);
@@ -90,9 +90,9 @@ class Scene2 extends Phaser.Scene {
         this.monchi.x = this.startingPoint.x;
         this.monchi.y = this.startingPoint.y;
         (this.map?.UIg?.getChildren()[this.lifes - 1] as Phaser.GameObjects.Image)
-        .setVisible(false);
-        };
+          .setVisible(false);
       };
+    };
 
 
     const win = () => {
@@ -118,13 +118,13 @@ class Scene2 extends Phaser.Scene {
 
     const timeTrack = () => {
       this.startTime = this.time.now
-      this.textTime = this.add.text(this.cameras.main.width/2, 35, 'Time: 0', { fontSize: '32px' }).setScrollFactor(0, 0);
+      this.textTime = this.add.text(this.cameras.main.width / 2, 35, 'Time: 0', { fontSize: '32px' }).setScrollFactor(0, 0);
     };
     timeTrack()
 
     //colliders
     if (this.map.portal) this.map.portal.setTint(0xff0000);
-    if (this.map.pisos) this.physics.add.collider(this.monchi, this.map.pisos, touch);
+    //if (this.map.pisos) this.physics.add.collider(this.monchi, this.map.pisos, touch);
     if (this.map.coin) this.physics.add.overlap(this.monchi, this.map.coin, coinCollected);
     if (this.map.portal) this.physics.add.overlap(this.monchi, this.map.portal, win);
 
@@ -132,44 +132,30 @@ class Scene2 extends Phaser.Scene {
     this.physics.world.on('worldbounds', (body: Phaser.Physics.Arcade.Sprite, top: boolean, down: boolean, left: boolean, right: boolean) => {
       if (down || top || left || right) lose();
     }, this);
+
+
+    //creative
+    
+      this.textTime = this.add.text(this.cameras.main.width/2 - 500, this.cameras.main.height/2, 'Coordenadas: ', { fontSize: '32px' }).setScrollFactor(0, 0);
+
   };
 
   update(this: Scene2) {
 
     //modo creative
-    
-    if(this.cursors) {
-        // Listen for keyboard input
-        var cursors = this.cursors;
-        var cameraSpeed = 10; // Adjust the camera movement speed as needed
-
-        if (this.cursors.up.isDown) {
-            this.cameras.main.y += cameraSpeed;
-        } else if (this.cursors.down.isDown) {
-            this.cameras.main.y -= cameraSpeed;
-        }
-
-        if (this.cursors.left.isDown) {
-            this.cameras.main.x += cameraSpeed;
-        } else if (this.cursors.right.isDown) {
-            this.cameras.main.x -= cameraSpeed;
-        }
-    }
-
-    /*
     if (this.textTime) {
       let timePassed = this.time.now - this.startTime
       this.textTime.setText('Time: ' + Math.floor(timePassed/1000));
     };
+    if (this.cursors) {
 
+      // Creative mode controls
+      if (this.monchi) {
+        this.monchi.checkMoveCreative(this.cursors);
+        if (this.map) this.map.animateBackground(this.monchi);
+      };
 
-    // Attach controls to player 
-    if (this.monchi && this.normalito) {
-      this.monchi.checkMove(this.cursors);
-      if (this.map) this.map.animateBackground(this.monchi);
     };
-    */
   };
 };
-
 export default Scene2

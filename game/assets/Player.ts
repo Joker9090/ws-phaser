@@ -153,6 +153,36 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
+  checkMoveCreative(cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined) {
+    /* Keywords press */
+    if (cursors) {
+      const { left, right, up, down, space } = cursors;
+      /* Left*/
+      if (left.isDown) {
+        this.setVelocityX(-160);
+      }
+
+      /* Right*/
+      else if (right.isDown) {
+        this.setVelocityX(160);
+      }
+
+      /* Up*/
+      else if (down.isDown) {
+        this.setVelocityY(160);
+      }
+       /* Down*/
+       else if (up.isDown) {
+        this.setVelocityY(-160);
+      }
+      /* Stop*/
+      else {
+        this.setVelocityY(0);
+        this.setVelocityX(0);
+      }
+    }
+  }
+
 }
 
 export default Player 

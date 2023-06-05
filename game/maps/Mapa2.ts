@@ -18,8 +18,8 @@ class Mapa {
   portal?: Phaser.Physics.Arcade.Group;
   UIg?: Phaser.GameObjects.Group;
   startingPoint = {
-    x: 50, //500
-    y: 150, //800
+    x: 400, //500
+    y: 750, //800
   };
   background: Phaser.GameObjects.Image;
   constructor(scene: Phaser.Scene) {
@@ -57,66 +57,73 @@ class Mapa {
         textureA: "plataformaA",
         textureB: "plataformaB",
         large: 5,
-        pos: { x: 0, y: 300, },
+        pos: { x: 400, y: 300, },
         scale: { width: 0.7, height: 0.7, },
+        rotated: false
       };
     const p1 = new LargeFloor(this.scene, p1Config, this.pisos);
 
     const p2Config: LargeFloorConfig = {
         textureA: "plataformaA",
         textureB: "plataformaB",
-        large: 7,
-        pos: { x: 1500, y: 100, },
+        large: 5,
+        pos: { x: 1400, y: 100, },
         scale: { width: 0.7, height: 0.7, },
+        rotated: true,
       };
-    const p2 = new LargeFloor(this.scene, p2Config, this.pisos).setRotation(Math.PI/2);
+    const p2 = new LargeFloor(this.scene, p2Config, this.pisos);
 
     const p3Config: LargeFloorConfig = {
         textureA: "plataformaA",
         textureB: "plataformaB",
         large: 7,
-        pos: { x: 1500, y: 100, },
+        pos: { x: 1045, y: 360, },
         scale: { width: 0.7, height: 0.7, },
+        rotated: true,
       };
-    const p3 = new LargeFloor(this.scene, p3Config, this.pisos).setRotation(Math.PI/2);
+    const p3 = new LargeFloor(this.scene, p3Config, this.pisos);
 
     const p4Config: LargeFloorConfig = {
       textureA: "plataformaA",
       textureB: "plataformaB",
-      large: 7,
-      pos: { x: 1500, y: 100, },
+      large: 4,
+      pos: { x: 1400, y: 1300, },
       scale: { width: 0.7, height: 0.7, },
+      rotated: true,
     };
-
-    const p4 = new LargeFloor(this.scene, p4Config, this.pisos).setRotation(Math.PI/2);
-
+    const p4 = new LargeFloor(this.scene, p4Config, this.pisos);
+    
     const p5Config: LargeFloorConfig = {
-        textureA: "plataformaA",
-        textureB: "plataformaB",
-        large: 7,
-        pos: { x: 1500, y: 100, },
-        scale: { width: 0.7, height: 0.7, },
-      };
+      textureA: "plataformaA",
+      textureB: "plataformaB",
+      large: 5,
+      pos: { x: 720, y: 1870, },
+      scale: { width: 0.7, height: 0.7, },
+      rotated: false,
+    };
     const p5 = new LargeFloor(this.scene, p5Config, this.pisos);
     
     
     const p6Config: LargeFloorConfig = {
-        textureA: "plataformaA",
-        textureB: "plataformaB",
-        large: 7,
-        pos: { x: 1500, y: 100, },
-        scale: { width: 0.7, height: 0.7, },
-      };
-    const p6 = new LargeFloor(this.scene, p6Config, this.pisos).setRotation(Math.PI/2);
-
+      textureA: "plataformaA",
+      textureB: "plataformaB",
+      large: 7,
+      pos: { x: 590, y: 1300, },
+      scale: { width: 0.7, height: 0.7, },
+      rotated: true,
+    };
+    const p6 = new LargeFloor(this.scene, p6Config, this.pisos);
+    
     const p7Config: LargeFloorConfig = {
-        textureA: "plataformaA",
-        textureB: "plataformaB",
-        large: 7,
-        pos: { x: 1500, y: 100, },
-        scale: { width: 0.7, height: 0.7, },
-      };
-    const p7 = new LargeFloor(this.scene, p7Config, this.pisos).setRotation(Math.PI/2);
+      textureA: "plataformaA",
+      textureB: "plataformaB",
+      large: 10,
+      pos: { x: 200, y: 800, },
+      rotated: true,
+      scale: { width: 0.7, height: 0.7, },
+    };
+    const p7 = new LargeFloor(this.scene, p7Config, this.pisos);
+    /*
 
     const p8Config: LargeFloorConfig = {
         textureA: "plataformaA",
@@ -125,7 +132,7 @@ class Mapa {
         pos: { x: 1500, y: 100, },
         scale: { width: 0.7, height: 0.7, },
       };
-    const p8 = new LargeFloor(this.scene, p8Config, this.pisos).setRotation(Math.PI/2);
+    const p8 = new LargeFloor(this.scene, p8Config, this.pisos);
     // this.scene.physics.add.sprite(0,0,"plataformaB")
 
     const p9Config: LargeFloorConfig = {
@@ -135,7 +142,7 @@ class Mapa {
         pos: { x: 1500, y: 100, },
         scale: { width: 0.7, height: 0.7, },
       };
-    const p9 = new LargeFloor(this.scene, p9Config, this.pisos).setRotation(Math.PI/2);
+    const p9 = new LargeFloor(this.scene, p9Config, this.pisos);
 
 
     const p10Config: LargeFloorConfig = {
@@ -145,7 +152,7 @@ class Mapa {
         pos: { x: 1500, y: 100, },
         scale: { width: 0.7, height: 0.7, },
       };
-    const p10 = new LargeFloor(this.scene, p10Config, this.pisos).setRotation(Math.PI/2);
+    const p10 = new LargeFloor(this.scene, p10Config, this.pisos);
 
     const p11Config: LargeFloorConfig = {
         textureA: "plataformaA",
@@ -154,7 +161,7 @@ class Mapa {
         pos: { x: 1500, y: 100, },
         scale: { width: 0.7, height: 0.7, },
       };
-    const p11 = new LargeFloor(this.scene, p11Config, this.pisos).setRotation(Math.PI/2);
+    const p11 = new LargeFloor(this.scene, p11Config, this.pisos);
 
     const p12Config: LargeFloorConfig = {
         textureA: "plataformaA",
@@ -163,7 +170,7 @@ class Mapa {
         pos: { x: 1500, y: 100, },
         scale: { width: 0.7, height: 0.7, },
       };
-    const p12 = new LargeFloor(this.scene, p12Config, this.pisos).setRotation(Math.PI/2);
+    const p12 = new LargeFloor(this.scene, p12Config, this.pisos);
 
     const p13Config: LargeFloorConfig = {
         textureA: "plataformaA",
@@ -172,10 +179,10 @@ class Mapa {
         pos: { x: 1500, y: 100, },
         scale: { width: 0.7, height: 0.7, },
       };
-    const p13 = new LargeFloor(this.scene, p13Config, this.pisos).setRotation(Math.PI/2);
+    const p13 = new LargeFloor(this.scene, p13Config, this.pisos);
 
 
-
+*/
 
     //portal monedas y asteroides
 
@@ -193,8 +200,8 @@ class Mapa {
       texture: "coin",
       pos: { x: 500, y: 1580, }, // 500 1580
       scale: { width: 0.1, height: 0.1, },
-      width: 450,
-      height: 600,
+      width: 650,
+      height: 300,
       fix: 100,
     };
     const coin = new Floor(this.scene, coinConfig, this.coin);

@@ -48,9 +48,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
   idle() {
     this.isJumping = false;
-    this.setVelocityX(0);
-   
-    
+    //this.setVelocityX(0);
   }
 
   jump() {
@@ -112,6 +110,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
+  
   checkMoveRot(cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined) {
     /* Keywords press */
     if (cursors) {
@@ -120,7 +119,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       if (left.isDown) {
         this.setVelocityX(160);
         this.setFlipX(false)
-
+        
         /* Play animation */
         if(!this.isJumping) this.anims.play('monchiMove', true);
       }
@@ -129,51 +128,81 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       else if (right.isDown) {
         this.setVelocityX(-160);
         this.setFlipX(true)
-
+        
         /* Play animation */
         if(!this.isJumping) this.anims.play('monchiMove', true);
       }
-
+      
       /* Nothing */
       else {
         this.setVelocityX(0)
       }
-
+      
       /* Up / Juamp */
-
+      
       if (up.isDown && this.body && this.body.touching.down) {
         /* Play animation */
         this.jump()
       } 
-
+      
       if (up.isDown && this.body && this.body.touching.up) {
         /* Play animation */
         this.jumpBack()
       } 
     }
   }
+  
+  checkSideGravity(cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined) {
+    /* Keywords press */
+    if (cursors) {
+      let grav = 1
+      const { up, down, left, right } = cursors;
+      if (up.isDown) {
+        this.setVelocityY(-160)
+        this.setFlipX(false)
+        if (!this.isJumping) this.anims.play('monchiMove', true);
+      } else if (down.isDown) {
+        this.setVelocityY(160)
+        this.setFlipX(true)
+        if (!this.isJumping) this.anims.play('monchiMove', true);
+      } else {
+        this.setVelocityY(0)
+      }
+      if (left.isDown) {
+        this.setGravityX(-100000)
+        this.setFlipY(true)
+        this.setOffset(100, 50)
+      } else if (right.isDown) {
+        this.setGravityX(100000)
+        this.setFlipY(false)
+        this.setOffset(80, 50)
+      }
+    }
+   }
+  
 
   checkMoveCreative(cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined) {
     /* Keywords press */
+    const velo = 300
     if (cursors) {
       const { left, right, up, down, space } = cursors;
       /* Left*/
       if (left.isDown) {
-        this.setVelocityX(-160);
+        this.setVelocityX(-velo);
       }
 
       /* Right*/
       else if (right.isDown) {
-        this.setVelocityX(160);
+        this.setVelocityX(velo);
       }
 
       /* Up*/
       else if (down.isDown) {
-        this.setVelocityY(160);
+        this.setVelocityY(velo);
       }
        /* Down*/
        else if (up.isDown) {
-        this.setVelocityY(-160);
+        this.setVelocityY(-velo);
       }
       /* Stop*/
       else {

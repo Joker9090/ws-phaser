@@ -15,9 +15,10 @@ class Scene2 extends Phaser.Scene {
   lifes: number = 3;
   checkPoint: number = 0;
   creative: boolean = true;
+  sideGrav: boolean = false;
   startingPoint = {
-    x: 500,
-    y: 800,
+    x: 400,
+    y: 140,
   };
 
   constructor() {
@@ -37,6 +38,7 @@ class Scene2 extends Phaser.Scene {
     this.load.image("heart", "/game/heart.png")
     this.load.image("arrow", "/game/arrow.png")
     this.load.audio("song", 'sounds/monchiSpace.mp3')
+    this.load.image("fireball","/game/fireball.png")
   }
 
 
@@ -48,8 +50,6 @@ class Scene2 extends Phaser.Scene {
     const music = this.sound.add('song')
     //music.play()
 
-    //modo creative
-    this.physics.world.gravity.y = 0;
 
     /* Controls */
 
@@ -59,6 +59,7 @@ class Scene2 extends Phaser.Scene {
     const { x, y } = this.map.startingPoint;
     this.monchi = new Player(this, x, y, "character", 2);
     this.canWin = false;
+    this.monchi.setGravity(1000)
 
     /* Camera */
     this.cameras.main.startFollow(this.monchi);
@@ -69,6 +70,8 @@ class Scene2 extends Phaser.Scene {
         this.monchi.idle();
       };
     };
+    
+
 
     const gameOver = () => {
       music.stop()
@@ -83,10 +86,11 @@ class Scene2 extends Phaser.Scene {
         gameOver();
       } else if (this.lifes != 0 && this.checkPoint == 0 && this.monchi) {
         this.monchi?.setFlipY(false);
-        this.monchi?.setBounceY(0);
+        this.monchi?.setFlipX(false);
         this.monchi?.body?.setOffset(70, 50);
         this.cameras.main.setRotation(0);
-        this.monchi?.setGravity(0);
+        this.monchi?.setGravityY(1000);
+        this.sideGrav=false
         this.monchi.x = this.startingPoint.x;
         this.monchi.y = this.startingPoint.y;
         (this.map?.UIg?.getChildren()[this.lifes - 1] as Phaser.GameObjects.Image)
@@ -123,8 +127,9 @@ class Scene2 extends Phaser.Scene {
     timeTrack()
 
     //colliders
+    
     if (this.map.portal) this.map.portal.setTint(0xff0000);
-    //if (this.map.pisos) this.physics.add.collider(this.monchi, this.map.pisos, touch);
+    if (this.map.pisos) this.physics.add.collider(this.monchi, this.map.pisos, touch);
     if (this.map.coin) this.physics.add.overlap(this.monchi, this.map.coin, coinCollected);
     if (this.map.portal) this.physics.add.overlap(this.monchi, this.map.portal, win);
 
@@ -135,23 +140,34 @@ class Scene2 extends Phaser.Scene {
 
 
     //creative
-    
+     // this.cameras.main.setRotation(-Math.PI/4)
       this.textTime = this.add.text(this.cameras.main.width/2 - 500, this.cameras.main.height/2, 'Coordenadas: ', { fontSize: '32px' }).setScrollFactor(0, 0);
 
   };
 
   update(this: Scene2) {
 
+   
     //modo creative
-    if (this.textTime) {
-      let timePassed = this.time.now - this.startTime
-      this.textTime.setText('Time: ' + Math.floor(timePassed/1000));
+    if (this.textTime && this.monchi) {
+      this.textTime.setText('X: ' + Math.floor(this.monchi.x) + ' Y: ' + Math.floor(this.monchi.y));
+    };
+
+    //
+    if(this.monchi){
+      if(this.monchi.x > 1000){
+        this.sideGrav = true;
+        this.monchi.setVelocityX(0);
+        this.monchi.setRotation(-Math.PI/2).setSize(110,73).setOffset(80,50);
+      };
     };
     if (this.cursors) {
-
-      // Creative mode controls
       if (this.monchi) {
-        this.monchi.checkMoveCreative(this.cursors);
+        if(this.sideGrav){
+          this.monchi.checkSideGravity(this.cursors);
+        } else {
+          this.monchi.checkMove(this.cursors);
+        }
         if (this.map) this.map.animateBackground(this.monchi);
       };
 

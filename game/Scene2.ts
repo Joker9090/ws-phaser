@@ -166,7 +166,7 @@ class Scene2 extends Phaser.Scene {
         if(this.sideGrav){
           this.monchi.checkSideGravity(this.cursors);
         } else {
-          this.monchi.checkMove(this.cursors);
+         // this.monchi.checkMove(this.cursors);
         }
         if (this.map) this.map.animateBackground(this.monchi);
       };

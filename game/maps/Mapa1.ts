@@ -4,11 +4,12 @@ import CloudGenerator, { CloudGeneratorConfig } from "../assets/CloudGenerator";
 import Floor, { FloorConfig } from "../assets/Floor";
 import LargeFloor, { LargeFloorConfig } from "../assets/LargeFloor";
 import UI, { UIConfig } from "../assets/UI";
+import Game from "../Game";
 // Scene in class
-class Mapa {
+class Mapa1 {
   isJumping = false;
   debugGraphics: Phaser.GameObjects.Graphics;
-  scene: Phaser.Scene;
+  scene: Game;
   worldSize = {
     width: 10000,
     height: 2500,
@@ -19,15 +20,16 @@ class Mapa {
   pisos4?: Phaser.Physics.Arcade.Group;
   coin?: Phaser.Physics.Arcade.Group;
   portal?: Phaser.Physics.Arcade.Group;
-  movingFloor?:  Phaser.Physics.Arcade.Group;
-  movingFloorRot?:  Phaser.Physics.Arcade.Group;
+  movingFloor?: Phaser.Physics.Arcade.Group;
+  movingFloorRot?: Phaser.Physics.Arcade.Group;
   UIg?: Phaser.GameObjects.Group;
+  gravityArrow?: Phaser.GameObjects.Image;
   startingPoint = {
     x: 500, //500
     y: 800, //800
   };
   background: Phaser.GameObjects.Image;
-  constructor(scene: Phaser.Scene) {
+  constructor(scene: Game) {
     this.scene = scene;
 
     /* World size*/
@@ -46,10 +48,10 @@ class Mapa {
     const { x: x2, y: y2 } = player;
     const calcDiffX = (x2 - x) / 1.2;
     const calcDiffY = (y2 - y) / 1.2;
-    this.background.setPosition((x + calcDiffX),(y + calcDiffY));  
+    this.background.setPosition((x + calcDiffX), (y + calcDiffY));
   };
 
-  createMap() {
+  createMap(data: { level: number, lifes: number }) {
     this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
     this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });
     this.pisos = this.scene.physics.add.group({ allowGravity: false });
@@ -93,12 +95,12 @@ class Mapa {
       texture: "plataforma2",
       pos: { x: 1100, y: 800, }, // 1100 800
       scale: { width: 0.1, height: 0.1, },
-      width: 2400, 
+      width: 2400,
       height: 300,
     };
     const p5 = new Floor(this.scene, p5Config, this.pisos);
-    
-    
+
+
     const p6Config: FloorConfig = {
       texture: "plataforma2",
       pos: { x: 1300, y: 1200, },
@@ -193,7 +195,7 @@ class Mapa {
       }
     };
     const p13 = new Floor(this.scene, p13Config, this.pisos3)
-    .setTint(Phaser.Display.Color.GetColor(255, 177, 0));
+      .setTint(Phaser.Display.Color.GetColor(255, 177, 0));
     //RGB(255 178 252) rosita
     const p14Config: LargeFloorConfig = {
       textureA: "plataformaA",
@@ -248,7 +250,7 @@ class Mapa {
       scale: { width: 0.8, height: 0.7, },
     };
     const p19 = new Floor(this.scene, p19Config, this.pisos4).setTint(Phaser.Display.Color.GetColor(255, 177, 0));
-//portal monedas y asteroides
+    //portal monedas y asteroides
 
     const portalConfig: FloorConfig = {
       texture: "portal",
@@ -297,64 +299,110 @@ class Mapa {
     c2.start();
 
     //UI
-    
-    
 
-    const lifeConfig: UIConfig = {
-      texture: "heart",
-      pos: { x: 150, y: 50},
-      scale: .1
-    };
-    const lifes1 = new UI(this.scene, lifeConfig, this.UIg)
-    .setScrollFactor(0, 0);
-
-
-    const lifeConfig2: UIConfig = {
-      texture: "heart",
-      pos: { x: 200, y: 50},
-      scale: .1
-    };
-    const lifes2 = new UI(this.scene, lifeConfig2, this.UIg)
-    .setScrollFactor(0, 0);
-
-
-    const lifeConfig3: UIConfig = {
-      texture: "heart",
-      pos: { x: 100, y: 50},
-      scale: .1
-
-    };
-    const lifes3 = new UI(this.scene, lifeConfig3, this.UIg)
-    .setScrollFactor(0, 0);
-
-
-
+    this.createUI(data.lifes)
     const coinConf: UIConfig = {
       texture: "coin",
-      pos: { x: 300, y: 50},
+      pos: { x: 300, y: 50 },
       scale: .1
 
     };
     const coinUI = new UI(this.scene, coinConf, this.UIg)
-    .setTint(Phaser.Display.Color.GetColor(0, 0, 0))
-    .setScrollFactor(0, 0);
+      .setTint(Phaser.Display.Color.GetColor(0, 0, 0))
+      .setScrollFactor(0, 0);
 
 
     const arrowConfig: UIConfig = {
       texture: "arrow",
-      pos: { x: 400 , y: 50},
+      pos: { x: 400, y: 50 },
       scale: .1
 
     };
-    const arrow = new UI(this.scene, arrowConfig, this.UIg)
-    .setRotation(Math.PI/2)
-    .setScrollFactor(0, 0);
+    this.gravityArrow = new UI(this.scene, arrowConfig, this.UIg)
+      .setRotation(Math.PI / 2)
+      .setScrollFactor(0, 0);
 
     this.UIg.setDepth(10);
 
 
   };
 
+  addColliders() {
+    if (this.scene.monchi) {
+
+      if (this.portal) this.portal.setTint(0xff0000);
+      if (this.pisos) this.scene.physics.add.collider(this.scene.monchi, this.pisos, this.scene.touch, () => true, this.scene);
+      if (this.pisos2) this.scene.physics.add.collider(this.scene.monchi, this.pisos2, this.scene.float, () => true, this.scene);
+      if (this.pisos3) this.scene.physics.add.collider(this.scene.monchi, this.pisos3, this.scene.rotateCam, () => true, this.scene);
+      if (this.coin) this.scene.physics.add.overlap(this.scene.monchi, this.coin, this.scene.coinCollected, () => true, this.scene);
+      if (this.portal) this.scene.physics.add.overlap(this.scene.monchi, this.portal, this.scene.win, () => true, this.scene);
+      if (this.pisos4) this.scene.physics.add.collider(this.scene.monchi, this.pisos4, this.scene.noFloat, () => true, this.scene);
+      if (this.movingFloor) this.scene.physics.add.collider(this.scene.monchi, this.movingFloor, this.scene.movingFloorsGrav, () => true, this.scene);
+      if (this.movingFloorRot) this.scene.physics.add.collider(this.scene.monchi, this.movingFloorRot, this.scene.movingFloorsGravRot, () => true, this.scene);
+    }
+
+  }
+  createUI(lifes: number) {
+    if (this.UIg) {
+      if (lifes > 0) {
+        const lifeConfig: UIConfig = {
+          texture: "heart",
+          pos: { x: 150, y: 50 },
+          scale: .1
+        };
+        const lifes1 = new UI(this.scene, lifeConfig, this.UIg)
+          .setScrollFactor(0, 0);
+      }
+      if (lifes > 1) {
+
+        const lifeConfig2: UIConfig = {
+          texture: "heart",
+          pos: { x: 200, y: 50 },
+          scale: .1
+        };
+        const lifes2 = new UI(this.scene, lifeConfig2, this.UIg)
+          .setScrollFactor(0, 0);
+      }
+      if (lifes > 2) {
+
+        const lifeConfig3: UIConfig = {
+          texture: "heart",
+          pos: { x: 100, y: 50 },
+          scale: .1
+
+        };
+        const lifes3 = new UI(this.scene, lifeConfig3, this.UIg)
+          .setScrollFactor(0, 0);
+      }
+    }
+
+  }
+  update() {
+    if (this.scene.gravityDown === false) {
+      (this.gravityArrow as Phaser.GameObjects.Image).setRotation(Math.PI * 3 / 2);
+    } else { (this.gravityArrow as Phaser.GameObjects.Image).setRotation(Math.PI / 2) };
+
+    /* Attach controls to player */
+    if (this.scene.monchi && this.scene.normalito) {
+      this.scene.monchi.checkMove(this.scene.cursors);
+      this.animateBackground(this.scene.monchi);
+    }
+    else if (this.scene.monchi && this.scene.normalito == false) {
+      this.scene.monchi?.checkMoveRot(this.scene.cursors);
+      this.animateBackground(this.scene.monchi);
+    };
+    if (this.UIg && this.scene.normalito == false) {
+      //console.log("entro")
+      for (let i = 0; i < this.UIg.getChildren().length; i++) {
+        (this.UIg?.getChildren()[i] as Phaser.GameObjects.Image).setRotation(Math.PI);
+      };
+    } else if(this.UIg) {
+      for (let i = 0; i < this.UIg.getChildren().length; i++) {
+        (this.UIg?.getChildren()[i] as Phaser.GameObjects.Image).setRotation(0);
+      };
+    };
+  }
+
 };
 
-export default Mapa 
+export default Mapa1 

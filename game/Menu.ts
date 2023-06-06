@@ -7,10 +7,9 @@ export default class MainMenuScene extends Phaser.Scene {
     selectedButtonIndex: number = 0;
     buttonSelector!: Phaser.GameObjects.Image;
     monchi?: Phaser.GameObjects.Sprite;
-    progress?: number = 0;
+    progress: number = 0;
     constructor() {
         super({ key: 'Menu' });
-        
     };
 
     init() {
@@ -56,7 +55,7 @@ export default class MainMenuScene extends Phaser.Scene {
 
         playButton.on('selected', () => {
             this.scene.sleep();
-            this.scene.start("Scene1");
+            this.scene.start("Game", { level: 1, lifes: 1 });
             this.selectedButtonIndex = 0
         });
 
@@ -116,7 +115,7 @@ export default class MainMenuScene extends Phaser.Scene {
 
     update() {
         if(this.monchi){
-            this.progress = this.progress + .0031415 ;
+            this.progress = this.progress + .0031415;
             this.monchi.x = this.monchi.x + .5;
             this.monchi.y = this.monchi.y - .25;
             this.monchi.setRotation(this.progress);

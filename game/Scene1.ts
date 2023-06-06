@@ -51,11 +51,8 @@ class Scene1 extends Phaser.Scene {
 
   create(this: Scene1) {
     /* Audio */
-    //let songLoader = this.load.audio('song', ['sounds/monchiSpace.mp3'])
-    //songLoader.on('filecomplete', () => this.sound.add('song').play())
-    //songLoader.start()
-    const music = this.sound.add('song')
-    //music.play()
+    const music = this.sound.add('song').setVolume(0.1)
+    music.play()
 
     /* Controls */
     this.cursors = this.input.keyboard?.createCursorKeys();

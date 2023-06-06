@@ -18,7 +18,7 @@ class UI extends Phaser.GameObjects.Image {
         super(scene,config.pos.x, config.pos.y, config.texture)
         this.scene = scene;
         scene.add.existing(this)
-        this.setDepth(0)
+        this.setDepth(100)
         this.setScale(config.scale)
         this.group = group
         this.group.add(this)

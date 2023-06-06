@@ -92,8 +92,8 @@ class Mapa {
     const p4Config: LargeFloorConfig = {
       textureA: "plataformaA",
       textureB: "plataformaB",
-      large: 4,
-      pos: { x: 1400, y: 1300, },
+      large: 5,
+      pos: { x: 1400, y: 1130, },
       scale: { width: 0.7, height: 0.7, },
       rotated: true,
     };

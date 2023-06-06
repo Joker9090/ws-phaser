@@ -22,7 +22,7 @@ class Scene2 extends Phaser.Scene {
   };
 
   constructor() {
-    super({ key: 'Scene1' });
+    super({ key: 'Scene2' });
   };
 
   preload(this: Phaser.Scene) {
@@ -44,9 +44,7 @@ class Scene2 extends Phaser.Scene {
 
   create(this: Scene2) {
     /* Audio */
-    //let songLoader = this.load.audio('song', ['sounds/monchiSpace.mp3'])
-    //songLoader.on('filecomplete', () => this.sound.add('song').play())
-    //songLoader.start()
+ 
     const music = this.sound.add('song')
     //music.play()
 
@@ -59,7 +57,7 @@ class Scene2 extends Phaser.Scene {
     const { x, y } = this.map.startingPoint;
     this.monchi = new Player(this, x, y, "character", 2);
     this.canWin = false;
-    this.monchi.setGravity(1000)
+     
 
     /* Camera */
     this.cameras.main.startFollow(this.monchi);
@@ -68,6 +66,9 @@ class Scene2 extends Phaser.Scene {
     const touch = () => {
       if (this.monchi) {
         this.monchi.idle();
+        if (this.sideGrav){
+          this.monchi.setVelocityY(0)
+        } else {this.monchi.setVelocityX(0)}
       };
     };
     
@@ -86,10 +87,11 @@ class Scene2 extends Phaser.Scene {
         gameOver();
       } else if (this.lifes != 0 && this.checkPoint == 0 && this.monchi) {
         this.monchi?.setFlipY(false);
+        this.physics.world.gravity.y = 1000;
         this.monchi?.setFlipX(false);
-        this.monchi?.body?.setOffset(70, 50);
+        this.monchi.setRotation(0).setSize(73,110).setOffset(70,50);
         this.cameras.main.setRotation(0);
-        this.monchi?.setGravityY(1000);
+        this.monchi?.setGravityX(0);
         this.sideGrav=false
         this.monchi.x = this.startingPoint.x;
         this.monchi.y = this.startingPoint.y;
@@ -138,6 +140,7 @@ class Scene2 extends Phaser.Scene {
       if (down || top || left || right) lose();
     }, this);
 
+    
 
     //creative
      // this.cameras.main.setRotation(-Math.PI/4)
@@ -147,26 +150,35 @@ class Scene2 extends Phaser.Scene {
 
   update(this: Scene2) {
 
-   
+    console.log(this.sideGrav)
     //modo creative
     if (this.textTime && this.monchi) {
       this.textTime.setText('X: ' + Math.floor(this.monchi.x) + ' Y: ' + Math.floor(this.monchi.y));
     };
 
     //
+    let firstChange = false
     if(this.monchi){
-      if(this.monchi.x > 1000){
+      if(this.monchi.x > 1000 && this.monchi.x < 1200 && this.monchi.y < 236){
         this.sideGrav = true;
-        this.monchi.setVelocityX(0);
-        this.monchi.setRotation(-Math.PI/2).setSize(110,73).setOffset(80,50);
+        firstChange = true
       };
+      if(this.sideGrav){
+        this.physics.world.gravity.y = 0
+        if(firstChange){
+          this.monchi.setRotation(-Math.PI/2).setSize(110,73).setOffset(80,40);
+          firstChange = false;
+          (this.map?.UIg?.getChildren()[4] as Phaser.GameObjects.Image)
+          .setRotation(0)
+        }
+      }
     };
     if (this.cursors) {
       if (this.monchi) {
         if(this.sideGrav){
           this.monchi.checkSideGravity(this.cursors);
         } else {
-         // this.monchi.checkMove(this.cursors);
+         this.monchi.checkMove(this.cursors);
         }
         if (this.map) this.map.animateBackground(this.monchi);
       };

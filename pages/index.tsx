@@ -37,7 +37,7 @@ export default function Home() {
         scale: {
           mode: window.Phaser.Scale.FIT
         },
-        scene: scenes[5],
+        scene: scenes,
         physics: {
           default: "arcade",
           arcade: {

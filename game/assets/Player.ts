@@ -4,6 +4,7 @@ import Phaser from "phaser";
 class Player extends Phaser.Physics.Arcade.Sprite {
   isJumping = false;
   scene: Phaser.Scene;
+  
   constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, frame?: string | number | undefined) {
     super(scene,x,y,texture)
     this.scene = scene;
@@ -155,7 +156,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   checkSideGravity(cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined) {
     /* Keywords press */
     if (cursors) {
-      let grav = 1
       const { up, down, left, right } = cursors;
       if (up.isDown) {
         this.setVelocityY(-160)
@@ -169,13 +169,14 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.setVelocityY(0)
       }
       if (left.isDown) {
-        this.setGravityX(-100000)
-        this.setFlipY(true)
-        this.setOffset(100, 50)
+        this.setGravityX(-1000);
+        this.setFlipY(true);
+        this.setOffset(30, 40);
+        
       } else if (right.isDown) {
-        this.setGravityX(100000)
-        this.setFlipY(false)
-        this.setOffset(80, 50)
+        this.setGravityX(1000);
+        this.setFlipY(false);
+        this.setOffset(80, 40);
       }
     }
    }

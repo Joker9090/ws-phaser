@@ -12,13 +12,14 @@ class Game extends Phaser.Scene {
   monchi?: Player;
   graphics?: Phaser.GameObjects.Graphics;
   map?: Mapa1 | Mapa2;
-  lifes: number = 3;
+  lifes?: number;
 
   music?: Phaser.Sound.NoAudioSound | Phaser.Sound.HTML5AudioSound | Phaser.Sound.WebAudioSound;
   canWin: boolean = false;
+  nextLevel: boolean = false;
   canRot: boolean = true;
 
-  normalito: boolean = true;
+  cameraNormal: boolean = true;
   gravityDown: boolean = true;
 
   startTime: number = 0;
@@ -64,11 +65,11 @@ class Game extends Phaser.Scene {
   };
 
 
-  float() {
+  float(time:number) {
     if (this.monchi) {
       this.monchi.setBounce(0.1);
       this.monchi.setGravityY(-2000);
-      this.time.delayedCall(1000, () => {
+      this.time.delayedCall(time, () => {
         this.monchi?.setFlipY(true);
         this.gravityDown = false;
         this.monchi?.body?.setOffset(70, 0);
@@ -77,12 +78,11 @@ class Game extends Phaser.Scene {
     }
   };
 
-  rotateCam(){
-    this.normalito = false;
+  rotateCam(time:number){
+    this.cameraNormal = false;
     if (this.canRot) {
-      let rotation = 0;
       for (let i = 0; i < 25; i++) {
-        this.time.delayedCall(10 * i, () => ((rotate) => {
+        this.time.delayedCall(time * i, () => ((rotate) => {
           this.cameras.main.setRotation(rotate);
         })(3.1415 * i / 24));
         if (i == 24) { this.canRot = false };
@@ -91,7 +91,7 @@ class Game extends Phaser.Scene {
   };
 
   noFloat(){
-    this.normalito = true;
+    this.cameraNormal = true;
     if (this.monchi) {
       this.monchi?.setGravity(0);
       for (let i = 0; i < 25; i++) {
@@ -110,40 +110,62 @@ class Game extends Phaser.Scene {
   gameOver(){
     if(this.music) this.music.stop()
     this.lifes = 3
-    this.normalito = true;
+    this.cameraNormal = true;
     this.scene.sleep();
     this.scene.switch("GameOver");
   };
 
-  lose(){
-    this.lifes -= 1;
-    if (this.lifes == 0) {
-      this.gameOver();
-    } else if (this.lifes != 0 && this.checkPoint == 0 && this.monchi) {
-      this.monchi?.setFlipY(false);
-      this.monchi?.setBounceY(0);
-      this.gravityDown = true;
-      this.monchi?.body?.setOffset(70, 50);
-      this.cameras.main.setRotation(0);
-      this.monchi?.setGravity(0);
-      this.normalito = true;
-      this.monchi.x = this.startingPoint.x;
-      this.monchi.y = this.startingPoint.y;
-      (this.map?.UIg?.getChildren()[this.lifes - 1] as Phaser.GameObjects.Image)
-        .setVisible(false);
-    } else if (this.lifes != 0 && this.checkPoint == 1 && this.monchi) {
-      this.monchi.x = this.checkPointPos.x;
-      this.monchi.y = this.checkPointPos.y;
-      (this.map?.UIg?.getChildren()[this.lifes - 1] as Phaser.GameObjects.Image)
-        .setVisible(false);
-    }
-  };
+  loseLevel1() {
+    if (this.lifes) {
+      this.lifes -= 1;
+      if (this.lifes == 0) {
+        this.gameOver();
+      } else if (this.lifes != 0 && this.checkPoint == 0 && this.monchi) {
+        this.monchi?.setFlipY(false);
+        this.monchi?.setBounceY(0);
+        this.gravityDown = true;
+        this.monchi?.body?.setOffset(70, 50);
+        this.cameras.main.setRotation(0);
+        this.monchi?.setGravity(0);
+        this.cameraNormal = true;
+        this.monchi.x = this.startingPoint.x;
+        this.monchi.y = this.startingPoint.y;
+      } else if (this.lifes != 0 && this.checkPoint == 1 && this.monchi && this.cameraNormal == false) {
+        this.float(0);
+        this.cameraNormal = true
+        this.canRot = true
+        this.rotateCam(0);
+        this.monchi.x = this.checkPointPos.x;
+        this.monchi.y = this.checkPointPos.y;
+        (this.map?.lifesGroup?.getChildren()[this.lifes - 1] as Phaser.GameObjects.Image)
+          .setVisible(false);
+      } else if (this.lifes != 0 && this.checkPoint == 1 && this.monchi && this.cameraNormal) {
+        this.float(0);
+        this.canRot = true
+        this.monchi.x = this.checkPointPos.x;
+        this.monchi.y = this.checkPointPos.y;
+      }
+      if (this.lifes != 0) {
+        let lifeToTheRight = null;
+        let highestX = Number.NEGATIVE_INFINITY;
+        for (let i = 0; i < this.lifes + 1; i++) {
+          console.log(this.lifes)
+          const child = (this.map?.lifesGroup?.getChildren()[i] as Phaser.GameObjects.Image);
+          if (child.x > highestX) {
+            lifeToTheRight = child;
+            highestX = child.x;
+          };
+          // Remove the object with the highest x position
+        }
+        lifeToTheRight?.setVisible(false);
+      };
+    };
+  }
 
   win(){
     if (this.canWin && this.monchi) {
-      this.lifes = 3;
       if(this.music) this.music.stop()
-      this.normalito = true;
+      this.cameraNormal = true;
       this.scene.sleep();
       this.scene.switch("Won");
 
@@ -159,46 +181,58 @@ class Game extends Phaser.Scene {
   };
 
   coinCollected(){
-    console.log("coinCollected", this.map)
     if (this.map?.coin) {
       this.map.portal?.setTint(0x00ff00);
       this.canWin = true;
       this.map.coin.setVisible(false);
       this.map.coin.clear(true);
-      (this.map.UIg?.getChildren()[3] as Phaser.GameObjects.Image).clearTint();
     };
   };
 
+  // no ta andanding
+  goNextLevel(){
+    console.log("next level", this.lifes)
+    if (this.nextLevel && this.monchi) {
+      this.cameraNormal = true;
+      this.scene.sleep();
+      this.scene.start("Game", { level: 2, lifes: this.lifes });
+      this.scene.switch("Game")
+    };
+  }
 
   create(this: Game, data: { level: number, lifes: number }) {
+   
 
+    /* CHOSE LEVEL, LIFES AND AUDIO */
     switch (data.level) {
       case 1:
         this.map = new Mapa1(this);
+        this.music = this.sound.add('song').setVolume(0.3)
         break;
       case 2:
         this.map = new Mapa2(this);
+        this.music = this.sound.add('song').setVolume(0.3)
         break;
       default:
         this.map = new Mapa1(this);
+        this.music = this.sound.add('song').setVolume(0.3)
         break;
     }
     if (data.lifes) this.lifes = data.lifes;
     this.map.createMap(data);
 
-    /* Audio */
+    /* SET AUDIO */
     
-    this.music = this.sound.add('song')
-    // music.play()
+    this.music.play()
 
-    /* Controls */
+    /* CONTROLS */
     this.cursors = this.input.keyboard?.createCursorKeys();
     const { x, y } = this.map.startingPoint;
     this.monchi = new Player(this, x, y, "character", 2);
     this.canWin = false;
     this.canRot = true;
 
-    /* Camera */
+    /* CAMERA */
     this.cameras.main.startFollow(this.monchi);
 
 
@@ -212,12 +246,13 @@ class Game extends Phaser.Scene {
     this.map.addColliders()
     
     this.physics.world.on('worldbounds', (body: Phaser.Physics.Arcade.Sprite, top: boolean, down: boolean, left: boolean, right: boolean) => {
-      if (down || top || left || right) this.lose();
+      if (down || top || left || right) this.loseLevel1();
     }, this);
 
   };
 
   update(this: Game) {
+    
     if (this.monchi) {
       if (this.monchi.x > this.checkPointPos.x) {
         this.checkPoint = 1;

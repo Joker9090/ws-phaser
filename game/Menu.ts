@@ -1,5 +1,4 @@
 import Phaser from 'phaser';
-import Player from "./assets/Player";
 
 export default class MainMenuScene extends Phaser.Scene {
     cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -28,46 +27,54 @@ export default class MainMenuScene extends Phaser.Scene {
         //let songLoader = this.load.audio('song', ['sounds/monchiSpace.mp3'])
         //songLoader.on('filecomplete', () => this.sound.add('song').play())
         //songLoader.start()
+
+        /* Main Scene Menu */
+        this.physics.world.setBounds(0, 0, 5000, 2500);
         this.add.image(900,500,"background").setScale(.7);
         this.monchi = this.add.sprite(100,700,"monchi",1).setScale(.5);
         const { width, height } = this.scale;
         const [widthButton, heightButton] = [250,100];
-        // Play button
-        const playButton = this.add.image(width * 0.5, height * 0.4, 'glass').setDisplaySize(widthButton, heightButton);
 
-        this.add.text(playButton.x, playButton.y, 'Play').setOrigin(0.5);
+        // Tutorial button
+        const Tutorial = this.add.image(width * 0.5, height * 0.4, 'glass').setDisplaySize(widthButton, heightButton);
+        this.add.text(Tutorial.x, Tutorial.y, 'Tutorial').setOrigin(0.5);
 
-        // Settings button
-        const settingsButton = this.add.image(playButton.x, playButton.y + playButton.displayHeight + 10, 'glass').setDisplaySize(widthButton, heightButton);
+        // Play level 1 button
+        const PlayLevel1 = this.add.image(Tutorial.x, Tutorial.y + Tutorial.displayHeight + 10, 'glass').setDisplaySize(widthButton, heightButton);
+        this.add.text(PlayLevel1.x, PlayLevel1.y, 'Start level 1').setOrigin(0.5);
 
-        this.add.text(settingsButton.x, settingsButton.y, 'Settings').setOrigin(0.5);
+        // Play level 2 button
+        const PlayLevel2 = this.add.image(PlayLevel1.x, PlayLevel1.y + PlayLevel1.displayHeight + 10, 'glass').setDisplaySize(widthButton, heightButton);
+        this.add.text(PlayLevel2.x, PlayLevel2.y, 'Start level 2').setOrigin(0.5);
+        
 
-        // Credits button
-        const creditsButton = this.add.image(settingsButton.x, settingsButton.y + settingsButton.displayHeight + 10, 'glass').setDisplaySize(widthButton, heightButton);
-
-        this.add.text(creditsButton.x, creditsButton.y, 'Credits').setOrigin(0.5);
-        this.buttons = [playButton, settingsButton, creditsButton];
-        //this.buttons.push(settingsButton);
-        //this.buttons.push(playButton);
-        //this.buttons.push(creditsButton);
+        this.buttons = [Tutorial, PlayLevel1, PlayLevel2];
         this.buttonSelector = this.add.image(0, 0, 'cursor').setScale(.1).setRotation(-1);
         this.selectButton(0);
 
-        playButton.on('selected', () => {
+        Tutorial.on('selected', () => {
             this.scene.sleep();
-            this.scene.start("Game", { level: 1, lifes: 1 });
+            this.scene.start("Game", { level: 0, lifes: 3 });
             this.selectedButtonIndex = 0
         });
 
-        settingsButton.on('selected', () => {
-            console.log('settings')
+        PlayLevel1.on('selected', () => {
+            this.scene.sleep();
+            this.scene.start("Game", { level: 1, lifes: 3 });
+            this.selectedButtonIndex = 0
         });
 
-        creditsButton.on('selected', () => {
-            console.log('credits')
+        PlayLevel2.on('selected', () => {
+            this.scene.sleep();
+            this.scene.start("Game", { level: 2, lifes: 3 });
+            this.selectedButtonIndex = 0
+        });
+
+        this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+            PlayLevel1.off('selected')
         });
         this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
-            playButton.off('selected')
+            PlayLevel2.off('selected')
         });
 
     };

@@ -22,8 +22,9 @@ class Mapa1 {
   portal?: Phaser.Physics.Arcade.Group;
   movingFloor?: Phaser.Physics.Arcade.Group;
   movingFloorRot?: Phaser.Physics.Arcade.Group;
-  UIg?: Phaser.GameObjects.Group;
+  lifesGroup?: Phaser.GameObjects.Group;
   gravityArrow?: Phaser.GameObjects.Image;
+  coinUI?: Phaser.GameObjects.Image;
   startingPoint = {
     x: 500, //500
     y: 800, //800
@@ -51,6 +52,64 @@ class Mapa1 {
     this.background.setPosition((x + calcDiffX), (y + calcDiffY));
   };
 
+  addColliders() {
+    if (this.scene.monchi) {
+
+      if (this.portal) this.portal.setTint(0xff0000);
+      if (this.pisos) this.scene.physics.add.collider(this.scene.monchi, this.pisos, this.scene.touch, () => true, this.scene);
+      if (this.pisos2) this.scene.physics.add.collider(this.scene.monchi, this.pisos2, () => this.scene.float(1000), () => true, this.scene);
+      if (this.pisos3) this.scene.physics.add.collider(this.scene.monchi, this.pisos3, () => this.scene.rotateCam(10), () => true, this.scene);
+      if (this.coin) this.scene.physics.add.overlap(this.scene.monchi, this.coin, this.scene.coinCollected, () => true, this.scene);
+      if (this.portal) this.scene.physics.add.overlap(this.scene.monchi, this.portal, this.scene.goNextLevel, () => true, this.scene);
+      if (this.pisos4) this.scene.physics.add.collider(this.scene.monchi, this.pisos4, this.scene.noFloat, () => true, this.scene);
+      if (this.movingFloor) this.scene.physics.add.collider(this.scene.monchi, this.movingFloor, this.scene.movingFloorsGrav, () => true, this.scene);
+      if (this.movingFloorRot) this.scene.physics.add.collider(this.scene.monchi, this.movingFloorRot, this.scene.movingFloorsGravRot, () => true, this.scene);
+    }
+  }
+
+  createUI(lifes: number) {
+    let quantityLifes = 0
+    let xpos = 0
+    if (this.lifesGroup) {
+      for (let i: number = 0; i < lifes; i++) {
+        quantityLifes += 1;
+        xpos = 100 + i * 50;
+        const lifeConfig: UIConfig = {
+          texture: "heart",
+          pos: { x: xpos, y: 50 },
+          scale: .1
+        };
+        const coras = new UI(this.scene, lifeConfig, this.lifesGroup)
+          .setScrollFactor(0, 0);
+      };
+      const coinConf: UIConfig = {
+        texture: "coin",
+        pos: { x: quantityLifes * 50 + 150, y: 50 },
+        scale: .1
+
+      };
+      this.coinUI = new UI(this.scene, coinConf)
+        .setTint(Phaser.Display.Color.GetColor(0, 0, 0))
+        .setScrollFactor(0, 0)
+        .setDepth(100);
+
+
+      const arrowConfig: UIConfig = {
+        texture: "arrow",
+        pos: { x: quantityLifes * 50 + 250, y: 50 },
+        scale: .1
+
+      };
+
+      this.gravityArrow = new UI(this.scene, arrowConfig)
+        .setRotation(Math.PI / 2)
+        .setScrollFactor(0, 0)
+        .setDepth(100);
+
+      this.lifesGroup.setDepth(100);
+    }
+  }
+
   createMap(data: { level: number, lifes: number }) {
     this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
     this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });
@@ -60,7 +119,7 @@ class Mapa1 {
     this.coin = this.scene.physics.add.group({ allowGravity: false });
     this.portal = this.scene.physics.add.group({ allowGravity: false });
     this.pisos4 = this.scene.physics.add.group({ allowGravity: false });
-    this.UIg = this.scene.add.group()
+    this.lifesGroup = this.scene.add.group()
 
     const p1Config: FloorConfig = {
       texture: "plataformaA",
@@ -196,7 +255,7 @@ class Mapa1 {
     };
     const p13 = new Floor(this.scene, p13Config, this.pisos3)
       .setTint(Phaser.Display.Color.GetColor(255, 177, 0));
-    //RGB(255 178 252) rosita
+
     const p14Config: LargeFloorConfig = {
       textureA: "plataformaA",
       textureB: "plataformaB",
@@ -250,8 +309,8 @@ class Mapa1 {
       scale: { width: 0.8, height: 0.7, },
     };
     const p19 = new Floor(this.scene, p19Config, this.pisos4).setTint(Phaser.Display.Color.GetColor(255, 177, 0));
-    //portal monedas y asteroides
 
+    //portal monedas y asteroides
     const portalConfig: FloorConfig = {
       texture: "portal",
       pos: { x: 5400, y: 1590, },
@@ -301,104 +360,37 @@ class Mapa1 {
     //UI
 
     this.createUI(data.lifes)
-    const coinConf: UIConfig = {
-      texture: "coin",
-      pos: { x: 300, y: 50 },
-      scale: .1
 
-    };
-    const coinUI = new UI(this.scene, coinConf, this.UIg)
-      .setTint(Phaser.Display.Color.GetColor(0, 0, 0))
-      .setScrollFactor(0, 0);
-
-
-    const arrowConfig: UIConfig = {
-      texture: "arrow",
-      pos: { x: 400, y: 50 },
-      scale: .1
-
-    };
-    this.gravityArrow = new UI(this.scene, arrowConfig, this.UIg)
-      .setRotation(Math.PI / 2)
-      .setScrollFactor(0, 0);
-
-    this.UIg.setDepth(10);
 
 
   };
 
-  addColliders() {
-    if (this.scene.monchi) {
-
-      if (this.portal) this.portal.setTint(0xff0000);
-      if (this.pisos) this.scene.physics.add.collider(this.scene.monchi, this.pisos, this.scene.touch, () => true, this.scene);
-      if (this.pisos2) this.scene.physics.add.collider(this.scene.monchi, this.pisos2, this.scene.float, () => true, this.scene);
-      if (this.pisos3) this.scene.physics.add.collider(this.scene.monchi, this.pisos3, this.scene.rotateCam, () => true, this.scene);
-      if (this.coin) this.scene.physics.add.overlap(this.scene.monchi, this.coin, this.scene.coinCollected, () => true, this.scene);
-      if (this.portal) this.scene.physics.add.overlap(this.scene.monchi, this.portal, this.scene.win, () => true, this.scene);
-      if (this.pisos4) this.scene.physics.add.collider(this.scene.monchi, this.pisos4, this.scene.noFloat, () => true, this.scene);
-      if (this.movingFloor) this.scene.physics.add.collider(this.scene.monchi, this.movingFloor, this.scene.movingFloorsGrav, () => true, this.scene);
-      if (this.movingFloorRot) this.scene.physics.add.collider(this.scene.monchi, this.movingFloorRot, this.scene.movingFloorsGravRot, () => true, this.scene);
-    }
-
-  }
-  createUI(lifes: number) {
-    if (this.UIg) {
-      if (lifes > 0) {
-        const lifeConfig: UIConfig = {
-          texture: "heart",
-          pos: { x: 150, y: 50 },
-          scale: .1
-        };
-        const lifes1 = new UI(this.scene, lifeConfig, this.UIg)
-          .setScrollFactor(0, 0);
-      }
-      if (lifes > 1) {
-
-        const lifeConfig2: UIConfig = {
-          texture: "heart",
-          pos: { x: 200, y: 50 },
-          scale: .1
-        };
-        const lifes2 = new UI(this.scene, lifeConfig2, this.UIg)
-          .setScrollFactor(0, 0);
-      }
-      if (lifes > 2) {
-
-        const lifeConfig3: UIConfig = {
-          texture: "heart",
-          pos: { x: 100, y: 50 },
-          scale: .1
-
-        };
-        const lifes3 = new UI(this.scene, lifeConfig3, this.UIg)
-          .setScrollFactor(0, 0);
-      }
-    }
-
-  }
   update() {
+    if (this.scene.canWin){
+      this.coinUI?.clearTint();
+    }
+
     if (this.scene.gravityDown === false) {
       (this.gravityArrow as Phaser.GameObjects.Image).setRotation(Math.PI * 3 / 2);
     } else { (this.gravityArrow as Phaser.GameObjects.Image).setRotation(Math.PI / 2) };
 
     /* Attach controls to player */
-    if (this.scene.monchi && this.scene.normalito) {
+    if (this.scene.monchi && this.scene.cameraNormal) {
       this.scene.monchi.checkMove(this.scene.cursors);
       this.animateBackground(this.scene.monchi);
     }
-    else if (this.scene.monchi && this.scene.normalito == false) {
+    else if (this.scene.monchi && this.scene.cameraNormal == false) {
+      console.log("entro a cameraNormal")
       this.scene.monchi?.checkMoveRot(this.scene.cursors);
       this.animateBackground(this.scene.monchi);
     };
-    if (this.UIg && this.scene.normalito == false) {
-      //console.log("entro")
-      for (let i = 0; i < this.UIg.getChildren().length; i++) {
-        (this.UIg?.getChildren()[i] as Phaser.GameObjects.Image).setRotation(Math.PI);
+    if (this.lifesGroup && this.scene.cameraNormal == false) {
+      for (let i = 0; i < this.lifesGroup.getChildren().length; i++) {
+        (this.lifesGroup?.getChildren()[i] as Phaser.GameObjects.Image).setRotation(Math.PI);
       };
-    } else if(this.UIg) {
-      for (let i = 0; i < this.UIg.getChildren().length; i++) {
-        (this.UIg?.getChildren()[i] as Phaser.GameObjects.Image).setRotation(0);
+    } else if (this.lifesGroup) {
+      for (let i = 0; i < this.lifesGroup.getChildren().length; i++) {
+        (this.lifesGroup?.getChildren()[i] as Phaser.GameObjects.Image).setRotation(0);
       };
     };
   }

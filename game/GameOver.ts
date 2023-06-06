@@ -18,6 +18,7 @@ export default class GameOver extends Phaser.Scene {
     };
 
     create() {
+        this.physics.world.setBounds(0, 0, 5000, 2500);
         this.add.image(900,500,"background").setScale(.7);
         this.add.text(this.cameras.main.width/2, this.cameras.main.height/2, "You've lose! Very mal culiao!!",{fontSize: '32px'})
         .setOrigin(0.5)

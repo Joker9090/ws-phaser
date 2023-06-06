@@ -17,15 +17,18 @@ class Mapa {
   pisos?: Phaser.Physics.Arcade.Group;
   coin?: Phaser.Physics.Arcade.Group;
   portal?: Phaser.Physics.Arcade.Group;
-  UIg?: Phaser.GameObjects.Group;
+  lifesGroup?: Phaser.GameObjects.Group;
   changer?: Phaser.GameObjects.Image;
   portalInit?: Phaser.Physics.Arcade.Group;
   fireballGroup?: Phaser.Physics.Arcade.Group;
+  gravityArrow?: Phaser.GameObjects.Image;
+  coinUI?: Phaser.GameObjects.Image;
   startingPoint = {
     x: 400, //400
     y: 140, //140
   };
   background: Phaser.GameObjects.Image;
+  sideGrav: boolean = false;
   constructor(scene: Game) {
     this.scene = scene;
 
@@ -48,12 +51,55 @@ class Mapa {
     this.background.setPosition((x + calcDiffX), (y + calcDiffY));
   };
 
+  createUI(lifes: number) {
+    let quantityLifes = 0
+    let xpos = 0
+    if (this.lifesGroup) {
+      for (let i: number = 0; i < lifes; i++) {
+        quantityLifes += 1;
+        xpos = 100 + i * 50;
+        const lifeConfig: UIConfig = {
+          texture: "heart",
+          pos: { x: xpos, y: 50 },
+          scale: .1
+        };
+        const coras = new UI(this.scene, lifeConfig, this.lifesGroup)
+          .setScrollFactor(0, 0);
+      };
+      const coinConf: UIConfig = {
+        texture: "coin",
+        pos: { x: quantityLifes * 50 + 150, y: 50 },
+        scale: .1
+
+      };
+      this.coinUI = new UI(this.scene, coinConf)
+        .setTint(Phaser.Display.Color.GetColor(0, 0, 0))
+        .setScrollFactor(0, 0)
+        .setDepth(100);
+
+
+      const arrowConfig: UIConfig = {
+        texture: "arrow",
+        pos: { x: quantityLifes * 50 + 250, y: 50 },
+        scale: .1
+
+      };
+
+      this.gravityArrow = new UI(this.scene, arrowConfig)
+        .setRotation(Math.PI / 2)
+        .setScrollFactor(0, 0)
+        .setDepth(100);
+
+      this.lifesGroup.setDepth(100);
+    }
+  }
+
   createMap(data: { level: number, lifes: number }) {
 
     this.pisos = this.scene.physics.add.group({ allowGravity: false });
     this.coin = this.scene.physics.add.group({ allowGravity: false });
     this.portal = this.scene.physics.add.group({ allowGravity: false });
-    this.UIg = this.scene.add.group()
+    this.lifesGroup = this.scene.add.group()
     this.fireballGroup = this.scene.physics.add.group({ allowGravity: false });
     this.portalInit = this.scene.physics.add.group({ allowGravity: false });
 
@@ -288,7 +334,7 @@ class Mapa {
       pos: { x: 150, y: 100 },
       scale: .1
     };
-    const lifes1 = new UI(this.scene, lifeConfig, this.UIg)
+    const lifes1 = new UI(this.scene, lifeConfig, this.lifesGroup)
       .setScrollFactor(0, 0);
 
 
@@ -297,7 +343,7 @@ class Mapa {
       pos: { x: 200, y: 100 },
       scale: .1
     };
-    const lifes2 = new UI(this.scene, lifeConfig2, this.UIg)
+    const lifes2 = new UI(this.scene, lifeConfig2, this.lifesGroup)
       .setScrollFactor(0, 0);
 
 
@@ -307,7 +353,7 @@ class Mapa {
       scale: .1
 
     };
-    const lifes3 = new UI(this.scene, lifeConfig3, this.UIg)
+    const lifes3 = new UI(this.scene, lifeConfig3, this.lifesGroup)
       .setScrollFactor(0, 0);
 
 
@@ -318,7 +364,7 @@ class Mapa {
       scale: .1
 
     };
-    const coinUI = new UI(this.scene, coinConf, this.UIg)
+    const coinUI = new UI(this.scene, coinConf, this.lifesGroup)
       .setTint(Phaser.Display.Color.GetColor(0, 0, 0))
       .setScrollFactor(0, 0);
 
@@ -329,11 +375,11 @@ class Mapa {
       scale: .1
 
     };
-    const arrow = new UI(this.scene, arrowConfig, this.UIg)
+    const arrow = new UI(this.scene, arrowConfig, this.lifesGroup)
       .setRotation(Math.PI / 2)
       .setScrollFactor(0, 0);
 
-    this.UIg.setDepth(10);
+    this.lifesGroup.setDepth(10);
 
 
   };
@@ -352,8 +398,40 @@ class Mapa {
   }
 
   update() {
+    console.log(this.sideGrav)
+    //modo creative
+    if (this.scene.textTime && this.scene.monchi) {
+      this.scene.textTime.setText('X: ' + Math.floor(this.scene.monchi.x) + ' Y: ' + Math.floor(this.scene.monchi.y));
+    };
 
-  }
+    //
+    let firstChange = false
+    if(this.scene.monchi){
+      if(this.scene.monchi.x > 1000 && this.scene.monchi.x < 1200 && this.scene.monchi.y < 236){
+        this.sideGrav = true;
+        firstChange = true
+      };
+      if(this.sideGrav){
+        this.scene.physics.world.gravity.y = 0
+        if(firstChange){
+          this.scene.monchi.setRotation(-Math.PI/2).setSize(110,73).setOffset(80,40);
+          firstChange = false;
+          this.gravityArrow?.setRotation(0)
+        }
+      }
+    };
+    if (this.scene.cursors) {
+      if (this.scene.monchi) {
+        if(this.sideGrav){
+          this.scene.monchi.checkSideGravity(this.scene.cursors);
+        } else {
+         this.scene.monchi.checkMove(this.scene.cursors);
+        }
+        if (this) this.animateBackground(this.scene.monchi);
+      };
+
+    };
+  };
 
 };
 

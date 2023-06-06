@@ -35,8 +35,27 @@ const loadAssets = {
             ["image", "arrow", "/game/arrow.png"],
             ["spritesheet", "character", "/game/character.png", { frameWidth: 220, frameHeight: 162 }],
         ]
+    },
+    "Scene2": {
+        assets: [
+            ["audio", "song", 'sounds/monchiSpace.mp3'],
+            ["image", "background", "/game/background.png"],
+            ["image", "plataformaA", "/game/platform1.png"],
+            ["image", "plataformaB", "/game/platform1B.png"],
+            ["image", "plataforma2", "/game/platform2.png"],
+            ["image", "asteroid", "/game/asteroid.png"],
+            ["image", "asteroid2", "/game/asteroid2.png"],
+            ["image", "coin", "/game/coin.png"],
+            ["image", "portal", "/game/portal.png"],
+            ["image", "heart", "/game/heart.png"],
+            ["image", "arrow", "/game/arrow.png"],
+            ["image", "fireball", "/game/fireball.png"],
+            ["spritesheet", "character", "/game/character.png", { frameWidth: 220, frameHeight: 162 }],
+        ]
     }
 }
+
+
 
 // Scene in class
 class SceneLoader extends Phaser.Scene {
@@ -105,9 +124,9 @@ class SceneLoader extends Phaser.Scene {
             percentText.destroy();
             assetText.destroy();
         });
-        const scenesTitles = ["Menu","Scene1","Won","GameOver"]
+        const scenesTitles:Array<string> = ["Menu","Scene1","Won","GameOver","Scene2"]
         for(let i = 0;i<scenesTitles.length;i++){ 
-        loadAssets["Scene1"].assets.map(([type, name, src, config]:any) => {
+        loadAssets[scenesTitles[i]].assets.map(([type, name, src, config]:any) => {
             // @ts-checkts-ignore
             if (config) {
                 this.load[type](name, src, config)

@@ -13,7 +13,7 @@ class Scene1 extends Phaser.Scene {
   map?: Mapa;
   canWin: boolean = false;
   canRot: boolean = true;
-  normalito: boolean = true;
+  cameraNormal: boolean = true;
   gravityDown: boolean = true;
   startTime: number = 0;
   textTime?: Phaser.GameObjects.Text;
@@ -57,7 +57,7 @@ class Scene1 extends Phaser.Scene {
     /* Controls */
     this.cursors = this.input.keyboard?.createCursorKeys();
     this.map = new Mapa(this);
-    this.map.createMap();
+    this.map.createMap({1,3});
     const { x, y } = this.map.startingPoint;
     this.monchi = new Player(this, x, y, "character", 2);
     this.canWin = false;
@@ -88,7 +88,7 @@ class Scene1 extends Phaser.Scene {
     };
 
     const rotateCam = () => {
-      this.normalito = false;
+      this.cameraNormal = false;
       if (this.canRot) {
         let rotation = 0;
         for (let i = 0; i < 25; i++) {
@@ -102,7 +102,7 @@ class Scene1 extends Phaser.Scene {
 
 
     const noFloat = () => {
-      this.normalito = true;
+      this.cameraNormal = true;
       if (this.monchi) {
         this.monchi?.setGravity(0);
         for (let i = 0; i < 25; i++) {
@@ -121,12 +121,12 @@ class Scene1 extends Phaser.Scene {
     const gameOver = () => {
       music.stop()
       this.lifes = 3
-      this.normalito = true;
+      this.cameraNormal = true;
       this.scene.sleep();
       this.scene.switch("GameOver");
     };
 
-    const lose = () => {
+    const loseLevel1 = () => {
       this.lifes -= 1;
       if (this.lifes == 0) {
         gameOver();
@@ -137,15 +137,15 @@ class Scene1 extends Phaser.Scene {
         this.monchi?.body?.setOffset(70, 50);
         this.cameras.main.setRotation(0);
         this.monchi?.setGravity(0);
-        this.normalito = true;
+        this.cameraNormal = true;
         this.monchi.x = this.startingPoint.x;
         this.monchi.y = this.startingPoint.y;
-        (this.map?.UIg?.getChildren()[this.lifes - 1] as Phaser.GameObjects.Image)
+        (this.map?.lifesGroup?.getChildren()[this.lifes - 1] as Phaser.GameObjects.Image)
         .setVisible(false);
         } else if (this.lifes != 0 && this.checkPoint == 1 && this.monchi){
         this.monchi.x = this.checkPointPos.x;
         this.monchi.y = this.checkPointPos.y;
-        (this.map?.UIg?.getChildren()[this.lifes - 1] as Phaser.GameObjects.Image)
+        (this.map?.lifesGroup?.getChildren()[this.lifes - 1] as Phaser.GameObjects.Image)
         .setVisible(false);
         }
       };
@@ -155,7 +155,7 @@ class Scene1 extends Phaser.Scene {
       if (this.canWin && this.monchi) {
         this.lifes = 3;
         music.stop()
-        this.normalito = true;
+        this.cameraNormal = true;
         this.scene.sleep();
         this.scene.switch("Won");
 
@@ -176,7 +176,7 @@ class Scene1 extends Phaser.Scene {
         this.canWin = true;
         this.map.coin.setVisible(false);
         this.map.coin.clear(true);
-        (this.map.UIg?.getChildren()[3] as Phaser.GameObjects.Image).clearTint();
+        (this.map.lifesGroup?.getChildren()[3] as Phaser.GameObjects.Image).clearTint();
       };
     };
 
@@ -198,7 +198,7 @@ class Scene1 extends Phaser.Scene {
     if (this.map.movingFloorRot) this.physics.add.collider(this.monchi, this.map.movingFloorRot, movingFloorsGravRot);
 
     this.physics.world.on('worldbounds', (body: Phaser.Physics.Arcade.Sprite, top: boolean, down: boolean, left: boolean, right: boolean) => {
-      if (down || top || left || right) lose();
+      if (down || top || left || right) loseLevel1();
     }, this);
   };
 
@@ -215,27 +215,27 @@ class Scene1 extends Phaser.Scene {
     };
 
     if (this.gravityDown === false) {
-      (this.map?.UIg?.getChildren()[4] as Phaser.GameObjects.Image).setRotation(Math.PI * 3 / 2);
-    } else { (this.map?.UIg?.getChildren()[4] as Phaser.GameObjects.Image).setRotation(Math.PI / 2) };
+      (this.map?.lifesGroup?.getChildren()[4] as Phaser.GameObjects.Image).setRotation(Math.PI * 3 / 2);
+    } else { (this.map?.lifesGroup?.getChildren()[4] as Phaser.GameObjects.Image).setRotation(Math.PI / 2) };
 
     /* Attach controls to player */
-    if (this.monchi && this.normalito) {
+    if (this.monchi && this.cameraNormal) {
       this.monchi.checkMove(this.cursors);
       if (this.map) this.map.animateBackground(this.monchi);
     }
-    else if (this.monchi && this.normalito == false) {
+    else if (this.monchi && this.cameraNormal == false) {
       this.monchi?.checkMoveRot(this.cursors);
       if (this.map) this.map.animateBackground(this.monchi);
     };
-    if (this.map?.UIg && this.normalito == false) {
+    if (this.map?.lifesGroup && this.cameraNormal == false) {
       //console.log("entro")
       for (let i = 0; i < 4; i++) {
-        (this.map?.UIg?.getChildren()[i] as Phaser.GameObjects.Image)
+        (this.map?.lifesGroup?.getChildren()[i] as Phaser.GameObjects.Image)
           .setRotation(Math.PI);
       };
     } else {
       for (let i = 0; i < 4; i++) {
-        (this.map?.UIg?.getChildren()[i] as Phaser.GameObjects.Image)
+        (this.map?.lifesGroup?.getChildren()[i] as Phaser.GameObjects.Image)
           .setRotation(0);
       };
     };

@@ -1,6 +1,7 @@
 import Phaser from "phaser"
 
-
+export type SceneKeys = "Menu" | "GameOver" | "Won" | "Scene1" | "Scene2"
+export type LoadTypes = "image" | "spritesheet" | "audio"
 const loadAssets = {
     "Menu": {
         assets: [
@@ -124,9 +125,13 @@ class SceneLoader extends Phaser.Scene {
             percentText.destroy();
             assetText.destroy();
         });
-        const scenesTitles:Array<string> = ["Menu","Scene1","Won","GameOver","Scene2"]
+        const scenesTitles:Array<SceneKeys> = ["Menu","Scene1","Won","GameOver","Scene2"]
         for(let i = 0;i<scenesTitles.length;i++){ 
-        loadAssets[scenesTitles[i]].assets.map(([type, name, src, config]:any) => {
+            loadAssets[scenesTitles[i]].assets.map((sceneAssetConfig) => {
+            const type = sceneAssetConfig[0] as LoadTypes;
+            const name = sceneAssetConfig[1] as string;
+            const src = sceneAssetConfig[2] as string;
+            const config = sceneAssetConfig[3] as any;
             // @ts-checkts-ignore
             if (config) {
                 this.load[type](name, src, config)

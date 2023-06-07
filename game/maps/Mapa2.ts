@@ -387,7 +387,7 @@ class Mapa {
 
   addColliders() {
     if (this.scene.monchi) {
-
+      if (this.fireballGroup) this.scene.physics.add.collider(this.scene.monchi,this.fireballGroup, this.scene.loseLevel2)
       if (this.portal) this.portal.setTint(0xff0000);
       if (this.pisos) this.scene.physics.add.collider(this.scene.monchi, this.pisos, this.scene.touch);
       if (this.coin) this.scene.physics.add.overlap(this.scene.monchi, this.coin, this.scene.coinCollected);

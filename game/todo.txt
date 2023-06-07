@@ -1,8 +1,1 @@
 TODO LIST
-1.polish spwan position and movement (PENDING)
-2.make the platforms have a debounce (PENDING)
-3.translate health to the crop of health bar fillin (PENDING)
-4.modulize (PENDING)
-5.polish platform spawning (PENDING)
-6.add gameOver scene with menu (PENDING)
-7.solve custom Font problem (PENDING)

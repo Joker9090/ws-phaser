@@ -17,24 +17,6 @@ export type mapConfig = {
   flip?: boolean
 }
 
-const updatePlatform = (group: Phaser.GameObjects.Group, spriteWidth: number, texture: string, dist: number) => {
-  let _dist = dist ?? 0
-  const child = group.get(spriteWidth - _dist, gameState.sceneHeigth, texture);
-  child.setVisible(true);
-  child.setActive(true);
-  switch (texture) {
-    case "plataforma3":
-    case "plataforma2":
-    case "plataforma1":
-      child.setDepth(2);
-      break;
-    case 'plateau':
-      child.setDepth(1);
-      break;
-    default:
-  }
-}
-
 class MapHandler {
   config: mapConfig
   timer: number = 0
@@ -83,30 +65,28 @@ class MapHandler {
     // saw.setSize(saw.displayWidth - 10, saw.displayHeigh - 10)
   }
 
-  createDiamond(){
+  createDiamond() {
     const { top, bottom } = this.config.diamondsY
     const y = Phaser.Math.Between(top, bottom)
     const diamond = this.diamonds.create(this.scene.cameras.main.width + 100, y, "diamond").setGravityY(0).setScale(0.7)
     diamond.setVelocityX(-300)
     diamond.setDepth(6)
     diamond.body.setSize(diamond.displayWidth + 35, diamond.displayHeight + 30)
-
   }
 
   createUpPlatform() {
     const y = 200
     const upPlatform = this.groundGroup.create(this.scene.cameras.main.width + 90, y, "plataforma3").setGravityY(0).setScale(0.7)
-    upPlatform.setVelocityX(Phaser.Math.Between(-300, -350))
+    upPlatform.setVelocityX(-300)
     upPlatform.setDepth(6)
-
     upPlatform.body.setSize(upPlatform.displayWidth - 35, upPlatform.displayHeight - 35)
 
   }
 
-  createDownPlatform(){
+  createDownPlatform() {
     const y = 890
     const downPlatform = this.groundGroup.create(this.scene.cameras.main.width + 90, y, "plataforma3").setGravityY(0).setScale(0.7)
-    downPlatform.setVelocityX(Phaser.Math.Between(-300, -250))
+    downPlatform.setVelocityX(-300)
     downPlatform.setDepth(6)
     downPlatform.body.setSize(downPlatform.displayWidth - 35, downPlatform.displayHeight - 35)
 
@@ -114,18 +94,43 @@ class MapHandler {
 
   createSawMachine() {
     this.createSaw()
-    const t = this.config.initialDelay + Phaser.Math.Between(100, 700)
-    console.log("SAW t",t)
+    const t = this.config.initialDelay + Phaser.Math.Between(100, 400)
+    console.log("SAW t", t)
     this.scene.time.delayedCall(t, this.createSawMachine, undefined, this)
+  }
+  createDiamondMachine() {
+    this.createDiamond()
+    const t = this.config.initialDelay + Phaser.Math.Between(100, 700)
+
+    this.scene.time.delayedCall(t, this.createDiamondMachine, undefined, this)
+  }
+  createSpikeMachine() {
+    this.createSpikes
+    const t = 10
+    this.scene.time.delayedCall(t, this.createSpikeMachine, undefined, this)
+  }
+
+  createUpPlatformMachine() {
+    this.createUpPlatform()
+    const t = this.config.initialDelay + Phaser.Math.Between(100, 700)
+    this.scene.time.delayedCall(t, this.createDiamondMachine, undefined, this)
+  }
+  createDownPlatformMachine() {
+    this.createDownPlatform()
+    const t = this.config.initialDelay + Phaser.Math.Between(100, 700)
+
+    this.scene.time.delayedCall(t, this.createDiamondMachine, undefined, this)
   }
 
   createMap() {
-
+    this.scene.add.image(1000, 400, "background").setScale(6).setScrollFactor(0).setDepth(-1)
     // saws
     this.saws = this.scene.physics.add.group();
-
-    // El Random number es siempre el mismo!
     this.scene.time.delayedCall(this.config.initialDelay, this.createSawMachine, undefined, this)
+    this.scene.time.delayedCall(this.config.initialDelay, this.createUpPlatformMachine, undefined, this)
+    this.scene.time.delayedCall(this.config.initialDelay, this.createDownPlatformMachine, undefined, this)
+
+
 
     /*
     this.sawCreationTime = this.scene.time.addEvent({
@@ -138,49 +143,26 @@ class MapHandler {
 
     // spikes
     this.spikes = this.scene.physics.add.group();
-   
-    this.spikesCreationTime = this.scene.time.addEvent({
-      callback: this.createSpikes,
-      delay: 390,
-      callbackScope: this,
-      loop: true
-    })
-
+    this.scene.time.delayedCall(this.config.initialDelay, this.createSpikeMachine, undefined, this)
     // dimonds
 
     this.diamonds = this.scene.physics.add.group()
-    
-    this.diamondCreationTime = this.scene.time.addEvent({
-      callback: this.createDiamond,
-      delay: this.config.initialDelay + Phaser.Math.Between(400, 700),
-      callbackScope: this,
-      loop: true
-    })
-    
+    this.scene.time.delayedCall(this.config.initialDelay, this.createDiamondMachine, undefined, this)
+
+
 
     this.groundGroup = this.scene.physics.add.group()
-
-    
     this.upPlatformCreationTime = this.scene.time.addEvent({
       callback: this.createUpPlatform,
       delay: this.config.initialDelay + Phaser.Math.Between(400, 700),
       callbackScope: this,
       loop: true
     })
-
-   
     this.downPlatformCreationTime = this.scene.time.addEvent({
       callback: this.createDownPlatform,
       delay: this.config.initialDelay + Phaser.Math.Between(400, 700),
       callbackScope: this,
       loop: true
-    })
-    
-
-    // mmmmmmm
-    this.scene.physics.add.overlap(this.saws, this.diamonds, (saw, singleDiamond) => {
-      singleDiamond.destroy();
-      saw.destroy()
     })
   }
 

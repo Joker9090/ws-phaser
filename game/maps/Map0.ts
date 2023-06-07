@@ -24,7 +24,10 @@ class Map0 {
     /* Debug */
 
   }
-  createMap(speed: number, plataforma1: string, plataforma2: string, plataforma3: string, diamond: string, saw: string, spikestxt: string, fDSpikestxt: string) {
+  createMap(speed: number, plataforma1: string,
+    plataforma2: string, plataforma3: string,
+    diamond: string, saw: string,
+    spikestxt: string, fDSpikestxt: string) {
     var starX = Phaser.Math.Between(400, 1100);
     var starY = Phaser.Math.Between(350, 700)
     const floor = this.scene.physics.add.group({ allowGravity: false, immovable: true })

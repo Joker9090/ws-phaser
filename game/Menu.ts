@@ -100,7 +100,7 @@ export default class MainMenuScene extends Phaser.Scene {
 
     selectNextButton(change = 1) {
         let index = this.selectedButtonIndex + change;
-        console.log(index, this.buttons.length , this.buttons)
+        //console.log(index, this.buttons.length , this.buttons)
         // wrap the index to the front or end of array
         if (index >= this.buttons.length) {
             index = 0

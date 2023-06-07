@@ -1,11 +1,11 @@
 
 import Phaser from "phaser";
+import Game from "../Game";
 // Scene in class
 class Player extends Phaser.Physics.Arcade.Sprite {
   isJumping = false;
-  scene: Phaser.Scene;
-  
-  constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, frame?: string | number | undefined) {
+  scene: Game;
+  constructor(scene: Game, x: number, y: number, texture: string | Phaser.Textures.Texture, frame?: string | number | undefined) {
     super(scene,x,y,texture)
     this.scene = scene;
     /* Monchi animations */
@@ -34,7 +34,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.body?.setSize(73,110)
     this.body?.setOffset(70,50)
     this.setScale(0.6)
-    this.setBounce(0.1);
+    this.setBounce(0);
     this.setDepth(10)
     /* Monchi add to scene */
     scene.add.existing(this);
@@ -157,34 +157,37 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     /* Keywords press */
     if (cursors) {
       const { up, down, left, right } = cursors;
+      const velocity = 300;
       if (up.isDown) {
-        this.setVelocityY(-160)
+        this.setVelocityY(-velocity)
         this.setFlipX(false)
         if (!this.isJumping) this.anims.play('monchiMove', true);
       } else if (down.isDown) {
-        this.setVelocityY(160)
+        this.setVelocityY(velocity)
         this.setFlipX(true)
         if (!this.isJumping) this.anims.play('monchiMove', true);
       } else {
         this.setVelocityY(0)
-      }
+      };
       if (left.isDown) {
-        this.setGravityX(-1000);
+        this.setGravityX(-1300);
         this.setFlipY(true);
+        this.scene.map?.gravityArrow?.setRotation(Math.PI);
         this.setOffset(30, 40);
         
       } else if (right.isDown) {
-        this.setGravityX(1000);
+        this.setGravityX(1300);
         this.setFlipY(false);
+        this.scene.map?.gravityArrow?.setRotation(0);
         this.setOffset(80, 40);
-      }
-    }
-   }
+      };
+    };
+   };
   
 
   checkMoveCreative(cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined) {
     /* Keywords press */
-    const velo = 300
+    const velo = 400
     if (cursors) {
       const { left, right, up, down, space } = cursors;
       /* Left*/

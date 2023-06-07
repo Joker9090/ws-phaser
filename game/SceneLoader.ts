@@ -1,6 +1,6 @@
 import Phaser from "phaser"
 
-export type SceneKeys = "Menu" | "GameOver" | "Won" | "Scene1" | "Scene2"
+export type SceneKeys = "Menu" | "GameOver" | "Won" | "Scene1" | "Scene2" | "Tutorial"
 export type LoadTypes = "image" | "spritesheet" | "audio"
 
 const loadAssets = {
@@ -54,6 +54,23 @@ const loadAssets = {
             ["image", "fireball", "/game/fireball.png"],
             ["spritesheet", "character", "/game/character.png", { frameWidth: 220, frameHeight: 162 }],
         ]
+    },
+    "Tutorial": {
+        assets: [
+            ["audio", "song", 'sounds/monchiSpace.mp3'],
+            ["image", "background", "/game/background.png"],
+            ["image", "plataformaA", "/game/platform1.png"],
+            ["image", "plataformaB", "/game/platform1B.png"],
+            ["image", "plataforma2", "/game/platform2.png"],
+            ["image", "asteroid", "/game/asteroid.png"],
+            ["image", "asteroid2", "/game/asteroid2.png"],
+            ["image", "coin", "/game/coin.png"],
+            ["image", "portal", "/game/portal.png"],
+            ["image", "heart", "/game/heart.png"],
+            ["image", "arrow", "/game/arrow.png"],
+            ["image", "fireball", "/game/fireball.png"],
+            ["spritesheet", "character", "/game/character.png", { frameWidth: 220, frameHeight: 162 }],
+        ]
     }
 }
 
@@ -65,11 +82,7 @@ class SceneLoader extends Phaser.Scene {
         super({ key: 'SceneLoader' })
     }
     preload(this: Phaser.Scene) {
-        var progressBar = this.add.graphics();
-        var progressBox = this.add.graphics();
-        progressBox.fillStyle(0x222222, 0.8);
-        progressBox.fillRect(240, 270, 320, 50);
-
+        
         var width = this.cameras.main.width;
         var height = this.cameras.main.height;
         var loadingText = this.make.text({
@@ -81,6 +94,10 @@ class SceneLoader extends Phaser.Scene {
                 color: '#ffffff'
             }
         });
+        var progressBar = this.add.graphics();
+        var progressBox = this.add.graphics();
+        progressBox.fillStyle(0x222222, 0.8);
+        progressBox.fillRect(width/2 - 160, height/2 +100, 320, 50);
 
         loadingText.setOrigin(0.5, 0.5);
 
@@ -112,7 +129,7 @@ class SceneLoader extends Phaser.Scene {
             percentText.setText(Number(value * 100) + '%');
             progressBar.clear();
             progressBar.fillStyle(0xffffff, 1);
-            progressBar.fillRect(250, 280, 300 * value, 30);
+            progressBar.fillRect(width/2 - 160, height/2 +100, 300 * value, 30);
         });
 
         this.load.on('fileprogress', function (file: any) {
@@ -126,7 +143,7 @@ class SceneLoader extends Phaser.Scene {
             percentText.destroy();
             assetText.destroy();
         });
-        const scenesTitles: Array<SceneKeys> = ["Menu", "Scene1", "Won", "GameOver", "Scene2"]
+        const scenesTitles: Array<SceneKeys> = ["Menu", "Scene1", "Won", "GameOver", "Scene2", "Tutorial"]
         for (let i = 0; i < scenesTitles.length; i++) {
             loadAssets[scenesTitles[i]].assets.map((sceneAssetConfig) => {
                 const type = sceneAssetConfig[0] as LoadTypes;

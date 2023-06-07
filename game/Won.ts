@@ -1,5 +1,4 @@
 import Phaser from 'phaser';
-import Scene1 from './Scene1';
 
 export default class WonScene extends Phaser.Scene {
     cursors?: Phaser.Types.Input.Keyboard.CursorKeys;

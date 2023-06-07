@@ -19,8 +19,6 @@ export default function Home() {
       import("@/game/SceneLoader"),
       import("@/game/Menu"),
       import("@/game/Game"),
-      //import("@/game/Scene1"),
-      //import("@/game/Scene2")
       import("@/game/Won"),
       import("@/game/GameOver")
     ]).then((scenes) => {

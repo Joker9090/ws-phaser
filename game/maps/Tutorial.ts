@@ -6,13 +6,13 @@ import LargeFloor, { LargeFloorConfig } from "../assets/LargeFloor";
 import UI, { UIConfig } from "../assets/UI";
 import Game from "../Game";
 // Scene in class
-class Mapa {
+class Tutorial {
   isJumping = false;
   debugGraphics: Phaser.GameObjects.Graphics;
   scene: Game;
   worldSize = {
-    width: 3500,
-    height: 10000,
+    width: 5000,
+    height: 2500,
   };
   pisos?: Phaser.Physics.Arcade.Group;
   coin?: Phaser.Physics.Arcade.Group;
@@ -24,8 +24,8 @@ class Mapa {
   gravityArrow?: Phaser.GameObjects.Image;
   coinUI?: Phaser.GameObjects.Image;
   startingPoint = {
-    x: 400, //400
-    y: 140, //140
+    x: 100, //400
+    y: 1800, //140
   };
   checkPointPos = {
     x: 400, 
@@ -109,26 +109,35 @@ class Mapa {
 
 
     /* Platforms */
-
-    const p1Config: LargeFloorConfig = {
-      textureA: "plataformaA",
-      textureB: "plataformaB",
-      large: 5,
-      pos: { x: 400, y: 300, },
-      scale: { width: 0.7, height: 0.7, },
-      rotated: false
-    };
-    const p1 = new LargeFloor(this.scene, p1Config, this.pisos);
-
-    const p2Config: LargeFloorConfig = {
-      textureA: "plataformaA",
-      textureB: "plataformaB",
-      large: 5,
-      pos: { x: 1400, y: 100, },
-      scale: { width: 0.7, height: 0.7, },
-      rotated: true,
-    };
-    const p2 = new LargeFloor(this.scene, p2Config, this.pisos);
+    const p0Config: LargeFloorConfig = {
+        textureA: "plataformaA",
+        textureB: "plataformaB",
+        large: 20,
+        pos: { x: 0, y: 2000, },
+        scale: { width: 0.7, height: 0.7, },
+        rotated: false
+      };
+      const p0 = new LargeFloor(this.scene, p0Config, this.pisos);
+      const p1Config: LargeFloorConfig = {
+          textureA: "plataformaA",
+          textureB: "plataformaB",
+          large: 2,
+          pos: { x: 400, y: 1800, },
+          scale: { width: 0.7, height: 0.7, },
+          rotated: false
+        };
+        const p1 = new LargeFloor(this.scene, p1Config, this.pisos);
+        
+        const p2Config: LargeFloorConfig = {
+            textureA: "plataformaA",
+            textureB: "plataformaB",
+            large: 3,
+            pos: { x: 700, y: 1600, },
+            scale: { width: 0.7, height: 0.7, },
+            rotated: false,
+        };
+        const p2 = new LargeFloor(this.scene, p2Config, this.pisos);
+        /*
 
     const p3Config: LargeFloorConfig = {
       textureA: "plataformaA",
@@ -170,69 +179,7 @@ class Mapa {
       rotated: true,
     };
     const p6 = new LargeFloor(this.scene, p6Config, this.pisos);
-
-    const p7Config: LargeFloorConfig = {
-      textureA: "plataformaA",
-      textureB: "plataformaB",
-      large: 12,
-      pos: { x: 200, y: 1000, },
-      rotated: true,
-      scale: { width: 0.7, height: 0.7, },
-    };
-    const p7 = new LargeFloor(this.scene, p7Config, this.pisos);
-
-    const p8Config: LargeFloorConfig = {
-      textureA: "plataformaA",
-      textureB: "plataformaB",
-      large: 4,
-      pos: { x: 900, y: 2200, },
-      scale: { width: 0.7, height: 0.7, },
-      rotated: true,
-    };
-    const p8 = new LargeFloor(this.scene, p8Config, this.pisos);
-
-
-    const p9Config: LargeFloorConfig = {
-      textureA: "plataformaA",
-      textureB: "plataformaB",
-      large: 4,
-      pos: { x: 1200, y: 1970, },
-      scale: { width: 0.7, height: 0.7, },
-      rotated: true,
-    };
-    const p9 = new LargeFloor(this.scene, p9Config, this.pisos);
-
-
-    const p10Config: LargeFloorConfig = {
-      textureA: "plataformaA",
-      textureB: "plataformaB",
-      large: 4,
-      pos: { x: 1500, y: 2200, },
-      scale: { width: 0.7, height: 0.7, },
-      rotated: true,
-    };
-    const p10 = new LargeFloor(this.scene, p10Config, this.pisos);
-
-    const p11Config: LargeFloorConfig = {
-      textureA: "plataformaA",
-      textureB: "plataformaB",
-      large: 7,
-      pos: { x: 1900, y: 1600, },
-      scale: { width: 0.7, height: 0.7, },
-      rotated: true,
-    };
-    const p11 = new LargeFloor(this.scene, p11Config, this.pisos);
-
-    const p12Config: LargeFloorConfig = {
-      textureA: "plataformaA",
-      textureB: "plataformaB",
-      large: 7,
-      pos: { x: 2300, y: 1350, },
-      scale: { width: 0.7, height: 0.7, },
-      rotated: true,
-    };
-    const p12 = new LargeFloor(this.scene, p12Config, this.pisos);
-
+    */
 
     /* Portal, Coin, Fireball and Asteroids */
 
@@ -248,19 +195,10 @@ class Mapa {
       .setRotation(Math.PI / 2)
       .setSize(1400, 800);
 
-    const portalInicioConfig: FloorConfig = {
-      texture: "portal",
-      pos: { x: 400, y: 150, },
-      scale: { width: 0.1, height: 0.1, },
-      width: 1000,
-      height: 1500,
-    };
-
-    const portInicio = new Floor(this.scene, portalInicioConfig, this.portalInit).setDepth(15);
 
     const fireballConfig: FloorConfig = {
       texture: "fireball",
-      pos: { x: 1910, y: 1450, }, // 500 1580
+      pos: { x: 310, y: 1850, }, // 500 1580
       scale: { width: .2, height: .2, },
       width: 400,
       height: 400,
@@ -288,31 +226,6 @@ class Mapa {
     const coin = new Floor(this.scene, coinConfig, this.coin)
       .setVisible(false);
 
-    const c1Config: CloudGeneratorConfig = {
-      texture: "asteroid",
-      x: -100,
-      y: 1700,
-      delayed: 100,
-      direction: 0,
-      velocity: 100,
-      scale: .70,
-      depth: 1,
-    };
-    const c1 = new CloudGenerator(this.scene, c1Config);
-    c1.start();
-
-    const c2Config: CloudGeneratorConfig = {
-      texture: "asteroid2",
-      x: 3000,
-      y: 800,
-      delayed: 100,
-      direction: 1,
-      velocity: 100,
-      scale: .50,
-      depth: 1,
-    };
-    const c2 = new CloudGenerator(this.scene, c2Config);
-    c2.start();
 
     /* UI */
     this.createUI(data.lifes)
@@ -326,7 +239,6 @@ class Mapa {
       if (this.pisos) this.scene.physics.add.collider(this.scene.monchi, this.pisos, this.scene.touch, () => true, this.scene);
       if (this.coin) this.scene.physics.add.overlap(this.scene.monchi, this.coin, this.scene.coinCollected, () => true, this.scene);
       if (this.portal) this.scene.physics.add.overlap(this.scene.monchi, this.portal, this.scene.win, () => true, this.scene);
-
     }
 
   }
@@ -380,4 +292,4 @@ class Mapa {
 
 };
 
-export default Mapa 
+export default Tutorial 

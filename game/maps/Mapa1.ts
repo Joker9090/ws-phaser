@@ -25,9 +25,14 @@ class Mapa1 {
   lifesGroup?: Phaser.GameObjects.Group;
   gravityArrow?: Phaser.GameObjects.Image;
   coinUI?: Phaser.GameObjects.Image;
+  sideGrav: boolean = false
   startingPoint = {
     x: 500, //500
     y: 800, //800
+  };
+  checkPointPos = {
+    x: 3000, //500
+    y: 600, //800
   };
   background: Phaser.GameObjects.Image;
   constructor(scene: Game) {
@@ -366,7 +371,7 @@ class Mapa1 {
   };
 
   update() {
-    if (this.scene.canWin){
+    if (this.scene.canWin || this.scene.nextLevel){
       this.coinUI?.clearTint();
     }
 

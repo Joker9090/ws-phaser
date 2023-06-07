@@ -1,3 +1,16 @@
+COSAS PARA ARREGLAR:
+
+-TIMER 
+-GAMEOVER CUANDO CAMBIA DE NIVEL Y LE QUEDAN VIDAS PERO PIERDE 1
+-TUTORIAL: contar UI (vidas, moneda, gravedad y tiempo), contar plataformas naranjas y contar fireball. Finalmente mostrar portal
+-MUSICA NIVEL 2, MENU, WIN Y GAMEOVER
+-
+
+
+
+
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started

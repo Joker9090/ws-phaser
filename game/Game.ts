@@ -182,8 +182,8 @@ class Game extends Phaser.Scene {
 
   coinCollected(){
     if (this.map?.coin) {
-      this.map.portal?.setTint(0x00ff00);
-      this.canWin = true;
+      (this.map.portal?.getChildren()[0] as Phaser.GameObjects.Image).clearTint();
+      this.nextLevel = true;
       this.map.coin.setVisible(false);
       this.map.coin.clear(true);
     };
@@ -191,12 +191,10 @@ class Game extends Phaser.Scene {
 
   // no ta andanding
   goNextLevel(){
-    console.log("next level", this.lifes)
+    console.log("next level", this.nextLevel, this.lifes)
     if (this.nextLevel && this.monchi) {
       this.cameraNormal = true;
-      this.scene.sleep();
-      this.scene.start("Game", { level: 2, lifes: this.lifes });
-      this.scene.switch("Game")
+      this.scene.restart({ level: 2, lifes: this.lifes });
     };
   }
 

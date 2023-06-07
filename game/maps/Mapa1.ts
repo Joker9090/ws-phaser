@@ -380,7 +380,6 @@ class Mapa1 {
       this.animateBackground(this.scene.monchi);
     }
     else if (this.scene.monchi && this.scene.cameraNormal == false) {
-      console.log("entro a cameraNormal")
       this.scene.monchi?.checkMoveRot(this.scene.cursors);
       this.animateBackground(this.scene.monchi);
     };

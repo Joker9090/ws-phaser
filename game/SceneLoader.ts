@@ -15,6 +15,7 @@ const loadAssets = {
             ["image", "lifeFilling", "/game/lifeRelleno.png"],
             ["image", "close", "/game/close.png"],
             ["image", "spikes", "/game/spikes.png"],
+            ["spritesheet", "run", "/game/Run.png", { frameWidth: 128, frameHeight: 128 }],
         ]
     }
 }

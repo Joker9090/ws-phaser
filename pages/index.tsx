@@ -23,9 +23,10 @@ export default function Home() {
     //Load scenes async when windows is ready
     Promise.all([
       import("@/game/SceneLoader"),
-      import("@/game/Scene4")]).then((scenes) => {
-        setScenes(scenes.map(s => s.default))
-      })
+      import("@/game/Scene4")
+    ]).then((scenes) => {
+      setScenes(scenes.map(s => s.default))
+    })
 
   }, [])
 
@@ -41,7 +42,7 @@ export default function Home() {
           mode: window.Phaser.Scale.FIT
         },
 
-        scene: scenes[0],
+        scene: scenes,
         physics: {
           default: "arcade",
           arcade: {

@@ -24,8 +24,11 @@ class Game extends Phaser.Scene {
   gravityDown: boolean = true;
 
   startTime: number = 0;
-  textTime?: Phaser.GameObjects.Text;
+  timerText?: Phaser.GameObjects.Text;
   checkPoint: number = 0;
+
+  cameraWidth: number = 0;
+  cameraHeight: number = 0;
   /*
   startingPoint = {
     x: this.map?.startingPoint.x,
@@ -42,23 +45,29 @@ class Game extends Phaser.Scene {
   };
 
   /*   */
-   preload(this: Phaser.Scene) {
-     this.load.spritesheet("character", "/game/character.png", { frameWidth: 220, frameHeight: 162 });
-     this.load.image("background", "/game/background.png");
-     this.load.image("plataformaA", "/game/platform1.png");
-     this.load.image("plataformaB", "/game/platform1B.png");
-     this.load.image("plataforma2", "/game/platform2.png");
-     this.load.image("asteroid", "/game/asteroid.png");
-     this.load.image("asteroid2", "/game/asteroid2.png");
-     this.load.image("coin", "/game/coin.png");
-     this.load.image("portal", "/game/portal.png");
-     this.load.image("heart", "/game/heart.png");
-     this.load.image("arrow", "/game/arrow.png");
-     this.load.audio("song" , 'sounds/monchiSpace.mp3');
-     this.load.image("fireball", "/game/fireball.png");
-   }
+  preload(this: Phaser.Scene) {
+    this.load.spritesheet("character", "/game/character.png", { frameWidth: 220, frameHeight: 162 });
+    this.load.image("background", "/game/background.png");
+    this.load.image("plataformaA", "/game/platform1.png");
+    this.load.image("plataformaB", "/game/platform1B.png");
+    this.load.image("plataforma2", "/game/platform2.png");
+    this.load.image("asteroid", "/game/asteroid.png");
+    this.load.image("asteroid2", "/game/asteroid2.png");
+    this.load.image("coin", "/game/coin.png");
+    this.load.image("portal", "/game/portal.png");
+    this.load.image("heart", "/game/heart.png");
+    this.load.image("arrow", "/game/arrow.png");
+    this.load.audio("song", 'sounds/monchiSpace.mp3');
+    this.load.image("fireball", "/game/fireball.png");
+  }
 
+  stop() {
+    this.scene.stop;
+  }
 
+  wake() {
+    this.scene.wake()
+  };
 
   touch() {
     if (this.monchi) {
@@ -67,7 +76,7 @@ class Game extends Phaser.Scene {
   };
 
 
-  float(time:number) {
+  float(time: number) {
     if (this.monchi) {
       this.monchi.setBounce(0.1);
       this.monchi.setGravityY(-2000);
@@ -80,7 +89,7 @@ class Game extends Phaser.Scene {
     }
   };
 
-  rotateCam(time:number){
+  rotateCam(time: number) {
     this.cameraNormal = false;
     if (this.canRot) {
       for (let i = 0; i < 25; i++) {
@@ -92,7 +101,7 @@ class Game extends Phaser.Scene {
     };
   };
 
-  noFloat(){
+  noFloat() {
     this.cameraNormal = true;
     if (this.monchi) {
       this.monchi?.setGravity(0);
@@ -108,8 +117,8 @@ class Game extends Phaser.Scene {
     };
   };
 
-  gameOver(){
-    if(this.music) this.music.stop()
+  gameOver() {
+    if (this.music) this.music.stop()
     this.lifes = 3
     this.cameraNormal = true;
     this.checkPoint = 0;
@@ -119,28 +128,28 @@ class Game extends Phaser.Scene {
     this.nextLevel = false;
   };
 
-  
-  win(){
+
+  win(Phrase:string) {
     if (this.canWin && this.monchi) {
-      if(this.music) this.music.stop()
+      if (this.music) this.music.stop()
       this.cameraNormal = true;
       this.scene.sleep();
-      this.scene.switch("Won");
+      this.scene.start("Won",{text: Phrase});
       this.checkPoint = 0;
       this.canWin = false;
       this.nextLevel = false;
     };
   };
-  
-  movingFloorsGrav(){
+
+  movingFloorsGrav() {
     this.monchi?.setVelocityY(300);
   };
-  
-  movingFloorsGravRot(){
+
+  movingFloorsGravRot() {
     this.monchi?.setVelocityY(-300);
   };
-  
-  coinCollected(){
+
+  coinCollected() {
     if (this.map?.coin) {
       (this.map.portal?.getChildren()[0] as Phaser.GameObjects.Image).clearTint();
       this.nextLevel = true;
@@ -149,8 +158,8 @@ class Game extends Phaser.Scene {
       this.map.coin.clear(true);
     };
   };
-  
-  goNextLevel(){
+
+  goNextLevel() {
     console.log(this.lifes)
     if (this.nextLevel && this.monchi) {
       this.cameraNormal = true;
@@ -158,8 +167,8 @@ class Game extends Phaser.Scene {
       this.scene.restart({ level: 2, lifes: this.lifes });
     };
   };
-  
-  noFloatTutorial(){
+
+  noFloatTutorial() {
     if (this.monchi) {
       this.monchi?.setGravity(0);
       this.monchi?.setFlipY(false);
@@ -170,24 +179,24 @@ class Game extends Phaser.Scene {
 
   };
 
-  loseLevelTutorial(){
+  loseLevelTutorial() {
     if (this.lifes) {
       this.lifes -= 1;
       console.log("vidas :", this.lifes, " long: ", this.map?.lifesGroup?.getLength())
       if (this.lifes == 0) {
         this.gameOver();
       } else if (this.lifes != 0 && this.gravityDown && this.monchi) {
-        if(this.map) this.monchi.x = this.map.startingPoint.x;
-        if(this.map) this.monchi.y = this.map.startingPoint.y;
-      } else if (this.lifes != 0 && this.gravityDown == false && this.monchi){
-        if(this.map) this.monchi.x = this.map.startingPoint.x;
-        if(this.map) this.monchi.y = this.map.startingPoint.y;
+        if (this.map) this.monchi.x = this.map.startingPoint.x;
+        if (this.map) this.monchi.y = this.map.startingPoint.y;
+      } else if (this.lifes != 0 && this.gravityDown == false && this.monchi) {
+        if (this.map) this.monchi.x = this.map.startingPoint.x;
+        if (this.map) this.monchi.y = this.map.startingPoint.y;
         this.noFloatTutorial()
       }
       if (this.lifes != 0 && this.map?.lifesGroup) {
         let lifeToTheRight = null;
         let highestX = Number.NEGATIVE_INFINITY;
-        for (let i = 0; i < this.map?.lifesGroup?.getLength()  ; i++) {
+        for (let i = 0; i < this.map?.lifesGroup?.getLength(); i++) {
           const child = (this.map?.lifesGroup?.getChildren()[i] as Phaser.GameObjects.Image);
           if (child.x > highestX) {
             lifeToTheRight = child;
@@ -195,7 +204,6 @@ class Game extends Phaser.Scene {
           };
           // Remove the object with the highest x position
         }
-        //lifeToTheRight?.setVisible(false);
         lifeToTheRight?.destroy()
       };
     };
@@ -212,28 +220,28 @@ class Game extends Phaser.Scene {
         this.monchi?.setBounceY(0);
         this.gravityDown = true;
         this.monchi?.body?.setOffset(70, 50);
-        this.cameras.main.setRotation(0); 
-        this.monchi?.setGravity(0); 
+        this.cameras.main.setRotation(0);
+        this.monchi?.setGravity(0);
         this.cameraNormal = true;
-        if(this.map) this.monchi.x = this.map.startingPoint.x;
-        if(this.map) this.monchi.y = this.map.startingPoint.y;
+        if (this.map) this.monchi.x = this.map.startingPoint.x;
+        if (this.map) this.monchi.y = this.map.startingPoint.y;
       } else if (this.lifes != 0 && this.checkPoint == 1 && this.monchi && this.cameraNormal == false) {
         this.float(0);
         this.cameraNormal = true
         this.canRot = true
         this.rotateCam(0);
-        if(this.map) this.monchi.x = this.map.checkPointPos.x;
-        if(this.map) this.monchi.y = this.map.checkPointPos.y;
+        if (this.map) this.monchi.x = this.map.checkPointPos.x;
+        if (this.map) this.monchi.y = this.map.checkPointPos.y;
       } else if (this.lifes != 0 && this.checkPoint == 1 && this.monchi && this.cameraNormal) {
         this.float(0);
         this.canRot = true
-        if(this.map) this.monchi.x = this.map.checkPointPos.x;
-        if(this.map) this.monchi.y = this.map.checkPointPos.y;
+        if (this.map) this.monchi.x = this.map.checkPointPos.x;
+        if (this.map) this.monchi.y = this.map.checkPointPos.y;
       }
       if (this.lifes != 0 && this.map?.lifesGroup) {
         let lifeToTheRight = null;
         let highestX = Number.NEGATIVE_INFINITY;
-        for (let i = 0; i < this.map?.lifesGroup?.getLength()  ; i++) {
+        for (let i = 0; i < this.map?.lifesGroup?.getLength(); i++) {
           const child = (this.map?.lifesGroup?.getChildren()[i] as Phaser.GameObjects.Image);
           if (child.x > highestX) {
             lifeToTheRight = child;
@@ -261,14 +269,14 @@ class Game extends Phaser.Scene {
         this.monchi.setRotation(0).setSize(73, 110).setOffset(70, 50);
         this.cameras.main.setRotation(0);
         this.monchi?.setGravityX(0);
-        if(this.map) this.map.sideGrav = false;
-        if(this.map) this.monchi.x = this.map.startingPoint.x;
-        if(this.map) this.monchi.y = this.map.startingPoint.y;
+        if (this.map) this.map.sideGrav = false;
+        if (this.map) this.monchi.x = this.map.startingPoint.x;
+        if (this.map) this.monchi.y = this.map.startingPoint.y;
       };
       if (this.lifes != 0 && this.map?.lifesGroup) {
         let lifeToTheRight = null;
         let highestX = Number.NEGATIVE_INFINITY;
-        for (let i = 0; i < this.map?.lifesGroup?.getLength()  ; i++) {
+        for (let i = 0; i < this.map?.lifesGroup?.getLength(); i++) {
           const child = (this.map?.lifesGroup?.getChildren()[i] as Phaser.GameObjects.Image);
           if (child.x > highestX) {
             lifeToTheRight = child;
@@ -284,10 +292,12 @@ class Game extends Phaser.Scene {
   create(this: Game, data: { level: number, lifes: number }) {
 
     /* DEBUG DE NIVEL */
-    //data.level = 2
+    //data.level = 1
     //data.lifes = 3
     /* DEBUG DE NIVEL */
 
+    this.cameraWidth = this.cameras.main.width;
+    this.cameraHeight = this.cameras.main.height;
 
     /* CHOSE LEVEL, LIFES AND AUDIO */
     switch (data.level) {
@@ -326,25 +336,31 @@ class Game extends Phaser.Scene {
     /* CAMERA */
     this.cameras.main.startFollow(this.monchi);
 
-
-    const timeTrack = () => {
-      this.startTime = this.time.now
-      this.textTime = this.add.text(this.cameras.main.width / 2, 35, 'Time: 0', { fontSize: '32px' }).setScrollFactor(0, 0);
-    };
-    timeTrack() 
-
-    //colliders+
+    /* TIMER */
+    this.timerText = this.add.text(this.cameras.main.width -120 , 35, 'Time: 0', { fontSize: '32px' }).setOrigin(.5,.5).setScrollFactor(0, 0).setDepth(100).setSize(50,50);
+    var timePassed = 0;
+    var timerEvent = this.time.addEvent({
+      delay: 1000, 
+      callback: () => {
+        timePassed++;
+        this.timerText?.setText('Time: ' + timePassed);
+      },
+      callbackScope: this,
+      loop: true
+    });
+   
+    /* COLLIDERS */ 
     this.map.addColliders()
-    
+
 
     this.physics.world.on('worldbounds', (body: Phaser.Physics.Arcade.Sprite, top: boolean, down: boolean, left: boolean, right: boolean) => {
       if (down || top || left || right) {
-        if (data.level == 1){
+        if (data.level == 1) {
           this.loseLevel1();
-        } else if (data.level == 2){
-          this.loseLevel2(); 
-        } else if (data.level == 0){
-          this.loseLevelTutorial(); 
+        } else if (data.level == 2) {
+          this.loseLevel2();
+        } else if (data.level == 0) {
+          this.loseLevelTutorial();
         };
       };
     }, this);
@@ -358,13 +374,13 @@ class Game extends Phaser.Scene {
         this.checkPoint = 1;
       };
     };
-
+    /*
     if (this.textTime) {
       let timePassed = this.time.now - this.startTime
       this.textTime.setText('Time: ' + Math.floor(timePassed / 1000));
     };
-
-    if(this.map) this.map.update()
+    */
+    if (this.map) this.map.update()
   };
 };
 

@@ -371,15 +371,20 @@ class Mapa1 {
   };
 
   update() {
-    if(this.coinUI){
-      if (this.scene.canWin || this.scene.nextLevel){
+    /* DEBUGGER
+    if (this.scene.textTime && this.scene.monchi) {
+      this.scene.textTime.setText('X: ' + Math.floor(this.scene.monchi.x) + ' Y: ' + Math.floor(this.scene.monchi.y));
+    };
+    */
+    if (this.coinUI) {
+      if (this.scene.canWin || this.scene.nextLevel) {
         this.coinUI?.clearTint();
       } else {
         this.coinUI?.setTint().setTint(Phaser.Display.Color.GetColor(0, 0, 0));
       };
     };
 
-    if (this.scene.gravityDown === false) {
+    if (this.scene.gravityDown == false) {
       (this.gravityArrow as Phaser.GameObjects.Image).setRotation(Math.PI * 3 / 2);
     } else { (this.gravityArrow as Phaser.GameObjects.Image).setRotation(Math.PI / 2) };
 
@@ -394,12 +399,15 @@ class Mapa1 {
     };
     if (this.lifesGroup && this.scene.cameraNormal == false) {
       for (let i = 0; i < this.lifesGroup.getChildren().length; i++) {
-        (this.lifesGroup?.getChildren()[i] as Phaser.GameObjects.Image).setRotation(Math.PI);
+        (this.lifesGroup?.getChildren()[i] as Phaser.GameObjects.Image).setRotation(Math.PI); 
       };
+      if(this.scene.timerText) this.scene.timerText.setRotation(Math.PI);
+      //if(this.scene.timerText) this.scene.timerText.y += this.scene.cameraHeight - 50
     } else if (this.lifesGroup) {
       for (let i = 0; i < this.lifesGroup.getChildren().length; i++) {
         (this.lifesGroup?.getChildren()[i] as Phaser.GameObjects.Image).setRotation(0);
       };
+      if(this.scene.timerText) this.scene.timerText.setRotation(0);
     };
   }
 

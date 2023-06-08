@@ -16,10 +16,10 @@ export default class MainMenuScene extends Phaser.Scene {
     };
 
     preload() {
-        this.load.image("background" , "game/background.png");
+        this.load.image("background", "game/background.png");
         this.load.image("glass", "game/glass.png");
         this.load.image("cursor", "game/cursor.png");
-        this.load.spritesheet("monchi","game/character.png",{ frameWidth: 220, frameHeight: 162 });
+        this.load.spritesheet("monchi", "game/character.png", { frameWidth: 220, frameHeight: 162 });
     };
 
     create() {
@@ -30,10 +30,10 @@ export default class MainMenuScene extends Phaser.Scene {
 
         /* Main Scene Menu */
         this.physics.world.setBounds(0, 0, 5000, 2500);
-        this.add.image(900,500,"background").setScale(.7);
-        this.monchi = this.add.sprite(100,700,"monchi",1).setScale(.5);
+        this.add.image(900, 500, "background").setScale(.7);
+        this.monchi = this.add.sprite(100, 700, "monchi", 1).setScale(.5);
         const { width, height } = this.scale;
-        const [widthButton, heightButton] = [250,100];
+        const [widthButton, heightButton] = [250, 100];
 
         // Tutorial button
         const Tutorial = this.add.image(width * 0.5, height * 0.4, 'glass').setDisplaySize(widthButton, heightButton);
@@ -46,7 +46,7 @@ export default class MainMenuScene extends Phaser.Scene {
         // Play level 2 button
         const PlayLevel2 = this.add.image(PlayLevel1.x, PlayLevel1.y + PlayLevel1.displayHeight + 10, 'glass').setDisplaySize(widthButton, heightButton);
         this.add.text(PlayLevel2.x, PlayLevel2.y, 'Start level 2').setOrigin(0.5);
-        
+
 
         this.buttons = [Tutorial, PlayLevel1, PlayLevel2];
         this.buttonSelector = this.add.image(0, 0, 'cursor').setScale(.1).setRotation(-1);
@@ -54,19 +54,19 @@ export default class MainMenuScene extends Phaser.Scene {
 
         Tutorial.on('selected', () => {
             this.scene.sleep();
-            this.scene.start("Game", { level: 0, lifes: 7 });
+            this.scene.start("Game", { level: 0, lifes: 3 });
             this.selectedButtonIndex = 0
         });
 
         PlayLevel1.on('selected', () => {
             this.scene.sleep();
-            this.scene.start("Game", { level: 1, lifes: 7 });
+            this.scene.start("Game", { level: 1, lifes: 3 });
             this.selectedButtonIndex = 0
         });
 
         PlayLevel2.on('selected', () => {
             this.scene.sleep();
-            this.scene.start("Game", { level: 2, lifes: 7 });
+            this.scene.start("Game", { level: 2, lifes: 3 });
             this.selectedButtonIndex = 0
         });
 
@@ -121,7 +121,7 @@ export default class MainMenuScene extends Phaser.Scene {
     };
 
     update() {
-        if(this.monchi){
+        if (this.monchi) {
             this.progress = this.progress + .0031415;
             this.monchi.x = this.monchi.x + .5;
             this.monchi.y = this.monchi.y - .25;

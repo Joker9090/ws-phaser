@@ -28,8 +28,8 @@ class Mapa {
     y: 140, //140
   };
   checkPointPos = {
-    x: 400, 
-    y: 140, 
+    x: 400,
+    y: 140,
   };
   background: Phaser.GameObjects.Image;
   sideGrav: boolean = false;
@@ -321,11 +321,11 @@ class Mapa {
 
   addColliders() {
     if (this.scene.monchi) {
-      if (this.fireballGroup) this.scene.physics.add.collider(this.scene.monchi,this.fireballGroup, this.scene.loseLevel2, () => true, this.scene)
+      if (this.fireballGroup) this.scene.physics.add.collider(this.scene.monchi, this.fireballGroup, this.scene.loseLevel2, () => true, this.scene)
       if (this.portal) this.portal.setTint(0xff0000);
       if (this.pisos) this.scene.physics.add.collider(this.scene.monchi, this.pisos, this.scene.touch, () => true, this.scene);
       if (this.coin) this.scene.physics.add.overlap(this.scene.monchi, this.coin, this.scene.coinCollected, () => true, this.scene);
-      if (this.portal) this.scene.physics.add.overlap(this.scene.monchi, this.portal, this.scene.win, () => true, this.scene);
+      if (this.portal) this.scene.physics.add.overlap(this.scene.monchi, this.portal,()=>this.scene.win("Congrats! You've won the game"), () => true, this.scene);
 
     }
 
@@ -334,13 +334,14 @@ class Mapa {
   update() {
     //console.log(this.scene.canWin, "can win", this.scene.nextLevel, "next level")
     //modo creative
-    if (this.scene.textTime && this.scene.monchi) {
-      this.scene.textTime.setText('X: ' + Math.floor(this.scene.monchi.x) + ' Y: ' + Math.floor(this.scene.monchi.y));
+    /*
+    if (this.scene.timerText && this.scene.monchi) {
+      this.scene.timerText.setText('X: ' + Math.floor(this.scene.monchi.x) + ' Y: ' + Math.floor(this.scene.monchi.y));
     };
-
-    //
-    if(this.coinUI){
-      if (this.scene.canWin || this.scene.nextLevel){
+    */
+    
+    if (this.coinUI) {
+      if (this.scene.canWin || this.scene.nextLevel) {
         this.coinUI?.clearTint();
       } else {
         this.coinUI?.setTint().setTint(Phaser.Display.Color.GetColor(0, 0, 0));
@@ -348,31 +349,31 @@ class Mapa {
     };
 
     let firstChange = false
-    if(this.scene.monchi){
-      if(this.scene.monchi.x > 1000 && this.scene.monchi.x < 1200 && this.scene.monchi.y < 236){
+    if (this.scene.monchi) {
+      if (this.scene.monchi.x > 1000 && this.scene.monchi.x < 1200 && this.scene.monchi.y < 236) {
         this.sideGrav = true;
         firstChange = true
       };
-      if(this.sideGrav){
+      if (this.sideGrav) {
         this.scene.physics.world.gravity.y = 0
-        if(firstChange){
-          this.scene.monchi.setRotation(-Math.PI/2).setSize(110,73).setOffset(80,40);
+        if (firstChange) {
+          this.scene.monchi.setRotation(-Math.PI / 2).setSize(110, 73).setOffset(80, 40);
           firstChange = false;
           this.gravityArrow?.setRotation(0)
         }
       }
     };
-    if (this.scene.monchi){
-      if(this.scene.monchi.y > 1100){
+    if (this.scene.monchi) {
+      if (this.scene.monchi.y > 1100) {
         this.coin?.setVisible(true);
       };
     };
     if (this.scene.cursors) {
       if (this.scene.monchi) {
-        if(this.sideGrav){
+        if (this.sideGrav) {
           this.scene.monchi.checkSideGravity(this.scene.cursors);
         } else {
-         this.scene.monchi.checkMove(this.scene.cursors);
+          this.scene.monchi.checkMove(this.scene.cursors);
         }
         if (this) this.animateBackground(this.scene.monchi);
       };

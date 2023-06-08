@@ -5,7 +5,7 @@ export default class GameOver extends Phaser.Scene {
 
     constructor() {
         super({ key: 'GameOver' });
-        
+
     };
 
     init() {
@@ -13,22 +13,22 @@ export default class GameOver extends Phaser.Scene {
     };
 
     preload() {
-        this.load.image("background" , "game/background.png");
+        this.load.image("background", "game/background.png");
     };
 
     create() {
         this.physics.world.setBounds(0, 0, 5000, 2500);
-        this.add.image(900,500,"background").setScale(.7);
-        this.add.text(this.cameras.main.width/2, this.cameras.main.height/2, "You've lost! Very mal culiao!!",{fontSize: '32px'})
-        .setOrigin(0.5)
-        .setScale(1);
-        this.add.text(this.cameras.main.width/2, this.cameras.main.height/2 + 200, "Press SPACE to play again",{fontSize: '22px'})
-        .setOrigin(0.5)
-        .setScale(1);
+        this.add.image(900, 500, "background").setScale(.7);
+        this.add.text(this.cameras.main.width / 2, this.cameras.main.height / 2, "You've lost! Very mal culiao!!", { fontSize: '32px' })
+            .setOrigin(0.5)
+            .setScale(1);
+        this.add.text(this.cameras.main.width / 2, this.cameras.main.height / 2 + 200, "Press SPACE to play again", { fontSize: '22px' })
+            .setOrigin(0.5)
+            .setScale(1);
     };
 
     update() {
-        if (this.cursors){
+        if (this.cursors) {
             const space = this.cursors.space;
             /*Space*/
             if (space.isDown) {

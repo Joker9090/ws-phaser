@@ -82,7 +82,7 @@ class SceneLoader extends Phaser.Scene {
         super({ key: 'SceneLoader' })
     }
     preload(this: Phaser.Scene) {
-        
+
         var width = this.cameras.main.width;
         var height = this.cameras.main.height;
         var loadingText = this.make.text({
@@ -97,7 +97,7 @@ class SceneLoader extends Phaser.Scene {
         var progressBar = this.add.graphics();
         var progressBox = this.add.graphics();
         progressBox.fillStyle(0x222222, 0.8);
-        progressBox.fillRect(width/2 - 160, height/2 +100, 320, 50);
+        progressBox.fillRect(width / 2 - 160, height / 2 + 100, 320, 50);
 
         loadingText.setOrigin(0.5, 0.5);
 
@@ -129,7 +129,7 @@ class SceneLoader extends Phaser.Scene {
             percentText.setText(Number(value * 100) + '%');
             progressBar.clear();
             progressBar.fillStyle(0xffffff, 1);
-            progressBar.fillRect(width/2 - 160, height/2 +100, 300 * value, 30);
+            progressBar.fillRect(width / 2 - 160, height / 2 + 100, 300 * value, 30);
         });
 
         this.load.on('fileprogress', function (file: any) {

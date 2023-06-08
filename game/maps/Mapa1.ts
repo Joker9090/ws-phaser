@@ -371,9 +371,13 @@ class Mapa1 {
   };
 
   update() {
-    if (this.scene.canWin || this.scene.nextLevel){
-      this.coinUI?.clearTint();
-    }
+    if(this.coinUI){
+      if (this.scene.canWin || this.scene.nextLevel){
+        this.coinUI?.clearTint();
+      } else {
+        this.coinUI?.setTint().setTint(Phaser.Display.Color.GetColor(0, 0, 0));
+      };
+    };
 
     if (this.scene.gravityDown === false) {
       (this.gravityArrow as Phaser.GameObjects.Image).setRotation(Math.PI * 3 / 2);

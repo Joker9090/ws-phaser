@@ -106,15 +106,17 @@ class Game extends Phaser.Scene {
       this.monchi?.body?.setOffset(70, 50);
       this.monchi?.setBounceY(0);
     };
-
   };
 
   gameOver(){
     if(this.music) this.music.stop()
     this.lifes = 3
     this.cameraNormal = true;
-    this.checkPoint = 0
+    this.checkPoint = 0;
+    this.scene.sleep();
     this.scene.switch("GameOver");
+    this.canWin = false;
+    this.nextLevel = false;
   };
 
   
@@ -124,7 +126,9 @@ class Game extends Phaser.Scene {
       this.cameraNormal = true;
       this.scene.sleep();
       this.scene.switch("Won");
-      
+      this.checkPoint = 0;
+      this.canWin = false;
+      this.nextLevel = false;
     };
   };
   
@@ -150,10 +154,53 @@ class Game extends Phaser.Scene {
     console.log(this.lifes)
     if (this.nextLevel && this.monchi) {
       this.cameraNormal = true;
+      this.checkPoint = 0;
       this.scene.restart({ level: 2, lifes: this.lifes });
     };
   };
   
+  noFloatTutorial(){
+    if (this.monchi) {
+      this.monchi?.setGravity(0);
+      this.monchi?.setFlipY(false);
+      this.gravityDown = true;
+      this.monchi?.body?.setOffset(70, 50);
+      this.monchi?.setBounceY(0);
+    };
+
+  };
+
+  loseLevelTutorial(){
+    if (this.lifes) {
+      this.lifes -= 1;
+      console.log("vidas :", this.lifes, " long: ", this.map?.lifesGroup?.getLength())
+      if (this.lifes == 0) {
+        this.gameOver();
+      } else if (this.lifes != 0 && this.gravityDown && this.monchi) {
+        if(this.map) this.monchi.x = this.map.startingPoint.x;
+        if(this.map) this.monchi.y = this.map.startingPoint.y;
+      } else if (this.lifes != 0 && this.gravityDown == false && this.monchi){
+        if(this.map) this.monchi.x = this.map.startingPoint.x;
+        if(this.map) this.monchi.y = this.map.startingPoint.y;
+        this.noFloatTutorial()
+      }
+      if (this.lifes != 0 && this.map?.lifesGroup) {
+        let lifeToTheRight = null;
+        let highestX = Number.NEGATIVE_INFINITY;
+        for (let i = 0; i < this.map?.lifesGroup?.getLength()  ; i++) {
+          const child = (this.map?.lifesGroup?.getChildren()[i] as Phaser.GameObjects.Image);
+          if (child.x > highestX) {
+            lifeToTheRight = child;
+            highestX = child.x;
+          };
+          // Remove the object with the highest x position
+        }
+        //lifeToTheRight?.setVisible(false);
+        lifeToTheRight?.destroy()
+      };
+    };
+  }
+
   loseLevel1() {
     if (this.lifes) {
       this.lifes -= 1;
@@ -296,6 +343,8 @@ class Game extends Phaser.Scene {
           this.loseLevel1();
         } else if (data.level == 2){
           this.loseLevel2(); 
+        } else if (data.level == 0){
+          this.loseLevelTutorial(); 
         };
       };
     }, this);

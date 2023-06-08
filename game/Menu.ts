@@ -54,19 +54,19 @@ export default class MainMenuScene extends Phaser.Scene {
 
         Tutorial.on('selected', () => {
             this.scene.sleep();
-            this.scene.start("Game", { level: 0, lifes: 3 });
+            this.scene.start("Game", { level: 0, lifes: 7 });
             this.selectedButtonIndex = 0
         });
 
         PlayLevel1.on('selected', () => {
             this.scene.sleep();
-            this.scene.start("Game", { level: 1, lifes: 3 });
+            this.scene.start("Game", { level: 1, lifes: 7 });
             this.selectedButtonIndex = 0
         });
 
         PlayLevel2.on('selected', () => {
             this.scene.sleep();
-            this.scene.start("Game", { level: 2, lifes: 3 });
+            this.scene.start("Game", { level: 2, lifes: 7 });
             this.selectedButtonIndex = 0
         });
 

@@ -342,6 +342,8 @@ class Mapa {
     if(this.coinUI){
       if (this.scene.canWin || this.scene.nextLevel){
         this.coinUI?.clearTint();
+      } else {
+        this.coinUI?.setTint().setTint(Phaser.Display.Color.GetColor(0, 0, 0));
       };
     };
 

@@ -15,6 +15,8 @@ class Tutorial {
     height: 2500,
   };
   pisos?: Phaser.Physics.Arcade.Group;
+  pisos2?: Phaser.Physics.Arcade.Group;
+  pisos3?: Phaser.Physics.Arcade.Group;
   coin?: Phaser.Physics.Arcade.Group;
   portal?: Phaser.Physics.Arcade.Group;
   lifesGroup?: Phaser.GameObjects.Group;
@@ -24,11 +26,11 @@ class Tutorial {
   gravityArrow?: Phaser.GameObjects.Image;
   coinUI?: Phaser.GameObjects.Image;
   startingPoint = {
-    x: 100, //400
-    y: 1800, //140
+    x: 600, //600
+    y: 1800, //1800
   };
   checkPointPos = {
-    x: 400, 
+    x: 900,
     y: 140, 
   };
   background: Phaser.GameObjects.Image;
@@ -101,6 +103,8 @@ class Tutorial {
   createMap(data: { level: number, lifes: number }) {
 
     this.pisos = this.scene.physics.add.group({ allowGravity: false });
+    this.pisos2 = this.scene.physics.add.group({ allowGravity: false });
+    this.pisos3 = this.scene.physics.add.group({ allowGravity: false });
     this.coin = this.scene.physics.add.group({ allowGravity: false });
     this.portal = this.scene.physics.add.group({ allowGravity: false });
     this.lifesGroup = this.scene.add.group()
@@ -113,7 +117,7 @@ class Tutorial {
         textureA: "plataformaA",
         textureB: "plataformaB",
         large: 20,
-        pos: { x: 0, y: 2000, },
+        pos: { x: 500, y: 2000, },
         scale: { width: 0.7, height: 0.7, },
         rotated: false
       };
@@ -122,7 +126,7 @@ class Tutorial {
           textureA: "plataformaA",
           textureB: "plataformaB",
           large: 2,
-          pos: { x: 400, y: 1800, },
+          pos: { x: 1000, y: 1850, },
           scale: { width: 0.7, height: 0.7, },
           rotated: false
         };
@@ -132,42 +136,38 @@ class Tutorial {
             textureA: "plataformaA",
             textureB: "plataformaB",
             large: 3,
-            pos: { x: 700, y: 1600, },
+            pos: { x: 1300, y: 1700, },
             scale: { width: 0.7, height: 0.7, },
             rotated: false,
         };
         const p2 = new LargeFloor(this.scene, p2Config, this.pisos);
+        
+        const p3Config: FloorConfig = {
+          texture: "plataformaA",
+          pos: { x: 1750, y: 1550, },
+          scale: { width: 0.7, height: 0.7, }
+        };
+        const p3 = new Floor(this.scene, p3Config, this.pisos2)
+        .setTint(Phaser.Display.Color.GetColor(255, 177, 0));
+        
+        const p4Config: LargeFloorConfig = {
+          textureA: "plataformaA",
+          textureB: "plataformaB",
+          large: 5,
+          pos: { x: 1500, y: 400, },
+          scale: { width: 0.7, height: 0.7, },
+          rotated: false,
+        };
+        const p4 = new LargeFloor(this.scene, p4Config, this.pisos);
+        
+        const p5Config: FloorConfig = {
+          texture: "plataformaB",
+          pos: { x: 2350, y: 250, },
+          scale: { width: 0.7, height: 0.7, }
+        };
+        const p5 = new Floor(this.scene, p5Config, this.pisos3)
+        .setTint(Phaser.Display.Color.GetColor(255, 177, 0));
         /*
-
-    const p3Config: LargeFloorConfig = {
-      textureA: "plataformaA",
-      textureB: "plataformaB",
-      large: 7,
-      pos: { x: 1045, y: 360, },
-      scale: { width: 0.7, height: 0.7, },
-      rotated: true,
-    };
-    const p3 = new LargeFloor(this.scene, p3Config, this.pisos);
-
-    const p4Config: LargeFloorConfig = {
-      textureA: "plataformaA",
-      textureB: "plataformaB",
-      large: 5,
-      pos: { x: 1400, y: 1130, },
-      scale: { width: 0.7, height: 0.7, },
-      rotated: true,
-    };
-    const p4 = new LargeFloor(this.scene, p4Config, this.pisos);
-
-    const p5Config: LargeFloorConfig = {
-      textureA: "plataformaA",
-      textureB: "plataformaB",
-      large: 5,
-      pos: { x: 720, y: 1870, },
-      scale: { width: 0.7, height: 0.7, },
-      rotated: false,
-    };
-    const p5 = new LargeFloor(this.scene, p5Config, this.pisos);
 
 
     const p6Config: LargeFloorConfig = {
@@ -185,20 +185,19 @@ class Tutorial {
 
     const portalConfig: FloorConfig = {
       texture: "portal",
-      pos: { x: 2220, y: 2150, },
+      pos: { x: 3250, y: 1875, },
       scale: { width: 0.1, height: 0.1, },
       width: 1000,
       height: 1500,
     };
 
     const port = new Floor(this.scene, portalConfig, this.portal)
-      .setRotation(Math.PI / 2)
       .setSize(1400, 800);
 
 
     const fireballConfig: FloorConfig = {
       texture: "fireball",
-      pos: { x: 310, y: 1850, }, // 500 1580
+      pos: { x: 2850, y: 1875, }, // 500 1580
       scale: { width: .2, height: .2, },
       width: 400,
       height: 400,
@@ -217,14 +216,13 @@ class Tutorial {
 
     const coinConfig: FloorConfig = {
       texture: "coin",
-      pos: { x: 1000, y: 350, }, // 500 1580
+      pos: { x: 1500, y: 450, }, // 500 1580
       scale: { width: 0.1, height: 0.1, },
       width: 450,
       height: 600,
       fix: 100,
     };
-    const coin = new Floor(this.scene, coinConfig, this.coin)
-      .setVisible(false);
+    const coin = new Floor(this.scene, coinConfig, this.coin);
 
 
     /* UI */
@@ -234,9 +232,11 @@ class Tutorial {
 
   addColliders() {
     if (this.scene.monchi) {
-      if (this.fireballGroup) this.scene.physics.add.collider(this.scene.monchi,this.fireballGroup, this.scene.loseLevel2, () => true, this.scene)
+      if (this.fireballGroup) this.scene.physics.add.collider(this.scene.monchi,this.fireballGroup, this.scene.loseLevelTutorial, () => true, this.scene);
       if (this.portal) this.portal.setTint(0xff0000);
       if (this.pisos) this.scene.physics.add.collider(this.scene.monchi, this.pisos, this.scene.touch, () => true, this.scene);
+      if (this.pisos2) this.scene.physics.add.collider(this.scene.monchi, this.pisos2, ()=>this.scene.float(500), () => true, this.scene);
+      if (this.pisos3) this.scene.physics.add.collider(this.scene.monchi, this.pisos3, this.scene.noFloatTutorial, () => true, this.scene);
       if (this.coin) this.scene.physics.add.overlap(this.scene.monchi, this.coin, this.scene.coinCollected, () => true, this.scene);
       if (this.portal) this.scene.physics.add.overlap(this.scene.monchi, this.portal, this.scene.win, () => true, this.scene);
     }
@@ -250,46 +250,27 @@ class Tutorial {
       this.scene.textTime.setText('X: ' + Math.floor(this.scene.monchi.x) + ' Y: ' + Math.floor(this.scene.monchi.y));
     };
 
+    if(this.scene.gravityDown == false){
+      this.gravityArrow?.setRotation(-Math.PI/2)
+    } else {
+      this.gravityArrow?.setRotation(Math.PI/2)
+    };
     //
     if(this.coinUI){
       if (this.scene.canWin || this.scene.nextLevel){
         this.coinUI?.clearTint();
+      } else {
+        this.coinUI?.setTint().setTint(Phaser.Display.Color.GetColor(0, 0, 0));
       };
     };
-
-    let firstChange = false
-    if(this.scene.monchi){
-      if(this.scene.monchi.x > 1000 && this.scene.monchi.x < 1200 && this.scene.monchi.y < 236){
-        this.sideGrav = true;
-        firstChange = true
-      };
-      if(this.sideGrav){
-        this.scene.physics.world.gravity.y = 0
-        if(firstChange){
-          this.scene.monchi.setRotation(-Math.PI/2).setSize(110,73).setOffset(80,40);
-          firstChange = false;
-          this.gravityArrow?.setRotation(0)
-        }
-      }
-    };
-    if (this.scene.monchi){
-      if(this.scene.monchi.y > 1100){
-        this.coin?.setVisible(true);
-      };
-    };
+ 
     if (this.scene.cursors) {
-      if (this.scene.monchi) {
-        if(this.sideGrav){
-          this.scene.monchi.checkSideGravity(this.scene.cursors);
-        } else {
-         this.scene.monchi.checkMove(this.scene.cursors);
-        }
+      if (this.scene.monchi) { 
+        this.scene.monchi.checkMove(this.scene.cursors);
         if (this) this.animateBackground(this.scene.monchi);
       };
-
     };
   };
-
 };
 
 export default Tutorial 

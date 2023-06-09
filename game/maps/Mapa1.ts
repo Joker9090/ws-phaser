@@ -25,6 +25,13 @@ class Mapa1 {
   lifesGroup?: Phaser.GameObjects.Group;
   gravityArrow?: Phaser.GameObjects.Image;
   coinUI?: Phaser.GameObjects.Image;
+
+  UIboundsCoin: number = 0;
+  UIboundsArrow: number = 0;
+  UIboundsHeart: number = 0;
+  ArrowOriginalPos?: number;
+  CoinOriginalPos?: number;
+  amountLifes: number = 0;
   sideGrav: boolean = false
   startingPoint = {
     x: 500, //500
@@ -86,18 +93,22 @@ class Mapa1 {
         };
         const coras = new UI(this.scene, lifeConfig, this.lifesGroup)
           .setScrollFactor(0, 0);
+
+        this.UIboundsHeart = coras.getBounds().height;
+        //console.log("coras: ", coras.getBounds().height)
       };
       const coinConf: UIConfig = {
         texture: "coin",
         pos: { x: quantityLifes * 50 + 150, y: 50 },
         scale: .1
-
       };
+      this.ArrowOriginalPos = (quantityLifes * 50 + 250)
       this.coinUI = new UI(this.scene, coinConf)
         .setTint(Phaser.Display.Color.GetColor(0, 0, 0))
         .setScrollFactor(0, 0)
         .setDepth(100);
-
+      this.UIboundsCoin = this.coinUI.getBounds().height;
+      //console.log("coin: ", this.coinUI.getBounds().height)
 
       const arrowConfig: UIConfig = {
         texture: "arrow",
@@ -105,15 +116,16 @@ class Mapa1 {
         scale: .1
 
       };
-
+      this.CoinOriginalPos = (quantityLifes * 50 + 150)
       this.gravityArrow = new UI(this.scene, arrowConfig)
         .setRotation(Math.PI / 2)
         .setScrollFactor(0, 0)
         .setDepth(100);
-
+      //console.log("gravity arrow: ", this.gravityArrow.getBounds().height)
+      this.UIboundsArrow = this.gravityArrow.getBounds().height;
       this.lifesGroup.setDepth(100);
-    }
-  }
+    };
+  };
 
   createMap(data: { level: number, lifes: number }) {
     this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
@@ -125,6 +137,8 @@ class Mapa1 {
     this.portal = this.scene.physics.add.group({ allowGravity: false });
     this.pisos4 = this.scene.physics.add.group({ allowGravity: false });
     this.lifesGroup = this.scene.add.group()
+
+    this.amountLifes = data.lifes;
 
     const p1Config: FloorConfig = {
       texture: "plataformaA",
@@ -364,18 +378,37 @@ class Mapa1 {
 
     //UI
 
-    this.createUI(data.lifes)
+    this.createUI(data.lifes);
+
 
 
 
   };
 
   update() {
+    //console.log(this.UIgroup)
     /* DEBUGGER
     if (this.scene.textTime && this.scene.monchi) {
       this.scene.textTime.setText('X: ' + Math.floor(this.scene.monchi.x) + ' Y: ' + Math.floor(this.scene.monchi.y));
     };
     */
+
+    if (this.scene.cameraNormal == false) {
+      this.lifesGroup?.setX(this.scene.cameraWidth - this.amountLifes * 50 - 50, 51);
+      this.lifesGroup?.setY(this.scene.cameraHeight - this.UIboundsHeart, 0);
+      this.gravityArrow?.setX(this.scene.cameraWidth - this.amountLifes * 50 - 250);
+      this.gravityArrow?.setY(this.scene.cameraHeight - this.UIboundsArrow + 5);
+      this.coinUI?.setX(this.scene.cameraWidth - this.amountLifes * 50 - 150);
+      this.coinUI?.setY(this.scene.cameraHeight - this.UIboundsCoin + 10);
+    } else if (this.scene.cameraNormal) {
+      this.lifesGroup?.setX(100, 51);
+      this.lifesGroup?.setY(50, 0);
+      this.gravityArrow?.setX(this.ArrowOriginalPos);
+      this.gravityArrow?.setY(50);
+      this.coinUI?.setX(this.CoinOriginalPos);
+      this.coinUI?.setY(50);
+    }
+
     if (this.coinUI) {
       if (this.scene.canWin || this.scene.nextLevel) {
         this.coinUI?.clearTint();

@@ -29,6 +29,7 @@ class Game extends Phaser.Scene {
   timerText?: Phaser.GameObjects.Text;
   checkPoint: number = 0;
 
+  //cameraUpsideDown?: Phaser.Cameras.Scene2D.Camera;
   cameraWidth: number = 0;
   cameraHeight: number = 0;
   /*
@@ -90,6 +91,8 @@ class Game extends Phaser.Scene {
       });
     }
   };
+
+
 
   rotateCam(time: number) {
     this.cameraNormal = false;
@@ -163,10 +166,12 @@ class Game extends Phaser.Scene {
   };
 
   goNextLevel() {
-    console.log(this.lifes)
+    //console.log(this.lifes)
     if (this.nextLevel && this.monchi) {
       this.cameraNormal = true;
       this.checkPoint = 0;
+      this.canWin = false;
+      this.nextLevel = false;
       this.scene.restart({ level: 2, lifes: this.lifes });
     };
   };
@@ -185,7 +190,7 @@ class Game extends Phaser.Scene {
   loseLevelTutorial() {
     if (this.lifes) {
       this.lifes -= 1;
-      console.log("vidas :", this.lifes, " long: ", this.map?.lifesGroup?.getLength())
+      //console.log("vidas :", this.lifes, " long: ", this.map?.lifesGroup?.getLength())
       if (this.lifes == 0) {
         this.gameOver();
       } else if (this.lifes != 0 && this.gravityDown && this.monchi) {
@@ -215,7 +220,7 @@ class Game extends Phaser.Scene {
   loseLevel1() {
     if (this.lifes) {
       this.lifes -= 1;
-      console.log("vidas :", this.lifes, " long: ", this.map?.lifesGroup?.getLength())
+      //console.log("vidas :", this.lifes, " long: ", this.map?.lifesGroup?.getLength())
       if (this.lifes == 0) {
         this.gameOver();
       } else if (this.lifes != 0 && this.checkPoint == 0 && this.monchi) {
@@ -312,9 +317,6 @@ class Game extends Phaser.Scene {
     //data.lifes = 3
     /* DEBUG DE NIVEL */
 
-    this.cameraWidth = this.cameras.main.width;
-    this.cameraHeight = this.cameras.main.height;
-
     /* CHOSE LEVEL, LIFES AND AUDIO */
     switch (data.level) {
       case 0:
@@ -335,10 +337,10 @@ class Game extends Phaser.Scene {
         break;
     }
 
-  if(data.level == 0){
-    this.levelIs = 0
-    this.monchi?.setVelocity(300, 0);
-  }
+    if (data.level == 0) {
+      this.levelIs = 0
+      this.monchi?.setVelocity(300, 0);
+    }
 
     /* CREATE MAP AND LFIES */
     if (data.lifes) this.lifes = data.lifes;
@@ -354,8 +356,15 @@ class Game extends Phaser.Scene {
     this.canWin = false;
     this.canRot = true;
 
-    /* CAMERA */
+    /* CAMERAS */
     this.cameras.main.startFollow(this.monchi);
+    this.cameraWidth = this.cameras.main.width;
+    this.cameraHeight = this.cameras.main.height;
+
+    /* UPSIDEDOWN CAMERA */
+
+    //this.cameraUpsideDown = this.cameras.add(0, 0, this.cameraWidth, this.cameraHeight/6).setRotation(Math.PI).setVisible(false);
+    //if (this.monchi) this.cameraUpsideDown.startFollow(this.monchi).followOffset.set(0, this.cameraHeight*5/6);
 
     /* TIMER */
     this.timerText = this.add.text(this.cameras.main.width - 120, 35, 'Time: 0', { fontSize: '32px' }).setOrigin(.5, .5).setScrollFactor(0, 0).setDepth(100).setSize(50, 50);
@@ -390,18 +399,19 @@ class Game extends Phaser.Scene {
   };
 
   update(this: Game) {
-    console.log("checkPoint true/false: ", this.checkPoint, "checkpointPos: ", this.map?.checkPointPos)
+    //console.log("checkPoint true/false: ", this.checkPoint, "checkpointPos: ", this.map?.checkPointPos)
     if (this.monchi && this.map) {
       if (this.monchi.x > this.map.checkPointPos.x) {
         this.checkPoint = 1;
       };
     };
-    /*
-    if (this.textTime) {
-      let timePassed = this.time.now - this.startTime
-      this.textTime.setText('Time: ' + Math.floor(timePassed / 1000));
+
+    if (this.timerText && this.cameraNormal) {
+      this.timerText.setPosition(this.cameras.main.width - 120, 35);
+    } else if (this.timerText && this.cameraNormal == false) {
+      this.timerText.setPosition(120, this.cameraHeight - 50);
     };
-    */
+
     if (this.map) this.map.update()
   };
 };

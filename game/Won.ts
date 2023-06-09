@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 
 export default class WonScene extends Phaser.Scene {
     cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
-    music?: Phaser.Sound.NoAudioSound | Phaser.Sound.HTML5AudioSound | Phaser.Sound.WebAudioSound; 
+    music?: Phaser.Sound.NoAudioSound | Phaser.Sound.HTML5AudioSound | Phaser.Sound.WebAudioSound;
     constructor() {
         super({ key: 'Won' });
 

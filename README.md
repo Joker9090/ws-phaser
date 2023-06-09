@@ -1,10 +1,9 @@
 COSAS PARA ARREGLAR:
 
--GAMEOVER CUANDO CAMBIA DE NIVEL Y LE QUEDAN VIDAS PERO PIERDE 1
--TUTORIAL: contar UI (vidas, moneda, gravedad y tiempo), contar plataformas naranjas y contar fireball. Finalmente mostrar portal
--MUSICA NIVEL 2, MENU, WIN Y GAMEOVER
--arreglar UI cuando rota la camara (colocarlo arriba de todo)
-- velocidad inicial mapa 2
+-TUTORIAL: contar UI (vidas, moneda, gravedad y tiempo), contar plataformas naranjas y contar fireball. Finalmente mostrar portal.
+
+-arreglar UI cuando rota la camara (colocarlo arriba de todo) -- Solución: usar dos cámaras.
+- problemas con la musica, Win y Lose no dejan de sonar cuando salgo de la escena.
 
 
 

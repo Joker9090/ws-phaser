@@ -28,7 +28,7 @@ class Mapa {
     y: 140, //140
   };
   checkPointPos = {
-    x: 400,
+    x: 600,
     y: 140,
   };
   background: Phaser.GameObjects.Image;
@@ -325,7 +325,7 @@ class Mapa {
       if (this.portal) this.portal.setTint(0xff0000);
       if (this.pisos) this.scene.physics.add.collider(this.scene.monchi, this.pisos, this.scene.touch, () => true, this.scene);
       if (this.coin) this.scene.physics.add.overlap(this.scene.monchi, this.coin, this.scene.coinCollected, () => true, this.scene);
-      if (this.portal) this.scene.physics.add.overlap(this.scene.monchi, this.portal,()=>this.scene.win("Congrats! You've won the game"), () => true, this.scene);
+      if (this.portal) this.scene.physics.add.overlap(this.scene.monchi, this.portal, () => this.scene.win("Congrats! You've won the game"), () => true, this.scene);
 
     }
 
@@ -339,7 +339,7 @@ class Mapa {
       this.scene.timerText.setText('X: ' + Math.floor(this.scene.monchi.x) + ' Y: ' + Math.floor(this.scene.monchi.y));
     };
     */
-    
+
     if (this.coinUI) {
       if (this.scene.canWin || this.scene.nextLevel) {
         this.coinUI?.clearTint();
@@ -372,8 +372,13 @@ class Mapa {
       if (this.scene.monchi) {
         if (this.sideGrav) {
           this.scene.monchi.checkSideGravity(this.scene.cursors);
-        } else {
+        } else if (this.scene.timeLevel < 1) {
+          this.scene.monchi.setVelocityX(300);
+          //this.scene.monchi.setGravityY(0);
+        }
+        else if (this.scene.timeLevel >= 1) {
           this.scene.monchi.checkMove(this.scene.cursors);
+          //this.scene.monchi.setGravityY(0);
         }
         if (this) this.animateBackground(this.scene.monchi);
       };

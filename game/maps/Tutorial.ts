@@ -30,8 +30,8 @@ class Tutorial {
     y: 1800, //1800
   };
   checkPointPos = {
-    x: 900,
-    y: 140,
+    x: 600,
+    y: 1800,
   };
   background: Phaser.GameObjects.Image;
   sideGrav: boolean = false;
@@ -242,7 +242,7 @@ const p6 = new LargeFloor(this.scene, p6Config, this.pisos);
       if (this.pisos2) this.scene.physics.add.collider(this.scene.monchi, this.pisos2, () => this.scene.float(500), () => true, this.scene);
       if (this.pisos3) this.scene.physics.add.collider(this.scene.monchi, this.pisos3, this.scene.noFloatTutorial, () => true, this.scene);
       if (this.coin) this.scene.physics.add.overlap(this.scene.monchi, this.coin, this.scene.coinCollected, () => true, this.scene);
-      if (this.portal) this.scene.physics.add.overlap(this.scene.monchi, this.portal, ()=>this.scene.win("Congrats! You've finished the tutorial"), () => true, this.scene);
+      if (this.portal) this.scene.physics.add.overlap(this.scene.monchi, this.portal, () => this.scene.win("Congrats! You've finished the tutorial"), () => true, this.scene);
     }
 
   }
@@ -276,7 +276,7 @@ const p6 = new LargeFloor(this.scene, p6Config, this.pisos);
     };
     if (this) {
       if (this.scene.cursors) {
-        this.scene.cursors.space.on("down",  () => {
+        this.scene.cursors.space.on("down", () => {
           this.tutorialState += 1;
         })
       };

@@ -4,7 +4,7 @@ import Phaser, { Physics } from "phaser";
 
 export type LargeFloorTween = Phaser.Tweens.Tween | Phaser.Types.Tweens.TweenBuilderConfig | Phaser.Types.Tweens.TweenChainBuilderConfig | Phaser.Tweens.TweenChain
 export type LargeFloorConfig = {
-  textureA: string 
+  textureA: string
   textureB: string
   width?: number,
   height?: number,
@@ -13,7 +13,7 @@ export type LargeFloorConfig = {
     x: number,
     y: number
   },
-  scale? : {
+  scale?: {
     width: number,
     height: number,
   },
@@ -27,7 +27,7 @@ class LargeFloor extends Phaser.GameObjects.Container {
   group: Phaser.Physics.Arcade.Group;
   parts: Phaser.Physics.Arcade.Sprite[];
 
-  constructor(scene: Phaser.Scene, config: LargeFloorConfig, group: Phaser.Physics.Arcade.Group,  frame?: string | number | undefined) {
+  constructor(scene: Phaser.Scene, config: LargeFloorConfig, group: Phaser.Physics.Arcade.Group, frame?: string | number | undefined) {
     super(scene, config.pos.x, config.pos.y)
     this.parts = [];
     const rota = config.rotated ?? false
@@ -38,13 +38,13 @@ class LargeFloor extends Phaser.GameObjects.Container {
     const fix = config.fix ?? 13;
     //Arma la textura del LargeFloor
     for (let index = 0; index < config.large; index++) {
-      const t = (index  % 2 == 0) ? config.textureA : config.textureB;
-      const s = scene.add.sprite(index * width,0,t);
+      const t = (index % 2 == 0) ? config.textureA : config.textureB;
+      const s = scene.add.sprite(index * width, 0, t);
       this.add(s);
-      
+
     }
     //Setea scala
-    if(config.scale) {
+    if (config.scale) {
       this.setScale(config.scale.width, config.scale.height);
     }
     //Setea depth y agrega la plataforma al mundo
@@ -52,24 +52,24 @@ class LargeFloor extends Phaser.GameObjects.Container {
     scene.add.existing(this);
     this.group.add(this);
 
-    if(this.body) { 
+    if (this.body) {
       const body = (this.body as Phaser.Physics.Arcade.Body);
       body.setImmovable(true);
-      if(rota){
-        body.setOffset(0,-90);
-      }else{ 
-       body.setOffset(-110,-50);
+      if (rota) {
+        body.setOffset(0, -90);
+      } else {
+        body.setOffset(-110, -50);
       }
-      
-    if(rota && body){
-      body.setSize(height + fix,width * config.large);
-      this.setRotation(Math.PI/2);
-    } else {
-      body.setSize(width * config.large + fix ,height + fix);
+
+      if (rota && body) {
+        body.setSize(height + fix, width * config.large);
+        this.setRotation(Math.PI / 2);
+      } else {
+        body.setSize(width * config.large + fix, height + fix);
+      }
+
+
     }
-
-
-    } 
   }
 }
 

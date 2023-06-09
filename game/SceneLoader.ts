@@ -1,30 +1,18 @@
 import Phaser from "phaser"
 
-export type SceneKeys = "Menu" | "GameOver" | "Won" | "Scene1" | "Scene2" | "Tutorial"
+export type SceneKeys = "Menu" | "Scenes" | "Tutorial" | "Music"
 export type LoadTypes = "image" | "spritesheet" | "audio"
 
 const loadAssets = {
     "Menu": {
         assets: [
-            ["image", "background", "game/background.png"],
             ["image", "glass", "game/glass.png"],
             ["image", "cursor", "game/cursor.png"],
             ["spritesheet", "monchi", "game/character.png", { frameWidth: 220, frameHeight: 162 }],
         ]
     },
-    "GameOver": {
+    "Scenes": {
         assets: [
-            ["image", "background", "game/background.png"],
-        ]
-    },
-    "Won": {
-        assets: [
-            ["image", "background", "game/background.png"],
-        ]
-    },
-    "Scene1": {
-        assets: [
-            ["audio", "song", 'sounds/monchiSpace.mp3'],
             ["image", "background", "/game/background.png"],
             ["image", "plataformaA", "/game/platform1.png"],
             ["image", "plataformaB", "/game/platform1B.png"],
@@ -35,43 +23,26 @@ const loadAssets = {
             ["image", "portal", "/game/portal.png"],
             ["image", "heart", "/game/heart.png"],
             ["image", "arrow", "/game/arrow.png"],
-            ["spritesheet", "character", "/game/character.png", { frameWidth: 220, frameHeight: 162 }],
         ]
     },
-    "Scene2": {
-        assets: [
-            ["audio", "song", 'sounds/monchiSpace.mp3'],
-            ["image", "background", "/game/background.png"],
-            ["image", "plataformaA", "/game/platform1.png"],
-            ["image", "plataformaB", "/game/platform1B.png"],
-            ["image", "plataforma2", "/game/platform2.png"],
-            ["image", "asteroid", "/game/asteroid.png"],
-            ["image", "asteroid2", "/game/asteroid2.png"],
-            ["image", "coin", "/game/coin.png"],
-            ["image", "portal", "/game/portal.png"],
-            ["image", "heart", "/game/heart.png"],
-            ["image", "arrow", "/game/arrow.png"],
-            ["image", "fireball", "/game/fireball.png"],
-            ["spritesheet", "character", "/game/character.png", { frameWidth: 220, frameHeight: 162 }],
-        ]
-    },
+
     "Tutorial": {
         assets: [
-            ["audio", "song", 'sounds/monchiSpace.mp3'],
-            ["image", "background", "/game/background.png"],
-            ["image", "plataformaA", "/game/platform1.png"],
-            ["image", "plataformaB", "/game/platform1B.png"],
-            ["image", "plataforma2", "/game/platform2.png"],
-            ["image", "asteroid", "/game/asteroid.png"],
-            ["image", "asteroid2", "/game/asteroid2.png"],
-            ["image", "coin", "/game/coin.png"],
-            ["image", "portal", "/game/portal.png"],
-            ["image", "heart", "/game/heart.png"],
-            ["image", "arrow", "/game/arrow.png"],
+            ["audio", "song", 'sounds/tutorial.png'],
             ["image", "fireball", "/game/fireball.png"],
-            ["spritesheet", "character", "/game/character.png", { frameWidth: 220, frameHeight: 162 }],
         ]
-    }
+    },
+    "Music": {
+        assets: [
+            ["audio", "songTutorial", 'sounds/tutorial.mp3'],
+            ["audio", "songLevel1", 'sounds/monchiSpace.mp3'],
+            ["audio", "songLevel2", 'sounds/level2.mp3'],
+            ["audio", "songWon", 'sounds/won.mp3'],
+            ["audio", "songLose", 'sounds/lose.mp3'],
+            ["audio", "songMenu", 'sounds/menu.mp3'],
+
+        ]
+    },
 }
 
 
@@ -143,7 +114,7 @@ class SceneLoader extends Phaser.Scene {
             percentText.destroy();
             assetText.destroy();
         });
-        const scenesTitles: Array<SceneKeys> = ["Menu", "Scene1", "Won", "GameOver", "Scene2", "Tutorial"]
+        const scenesTitles: Array<SceneKeys> = ["Menu", "Scenes", "Tutorial", "Music"]
         for (let i = 0; i < scenesTitles.length; i++) {
             loadAssets[scenesTitles[i]].assets.map((sceneAssetConfig) => {
                 const type = sceneAssetConfig[0] as LoadTypes;

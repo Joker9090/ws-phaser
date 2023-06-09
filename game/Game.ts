@@ -14,6 +14,8 @@ class Game extends Phaser.Scene {
   graphics?: Phaser.GameObjects.Graphics;
   map?: Mapa1 | Mapa2;
   lifes?: number;
+  levelIs?: number;
+  timeLevel: number = 0;
 
   music?: Phaser.Sound.NoAudioSound | Phaser.Sound.HTML5AudioSound | Phaser.Sound.WebAudioSound;
   canWin: boolean = false;
@@ -122,19 +124,20 @@ class Game extends Phaser.Scene {
     this.lifes = 3
     this.cameraNormal = true;
     this.checkPoint = 0;
-    this.scene.sleep();
+    this.scene.restart();
+    this.timeLevel = 0
     this.scene.switch("GameOver");
     this.canWin = false;
     this.nextLevel = false;
   };
 
 
-  win(Phrase:string) {
+  win(Phrase: string) {
     if (this.canWin && this.monchi) {
       if (this.music) this.music.stop()
       this.cameraNormal = true;
       this.scene.sleep();
-      this.scene.start("Won",{text: Phrase});
+      this.scene.start("Won", { text: Phrase });
       this.checkPoint = 0;
       this.canWin = false;
       this.nextLevel = false;
@@ -261,8 +264,10 @@ class Game extends Phaser.Scene {
     if (this.lifes) {
       this.lifes -= 1;
       if (this.lifes == 0) {
+        //console.log("entro en 0 y check: ", this.checkPoint);
         this.gameOver();
       } else if (this.lifes != 0 && this.checkPoint == 0 && this.monchi) {
+        //console.log("entro en 1 y check: ", this.checkPoint);
         this.monchi?.setFlipY(false);
         this.physics.world.gravity.y = 1000;
         this.monchi?.setFlipX(false);
@@ -272,6 +277,17 @@ class Game extends Phaser.Scene {
         if (this.map) this.map.sideGrav = false;
         if (this.map) this.monchi.x = this.map.startingPoint.x;
         if (this.map) this.monchi.y = this.map.startingPoint.y;
+      } else if (this.lifes != 0 && this.checkPoint == 1 && this.monchi) {
+        //console.log("entro en 1 y check: ", this.checkPoint);
+        this.monchi?.setFlipY(false);
+        this.physics.world.gravity.y = 1000;
+        this.monchi?.setFlipX(false);
+        this.monchi.setRotation(0).setSize(73, 110).setOffset(70, 50);
+        this.cameras.main.setRotation(0);
+        this.monchi?.setGravityX(0);
+        if (this.map) this.map.sideGrav = false;
+        if (this.map) this.monchi.x = this.map.checkPointPos.x;
+        if (this.map) this.monchi.y = this.map.checkPointPos.y;
       };
       if (this.lifes != 0 && this.map?.lifesGroup) {
         let lifeToTheRight = null;
@@ -303,21 +319,26 @@ class Game extends Phaser.Scene {
     switch (data.level) {
       case 0:
         this.map = new Tutorial(this);
-        this.music = this.sound.add('song').setVolume(0.3)
+        this.music = this.sound.add('songTutorial').setVolume(0.3)
         break;
       case 1:
         this.map = new Mapa1(this);
-        this.music = this.sound.add('song').setVolume(0.3)
+        this.music = this.sound.add('songLevel1').setVolume(0.3)
         break;
       case 2:
         this.map = new Mapa2(this);
-        this.music = this.sound.add('song').setVolume(0.3)
+        this.music = this.sound.add('songLevel2').setVolume(0.3)
         break;
       default:
         this.map = new Mapa1(this);
-        this.music = this.sound.add('song').setVolume(0.3)
+        this.music = this.sound.add('songLevel').setVolume(0.3)
         break;
     }
+
+  if(data.level == 0){
+    this.levelIs = 0
+    this.monchi?.setVelocity(300, 0);
+  }
 
     /* CREATE MAP AND LFIES */
     if (data.lifes) this.lifes = data.lifes;
@@ -337,19 +358,20 @@ class Game extends Phaser.Scene {
     this.cameras.main.startFollow(this.monchi);
 
     /* TIMER */
-    this.timerText = this.add.text(this.cameras.main.width -120 , 35, 'Time: 0', { fontSize: '32px' }).setOrigin(.5,.5).setScrollFactor(0, 0).setDepth(100).setSize(50,50);
+    this.timerText = this.add.text(this.cameras.main.width - 120, 35, 'Time: 0', { fontSize: '32px' }).setOrigin(.5, .5).setScrollFactor(0, 0).setDepth(100).setSize(50, 50);
     var timePassed = 0;
     var timerEvent = this.time.addEvent({
-      delay: 1000, 
+      delay: 1000,
       callback: () => {
         timePassed++;
         this.timerText?.setText('Time: ' + timePassed);
+        this.timeLevel = timePassed;
       },
       callbackScope: this,
       loop: true
     });
-   
-    /* COLLIDERS */ 
+
+    /* COLLIDERS */
     this.map.addColliders()
 
 
@@ -368,7 +390,7 @@ class Game extends Phaser.Scene {
   };
 
   update(this: Game) {
-    console.log(this.lifes)
+    console.log("checkPoint true/false: ", this.checkPoint, "checkpointPos: ", this.map?.checkPointPos)
     if (this.monchi && this.map) {
       if (this.monchi.x > this.map.checkPointPos.x) {
         this.checkPoint = 1;

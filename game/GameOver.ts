@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 
 export default class GameOver extends Phaser.Scene {
     cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
-
+    music?: Phaser.Sound.NoAudioSound | Phaser.Sound.HTML5AudioSound | Phaser.Sound.WebAudioSound;
     constructor() {
         super({ key: 'GameOver' });
 
@@ -11,12 +11,17 @@ export default class GameOver extends Phaser.Scene {
     init() {
         this.cursors = this.input.keyboard?.createCursorKeys();
     };
-
+    /*debug
     preload() {
         this.load.image("background", "game/background.png");
     };
+    */
 
     create() {
+        /* Audio */
+        this.music = this.sound.add('songLose').setVolume(0.3)
+        this.music.play()
+
         this.physics.world.setBounds(0, 0, 5000, 2500);
         this.add.image(900, 500, "background").setScale(.7);
         this.add.text(this.cameras.main.width / 2, this.cameras.main.height / 2, "You've lost! Very mal culiao!!", { fontSize: '32px' })
@@ -31,10 +36,18 @@ export default class GameOver extends Phaser.Scene {
         if (this.cursors) {
             const space = this.cursors.space;
             /*Space*/
+            space.on('down', () => {
+                this.music?.stop;
+                this.scene.stop;
+                this.scene.start("Menu");
+            });
+            /*
             if (space.isDown) {
+                this.music?.stop;
                 this.scene.sleep()
-                this.scene.switch("Menu");
+                this.scene.start("Menu");
             };
+            */
         };
     };
 };

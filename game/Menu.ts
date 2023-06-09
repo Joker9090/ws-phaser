@@ -7,6 +7,7 @@ export default class MainMenuScene extends Phaser.Scene {
     buttonSelector!: Phaser.GameObjects.Image;
     monchi?: Phaser.GameObjects.Sprite;
     progress: number = 0;
+    music?: Phaser.Sound.NoAudioSound | Phaser.Sound.HTML5AudioSound | Phaser.Sound.WebAudioSound;
     constructor() {
         super({ key: 'Menu' });
     };
@@ -14,19 +15,19 @@ export default class MainMenuScene extends Phaser.Scene {
     init() {
         this.cursors = this.input.keyboard?.createCursorKeys();
     };
-
+    /* Debug 
     preload() {
         this.load.image("background", "game/background.png");
         this.load.image("glass", "game/glass.png");
         this.load.image("cursor", "game/cursor.png");
         this.load.spritesheet("monchi", "game/character.png", { frameWidth: 220, frameHeight: 162 });
     };
+    */
 
     create() {
         /* Audio */
-        //let songLoader = this.load.audio('song', ['sounds/monchiSpace.mp3'])
-        //songLoader.on('filecomplete', () => this.sound.add('song').play())
-        //songLoader.start()
+        this.music = this.sound.add('songMenu').setVolume(0.4)
+        this.music.play()
 
         /* Main Scene Menu */
         this.physics.world.setBounds(0, 0, 5000, 2500);
@@ -53,19 +54,22 @@ export default class MainMenuScene extends Phaser.Scene {
         this.selectButton(0);
 
         Tutorial.on('selected', () => {
-            this.scene.sleep();
+            this.music?.stop();
+            this.scene.stop();
             this.scene.start("Game", { level: 0, lifes: 3 });
             this.selectedButtonIndex = 0
         });
 
         PlayLevel1.on('selected', () => {
-            this.scene.sleep();
+            this.music?.stop();
+            this.scene.stop();
             this.scene.start("Game", { level: 1, lifes: 3 });
             this.selectedButtonIndex = 0
         });
 
         PlayLevel2.on('selected', () => {
-            this.scene.sleep();
+            this.music?.stop();
+            this.scene.stop();
             this.scene.start("Game", { level: 2, lifes: 3 });
             this.selectedButtonIndex = 0
         });

@@ -1,7 +1,7 @@
-import Phaser from "phaser"
+import Phaser from "phaser";
 
-export type SceneKeys = "Menu" | "Scenes" | "Tutorial" | "Music"
-export type LoadTypes = "image" | "spritesheet" | "audio"
+export type SceneKeys = "Menu" | "Scenes" | "Tutorial" | "Music";
+export type LoadTypes = "image" | "spritesheet" | "audio";
 
 const loadAssets = {
     "Menu": {
@@ -43,15 +43,13 @@ const loadAssets = {
 
         ]
     },
-}
-
-
+};
 
 // Scene in class
 class SceneLoader extends Phaser.Scene {
     constructor() {
-        super({ key: 'SceneLoader' })
-    }
+        super({ key: 'SceneLoader' });
+    };
     preload(this: Phaser.Scene) {
 
         var width = this.cameras.main.width;
@@ -62,7 +60,7 @@ class SceneLoader extends Phaser.Scene {
             text: 'Loading...',
             style: {
                 font: '20px monospace',
-                color: '#ffffff'
+                color: '#ff0000'
             }
         });
         var progressBar = this.add.graphics();
@@ -78,7 +76,7 @@ class SceneLoader extends Phaser.Scene {
             text: '0%',
             style: {
                 font: '18px monospace',
-                color: '#ffffff'
+                color: '#ff0000'
             }
         });
 
@@ -90,7 +88,7 @@ class SceneLoader extends Phaser.Scene {
             text: '',
             style: {
                 font: '18px monospace',
-                color: '#ffffff'
+                color: '#ff0000'
             }
         });
 
@@ -99,7 +97,7 @@ class SceneLoader extends Phaser.Scene {
         this.load.on('progress', function (value: number) {
             percentText.setText(Number(value * 100) + '%');
             progressBar.clear();
-            progressBar.fillStyle(0xffffff, 1);
+            progressBar.fillStyle(0xff0000, 1); 
             progressBar.fillRect(width / 2 - 160, height / 2 + 100, 300 * value, 30);
         });
 
@@ -114,33 +112,29 @@ class SceneLoader extends Phaser.Scene {
             percentText.destroy();
             assetText.destroy();
         });
-        const scenesTitles: Array<SceneKeys> = ["Menu", "Scenes", "Tutorial", "Music"]
+        const scenesTitles: Array<SceneKeys> = ["Menu", "Scenes", "Tutorial", "Music"];
         for (let i = 0; i < scenesTitles.length; i++) {
             loadAssets[scenesTitles[i]].assets.map((sceneAssetConfig) => {
                 const type = sceneAssetConfig[0] as LoadTypes;
                 const name = sceneAssetConfig[1] as string;
                 const src = sceneAssetConfig[2] as string;
                 const config = sceneAssetConfig[3] as any;
-                // @ts-checkts-ignore
                 if (config) {
-                    this.load[type](name, src, config)
+                    this.load[type](name, src, config);
                 }
                 else {
-                    this.load[type](name, src)
+                    this.load[type](name, src);
                 }
-            })
-        }
-
-    }
+            });
+        };
+    };
 
     create(this: SceneLoader, { level }: any) {
-        //this.scene.start("Scene1", { "data": 1 })
-        this.scene.start("Menu", { "data": 1 })
-    }
+        this.scene.start("Menu", { "data": 1 });
+    };
 
     update(this: SceneLoader) {
+    };
+};
 
-    }
-}
-
-export default SceneLoader 
+export default SceneLoader;

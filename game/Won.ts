@@ -11,6 +11,7 @@ export default class WonScene extends Phaser.Scene {
     init() {
         this.cursors = this.input.keyboard?.createCursorKeys();
     };
+
     /*Debug
     preload() {
         this.load.image("background", "game/background.png");
@@ -18,9 +19,9 @@ export default class WonScene extends Phaser.Scene {
     */
 
     create(this: WonScene, data: { text: string }) {
-        /* Audio */
-        this.music = this.sound.add('songWon').setVolume(0.6)
-        this.music.play()
+
+        this.music = this.sound.add('songWon').setVolume(0.6);
+        this.music.play();
         this.physics.world.setBounds(0, 0, 5000, 2500);
         this.add.image(900, 500, "background").setScale(.7);
         this.add.text(this.cameras.main.width / 2, this.cameras.main.height / 2, data.text, { fontSize: '35px' })

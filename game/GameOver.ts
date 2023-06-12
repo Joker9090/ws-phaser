@@ -11,7 +11,8 @@ export default class GameOver extends Phaser.Scene {
     init() {
         this.cursors = this.input.keyboard?.createCursorKeys();
     };
-    /*debug
+
+    /*Debug
     preload() {
         this.load.image("background", "game/background.png");
     };
@@ -19,8 +20,8 @@ export default class GameOver extends Phaser.Scene {
 
     create() {
         /* Audio */
-        this.music = this.sound.add('songLose').setVolume(0.3)
-        this.music.play()
+        this.music = this.sound.add('songLose').setVolume(0.3);
+        this.music.play();
 
         this.physics.world.setBounds(0, 0, 5000, 2500);
         this.add.image(900, 500, "background").setScale(.7);

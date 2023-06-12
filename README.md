@@ -1,11 +1,14 @@
+
+
 COSAS PARA ARREGLAR:
 
--TUTORIAL: contar UI (vidas, moneda, gravedad y tiempo), contar plataformas naranjas y contar fireball. Finalmente mostrar portal.
+- TUTORIAL: contar UI (vidas, moneda, gravedad y tiempo), contar plataformas naranjas y contar fireball. Finalmente mostrar portal.
 
-- problemas cuando pantalla es tamaño celular
+- fix side colissions
+- problemas cuando pantalla es tamaño celular (responsive)
 - problemas con la musica, Win y Lose no dejan de sonar cuando salgo de la escena.
 - velocidad inicial de nivel 2 funciona si empiezo en nivel 2 pero no funciona si paso de nivel 1 a nivel 2
-- arreglar boxes sizes
+
 
 
 

@@ -1,41 +1,46 @@
 
 import Phaser from "phaser";
 import Game from "../Game";
+
 // Scene in class
 class Player extends Phaser.Physics.Arcade.Sprite {
   isJumping = false;
   scene: Game;
+
   constructor(scene: Game, x: number, y: number, texture: string | Phaser.Textures.Texture, frame?: string | number | undefined) {
-    super(scene, x, y, texture)
+    super(scene, x, y, texture);
     this.scene = scene;
+
     /* Monchi animations */
-    const monchiJumpFrames = scene.anims.generateFrameNumbers("character", { frames: [0, 1, 2, 3, 2, 1, 0] })
-    const monchiMoveFrames = scene.anims.generateFrameNumbers("character", { frames: [0, 1, 0, 1, 0] })
+    const monchiJumpFrames = scene.anims.generateFrameNumbers("character", { frames: [0, 1, 2, 3, 2, 1, 0] });
+    const monchiMoveFrames = scene.anims.generateFrameNumbers("character", { frames: [0, 1, 0, 1, 0] });
     const monchiJumpConfig = {
       key: "monchiJump",
       frames: monchiJumpFrames,
       frameRate: 12,
       repeat: 0,
-    }
+    };
     const monchiMoveConfig = {
       key: "monchiMove",
       frames: monchiMoveFrames,
       frameRate: 10,
       repeat: 0,
-    }
+    };
+
+    /* Monchi animations */
     scene.anims.create(monchiJumpConfig)
     scene.anims.create(monchiMoveConfig)
-    /* Monchi animations */
 
     /* Monchi add to physic world */
     scene.physics.add.existing(this);
 
     /* Monchi change size and bounce */
-    this.body?.setSize(73, 110)
-    this.body?.setOffset(70, 50)
-    this.setScale(0.6)
+    this.body?.setSize(73, 110);
+    this.body?.setOffset(70, 50);
+    this.setScale(0.6);
     this.setBounce(0);
     this.setDepth(10)
+
     /* Monchi add to scene */
     scene.add.existing(this);
 
@@ -44,8 +49,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     if (this.body) {
       const body = (this.body as Phaser.Physics.Arcade.Body)
       body.onWorldBounds = true;
-    }
-  }
+    };
+  };
 
   idle() {
     this.isJumping = false;
@@ -58,8 +63,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       this.play("monchiJump");
       this.setVelocityY(-630);
       this.scene.time.delayedCall(600, this.idle, [], this);
-    }
-  }
+    };
+  };
 
   jumpBack() {
     if (!this.isJumping) {
@@ -67,28 +72,25 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       this.play("monchiJump");
       this.setVelocityY(630);
       this.scene.time.delayedCall(600, this.idle, [], this);
-    }
-  }
+    };
+  };
 
   checkMove(cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined) {
     /* Keywords press */
     if (cursors) {
       const { left, right, up } = cursors;
+
       /* Left*/
       if (left.isDown) {
         this.setVelocityX(-160);
-        this.setFlipX(true)
-
-        /* Play animation */
+        this.setFlipX(true);
         if (!this.isJumping) this.anims.play('monchiMove', true);
       }
 
       /* Right*/
       else if (right.isDown) {
         this.setVelocityX(160);
-        this.setFlipX(false)
-
-        /* Play animation */
+        this.setFlipX(false);
         if (!this.isJumping) this.anims.play('monchiMove', true);
       }
 
@@ -104,78 +106,73 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.setVelocityX(0);
       };
 
-      /* Up / Juamp */
+      /* Up / Jump */
 
       if (up.isDown && this.body && this.body.touching.down) {
-        /* Play animation */
-        this.jump()
-      }
+        this.jump();
+      };
 
       if (up.isDown && this.body && this.body.touching.up) {
-        /* Play animation */
-        this.jumpBack()
-      }
-    }
-  }
+        this.jumpBack();
+      };
+    };
+  };
 
 
   checkMoveRot(cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined) {
     /* Keywords press */
     if (cursors) {
       const { left, right, up } = cursors;
+
       /* Left*/
       if (left.isDown) {
         this.setVelocityX(160);
-        this.setFlipX(false)
-
-        /* Play animation */
+        this.setFlipX(false);
         if (!this.isJumping) this.anims.play('monchiMove', true);
       }
 
       /* Right*/
       else if (right.isDown) {
         this.setVelocityX(-160);
-        this.setFlipX(true)
-
-        /* Play animation */
+        this.setFlipX(true);
         if (!this.isJumping) this.anims.play('monchiMove', true);
       }
 
       /* Nothing */
       else {
-        this.setVelocityX(0)
+        this.setVelocityX(0);
       }
 
-      /* Up / Juamp */
+      /* Up / Jump */
 
       if (up.isDown && this.body && this.body.touching.down) {
-        /* Play animation */
-        this.jump()
-      }
+        this.jump();
+      };
 
       if (up.isDown && this.body && this.body.touching.up) {
-        /* Play animation */
-        this.jumpBack()
-      }
-    }
-  }
+        this.jumpBack();
+      };
+    };
+  };
 
   checkSideGravity(cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined) {
     /* Keywords press */
     if (cursors) {
       const { up, down, left, right } = cursors;
       const velocity = 300;
+
       if (up.isDown) {
-        this.setVelocityY(-velocity)
-        this.setFlipX(false)
+        this.setVelocityY(-velocity);
+        this.setFlipX(false);
         if (!this.isJumping) this.anims.play('monchiMove', true);
       } else if (down.isDown) {
-        this.setVelocityY(velocity)
-        this.setFlipX(true)
+        this.setVelocityY(velocity);
+        this.setFlipX(true);
         if (!this.isJumping) this.anims.play('monchiMove', true);
       } else {
-        this.setVelocityY(0)
+        this.setVelocityY(0);
       };
+
       if (left.isDown) {
         this.setGravityX(-1300);
         this.setFlipY(true);
@@ -194,7 +191,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
   checkMoveCreative(cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined) {
     /* Keywords press */
-    const velo = 400
+    const velo = 400;
+    this.scene.physics.world.gravity.y = 0;
     if (cursors) {
       const { left, right, up, down, space } = cursors;
       /* Left*/
@@ -219,10 +217,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       else {
         this.setVelocityY(0);
         this.setVelocityX(0);
-      }
-    }
-  }
+      };
+    };
+  };
+};
 
-}
-
-export default Player 
+export default Player;

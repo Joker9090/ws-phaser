@@ -1,12 +1,12 @@
 
 import Phaser from "phaser";
-import CloudGenerator, { CloudGeneratorConfig } from "../assets/CloudGenerator";
+import AsteroidGenerator, { AsteroidGeneratorConfig } from "../assets/AsteroidGenerator";
 import Floor, { FloorConfig } from "../assets/Floor";
 import LargeFloor, { LargeFloorConfig } from "../assets/LargeFloor";
 import UI, { UIConfig } from "../assets/UI";
 import Game from "../Game";
 // Scene in class
-class Mapa {
+class Mapa2 {
   isJumping = false;
   debugGraphics: Phaser.GameObjects.Graphics;
   scene: Game;
@@ -256,7 +256,7 @@ class Mapa {
       height: 1500,
     };
 
-    const portInicio = new Floor(this.scene, portalInicioConfig, this.portalInit).setDepth(15);
+    const portInicio = new Floor(this.scene, portalInicioConfig, this.portalInit).setDepth(1);
 
     const fireballConfig: FloorConfig = {
       texture: "fireball",
@@ -288,7 +288,7 @@ class Mapa {
     const coin = new Floor(this.scene, coinConfig, this.coin)
       .setVisible(false);
 
-    const c1Config: CloudGeneratorConfig = {
+    const c1Config: AsteroidGeneratorConfig = {
       texture: "asteroid",
       x: -100,
       y: 1700,
@@ -298,10 +298,10 @@ class Mapa {
       scale: .70,
       depth: 1,
     };
-    const c1 = new CloudGenerator(this.scene, c1Config);
+    const c1 = new AsteroidGenerator(this.scene, c1Config);
     c1.start();
 
-    const c2Config: CloudGeneratorConfig = {
+    const c2Config: AsteroidGeneratorConfig = {
       texture: "asteroid2",
       x: 3000,
       y: 800,
@@ -311,7 +311,7 @@ class Mapa {
       scale: .50,
       depth: 1,
     };
-    const c2 = new CloudGenerator(this.scene, c2Config);
+    const c2 = new AsteroidGenerator(this.scene, c2Config);
     c2.start();
 
     /* UI */
@@ -332,16 +332,16 @@ class Mapa {
   }
 
   update() {
-    //console.log(this.scene.canWin, "can win", this.scene.nextLevel, "next level")
+    
     //modo creative
-    /*
-    if (this.scene.timerText && this.scene.monchi) {
-      this.scene.timerText.setText('X: ' + Math.floor(this.scene.monchi.x) + ' Y: ' + Math.floor(this.scene.monchi.y));
+    /* DEBUGGER
+    if (this.scene.monchi) {
+      this.scene.monchi.checkMoveCreative(this.scene.cursors);
     };
     */
-
+    
     if (this.coinUI) {
-      if (this.scene.canWin || this.scene.nextLevel) {
+      if (this.scene.canWin || this.scene.canNextLevel) {
         this.coinUI?.clearTint();
       } else {
         this.coinUI?.setTint().setTint(Phaser.Display.Color.GetColor(0, 0, 0));
@@ -374,18 +374,16 @@ class Mapa {
           this.scene.monchi.checkSideGravity(this.scene.cursors);
         } else if (this.scene.timeLevel < 1) {
           this.scene.monchi.setVelocityX(300);
-          //this.scene.monchi.setGravityY(0);
         }
         else if (this.scene.timeLevel >= 1) {
           this.scene.monchi.checkMove(this.scene.cursors);
-          //this.scene.monchi.setGravityY(0);
         }
         if (this) this.animateBackground(this.scene.monchi);
       };
 
     };
+    
   };
-
 };
 
-export default Mapa 
+export default Mapa2;

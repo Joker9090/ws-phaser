@@ -1,6 +1,6 @@
 
 import Phaser from "phaser";
-import CloudGenerator, { CloudGeneratorConfig } from "../assets/CloudGenerator";
+import AsteroidGenerator, { AsteroidGeneratorConfig } from "../assets/AsteroidGenerator";
 import Floor, { FloorConfig } from "../assets/Floor";
 import LargeFloor, { LargeFloorConfig } from "../assets/LargeFloor";
 import UI, { UIConfig } from "../assets/UI";
@@ -268,7 +268,7 @@ const p6 = new LargeFloor(this.scene, p6Config, this.pisos);
     };
     //
     if (this.coinUI) {
-      if (this.scene.canWin || this.scene.nextLevel) {
+      if (this.scene.canWin || this.scene.canNextLevel) {
         this.coinUI?.clearTint();
       } else {
         this.coinUI?.setTint().setTint(Phaser.Display.Color.GetColor(0, 0, 0));

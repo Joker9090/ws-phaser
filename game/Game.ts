@@ -19,7 +19,7 @@ class Game extends Phaser.Scene {
 
   music?: Phaser.Sound.NoAudioSound | Phaser.Sound.HTML5AudioSound | Phaser.Sound.WebAudioSound;
   canWin: boolean = false;
-  nextLevel: boolean = false;
+  canNextLevel: boolean = false;
   canRot: boolean = true;
 
   cameraNormal: boolean = true;
@@ -29,25 +29,15 @@ class Game extends Phaser.Scene {
   timerText?: Phaser.GameObjects.Text;
   checkPoint: number = 0;
 
-  //cameraUpsideDown?: Phaser.Cameras.Scene2D.Camera;
   cameraWidth: number = 0;
   cameraHeight: number = 0;
-  /*
-  startingPoint = {
-    x: this.map?.startingPoint.x,
-    y: this.map?.startingPoint.y,
-  };
 
-  checkPointPos = {
-    x: this.map?.checkPoint.x,
-    y: this.map?.checkPoint.y,
-  };
-  */
   constructor() {
     super({ key: 'Game' });
   };
 
-  /*   */
+  /*  
+  */
   preload(this: Phaser.Scene) {
     this.load.spritesheet("character", "/game/character.png", { frameWidth: 220, frameHeight: 162 });
     this.load.image("background", "/game/background.png");
@@ -64,17 +54,10 @@ class Game extends Phaser.Scene {
     this.load.image("fireball", "/game/fireball.png");
   }
 
-  stop() {
-    this.scene.stop;
-  }
-
-  wake() {
-    this.scene.wake()
-  };
-
   touch() {
     if (this.monchi) {
       this.monchi.idle();
+      this.monchi.setVelocityX(0); //check if working properly
     };
   };
 
@@ -89,7 +72,7 @@ class Game extends Phaser.Scene {
         this.monchi?.body?.setOffset(70, 0);
         this.monchi?.setBounceY(0);
       });
-    }
+    };
   };
 
 
@@ -123,27 +106,27 @@ class Game extends Phaser.Scene {
   };
 
   gameOver() {
-    if (this.music) this.music.stop()
-    this.lifes = 3
+    if (this.music) this.music.stop();
+    this.lifes = 3;
     this.cameraNormal = true;
     this.checkPoint = 0;
     this.scene.restart();
-    this.timeLevel = 0
+    this.timeLevel = 0;
     this.scene.switch("GameOver");
     this.canWin = false;
-    this.nextLevel = false;
+    this.canNextLevel = false;
   };
 
 
   win(Phrase: string) {
     if (this.canWin && this.monchi) {
-      if (this.music) this.music.stop()
+      if (this.music) this.music.stop();
       this.cameraNormal = true;
       this.scene.sleep();
       this.scene.start("Won", { text: Phrase });
       this.checkPoint = 0;
       this.canWin = false;
-      this.nextLevel = false;
+      this.canNextLevel = false;
     };
   };
 
@@ -158,7 +141,7 @@ class Game extends Phaser.Scene {
   coinCollected() {
     if (this.map?.coin) {
       (this.map.portal?.getChildren()[0] as Phaser.GameObjects.Image).clearTint();
-      this.nextLevel = true;
+      this.canNextLevel = true;
       this.canWin = true;
       this.map.coin.setVisible(false);
       this.map.coin.clear(true);
@@ -166,12 +149,11 @@ class Game extends Phaser.Scene {
   };
 
   goNextLevel() {
-    //console.log(this.lifes)
-    if (this.nextLevel && this.monchi) {
+    if (this.canNextLevel && this.monchi) {
       this.cameraNormal = true;
       this.checkPoint = 0;
       this.canWin = false;
-      this.nextLevel = false;
+      this.canNextLevel = false;
       this.scene.restart({ level: 2, lifes: this.lifes });
     };
   };
@@ -184,13 +166,12 @@ class Game extends Phaser.Scene {
       this.monchi?.body?.setOffset(70, 50);
       this.monchi?.setBounceY(0);
     };
-
   };
 
   loseLevelTutorial() {
     if (this.lifes) {
       this.lifes -= 1;
-      //console.log("vidas :", this.lifes, " long: ", this.map?.lifesGroup?.getLength())
+
       if (this.lifes == 0) {
         this.gameOver();
       } else if (this.lifes != 0 && this.gravityDown && this.monchi) {
@@ -199,8 +180,10 @@ class Game extends Phaser.Scene {
       } else if (this.lifes != 0 && this.gravityDown == false && this.monchi) {
         if (this.map) this.monchi.x = this.map.startingPoint.x;
         if (this.map) this.monchi.y = this.map.startingPoint.y;
-        this.noFloatTutorial()
-      }
+        this.noFloatTutorial();
+      };
+
+      // Remove the object with the highest x position
       if (this.lifes != 0 && this.map?.lifesGroup) {
         let lifeToTheRight = null;
         let highestX = Number.NEGATIVE_INFINITY;
@@ -210,17 +193,16 @@ class Game extends Phaser.Scene {
             lifeToTheRight = child;
             highestX = child.x;
           };
-          // Remove the object with the highest x position
-        }
-        lifeToTheRight?.destroy()
+        };
+        lifeToTheRight?.destroy();
       };
     };
-  }
+  };
 
   loseLevel1() {
     if (this.lifes) {
       this.lifes -= 1;
-      //console.log("vidas :", this.lifes, " long: ", this.map?.lifesGroup?.getLength())
+
       if (this.lifes == 0) {
         this.gameOver();
       } else if (this.lifes != 0 && this.checkPoint == 0 && this.monchi) {
@@ -235,17 +217,19 @@ class Game extends Phaser.Scene {
         if (this.map) this.monchi.y = this.map.startingPoint.y;
       } else if (this.lifes != 0 && this.checkPoint == 1 && this.monchi && this.cameraNormal == false) {
         this.float(0);
-        this.cameraNormal = true
-        this.canRot = true
+        this.cameraNormal = true;
+        this.canRot = true;
         this.rotateCam(0);
         if (this.map) this.monchi.x = this.map.checkPointPos.x;
         if (this.map) this.monchi.y = this.map.checkPointPos.y;
       } else if (this.lifes != 0 && this.checkPoint == 1 && this.monchi && this.cameraNormal) {
         this.float(0);
-        this.canRot = true
+        this.canRot = true;
         if (this.map) this.monchi.x = this.map.checkPointPos.x;
         if (this.map) this.monchi.y = this.map.checkPointPos.y;
-      }
+      };
+
+      // Remove the object with the highest x position
       if (this.lifes != 0 && this.map?.lifesGroup) {
         let lifeToTheRight = null;
         let highestX = Number.NEGATIVE_INFINITY;
@@ -255,24 +239,19 @@ class Game extends Phaser.Scene {
             lifeToTheRight = child;
             highestX = child.x;
           };
-          // Remove the object with the highest x position
-        }
-        //lifeToTheRight?.setVisible(false);
+        };
         lifeToTheRight?.destroy()
       };
     };
-  }
+  };
 
-  // no ta andanding
   loseLevel2() {
-    //console.log(this.lifes)
     if (this.lifes) {
       this.lifes -= 1;
+
       if (this.lifes == 0) {
-        //console.log("entro en 0 y check: ", this.checkPoint);
         this.gameOver();
       } else if (this.lifes != 0 && this.checkPoint == 0 && this.monchi) {
-        //console.log("entro en 1 y check: ", this.checkPoint);
         this.monchi?.setFlipY(false);
         this.physics.world.gravity.y = 1000;
         this.monchi?.setFlipX(false);
@@ -283,7 +262,6 @@ class Game extends Phaser.Scene {
         if (this.map) this.monchi.x = this.map.startingPoint.x;
         if (this.map) this.monchi.y = this.map.startingPoint.y;
       } else if (this.lifes != 0 && this.checkPoint == 1 && this.monchi) {
-        //console.log("entro en 1 y check: ", this.checkPoint);
         this.monchi?.setFlipY(false);
         this.physics.world.gravity.y = 1000;
         this.monchi?.setFlipX(false);
@@ -294,6 +272,8 @@ class Game extends Phaser.Scene {
         if (this.map) this.monchi.x = this.map.checkPointPos.x;
         if (this.map) this.monchi.y = this.map.checkPointPos.y;
       };
+
+      // Remove the object with the highest x position
       if (this.lifes != 0 && this.map?.lifesGroup) {
         let lifeToTheRight = null;
         let highestX = Number.NEGATIVE_INFINITY;
@@ -303,17 +283,16 @@ class Game extends Phaser.Scene {
             lifeToTheRight = child;
             highestX = child.x;
           };
-          // Remove the object with the highest x position
-        }
-        //lifeToTheRight?.setVisible(false);
-        lifeToTheRight?.destroy()
+        };
+        lifeToTheRight?.destroy();
       };
     };
   };
+
   create(this: Game, data: { level: number, lifes: number }) {
 
     /* DEBUG DE NIVEL */
-    //data.level = 1
+    //data.level = 2
     //data.lifes = 3
     /* DEBUG DE NIVEL */
 
@@ -321,33 +300,33 @@ class Game extends Phaser.Scene {
     switch (data.level) {
       case 0:
         this.map = new Tutorial(this);
-        this.music = this.sound.add('songTutorial').setVolume(0.3)
+        this.music = this.sound.add('songTutorial').setVolume(0.3);
         break;
       case 1:
         this.map = new Mapa1(this);
-        this.music = this.sound.add('songLevel1').setVolume(0.3)
+        this.music = this.sound.add('songLevel1').setVolume(0.3);
         break;
       case 2:
         this.map = new Mapa2(this);
-        this.music = this.sound.add('songLevel2').setVolume(0.3)
+        this.music = this.sound.add('songLevel2').setVolume(0.3);
         break;
       default:
         this.map = new Mapa1(this);
-        this.music = this.sound.add('songLevel').setVolume(0.3)
+        this.music = this.sound.add('songLevel1').setVolume(0.3);
         break;
-    }
+    };
 
     if (data.level == 0) {
-      this.levelIs = 0
+      this.levelIs = 0;
       this.monchi?.setVelocity(300, 0);
-    }
+    };
 
     /* CREATE MAP AND LFIES */
     if (data.lifes) this.lifes = data.lifes;
     this.map.createMap(data);
 
     /* SET AUDIO */
-    this.music.play()
+    this.music.play();
 
     /* CONTROLS */
     this.cursors = this.input.keyboard?.createCursorKeys();
@@ -360,11 +339,6 @@ class Game extends Phaser.Scene {
     this.cameras.main.startFollow(this.monchi);
     this.cameraWidth = this.cameras.main.width;
     this.cameraHeight = this.cameras.main.height;
-
-    /* UPSIDEDOWN CAMERA */
-
-    //this.cameraUpsideDown = this.cameras.add(0, 0, this.cameraWidth, this.cameraHeight/6).setRotation(Math.PI).setVisible(false);
-    //if (this.monchi) this.cameraUpsideDown.startFollow(this.monchi).followOffset.set(0, this.cameraHeight*5/6);
 
     /* TIMER */
     this.timerText = this.add.text(this.cameras.main.width - 120, 35, 'Time: 0', { fontSize: '32px' }).setOrigin(.5, .5).setScrollFactor(0, 0).setDepth(100).setSize(50, 50);
@@ -383,7 +357,6 @@ class Game extends Phaser.Scene {
     /* COLLIDERS */
     this.map.addColliders()
 
-
     this.physics.world.on('worldbounds', (body: Phaser.Physics.Arcade.Sprite, top: boolean, down: boolean, left: boolean, right: boolean) => {
       if (down || top || left || right) {
         if (data.level == 1) {
@@ -399,7 +372,7 @@ class Game extends Phaser.Scene {
   };
 
   update(this: Game) {
-    //console.log("checkPoint true/false: ", this.checkPoint, "checkpointPos: ", this.map?.checkPointPos)
+
     if (this.monchi && this.map) {
       if (this.monchi.x > this.map.checkPointPos.x) {
         this.checkPoint = 1;
@@ -412,8 +385,8 @@ class Game extends Phaser.Scene {
       this.timerText.setPosition(120, this.cameraHeight - 50);
     };
 
-    if (this.map) this.map.update()
+    if (this.map) this.map.update();
   };
 };
 
-export default Game 
+export default Game;

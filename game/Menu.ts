@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 
 export default class MainMenuScene extends Phaser.Scene {
+
     cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
     buttons: Phaser.GameObjects.Image[] = [];
     selectedButtonIndex: number = 0;
@@ -8,6 +9,7 @@ export default class MainMenuScene extends Phaser.Scene {
     monchi?: Phaser.GameObjects.Sprite;
     progress: number = 0;
     music?: Phaser.Sound.NoAudioSound | Phaser.Sound.HTML5AudioSound | Phaser.Sound.WebAudioSound;
+
     constructor() {
         super({ key: 'Menu' });
     };
@@ -15,6 +17,7 @@ export default class MainMenuScene extends Phaser.Scene {
     init() {
         this.cursors = this.input.keyboard?.createCursorKeys();
     };
+
     /* Debug 
     preload() {
         this.load.image("background", "game/background.png");
@@ -26,8 +29,8 @@ export default class MainMenuScene extends Phaser.Scene {
 
     create() {
         /* Audio */
-        this.music = this.sound.add('songMenu').setVolume(0.4)
-        this.music.play()
+        this.music = this.sound.add('songMenu').setVolume(0.4);
+        this.music.play();
 
         /* Main Scene Menu */
         this.physics.world.setBounds(0, 0, 5000, 2500);
@@ -104,13 +107,13 @@ export default class MainMenuScene extends Phaser.Scene {
 
     selectNextButton(change = 1) {
         let index = this.selectedButtonIndex + change;
-        //console.log(index, this.buttons.length , this.buttons)
+
         // wrap the index to the front or end of array
         if (index >= this.buttons.length) {
-            index = 0
+            index = 0;
         }
         else if (index < 0) {
-            index = this.buttons.length - 1
+            index = this.buttons.length - 1;
         };
 
         this.selectButton(index);

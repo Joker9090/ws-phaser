@@ -228,7 +228,7 @@ class Mapa1 {
       height: 50,
 
     };
-    const p9 = new Floor(this.scene, p9Config, this.pisos2);
+    const p9 = new Floor(this.scene, p9Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 177, 0));
 
     const p4Config: LargeFloorConfig = {
       textureA: "plataformaA",
@@ -272,7 +272,7 @@ class Mapa1 {
     const p12 = new Floor(this.scene, p12Config, this.pisos);
 
     const p13Config: FloorConfig = {
-      texture: "plataformaA",
+      texture: "plataformaB",
       pos: { x: 3550, y: 700, },
       scale: { width: 0.7, height: 0.7, },
       fix: 10,

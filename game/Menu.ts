@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-
+import MusicTracks from "./MusicManager";
 export default class MainMenuScene extends Phaser.Scene {
 
     cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -8,7 +8,7 @@ export default class MainMenuScene extends Phaser.Scene {
     buttonSelector!: Phaser.GameObjects.Image;
     monchi?: Phaser.GameObjects.Sprite;
     progress: number = 0;
-    music?: Phaser.Sound.NoAudioSound | Phaser.Sound.HTML5AudioSound | Phaser.Sound.WebAudioSound;
+    music?: MusicTracks;
 
     constructor() {
         super({ key: 'Menu' });
@@ -29,18 +29,27 @@ export default class MainMenuScene extends Phaser.Scene {
 
     create() {
         /* Audio */
-        this.music = this.sound.add('songMenu').setVolume(0.4);
-        this.music.play();
+        this.music = new MusicTracks(this);
+        this.music.playMusic('songMenu');
+
+        //window.scene = this
 
         /* Main Scene Menu */
         this.physics.world.setBounds(0, 0, 5000, 2500);
         this.add.image(900, 500, "background").setScale(.7);
         this.monchi = this.add.sprite(100, 700, "monchi", 1).setScale(.5);
-        const { width, height } = this.scale;
+        let { width, height } = this.scale
+        if (this.game.config.canvas) {
+            const size = this.game.config.canvas.getBoundingClientRect();
+            width = size.width;
+            height = size.height;
+        }
+
         const [widthButton, heightButton] = [250, 100];
 
         // Tutorial button
-        const Tutorial = this.add.image(width * 0.5, height * 0.4, 'glass').setDisplaySize(widthButton, heightButton);
+        const Tutorial = this.add.image(width / 2, height / 2 - 100, 'glass').setDisplaySize(widthButton, heightButton);
+        //window.tutorial = Tutorial
         this.add.text(Tutorial.x, Tutorial.y, 'Tutorial').setOrigin(0.5);
 
         // Play level 1 button
@@ -57,23 +66,20 @@ export default class MainMenuScene extends Phaser.Scene {
         this.selectButton(0);
 
         Tutorial.on('selected', () => {
-            this.music?.stop();
             this.scene.stop();
-            this.scene.start("Game", { level: 0, lifes: 3 });
+            this.scene.start("Game", { level: 0, lifes: 8 });
             this.selectedButtonIndex = 0
         });
 
         PlayLevel1.on('selected', () => {
-            this.music?.stop();
             this.scene.stop();
-            this.scene.start("Game", { level: 1, lifes: 3 });
+            this.scene.start("Game", { level: 1, lifes: 8 });
             this.selectedButtonIndex = 0
         });
 
         PlayLevel2.on('selected', () => {
-            this.music?.stop();
             this.scene.stop();
-            this.scene.start("Game", { level: 2, lifes: 3 });
+            this.scene.start("Game", { level: 2, lifes: 8 });
             this.selectedButtonIndex = 0
         });
 
@@ -128,6 +134,8 @@ export default class MainMenuScene extends Phaser.Scene {
     };
 
     update() {
+        //window.tutorial.setPosition(this.cameras.main.width/2,this.cameras.main.height/2);
+
         if (this.monchi) {
             this.progress = this.progress + .0031415;
             this.monchi.x = this.monchi.x + .5;

@@ -238,7 +238,9 @@ class Tutorial {
   }
 
   showPlatform() {
-    if(this.tutorialState == 1){}
+    if(this.tutorialState == 1){
+      
+    }
   }
 
   showMap() {

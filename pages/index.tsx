@@ -35,7 +35,7 @@ export default function Home() {
         height: "100%",
         parent: "game-container",
         scale: {
-          mode: window.Phaser.Scale.FIT
+          mode: window.Phaser.Scale.RESIZE
         },
         scene: scenes,
         physics: {
@@ -49,6 +49,17 @@ export default function Home() {
       }
       const game = new phaser.Game(config)
       setGame(game);
+      /* CONTROLS THE RESIZE AND RESTART OF SCENE */
+      window.addEventListener("resize", () => {
+        setTimeout(()=>{
+          game.scene.getScenes(true).map((s) => {
+            console.log(window.innerWidth)
+            game.canvas.style.width = window.innerWidth + 'px';
+            game.canvas.style.height = window.innerHeight + 'px';
+            s.scene.restart();
+          })
+        },300);
+      })
     }
   }, [phaser, scenes])
 

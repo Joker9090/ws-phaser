@@ -12,7 +12,7 @@ class Mapa2 {
   scene: Game;
   worldSize = {
     width: 3500,
-    height: 10000,
+    height: 3000,
   };
   pisos?: Phaser.Physics.Arcade.Group;
   coin?: Phaser.Physics.Arcade.Group;

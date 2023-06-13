@@ -1,8 +1,9 @@
 import Phaser from 'phaser';
+import MusicTracks from "./MusicManager";
 
 export default class GameOver extends Phaser.Scene {
     cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
-    music?: Phaser.Sound.NoAudioSound | Phaser.Sound.HTML5AudioSound | Phaser.Sound.WebAudioSound;
+    music?: MusicTracks;
     constructor() {
         super({ key: 'GameOver' });
 
@@ -18,10 +19,10 @@ export default class GameOver extends Phaser.Scene {
     };
     */
 
-    create() {
+    create(this: GameOver) {
         /* Audio */
-        this.music = this.sound.add('songLose').setVolume(0.3);
-        this.music.play();
+        this.music = new MusicTracks(this);
+        this.music.playMusic('songLose');
 
         this.physics.world.setBounds(0, 0, 5000, 2500);
         this.add.image(900, 500, "background").setScale(.7);
@@ -38,17 +39,8 @@ export default class GameOver extends Phaser.Scene {
             const space = this.cursors.space;
             /*Space*/
             space.on('down', () => {
-                this.music?.stop;
-                this.scene.stop;
                 this.scene.start("Menu");
             });
-            /*
-            if (space.isDown) {
-                this.music?.stop;
-                this.scene.sleep()
-                this.scene.start("Menu");
-            };
-            */
         };
     };
 };

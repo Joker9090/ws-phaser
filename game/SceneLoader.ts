@@ -28,18 +28,18 @@ const loadAssets = {
 
     "Tutorial": {
         assets: [
-            ["audio", "song", 'sounds/tutorial.png'],
+            ["audio", "song", '/sounds/tutorial.mp3'],
             ["image", "fireball", "/game/fireball.png"],
         ]
     },
     "Music": {
         assets: [
-            ["audio", "songTutorial", 'sounds/tutorial.mp3'],
-            ["audio", "songLevel1", 'sounds/monchiSpace.mp3'],
-            ["audio", "songLevel2", 'sounds/level2.mp3'],
-            ["audio", "songWon", 'sounds/won.mp3'],
-            ["audio", "songLose", 'sounds/lose.mp3'],
-            ["audio", "songMenu", 'sounds/menu.mp3'],
+            ["audio", "songTutorial", '/sounds/tutorial.mp3'],
+            ["audio", "songLevel1", '/sounds/monchiSpace.mp3'],
+            ["audio", "songLevel2", '/sounds/level2.mp3'],
+            ["audio", "songWon", '/sounds/won.mp3'],
+            ["audio", "songLose", '/sounds/lose.mp3'],
+            ["audio", "songMenu", '/sounds/menu.mp3'],
 
         ]
     },

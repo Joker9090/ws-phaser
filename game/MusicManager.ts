@@ -1,15 +1,10 @@
 import Phaser from 'phaser';
-import Game from "./Game";
-import GameOver from "./GameOver";
-import Menu from "./Menu";
-import Won from "./Won";
 
-export default class MusicManager {
-    scene: Game | GameOver | Menu | Won;
+export default class MusicManager extends Phaser.Scene {
     music?: Phaser.Sound.NoAudioSound | Phaser.Sound.HTML5AudioSound | Phaser.Sound.WebAudioSound;
 
-    constructor(scene: Game | GameOver | Menu | Won) {
-        this.scene = scene;
+    constructor() {
+      super({ key: 'MusicManager' });
     };
 
     stopMusic() {
@@ -22,11 +17,14 @@ export default class MusicManager {
     playMusic(name: string) {
         if (this.music) {
             this.music.stop();
-            this.music = this.scene.sound.add(name).setVolume(0.05);
-            this.music.play();
         }
+        this.music = this.sound.add(name).setVolume(0.05);
+        this.music.play(); 
     }
-
+    
+    create(/* {song} */) {
+      this.playMusic("songMenu")
+    }
     /*
     update() {
         if(this.scene.scene.key == "Game"){

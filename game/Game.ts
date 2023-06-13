@@ -42,7 +42,7 @@ class Game extends Phaser.Scene {
   };
 
   /*  
-  */
+  
   preload(this: Phaser.Scene) {
     this.load.spritesheet("character", "/game/character.png", { frameWidth: 220, frameHeight: 162 });
     this.load.image("background", "/game/background.png");
@@ -58,7 +58,7 @@ class Game extends Phaser.Scene {
     this.load.audio("song", 'sounds/monchiSpace.mp3');
     this.load.image("fireball", "/game/fireball.png");
   }
-
+*/
   touch() {
     if (this.monchi) {
       this.monchi.idle();
@@ -351,25 +351,25 @@ class Game extends Phaser.Scene {
     /* DEBUG DE NIVEL */
 
     /* MUSIC */
-    this.music = new MusicTracks(this);
+    // this.music = new MusicTracks(this);
 
     /* CHOSE LEVEL, LIFES AND AUDIO */
     switch (data.level) {
       case 0:
         this.map = new Tutorial(this);
-        this.music.playMusic('songTutorial');
+        // this.music.playMusic('songTutorial');
         break;
       case 1:
         this.map = new Mapa1(this);
-        this.music.playMusic('songLevel1');
+        // this.music.playMusic('songLevel1');
         break;
       case 2:
         this.map = new Mapa2(this);
-        this.music.playMusic('songLevel2');
+        // this.music.playMusic('songLevel2');
         break;
       default:
         this.map = new Tutorial(this);
-        this.music.playMusic('songTutorial');
+        // this.music.playMusic('songTutorial');
         break;
     };
     this.levelIs = data.level;

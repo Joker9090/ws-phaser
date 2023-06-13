@@ -20,7 +20,8 @@ export default function Home() {
       import("@/game/Menu"),
       import("@/game/Game"),
       import("@/game/Won"),
-      import("@/game/GameOver")
+      import("@/game/GameOver"),
+      import("@/game/MusicManager")
     ]).then((scenes) => {
       setScenes(scenes.map(s => s.default))
     })

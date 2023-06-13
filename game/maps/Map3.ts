@@ -8,7 +8,7 @@ import UiModel from "../assets/UIModel";
 import LifeBar from "../assets/LifeBar";
 import Door from "../assets/Door";
 
-class Map2 {
+class Map3 {
   scene: Phaser.Scene;
   mapElements?: Phaser.Physics.Arcade.Group;
   lifeBar?: LifeBar;
@@ -19,8 +19,8 @@ class Map2 {
     w: number,
     h: number
   } = {
-    w: 3000,
-    h: 1000
+    w: 800,
+    h: 800
   }
   constructor(scene: Phaser.Scene) {
     this.scene = scene
@@ -58,7 +58,7 @@ class Map2 {
       large: 32,
       //width:576,
       //height:324, 
-      pos: {x: 20,y: 1030},
+      pos: {x: 20,y: 700},
       //scale: {width: 1,height: 1,},
       //fix:-9,
       
@@ -299,4 +299,4 @@ class Map2 {
 
 }
 
-export default Map2;
+export default Map3;

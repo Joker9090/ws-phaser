@@ -175,12 +175,12 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     const dx = this.x - target.x;
     const dy = this.y - target.y;
     //console.log("enemy around dx value: "+dx);
-    if (Math.abs(dx) < maxRange && Math.abs(dy) < 20) {
+    if (Math.abs(dx) < maxRange && Math.abs(dy) < 2) {
       //enemy.setVelocityX(Math.sign(dx) * SPEED);
       this.isEnemyInFront = true;
       this.setVelocityX(0);
       //console.log("enemy around state from skeleton: "+this.isEnemyInFront);
-    } else if(Math.abs(dx) > maxRange&& Math.abs(dy) > 20){
+    } else if(Math.abs(dx) > maxRange&& Math.abs(dy) > 2){
       this.isEnemyInFront = false;
       //if(this.patrolConfig) {
         //this.patrolConfig.flip = this.flipX;
@@ -266,6 +266,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
       console.log("attack skeleton");
       this.newHitBox.attackBox((this.x),(this.y),!this.flipX, 20)
       this.isAttacking = true;
+      this.flipX = !this.flipX;
       this.play(`${this.sprite}AttackFrames`, true);
       //this.setVelocityY(-730);
       this.scene.time.delayedCall(600, () => {

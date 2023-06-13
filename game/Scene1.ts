@@ -10,6 +10,7 @@ import GameUI from "./assets/GameUI";
 import UiModel from "./assets/UIModel";
 import hitZone from "./assets/hitZone";
 import LifeBar from "./assets/LifeBar";
+import Map3 from "./maps/Map3";
 
 // Scene in class
 class Scene1 extends Phaser.Scene {
@@ -27,6 +28,8 @@ class Scene1 extends Phaser.Scene {
   lifePlayer?: LifeBar;
   constructor() {
     super({key: 'Scene1'})
+
+    //console.log("data de la escena ");
   }
  
 
@@ -80,15 +83,19 @@ class Scene1 extends Phaser.Scene {
 
 
     //this.scene.run('gameUI');
-    this.map = new Map2(this);
+    this.map = new Map3(this);
     this.lifePlayer = this.map.lifeBar;
     
     const floor = this.map.createMap()
-    
-    this.monchi = new Player(this, 100, 950, "knight", 2);
-    this.skeleton = new Enemy(this, 250, 950, "skeleton",1);
-    this.checkPoint = {x:100,y:950};
+    //Map2
+    //this.monchi = new Player(this, 100, 950, "knight", 2);
+    //this.skeleton = new Enemy(this, 250, 950, "skeleton",1);
+    //this.checkPoint = {x:100,y:950};
 
+    //Map3
+    this.monchi = new Player(this, 100, 650, "knight", 2);
+    this.skeleton = new Enemy(this, 250, 650, "skeleton",1);
+    this.checkPoint = {x:100,y:650};
 
 
 
@@ -129,8 +136,12 @@ class Scene1 extends Phaser.Scene {
       }
     } */
 
-    this.cameras.main.setBounds(0, 0, 3000, 1048);//tamaño del esceneario para poner limites
-    //this.physics.world.setBounds(0, 0, 3000, 1048);
+    //Map2
+    //this.cameras.main.setBounds(0, 0, 1850, 1054);//tamaño del esceneario para poner limites
+    //this.physics.world.setBounds(0, 0, 1850, 1030);
+    //Map3 boss fight
+    this.cameras.main.setBounds(0, 0, 950, 800);
+    this.physics.world.setBounds(0, 0, 950, 800);
     this.cameras.main.startFollow(this.monchi,true,0.5,0.5);//seguimiento del personaje, apartir de q pixeles alrededor
     this.cameras.main.setZoom(2);//zoom en la escene sobre lo que este apuntando la camara 3 , 0.5
 
@@ -163,6 +174,11 @@ class Scene1 extends Phaser.Scene {
         this.map.healths?.destroy();
         //this.map.lifeBar.updateBar(this,10);
       }
+    }
+
+    const changeMap = () => {
+      console.log("Entro en door cambia de level");
+      //this.scene.start("SceneLoader",{level: 3})
     }
 
     this.physics.world.on('worldbounds', (body: Phaser.Physics.Arcade.Sprite,top: boolean,down: boolean,left: boolean,right: boolean) => {
@@ -204,6 +220,9 @@ class Scene1 extends Phaser.Scene {
       //this.physics.add.collider(this.map.healths, this.monchi);
       this.physics.add.overlap(this.monchi, this.map.healths, takeHealth);
 
+    }
+    if(this.map.door) {
+      this.physics.add.overlap(this.monchi, this.map.door, changeMap);
     }
 
     

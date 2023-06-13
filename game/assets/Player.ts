@@ -71,7 +71,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     const knightDeadFramesConfig = {
       key: `${sprite}DeadFrames`,
       frames: knightDeadFrames,
-      frameRate: 10,
+      frameRate: 15,
       repeat: 0,
     }
 
@@ -114,23 +114,32 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   //  }
   //}
 
+  dead(){
+    this.setVelocityX(0);
+    this.anims.play(`${this.sprite}DeadFrames`, true);
+    //this.Onstate = "dead";
+  }
+
   receivedDamage(dmgRecieved:number) {
 
     this.loseLife(dmgRecieved);
-
-    this.scene.tweens.add({
-      targets: this,
-      duration: 150,
-      repeat: 3,
-      yoyo: true,
-      alpha: 0.5,
-      onStart: () => {
-        //this.setTint(0xffffff);
-      },
-      onComplete: () => {
-        this.setAlpha(1);
-      },
-    });
+    if(this.life == 0) {
+      this.dead();
+    }else {
+      this.scene.tweens.add({
+        targets: this,
+        duration: 150,
+        repeat: 3,
+        yoyo: true,
+        alpha: 0.5,
+        onStart: () => {
+          //this.setTint(0xffffff);
+        },
+        onComplete: () => {
+          this.setAlpha(1);
+        },
+      });
+    }
   }
 
   loseLife(dmgRecieved: number) {

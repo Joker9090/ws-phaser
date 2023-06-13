@@ -19,7 +19,7 @@ class Map3 {
     w: number,
     h: number
   } = {
-    w: 800,
+    w: 1300,
     h: 800
   }
   constructor(scene: Phaser.Scene) {
@@ -55,39 +55,14 @@ class Map3 {
     const LargeFloorConfigg: LargeFloorConfig = {
       textureA: "tile1",
       textureB: "tile3",
-      large: 32,
+      large: 44,
       //width:576,
       //height:324, 
-      pos: {x: 20,y: 700},
+      pos: {x: 20,y: 720},
       //scale: {width: 1,height: 1,},
       //fix:-9,
       
     }
-
-    const LargeFloorConfigg3: LargeFloorConfig = {
-      textureA: "lava1",
-      textureB: "lava2",
-      large: 20,
-      //width:576,
-      //height:324, 
-      pos: {x: 1000,y: 1050},
-      //scale: {width: 1,height: 1,},
-      //fix:-9,
-      
-    }
-
-    const LargeFloorConfigg2: LargeFloorConfig = {
-      textureA: "tile1",
-      textureB: "tile3",
-      large: 10,
-      //width:576,
-      //height:324, 
-      pos: {x: 1600,y: 1030},
-      //scale: {width: 1,height: 1,},
-      //fix:-9,
-      
-    }
-
 
     const LargeFloorIslandConfig = {
       textureA: "islandA",
@@ -96,7 +71,7 @@ class Map3 {
       large: 2,
       //width:576,
       //height:324, 
-      pos: {x: 300,y: 915},
+      pos: {x: 460,y: 610},
       //scale: {width: 1,height: 1,},
       //fix:-9,
       
@@ -109,7 +84,7 @@ class Map3 {
       large: 2,
       //width:576,
       //height:324, 
-      pos: {x: 800,y: 915},
+      pos: {x: 800,y: 610},
       //scale: {width: 1,height: 1,},
       //fix:-9,
       
@@ -122,33 +97,11 @@ class Map3 {
       large: 2,
       //width:576,
       //height:324, 
-      pos: {x: 1000,y: 855},
+      pos: {x: 633,y: 500},
       //scale: {width: 1,height: 1,},
       //fix:-9,
     }
 
-    const LargeFloorIslandConfig4 = {
-      textureA: "islandA",
-      textureB: "islandB",
-      textureC: "islandC",
-      large: 2,
-      //width:576,
-      //height:324, 
-      pos: {x: 1200,y: 855},
-      //scale: {width: 1,height: 1,},
-      //fix:-9,
-    }
-    const LargeFloorIslandConfig5 = {
-      textureA: "islandA",
-      textureB: "islandB",
-      textureC: "islandC",
-      large: 2,
-      //width:576,
-      //height:324, 
-      pos: {x: 1400,y: 875},
-      //scale: {width: 1,height: 1,},
-      //fix:-9,
-    }
 
     const CloudGeneratorConfig1 = {
       texture: "neblina",
@@ -168,18 +121,18 @@ class Map3 {
 
     const AntorchaConfig = {
       x:300,
-      y:750,
+      y:550,
       sprite:"antorcha",
     }
     const AntorchaConfig2 = {
       x:650,
-      y:850,
+      y:550,
       sprite:"antorcha",
     }
 
     const AntorchaConfig3 = {
-      x:1550,
-      y:865,
+      x:950,
+      y:550,
       sprite:"antorcha",
     }
 
@@ -206,9 +159,9 @@ class Map3 {
     const newAntorcha = new Antorcha(this.scene,AntorchaConfig);
     const newAntorcha2 = new Antorcha(this.scene,AntorchaConfig2);
     const newAntorcha3 = new Antorcha(this.scene,AntorchaConfig3);
-    const lightOnAntorcha = this.scene.lights.addLight(newAntorcha.x,newAntorcha.y,200).setColor(0xdc9e7c).setIntensity(1);
-    const lightOnAntorcha2 = this.scene.lights.addLight(newAntorcha2.x,newAntorcha2.y,200).setColor(0xdc9e7c).setIntensity(1);
-    const lightOnAntorcha3 = this.scene.lights.addLight(newAntorcha3.x,newAntorcha3.y,200).setColor(0xdc9e7c).setIntensity(1);
+    const lightOnAntorcha = this.scene.lights.addLight(newAntorcha.x,newAntorcha.y,300).setColor(0xdc9e7c).setIntensity(1);
+    const lightOnAntorcha2 = this.scene.lights.addLight(newAntorcha2.x,newAntorcha2.y,300).setColor(0xdc9e7c).setIntensity(1);
+    const lightOnAntorcha3 = this.scene.lights.addLight(newAntorcha3.x,newAntorcha3.y,300).setColor(0xdc9e7c).setIntensity(1);
     
 
     const newDoor = new Door(this.scene,1750,985,"doorCueva", true);
@@ -225,14 +178,10 @@ class Map3 {
     //const UI = new UiModel(this.scene,UIConfig,this.mapElements);
     //const nubes = new CloudGenerator(this.scene, CloudGeneratorConfig1);
     //nubes.start();
-    const newLava = new LargeFloor(this.scene,LargeFloorConfigg3,this.mapElements)
     const newIsland2 = new LargeFloorIsland(this.scene,LargeFloorIslandConfig2,this.mapElements)
     const newIsland = new LargeFloorIsland(this.scene,LargeFloorIslandConfig,this.mapElements)
     const newFloor = new LargeFloor(this.scene,LargeFloorConfigg,this.mapElements);
-    const newFloor2 = new LargeFloor(this.scene,LargeFloorConfigg2,this.mapElements);
     const newIsland3 = new LargeFloorIsland(this.scene,LargeFloorIslandConfig3,this.mapElements)
-    const newIsland4 = new LargeFloorIsland(this.scene,LargeFloorIslandConfig4,this.mapElements)
-    const newIsland5 = new LargeFloorIsland(this.scene,LargeFloorIslandConfig5,this.mapElements)
 
 
     
@@ -291,7 +240,7 @@ class Map3 {
 
 
     
-    this.mapElements.addMultiple([newFloor,newFloor2])
+    this.mapElements.addMultiple([newFloor])
 
     return this.mapElements; 
     

@@ -26,6 +26,7 @@ const loadAssets = {
       ["spritesheet", "character", "/game/character.png", { frameWidth: 220, frameHeight: 162}],
       ["spritesheet", "knight", "/game/Knight.png", { frameWidth: 86, frameHeight: 86}],
       ["spritesheet", "skeleton", "/game/skeleton.png", { frameWidth: 86, frameHeight: 86}],
+      ["spritesheet", "archimago", "/game/archimago.png", { frameWidth: 128, frameHeight: 128}],
       ["spritesheet", "antorcha", "/game/Antorcha.png", { frameWidth: 128, frameHeight: 128}],
       ["spritesheet", "heartFullUI", "/game/UI/heart.png", { frameWidth: 32, frameHeight: 32}],
     ]
@@ -102,9 +103,10 @@ class SceneLoader extends Phaser.Scene {
     })
   }
 
-  create(this: SceneLoader, { level }: any) {
+  create(this: SceneLoader, { dataLevel }: any) {
     //this.scene.start("Scene"+level);
-    this.scene.start("Scene1", { "dataLevel": level })
+    console.log("dataaaaa sceneloader ",dataLevel);
+    this.scene.start("Scene1", { "dataLevel": dataLevel })
   }
 
   update(this: SceneLoader) {

@@ -11,6 +11,7 @@ import UiModel from "./assets/UIModel";
 import hitZone from "./assets/hitZone";
 import LifeBar from "./assets/LifeBar";
 import Map3 from "./maps/Map3";
+import Boss from "./assets/Boss";
 
 // Scene in class
 class Scene1 extends Phaser.Scene {
@@ -25,11 +26,19 @@ class Scene1 extends Phaser.Scene {
   //UIGame?: Phaser.GameObjects.Container;
   hitZoneGroup?: Phaser.Physics.Arcade.Group;
   UIGame?: Phaser.GameObjects.Image;
+  dataLevel: any;
   lifePlayer?: LifeBar;
   constructor() {
     super({key: 'Scene1'})
 
     //console.log("data de la escena ");
+
+    
+  }
+  init(this:Scene1, {dataLevel}: any)
+  {
+    console.log("dataaaa",dataLevel);
+    this.dataLevel = dataLevel;
   }
  
 
@@ -58,6 +67,7 @@ class Scene1 extends Phaser.Scene {
     //this.load.image("this.player.setVelocityY(-330);plataformaB", "/game/platform1B.png");
   }
 
+
   hitPlayer = (monchi: Player, skeleton: Enemy, scene:Phaser.Scene) => {
     //console.log("Player colision con enemigo");
     console.log("Player espada colision con enemigo");
@@ -83,7 +93,12 @@ class Scene1 extends Phaser.Scene {
 
 
     //this.scene.run('gameUI');
-    this.map = new Map3(this);
+    if(this.dataLevel != undefined){
+      this.map = new Map3(this);
+    } else {
+      this.map = new Map2(this);
+    }
+    
     this.lifePlayer = this.map.lifeBar;
     
     const floor = this.map.createMap()
@@ -93,9 +108,17 @@ class Scene1 extends Phaser.Scene {
     //this.checkPoint = {x:100,y:950};
 
     //Map3
-    this.monchi = new Player(this, 100, 650, "knight", 2);
-    this.skeleton = new Enemy(this, 250, 650, "skeleton",1);
-    this.checkPoint = {x:100,y:650};
+    if(this.dataLevel != undefined) {
+      this.monchi = new Player(this, 100, 650, "knight", 2);
+      this.skeleton = new Boss(this, 250, 500, "archimago",1,10);
+      this.checkPoint = {x:100,y:650};
+
+    } else {
+      //Map2
+      this.monchi = new Player(this, 100, 950, "knight", 2);
+      this.skeleton = new Enemy(this, 250, 950, "skeleton",1);
+      this.checkPoint = {x:100,y:950};
+    }
 
 
 
@@ -140,8 +163,14 @@ class Scene1 extends Phaser.Scene {
     //this.cameras.main.setBounds(0, 0, 1850, 1054);//tamaño del esceneario para poner limites
     //this.physics.world.setBounds(0, 0, 1850, 1030);
     //Map3 boss fight
-    this.cameras.main.setBounds(0, 0, 950, 800);
-    this.physics.world.setBounds(0, 0, 950, 800);
+    if(this.dataLevel != undefined) {
+      this.cameras.main.setBounds(0, 0, 1300, 750);
+      this.physics.world.setBounds(0, 0, 1300, 750);
+
+    }else {
+      this.cameras.main.setBounds(0, 0, 1850, 1054);//tamaño del esceneario para poner limites
+      this.physics.world.setBounds(0, 0, 1850, 1030);
+    }
     this.cameras.main.startFollow(this.monchi,true,0.5,0.5);//seguimiento del personaje, apartir de q pixeles alrededor
     this.cameras.main.setZoom(2);//zoom en la escene sobre lo que este apuntando la camara 3 , 0.5
 
@@ -159,9 +188,17 @@ class Scene1 extends Phaser.Scene {
       player.y = this.checkPoint.y;
     }
 
+    const restartScene = () => {
+      this.scene.restart()
+    }
 
     const lose = () => {
-      this.scene.restart()
+      
+      if(this.monchi){
+        //this.monchi.dead();
+        //this.time.delayedCall(1000, restartScene);
+        restartScene();
+      }
     }
 
     const takeHealth = () => {
@@ -178,7 +215,7 @@ class Scene1 extends Phaser.Scene {
 
     const changeMap = () => {
       console.log("Entro en door cambia de level");
-      //this.scene.start("SceneLoader",{level: 3})
+      this.scene.start("SceneLoader",{dataLevel: 3})
     }
 
     this.physics.world.on('worldbounds', (body: Phaser.Physics.Arcade.Sprite,top: boolean,down: boolean,left: boolean,right: boolean) => {

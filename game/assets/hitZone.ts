@@ -11,6 +11,7 @@ class hitZone extends Phaser.GameObjects.Rectangle {
         scene.add.existing(this)
         this.scene.physics.add.existing(this,true);
         this.setDepth(1);
+        this.setAlpha(0);// debug off
         
         
         //this.group = group;

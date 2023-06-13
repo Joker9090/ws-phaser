@@ -37,6 +37,8 @@ class Tutorial {
   sideGrav: boolean = false;
 
   tutorialState: number = 0;
+  timedEvent?: Phaser.Time.TimerEvent;
+  previewCamara?: Phaser.Cameras.Scene2D.Camera;
 
 
   constructor(scene: Game) {
@@ -171,19 +173,7 @@ class Tutorial {
     };
     const p5 = new Floor(this.scene, p5Config, this.pisos3)
       .setTint(Phaser.Display.Color.GetColor(255, 177, 0));
-    /*
 
-
-const p6Config: LargeFloorConfig = {
-  textureA: "plataformaA",
-  textureB: "plataformaB",
-  large: 7,
-  pos: { x: 590, y: 1300, },
-  scale: { width: 0.7, height: 0.7, },
-  rotated: true,
-};
-const p6 = new LargeFloor(this.scene, p6Config, this.pisos);
-*/
 
     /* Portal, Coin, Fireball and Asteroids */
 
@@ -239,7 +229,7 @@ const p6 = new LargeFloor(this.scene, p6Config, this.pisos);
       if (this.fireballGroup) this.scene.physics.add.collider(this.scene.monchi, this.fireballGroup, this.scene.loseLevelTutorial, () => true, this.scene);
       if (this.portal) this.portal.setTint(0xff0000);
       if (this.pisos) this.scene.physics.add.collider(this.scene.monchi, this.pisos, this.scene.touch, () => true, this.scene);
-      if (this.pisos2) this.scene.physics.add.collider(this.scene.monchi, this.pisos2, () => this.scene.float(500), () => true, this.scene);
+      if (this.pisos2) this.scene.physics.add.collider(this.scene.monchi, this.pisos2, () => this.scene.showPlatform(500), () => true, this.scene);
       if (this.pisos3) this.scene.physics.add.collider(this.scene.monchi, this.pisos3, this.scene.noFloatTutorial, () => true, this.scene);
       if (this.coin) this.scene.physics.add.overlap(this.scene.monchi, this.coin, this.scene.coinCollected, () => true, this.scene);
       if (this.portal) this.scene.physics.add.overlap(this.scene.monchi, this.portal, () => this.scene.win("Congrats! You've finished the tutorial"), () => true, this.scene);
@@ -247,43 +237,54 @@ const p6 = new LargeFloor(this.scene, p6Config, this.pisos);
 
   }
 
-  update() {
-    //console.log(this.scene.canWin, "can win", this.scene.nextLevel, "next level")
-    //modo creative
-    /*
-    if (this.scene.timerText && this.scene.monchi) {
-      //this.scene.textTime.setText('X: ' + Math.floor(this.scene.monchi.x) + ' Y: ' + Math.floor(this.scene.monchi.y));
-      this.scene.timerText.setText("tutorialState: " + this.tutorialState);
-    };
-    if (this.scene) {
-      if (this.tutorialState == 0) {
-        this.scene.stop();
-      }
-    };
-    */
-    if (this.scene.gravityDown == false) {
-      this.gravityArrow?.setRotation(-Math.PI / 2)
-    } else {
-      this.gravityArrow?.setRotation(Math.PI / 2)
-    };
-    //
-    if (this.coinUI) {
-      if (this.scene.canWin || this.scene.canNextLevel) {
-        this.coinUI?.clearTint();
-      } else {
-        this.coinUI?.setTint().setTint(Phaser.Display.Color.GetColor(0, 0, 0));
-      };
-    };
-    if (this) {
-      if (this.scene.cursors) {
-        this.scene.cursors.space.on("down", () => {
+  showPlatform() {
+    if(this.tutorialState == 1){}
+  }
+
+  showMap() {
+    if (this.tutorialState == 0) {
+      this.scene.cameras.main.pan(2500, 1800, 5000, 'Linear', false, (camera, progress) => {
+        this.background.scrollFactorX = 0.2
+        if (progress == 1) {
           this.tutorialState += 1;
-        })
+          this.background.scrollFactorX = 1
+        }
+      }, this.scene);
+    };
+  };
+
+
+
+  update() {
+
+    this.showMap()
+
+    if (this.tutorialState == 1) {
+
+      if (this.scene.gravityDown == false) {
+        this.gravityArrow?.setRotation(-Math.PI / 2)
+      } else {
+        this.gravityArrow?.setRotation(Math.PI / 2)
       };
-      if (this.scene.monchi) {
-        this.scene.monchi.checkMove(this.scene.cursors);
-        if (this) this.animateBackground(this.scene.monchi);
+
+      if (this.coinUI) {
+        if (this.scene.canWin || this.scene.canNextLevel) {
+          this.coinUI?.clearTint();
+        } else {
+          this.coinUI?.setTint().setTint(Phaser.Display.Color.GetColor(0, 0, 0));
+        };
       };
+      if (this) {
+        if (this.scene.cursors) {
+          this.scene.cursors.space.on("down", () => {
+            this.tutorialState += 1;
+          })
+        };
+        if (this.scene.monchi) {
+          this.scene.monchi.checkMove(this.scene.cursors);
+          if (this) this.animateBackground(this.scene.monchi);
+        };
+      }
     };
   };
 };

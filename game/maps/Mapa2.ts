@@ -352,7 +352,7 @@ class Mapa2 {
     if (this.scene.monchi) {
       if (this.scene.monchi.x > 1000 && this.scene.monchi.x < 1200 && this.scene.monchi.y < 236) {
         this.sideGrav = true;
-        firstChange = true
+        firstChange = true;
       };
       if (this.sideGrav) {
         this.scene.physics.world.gravity.y = 0

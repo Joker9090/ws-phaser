@@ -6,6 +6,7 @@ import Player from "./assets/Player";
 import Mapa1 from "./maps/Mapa1";
 import Mapa2 from "./maps/Mapa2";
 import Tutorial from "./maps/Tutorial";
+import { text } from "stream/consumers";
 
 // Scene in class
 class Game extends Phaser.Scene {
@@ -27,10 +28,13 @@ class Game extends Phaser.Scene {
 
   startTime: number = 0;
   timerText?: Phaser.GameObjects.Text;
+  tutorialText?: Phaser.GameObjects.Text;
   checkPoint: number = 0;
 
   cameraWidth: number = 0;
   cameraHeight: number = 0;
+
+  mapShown: boolean = false;
 
   constructor() {
     super({ key: 'Game' });
@@ -75,8 +79,8 @@ class Game extends Phaser.Scene {
     };
   };
 
-
-
+  
+  
   rotateCam(time: number) {
     this.cameraNormal = false;
     if (this.canRot) {
@@ -88,7 +92,7 @@ class Game extends Phaser.Scene {
       };
     };
   };
-
+  
   noFloat() {
     this.cameraNormal = true;
     if (this.monchi) {
@@ -104,7 +108,7 @@ class Game extends Phaser.Scene {
       this.monchi?.setBounceY(0);
     };
   };
-
+  
   gameOver() {
     if (this.music) this.music.stop();
     this.lifes = 3;
@@ -116,8 +120,8 @@ class Game extends Phaser.Scene {
     this.canWin = false;
     this.canNextLevel = false;
   };
-
-
+  
+  
   win(Phrase: string) {
     if (this.canWin && this.monchi) {
       if (this.music) this.music.stop();
@@ -129,15 +133,15 @@ class Game extends Phaser.Scene {
       this.canNextLevel = false;
     };
   };
-
+  
   movingFloorsGrav() {
     this.monchi?.setVelocityY(300);
   };
-
+  
   movingFloorsGravRot() {
     this.monchi?.setVelocityY(-300);
   };
-
+  
   coinCollected() {
     if (this.map?.coin) {
       (this.map.portal?.getChildren()[0] as Phaser.GameObjects.Image).clearTint();
@@ -147,7 +151,7 @@ class Game extends Phaser.Scene {
       this.map.coin.clear(true);
     };
   };
-
+  
   goNextLevel() {
     if (this.canNextLevel && this.monchi) {
       this.cameraNormal = true;
@@ -157,7 +161,7 @@ class Game extends Phaser.Scene {
       this.scene.restart({ level: 2, lifes: this.lifes });
     };
   };
-
+  
   noFloatTutorial() {
     if (this.monchi) {
       this.monchi?.setGravity(0);
@@ -167,11 +171,11 @@ class Game extends Phaser.Scene {
       this.monchi?.setBounceY(0);
     };
   };
-
+  
   loseLevelTutorial() {
     if (this.lifes) {
       this.lifes -= 1;
-
+      
       if (this.lifes == 0) {
         this.gameOver();
       } else if (this.lifes != 0 && this.gravityDown && this.monchi) {
@@ -182,7 +186,7 @@ class Game extends Phaser.Scene {
         if (this.map) this.monchi.y = this.map.startingPoint.y;
         this.noFloatTutorial();
       };
-
+      
       // Remove the object with the highest x position
       if (this.lifes != 0 && this.map?.lifesGroup) {
         let lifeToTheRight = null;
@@ -198,13 +202,14 @@ class Game extends Phaser.Scene {
       };
     };
   };
-
+  
   loseLevel1() {
     if (this.lifes) {
       this.lifes -= 1;
 
       if (this.lifes == 0) {
         this.gameOver();
+
       } else if (this.lifes != 0 && this.checkPoint == 0 && this.monchi) {
         this.monchi?.setFlipY(false);
         this.monchi?.setBounceY(0);
@@ -215,6 +220,7 @@ class Game extends Phaser.Scene {
         this.cameraNormal = true;
         if (this.map) this.monchi.x = this.map.startingPoint.x;
         if (this.map) this.monchi.y = this.map.startingPoint.y;
+    
       } else if (this.lifes != 0 && this.checkPoint == 1 && this.monchi && this.cameraNormal == false) {
         this.float(0);
         this.cameraNormal = true;
@@ -228,7 +234,7 @@ class Game extends Phaser.Scene {
         if (this.map) this.monchi.x = this.map.checkPointPos.x;
         if (this.map) this.monchi.y = this.map.checkPointPos.y;
       };
-
+      
       // Remove the object with the highest x position
       if (this.lifes != 0 && this.map?.lifesGroup) {
         let lifeToTheRight = null;
@@ -244,11 +250,11 @@ class Game extends Phaser.Scene {
       };
     };
   };
-
+  
   loseLevel2() {
     if (this.lifes) {
       this.lifes -= 1;
-
+      
       if (this.lifes == 0) {
         this.gameOver();
       } else if (this.lifes != 0 && this.checkPoint == 0 && this.monchi) {
@@ -272,7 +278,7 @@ class Game extends Phaser.Scene {
         if (this.map) this.monchi.x = this.map.checkPointPos.x;
         if (this.map) this.monchi.y = this.map.checkPointPos.y;
       };
-
+      
       // Remove the object with the highest x position
       if (this.lifes != 0 && this.map?.lifesGroup) {
         let lifeToTheRight = null;
@@ -288,21 +294,70 @@ class Game extends Phaser.Scene {
       };
     };
   };
+  
+  showPlatform(time: number) {
+    if (this.monchi) {
+      this.tutorialText?.setText('Orange platforms are special since activate special effects... Press shift to continue.');
+      this.scene.pause()
+      this.time.delayedCall(4000, ()=>{
+        this.scene.resume(); 
+        this.tutorialText?.setText('')
+      }, [], this);
+      this.monchi.setGravityY(-2000);
+      this.time.delayedCall(time, () => {
+        this.monchi?.setFlipY(true);
+        this.gravityDown = false;
+        this.monchi?.body?.setOffset(70, 0);
+        this.monchi?.setBounceY(0);
+      });
+    };
+  };
+
+  /*  
+  showMap() {
+    
+    if (this.mapShown == false && this.map) {
+      let endPointX = 0;
+      let endPointY = 0;
+      let duration = 0;
+      if (this.levelIs == 0 || this.levelIs == 1){
+        endPointX = this.map.worldSize.width/2
+        endPointY = this.map.startingPoint.y
+        duration = 5000 + this.levelIs*5000
+      } else if (this.levelIs == 2){
+        endPointX = this.map.startingPoint.x
+        endPointY = this.map.worldSize.height/2
+        duration = 
+      }
+      const a = 2
+      this.cameras.main.pan(endPointX, endPointY, 7000, 'Linear', false, (camera, progress) => {
+        if(this.map) this.map.background.scrollFactorX = 0.1
+        if (progress == 1) {
+          this.mapShown = true;
+          if(this.map) this.map.background.scrollFactorX = 1
+        }
+      }, this.scene);
+    };
+  };
+  */
 
   create(this: Game, data: { level: number, lifes: number }) {
-
+    
+    /* TUTORIAL TEXT */
+    this.tutorialText = this.add.text(1400, 400, '', { fontSize: '32px' , wordWrap: { width: 400, useAdvancedWrap: true } }).setOrigin(.5, .5).setScrollFactor(0, 0).setDepth(100).setSize(50, 50);
+    
     /* DEBUG DE NIVEL */
     //data.level = 2
     //data.lifes = 3
     /* DEBUG DE NIVEL */
-
+    
     /* CHOSE LEVEL, LIFES AND AUDIO */
     switch (data.level) {
       case 0:
         this.map = new Tutorial(this);
         this.music = this.sound.add('songTutorial').setVolume(0.3);
         break;
-      case 1:
+        case 1:
         this.map = new Mapa1(this);
         this.music = this.sound.add('songLevel1').setVolume(0.3);
         break;
@@ -316,24 +371,28 @@ class Game extends Phaser.Scene {
         break;
     };
 
-    if (data.level == 0) {
-      this.levelIs = 0;
-      this.monchi?.setVelocity(300, 0);
-    };
+    this.levelIs = data.level
 
+
+    
+    
     /* CREATE MAP AND LFIES */
     if (data.lifes) this.lifes = data.lifes;
     this.map.createMap(data);
-
+    
     /* SET AUDIO */
     this.music.play();
-
+    
     /* CONTROLS */
     this.cursors = this.input.keyboard?.createCursorKeys();
     const { x, y } = this.map.startingPoint;
     this.monchi = new Player(this, x, y, "character", 2);
     this.canWin = false;
     this.canRot = true;
+    
+    if (this.levelIs == 2 && this.monchi) {
+      this.monchi.setVelocity(300, 0);
+    };
 
     /* CAMERAS */
     this.cameras.main.startFollow(this.monchi);
@@ -372,20 +431,23 @@ class Game extends Phaser.Scene {
   };
 
   update(this: Game) {
-
+    //console.log("x = ", this.monchi?.x," y = " ,this.monchi?.y )
+    /*if (this.mapShown == false) {
+      this.showMap()
+    } else if (this.mapShown) {
+    */
     if (this.monchi && this.map) {
       if (this.monchi.x > this.map.checkPointPos.x) {
         this.checkPoint = 1;
       };
     };
-
     if (this.timerText && this.cameraNormal) {
       this.timerText.setPosition(this.cameras.main.width - 120, 35);
     } else if (this.timerText && this.cameraNormal == false) {
       this.timerText.setPosition(120, this.cameraHeight - 50);
     };
-
     if (this.map) this.map.update();
+
   };
 };
 

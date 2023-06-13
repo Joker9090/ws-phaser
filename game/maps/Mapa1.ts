@@ -37,8 +37,8 @@ class Mapa1 {
     y: 800, //800
   };
   checkPointPos = {
-    x: 500, //500
-    y: 800, //800
+    x: 3000, //500
+    y: 600, //800
   };
   background: Phaser.GameObjects.Image;
   constructor(scene: Game) {

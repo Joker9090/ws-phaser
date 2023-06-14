@@ -1,4 +1,5 @@
 import React from 'react';
+
 export default function Home() {
   const [phaser, setPhaser] = React.useState<typeof Phaser | undefined>()
   const [game, setGame] = React.useState<Phaser.Game | undefined>()
@@ -21,6 +22,7 @@ export default function Home() {
       import("@/game/Game"),
       import("@/game/Won"),
       import("@/game/GameOver"),
+      import("@/game/TutorialText"),
       import("@/game/MusicManager")
     ]).then((scenes) => {
       setScenes(scenes.map(s => s.default))

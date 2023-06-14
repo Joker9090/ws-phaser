@@ -36,7 +36,7 @@ class Tutorial {
   background: Phaser.GameObjects.Image;
   sideGrav: boolean = false;
 
-  tutorialState: number = 0;
+  tutorialState: number = 1;
   timedEvent?: Phaser.Time.TimerEvent;
   previewCamara?: Phaser.Cameras.Scene2D.Camera;
 
@@ -229,7 +229,7 @@ class Tutorial {
       if (this.fireballGroup) this.scene.physics.add.collider(this.scene.monchi, this.fireballGroup, this.scene.loseLevelTutorial, () => true, this.scene);
       if (this.portal) this.portal.setTint(0xff0000);
       if (this.pisos) this.scene.physics.add.collider(this.scene.monchi, this.pisos, this.scene.touch, () => true, this.scene);
-      if (this.pisos2) this.scene.physics.add.collider(this.scene.monchi, this.pisos2, () => this.scene.showPlatform(500), () => true, this.scene);
+      if (this.pisos2) this.scene.physics.add.collider(this.scene.monchi, this.pisos2, () => this.scene.float(500), () => true, this.scene);
       if (this.pisos3) this.scene.physics.add.collider(this.scene.monchi, this.pisos3, this.scene.noFloatTutorial, () => true, this.scene);
       if (this.coin) this.scene.physics.add.overlap(this.scene.monchi, this.coin, this.scene.coinCollected, () => true, this.scene);
       if (this.portal) this.scene.physics.add.overlap(this.scene.monchi, this.portal, () => this.scene.win("Congrats! You've finished the tutorial"), () => true, this.scene);
@@ -237,11 +237,6 @@ class Tutorial {
 
   }
 
-  showPlatform() {
-    if(this.tutorialState == 1){
-      
-    }
-  }
 
   showMap() {
     if (this.tutorialState == 0) {
@@ -277,11 +272,6 @@ class Tutorial {
         };
       };
       if (this) {
-        if (this.scene.cursors) {
-          this.scene.cursors.space.on("down", () => {
-            this.tutorialState += 1;
-          })
-        };
         if (this.scene.monchi) {
           this.scene.monchi.checkMove(this.scene.cursors);
           if (this) this.animateBackground(this.scene.monchi);

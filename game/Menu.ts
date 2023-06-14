@@ -43,7 +43,7 @@ export default class MainMenuScene extends Phaser.Scene {
         /* Main Scene Menu */
         this.physics.world.setBounds(0, 0, 5000, 2500);
         this.add.image(900, 500, "background").setScale(.7);
-        this.monchi = this.add.sprite(100, 700, "monchi", 1).setScale(.5);
+        this.monchi = this.add.sprite(100, 700, "character", 1).setScale(.5);
         let { width, height } = this.scale
         if (this.game.config.canvas) {
             const size = this.game.config.canvas.getBoundingClientRect();

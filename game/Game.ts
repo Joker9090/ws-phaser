@@ -7,6 +7,8 @@ import Mapa1 from "./maps/Mapa1";
 import Mapa2 from "./maps/Mapa2";
 import Tutorial from "./maps/Tutorial";
 import MusicManager from './MusicManager';
+import TutorialTextScene from "./TutorialText";
+import EventsCenter from './EventsCenter';
 
 // Scene in class
 class Game extends Phaser.Scene {
@@ -29,21 +31,20 @@ class Game extends Phaser.Scene {
 
   startTime: number = 0;
   timerText?: Phaser.GameObjects.Text;
-  tutorialText?: Phaser.GameObjects.Text;
+
   checkPoint: number = 0;
 
   cameraWidth: number = 0;
   cameraHeight: number = 0;
 
   mapShown: boolean = false;
-
+  TutorialTextScene?: Phaser.Scene;
   constructor() {
     super({ key: 'Game' });
   };
 
   /*  
-  */
-
+  
   preload(this: Phaser.Scene) {
     this.load.spritesheet("character", "/game/character.png", { frameWidth: 220, frameHeight: 162 });
     this.load.image("background", "/game/background.png");
@@ -59,6 +60,7 @@ class Game extends Phaser.Scene {
     this.load.audio("song", 'sounds/monchiSpace.mp3');
     this.load.image("fireball", "/game/fireball.png");
   }
+  */
   touch() {
     if (this.monchi) {
       this.monchi.idle();
@@ -68,6 +70,9 @@ class Game extends Phaser.Scene {
 
 
   float(time: number) {
+    if (this.levelIs == 0){
+      EventsCenter.emit('float', true)
+    }
     if (this.monchi) {
       this.monchi.setBounce(0.1);
       this.monchi.setGravityY(-2000);
@@ -124,6 +129,7 @@ class Game extends Phaser.Scene {
 
   win(Phrase: string) {
     if (this.canWin && this.monchi) {
+      (this.TutorialTextScene as TutorialTextScene).stateTut = 0
       this.cameraNormal = true;
       this.scene.sleep();
       this.scene.start("Won", { text: Phrase });
@@ -142,6 +148,9 @@ class Game extends Phaser.Scene {
   };
 
   coinCollected() {
+    if (this.levelIs == 0){
+      EventsCenter.emit('coin', true)
+    }
     if (this.map?.coin) {
       (this.map.portal?.getChildren()[0] as Phaser.GameObjects.Image).clearTint();
       this.canNextLevel = true;
@@ -162,6 +171,9 @@ class Game extends Phaser.Scene {
   };
 
   noFloatTutorial() {
+    if (this.levelIs == 0){
+      EventsCenter.emit('noFloat', true)
+    }
     if (this.monchi) {
       this.monchi?.setGravity(0);
       this.monchi?.setFlipY(false);
@@ -294,15 +306,9 @@ class Game extends Phaser.Scene {
     };
   };
 
+  /*  SHOWMAP FUNCTION
   showPlatform(time: number) {
-    if (this.monchi) {
-      this.tutorialText?.setText('Orange platforms are special since activate special effects... Press shift to continue.');
-      //this.scene.pause()
-      this.time.delayedCall(4000, () => {
-        this.scene.resume();
-        this.tutorialText?.setText('')
-      }, [], this);
-      this.monchi.setGravityY(-2000);
+      this.monchi?.setGravityY(-2000);
       this.time.delayedCall(time, () => {
         this.monchi?.setFlipY(true);
         this.gravityDown = false;
@@ -312,7 +318,6 @@ class Game extends Phaser.Scene {
     };
   };
 
-  /*  SHOWMAP FUNCTION
   showMap() {
     
     if (this.mapShown == false && this.map) {
@@ -342,18 +347,8 @@ class Game extends Phaser.Scene {
 
   create(this: Game, data: { level: number, lifes: number }) {
 
-    /* TUTORIAL TEXT */
     this.checkPoint = 0
-    this.tutorialText = this.add.text(1400, 400, '', { fontSize: '32px', wordWrap: { width: 400, useAdvancedWrap: true } }).setOrigin(.5, .5).setScrollFactor(0, 0).setDepth(100).setSize(50, 50);
-
-    /* DEBUG DE NIVEL */
-    //data.level = 2
-    //data.lifes = 3
-    /* DEBUG DE NIVEL */
-
-    /* MUSIC */
-    // this.music = new MusicTracks(this);
-
+   
     /* CHOSE LEVEL, LIFES AND AUDIO */
     switch (data.level) {
       case 0:
@@ -386,6 +381,9 @@ class Game extends Phaser.Scene {
     }  else if (this.levelIs == 2) {
       getMusicManagerScene.playMusic("songLevel2")
     }
+
+    this.TutorialTextScene = this.game.scene.getScene("TutorialText");
+    this.scene.launch(this.TutorialTextScene);
 
     /* CREATE MAP AND LFIES */
     if (data.lifes) this.lifes = data.lifes;

@@ -102,6 +102,14 @@ a {
   }
 }
 
+@import 'extra.css';
+
 body {
   overflow: hidden;
+}
+
+@font-face {
+  font-family: 'Arcade';
+  src: url('/fonts/arcade.ttf') format('truetype');
+  /* Add more font properties if needed */
 }

@@ -6,9 +6,9 @@ export type LoadTypes = "image" | "spritesheet" | "audio";
 const loadAssets = {
     "Menu": {
         assets: [
-            ["image", "glass", "game/glass.png"],
-            ["image", "cursor", "game/cursor.png"],
-            ["spritesheet", "monchi", "game/character.png", { frameWidth: 220, frameHeight: 162 }],
+            ["image", "glass", "/game/glass.png"],
+            ["image", "cursor", "/game/cursor.png"],
+            ["spritesheet", "character", "/game/character.png", { frameWidth: 220, frameHeight: 162 }],
         ]
     },
     "Scenes": {
@@ -30,6 +30,7 @@ const loadAssets = {
         assets: [
             ["audio", "song", '/sounds/tutorial.mp3'],
             ["image", "fireball", "/game/fireball.png"],
+            ["image", "textBox", "/game/textBox.png"],
         ]
     },
     "Music": {
@@ -131,6 +132,7 @@ class SceneLoader extends Phaser.Scene {
 
     create(this: SceneLoader, { level }: any) {
         this.scene.start("Menu", { "data": 1 });
+        
     };
 
     update(this: SceneLoader) {

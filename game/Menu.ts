@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import MusicManager from './MusicManager';
-import MusicTracks from "./MusicManager";
+
 export default class MainMenuScene extends Phaser.Scene {
 
     cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -9,7 +9,7 @@ export default class MainMenuScene extends Phaser.Scene {
     buttonSelector!: Phaser.GameObjects.Image;
     monchi?: Phaser.GameObjects.Sprite;
     progress: number = 0;
-    music?: MusicTracks;
+
 
     constructor() {
         super({ key: 'Menu' });
@@ -34,7 +34,7 @@ export default class MainMenuScene extends Phaser.Scene {
         const getMusicManagerScene = this.game.scene.getScene("MusicManager") as MusicManager
         if(!getMusicManagerScene.scene.isActive()) this.scene.launch("MusicManager").sendToBack();
         else {
-          getMusicManagerScene.playMusic("song")
+          getMusicManagerScene.playMusic("songMenu")
         }
 
         this.scene.bringToTop().resume()
@@ -73,19 +73,19 @@ export default class MainMenuScene extends Phaser.Scene {
 
         Tutorial.on('selected', () => {
             this.scene.stop();
-            this.scene.start("Game", { level: 0, lifes: 8 });
+            this.scene.start("Game", { level: 0, lifes: 3 });
             this.selectedButtonIndex = 0
         });
 
         PlayLevel1.on('selected', () => {
             this.scene.stop();
-            this.scene.start("Game", { level: 1, lifes: 8 });
+            this.scene.start("Game", { level: 1, lifes: 3 });
             this.selectedButtonIndex = 0
         });
 
         PlayLevel2.on('selected', () => {
             this.scene.stop();
-            this.scene.start("Game", { level: 2, lifes: 8 });
+            this.scene.start("Game", { level: 2, lifes: 3 });
             this.selectedButtonIndex = 0
         });
 

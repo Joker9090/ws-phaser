@@ -6,7 +6,7 @@ import Player from "./assets/Player";
 import Mapa1 from "./maps/Mapa1";
 import Mapa2 from "./maps/Mapa2";
 import Tutorial from "./maps/Tutorial";
-import MusicTracks from "./MusicManager";
+import MusicManager from './MusicManager';
 
 // Scene in class
 class Game extends Phaser.Scene {
@@ -19,7 +19,7 @@ class Game extends Phaser.Scene {
   levelIs?: number;
   timeLevel: number = 0;
 
-  music?: MusicTracks;
+
   canWin: boolean = false;
   canNextLevel: boolean = false;
   canRot: boolean = true;
@@ -42,7 +42,8 @@ class Game extends Phaser.Scene {
   };
 
   /*  
-  
+  */
+
   preload(this: Phaser.Scene) {
     this.load.spritesheet("character", "/game/character.png", { frameWidth: 220, frameHeight: 162 });
     this.load.image("background", "/game/background.png");
@@ -58,7 +59,6 @@ class Game extends Phaser.Scene {
     this.load.audio("song", 'sounds/monchiSpace.mp3');
     this.load.image("fireball", "/game/fireball.png");
   }
-*/
   touch() {
     if (this.monchi) {
       this.monchi.idle();
@@ -297,7 +297,7 @@ class Game extends Phaser.Scene {
   showPlatform(time: number) {
     if (this.monchi) {
       this.tutorialText?.setText('Orange platforms are special since activate special effects... Press shift to continue.');
-      this.scene.pause()
+      //this.scene.pause()
       this.time.delayedCall(4000, () => {
         this.scene.resume();
         this.tutorialText?.setText('')
@@ -343,6 +343,7 @@ class Game extends Phaser.Scene {
   create(this: Game, data: { level: number, lifes: number }) {
 
     /* TUTORIAL TEXT */
+    this.checkPoint = 0
     this.tutorialText = this.add.text(1400, 400, '', { fontSize: '32px', wordWrap: { width: 400, useAdvancedWrap: true } }).setOrigin(.5, .5).setScrollFactor(0, 0).setDepth(100).setSize(50, 50);
 
     /* DEBUG DE NIVEL */
@@ -372,7 +373,19 @@ class Game extends Phaser.Scene {
         // this.music.playMusic('songTutorial');
         break;
     };
+
     this.levelIs = data.level;
+
+    /* Audio */
+    const getMusicManagerScene = this.game.scene.getScene("MusicManager") as MusicManager
+    if (!getMusicManagerScene.scene.isActive()) this.scene.launch("MusicManager").sendToBack();
+    else if (this.levelIs == 0) {
+      getMusicManagerScene.playMusic("songTutorial")
+    }  else if (this.levelIs == 1) {
+      getMusicManagerScene.playMusic("songLevel1")
+    }  else if (this.levelIs == 2) {
+      getMusicManagerScene.playMusic("songLevel2")
+    }
 
     /* CREATE MAP AND LFIES */
     if (data.lifes) this.lifes = data.lifes;
@@ -428,7 +441,7 @@ class Game extends Phaser.Scene {
   };
 
   update(this: Game) {
-    console.log(this.music)
+
     //console.log("x = ", this.monchi?.x," y = " ,this.monchi?.y )
     /*if (this.mapShown == false) {
       this.showMap()

@@ -1,9 +1,8 @@
 import Phaser from 'phaser';
-import MusicTracks from "./MusicManager";
+import MusicManager from "./MusicManager";
 
 export default class WonScene extends Phaser.Scene {
     cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
-    music?: MusicTracks;
     constructor() {
         super({ key: 'Won' });
 
@@ -21,8 +20,12 @@ export default class WonScene extends Phaser.Scene {
 
     create(this: WonScene, data: { text: string }) {
         /* Audio */
-        this.music = new MusicTracks(this);
-        this.music.playMusic('songWon');
+        
+        const getMusicManagerScene = this.game.scene.getScene("MusicManager") as MusicManager
+        if(!getMusicManagerScene.scene.isActive()) this.scene.launch("MusicManager").sendToBack();
+        else {
+          getMusicManagerScene.playMusic("songWon")
+        }
 
 
         this.physics.world.setBounds(0, 0, 5000, 2500);

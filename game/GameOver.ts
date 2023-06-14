@@ -1,9 +1,10 @@
 import Phaser from 'phaser';
-import MusicTracks from "./MusicManager";
+
+import MusicManager from './MusicManager';
 
 export default class GameOver extends Phaser.Scene {
     cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
-    music?: MusicTracks;
+   
     constructor() {
         super({ key: 'GameOver' });
 
@@ -21,9 +22,14 @@ export default class GameOver extends Phaser.Scene {
 
     create(this: GameOver) {
         /* Audio */
-        this.music = new MusicTracks(this);
-        this.music.playMusic('songLose');
-
+        /* Audio */
+        
+        const getMusicManagerScene = this.game.scene.getScene("MusicManager") as MusicManager
+        if(!getMusicManagerScene.scene.isActive()) this.scene.launch("MusicManager").sendToBack();
+        else {
+          getMusicManagerScene.playMusic("songLose")
+        }
+        
         this.physics.world.setBounds(0, 0, 5000, 2500);
         this.add.image(900, 500, "background").setScale(.7);
         this.add.text(this.cameras.main.width / 2, this.cameras.main.height / 2, "You've lost! Very mal culiao!!", { fontSize: '32px' })

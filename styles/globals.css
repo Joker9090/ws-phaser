@@ -89,6 +89,11 @@ body {
 
 #game-container {
   background-color: black;
+  overflow: hidden;
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
 }
 
 a {
@@ -105,3 +110,4 @@ a {
 body {
   overflow: hidden;
 }
+

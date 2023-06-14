@@ -18,10 +18,7 @@ export default function Home() {
     Promise.all([
       import("@/game/SceneLoader"),
       import("@/game/Menu"),
-      import("@/game/Game"),
-      import("@/game/Won"),
-      import("@/game/GameOver"),
-      import("@/game/MusicManager")
+      import("@/game/MusicManager"),
     ]).then((scenes) => {
       setScenes(scenes.map(s => s.default))
     })
@@ -36,7 +33,8 @@ export default function Home() {
         height: "100%",
         parent: "game-container",
         scale: {
-          mode: window.Phaser.Scale.RESIZE
+          mode: window.Phaser.Scale.CENTER_BOTH
+          // mode: window.Phaser.Scale.RESIZE
         },
         scene: scenes,
         physics: {
@@ -51,6 +49,7 @@ export default function Home() {
       const game = new phaser.Game(config)
       setGame(game);
       /* CONTROLS THE RESIZE AND RESTART OF SCENE */
+      /*
       window.addEventListener("resize", () => {
         setTimeout(()=>{
           game.scene.getScenes(true).map((s) => {
@@ -61,6 +60,7 @@ export default function Home() {
           })
         },300);
       })
+      */
     }
   }, [phaser, scenes])
 

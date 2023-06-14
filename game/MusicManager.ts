@@ -22,8 +22,8 @@ export default class MusicManager extends Phaser.Scene {
         this.music.play(); 
     }
     
-    create(/* {song} */) {
-      this.playMusic("songMenu")
+    create(data: {song: string}) {
+      this.playMusic(data.song)
     }
     /*
     update() {

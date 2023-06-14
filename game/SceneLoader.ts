@@ -1,16 +1,19 @@
 import Phaser from "phaser";
 
-export type SceneKeys = "Menu" | "Scenes" | "Tutorial" | "Music";
+export enum SceneKeys { Menu = "Menu" /*, Scene = "Scenes", Tutorial = "Tutorial", Music = "Music" */}
 export type LoadTypes = "image" | "spritesheet" | "audio";
 
 const loadAssets = {
     "Menu": {
         assets: [
-            ["image", "glass", "game/glass.png"],
-            ["image", "cursor", "game/cursor.png"],
-            ["spritesheet", "monchi", "game/character.png", { frameWidth: 220, frameHeight: 162 }],
+            ["image","background","/game/background.png"],
+            ["image","arrow","/game/arrow.png"],
+            ["audio", "songMenu", '/sounds/menu.mp3'],
+            ["audio", "songLevel2", '/sounds/level2.mp3'],
+
         ]
     },
+    /*
     "Scenes": {
         assets: [
             ["image", "background", "/game/background.png"],
@@ -43,6 +46,7 @@ const loadAssets = {
 
         ]
     },
+    */
 };
 
 // Scene in class
@@ -112,7 +116,8 @@ class SceneLoader extends Phaser.Scene {
             percentText.destroy();
             assetText.destroy();
         });
-        const scenesTitles: Array<SceneKeys> = ["Menu", "Scenes", "Tutorial", "Music"];
+
+        const scenesTitles: Array<SceneKeys> = Object.values(SceneKeys)
         for (let i = 0; i < scenesTitles.length; i++) {
             loadAssets[scenesTitles[i]].assets.map((sceneAssetConfig) => {
                 const type = sceneAssetConfig[0] as LoadTypes;

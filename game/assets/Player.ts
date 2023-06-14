@@ -219,6 +219,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       if (left.isDown) {
         this.setVelocityX(-170);
         this.setFlipX(true)
+        //this.scene.sound.play("playerWalk");
 
         /* Play animation */
         if (!this.isJumping) this.anims.play(`${this.sprite}Move`, true);
@@ -228,6 +229,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       else if (right.isDown) {
         this.setVelocityX(170);
         this.setFlipX(false)
+        //this.scene.sound.play("playerWalk");
 
         /* Play animation */
         if (!this.isJumping) this.anims.play(`${this.sprite}Move`, true);

@@ -28,6 +28,11 @@ class Scene1 extends Phaser.Scene {
   UIGame?: Phaser.GameObjects.Image;
   dataLevel: any;
   lifePlayer?: LifeBar;
+  backgroundMusic?: Phaser.Sound.BaseSound;
+  backgroundMusic2?: Phaser.Sound.BaseSound;
+  swordHit?: Phaser.Sound.BaseSound;
+  swordAir?: Phaser.Sound.BaseSound;
+  playerHurt?: Phaser.Sound.BaseSound;
   constructor() {
     super({key: 'Scene1'})
 
@@ -89,7 +94,7 @@ class Scene1 extends Phaser.Scene {
 
 
   create(this: Scene1) {
-
+    this.skeleton?.destroy();
 
 
     //this.scene.run('gameUI');
@@ -100,6 +105,9 @@ class Scene1 extends Phaser.Scene {
     }
     
     this.lifePlayer = this.map.lifeBar;
+
+
+    //this.backgroundMusic.
     
     const floor = this.map.createMap()
     //Map2
@@ -110,16 +118,27 @@ class Scene1 extends Phaser.Scene {
     //Map3
     if(this.dataLevel != undefined) {
       this.monchi = new Player(this, 100, 650, "knight", 2);
-      this.skeleton = new Boss(this, 250, 500, "archimago",1,10);
+      this.skeleton = new Boss(this, 633, 450, "archimago",1,10);
       this.checkPoint = {x:100,y:650};
+      this.backgroundMusic = this.sound.add('backgroundSoundBossBattleStart',{loop: false, volume:0.60});
+      this.backgroundMusic.play();
+      this.backgroundMusic2 = this.sound.add('backgroundSoundBossBattle',{delay: 2000,loop: true, volume: 0.70})
+      this.backgroundMusic2.play();
 
     } else {
       //Map2
       this.monchi = new Player(this, 100, 950, "knight", 2);
       this.skeleton = new Enemy(this, 250, 950, "skeleton",1);
       this.checkPoint = {x:100,y:950};
+      this.backgroundMusic = this.sound.add('backgroundSound',{loop: true,});
+      this.backgroundMusic.play();
     }
 
+
+    /*Normal sounds*/
+    this.swordHit = this.sound.add("swordHit",{volume:0.4, loop:false})
+    this.swordAir = this.sound.add("swordAir",{volume:0.4, loop:false})
+    this.playerHurt = this.sound.add("playerHurt",{});
 
 
     /**Darkness implementation */
@@ -215,6 +234,7 @@ class Scene1 extends Phaser.Scene {
 
     const changeMap = () => {
       console.log("Entro en door cambia de level");
+      this.backgroundMusic?.stop();
       this.scene.start("SceneLoader",{dataLevel: 3})
     }
 
@@ -222,6 +242,7 @@ class Scene1 extends Phaser.Scene {
       //if(down) lose()
       if(down && this.monchi && this.map && this.map.lifeBar) {
         this.monchi.receivedDamage(50);
+        this.playerHurt?.play();
         this.map.lifeBar.updateBar(this,-35);
         if(this.monchi.life <= 0) lose();
         else checkPoint(this.monchi);
@@ -262,9 +283,10 @@ class Scene1 extends Phaser.Scene {
       this.physics.add.overlap(this.monchi, this.map.door, changeMap);
     }
 
-    
-    this.skeleton.patrolConfig = skeletonOnePatrol;
-    this.skeleton.patrol(skeletonOnePatrol);
+    if(this.dataLevel == undefined) {
+      this.skeleton.patrolConfig = skeletonOnePatrol;
+      this.skeleton.patrol(skeletonOnePatrol);
+     }
     //this.physics.add.collider(this.monchi,this.skeleton, hitPlayer); // colision entre el player y el esqueleto
 
     /*     this.attackZone = this.add.zone(this.monchi.x, this.monchi.y, 20, 40);
@@ -303,10 +325,13 @@ class Scene1 extends Phaser.Scene {
       this.monchi.checkMove(this.cursors)
       if(this.monchi.isAttacking && this.skeleton) {
         if (Phaser.Geom.Rectangle.Overlaps(this.monchi.swordHitBox.getBounds(), this.skeleton?.getBounds()))
-            {
+        {
                 //this.graphics.strokeRectShape(this.rectangles[i]);
+                this.swordHit?.play()
                 this.hitPlayer(this.monchi,this.skeleton,this);
-            }
+        }else {
+          this.swordAir?.play();
+        }
       }
       
       
@@ -314,6 +339,7 @@ class Scene1 extends Phaser.Scene {
     if(this.skeleton && this.monchi && this.skeleton.Onstate !== "dead") {
       if(this.lifePlayer &&this.skeleton.isAttacking && this.monchi && Phaser.Geom.Rectangle.Overlaps(this.skeleton.newHitBox.getBounds(), this.monchi?.getBounds())){
         this.monchi.receivedDamage(50);
+        this.playerHurt?.play();
         this.lifePlayer.updateBar(this,-35);
         if(this.monchi.life <= 0) this.scene.restart();
 
@@ -321,6 +347,12 @@ class Scene1 extends Phaser.Scene {
       //console.log("skeleton update");
       this.skeleton.enemyAround(this.monchi,50);
       if(!this.skeleton.isEnemyInFront && !this.skeleton.isPatrol && this.skeleton.patrolConfig && this.skeleton.patrolConfig != null && this.skeleton.patrolConfig != undefined) {
+        if(this.dataLevel != undefined) {
+          if(this.monchi.x - 200 <= this.skeleton.x){
+            
+            this.skeleton.patrol(this.skeleton.patrolConfig);
+          }
+        }
         this.skeleton.patrol(this.skeleton.patrolConfig);
       }
     }

@@ -25,6 +25,7 @@ class Boss extends Phaser.Physics.Arcade.Sprite {
     super(scene, x, y, sprite, frame)
 
     this.createAnims(scene,sprite);
+    this.createPresentation(scene);
     if(life) this.life = life;
     this.sprite = sprite;
     this.setScale(1)
@@ -46,6 +47,28 @@ class Boss extends Phaser.Physics.Arcade.Sprite {
     }
 
     this.newHitBox = new hitZone(scene,150,150,32,64,0xfafa,0.5);
+  }
+
+  createPresentation (scene: Phaser.Scene) {
+
+    const emitter = scene.add.particles(this.x, this.y-10, 'particleFire', {
+      speed: 30,
+      angle:{min:100,max:450},
+      scale: { start: 1, end: 0.25 },
+      lifespan: 2000,
+      blendMode: 'ADD'
+    })
+    scene.tweens.add({
+        targets: emitter,
+        alpha: 0,
+        yoyo: true,
+        repeat: 0,
+        duration: 3200,
+        onComplete: () => {
+          emitter.destroy();
+        },
+    });
+
   }
 
   createAnims(scene: Phaser.Scene, sprite: string) {
@@ -231,10 +254,10 @@ class Boss extends Phaser.Physics.Arcade.Sprite {
     const posibility = this.getRandomIntInclusive(3,10);
     console.log("posibility: "+posibility);
     if(posibility <= 2) {
-      this.anims.play('skeletonDefFrames', true);
+      this.anims.play(`${this.sprite}DefFrames`, true);
       //this.scene.time.delayedCall(600, this.patrol, [this.patrolConfig], this);
     }else {
-      this.anims.play('skeletonDmgFrames', true);
+      this.anims.play(`${this.sprite}DmgFrames`, true);
       this.life= this.life - 1;
       console.log("cantidad de vidas ske: "+this.life);
       if(this.life == 0) {
@@ -287,6 +310,7 @@ class Boss extends Phaser.Physics.Arcade.Sprite {
       this.newHitBox.attackBox((this.x),(this.y),!this.flipX, 20)
       this.isAttacking = true;
       this.flipX = !this.flipX;
+      this.scene.sound.play("archimagoFire");
       this.play(`${this.sprite}MagicOne`, true);
       //this.play(`${this.sprite}AttackFrames`, true);
       //this.setVelocityY(-730);

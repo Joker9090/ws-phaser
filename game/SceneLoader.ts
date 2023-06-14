@@ -29,6 +29,14 @@ const loadAssets = {
       ["spritesheet", "archimago", "/game/archimago.png", { frameWidth: 128, frameHeight: 128}],
       ["spritesheet", "antorcha", "/game/Antorcha.png", { frameWidth: 128, frameHeight: 128}],
       ["spritesheet", "heartFullUI", "/game/UI/heart.png", { frameWidth: 32, frameHeight: 32}],
+      ["audio","backgroundSound", "/game/sounds/a_dungeon_ambience_loop-79423.mp3"],
+      ["audio","backgroundSoundBossBattleStart", "/game/sounds/heroic-intro-21468.mp3"],
+      ["audio","backgroundSoundBossBattle", "/game/sounds/exiting-spicatos-16208.mp3"],
+      ["audio","swordHit", "/game/sounds/sword-hit-7160.mp3"],
+      ["audio","swordAir", "/game/sounds/sword-sound-2-36274.mp3"],
+      ["audio","playerWalk", "/game/sounds/running-sounds-6003.mp3"],
+      ["audio","playerHurt", "/game/sounds/umph-47201.mp3"],
+      ["audio","archimagoFire", "/game/sounds/magic-spell-6005.mp3"],
     ]
   }
 }

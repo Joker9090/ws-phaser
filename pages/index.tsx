@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import React from 'react';
+import Ui from "../game/UiScene";
 
 <head>
   <link rel="stylesheet" href="/css/fonts.css" />
@@ -23,7 +24,10 @@ export default function Home() {
     //Load scenes async when windows is ready
     Promise.all([
       import("@/game/SceneLoader"),
-      import("@/game/Scene4")
+      import("@/game/Scene4"),
+      import("@/game/UiScene"),
+      import("@/game/Menu"),
+   
     ]).then((scenes) => {
       setScenes(scenes.map(s => s.default))
     })

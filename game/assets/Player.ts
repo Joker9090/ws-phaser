@@ -7,6 +7,7 @@ class player extends Phaser.Physics.Arcade.Sprite {
   swordHitBox?: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
   gravityForce: number = 1200;
   initialVelocity: number = 2000;
+  health: number = 2
   constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame: number) {
     super(scene, x, y, texture, frame)
 
@@ -22,6 +23,11 @@ class player extends Phaser.Physics.Arcade.Sprite {
     }
     this.setGravityY(3270)
   }
+
+  getHealth() {
+    return this.health
+  }
+
   createAnims(scene: Phaser.Scene, texture: string) {
     const runAnimFrames = scene.anims.generateFrameNumbers(texture, { frames: [0, 1, 2, 3, 4, 5, 0] })
     const idleAnimFrames = scene.anims.generateFrameNames(texture, { frames: [0, 1, 0] })
@@ -91,33 +97,20 @@ class player extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
+ 
+
   checkMove(cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined) {
     if (cursors) {
       const { left, right, up, down, space } = cursors
 
 
-      // if (left.isDown) {
-      //   this.setVelocityX(-300)
-      //   this.setFlipX(true)
-      //   // console.log("left")
-      //   if (!this.isJumping) { this.anims.play("run", true) }
-      // } else if(right.isDown) {
-      //   this.setVelocityX(300)
-      //   this.setFlipX(false)
-      //   // console.log("right")
-      //   if (!this.isJumping) { this.anims.play("run", true) }
-      // } else {
-      //   this.setVelocityX(0)
-      //   this.setFlipX(false)
-      //   this.anims.play("run", true)
-      //   // console.log("idle")
-      // }
+     
       if (up.isDown) {
         this.up()
       } else if (down.isDown) {
         this.down()
       }
-      this.anims.play("run",true)
+      this.anims.play("run", true)
 
 
 

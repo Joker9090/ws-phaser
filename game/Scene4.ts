@@ -3,7 +3,10 @@ import { text } from "stream/consumers";
 import player from "./assets/Player";
 import gameState from "./assets/GameState";
 import MapHandler from "./maps/MapHandler";
+import Ui from "./UiScene";
 import { mapConfig } from "./maps/MapHandler";
+import SceneEvents from "./events/EventCenter";
+import Menu from "./Menu";
 
 
 const plataformas = ["plataforma3", "plataforma2", "plataforma1"]
@@ -40,13 +43,15 @@ class Game extends Phaser.Scene {
     healthTimer: number;
     missileScore: number;
     timer: number;
-    health: number = 120;
     player?: player;
     cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
     score?: Phaser.GameObjects.Text
     x: number = 100
     y: number = 620
     map!: MapHandler
+    ui?: Phaser.Scene
+    menu?: Menu
+
     constructor() {
         super({ key: "game" })
         // add Scene
@@ -54,6 +59,7 @@ class Game extends Phaser.Scene {
         this.secondTimer = 0;
         this.healthTimer = 0;
         this.missileScore = 0;
+
         this.createMissile()
     }
 
@@ -61,14 +67,23 @@ class Game extends Phaser.Scene {
     createMissile() {
         console.log("inicio")
     }
+    restart() {
+        this.scene.restart()
+    }
+    launchMenu() {
+        const config = { scene: this, score: gameState.score }
+        this.scene.start("Menu", { scene: this, score: gameState.score })
+        this.scene.pause()
+        gameState.score = 0
+        console.log("ENTRO")
 
+    }
     create() {
-        this.health = 100
-        /* Player */
         const newY = this.game.canvas.getBoundingClientRect().height / 2
         const newx = this.game.canvas.getBoundingClientRect().width / 4
-
         this.player = new player(this, newx, newY, "run", 0)
+        let health = this.player.health
+        this.scene.run("Ui",{health:health})
 
 
         this.player.setGravity(0, 0)
@@ -81,7 +96,7 @@ class Game extends Phaser.Scene {
         });
 
         /* AL MAP HANDLER */
-   
+
 
         /* Controls */
         if (this.input.keyboard) {
@@ -90,13 +105,15 @@ class Game extends Phaser.Scene {
 
         /* World Collider, pero podria ir dentro del mapHandler */
         this.physics.world.on('worldbounds', (body: Phaser.Physics.Arcade.Sprite, top: boolean, down: boolean, left: boolean, right: boolean) => {
-            if (down || top) this.scene.restart()
+            if (down || top) this.launchMenu()
+
+
         }, this);
 
         /* MAP */
         const mapConfig = {
             player: this.player,
-            sawsY: { top: 230, bottom: 880 },
+            sawsY: { top: this.cameras.main.height - 90, bottom: this.cameras.main.height - 40 },
             diamondsY: { top: 230, bottom: 880 },
             initialDelay: 1300
         }
@@ -109,6 +126,7 @@ class Game extends Phaser.Scene {
 
         this.physics.add.overlap(saws, groundGroup, (saw, floor) => {
             saw.destroy();
+
         })
         this.physics.add.overlap(diamonds, groundGroup, (diamond, floor) => {
             diamond.destroy();
@@ -121,11 +139,16 @@ class Game extends Phaser.Scene {
             saw.destroy()
         })
 
-
-        if (this.player) {
+        
+        if (this.player && health) {
             this.physics.add.overlap(this.player, saws, (player, saw) => {
-                this.scene.restart()
-                gameState.score = 0
+                saw.destroy()
+                --health
+                SceneEvents.emit("updateHealth", health)
+                console.log("ouch from scene", health)
+                if (health <= 0) {
+                    this.launchMenu()
+                }
             })
             this.physics.add.overlap(this.player, diamonds, (player, diamond) => {
                 gameState.score += 1
@@ -133,27 +156,15 @@ class Game extends Phaser.Scene {
             })
             this.physics.add.overlap(this.player, groundGroup, (player, platform) => {
                 const p = (player as player)
+                const pl = platform
                 console.log("ACAAAA", p)
                 if (p._direction == "up") p.down()
                 else if (p._direction == "down") p.up()
+                pl.destroy()
             })
         }
 
 
-        // estos dos reducen vida progresivamente a -1 cada 500ms 
-        // const reduceHealthTimely = () => {
-        //     this.health -= 1;
-        //     this.healthTimer = 0;
-
-        // };
-
-
-        // this.time.addEvent({
-        //     callback: reduceHealthTimely,
-        //     delay: 500,
-        //     loop: true,
-        //     callbackScope: this,
-        // });
 
 
     }
@@ -161,66 +172,6 @@ class Game extends Phaser.Scene {
 
 
     update(time: number, delta: number, cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined) {
-        // if (this.health <= 0) {
-        //     this.scene.stop()
-        //   
-        //     this.scene.restart()
-        // }
-
-
-        // if (cursors) {
-        //     const { left, right, up, down, space } = cursors
-        //     console.log(cursors, "cursors")
-        //     // this.player?.anims.play("run", true)
-
-
-
-        //     this.timer += delta;
-        //     // every four missiles you jump on +1 to health and back to misile score of 0
-        //     if (this.missileScore >= 1) {
-        //         this.health += 1;
-        //         this.missileScore -= 1;
-        //     }
-        //     // moves misile your way
-        //     //  this.missileGroup.children.iterate((child) => {
-        //     //    child.x -= 5;
-        //     // });
-
-
-        //     // checks time and every 5 seconds triggers the create missile function
-        //     this.timer += delta;
-        //     if (this.timer >= 500) {
-
-        //         this.timer = 0;
-        //     }
-
-
-        //     // does the same with the second timer keeping two separate spawn rates
-        //     this.secondTimer += delta;
-        //     if (this.secondTimer >= 700) {
-
-        //         this.secondTimer = 0;
-        //     }
-
-        //     // checks the up key, makes you jump and changes the jump count acordingly
-        //     if (Phaser.Input.Keyboard.JustDown(up)) {
-        //         if (this.player.body?.touching.down || this.jump < this.jumpTimes && (this.jump > 0)) {
-        //             this.player.setVelocityY(-400)
-        //             this.jump += 1
-        //             if (this.player.body?.touching.down) {
-        //                 this.jump = 0
-        //             }
-        //         }
-        //     }
-        //     if (down.isDown) {
-        //         if (!this.player.body?.touching.down) {
-        //             this.player.setGravityY(1300)
-        //         }
-        //     }
-        //     if (this.player.body?.touching.down) {
-        //         this.player.setGravityY(800)
-        //     }
-        // }
 
         if (this.player) {
             this.player.checkMove(this.cursors)

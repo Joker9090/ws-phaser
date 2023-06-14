@@ -16,6 +16,11 @@ const loadAssets = {
             ["image", "close", "/game/close.png"],
             ["image", "spikes", "/game/spikes.png"],
             ["spritesheet", "run", "/game/Run.png", { frameWidth: 128, frameHeight: 128 }],
+            ["image", "emptyHeart", "/game/ui_heart_empty.png"],
+            ["image", "fullHeart", "/game/ui_heart_full.png"],
+            ["image", "menu", "/game/menu.png"],
+            ["image", "menuButton", "/game/menuButton.png"],
+            ["image", "iconBG", "/game/iconBG.png"],
         ]
     }
 }

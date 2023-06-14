@@ -75,7 +75,8 @@ class MapHandler {
   }
 
   createUpPlatform() {
-    const y = 200
+    const offset = this.scene.cameras.main.height - 100
+    const y = this.scene.cameras.main.height - offset
     const upPlatform = this.groundGroup.create(this.scene.cameras.main.width + 90, y, "plataforma3").setGravityY(0).setScale(0.7)
     upPlatform.setVelocityX(-300)
     upPlatform.setDepth(6)
@@ -84,7 +85,7 @@ class MapHandler {
   }
 
   createDownPlatform() {
-    const y = 890
+    const y = this.scene.cameras.main.height - 70
     const downPlatform = this.groundGroup.create(this.scene.cameras.main.width + 90, y, "plataforma3").setGravityY(0).setScale(0.7)
     downPlatform.setVelocityX(-300)
     downPlatform.setDepth(6)

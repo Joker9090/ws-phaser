@@ -1,1 +1,81 @@
 TODO LIST
+
+
+
+        // estos dos reducen vida progresivamente a -1 cada 500ms 
+        // const reduceHealthTimely = () => {
+        //     this.health -= 1;
+        //     this.healthTimer = 0;
+
+        // };
+
+
+        // this.time.addEvent({
+        //     callback: reduceHealthTimely,
+        //     delay: 500,
+        //     loop: true,
+        //     callbackScope: this,
+        // });
+
+
+
+         // if (this.health <= 0) {
+        //     this.scene.stop()
+        //   
+        //     this.scene.restart()
+        // }
+
+
+        // if (cursors) {
+        //     const { left, right, up, down, space } = cursors
+        //     console.log(cursors, "cursors")
+        //     // this.player?.anims.play("run", true)
+
+
+
+        //     this.timer += delta;
+        //     // every four missiles you jump on +1 to health and back to misile score of 0
+        //     if (this.missileScore >= 1) {
+        //         this.health += 1;
+        //         this.missileScore -= 1;
+        //     }
+        //     // moves misile your way
+        //     //  this.missileGroup.children.iterate((child) => {
+        //     //    child.x -= 5;
+        //     // });
+
+
+        //     // checks time and every 5 seconds triggers the create missile function
+        //     this.timer += delta;
+        //     if (this.timer >= 500) {
+
+        //         this.timer = 0;
+        //     }
+
+
+        //     // does the same with the second timer keeping two separate spawn rates
+        //     this.secondTimer += delta;
+        //     if (this.secondTimer >= 700) {
+
+        //         this.secondTimer = 0;
+        //     }
+
+        //     // checks the up key, makes you jump and changes the jump count acordingly
+        //     if (Phaser.Input.Keyboard.JustDown(up)) {
+        //         if (this.player.body?.touching.down || this.jump < this.jumpTimes && (this.jump > 0)) {
+        //             this.player.setVelocityY(-400)
+        //             this.jump += 1
+        //             if (this.player.body?.touching.down) {
+        //                 this.jump = 0
+        //             }
+        //         }
+        //     }
+        //     if (down.isDown) {
+        //         if (!this.player.body?.touching.down) {
+        //             this.player.setGravityY(1300)
+        //         }
+        //     }
+        //     if (this.player.body?.touching.down) {
+        //         this.player.setGravityY(800)
+        //     }
+        // }

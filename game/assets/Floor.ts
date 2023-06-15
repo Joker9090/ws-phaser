@@ -1,7 +1,7 @@
 
 import Phaser from "phaser";
 
-export type FloorTween = Phaser.Tweens.Tween | Phaser.Types.Tweens.TweenBuilderConfig | Phaser.Types.Tweens.TweenChainBuilderConfig | Phaser.Tweens.TweenChain ;
+export type FloorTween = Phaser.Tweens.Tween | Phaser.Types.Tweens.TweenBuilderConfig | Phaser.Types.Tweens.TweenChainBuilderConfig | Phaser.Tweens.TweenChain;
 export type FloorConfig = {
   texture: string | Phaser.Textures.Texture;
   width?: number;
@@ -56,4 +56,4 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
 
 };
 
-export default Floor ;
+export default Floor;

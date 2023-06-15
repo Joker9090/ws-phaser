@@ -67,7 +67,7 @@ class Mapa1 {
     if (this.scene.monchi) {
       if (this.portal) this.portal.setTint(0xff0000);
       if (this.pisos) this.scene.physics.add.collider(this.scene.monchi, this.pisos, this.scene.touch, () => true, this.scene);
-      if (this.pisos2) this.scene.physics.add.collider(this.scene.monchi, this.pisos2, () => this.scene.float(1000), () => true, this.scene);
+      if (this.pisos2) this.scene.physics.add.collider(this.scene.monchi, this.pisos2, (a, b) => this.scene.float(a, b, 1000), () => true, this.scene);
       if (this.pisos3) this.scene.physics.add.collider(this.scene.monchi, this.pisos3, () => this.scene.rotateCam(10), () => true, this.scene);
       if (this.coin) this.scene.physics.add.overlap(this.scene.monchi, this.coin, this.scene.coinCollected, () => true, this.scene);
       if (this.portal) this.scene.physics.add.overlap(this.scene.monchi, this.portal, this.scene.goNextLevel, () => true, this.scene);
@@ -81,7 +81,7 @@ class Mapa1 {
     let quantityLifes = 0;
     let xpos = 0;
 
-    /* LIFES */ 
+    /* LIFES */
     if (this.lifesGroup) {
       for (let i: number = 0; i < lifes; i++) {
         quantityLifes += 1;
@@ -98,7 +98,7 @@ class Mapa1 {
       };
       this.lifesGroup.setDepth(100);
 
-      /* COIN */ 
+      /* COIN */
       const coinConf: UIConfig = {
         texture: "coin",
         pos: { x: quantityLifes * 50 + 150, y: 50 },
@@ -106,12 +106,12 @@ class Mapa1 {
       };
       this.CoinOriginalPos = (quantityLifes * 50 + 150)
       this.coinUI = new UI(this.scene, coinConf)
-      .setTint(Phaser.Display.Color.GetColor(0, 0, 0))
-      .setScrollFactor(0, 0)
-      .setDepth(100);
+        .setTint(Phaser.Display.Color.GetColor(0, 0, 0))
+        .setScrollFactor(0, 0)
+        .setDepth(100);
       this.UIboundsCoin = this.coinUI.getBounds().height;
-      
-      /* ARROW */ 
+
+      /* ARROW */
       const arrowConfig: UIConfig = {
         texture: "arrow",
         pos: { x: quantityLifes * 50 + 250, y: 50 },
@@ -212,7 +212,7 @@ class Mapa1 {
       texture: "plataforma2",
       pos: { x: 1300, y: 1200, },
       scale: { width: 0.15, height: 0.1, },
-      fix:20,
+      fix: 20,
       width: 2400,
       height: 100,
 
@@ -223,7 +223,7 @@ class Mapa1 {
       texture: "plataformaA",
       pos: { x: 1800, y: 1800, },
       scale: { width: 1, height: 0.7, },
-      fix:10,
+      fix: 10,
       width: 235,
       height: 50,
 
@@ -371,7 +371,7 @@ class Mapa1 {
 
     const coinConfig: FloorConfig = {
       texture: "coin",
-      pos: { x: 500, y: 1580, }, 
+      pos: { x: 500, y: 1580, },
       scale: { width: 0.1, height: 0.1, },
       width: 450,
       height: 600,
@@ -471,4 +471,4 @@ class Mapa1 {
   };
 };
 
-export default Mapa1 ;
+export default Mapa1;

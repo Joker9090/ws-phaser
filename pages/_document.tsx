@@ -10,7 +10,7 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
-        <div style={{fontFamily: 'Arcade'}} />
+        <div style={{ fontFamily: 'Arcade' }} />
       </body>
     </Html>
   )

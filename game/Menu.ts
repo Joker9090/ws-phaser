@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import MusicManager from './MusicManager';
+import TextBox from './assets/TextBox';
 
 export default class MainMenuScene extends Phaser.Scene {
 
@@ -30,11 +31,10 @@ export default class MainMenuScene extends Phaser.Scene {
 
     create() {
         /* Audio */
-        
         const getMusicManagerScene = this.game.scene.getScene("MusicManager") as MusicManager
-        if(!getMusicManagerScene.scene.isActive()) this.scene.launch("MusicManager").sendToBack();
+        if (!getMusicManagerScene.scene.isActive()) this.scene.launch("MusicManager").sendToBack();
         else {
-          getMusicManagerScene.playMusic("songMenu")
+            getMusicManagerScene.playMusic("songMenu")
         }
 
         this.scene.bringToTop().resume()

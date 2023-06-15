@@ -7,9 +7,8 @@ import Mapa1 from "./maps/Mapa1";
 import Mapa2 from "./maps/Mapa2";
 import Tutorial from "./maps/Tutorial";
 import MusicManager from './MusicManager';
-import TutorialTextScene from "./TutorialText";
 import EventsCenter from './EventsCenter';
-import Floor from "./assets/Floor";
+
 
 // Scene in class
 class Game extends Phaser.Scene {
@@ -39,6 +38,7 @@ class Game extends Phaser.Scene {
   cameraHeight: number = 0;
 
   mapShown: boolean = false;
+  TutorialMap?: Tutorial;
   TutorialTextScene?: Phaser.Scene;
   constructor() {
     super({ key: 'Game' });
@@ -70,10 +70,20 @@ class Game extends Phaser.Scene {
   };
 
 
-  float(time: number) {
-    if (this.levelIs == 0){
+  float(a: any, b: any, time: number) {
+    if (this.levelIs == 0) {
       EventsCenter.emit('float', true)
     }
+    /* Event sender for tutorial */
+    [a, b].map(item => {
+      if (item.hasEvent) {
+        if (item.hasEvent == "Show_Tutorial_Text_1") {
+          EventsCenter.emit('float', true)
+          delete item.hasEvent
+        }
+      }
+      return item;
+    })
     if (this.monchi) {
       this.monchi.setBounce(0.1);
       this.monchi.setGravityY(-2000);
@@ -129,8 +139,10 @@ class Game extends Phaser.Scene {
 
 
   win(Phrase: string) {
+    if (this.levelIs == 0 && this.TutorialMap) {
+      //(this.TutorialMap as Tutorial).pisoCoin?.hasEvent = "Show_Tutorial_Text_2"
+    }
     if (this.canWin && this.monchi) {
-      (this.TutorialTextScene as TutorialTextScene).stateTut = 0
       this.cameraNormal = true;
       this.scene.sleep();
       this.scene.start("Won", { text: Phrase });
@@ -145,20 +157,21 @@ class Game extends Phaser.Scene {
   };
 
   movingFloorsGravRot() {
-    this.monchi?.setVelocityY(-300); 
+    this.monchi?.setVelocityY(-300);
   };
 
   coinCollected(a: any, b: any) {
-    [a,b].map(item => {
-      if(item.hasEvent) {
-        if(item.hasEvent == "Show_Tutorial_Text_3") {
-          // delete item.hasEvent
+    /* Event sender for tutorial */
+    [a, b].map(item => {
+      if (item.hasEvent) {
+        if (item.hasEvent == "Show_Tutorial_Text_2") {
           EventsCenter.emit('coin', true)
+          delete item.hasEvent
         }
       }
       return item;
     })
-    
+
     if (this.map?.coin) {
       (this.map.portal?.getChildren()[0] as Phaser.GameObjects.Image).clearTint();
       this.canNextLevel = true;
@@ -178,10 +191,20 @@ class Game extends Phaser.Scene {
     };
   };
 
-  noFloatTutorial() {
-    if (this.levelIs == 0){
+  noFloatTutorial(a: any, b: any) {
+    if (this.levelIs == 0) {
       EventsCenter.emit('noFloat', true)
     }
+    /* Event sender for tutorial */
+    [a, b].map(item => {
+      if (item.hasEvent) {
+        if (item.hasEvent == "Show_Tutorial_Text_3") {
+          EventsCenter.emit('noFloat', true)
+          delete item.hasEvent
+        }
+      }
+      return item;
+    })
     if (this.monchi) {
       this.monchi?.setGravity(0);
       this.monchi?.setFlipY(false);
@@ -203,7 +226,7 @@ class Game extends Phaser.Scene {
       } else if (this.lifes != 0 && this.gravityDown == false && this.monchi) {
         if (this.map) this.monchi.x = this.map.startingPoint.x;
         if (this.map) this.monchi.y = this.map.startingPoint.y;
-        this.noFloatTutorial();
+        this.noFloatTutorial(null, null);
       };
 
       // Remove the object with the highest x position
@@ -241,14 +264,14 @@ class Game extends Phaser.Scene {
         if (this.map) this.monchi.y = this.map.startingPoint.y;
 
       } else if (this.lifes != 0 && this.checkPoint == 1 && this.monchi && this.cameraNormal == false) {
-        this.float(0);
+        this.float(null, null, 0);
         this.cameraNormal = true;
         this.canRot = true;
         this.rotateCam(0);
         if (this.map) this.monchi.x = this.map.checkPointPos.x;
         if (this.map) this.monchi.y = this.map.checkPointPos.y;
       } else if (this.lifes != 0 && this.checkPoint == 1 && this.monchi && this.cameraNormal) {
-        this.float(0);
+        this.float(null, null, 0);
         this.canRot = true;
         if (this.map) this.monchi.x = this.map.checkPointPos.x;
         if (this.map) this.monchi.y = this.map.checkPointPos.y;
@@ -356,7 +379,7 @@ class Game extends Phaser.Scene {
   create(this: Game, data: { level: number, lifes: number }) {
 
     this.checkPoint = 0
-   
+
     /* CHOSE LEVEL, LIFES AND AUDIO */
     switch (data.level) {
       case 0:
@@ -384,9 +407,9 @@ class Game extends Phaser.Scene {
     if (!getMusicManagerScene.scene.isActive()) this.scene.launch("MusicManager").sendToBack();
     else if (this.levelIs == 0) {
       getMusicManagerScene.playMusic("songTutorial")
-    }  else if (this.levelIs == 1) {
+    } else if (this.levelIs == 1) {
       getMusicManagerScene.playMusic("songLevel1")
-    }  else if (this.levelIs == 2) {
+    } else if (this.levelIs == 2) {
       getMusicManagerScene.playMusic("songLevel2")
     }
 

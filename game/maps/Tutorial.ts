@@ -25,6 +25,7 @@ class Tutorial {
   fireballGroup?: Phaser.Physics.Arcade.Group;
   gravityArrow?: Phaser.GameObjects.Image;
   coinUI?: Phaser.GameObjects.Image;
+  lifesQty?: number;
   startingPoint = {
     x: 600, //600
     y: 1800, //1800
@@ -40,6 +41,10 @@ class Tutorial {
   timedEvent?: Phaser.Time.TimerEvent;
   previewCamara?: Phaser.Cameras.Scene2D.Camera;
 
+  pisoFloat?: Floor;
+  pisoCoin?: Floor;
+  pisoNoFloat?: Floor;
+
 
   constructor(scene: Game) {
     this.scene = scene;
@@ -53,6 +58,7 @@ class Tutorial {
     this.debugGraphics.fillRect(0, 0, this.worldSize.width, this.worldSize.height);
     /* Debug */
     this.background = this.scene.add.image(this.startingPoint.x, this.startingPoint.y, "background").setOrigin(0.5, 0.5);
+
   };
 
   animateBackground(player: Phaser.GameObjects.Sprite) {
@@ -64,8 +70,10 @@ class Tutorial {
   };
 
   createUI(lifes: number) {
+    this.lifesQty = lifes
     let quantityLifes = 0
     let xpos = 0
+    let xpos2 = 0
     if (this.lifesGroup) {
       for (let i = 0; i < lifes; i++) {
         quantityLifes += 1;
@@ -77,13 +85,17 @@ class Tutorial {
         };
         const coras = new UI(this.scene, lifeConfig, this.lifesGroup)
           .setScrollFactor(0, 0);
+        this.lifesGroup.setDepth(100);
+
+
       };
       const coinConf: UIConfig = {
         texture: "coin",
         pos: { x: quantityLifes * 50 + 150, y: 50 },
         scale: .1
-
       };
+      xpos = (quantityLifes * 50 + 150)
+
       this.coinUI = new UI(this.scene, coinConf)
         .setTint(Phaser.Display.Color.GetColor(0, 0, 0))
         .setScrollFactor(0, 0)
@@ -94,15 +106,13 @@ class Tutorial {
         texture: "arrow",
         pos: { x: quantityLifes * 50 + 250, y: 50 },
         scale: .1
-
       };
-
+      xpos2 = (quantityLifes * 50 + 250)
       this.gravityArrow = new UI(this.scene, arrowConfig)
         .setRotation(Math.PI / 2)
         .setScrollFactor(0, 0)
         .setDepth(100);
 
-      this.lifesGroup.setDepth(100);
     }
   }
 
@@ -111,7 +121,7 @@ class Tutorial {
     this.pisos = this.scene.physics.add.group({ allowGravity: false });
     this.pisos2 = this.scene.physics.add.group({ allowGravity: false });
     this.pisos3 = this.scene.physics.add.group({ allowGravity: false });
-    this.coin = this.scene.physics.add.group({ allowGravity: false }) 
+    this.coin = this.scene.physics.add.group({ allowGravity: false })
     this.portal = this.scene.physics.add.group({ allowGravity: false });
     this.lifesGroup = this.scene.add.group()
     this.fireballGroup = this.scene.physics.add.group({ allowGravity: false });
@@ -153,8 +163,9 @@ class Tutorial {
       pos: { x: 1750, y: 1550, },
       scale: { width: 0.7, height: 0.7, }
     };
-    const p3 = new Floor(this.scene, p3Config, this.pisos2)
-      .setTint(Phaser.Display.Color.GetColor(255, 177, 0));
+    this.pisoFloat = new Floor(this.scene, p3Config, this.pisos2)
+      .setTint(Phaser.Display.Color.GetColor(255, 177, 0))
+    this.pisoFloat.hasEvent = "Show_Tutorial_Text_1";
 
     const p4Config: LargeFloorConfig = {
       textureA: "plataformaA",
@@ -171,8 +182,9 @@ class Tutorial {
       pos: { x: 2350, y: 250, },
       scale: { width: 0.7, height: 0.7, }
     };
-    const p5 = new Floor(this.scene, p5Config, this.pisos3)
-      .setTint(Phaser.Display.Color.GetColor(255, 177, 0));
+    this.pisoNoFloat = new Floor(this.scene, p5Config, this.pisos3)
+      .setTint(Phaser.Display.Color.GetColor(255, 177, 0))
+    this.pisoNoFloat.hasEvent = "Show_Tutorial_Text_3";
 
 
     /* Portal, Coin, Fireball and Asteroids */
@@ -216,8 +228,8 @@ class Tutorial {
       height: 600,
       fix: 100,
     };
-    const coin = new Floor(this.scene, coinConfig, this.coin);
-    coin.hasEvent = "Show_Tutorial_Text_3";
+    this.pisoCoin = new Floor(this.scene, coinConfig, this.coin);
+    this.pisoCoin.hasEvent = "Show_Tutorial_Text_2";
 
 
     /* UI */
@@ -229,10 +241,10 @@ class Tutorial {
     if (this.scene.monchi) {
       if (this.fireballGroup) this.scene.physics.add.collider(this.scene.monchi, this.fireballGroup, this.scene.loseLevelTutorial, () => true, this.scene);
       if (this.portal) this.portal.setTint(0xff0000);
-      
+
       if (this.pisos) this.scene.physics.add.collider(this.scene.monchi, this.pisos, this.scene.touch, () => true, this.scene);
-      
-      if (this.pisos2) this.scene.physics.add.collider(this.scene.monchi, this.pisos2, () => this.scene.float(500), () => true, this.scene);
+
+      if (this.pisos2) this.scene.physics.add.collider(this.scene.monchi, this.pisos2, (a, b) => this.scene.float(a, b, 500), () => true, this.scene);
       if (this.pisos3) this.scene.physics.add.collider(this.scene.monchi, this.pisos3, this.scene.noFloatTutorial, () => true, this.scene);
 
       if (this.coin) this.scene.physics.add.overlap(this.scene.monchi, this.coin, this.scene.coinCollected, () => true, this.scene);

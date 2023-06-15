@@ -4,7 +4,7 @@ export default class MusicManager extends Phaser.Scene {
     music?: Phaser.Sound.NoAudioSound | Phaser.Sound.HTML5AudioSound | Phaser.Sound.WebAudioSound;
 
     constructor() {
-      super({ key: 'MusicManager' });
+        super({ key: 'MusicManager' });
     };
 
     stopMusic() {
@@ -19,11 +19,11 @@ export default class MusicManager extends Phaser.Scene {
             this.music.stop();
         }
         this.music = this.sound.add(name).setVolume(0.05);
-        this.music.play(); 
+        this.music.play();
     }
-    
+
     create(/* {song} */) {
-      this.playMusic("songMenu")
+        this.playMusic("songMenu")
     }
 };
 

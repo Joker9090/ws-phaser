@@ -332,14 +332,14 @@ class Mapa2 {
   }
 
   update() {
-    
+
     //modo creative
     /* DEBUGGER
     if (this.scene.monchi) {
       this.scene.monchi.checkMoveCreative(this.scene.cursors);
     };
     */
-    
+
     if (this.coinUI) {
       if (this.scene.canWin || this.scene.canNextLevel) {
         this.coinUI?.clearTint();
@@ -382,7 +382,7 @@ class Mapa2 {
       };
 
     };
-    
+
   };
 };
 

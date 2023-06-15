@@ -20,11 +20,11 @@ export default class WonScene extends Phaser.Scene {
 
     create(this: WonScene, data: { text: string }) {
         /* Audio */
-        
+
         const getMusicManagerScene = this.game.scene.getScene("MusicManager") as MusicManager
-        if(!getMusicManagerScene.scene.isActive()) this.scene.launch("MusicManager").sendToBack();
+        if (!getMusicManagerScene.scene.isActive()) this.scene.launch("MusicManager").sendToBack();
         else {
-          getMusicManagerScene.playMusic("songWon")
+            getMusicManagerScene.playMusic("songWon")
         }
 
 

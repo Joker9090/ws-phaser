@@ -18,6 +18,7 @@ export default function Home() {
     //Load scenes async when windows is ready
     Promise.all([
       import("@/game/SceneLoader"),
+      import("@/game/Sandbox"),
       import("@/game/Menu"),
       import("@/game/Game"),
       import("@/game/Won"),
@@ -54,14 +55,14 @@ export default function Home() {
       setGame(game);
       /* CONTROLS THE RESIZE AND RESTART OF SCENE */
       window.addEventListener("resize", () => {
-        setTimeout(()=>{
+        setTimeout(() => {
           game.scene.getScenes(true).map((s) => {
             console.log(window.innerWidth)
             game.canvas.style.width = window.innerWidth + 'px';
             game.canvas.style.height = window.innerHeight + 'px';
             s.scene.restart();
           })
-        },300);
+        }, 300);
       })
     }
   }, [phaser, scenes])

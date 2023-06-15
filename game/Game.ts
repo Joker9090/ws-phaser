@@ -9,6 +9,7 @@ import Tutorial from "./maps/Tutorial";
 import MusicManager from './MusicManager';
 import TutorialTextScene from "./TutorialText";
 import EventsCenter from './EventsCenter';
+import Floor from "./assets/Floor";
 
 // Scene in class
 class Game extends Phaser.Scene {
@@ -144,13 +145,20 @@ class Game extends Phaser.Scene {
   };
 
   movingFloorsGravRot() {
-    this.monchi?.setVelocityY(-300);
+    this.monchi?.setVelocityY(-300); 
   };
 
-  coinCollected() {
-    if (this.levelIs == 0){
-      EventsCenter.emit('coin', true)
-    }
+  coinCollected(a: any, b: any) {
+    [a,b].map(item => {
+      if(item.hasEvent) {
+        if(item.hasEvent == "Show_Tutorial_Text_3") {
+          // delete item.hasEvent
+          EventsCenter.emit('coin', true)
+        }
+      }
+      return item;
+    })
+    
     if (this.map?.coin) {
       (this.map.portal?.getChildren()[0] as Phaser.GameObjects.Image).clearTint();
       this.canNextLevel = true;

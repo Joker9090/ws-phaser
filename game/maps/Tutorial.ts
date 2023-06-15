@@ -111,7 +111,7 @@ class Tutorial {
     this.pisos = this.scene.physics.add.group({ allowGravity: false });
     this.pisos2 = this.scene.physics.add.group({ allowGravity: false });
     this.pisos3 = this.scene.physics.add.group({ allowGravity: false });
-    this.coin = this.scene.physics.add.group({ allowGravity: false });
+    this.coin = this.scene.physics.add.group({ allowGravity: false }) 
     this.portal = this.scene.physics.add.group({ allowGravity: false });
     this.lifesGroup = this.scene.add.group()
     this.fireballGroup = this.scene.physics.add.group({ allowGravity: false });
@@ -217,6 +217,7 @@ class Tutorial {
       fix: 100,
     };
     const coin = new Floor(this.scene, coinConfig, this.coin);
+    coin.hasEvent = "Show_Tutorial_Text_3";
 
 
     /* UI */
@@ -228,9 +229,12 @@ class Tutorial {
     if (this.scene.monchi) {
       if (this.fireballGroup) this.scene.physics.add.collider(this.scene.monchi, this.fireballGroup, this.scene.loseLevelTutorial, () => true, this.scene);
       if (this.portal) this.portal.setTint(0xff0000);
+      
       if (this.pisos) this.scene.physics.add.collider(this.scene.monchi, this.pisos, this.scene.touch, () => true, this.scene);
+      
       if (this.pisos2) this.scene.physics.add.collider(this.scene.monchi, this.pisos2, () => this.scene.float(500), () => true, this.scene);
       if (this.pisos3) this.scene.physics.add.collider(this.scene.monchi, this.pisos3, this.scene.noFloatTutorial, () => true, this.scene);
+
       if (this.coin) this.scene.physics.add.overlap(this.scene.monchi, this.coin, this.scene.coinCollected, () => true, this.scene);
       if (this.portal) this.scene.physics.add.overlap(this.scene.monchi, this.portal, () => this.scene.win("Congrats! You've finished the tutorial"), () => true, this.scene);
     }

@@ -18,7 +18,7 @@ export default class TutorialText extends Phaser.Scene {
   };
 
   DisplayText() {
-    if(this.stateTut < 3){
+    if (this.stateTut < 3) {
       this.gameScene?.scene.pause();
       this.rectanguleText?.setVisible(true);
     }
@@ -32,7 +32,7 @@ export default class TutorialText extends Phaser.Scene {
     } else if (this.stateTut == 2) {
       this.tutorialText?.setText("The gravity arrow points to where the gravity is pulling, this allows you to know to where you will be falling!!!!")
       this.stateTut = 3
-    } else if (this.stateTut > 3){
+    } else if (this.stateTut > 3) {
       this.rectanguleText?.setVisible(false);
       this.tutorialText?.setText("");
     };
@@ -42,39 +42,55 @@ export default class TutorialText extends Phaser.Scene {
 
 
   create(/* {song} */) {
+    const { width, height } = this.cameras.main;
+    const textPosY = (height / 2) - 100
+    const textPosX = (width / 2) + 50
     /* TEXT BOX */
-    this.rectanguleText = this.add.sprite(1300, 400, "textBox").setScrollFactor(0).setDepth(200).setScale(0.75,1.4).setVisible(true);
+    this.rectanguleText = this.add.sprite(textPosX, textPosY, "textBox")
+      .setScrollFactor(0)
+      .setDepth(200)
+      .setScale(0.75, 1.4)
+      .setVisible(false);
 
 
 
-    this.tutorialText = this.add.text(1300, 400, 'Orange platforms are special since they activate special effects... Press space to continue', {fontFamily: 'Arcade', fontSize: '30px', wordWrap: { width: 400, useAdvancedWrap: true } }).setOrigin(.5).setScrollFactor(0).setDepth(200).setSize(50, 50);
+    this.tutorialText = this.add.text(
+      textPosX,
+      textPosY,
+      '',
+      { fontFamily: 'Arcade', fontSize: '30px', wordWrap: { width: 400, useAdvancedWrap: true } }
+    )
+      .setOrigin(.5)
+      .setScrollFactor(0)
+      .setDepth(200)
+      .setSize(50, 50);
     EventsCenter.on('float', this.DisplayText, this);
     EventsCenter.on('coin', this.DisplayText, this);
     EventsCenter.on('noFloat', this.DisplayText, this);
 
   };
- 
+
   update() {
     console.log(this.stateTut)
     if (this.cursors) {
       if (this.cursors.space.isDown) {
         if (this.stateTut == 0) {
-          if(this.gameScene?.scene.isPaused) this.gameScene?.scene.resume();
-          this.rectanguleText?.setScale(0.5,1).setVisible(false);
+          if (this.gameScene?.scene.isPaused) this.gameScene?.scene.resume();
+          this.rectanguleText?.setScale(0.5, 1).setVisible(false);
           this.tutorialText?.setText('');
 
         } else if (this.stateTut == 1) {
-          if(this.gameScene?.scene.isPaused) this.gameScene?.scene.resume();
-          this.rectanguleText?.setVisible(false);
-          this.tutorialText?.setText('');
-          
-        } else if (this.stateTut == 2) {
-          if(this.gameScene?.scene.isPaused) this.gameScene?.scene.resume();
+          if (this.gameScene?.scene.isPaused) this.gameScene?.scene.resume();
           this.rectanguleText?.setVisible(false);
           this.tutorialText?.setText('');
 
-         } else if (this.stateTut == 3) {
-          if(this.gameScene?.scene.isPaused) this.gameScene?.scene.resume();
+        } else if (this.stateTut == 2) {
+          if (this.gameScene?.scene.isPaused) this.gameScene?.scene.resume();
+          this.rectanguleText?.setVisible(false);
+          this.tutorialText?.setText('');
+
+        } else if (this.stateTut == 3) {
+          if (this.gameScene?.scene.isPaused) this.gameScene?.scene.resume();
           this.rectanguleText?.setVisible(false);
           this.tutorialText?.setText('');
           this.stateTut = 4

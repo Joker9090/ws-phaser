@@ -5,13 +5,12 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        
-     
-        
-      </Head> 
+        <link rel="preload" as="font" href="/fonts/arcadeFont.otf" type="font/otf" />
+      </Head>
       <body>
         <Main />
         <NextScript />
+        <div style={{fontFamily: 'Arcade'}} />
       </body>
     </Html>
   )

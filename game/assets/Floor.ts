@@ -22,6 +22,7 @@ export type FloorConfig = {
 class Floor extends Phaser.Physics.Arcade.Sprite {
   isJumping = false;
   scene: Phaser.Scene;
+  hasEvent?: string;
   group: Phaser.Physics.Arcade.Group;
   constructor(scene: Phaser.Scene, config: FloorConfig, group: Phaser.Physics.Arcade.Group, frame?: string | number | undefined) {
     super(scene, config.pos.x, config.pos.y, config.texture);

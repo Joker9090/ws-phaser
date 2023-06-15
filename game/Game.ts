@@ -71,9 +71,7 @@ class Game extends Phaser.Scene {
 
 
   float(a: any, b: any, time: number) {
-    if (this.levelIs == 0) {
-      EventsCenter.emit('float', true)
-    }
+
     /* Event sender for tutorial */
     [a, b].map(item => {
       if (item.hasEvent) {
@@ -183,6 +181,7 @@ class Game extends Phaser.Scene {
 
   goNextLevel() {
     if (this.canNextLevel && this.monchi) {
+      this.timeLevel = 0;
       this.cameraNormal = true;
       this.checkPoint = 0;
       this.canWin = false;
@@ -192,9 +191,7 @@ class Game extends Phaser.Scene {
   };
 
   noFloatTutorial(a: any, b: any) {
-    if (this.levelIs == 0) {
-      EventsCenter.emit('noFloat', true)
-    }
+
     /* Event sender for tutorial */
     [a, b].map(item => {
       if (item.hasEvent) {
@@ -212,6 +209,19 @@ class Game extends Phaser.Scene {
       this.monchi?.body?.setOffset(70, 50);
       this.monchi?.setBounceY(0);
     };
+  };
+
+  fireballActFun(a: any, b: any) {
+    /* Event sender for tutorial */
+    [a, b].map(item => {
+      if (item.hasEvent) {
+        if (item.hasEvent == "Show_Tutorial_Text_4") {
+          EventsCenter.emit('fire', true)
+          delete item.hasEvent
+        }
+      }
+      return item;
+    })
   };
 
   loseLevelTutorial() {
@@ -338,16 +348,6 @@ class Game extends Phaser.Scene {
   };
 
   /*  SHOWMAP FUNCTION
-  showPlatform(time: number) {
-      this.monchi?.setGravityY(-2000);
-      this.time.delayedCall(time, () => {
-        this.monchi?.setFlipY(true);
-        this.gravityDown = false;
-        this.monchi?.body?.setOffset(70, 0);
-        this.monchi?.setBounceY(0);
-      });
-    };
-  };
 
   showMap() {
     
@@ -429,6 +429,7 @@ class Game extends Phaser.Scene {
     this.canRot = true;
 
     if (this.levelIs == 2 && this.monchi) {
+      console.log("entro a velocidad inicial");
       this.monchi.setVelocity(300, 0);
     };
 
@@ -437,6 +438,16 @@ class Game extends Phaser.Scene {
     this.cameras.main.startFollow(this.monchi);
     this.cameraWidth = this.cameras.main.width;
     this.cameraHeight = this.cameras.main.height;
+
+    /* SET SIZE OF UI ACCORDING TO SCREEN SIZE */
+    /*
+    if(this.map){
+      const sizeUIWidth = (this.cameraWidth / 1920)*0.1;
+      const sizeUIHeigth = (this.cameraHeight / 1060)*0.1;
+      const sizeUI = Math.max(sizeUIHeigth,sizeUIHeigth);
+      this.map.coinUI?.setScale(sizeUI);
+    };
+    */
 
     /* TIMER */
     this.timerText = this.add.text(this.cameras.main.width - 120, 35, 'Time: 0', { fontSize: '32px' }).setOrigin(.5, .5).setScrollFactor(0, 0).setDepth(100).setSize(50, 50);
@@ -451,6 +462,7 @@ class Game extends Phaser.Scene {
       callbackScope: this,
       loop: true
     });
+    
 
     /* COLLIDERS */
     this.map.addColliders()

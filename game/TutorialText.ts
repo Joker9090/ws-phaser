@@ -24,18 +24,24 @@ export default class TutorialText extends Phaser.Scene {
   };
 
   DisplayText(param: number) {
-    if (param < 3) {
+    if (param < 4) {
       this.gameScene?.scene.pause();
       this.tutorialTextBox?.setVisible(true);
     }
     if (param == 0) {
       this.tutorialTextBox?.setTextBox('Orange platforms are special since they activate special effects... Press space to continue');
+      //delete this.TutorialMap?.pisoFloat?.hasEvent
     } else if (param == 1) {
       this.tutorialTextBox?.setTextBox("Coins are needed in order to win the game, you can see if you've collected it here next to your lifes!");
       this.UIRectangle1?.setVisible(true);
+      //delete this.TutorialMap?.pisoCoin?.hasEvent
     } else if (param == 2) {
       this.tutorialTextBox?.setTextBox("The gravity arrow points to where the gravity is pulling, this allows you to know to where you will be falling!!!!");
       this.UIRectangle2?.setVisible(true);
+      //delete this.TutorialMap?.pisoNoFloat?.hasEvent
+    } else if (param == 3) {
+      this.tutorialTextBox?.setTextBox("Be careful with fireballs, they can kill you and you'll lose a life");
+      //delete this.TutorialMap?.pisoNoFloat?.hasEvent
     };
   };
 
@@ -63,6 +69,7 @@ export default class TutorialText extends Phaser.Scene {
     EventsCenter.on('float', () => this.DisplayText(0), this);
     EventsCenter.on('coin', () => this.DisplayText(1), this);
     EventsCenter.on('noFloat', () => this.DisplayText(2), this);
+    EventsCenter.on('fire', () => this.DisplayText(3), this);
 
 
   };

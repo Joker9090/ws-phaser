@@ -15,11 +15,13 @@ class Tutorial {
     height: 2500,
   };
   pisos?: Phaser.Physics.Arcade.Group;
+  fireballTextActivator?: Floor;
   pisos2?: Phaser.Physics.Arcade.Group;
   pisos3?: Phaser.Physics.Arcade.Group;
   coin?: Phaser.Physics.Arcade.Group;
   portal?: Phaser.Physics.Arcade.Group;
   lifesGroup?: Phaser.GameObjects.Group;
+  fireballAct?: Phaser.Physics.Arcade.Group;
   changer?: Phaser.GameObjects.Image;
   portalInit?: Phaser.Physics.Arcade.Group;
   fireballGroup?: Phaser.Physics.Arcade.Group;
@@ -73,7 +75,6 @@ class Tutorial {
     this.lifesQty = lifes
     let quantityLifes = 0
     let xpos = 0
-    let xpos2 = 0
     if (this.lifesGroup) {
       for (let i = 0; i < lifes; i++) {
         quantityLifes += 1;
@@ -94,7 +95,7 @@ class Tutorial {
         pos: { x: quantityLifes * 50 + 150, y: 50 },
         scale: .1
       };
-      xpos = (quantityLifes * 50 + 150)
+  
 
       this.coinUI = new UI(this.scene, coinConf)
         .setTint(Phaser.Display.Color.GetColor(0, 0, 0))
@@ -107,7 +108,7 @@ class Tutorial {
         pos: { x: quantityLifes * 50 + 250, y: 50 },
         scale: .1
       };
-      xpos2 = (quantityLifes * 50 + 250)
+      
       this.gravityArrow = new UI(this.scene, arrowConfig)
         .setRotation(Math.PI / 2)
         .setScrollFactor(0, 0)
@@ -126,7 +127,7 @@ class Tutorial {
     this.lifesGroup = this.scene.add.group()
     this.fireballGroup = this.scene.physics.add.group({ allowGravity: false });
     this.portalInit = this.scene.physics.add.group({ allowGravity: false });
-
+    this.fireballAct = this.scene.physics.add.group({ allowGravity: false });
 
     /* Platforms */
     const p0Config: LargeFloorConfig = {
@@ -231,17 +232,30 @@ class Tutorial {
     this.pisoCoin = new Floor(this.scene, coinConfig, this.coin);
     this.pisoCoin.hasEvent = "Show_Tutorial_Text_2";
 
+    const fireballTextConfig: FloorConfig = {
+      texture: "coin",
+      pos: { x: 2750, y: 1885, }, 
+      scale: { width: 0.1, height: 0.1, },
+      width: 450,
+      height: 600,
+      fix: 100,
+    };
+    this.fireballTextActivator = new Floor(this.scene, fireballTextConfig, this.fireballAct).setVisible(false)
+    this.fireballTextActivator.hasEvent = "Show_Tutorial_Text_4";
 
     /* UI */
     this.createUI(data.lifes)
   };
 
+  fireballActFunction(){
+
+  }
 
   addColliders() {
     if (this.scene.monchi) {
       if (this.fireballGroup) this.scene.physics.add.collider(this.scene.monchi, this.fireballGroup, this.scene.loseLevelTutorial, () => true, this.scene);
       if (this.portal) this.portal.setTint(0xff0000);
-
+      if (this.fireballAct) this.scene.physics.add.overlap(this.scene.monchi, this.fireballAct, this.scene.fireballActFun, () => true, this.scene);
       if (this.pisos) this.scene.physics.add.collider(this.scene.monchi, this.pisos, this.scene.touch, () => true, this.scene);
 
       if (this.pisos2) this.scene.physics.add.collider(this.scene.monchi, this.pisos2, (a, b) => this.scene.float(a, b, 500), () => true, this.scene);

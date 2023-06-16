@@ -23,6 +23,7 @@ export default function Home() {
       import("@/game/Game"),
       import("@/game/Won"),
       import("@/game/GameOver"),
+      import("@/game/UIScene"),
       import("@/game/TutorialText"),
       import("@/game/MusicManager")
     ]).then((scenes) => {
@@ -57,7 +58,6 @@ export default function Home() {
       window.addEventListener("resize", () => {
         setTimeout(() => {
           game.scene.getScenes(true).map((s) => {
-            console.log(window.innerWidth)
             game.canvas.style.width = window.innerWidth + 'px';
             game.canvas.style.height = window.innerHeight + 'px';
             s.scene.restart();

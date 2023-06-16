@@ -8,7 +8,7 @@ import Mapa2 from "./maps/Mapa2";
 import Tutorial from "./maps/Tutorial";
 import MusicManager from './MusicManager';
 import EventsCenter from './EventsCenter';
-
+import UIScene from './UIScene';
 
 // Scene in class
 class Game extends Phaser.Scene {
@@ -29,8 +29,6 @@ class Game extends Phaser.Scene {
   cameraNormal: boolean = true;
   gravityDown: boolean = true;
 
-  startTime: number = 0;
-  timerText?: Phaser.GameObjects.Text;
 
   checkPoint: number = 0;
 
@@ -40,11 +38,12 @@ class Game extends Phaser.Scene {
   mapShown: boolean = false;
   TutorialMap?: Tutorial;
   TutorialTextScene?: Phaser.Scene;
+  UIScene?: UIScene;
   constructor() {
     super({ key: 'Game' });
   };
 
-  /*  
+  /* PRELOAD 
   
   preload(this: Phaser.Scene) {
     this.load.spritesheet("character", "/game/character.png", { frameWidth: 220, frameHeight: 162 });
@@ -62,13 +61,13 @@ class Game extends Phaser.Scene {
     this.load.image("fireball", "/game/fireball.png");
   }
   */
+
   touch() {
     if (this.monchi) {
       this.monchi.idle();
       this.monchi.setVelocityX(0); //check if working properly
     };
   };
-
 
   float(a: any, b: any, time: number) {
 
@@ -83,7 +82,6 @@ class Game extends Phaser.Scene {
       return item;
     })
     if (this.monchi) {
-      this.monchi.setBounce(0.1);
       this.monchi.setGravityY(-2000);
       this.time.delayedCall(time, () => {
         this.monchi?.setFlipY(true);
@@ -94,11 +92,10 @@ class Game extends Phaser.Scene {
     };
   };
 
-
-
   rotateCam(time: number) {
     this.cameraNormal = false;
     if (this.canRot) {
+      EventsCenter.emit('rotateCamera', true)
       for (let i = 0; i < 25; i++) {
         this.time.delayedCall(time * i, () => ((rotate) => {
           this.cameras.main.setRotation(rotate);
@@ -137,12 +134,9 @@ class Game extends Phaser.Scene {
 
 
   win(Phrase: string) {
-    if (this.levelIs == 0 && this.TutorialMap) {
-      //(this.TutorialMap as Tutorial).pisoCoin?.hasEvent = "Show_Tutorial_Text_2"
-    }
     if (this.canWin && this.monchi) {
       this.cameraNormal = true;
-      this.scene.sleep();
+      this.scene.stop();
       this.scene.start("Won", { text: Phrase });
       this.checkPoint = 0;
       this.canWin = false;
@@ -171,6 +165,7 @@ class Game extends Phaser.Scene {
     })
 
     if (this.map?.coin) {
+      EventsCenter.emit('coinCollected', true);
       (this.map.portal?.getChildren()[0] as Phaser.GameObjects.Image).clearTint();
       this.canNextLevel = true;
       this.canWin = true;
@@ -187,6 +182,7 @@ class Game extends Phaser.Scene {
       this.canWin = false;
       this.canNextLevel = false;
       this.scene.restart({ level: 2, lifes: this.lifes });
+      this.UIScene?.scene.restart({ level: 2, lifes: this.lifes, game: this })
     };
   };
 
@@ -227,30 +223,25 @@ class Game extends Phaser.Scene {
   loseLevelTutorial() {
     if (this.lifes) {
       this.lifes -= 1;
-
       if (this.lifes == 0) {
         this.gameOver();
       } else if (this.lifes != 0 && this.gravityDown && this.monchi) {
+        EventsCenter.emit('die', true)
         if (this.map) this.monchi.x = this.map.startingPoint.x;
         if (this.map) this.monchi.y = this.map.startingPoint.y;
-      } else if (this.lifes != 0 && this.gravityDown == false && this.monchi) {
+      } else if (this.lifes != 0 && !this.gravityDown && this.monchi) {
+        EventsCenter.emit('die', true)
         if (this.map) this.monchi.x = this.map.startingPoint.x;
         if (this.map) this.monchi.y = this.map.startingPoint.y;
-        this.noFloatTutorial(null, null);
-      };
-
-      // Remove the object with the highest x position
-      if (this.lifes != 0 && this.map?.lifesGroup) {
-        let lifeToTheRight = null;
-        let highestX = Number.NEGATIVE_INFINITY;
-        for (let i = 0; i < this.map?.lifesGroup?.getLength(); i++) {
-          const child = (this.map?.lifesGroup?.getChildren()[i] as Phaser.GameObjects.Image);
-          if (child.x > highestX) {
-            lifeToTheRight = child;
-            highestX = child.x;
-          };
+        if (this.monchi) {
+          this.monchi.setGravityY(0);
+          this.time.delayedCall(0, () => {
+            this.monchi?.setFlipY(false);
+            this.gravityDown = true;
+            this.monchi?.body?.setOffset(70, 50);
+            this.monchi?.setBounceY(0);
+          });
         };
-        lifeToTheRight?.destroy();
       };
     };
   };
@@ -258,11 +249,10 @@ class Game extends Phaser.Scene {
   loseLevel1() {
     if (this.lifes) {
       this.lifes -= 1;
-
       if (this.lifes == 0) {
         this.gameOver();
-
       } else if (this.lifes != 0 && this.checkPoint == 0 && this.monchi) {
+        EventsCenter.emit('die', true)
         this.monchi?.setFlipY(false);
         this.monchi?.setBounceY(0);
         this.gravityDown = true;
@@ -272,33 +262,32 @@ class Game extends Phaser.Scene {
         this.cameraNormal = true;
         if (this.map) this.monchi.x = this.map.startingPoint.x;
         if (this.map) this.monchi.y = this.map.startingPoint.y;
-
       } else if (this.lifes != 0 && this.checkPoint == 1 && this.monchi && this.cameraNormal == false) {
-        this.float(null, null, 0);
+        EventsCenter.emit('die', true)
+        this.monchi.setGravityY(-2000);
+        this.time.delayedCall(0, () => {
+          this.monchi?.setFlipY(true);
+          this.gravityDown = false;
+          this.monchi?.body?.setOffset(70, 0);
+          this.monchi?.setBounceY(0);
+        });
         this.cameraNormal = true;
         this.canRot = true;
         this.rotateCam(0);
         if (this.map) this.monchi.x = this.map.checkPointPos.x;
         if (this.map) this.monchi.y = this.map.checkPointPos.y;
       } else if (this.lifes != 0 && this.checkPoint == 1 && this.monchi && this.cameraNormal) {
-        this.float(null, null, 0);
+        EventsCenter.emit('die', true)
+        this.monchi.setGravityY(-2000);
+        this.time.delayedCall(0, () => {
+          this.monchi?.setFlipY(true);
+          this.gravityDown = false;
+          this.monchi?.body?.setOffset(70, 0);
+          this.monchi?.setBounceY(0);
+        });
         this.canRot = true;
         if (this.map) this.monchi.x = this.map.checkPointPos.x;
         if (this.map) this.monchi.y = this.map.checkPointPos.y;
-      };
-
-      // Remove the object with the highest x position
-      if (this.lifes != 0 && this.map?.lifesGroup) {
-        let lifeToTheRight = null;
-        let highestX = Number.NEGATIVE_INFINITY;
-        for (let i = 0; i < this.map?.lifesGroup?.getLength(); i++) {
-          const child = (this.map?.lifesGroup?.getChildren()[i] as Phaser.GameObjects.Image);
-          if (child.x > highestX) {
-            lifeToTheRight = child;
-            highestX = child.x;
-          };
-        };
-        lifeToTheRight?.destroy()
       };
     };
   };
@@ -310,6 +299,7 @@ class Game extends Phaser.Scene {
       if (this.lifes == 0) {
         this.gameOver();
       } else if (this.lifes != 0 && this.checkPoint == 0 && this.monchi) {
+        EventsCenter.emit('die', true);
         this.monchi?.setFlipY(false);
         this.physics.world.gravity.y = 1000;
         this.monchi?.setFlipX(false);
@@ -320,6 +310,7 @@ class Game extends Phaser.Scene {
         if (this.map) this.monchi.x = this.map.startingPoint.x;
         if (this.map) this.monchi.y = this.map.startingPoint.y;
       } else if (this.lifes != 0 && this.checkPoint == 1 && this.monchi) {
+        EventsCenter.emit('die', true)
         this.monchi?.setFlipY(false);
         this.physics.world.gravity.y = 1000;
         this.monchi?.setFlipX(false);
@@ -330,94 +321,55 @@ class Game extends Phaser.Scene {
         if (this.map) this.monchi.x = this.map.checkPointPos.x;
         if (this.map) this.monchi.y = this.map.checkPointPos.y;
       };
-
-      // Remove the object with the highest x position
-      if (this.lifes != 0 && this.map?.lifesGroup) {
-        let lifeToTheRight = null;
-        let highestX = Number.NEGATIVE_INFINITY;
-        for (let i = 0; i < this.map?.lifesGroup?.getLength(); i++) {
-          const child = (this.map?.lifesGroup?.getChildren()[i] as Phaser.GameObjects.Image);
-          if (child.x > highestX) {
-            lifeToTheRight = child;
-            highestX = child.x;
-          };
-        };
-        lifeToTheRight?.destroy();
-      };
     };
   };
 
-  /*  SHOWMAP FUNCTION
 
-  showMap() {
-    
-    if (this.mapShown == false && this.map) {
-      let endPointX = 0;
-      let endPointY = 0;
-      let duration = 0;
-      if (this.levelIs == 0 || this.levelIs == 1){
-        endPointX = this.map.worldSize.width/2
-        endPointY = this.map.startingPoint.y
-        duration = 5000 + this.levelIs*5000
-      } else if (this.levelIs == 2){
-        endPointX = this.map.startingPoint.x
-        endPointY = this.map.worldSize.height/2
-        duration = 
-      }
-      const a = 2
-      this.cameras.main.pan(endPointX, endPointY, 7000, 'Linear', false, (camera, progress) => {
-        if(this.map) this.map.background.scrollFactorX = 0.1
-        if (progress == 1) {
-          this.mapShown = true;
-          if(this.map) this.map.background.scrollFactorX = 1
-        }
-      }, this.scene);
-    };
-  };
-  */
 
   create(this: Game, data: { level: number, lifes: number }) {
-
-    this.checkPoint = 0
+    this.checkPoint = 0;
 
     /* CHOSE LEVEL, LIFES AND AUDIO */
     switch (data.level) {
       case 0:
         this.map = new Tutorial(this);
-        // this.music.playMusic('songTutorial');
         break;
       case 1:
         this.map = new Mapa1(this);
-        // this.music.playMusic('songLevel1');
         break;
       case 2:
         this.map = new Mapa2(this);
-        // this.music.playMusic('songLevel2');
         break;
       default:
         this.map = new Tutorial(this);
-        // this.music.playMusic('songTutorial');
         break;
     };
 
     this.levelIs = data.level;
+    this.lifes = data.lifes;
 
     /* Audio */
-    const getMusicManagerScene = this.game.scene.getScene("MusicManager") as MusicManager
+    const getMusicManagerScene = this.game.scene.getScene("MusicManager") as MusicManager;
     if (!getMusicManagerScene.scene.isActive()) this.scene.launch("MusicManager").sendToBack();
     else if (this.levelIs == 0) {
-      getMusicManagerScene.playMusic("songTutorial")
+      getMusicManagerScene.playMusic("songTutorial");
     } else if (this.levelIs == 1) {
-      getMusicManagerScene.playMusic("songLevel1")
+      getMusicManagerScene.playMusic("songLevel1");
     } else if (this.levelIs == 2) {
-      getMusicManagerScene.playMusic("songLevel2")
+      getMusicManagerScene.playMusic("songLevel2");
     }
 
-    this.TutorialTextScene = this.game.scene.getScene("TutorialText");
-    this.scene.launch(this.TutorialTextScene);
+    /* UI SCENE  */
+    const UIScene = this.game.scene.getScene("UIScene");
+    this.scene.launch(UIScene, { ...data, game: this });
 
-    /* CREATE MAP AND LFIES */
-    if (data.lifes) this.lifes = data.lifes;
+    /* TUTORIAL TEXTS SCENE */ 
+    if(this.levelIs == 0){
+      this.TutorialTextScene = this.game.scene.getScene("TutorialText");
+      this.scene.launch(this.TutorialTextScene);
+    }
+
+    /* CREATE MAP */
     this.map.createMap(data);
 
     /* CONTROLS */
@@ -428,45 +380,16 @@ class Game extends Phaser.Scene {
     this.canWin = false;
     this.canRot = true;
 
-    if (this.levelIs == 2 && this.monchi) {
-      console.log("entro a velocidad inicial");
-      this.monchi.setVelocity(300, 0);
-    };
 
     /* CAMERAS */
-    this.cameras.main.zoom = 0.95
+    this.cameras.main.zoom = 0.95;
     this.cameras.main.startFollow(this.monchi);
     this.cameraWidth = this.cameras.main.width;
     this.cameraHeight = this.cameras.main.height;
 
-    /* SET SIZE OF UI ACCORDING TO SCREEN SIZE */
-    /*
-    if(this.map){
-      const sizeUIWidth = (this.cameraWidth / 1920)*0.1;
-      const sizeUIHeigth = (this.cameraHeight / 1060)*0.1;
-      const sizeUI = Math.max(sizeUIHeigth,sizeUIHeigth);
-      this.map.coinUI?.setScale(sizeUI);
-    };
-    */
-
-    /* TIMER */
-    this.timerText = this.add.text(this.cameras.main.width - 120, 35, 'Time: 0', { fontSize: '32px' }).setOrigin(.5, .5).setScrollFactor(0, 0).setDepth(100).setSize(50, 50);
-    var timePassed = 0;
-    var timerEvent = this.time.addEvent({
-      delay: 1000,
-      callback: () => {
-        timePassed++;
-        this.timerText?.setText('Time: ' + timePassed);
-        this.timeLevel = timePassed;
-      },
-      callbackScope: this,
-      loop: true
-    });
-    
 
     /* COLLIDERS */
     this.map.addColliders()
-
     this.physics.world.on('worldbounds', (body: Phaser.Physics.Arcade.Sprite, top: boolean, down: boolean, left: boolean, right: boolean) => {
       if (down || top || left || right) {
         if (data.level == 1) {
@@ -478,28 +401,17 @@ class Game extends Phaser.Scene {
         };
       };
     }, this);
-
   };
 
   update(this: Game) {
-
-    //console.log("x = ", this.monchi?.x," y = " ,this.monchi?.y )
-    /*if (this.mapShown == false) {
-      this.showMap()
-    } else if (this.mapShown) {
-    */
     if (this.monchi && this.map) {
       if (this.monchi.x > this.map.checkPointPos.x) {
         this.checkPoint = 1;
       };
     };
-    if (this.timerText && this.cameraNormal) {
-      this.timerText.setPosition(this.cameras.main.width - 120, 35);
-    } else if (this.timerText && this.cameraNormal == false) {
-      this.timerText.setPosition(120, this.cameraHeight - 50);
-    };
     if (this.map) this.map.update();
     if (this.EscKeyboard) this.EscKeyboard.on("down", () => {
+      this.UIScene?.scene.restart();
       this.scene.start("Menu");
     })
   };

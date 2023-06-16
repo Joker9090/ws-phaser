@@ -1,9 +1,8 @@
 
 import Phaser from "phaser";
-import AsteroidGenerator, { AsteroidGeneratorConfig } from "../assets/AsteroidGenerator";
 import Floor, { FloorConfig } from "../assets/Floor";
 import LargeFloor, { LargeFloorConfig } from "../assets/LargeFloor";
-import UI, { UIConfig } from "../assets/UI";
+import UIScene from "../UIScene";
 import Game from "../Game";
 // Scene in class
 class Tutorial {
@@ -25,8 +24,6 @@ class Tutorial {
   changer?: Phaser.GameObjects.Image;
   portalInit?: Phaser.Physics.Arcade.Group;
   fireballGroup?: Phaser.Physics.Arcade.Group;
-  gravityArrow?: Phaser.GameObjects.Image;
-  coinUI?: Phaser.GameObjects.Image;
   lifesQty?: number;
   startingPoint = {
     x: 600, //600
@@ -38,7 +35,7 @@ class Tutorial {
   };
   background: Phaser.GameObjects.Image;
   sideGrav: boolean = false;
-
+  UIScene: UIScene;
   tutorialState: number = 1;
   timedEvent?: Phaser.Time.TimerEvent;
   previewCamara?: Phaser.Cameras.Scene2D.Camera;
@@ -50,7 +47,7 @@ class Tutorial {
 
   constructor(scene: Game) {
     this.scene = scene;
-
+    this.UIScene = this.scene.game.scene.getScene("UIScene") as UIScene
     /* World size*/
     this.scene.physics.world.setBounds(0, 0, this.worldSize.width, this.worldSize.height);
 
@@ -60,7 +57,6 @@ class Tutorial {
     this.debugGraphics.fillRect(0, 0, this.worldSize.width, this.worldSize.height);
     /* Debug */
     this.background = this.scene.add.image(this.startingPoint.x, this.startingPoint.y, "background").setOrigin(0.5, 0.5);
-
   };
 
   animateBackground(player: Phaser.GameObjects.Sprite) {
@@ -71,6 +67,7 @@ class Tutorial {
     this.background.setPosition((x + calcDiffX), (y + calcDiffY));
   };
 
+/*
   createUI(lifes: number) {
     this.lifesQty = lifes
     let quantityLifes = 0
@@ -116,6 +113,7 @@ class Tutorial {
 
     }
   }
+*/
 
   createMap(data: { level: number, lifes: number }) {
 
@@ -124,7 +122,6 @@ class Tutorial {
     this.pisos3 = this.scene.physics.add.group({ allowGravity: false });
     this.coin = this.scene.physics.add.group({ allowGravity: false })
     this.portal = this.scene.physics.add.group({ allowGravity: false });
-    this.lifesGroup = this.scene.add.group()
     this.fireballGroup = this.scene.physics.add.group({ allowGravity: false });
     this.portalInit = this.scene.physics.add.group({ allowGravity: false });
     this.fireballAct = this.scene.physics.add.group({ allowGravity: false });
@@ -243,8 +240,6 @@ class Tutorial {
     this.fireballTextActivator = new Floor(this.scene, fireballTextConfig, this.fireballAct).setVisible(false)
     this.fireballTextActivator.hasEvent = "Show_Tutorial_Text_4";
 
-    /* UI */
-    this.createUI(data.lifes)
   };
 
   fireballActFunction(){
@@ -257,10 +252,8 @@ class Tutorial {
       if (this.portal) this.portal.setTint(0xff0000);
       if (this.fireballAct) this.scene.physics.add.overlap(this.scene.monchi, this.fireballAct, this.scene.fireballActFun, () => true, this.scene);
       if (this.pisos) this.scene.physics.add.collider(this.scene.monchi, this.pisos, this.scene.touch, () => true, this.scene);
-
       if (this.pisos2) this.scene.physics.add.collider(this.scene.monchi, this.pisos2, (a, b) => this.scene.float(a, b, 500), () => true, this.scene);
       if (this.pisos3) this.scene.physics.add.collider(this.scene.monchi, this.pisos3, this.scene.noFloatTutorial, () => true, this.scene);
-
       if (this.coin) this.scene.physics.add.overlap(this.scene.monchi, this.coin, this.scene.coinCollected, () => true, this.scene);
       if (this.portal) this.scene.physics.add.overlap(this.scene.monchi, this.portal, () => this.scene.win("Congrats! You've finished the tutorial"), () => true, this.scene);
     }
@@ -287,20 +280,6 @@ class Tutorial {
     this.showMap()
 
     if (this.tutorialState == 1) {
-
-      if (this.scene.gravityDown == false) {
-        this.gravityArrow?.setRotation(-Math.PI / 2)
-      } else {
-        this.gravityArrow?.setRotation(Math.PI / 2)
-      };
-
-      if (this.coinUI) {
-        if (this.scene.canWin || this.scene.canNextLevel) {
-          this.coinUI?.clearTint();
-        } else {
-          this.coinUI?.setTint().setTint(Phaser.Display.Color.GetColor(0, 0, 0));
-        };
-      };
       if (this) {
         if (this.scene.monchi) {
           this.scene.monchi.checkMove(this.scene.cursors);

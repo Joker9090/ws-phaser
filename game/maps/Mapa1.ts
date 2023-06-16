@@ -3,9 +3,9 @@ import Phaser from "phaser";
 import AsteroidGenerator, { AsteroidGeneratorConfig } from "../assets/AsteroidGenerator";
 import Floor, { FloorConfig } from "../assets/Floor";
 import LargeFloor, { LargeFloorConfig } from "../assets/LargeFloor";
-import UI, { UIConfig } from "../assets/UI";
 import Game from "../Game";
-// Scene in class
+import UIScene from "../UIScene"
+
 class Mapa1 {
   isJumping = false;
   debugGraphics: Phaser.GameObjects.Graphics;
@@ -22,14 +22,7 @@ class Mapa1 {
   portal?: Phaser.Physics.Arcade.Group;
   movingFloor?: Phaser.Physics.Arcade.Group;
   movingFloorRot?: Phaser.Physics.Arcade.Group;
-  lifesGroup?: Phaser.GameObjects.Group;
-  gravityArrow?: Phaser.GameObjects.Image;
-  coinUI?: Phaser.GameObjects.Image;
-  UIboundsCoin: number = 0;
-  UIboundsArrow: number = 0;
-  UIboundsHeart: number = 0;
-  ArrowOriginalPos?: number;
-  CoinOriginalPos?: number;
+  UIScene?: UIScene
   amountLifes: number = 0;
   sideGrav: boolean = false
   startingPoint = {
@@ -41,9 +34,10 @@ class Mapa1 {
     y: 600, //800
   };
   background: Phaser.GameObjects.Image;
+
   constructor(scene: Game) {
     this.scene = scene;
-
+    this.UIScene = this.scene.game.scene.getScene("UIScene") as UIScene
     /* World size*/
     this.scene.physics.world.setBounds(0, 0, this.worldSize.width, this.worldSize.height);
 
@@ -52,6 +46,7 @@ class Mapa1 {
     this.debugGraphics.fillStyle(0x00ff00, 0.5);
     this.debugGraphics.fillRect(0, 0, this.worldSize.width, this.worldSize.height);
     /* Debug */
+
     this.background = this.scene.add.image(this.startingPoint.x, this.startingPoint.y, "background").setOrigin(0.5, 0.5);
   };
 
@@ -77,56 +72,8 @@ class Mapa1 {
     };
   };
 
-  createUI(lifes: number) {
-    let quantityLifes = 0;
-    let xpos = 0;
-
-    /* LIFES */
-    if (this.lifesGroup) {
-      for (let i: number = 0; i < lifes; i++) {
-        quantityLifes += 1;
-        xpos = 100 + i * 50;
-        const lifeConfig: UIConfig = {
-          texture: "heart",
-          pos: { x: xpos, y: 50 },
-          scale: .1
-        };
-        const coras = new UI(this.scene, lifeConfig, this.lifesGroup)
-          .setScrollFactor(0, 0);
-
-        this.UIboundsHeart = coras.getBounds().height;
-      };
-      this.lifesGroup.setDepth(100);
-
-      /* COIN */
-      const coinConf: UIConfig = {
-        texture: "coin",
-        pos: { x: quantityLifes * 50 + 150, y: 50 },
-        scale: .1
-      };
-      this.CoinOriginalPos = (quantityLifes * 50 + 150)
-      this.coinUI = new UI(this.scene, coinConf)
-        .setTint(Phaser.Display.Color.GetColor(0, 0, 0))
-        .setScrollFactor(0, 0)
-        .setDepth(100);
-      this.UIboundsCoin = this.coinUI.getBounds().height;
-
-      /* ARROW */
-      const arrowConfig: UIConfig = {
-        texture: "arrow",
-        pos: { x: quantityLifes * 50 + 250, y: 50 },
-        scale: .1
-      };
-      this.ArrowOriginalPos = (quantityLifes * 50 + 250)
-      this.gravityArrow = new UI(this.scene, arrowConfig)
-        .setRotation(Math.PI / 2)
-        .setScrollFactor(0, 0)
-        .setDepth(100);
-      this.UIboundsArrow = this.gravityArrow.getBounds().height;
-    };
-  };
-
   createMap(data: { level: number, lifes: number }) {
+
     this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
     this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });
     this.pisos = this.scene.physics.add.group({ allowGravity: false });
@@ -135,7 +82,6 @@ class Mapa1 {
     this.coin = this.scene.physics.add.group({ allowGravity: false });
     this.portal = this.scene.physics.add.group({ allowGravity: false });
     this.pisos4 = this.scene.physics.add.group({ allowGravity: false });
-    this.lifesGroup = this.scene.add.group();
 
     this.amountLifes = data.lifes;
 
@@ -405,49 +351,9 @@ class Mapa1 {
     const c2 = new AsteroidGenerator(this.scene, c2Config);
     c2.start();
 
-    //UI
-
-    this.createUI(data.lifes);
-
-
-
-
   };
 
   update() {
-
-    /* DEBUGGER
-    if (this.scene.monchi) {
-      this.scene.monchi.checkMoveCreative(this.scene.cursors);
-    };
-    */
-
-    if (this.scene.cameraNormal == false) {
-      this.lifesGroup?.setX(this.scene.cameraWidth - this.amountLifes * 50 - 50, 51);
-      this.lifesGroup?.setY(this.scene.cameraHeight - this.UIboundsHeart, 0);
-      this.gravityArrow?.setX(this.scene.cameraWidth - this.amountLifes * 50 - 250);
-      this.gravityArrow?.setY(this.scene.cameraHeight - this.UIboundsArrow + 5);
-      this.coinUI?.setX(this.scene.cameraWidth - this.amountLifes * 50 - 150);
-      this.coinUI?.setY(this.scene.cameraHeight - this.UIboundsCoin + 10);
-    } else if (this.scene.cameraNormal) {
-      this.lifesGroup?.setX(100, 51);
-      this.lifesGroup?.setY(50, 0);
-      this.gravityArrow?.setX(this.ArrowOriginalPos);
-      this.gravityArrow?.setY(50);
-      this.coinUI?.setX(this.CoinOriginalPos);
-      this.coinUI?.setY(50);
-    }
-    if (this.coinUI) {
-      if (this.scene.canWin || this.scene.canNextLevel) {
-        this.coinUI?.clearTint();
-      } else {
-        this.coinUI?.setTint().setTint(Phaser.Display.Color.GetColor(0, 0, 0));
-      };
-    };
-    if (this.scene.gravityDown == false) {
-      (this.gravityArrow as Phaser.GameObjects.Image).setRotation(Math.PI * 3 / 2);
-    } else { (this.gravityArrow as Phaser.GameObjects.Image).setRotation(Math.PI / 2) };
-
     /* Attach controls to player */
     if (this.scene.monchi && this.scene.cameraNormal) {
       this.scene.monchi.checkMove(this.scene.cursors);
@@ -456,17 +362,6 @@ class Mapa1 {
     else if (this.scene.monchi && this.scene.cameraNormal == false) {
       this.scene.monchi?.checkMoveRot(this.scene.cursors);
       this.animateBackground(this.scene.monchi);
-    };
-    if (this.lifesGroup && this.scene.cameraNormal == false) {
-      for (let i = 0; i < this.lifesGroup.getChildren().length; i++) {
-        (this.lifesGroup?.getChildren()[i] as Phaser.GameObjects.Image).setRotation(Math.PI);
-      };
-      if (this.scene.timerText) this.scene.timerText.setRotation(Math.PI);
-    } else if (this.lifesGroup) {
-      for (let i = 0; i < this.lifesGroup.getChildren().length; i++) {
-        (this.lifesGroup?.getChildren()[i] as Phaser.GameObjects.Image).setRotation(0);
-      };
-      if (this.scene.timerText) this.scene.timerText.setRotation(0);
     };
   };
 };

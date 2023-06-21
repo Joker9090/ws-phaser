@@ -95,7 +95,6 @@ class Game extends Phaser.Scene {
   rotateCam(time: number) {
     this.cameraNormal = false;
     if (this.canRot) {
-      EventsCenter.emit('rotateCamera', true)
       for (let i = 0; i < 25; i++) {
         this.time.delayedCall(time * i, () => ((rotate) => {
           this.cameras.main.setRotation(rotate);
@@ -127,7 +126,8 @@ class Game extends Phaser.Scene {
     this.checkPoint = 0;
     this.scene.restart();
     this.timeLevel = 0;
-    this.scene.switch("GameOver");
+    EventsCenter.emit('gameOver', true)
+    this.scene.start("GameOver");
     this.canWin = false;
     this.canNextLevel = false;
   };
@@ -179,6 +179,7 @@ class Game extends Phaser.Scene {
       this.timeLevel = 0;
       this.cameraNormal = true;
       this.checkPoint = 0;
+      EventsCenter.emit('resetTimer', true)
       this.canWin = false;
       this.canNextLevel = false;
       this.scene.restart({ level: 2, lifes: this.lifes });
@@ -226,11 +227,11 @@ class Game extends Phaser.Scene {
       if (this.lifes == 0) {
         this.gameOver();
       } else if (this.lifes != 0 && this.gravityDown && this.monchi) {
-        EventsCenter.emit('die', true)
+        EventsCenter.emit('die', this.lifes)
         if (this.map) this.monchi.x = this.map.startingPoint.x;
         if (this.map) this.monchi.y = this.map.startingPoint.y;
       } else if (this.lifes != 0 && !this.gravityDown && this.monchi) {
-        EventsCenter.emit('die', true)
+        EventsCenter.emit('die', this.lifes)
         if (this.map) this.monchi.x = this.map.startingPoint.x;
         if (this.map) this.monchi.y = this.map.startingPoint.y;
         if (this.monchi) {
@@ -263,7 +264,7 @@ class Game extends Phaser.Scene {
         if (this.map) this.monchi.x = this.map.startingPoint.x;
         if (this.map) this.monchi.y = this.map.startingPoint.y;
       } else if (this.lifes != 0 && this.checkPoint == 1 && this.monchi && this.cameraNormal == false) {
-        EventsCenter.emit('die', true)
+        EventsCenter.emit('die', this.lifes)
         this.monchi.setGravityY(-2000);
         this.time.delayedCall(0, () => {
           this.monchi?.setFlipY(true);
@@ -277,7 +278,7 @@ class Game extends Phaser.Scene {
         if (this.map) this.monchi.x = this.map.checkPointPos.x;
         if (this.map) this.monchi.y = this.map.checkPointPos.y;
       } else if (this.lifes != 0 && this.checkPoint == 1 && this.monchi && this.cameraNormal) {
-        EventsCenter.emit('die', true)
+        EventsCenter.emit('die', this.lifes)
         this.monchi.setGravityY(-2000);
         this.time.delayedCall(0, () => {
           this.monchi?.setFlipY(true);
@@ -299,7 +300,7 @@ class Game extends Phaser.Scene {
       if (this.lifes == 0) {
         this.gameOver();
       } else if (this.lifes != 0 && this.checkPoint == 0 && this.monchi) {
-        EventsCenter.emit('die', true);
+        EventsCenter.emit('die', this.lifes);
         this.monchi?.setFlipY(false);
         this.physics.world.gravity.y = 1000;
         this.monchi?.setFlipX(false);
@@ -310,7 +311,7 @@ class Game extends Phaser.Scene {
         if (this.map) this.monchi.x = this.map.startingPoint.x;
         if (this.map) this.monchi.y = this.map.startingPoint.y;
       } else if (this.lifes != 0 && this.checkPoint == 1 && this.monchi) {
-        EventsCenter.emit('die', true)
+        EventsCenter.emit('die', this.lifes)
         this.monchi?.setFlipY(false);
         this.physics.world.gravity.y = 1000;
         this.monchi?.setFlipX(false);
@@ -323,8 +324,6 @@ class Game extends Phaser.Scene {
       };
     };
   };
-
-
 
   create(this: Game, data: { level: number, lifes: number }) {
     this.checkPoint = 0;
@@ -361,13 +360,14 @@ class Game extends Phaser.Scene {
 
     /* UI SCENE  */
     const UIScene = this.game.scene.getScene("UIScene");
-    this.scene.launch(UIScene, { ...data, game: this });
+    if (!UIScene.scene.isActive()) this.scene.launch(UIScene, { ...data, game: this })
+    else if (UIScene.scene.isActive()) this.scene.restart(UIScene);
 
-    /* TUTORIAL TEXTS SCENE */ 
-    if(this.levelIs == 0){
+    /* TUTORIAL TEXTS SCENE */
+    if (this.levelIs == 0) {
       this.TutorialTextScene = this.game.scene.getScene("TutorialText");
       this.scene.launch(this.TutorialTextScene);
-    }
+    };
 
     /* CREATE MAP */
     this.map.createMap(data);
@@ -404,6 +404,14 @@ class Game extends Phaser.Scene {
   };
 
   update(this: Game) {
+    if (this.levelIs != 2) {
+      if (this.gravityDown) {
+        EventsCenter.emit('gravityArrow', "down");
+      } else if (!this.gravityDown) {
+        EventsCenter.emit('gravityArrow', "up");
+      };
+    };
+
     if (this.monchi && this.map) {
       if (this.monchi.x > this.map.checkPointPos.x) {
         this.checkPoint = 1;
@@ -411,7 +419,7 @@ class Game extends Phaser.Scene {
     };
     if (this.map) this.map.update();
     if (this.EscKeyboard) this.EscKeyboard.on("down", () => {
-      this.UIScene?.scene.restart();
+      EventsCenter.emit('gameOver', true)
       this.scene.start("Menu");
     })
   };

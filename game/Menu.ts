@@ -100,26 +100,20 @@ export default class MainMenuScene extends Phaser.Scene {
 
     selectButton(index: number) {
         const currentButton = this.buttons[this.selectedButtonIndex];
-
         // set the current selected button to a white tint
         currentButton.setTint(0xffffff);
-
         const button = this.buttons[index];
-
         // set the newly selected button to a green tint
         button.setTint(0x66ff7f);
-
         // move the hand cursor to the right edge
         this.buttonSelector.x = button.x + button.displayWidth * 0.5;
         this.buttonSelector.y = button.y + 10;
-
         // store the new selected index
         this.selectedButtonIndex = index;
     };
 
     selectNextButton(change = 1) {
         let index = this.selectedButtonIndex + change;
-
         // wrap the index to the front or end of array
         if (index >= this.buttons.length) {
             index = 0;
@@ -127,21 +121,18 @@ export default class MainMenuScene extends Phaser.Scene {
         else if (index < 0) {
             index = this.buttons.length - 1;
         };
-
         this.selectButton(index);
     };
 
     confirmSelection() {
         // get the currently selected button
         const button = this.buttons[this.selectedButtonIndex];
-
         // emit the 'selected' event
         button.emit('selected');
     };
 
     update() {
         //window.tutorial.setPosition(this.cameras.main.width/2,this.cameras.main.height/2);
-
         if (this.monchi) {
             this.progress = this.progress + .0031415;
             this.monchi.x = this.monchi.x + .5;

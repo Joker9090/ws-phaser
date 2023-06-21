@@ -21,9 +21,9 @@ class Mapa2 {
   changer?: Phaser.GameObjects.Image;
   portalInit?: Phaser.Physics.Arcade.Group;
   fireballGroup?: Phaser.Physics.Arcade.Group;
-  
+
   UIScene?: UIScene
-  
+
   startingPoint = {
     x: 400, //400
     y: 140, //140
@@ -34,11 +34,11 @@ class Mapa2 {
   };
   background: Phaser.GameObjects.Image;
   sideGrav: boolean = false;
-  
+
   constructor(scene: Game) {
     this.scene = scene;
     this.UIScene = this.scene.game.scene.getScene("UIScene") as UIScene
-    
+
     /* World size*/
     this.scene.physics.world.setBounds(0, 0, this.worldSize.width, this.worldSize.height);
 
@@ -313,7 +313,7 @@ class Mapa2 {
         if (this.sideGrav) {
           this.scene.monchi.checkSideGravity(this.scene.cursors);
         } else if (this.scene.timeLevel < 1) {
-          this.scene.monchi.setVelocityX(300);
+          this.scene.monchi.setVelocityX(200); //acá es donde está rota la velocidad inicial del nivel 2
         }
         else if (this.scene.timeLevel >= 1) {
           this.scene.monchi.checkMove(this.scene.cursors);

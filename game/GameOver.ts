@@ -22,13 +22,11 @@ export default class GameOver extends Phaser.Scene {
 
     create(this: GameOver) {
         /* Audio */
-        /* Audio */
-
-        const getMusicManagerScene = this.game.scene.getScene("MusicManager") as MusicManager
+        const getMusicManagerScene = this.game.scene.getScene("MusicManager") as MusicManager;
         if (!getMusicManagerScene.scene.isActive()) this.scene.launch("MusicManager").sendToBack();
         else {
-            getMusicManagerScene.playMusic("songLose")
-        }
+            getMusicManagerScene.playMusic("songLose");
+        };
 
         this.physics.world.setBounds(0, 0, 5000, 2500);
         this.add.image(900, 500, "background").setScale(.7);

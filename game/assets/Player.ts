@@ -1,6 +1,7 @@
 
 import Phaser from "phaser";
 import Game from "../Game";
+import EventsCenter from "../EventsCenter";
 
 // Scene in class
 class Player extends Phaser.Physics.Arcade.Sprite {
@@ -175,13 +176,13 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       if (left.isDown) {
         this.setGravityX(-1300);
         this.setFlipY(true);
-        this.scene.map?.gravityArrow?.setRotation(Math.PI);
+        EventsCenter.emit('gravityArrow', "left");
         this.setOffset(30, 40);
 
       } else if (right.isDown) {
         this.setGravityX(1300);
         this.setFlipY(false);
-        this.scene.map?.gravityArrow?.setRotation(0);
+        EventsCenter.emit('gravityArrow', "right");
         this.setOffset(80, 40);
       };
     };

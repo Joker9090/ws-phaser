@@ -21,10 +21,9 @@ export default class UIScene extends Phaser.Scene {
     UIboundsHeart: number = 0;
     ArrowOriginalPos?: number;
     CoinOriginalPos?: number;
-    amountLifes?: number;
     timeLevel: number = 0;
     timerText?: Phaser.GameObjects.Text;
-  
+
 
     constructor() {
         super({ key: 'UIScene' });
@@ -75,11 +74,33 @@ export default class UIScene extends Phaser.Scene {
         };
     };
 
-    loseLife() {
+
+    rotateArrow(direction: string) {
+        if (direction == "down") {
+            this.gravityArrow?.setRotation(Math.PI / 2);
+        } else if (direction == "up") {
+            this.gravityArrow?.setRotation(-Math.PI / 2);
+        } else if (direction == "left") {
+            this.gravityArrow?.setRotation(Math.PI);
+        } else if (direction == "right") {
+            this.gravityArrow?.setRotation(0);
+        }
+    };
+
+
+    coinCollected() {
+        this.coinUI?.clearTint()
+    };
+
+    resetTimer() {
+        this.timeLevel = 0;
+    };
+
+    loseLife(lifes: number) {
         // Remove the object with the highest x position
-        if (this.gameScene?.scene.isActive && this.lifesGroup) {
-            console.log("entro")
-            if (this.gameScene.lifes != 0) {
+        console.log("entró", lifes)
+        if (this.lifesGroup) {
+            if (lifes != 0) {
                 let lifeToTheRight = null;
                 let highestX = Number.NEGATIVE_INFINITY;
                 for (let i = 0; i < this.lifesGroup.getLength(); i++) {
@@ -89,108 +110,67 @@ export default class UIScene extends Phaser.Scene {
                         highestX = child.x;
                     };
                 };
-                console.log("destruye vida")
-                lifeToTheRight?.destroy()
+                lifeToTheRight?.destroy();
             };
-        }
+        };
+    };
+
+    closeSign(sign: number) {
+        if (sign == 1) {
+            this.UIRectangle1?.setVisible(false);
+        } else if (sign == 2) {
+            this.UIRectangle2?.setVisible(false);
+        };
+    };
+
+    showCoin() {
+        this.UIRectangle1?.setVisible(true);
     }
 
-    rotateCamera() {
-
-    };
-
-    coinCollected() {
-        this.coinUI?.clearTint()
-    };
+    showArrow() {
+        this.UIRectangle2?.setVisible(true);
+    }
 
     create(this: UIScene, data: { level: number, lifes: number, scene: Game }) {
+
         this.gameScene = data.scene;
+        this.lifesGroup = this.add.group();
+
         this.createUI(data.lifes);
-        this.amountLifes = data.lifes;
-        this.lifesGroup = this.add.group()
+
+        /* RED BOX TO SHOW UI */
+        this.UIRectangle1 = this.add.rectangle(200, 50, 260, 60, Phaser.Display.Color.GetColor(244, 15, 15), 0.5).setVisible(false);
+        this.UIRectangle2 = this.add.rectangle(400, 50, 50, 60, Phaser.Display.Color.GetColor(244, 15, 15), 0.5).setVisible(false);
+
         /* TIMER */
         this.timerText = this.add.text(this.cameras.main.width - 120, 50, 'Time: 0', { fontSize: '32px' }).setOrigin(.5, .5).setScrollFactor(0, 0).setDepth(100).setSize(50, 50);
-        var timePassed = 0;
+        this.timeLevel = 0;
         var timerEvent = this.time.addEvent({
             delay: 1000,
             callback: () => {
-                timePassed++;
-                this.timerText?.setText('Time: ' + timePassed);
-                this.timeLevel = timePassed;
+                this.timeLevel++;
+                this.timerText?.setText('Time: ' + this.timeLevel);
+                this.timeLevel = this.timeLevel;
             },
             callbackScope: this,
             loop: true
         });
 
-        EventsCenter.on('die', () => this.loseLife(), this); //removes 1 heart
-        EventsCenter.on('coinCollected', () => this.rotateCamera(), this); // clears tint in UI coin
-        EventsCenter.on('rotateGravityArrow', () => this.loseLife(), this); //has to rotate up | down | left | right
-        EventsCenter.on('rotateCamera', () => this.loseLife(), this);   //has to rotate all UI and shift it to the top of the screen once it has rotated
-        EventsCenter.on('resetTimer', () => this.loseLife(), this);  //has to reset timer when you lose or go to next level
+        /* SCENE HANDLER */
+        EventsCenter.on('gameOver', () => { this.scene.stop() }); //TA ANDANDO MALLLLLL
+
+        /* EVENTS HANDLER */
+        EventsCenter.on('gravityArrow', this.rotateArrow, this)
+        EventsCenter.on('die', this.loseLife, this);
+        EventsCenter.on('coinCollected', this.coinCollected, this);
+        EventsCenter.on('resetTimer', this.resetTimer, this);
+        EventsCenter.on('coin', this.showCoin, this);
+        EventsCenter.on('noFloat', this.showArrow, this);
+        EventsCenter.on('closeSign', this.closeSign, this);
     };
 
     update() {
-        /* FUNCTIONS TO BE REPLACED WITH EVENTS LISTENERS
-        
-        console.log(this.gameScene?.scene.isActive)
-        if (this.timerText && this.gameScene?.cameraNormal) {
-            this.timerText.setPosition(this.cameras.main.width - 120, 35);
-        } else if (this.timerText && this.cameraNormal == false) {
-            this.timerText.setPosition(120, this.cameraHeight - 50);
-        };
-        if (this.gameScene?.cameraNormal == false && this.gameScene) {
-            if (this.lifesGroup) {
-                for (let i = 0; i < this.lifesGroup.getChildren().length; i++) {
-                    (this.lifesGroup?.getChildren()[i] as Phaser.GameObjects.Image).setRotation(Math.PI);
-                };
-            };
-            if (this.gameScene.timerText) this.gameScene.timerText.setRotation(Math.PI);
-        } else if (this.lifesGroup) {
-            for (let i = 0; i < this.lifesGroup.getChildren().length; i++) {
-                (this.lifesGroup?.getChildren()[i] as Phaser.GameObjects.Image).setRotation(0);
-            };
-            if (this.gameScene?.timerText) this.gameScene.timerText.setRotation(0);
-        };
-        if (this.gameScene) {
-            if (this.gameScene.gravityDown == false) {
-                this.gravityArrow?.setRotation(-Math.PI / 2)
-            } else {
-                this.gravityArrow?.setRotation(Math.PI / 2)
-            };
 
-            if (this.coinUI) {
-                if (this.gameScene?.canWin || this.gameScene?.canNextLevel) {
-                    this.coinUI?.clearTint();
-                } else {
-                    this.coinUI?.setTint().setTint(Phaser.Display.Color.GetColor(0, 0, 0));
-                };
-            };
-            if (this.gameScene?.cameraNormal == false && this.gameScene) {
-                if (this.amountLifes) this.lifesGroup?.setX(this.gameScene.cameraWidth - this.amountLifes * 50 - 50, 51);
-                this.lifesGroup?.setY(this.gameScene.cameraHeight - this.UIboundsHeart, 0);
-                if (this.amountLifes) this.gravityArrow?.setX(this.gameScene.cameraWidth - this.amountLifes * 50 - 250);
-                this.gravityArrow?.setY(this.gameScene.cameraHeight - this.UIboundsArrow + 5);
-                if (this.amountLifes) this.coinUI?.setX(this.gameScene.cameraWidth - this.amountLifes * 50 - 150);
-                this.coinUI?.setY(this.gameScene.cameraHeight - this.UIboundsCoin + 10);
-            } else if (this.gameScene?.cameraNormal) {
-                this.lifesGroup?.setX(100, 51);
-                this.lifesGroup?.setY(50, 0);
-                this.gravityArrow?.setX(this.ArrowOriginalPos);
-                this.gravityArrow?.setY(50);
-                this.coinUI?.setX(this.CoinOriginalPos);
-                this.coinUI?.setY(50);
-            }
-            if (this.coinUI) {
-                if (this.gameScene?.canWin || this.gameScene?.canNextLevel) {
-                    this.coinUI?.clearTint();
-                } else {
-                    this.coinUI?.setTint().setTint(Phaser.Display.Color.GetColor(0, 0, 0));
-                };
-            };
-            if (this.gameScene?.gravityDown == false) {
-                (this.gravityArrow as Phaser.GameObjects.Image).setRotation(Math.PI * 3 / 2);
-            } else { (this.gravityArrow as Phaser.GameObjects.Image).setRotation(Math.PI / 2) };
-        };*/
     };
 };
 

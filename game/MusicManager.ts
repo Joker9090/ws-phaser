@@ -17,13 +17,13 @@ export default class MusicManager extends Phaser.Scene {
     playMusic(name: string) {
         if (this.music) {
             this.music.stop();
-        }
+        };
         this.music = this.sound.add(name).setVolume(0.05);
         this.music.play();
-    }
+    };
 
     create(/* {song} */) {
-        this.playMusic("songMenu")
-    }
+        this.playMusic("songMenu");
+    };
 };
 

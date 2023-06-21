@@ -129,7 +129,7 @@ class SceneLoader extends Phaser.Scene {
       });
     };
     /*Load Fonts*/
-    const ArcadeFont = this.add.text(0, 0, '.', { fontFamily: 'Arcade', })
+    const ArcadeFont = this.add.text(0, 0, ':)', { fontFamily: 'Arcade', })
   };
 
   create(this: SceneLoader, { level }: any) {

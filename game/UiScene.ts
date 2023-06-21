@@ -5,11 +5,13 @@ import SceneEvents from "./events/EventCenter";
 class Ui extends Phaser.Scene {
     hearts?: Phaser.GameObjects.Group
     quantity: number = 2
+    currentIndex: number = 0;
     constructor() {
         super({ key: "Ui" })
     }
 
     create() {
+        this.currentIndex = 0;
         this.hearts = this.add.group({ classType: Phaser.GameObjects.Image })
         const width = this.game.canvas.getBoundingClientRect().width
         const height = this.game.canvas.getBoundingClientRect().height
@@ -29,29 +31,26 @@ class Ui extends Phaser.Scene {
         iconBG.on("pointerdown", () => {
             console.log("iconBG clicked!");
         });
-
         const updateHealth = () => {
-            const hearts = this.hearts.getChildren() ; // Get an array of heart objects
-            const fullHeartTexture = this.textures.get("fullHeart");
-            const emptyHeartTexture = this.textures.get("emptyHeart");
+            if (this.hearts) {
+                const hearts = this.hearts.getChildren();
+                const currentHeart = hearts[this.currentIndex] as Phaser.GameObjects.Image;
 
-            for (let i = 0; i < hearts.length; i++) {
-                const heart = hearts[i];
+                if (currentHeart) {
+                    currentHeart.setTexture("emptyHeart");
+                }
 
-                if (heart.texture.key === "fullHeart") {
-                    heart.setTexture(emptyHeartTexture); // Change the texture to emptyHeart
-                    break; // Change only one heart at a time
+                this.currentIndex = (this.currentIndex + 1) % hearts.length;
+
+                console.log(this.currentIndex, "currentIndex")
+
+                if (this.currentIndex === 2) {
+                    hearts.forEach((heart: Phaser.GameObjects.Components.Texture) => {
+                        heart.setTexture("fullHeart");
+                    });
                 }
             }
-
-            // Check if all hearts are changed, then reset them back to fullHeart
-            const allHeartsEmpty = hearts.every((heart) => heart.texture.key === "emptyHeart");
-
-            if (allHeartsEmpty) {
-                hearts.forEach((heart) => heart.setTexture(fullHeartTexture));
-            }
-        }
-
+        };
 
         SceneEvents.on("updateHealth", updateHealth, this)
 

@@ -40,7 +40,7 @@ class MapHandler {
   }
 
   createSaw() {
-    const y = Phaser.Math.Between(210, 880)
+    const y = Phaser.Math.Between(this.scene.cameras.main.height - 300, this.scene.cameras.main.height -1300)
     const saw = this.saws.create(this.scene.cameras.main.width + 100, y, "saw").setGravityY(0).setScale(0.7)
     saw.setVelocityX(-300)
     saw.setDepth(6)
@@ -95,7 +95,7 @@ class MapHandler {
 
   createSawMachine() {
     this.createSaw()
-    const t = this.config.initialDelay + Phaser.Math.Between(100, 400)
+    const t = this.config.initialDelay - Phaser.Math.Between(100, 400)
     console.log("SAW t", t)
     this.scene.time.delayedCall(t, this.createSawMachine, undefined, this)
   }

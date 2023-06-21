@@ -67,53 +67,53 @@ class Tutorial {
     this.background.setPosition((x + calcDiffX), (y + calcDiffY));
   };
 
-  /*
-    createUI(lifes: number) {
-      this.lifesQty = lifes
-      let quantityLifes = 0
-      let xpos = 0
-      if (this.lifesGroup) {
-        for (let i = 0; i < lifes; i++) {
-          quantityLifes += 1;
-          xpos = 100 + i * 50;
-          const lifeConfig: UIConfig = {
-            texture: "heart",
-            pos: { x: xpos, y: 50 },
-            scale: .1
-          };
-          const coras = new UI(this.scene, lifeConfig, this.lifesGroup)
-            .setScrollFactor(0, 0);
-          this.lifesGroup.setDepth(100);
-  
-  
-        };
-        const coinConf: UIConfig = {
-          texture: "coin",
-          pos: { x: quantityLifes * 50 + 150, y: 50 },
+/*
+  createUI(lifes: number) {
+    this.lifesQty = lifes
+    let quantityLifes = 0
+    let xpos = 0
+    if (this.lifesGroup) {
+      for (let i = 0; i < lifes; i++) {
+        quantityLifes += 1;
+        xpos = 100 + i * 50;
+        const lifeConfig: UIConfig = {
+          texture: "heart",
+          pos: { x: xpos, y: 50 },
           scale: .1
         };
-    
+        const coras = new UI(this.scene, lifeConfig, this.lifesGroup)
+          .setScrollFactor(0, 0);
+        this.lifesGroup.setDepth(100);
+
+
+      };
+      const coinConf: UIConfig = {
+        texture: "coin",
+        pos: { x: quantityLifes * 50 + 150, y: 50 },
+        scale: .1
+      };
   
-        this.coinUI = new UI(this.scene, coinConf)
-          .setTint(Phaser.Display.Color.GetColor(0, 0, 0))
-          .setScrollFactor(0, 0)
-          .setDepth(100);
-  
-  
-        const arrowConfig: UIConfig = {
-          texture: "arrow",
-          pos: { x: quantityLifes * 50 + 250, y: 50 },
-          scale: .1
-        };
-        
-        this.gravityArrow = new UI(this.scene, arrowConfig)
-          .setRotation(Math.PI / 2)
-          .setScrollFactor(0, 0)
-          .setDepth(100);
-  
-      }
+
+      this.coinUI = new UI(this.scene, coinConf)
+        .setTint(Phaser.Display.Color.GetColor(0, 0, 0))
+        .setScrollFactor(0, 0)
+        .setDepth(100);
+
+
+      const arrowConfig: UIConfig = {
+        texture: "arrow",
+        pos: { x: quantityLifes * 50 + 250, y: 50 },
+        scale: .1
+      };
+      
+      this.gravityArrow = new UI(this.scene, arrowConfig)
+        .setRotation(Math.PI / 2)
+        .setScrollFactor(0, 0)
+        .setDepth(100);
+
     }
-  */
+  }
+*/
 
   createMap(data: { level: number, lifes: number }) {
 
@@ -231,7 +231,7 @@ class Tutorial {
 
     const fireballTextConfig: FloorConfig = {
       texture: "coin",
-      pos: { x: 2750, y: 1885, },
+      pos: { x: 2750, y: 1885, }, 
       scale: { width: 0.1, height: 0.1, },
       width: 450,
       height: 600,
@@ -239,8 +239,12 @@ class Tutorial {
     };
     this.fireballTextActivator = new Floor(this.scene, fireballTextConfig, this.fireballAct).setVisible(false)
     this.fireballTextActivator.hasEvent = "Show_Tutorial_Text_4";
+
   };
 
+  fireballActFunction(){
+
+  };
 
   addColliders() {
     if (this.scene.monchi) {

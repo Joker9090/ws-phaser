@@ -92,8 +92,9 @@ export default class UIScene extends Phaser.Scene {
         this.coinUI?.clearTint()
     };
 
-    resetTimer() {
+    nextLevel() {
         this.timeLevel = 0;
+        this.coinUI?.setTint(Phaser.Display.Color.GetColor(0, 0, 0))
     };
 
     loseLife(lifes: number) {
@@ -157,13 +158,13 @@ export default class UIScene extends Phaser.Scene {
         });
 
         /* SCENE HANDLER */
-        EventsCenter.on('gameOver', () => { this.scene.stop() }); //TA ANDANDO MALLLLLL
+        //EventsCenter.on('gameOver', () => { this.scene.stop() }); //TA ANDANDO MALLLLLL
 
         /* EVENTS HANDLER */
         EventsCenter.on('gravityArrow', this.rotateArrow, this)
         EventsCenter.on('die', this.loseLife, this);
         EventsCenter.on('coinCollected', this.coinCollected, this);
-        EventsCenter.on('resetTimer', this.resetTimer, this);
+        EventsCenter.on('nextLevel', this.nextLevel, this);
         EventsCenter.on('coin', this.showCoin, this);
         EventsCenter.on('noFloat', this.showArrow, this);
         EventsCenter.on('closeSign', this.closeSign, this);

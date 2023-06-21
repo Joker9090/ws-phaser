@@ -23,6 +23,11 @@ export default class TutorialText extends Phaser.Scene {
   };
 
   DisplayText(param: number) {
+    console.log("entro")
+    if (param <= 3){
+      this.gameScene?.scene.pause();
+      this.tutorialTextBox?.setVisible(true);
+    }
     if (param == 0) {
       this.tutorialTextBox?.setTextBox('Orange platforms are special since they activate special effects... Press space to continue');
     } else if (param == 1) {

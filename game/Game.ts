@@ -179,7 +179,7 @@ class Game extends Phaser.Scene {
       this.timeLevel = 0;
       this.cameraNormal = true;
       this.checkPoint = 0;
-      EventsCenter.emit('resetTimer', true)
+      EventsCenter.emit('nextLevel', true)
       this.canWin = false;
       this.canNextLevel = false;
       this.scene.restart({ level: 2, lifes: this.lifes });
@@ -360,8 +360,7 @@ class Game extends Phaser.Scene {
 
     /* UI SCENE  */
     const UIScene = this.game.scene.getScene("UIScene");
-    if (!UIScene.scene.isActive()) this.scene.launch(UIScene, { ...data, game: this })
-    else if (UIScene.scene.isActive()) this.scene.restart(UIScene);
+    if (!UIScene.scene.isActive()) this.scene.launch(UIScene, { ...data, game: this });
 
     /* TUTORIAL TEXTS SCENE */
     if (this.levelIs == 0) {

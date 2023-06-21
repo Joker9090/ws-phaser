@@ -3,6 +3,7 @@ import MusicManager from "./MusicManager";
 
 export default class WonScene extends Phaser.Scene {
     cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
+    container?: Phaser.GameObjects.Container;
     constructor() {
         super({ key: 'Won' });
 
@@ -24,18 +25,28 @@ export default class WonScene extends Phaser.Scene {
         if (!getMusicManagerScene.scene.isActive()) this.scene.launch("MusicManager").sendToBack();
         else { getMusicManagerScene.playMusic("songWon"); };
 
+        this.container = this.add.container(0,0).setDepth(999)
 
         this.physics.world.setBounds(0, 0, 5000, 2500);
         this.add.image(900, 500, "background").setScale(.7);
-        this.add.text(this.cameras.main.width / 2, this.cameras.main.height / 2, data.text, { fontSize: '35px' })
-            .setOrigin(0.5)
-            .setScale(1);
-        this.add.text(this.cameras.main.width / 2, this.cameras.main.height / 2 + 200, "Press SPACE to play again", { fontSize: '22px' })
-            .setOrigin(0.5)
-            .setScale(1);
+        const text1 = this.add.text(0,0, data.text, { fontSize: '35px' })
+        .setOrigin(0.5)
+        .setScale(1);
+        const text2 = this.add.text(0,200, "Press SPACE to play again", { fontSize: '22px' })
+        .setOrigin(0.5)
+        .setScale(1);
+        this.container?.add([text1,text2]);
     };
-
+    
     update() {
+        if (this.container) {
+            if (this.cameras.main) {
+               this.container.setPosition(this.cameras.main.width/2 ,this.cameras.main.height/3);
+               if(this.cameras.main.width < this.cameras.main.height){
+                   this.container.setScale(this.cameras.main.width / this.cameras.main.height)
+               }
+            }
+        }
         if (this.cursors) {
             const space = this.cursors.space;
             /*Space*/

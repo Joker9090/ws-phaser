@@ -24,7 +24,7 @@ export default class TutorialText extends Phaser.Scene {
 
   DisplayText(param: number) {
     console.log("entro")
-    if (param <= 3){
+    if (param <= 3) {
       this.gameScene?.scene.pause();
       this.tutorialTextBox?.setVisible(true);
     }
@@ -59,6 +59,13 @@ export default class TutorialText extends Phaser.Scene {
   };
 
   update() {
+    if (this.tutorialTextBox) {
+      if (this.cameras.main.width < this.cameras.main.height) {
+        this.tutorialTextBox.setScale(0.8 * this.cameras.main.width / this.cameras.main.height);
+        this.tutorialTextBox.setPosition(220, 230);
+      };
+    };
+
     if (this.tutorialTextBox?.visible) {
       if (this.cursors) {
         if (this.cursors.space.isDown) {

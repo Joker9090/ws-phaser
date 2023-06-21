@@ -141,6 +141,7 @@ class Game extends Phaser.Scene {
       this.checkPoint = 0;
       this.canWin = false;
       this.canNextLevel = false;
+      EventsCenter.emit('nextLevel', true);
     };
   };
 
@@ -403,6 +404,10 @@ class Game extends Phaser.Scene {
   };
 
   update(this: Game) {
+    if (this.cameras.main.width < this.cameras.main.height) {
+      this.cameras.main.zoom = this.cameras.main.width / this.cameras.main.height
+  }
+
     if (this.levelIs != 2) {
       if (this.gravityDown) {
         EventsCenter.emit('gravityArrow', "down");

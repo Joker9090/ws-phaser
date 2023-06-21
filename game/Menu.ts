@@ -10,8 +10,13 @@ export default class MainMenuScene extends Phaser.Scene {
     buttonSelector!: Phaser.GameObjects.Image;
     monchi?: Phaser.GameObjects.Sprite;
     progress: number = 0;
-
-
+    tutorial?: Phaser.GameObjects.Image;
+    level1?: Phaser.GameObjects.Image;
+    level2?: Phaser.GameObjects.Image;
+    textTut?: Phaser.GameObjects.Text;
+    textLvl1?: Phaser.GameObjects.Text;
+    textLvl2?: Phaser.GameObjects.Text;
+    container?: Phaser.GameObjects.Container;
     constructor() {
         super({ key: 'Menu' });
     };
@@ -41,6 +46,8 @@ export default class MainMenuScene extends Phaser.Scene {
         //window.scene = this
 
         /* Main Scene Menu */
+        //this.container = this.add.container(this.game.canvas.getBoundingClientRect().width/2 ,this.game.canvas.getBoundingClientRect().height/3).setDepth(999)
+        this.container = this.add.container(0,0).setDepth(999)
         this.physics.world.setBounds(0, 0, 5000, 2500);
         this.add.image(900, 500, "background").setScale(.7);
         this.monchi = this.add.sprite(100, 700, "character", 1).setScale(.5);
@@ -54,46 +61,48 @@ export default class MainMenuScene extends Phaser.Scene {
         const [widthButton, heightButton] = [250, 100];
 
         // Tutorial button
-        const Tutorial = this.add.image(width / 2, height / 2 - 100, 'glass').setDisplaySize(widthButton, heightButton);
+        this.tutorial = this.add.image(0, 0, 'glass').setDisplaySize(widthButton, heightButton);
         //window.tutorial = Tutorial
-        this.add.text(Tutorial.x, Tutorial.y, 'Tutorial').setOrigin(0.5);
+        this.textTut = this.add.text(this.tutorial.x, this.tutorial.y, 'Tutorial').setOrigin(0.5);
 
         // Play level 1 button
-        const PlayLevel1 = this.add.image(Tutorial.x, Tutorial.y + Tutorial.displayHeight + 10, 'glass').setDisplaySize(widthButton, heightButton);
-        this.add.text(PlayLevel1.x, PlayLevel1.y, 'Start level 1').setOrigin(0.5);
+        this.level1 = this.add.image(this.tutorial.x, this.tutorial.y + this.tutorial.displayHeight + 10, 'glass').setDisplaySize(widthButton, heightButton);
+        this.textLvl1 = this.add.text(this.level1.x, this.level1.y, 'Start level 1').setOrigin(0.5);
 
         // Play level 2 button
-        const PlayLevel2 = this.add.image(PlayLevel1.x, PlayLevel1.y + PlayLevel1.displayHeight + 10, 'glass').setDisplaySize(widthButton, heightButton);
-        this.add.text(PlayLevel2.x, PlayLevel2.y, 'Start level 2').setOrigin(0.5);
+        this.level2 = this.add.image(this.level1.x, this.level1.y + this.level1.displayHeight + 10, 'glass').setDisplaySize(widthButton, heightButton);
+        this.textLvl2 = this.add.text(this.level2.x, this.level2.y, 'Start level 2').setOrigin(0.5);
 
-
-        this.buttons = [Tutorial, PlayLevel1, PlayLevel2];
+        
+        this.buttons = [this.tutorial, this.level1, this.level2];
         this.buttonSelector = this.add.image(0, 0, 'cursor').setScale(.1).setRotation(-1);
         this.selectButton(0);
+        
+        this.container.add([this.tutorial, this.level1, this.level2, this.textLvl1, this.textLvl1, this.textLvl2, this.textTut, this.buttonSelector]);
 
-        Tutorial.on('selected', () => {
+        this.tutorial.on('selected', () => {
             this.scene.stop();
             this.scene.start("Game", { level: 0, lifes: 3 });
             this.selectedButtonIndex = 0
         });
 
-        PlayLevel1.on('selected', () => {
+        this.level1.on('selected', () => {
             this.scene.stop();
             this.scene.start("Game", { level: 1, lifes: 3 });
             this.selectedButtonIndex = 0
         });
 
-        PlayLevel2.on('selected', () => {
+        this.level2.on('selected', () => {
             this.scene.stop();
             this.scene.start("Game", { level: 2, lifes: 3 });
             this.selectedButtonIndex = 0
         });
 
         this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
-            PlayLevel1.off('selected')
+            this.level1?.off('selected')
         });
         this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
-            PlayLevel2.off('selected')
+            this.level2?.off('selected')
         });
 
     };
@@ -132,6 +141,15 @@ export default class MainMenuScene extends Phaser.Scene {
     };
 
     update() {
+        if (this.container) {
+            if (this.cameras.main) {
+               this.container.setPosition(this.cameras.main.width/2 ,this.cameras.main.height/3);
+               if(this.cameras.main.width < this.cameras.main.height){
+                   this.container.setScale(2*this.cameras.main.width / this.cameras.main.height)
+               }
+            }
+        }
+
         //window.tutorial.setPosition(this.cameras.main.width/2,this.cameras.main.height/2);
         if (this.monchi) {
             this.progress = this.progress + .0031415;

@@ -1,4 +1,4 @@
-import Phaser from 'phaser';
+import Phaser, { GameObjects } from 'phaser';
 import Tutorial from './maps/Tutorial'
 import UI, { UIConfig } from "./assets/UI";
 import TextBox from './assets/TextBox';
@@ -23,6 +23,7 @@ export default class UIScene extends Phaser.Scene {
     CoinOriginalPos?: number;
     timeLevel: number = 0;
     timerText?: Phaser.GameObjects.Text;
+    UIContainer?: Phaser.GameObjects.Container;
 
 
     constructor() {
@@ -45,6 +46,7 @@ export default class UIScene extends Phaser.Scene {
                 };
                 const coras = new UI(this, lifeConfig, this.lifesGroup)
                     .setScrollFactor(0, 0);
+                this.UIContainer?.add(coras)
                 this.lifesGroup?.setDepth(100);
             };
 
@@ -59,6 +61,7 @@ export default class UIScene extends Phaser.Scene {
                 .setTint(Phaser.Display.Color.GetColor(0, 0, 0))
                 .setScrollFactor(0, 0)
                 .setDepth(100);
+            this.UIContainer?.add(this.coinUI)
 
             const arrowConfig: UIConfig = {
                 texture: "arrow",
@@ -70,7 +73,7 @@ export default class UIScene extends Phaser.Scene {
                 .setRotation(Math.PI / 2)
                 .setScrollFactor(0, 0)
                 .setDepth(100);
-
+            this.UIContainer?.add(this.gravityArrow)
         };
     };
 
@@ -133,10 +136,10 @@ export default class UIScene extends Phaser.Scene {
     }
 
     create(this: UIScene, data: { level: number, lifes: number, scene: Game }) {
-
+        this.UIContainer = this.add.container(0, 0)
+        this.game.scale
         this.gameScene = data.scene;
         this.lifesGroup = this.add.group();
-
         this.createUI(data.lifes);
 
         /* RED BOX TO SHOW UI */
@@ -156,7 +159,7 @@ export default class UIScene extends Phaser.Scene {
             callbackScope: this,
             loop: true
         });
-
+        this.UIContainer.add([this.timerText, this.UIRectangle1, this.UIRectangle2]);
         /* SCENE HANDLER */
         //EventsCenter.on('gameOver', () => { this.scene.stop() }); //TA ANDANDO MALLLLLL
 
@@ -171,7 +174,11 @@ export default class UIScene extends Phaser.Scene {
     };
 
     update() {
-
+        this.timerText?.setPosition(this.cameras.main.width - this.cameras.main.width / 10, 50);
+        if (this.cameras.main.width < this.cameras.main.height) {
+            this.timerText?.setPosition(160, 100);
+            this.UIContainer?.setScale(this.cameras.main.width / this.cameras.main.height);
+        }
     };
 };
 

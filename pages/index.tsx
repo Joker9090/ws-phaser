@@ -40,7 +40,7 @@ export default function Home() {
         height: "100%",
         parent: "game-container",
         scale: {
-          mode: window.Phaser.Scale.RESIZE
+          mode: window.Phaser.Scale.NONE
         },
         scene: scenes,
         physics: {
@@ -54,15 +54,28 @@ export default function Home() {
       }
       const game = new phaser.Game(config)
       setGame(game);
+     
+      /* ola */
+
+        
+        // Escala la interfaz de usuario proporcionalmente al tamaño de la pantalla
+        
+        
+        
       /* CONTROLS THE RESIZE AND RESTART OF SCENE */
+      
       window.addEventListener("resize", () => {
         setTimeout(() => {
+          var gameWidth = window.innerWidth
+          var gameHeight = window.innerHeight
+          var ratio = gameWidth/gameHeight
+          var scaleX = window.innerWidth / gameWidth;
+          var scaleY = window.innerHeight / gameHeight;
           game.scene.getScenes(true).map((s) => {
-            game.canvas.style.width = window.innerWidth + 'px';
-            game.canvas.style.height = window.innerHeight + 'px';
-            s.scene.restart();
+            s.scale.resize(gameWidth,gameHeight);
+            s.renderer.onResize
           })
-        }, 300);
+        }, 100);
       })
     }
   }, [phaser, scenes])

@@ -134,6 +134,7 @@ export default class UIScene extends Phaser.Scene {
     showArrow() {
         this.UIRectangle2?.setVisible(true);
     }
+ 
 
     create(this: UIScene, data: { level: number, lifes: number, scene: Game }) {
         this.UIContainer = this.add.container(0, 0)
@@ -161,8 +162,16 @@ export default class UIScene extends Phaser.Scene {
         });
         this.UIContainer.add([this.timerText, this.UIRectangle1, this.UIRectangle2]);
         /* SCENE HANDLER */
-        //EventsCenter.on('gameOver', () => { this.scene.stop() }); //TA ANDANDO MALLLLLL
-
+        EventsCenter.on('gameOver', () => { 
+          EventsCenter.removeListener('gravityArrow', this.rotateArrow, this)
+          EventsCenter.removeListener('die', this.loseLife, this);
+          EventsCenter.removeListener('coinCollected', this.coinCollected, this);
+          EventsCenter.removeListener('nextLevel', this.nextLevel, this);
+          EventsCenter.removeListener('coin', this.showCoin, this);
+          EventsCenter.removeListener('noFloat', this.showArrow, this);
+          EventsCenter.removeListener('closeSign', this.closeSign, this);
+          this.scene.stop() 
+        });
         /* EVENTS HANDLER */
         EventsCenter.on('gravityArrow', this.rotateArrow, this)
         EventsCenter.on('die', this.loseLife, this);

@@ -16,7 +16,7 @@ class Game extends Phaser.Scene {
   EscKeyboard?: Phaser.Input.Keyboard.Key;
   monchi?: Player;
   graphics?: Phaser.GameObjects.Graphics;
-  map?: Mapa1 | Mapa2;
+  map?: Mapa1 | Mapa2 | Tutorial;
   lifes?: number;
   levelIs?: number;
   timeLevel: number = 0;
@@ -124,12 +124,12 @@ class Game extends Phaser.Scene {
     this.lifes = 3;
     this.cameraNormal = true;
     this.checkPoint = 0;
-    this.scene.restart();
     this.timeLevel = 0;
     EventsCenter.emit('gameOver', true)
-    this.scene.start("GameOver");
     this.canWin = false;
     this.canNextLevel = false;
+    this.scene.start("GameOver");
+    this.scene.restart();
   };
 
 
@@ -228,6 +228,7 @@ class Game extends Phaser.Scene {
       if (this.lifes == 0) {
         this.gameOver();
       } else if (this.lifes != 0 && this.gravityDown && this.monchi) {
+        console.log("entro 22")
         EventsCenter.emit('die', this.lifes)
         if (this.map) this.monchi.x = this.map.startingPoint.x;
         if (this.map) this.monchi.y = this.map.startingPoint.y;

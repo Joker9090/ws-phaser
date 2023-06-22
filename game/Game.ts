@@ -95,10 +95,11 @@ class Game extends Phaser.Scene {
   rotateCam(time: number) {
     this.cameraNormal = false;
     if (this.canRot) {
+      this.UIScene?.rotateArrow("down");
       for (let i = 0; i < 25; i++) {
         this.time.delayedCall(time * i, () => ((rotate) => {
           this.cameras.main.setRotation(rotate);
-        })(3.1415 * i / 24));
+        })(Math.PI * i / 24));
         if (i == 24) { this.canRot = false };
       };
     };
@@ -125,23 +126,23 @@ class Game extends Phaser.Scene {
     this.cameraNormal = true;
     this.checkPoint = 0;
     this.timeLevel = 0;
-    EventsCenter.emit('gameOver', true)
     this.canWin = false;
     this.canNextLevel = false;
+    EventsCenter.emit('gameOver', true)
     this.scene.start("GameOver");
-    this.scene.restart();
+    
   };
 
 
   win(Phrase: string) {
     if (this.canWin && this.monchi) {
       this.cameraNormal = true;
-      this.scene.stop();
-      this.scene.start("Won", { text: Phrase });
       this.checkPoint = 0;
       this.canWin = false;
       this.canNextLevel = false;
-      EventsCenter.emit('nextLevel', true);
+      EventsCenter.emit('gameOver', true);
+      this.scene.start("Won", { text: Phrase });
+      this.scene.stop();
     };
   };
 
@@ -298,28 +299,27 @@ class Game extends Phaser.Scene {
   loseLevel2() {
     if (this.lifes) {
       this.lifes -= 1;
-
       if (this.lifes == 0) {
         this.gameOver();
       } else if (this.lifes != 0 && this.checkPoint == 0 && this.monchi) {
         EventsCenter.emit('die', this.lifes);
-        this.monchi?.setFlipY(false);
+        this.monchi.setFlipY(false);
         this.physics.world.gravity.y = 1000;
         this.monchi?.setFlipX(false);
         this.monchi.setRotation(0).setSize(73, 110).setOffset(70, 50);
         this.cameras.main.setRotation(0);
-        this.monchi?.setGravityX(0);
+        this.monchi.setGravityX(0);
         if (this.map) this.map.sideGrav = false;
         if (this.map) this.monchi.x = this.map.startingPoint.x;
         if (this.map) this.monchi.y = this.map.startingPoint.y;
       } else if (this.lifes != 0 && this.checkPoint == 1 && this.monchi) {
         EventsCenter.emit('die', this.lifes)
-        this.monchi?.setFlipY(false);
+        this.monchi.setFlipY(false);
         this.physics.world.gravity.y = 1000;
-        this.monchi?.setFlipX(false);
+        this.monchi.setFlipX(false);
         this.monchi.setRotation(0).setSize(73, 110).setOffset(70, 50);
         this.cameras.main.setRotation(0);
-        this.monchi?.setGravityX(0);
+        this.monchi.setGravityX(0);
         if (this.map) this.map.sideGrav = false;
         if (this.map) this.monchi.x = this.map.checkPointPos.x;
         if (this.map) this.monchi.y = this.map.checkPointPos.y;
@@ -402,6 +402,17 @@ class Game extends Phaser.Scene {
         };
       };
     }, this);
+
+    this.timeLevel = 0;
+        var timerEvent = this.time.addEvent({
+            delay: 200,
+            callback: () => {
+                this.timeLevel++;
+                this.timeLevel = this.timeLevel;
+            },
+            callbackScope: this,
+            loop: true
+        });
   };
 
   update(this: Game) {

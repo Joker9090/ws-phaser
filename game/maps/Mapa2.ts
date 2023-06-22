@@ -312,10 +312,12 @@ class Mapa2 {
       if (this.scene.monchi) {
         if (this.sideGrav) {
           this.scene.monchi.checkSideGravity(this.scene.cursors);
-        } else if (this.scene.timeLevel < 1) {
-          this.scene.monchi.setVelocityX(200); //acá es donde está rota la velocidad inicial del nivel 2
+        } else if (this.scene.timeLevel < 7) {
+          this.scene.monchi.setVelocityX(200); 
+          this.scene.cameras.main.shake(1400,0.01);
         }
-        else if (this.scene.timeLevel >= 1) {
+        else if (this.scene.timeLevel >= 7) {
+          //this.scene.monchi.setVelocityX(0)
           this.scene.monchi.checkMove(this.scene.cursors);
         }
         if (this) this.animateBackground(this.scene.monchi);

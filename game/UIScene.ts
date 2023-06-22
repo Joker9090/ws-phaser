@@ -97,11 +97,12 @@ export default class UIScene extends Phaser.Scene {
 
     nextLevel() {
         this.timeLevel = 0;
-        this.coinUI?.setTint(Phaser.Display.Color.GetColor(0, 0, 0))
+        this.coinUI?.setTint(Phaser.Display.Color.GetColor(0, 0, 0));
     };
 
     loseLife(lifes: number) {
         // Remove the object with the highest x position
+        this.cameras.main.flash(500,1)
         console.log("entró", lifes)
         if (this.lifesGroup) {
             if (lifes != 0) {
@@ -117,6 +118,11 @@ export default class UIScene extends Phaser.Scene {
                 lifeToTheRight?.destroy();
             };
         };
+        console.log("check", this.gameScene, "level", this.gameScene?.levelIs)
+        if (this.gameScene?.checkPoint == 1 && this.gameScene.levelIs == 2){
+            this.rotateArrow("down");
+            console.log("entró a la rotación")
+        }
     };
 
     closeSign(sign: number) {
@@ -134,11 +140,11 @@ export default class UIScene extends Phaser.Scene {
     showArrow() {
         this.UIRectangle2?.setVisible(true);
     }
- 
+
 
     create(this: UIScene, data: { level: number, lifes: number, scene: Game }) {
         this.UIContainer = this.add.container(0, 0)
-        this.game.scale
+        console.log("aca", data)
         this.gameScene = data.scene;
         this.lifesGroup = this.add.group();
         this.createUI(data.lifes);
@@ -162,17 +168,18 @@ export default class UIScene extends Phaser.Scene {
         });
         this.UIContainer.add([this.timerText, this.UIRectangle1, this.UIRectangle2]);
         /* SCENE HANDLER */
-        EventsCenter.on('gameOver', () => { 
-          EventsCenter.removeListener('gravityArrow', this.rotateArrow, this)
-          EventsCenter.removeListener('die', this.loseLife, this);
-          EventsCenter.removeListener('coinCollected', this.coinCollected, this);
-          EventsCenter.removeListener('nextLevel', this.nextLevel, this);
-          EventsCenter.removeListener('coin', this.showCoin, this);
-          EventsCenter.removeListener('noFloat', this.showArrow, this);
-          EventsCenter.removeListener('closeSign', this.closeSign, this);
-          this.scene.stop() 
+        EventsCenter.on('gameOver', () => {
+            this.timeLevel = 0;
+            EventsCenter.removeListener('gravityArrow', this.rotateArrow, this);
+            EventsCenter.removeListener('die', this.loseLife, this);
+            EventsCenter.removeListener('coinCollected', this.coinCollected, this);
+            EventsCenter.removeListener('nextLevel', this.nextLevel, this);
+            EventsCenter.removeListener('coin', this.showCoin, this);
+            EventsCenter.removeListener('noFloat', this.showArrow, this);
+            EventsCenter.removeListener('closeSign', this.closeSign, this);
+            EventsCenter.removeListener('gameOver', this.closeSign, this);
+            this.scene.stop();
         });
-        /* EVENTS HANDLER */
         EventsCenter.on('gravityArrow', this.rotateArrow, this)
         EventsCenter.on('die', this.loseLife, this);
         EventsCenter.on('coinCollected', this.coinCollected, this);

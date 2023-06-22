@@ -28,15 +28,15 @@ const updatePlatform = (group: Phaser.GameObjects.Group, spriteWidth: number, te
     }
 }
 
-const moveBackgroundPlatform = (group: any, platformWidth: number, myTexture: "string", scrollFactor: number) => {
-    group.children.iterate((child: any) => {
-        child.x -= scrollFactor;
-        if (child.x < -(child.displayWidth)) {
-            group.killAndHide(child);
-            updatePlatform(group, platformWidth, myTexture, scrollFactor);
-        }
-    });
-};
+// const moveBackgroundPlatform = (group: any, platformWidth: number, myTexture: "string", scrollFactor: number) => {
+//     group.children.iterate((child: any) => {
+//         child.x -= scrollFactor;
+//         if (child.x < -(child.displayWidth)) {
+//             group.killAndHide(child);
+//             updatePlatform(group, platformWidth, myTexture, scrollFactor);
+//         }
+//     });
+// };
 
 class Game extends Phaser.Scene {
     secondTimer: number;
@@ -138,31 +138,30 @@ class Game extends Phaser.Scene {
             singleDiamond.destroy();
             saw.destroy()
         })
-
         
-        if (this.player && health) {
-            this.physics.add.overlap(this.player, saws, (player, saw) => {
-                saw.destroy()
-                --health
-                SceneEvents.emit("updateHealth", health)
-                console.log("ouch from scene", health)
-                if (health <= 0) {
-                    this.launchMenu()
-                }
-            })
-            this.physics.add.overlap(this.player, diamonds, (player, diamond) => {
-                gameState.score += 1
-                diamond.destroy()
-            })
-            this.physics.add.overlap(this.player, groundGroup, (player, platform) => {
-                const p = (player as player)
-                const pl = platform
-                console.log("ACAAAA", p)
-                if (p._direction == "up") p.down()
-                else if (p._direction == "down") p.up()
-                pl.destroy()
-            })
-        }
+        this.physics.add.overlap(this.player, saws, (player, saw) => {
+            saw.destroy()
+            --health
+            console.log("barto overlap", health)
+            SceneEvents.emit("updateHealth", health)
+            if (health <= 0) {
+                this.launchMenu()
+            }
+        })
+
+        this.physics.add.overlap(this.player, diamonds, (player, diamond) => {
+            gameState.score += 1
+            diamond.destroy()
+        })
+
+        this.physics.add.overlap(this.player, groundGroup, (player, platform) => {
+            const p = (player as player)
+            const pl = platform
+            console.log("ACAAAA", p)
+            if (p._direction == "up") p.down()
+            else if (p._direction == "down") p.up()
+            pl.destroy()
+        })
 
 
 

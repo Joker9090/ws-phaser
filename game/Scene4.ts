@@ -24,7 +24,7 @@ class Scene4 extends Phaser.Scene {
     super({ key: 'Scene4' })
   }
   // preload(this: Phaser.Scene) {
-    
+
   // }
 
   create(this: Scene4) {
@@ -32,16 +32,22 @@ class Scene4 extends Phaser.Scene {
     songLoader.on('filecomplete', () => this.sound.add('song').play())
     songLoader.start()
 
-    this.physics.add.world.gravity.set(0, 0)
+    this.cameras.main.flash(1000);
     
+    const secondCamera = this.cameras.add(0, 0, 300, 200);
+    secondCamera.setPosition(this.cameras.main.width - 300,0).setZoom(0.3).centerOn(600,600)
+    secondCamera.flash(1000);
+
+    this.physics.add.world.gravity.set(0, 0)
+
     const { centerX, centerY, height, width } = this.physics.world.bounds
     const { height: h, width: w } = this.game.canvas.getBoundingClientRect()
 
-    this.background1 = this.add.tileSprite(0, 0, w * 2, h * 3.6, "nightSkyTop").setOrigin(0.5,0.5).setDepth(1)
-    this.background2 = this.add.tileSprite(0, height - 330, w , 200 * -1, "nightSky").setOrigin(0,0).setDepth(1)
+    this.background1 = this.add.tileSprite(0, 0, w * 2, h * 3.6, "nightSkyTop").setOrigin(0.5, 0.5).setDepth(1)
+    this.background2 = this.add.tileSprite(0, height - 330, w, 200 * -1, "nightSky").setOrigin(0, 0).setDepth(1)
     this.road = this.add.tileSprite(centerX, height, Number(width), 390, "roadSide").setOrigin(0.5, 1).setDepth(3)
-    this.carEnemy = this.physics.add.sprite(centerX - 80, height - 300, "carEnemy").setScale(0.09).setFlipX(true).setBounce(1,1).setMass(200).setDepth(3)
-    this.car = this.physics.add.sprite(centerX, height - 180, "car").setScale(0.2).setFlipX(true).setBounce(1,1).setMass(200).setDepth(3)
+    this.carEnemy = this.physics.add.sprite(centerX - 80, height - 300, "carEnemy").setScale(0.09).setFlipX(true).setBounce(1, 1).setMass(200).setDepth(3)
+    this.car = this.physics.add.sprite(centerX, height - 180, "car").setScale(0.2).setFlipX(true).setBounce(1, 1).setMass(200).setDepth(3)
     this.powerBarEmpty = this.add.tileSprite(width - 15, height - 82, 340, 140, "powerBarEmpty").setOrigin(1, 0.5).setDepth(199)
     this.powerBarFull = this.add.tileSprite(width - 15, height - 82, 340, 140, "powerBarFull").setOrigin(1, 0.5).setDepth(199)
 
@@ -55,13 +61,13 @@ class Scene4 extends Phaser.Scene {
     // left
     this.graphics1.fillStyle(0x0d3d73, 1).setAlpha(0);
     this.graphics1.fillRect(0, height - 390, width, 20);
-    
+
     if (this.graphics1.body) {
       (this.graphics1.body as Phaser.Physics.Arcade.Body)
-      .setOffset(0,height - 390)
-      .setSize(width, 20, false)
-      .setBounce(1,1).setMass(200)
-      .setImmovable(true);
+        .setOffset(0, height - 390)
+        .setSize(width, 20, false)
+        .setBounce(1, 1).setMass(200)
+        .setImmovable(true);
     }
 
     // 
@@ -71,21 +77,21 @@ class Scene4 extends Phaser.Scene {
     // left
     this.graphics2.fillStyle(0x0d3d73, 1);
     this.graphics2.fillRect(0, height - 80, width, 20);
-    
+
     if (this.graphics2.body) {
       (this.graphics2.body as Phaser.Physics.Arcade.Body)
-      .setOffset(0,height-80)
-      .setSize(width, 20, false)
-      .setBounce(1,1).setMass(200)
-      .setImmovable(true);
+        .setOffset(0, height - 80)
+        .setSize(width, 20, false)
+        .setBounce(1, 1).setMass(200)
+        .setImmovable(true);
     }
 
 
     // this.physics.collide(this.car, this.graphics1)
-    this.physics.world.addCollider(this.car, [this.graphics2,this.graphics1,this.carEnemy], () => {
+    this.physics.world.addCollider(this.car, [this.graphics2, this.graphics1, this.carEnemy], () => {
 
     });
-    this.physics.world.addCollider(this.carEnemy, [this.graphics2,this.graphics1,this.car], () => {
+    this.physics.world.addCollider(this.carEnemy, [this.graphics2, this.graphics1, this.car], () => {
 
     });
 
@@ -101,14 +107,37 @@ class Scene4 extends Phaser.Scene {
     }
     const c3 = new CloudGenerator(this, c3Config)
     c3.start()
+
+      /*
+    this.tweens.addCounter({
+      from: 0,
+      to: 60,
+      duration: 10000,
+      ease: window.Phaser.Math.Easing.Sine.InOut,
+      // yoyo: true,
+      repeat: -1,
+      onUpdate: (tween) => {
+        if (this.car) {
+          const value = tween.getValue();
+         
+
+        }
+      }
+    })
+    */
+
+    secondCamera.ignore(this.powerBarFull);
+    secondCamera.ignore(this.powerBarEmpty);
   }
 
 
   update(this: Scene4) {
+   // this.cameras.main.shake(1000, 0.005)
+
     if (this.powerBarFull) this.powerBarFull.setCrop(0, 0, 340 * this.velocity / this.maxVelocity, 140)
     if (this.road) this.road.setTilePosition(this.road.tilePositionX + (this.velocity / 2), 0)
-    if(this.background1) this.background1.setTilePosition(this.background1.tilePositionX + (this.velocity / 750), 0)
-    if(this.background2) this.background2.setTilePosition(this.background2.tilePositionX + (this.velocity / 300), 0)
+    if (this.background1) this.background1.setTilePosition(this.background1.tilePositionX + (this.velocity / 750), 0)
+    if (this.background2) this.background2.setTilePosition(this.background2.tilePositionX + (this.velocity / 300), 0)
     const speed = 110;
     const angle = 0.05;
     if (this.cursors) {

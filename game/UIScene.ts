@@ -142,10 +142,10 @@ export default class UIScene extends Phaser.Scene {
     }
 
 
-    create(this: UIScene, data: { level: number, lifes: number, scene: Game }) {
+    create(this: UIScene, data: { level: number, lifes: number }) {
         this.UIContainer = this.add.container(0, 0)
-        console.log("aca", data)
-        this.gameScene = data.scene;
+        console.log("Barto", data)
+        this.gameScene = this.game.scene.getScene("Game") as Game
         this.lifesGroup = this.add.group();
         this.createUI(data.lifes);
 
@@ -169,6 +169,7 @@ export default class UIScene extends Phaser.Scene {
         this.UIContainer.add([this.timerText, this.UIRectangle1, this.UIRectangle2]);
         /* SCENE HANDLER */
         EventsCenter.on('gameOver', () => {
+            console.log("Barto gameOver", this.gameScene)
             this.timeLevel = 0;
             EventsCenter.removeListener('gravityArrow', this.rotateArrow, this);
             EventsCenter.removeListener('die', this.loseLife, this);

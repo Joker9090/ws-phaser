@@ -53,7 +53,7 @@ class Game extends Phaser.Scene {
     menu?: Menu
 
     constructor() {
-        super({ key: "game" })
+        super({ key: "Game" })
         // add Scene
         this.timer = 0;
         this.secondTimer = 0;
@@ -75,8 +75,6 @@ class Game extends Phaser.Scene {
         this.scene.start("Menu", { scene: this, score: gameState.score })
         this.scene.pause()
         gameState.score = 0
-        console.log("ENTRO")
-
     }
     create() {
         const newY = this.game.canvas.getBoundingClientRect().height / 2

@@ -3,7 +3,7 @@ import React from 'react';
 import Ui from "../game/UiScene";
 
 <head>
-  <link rel="stylesheet" href="/css/fonts.css" />
+  <link rel="stylesheet" type="text/css" href="/css/RollboxRegular-jE2lv.ttf"/>
 </head>
 export default function Home() {
   const [phaser, setPhaser] = React.useState<typeof Phaser | undefined>()
@@ -27,8 +27,11 @@ export default function Home() {
       import("@/game/Scene4"),
       import("@/game/UiScene"),
       import("@/game/Menu"),
-   
+      import("@/game/StartMenu"),
+
+
     ]).then((scenes) => {
+      // @ts-ignore
       setScenes(scenes.map(s => s.default))
     })
 

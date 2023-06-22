@@ -1,8 +1,8 @@
-
 import Phaser from "phaser";
 import Scene4 from "./Scene4";
+import StartMenu from "./StartMenu";
 
-const loadAssets = {
+const loadAssets = { 
     "game": {
         assets: [
             ["image", "plataforma1", "/game/platform1.png"],
@@ -21,6 +21,7 @@ const loadAssets = {
             ["image", "menu", "/game/menu.png"],
             ["image", "menuButton", "/game/menuButton.png"],
             ["image", "iconBG", "/game/iconBG.png"],
+            // ["font","rollBox","/css/RollboxRegular-jE2lv.ttf"]
         ]
     }
 }
@@ -93,14 +94,12 @@ class SceneLoader extends Phaser.Scene {
             // @ts-checkts-ignore
             if (config) this.load[type](name, src, config);
             else this.load[type](name, src);
-      
-      
-          })
+        })
 
     }
 
     create(this: SceneLoader, { level }: any) {
-        this.scene.start("game", { "data": 1 })
+        this.scene.start("StartMenu", { "data": 1 })
     }
 
     update(this: SceneLoader) {

@@ -4,6 +4,7 @@ import Floor, { FloorConfig } from "../assets/Floor";
 import LargeFloor, { LargeFloorConfig } from "../assets/LargeFloor";
 import UIScene from "../UIScene";
 import Game from "../Game";
+import Sandbox from "../Sandbox";
 // Scene in class
 class Tutorial {
   isJumping = false;
@@ -45,7 +46,7 @@ class Tutorial {
   pisoNoFloat?: Floor;
 
 
-  constructor(scene: Game) {
+  constructor(scene: Game ) {
     this.scene = scene;
     this.UIScene = this.scene.game.scene.getScene("UIScene") as UIScene
     /* World size*/
@@ -136,6 +137,17 @@ class Tutorial {
       rotated: false
     };
     const p0 = new LargeFloor(this.scene, p0Config, this.pisos);
+    /*
+    const debugConfig: LargeFloorConfig = {
+      textureA: "plataformaA",
+      textureB: "plataformaB",
+      large: 1,
+      pos: { x: 800, y: 1970, },
+      scale: { width: 0.7, height: 0.7, },
+      rotated: false
+    };
+    const debug = new LargeFloor(this.scene, debugConfig, this.pisos);
+    */
     const p1Config: LargeFloorConfig = {
       textureA: "plataformaA",
       textureB: "plataformaB",

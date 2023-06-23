@@ -88,6 +88,7 @@ class Game extends Phaser.Scene {
         this.gravityDown = false;
         this.monchi?.body?.setOffset(70, 0);
         this.monchi?.setBounceY(0);
+        EventsCenter.emit('gravityArrow', "up");
       });
     };
   };
@@ -95,7 +96,9 @@ class Game extends Phaser.Scene {
   rotateCam(time: number) {
     this.cameraNormal = false;
     if (this.canRot) {
-      this.UIScene?.rotateArrow("down");
+      if (!this.gravityDown){
+        EventsCenter.emit('gravityArrow', "down");
+      }
       for (let i = 0; i < 25; i++) {
         this.time.delayedCall(time * i, () => ((rotate) => {
           this.cameras.main.setRotation(rotate);
@@ -113,6 +116,7 @@ class Game extends Phaser.Scene {
         this.time.delayedCall(10 * i, () => ((rotate) => {
           this.cameras.main.setRotation(rotate);
         })(3.1415 + 3.1415 * (i) / 24));
+        EventsCenter.emit('gravityArrow', "down");
       };
       this.monchi?.setFlipY(false);
       this.gravityDown = true;
@@ -195,8 +199,9 @@ class Game extends Phaser.Scene {
     [a, b].map(item => {
       if (item.hasEvent) {
         if (item.hasEvent == "Show_Tutorial_Text_3") {
-          EventsCenter.emit('noFloat', true)
-          delete item.hasEvent
+          EventsCenter.emit('noFloat', true);
+          EventsCenter.emit('gravityArrow', "down");
+          delete item.hasEvent;
         }
       }
       return item;
@@ -229,7 +234,6 @@ class Game extends Phaser.Scene {
       if (this.lifes == 0) {
         this.gameOver();
       } else if (this.lifes != 0 && this.gravityDown && this.monchi) {
-        console.log("entro 22")
         EventsCenter.emit('die', this.lifes)
         if (this.map) this.monchi.x = this.map.startingPoint.x;
         if (this.map) this.monchi.y = this.map.startingPoint.y;
@@ -299,6 +303,7 @@ class Game extends Phaser.Scene {
   loseLevel2() {
     if (this.lifes) {
       this.lifes -= 1;
+      EventsCenter.emit('gravityArrow', "down");
       if (this.lifes == 0) {
         this.gameOver();
       } else if (this.lifes != 0 && this.checkPoint == 0 && this.monchi) {
@@ -419,14 +424,6 @@ class Game extends Phaser.Scene {
     if (this.cameras.main.width < this.cameras.main.height) {
       this.cameras.main.zoom = this.cameras.main.width / this.cameras.main.height
   }
-
-    if (this.levelIs != 2) {
-      if (this.gravityDown) {
-        EventsCenter.emit('gravityArrow', "down");
-      } else if (!this.gravityDown) {
-        EventsCenter.emit('gravityArrow', "up");
-      };
-    };
 
     if (this.monchi && this.map) {
       if (this.monchi.x > this.map.checkPointPos.x) {

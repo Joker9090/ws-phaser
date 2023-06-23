@@ -23,7 +23,6 @@ export default class TutorialText extends Phaser.Scene {
   };
 
   DisplayText(param: number) {
-    console.log("entro")
     if (param <= 3) {
       this.gameScene?.scene.pause();
       this.tutorialTextBox?.setVisible(true);

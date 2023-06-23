@@ -25,7 +25,6 @@ class TextBox extends Phaser.GameObjects.Container {
 
         /* HEIGHT OF TEXT */
         const textHeight = this.tutorialText.height;
-        console.log(textHeight)
         /* DIMENSIONS OF SPRITE BOX */
         const spriteHeight = 120;
         const spriteWidth = 570;

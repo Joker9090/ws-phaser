@@ -80,6 +80,7 @@ export default class UIScene extends Phaser.Scene {
 
     rotateArrow(direction: string) {
         if (direction == "down") {
+            console.log("entro 111")
             this.gravityArrow?.setRotation(Math.PI / 2);
         } else if (direction == "up") {
             this.gravityArrow?.setRotation(-Math.PI / 2);
@@ -88,8 +89,8 @@ export default class UIScene extends Phaser.Scene {
         } else if (direction == "right") {
             this.gravityArrow?.setRotation(0);
         }
-    };
 
+    };
 
     coinCollected() {
         this.coinUI?.clearTint()
@@ -102,8 +103,7 @@ export default class UIScene extends Phaser.Scene {
 
     loseLife(lifes: number) {
         // Remove the object with the highest x position
-        this.cameras.main.flash(500,1)
-        console.log("entró", lifes)
+        this.cameras.main.flash(500,1);
         if (this.lifesGroup) {
             if (lifes != 0) {
                 let lifeToTheRight = null;
@@ -118,11 +118,6 @@ export default class UIScene extends Phaser.Scene {
                 lifeToTheRight?.destroy();
             };
         };
-        console.log("check", this.gameScene, "level", this.gameScene?.levelIs)
-        if (this.gameScene?.checkPoint == 1 && this.gameScene.levelIs == 2){
-            this.rotateArrow("down");
-            console.log("entró a la rotación")
-        }
     };
 
     closeSign(sign: number) {
@@ -144,7 +139,6 @@ export default class UIScene extends Phaser.Scene {
 
     create(this: UIScene, data: { level: number, lifes: number }) {
         this.UIContainer = this.add.container(0, 0)
-        console.log("Barto", data)
         this.gameScene = this.game.scene.getScene("Game") as Game
         this.lifesGroup = this.add.group();
         this.createUI(data.lifes);
@@ -169,7 +163,6 @@ export default class UIScene extends Phaser.Scene {
         this.UIContainer.add([this.timerText, this.UIRectangle1, this.UIRectangle2]);
         /* SCENE HANDLER */
         EventsCenter.on('gameOver', () => {
-            console.log("Barto gameOver", this.gameScene)
             this.timeLevel = 0;
             EventsCenter.removeListener('gravityArrow', this.rotateArrow, this);
             EventsCenter.removeListener('die', this.loseLife, this);
@@ -179,9 +172,11 @@ export default class UIScene extends Phaser.Scene {
             EventsCenter.removeListener('noFloat', this.showArrow, this);
             EventsCenter.removeListener('closeSign', this.closeSign, this);
             EventsCenter.removeListener('gameOver', this.closeSign, this);
+            //EventsCenter.on('rotateCam', this.rotateArrow, this);
             this.scene.stop();
         });
-        EventsCenter.on('gravityArrow', this.rotateArrow, this)
+        EventsCenter.on('gravityArrow', this.rotateArrow, this);
+        //EventsCenter.on('rotateCam', this.rotateArrow, this);
         EventsCenter.on('die', this.loseLife, this);
         EventsCenter.on('coinCollected', this.coinCollected, this);
         EventsCenter.on('nextLevel', this.nextLevel, this);

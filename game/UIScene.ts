@@ -23,8 +23,10 @@ export default class UIScene extends Phaser.Scene {
     CoinOriginalPos?: number;
     timeLevel: number = 0;
     timerText?: Phaser.GameObjects.Text;
-    UIContainer?: Phaser.GameObjects.Container;
-
+    containerText?: Phaser.GameObjects.Container;
+    containerLeft?: Phaser.GameObjects.Container;
+    containerRight?: Phaser.GameObjects.Container;
+    progressParam: number = 0;
 
     constructor() {
         super({ key: 'UIScene' });
@@ -46,7 +48,7 @@ export default class UIScene extends Phaser.Scene {
                 };
                 const coras = new UI(this, lifeConfig, this.lifesGroup)
                     .setScrollFactor(0, 0);
-                this.UIContainer?.add(coras)
+                this.containerLeft?.add(coras)
                 this.lifesGroup?.setDepth(100);
             };
 
@@ -61,7 +63,7 @@ export default class UIScene extends Phaser.Scene {
                 .setTint(Phaser.Display.Color.GetColor(0, 0, 0))
                 .setScrollFactor(0, 0)
                 .setDepth(100);
-            this.UIContainer?.add(this.coinUI)
+            this.containerLeft?.add(this.coinUI)
 
             const arrowConfig: UIConfig = {
                 texture: "arrow",
@@ -73,7 +75,7 @@ export default class UIScene extends Phaser.Scene {
                 .setRotation(Math.PI / 2)
                 .setScrollFactor(0, 0)
                 .setDepth(100);
-            this.UIContainer?.add(this.gravityArrow)
+            this.containerRight?.add(this.gravityArrow)
         };
     };
 
@@ -122,23 +124,29 @@ export default class UIScene extends Phaser.Scene {
 
     closeSign(sign: number) {
         if (sign == 1) {
+            this.progressParam = 2
             this.UIRectangle1?.setVisible(false);
         } else if (sign == 2) {
             this.UIRectangle2?.setVisible(false);
+            this.progressParam = 4
         };
     };
 
     showCoin() {
         this.UIRectangle1?.setVisible(true);
+        this.progressParam = 1
     }
 
     showArrow() {
         this.UIRectangle2?.setVisible(true);
+        this.progressParam = 3
     }
 
 
     create(this: UIScene, data: { level: number, lifes: number }) {
-        this.UIContainer = this.add.container(0, 0)
+        this.containerText = this.add.container(0, 0)
+        this.containerLeft = this.add.container(0, 0)
+        this.containerRight = this.add.container(0, 0)
         this.gameScene = this.game.scene.getScene("Game") as Game
         this.lifesGroup = this.add.group();
         this.createUI(data.lifes);
@@ -160,7 +168,34 @@ export default class UIScene extends Phaser.Scene {
             callbackScope: this,
             loop: true
         });
-        this.UIContainer.add([this.timerText, this.UIRectangle1, this.UIRectangle2]);
+        this.containerLeft.add([this.UIRectangle1]);
+        this.containerRight.add([this.UIRectangle2]);
+        this.containerText.add([this.timerText]);
+
+        this.tweens.addCounter({
+            from: 0,
+            to: 30,
+            duration: 1000,
+            ease: window.Phaser.Math.Easing.Sine.InOut,
+            yoyo: true,
+            repeat: -1,
+            onUpdate: (tween) => {
+                let originalPosition = 0;
+              if (this.progressParam == 1) {
+                this.containerRight?.setPosition(0,0);
+                const value = tween.getValue();
+                this.containerLeft?.setPosition(0,value);
+              } else if (this.progressParam == 3) { 
+                this.containerLeft?.setPosition(0,0);
+                const value = tween.getValue();
+                this.containerRight?.setPosition(0,value);
+              } else {
+                this.containerLeft?.setPosition(0,0);
+                this.containerRight?.setPosition(0,0);
+              }; 
+            }
+          })
+
         /* SCENE HANDLER */
         EventsCenter.on('gameOver', () => {
             this.timeLevel = 0;
@@ -186,11 +221,31 @@ export default class UIScene extends Phaser.Scene {
     };
 
     update() {
+        
         this.timerText?.setPosition(this.cameras.main.width - this.cameras.main.width / 10, 50);
         if (this.cameras.main.width < this.cameras.main.height) {
             this.timerText?.setPosition(160, 100);
-            this.UIContainer?.setScale(this.cameras.main.width / this.cameras.main.height);
+            this.containerLeft?.setScale(this.cameras.main.width / this.cameras.main.height);
+            this.containerRight?.setScale(this.cameras.main.width / this.cameras.main.height);
+            this.containerText?.setScale(this.cameras.main.width / this.cameras.main.height);
         }
     };
 };
 
+  /*
+    this.tweens.addCounter({
+      from: 0,
+      to: 60,
+      duration: 10000,
+      ease: window.Phaser.Math.Easing.Sine.InOut,
+      // yoyo: true,
+      repeat: -1,
+      onUpdate: (tween) => {
+        if (this.car) {
+          const value = tween.getValue();
+         
+
+        }
+      }
+    })
+    */

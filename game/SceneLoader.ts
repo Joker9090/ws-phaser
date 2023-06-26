@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 
-export type SceneKeys = "Menu" | "Scenes" | "Tutorial" | "Music";
+export type SceneKeys = "Menu" | "Scenes" | "Tutorial" | "Music" | "Intro";
 export type LoadTypes = "image" | "spritesheet" | "audio";
 
 const loadAssets = {
@@ -9,6 +9,11 @@ const loadAssets = {
       ["image", "glass", "/game/glass.png"],
       ["image", "cursor", "/game/cursor.png"],
       ["spritesheet", "character", "/game/character.png", { frameWidth: 220, frameHeight: 162 }],
+    ]
+  },
+  "Intro": {
+    assets: [
+      ["image", "logoNoswar", "/game/logo.png"],
     ]
   },
   "Scenes": {
@@ -113,7 +118,7 @@ class SceneLoader extends Phaser.Scene {
       percentText.destroy();
       assetText.destroy();
     });
-    const scenesTitles: Array<SceneKeys> = ["Menu", "Scenes", "Tutorial", "Music"];
+    const scenesTitles: Array<SceneKeys> = ["Menu", "Scenes", "Tutorial", "Music", "Intro"];
     for (let i = 0; i < scenesTitles.length; i++) {
       loadAssets[scenesTitles[i]].assets.map((sceneAssetConfig) => {
         const type = sceneAssetConfig[0] as LoadTypes;
@@ -134,7 +139,8 @@ class SceneLoader extends Phaser.Scene {
 
   create(this: SceneLoader, { level }: any) {
     //this.scene.start("Sandbox", { "data": 1 });
-    this.scene.start("Menu", { "data": 1 });
+    this.scene.start("Intro", { "data": 1 });
+    //this.scene.start("Menu", { "data": 1 });
 
   };
 

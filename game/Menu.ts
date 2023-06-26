@@ -10,9 +10,10 @@ export default class MainMenuScene extends Phaser.Scene {
     buttonSelector!: Phaser.GameObjects.Image;
     monchi?: Phaser.GameObjects.Sprite;
     progress: number = 0;
-    tutorial?: Phaser.GameObjects.Image;
-    level1?: Phaser.GameObjects.Image;
-    level2?: Phaser.GameObjects.Image;
+    play?: Phaser.GameObjects.Image;
+    credits?: Phaser.GameObjects.Image;
+    exit?: Phaser.GameObjects.Image;
+    title?: Phaser.GameObjects.Text;
     textTut?: Phaser.GameObjects.Text;
     textLvl1?: Phaser.GameObjects.Text;
     textLvl2?: Phaser.GameObjects.Text;
@@ -33,6 +34,65 @@ export default class MainMenuScene extends Phaser.Scene {
         this.load.spritesheet("monchi", "game/character.png", { frameWidth: 220, frameHeight: 162 });
     };
     */
+
+    button1() {
+        /* animation logo after introduction */
+        this.tweens.addCounter({
+            from: 2000,
+            to: 0,
+            duration: 2000,
+            ease: window.Phaser.Math.Easing.Bounce.InOut,
+            yoyo: false,
+            repeat: 0,
+            onUpdate: (tween) => {
+                const value = tween.getValue();
+                if (this.play) this.play.setPosition(value,100);
+                if (this.textTut) this.textTut.setPosition(value,100);
+            },
+            onComplete: () => {
+                this.button2()
+            }
+        });
+    };
+    button2() {
+        /* animation logo after introduction */
+        this.tweens.addCounter({
+            from: 2000,
+            to: 0,
+            duration: 1000,
+            ease: window.Phaser.Math.Easing.Bounce.InOut,
+            yoyo: false,
+            repeat: 0,
+            onUpdate: (tween) => {
+                const value = tween.getValue();
+                if(this.play){
+                    if (this.credits) this.credits.setPosition(value,this.play.y + this.play.displayHeight + 10);
+                    if (this.textLvl1) this.textLvl1.setPosition(value,this.play.y + this.play.displayHeight + 10);
+                }
+            },
+            onComplete: () => {
+                this.button3()
+            }
+        });
+    };
+    button3() {
+        /* animation logo after introduction */
+        this.tweens.addCounter({
+            from: 2000,
+            to: 0,
+            duration: 1000,
+            ease: window.Phaser.Math.Easing.Bounce.InOut,
+            yoyo: false,
+            repeat: 0,
+            onUpdate: (tween) => {
+                const value = tween.getValue();
+                if(this.credits){
+                    if (this.exit) this.exit.setPosition(value,this.credits.y + this.credits.displayHeight + 10);
+                    if (this.textLvl2) this.textLvl2.setPosition(value,this.credits.y + this.credits.displayHeight + 10);
+                }
+            }
+        });
+    }
 
     create() {
         /* Audio */
@@ -59,52 +119,52 @@ export default class MainMenuScene extends Phaser.Scene {
         }
 
         const [widthButton, heightButton] = [250, 100];
-
-        // Tutorial button
-        this.tutorial = this.add.image(0, 0, 'glass').setDisplaySize(widthButton, heightButton);
-        //window.tutorial = Tutorial
-        this.textTut = this.add.text(this.tutorial.x, this.tutorial.y, 'Tutorial').setOrigin(0.5);
+        this.title = this.add.text(0,-100,"LAS AVENTURAS DE MONCHI",{fontSize: '80px', color: '#c3c5c3'},).setOrigin(0.5)
+        // play button
+        this.play = this.add.image(2000, 100, 'glass').setDisplaySize(widthButton, heightButton);
+        //window.play = play
+        this.textTut = this.add.text(this.play.x, this.play.y, 'Play').setOrigin(0.5);
 
         // Play level 1 button
-        this.level1 = this.add.image(this.tutorial.x, this.tutorial.y + this.tutorial.displayHeight + 10, 'glass').setDisplaySize(widthButton, heightButton);
-        this.textLvl1 = this.add.text(this.level1.x, this.level1.y, 'Start level 1').setOrigin(0.5);
+        this.credits = this.add.image(this.play.x, this.play.y + this.play.displayHeight + 10, 'glass').setDisplaySize(widthButton, heightButton);
+        this.textLvl1 = this.add.text(this.credits.x, this.credits.y, 'Credits').setOrigin(0.5);
 
         // Play level 2 button
-        this.level2 = this.add.image(this.level1.x, this.level1.y + this.level1.displayHeight + 10, 'glass').setDisplaySize(widthButton, heightButton);
-        this.textLvl2 = this.add.text(this.level2.x, this.level2.y, 'Start level 2').setOrigin(0.5);
+        this.exit = this.add.image(this.credits.x, this.credits.y + this.credits.displayHeight + 10, 'glass').setDisplaySize(widthButton, heightButton);
+        this.textLvl2 = this.add.text(this.exit.x, this.exit.y, 'Exit').setOrigin(0.5);
 
         
-        this.buttons = [this.tutorial, this.level1, this.level2];
+        this.buttons = [this.play, this.credits, this.exit];
         this.buttonSelector = this.add.image(0, 0, 'cursor').setScale(.1).setRotation(-1);
         this.selectButton(0);
         
-        this.container.add([this.tutorial, this.level1, this.level2, this.textLvl1, this.textLvl1, this.textLvl2, this.textTut, this.buttonSelector]);
+        this.container.add([this.play, this.credits, this.exit, this.textLvl1, this.textLvl1, this.textLvl2, this.textTut, this.buttonSelector, this.title]);
 
-        this.tutorial.on('selected', () => {
+        this.play.on('selected', () => {
             this.scene.stop();
             this.scene.start("Game", { level: 0, lifes: 3 });
             this.selectedButtonIndex = 0
         });
 
-        this.level1.on('selected', () => {
+        this.credits.on('selected', () => {
             this.scene.stop();
             this.scene.start("Game", { level: 1, lifes: 3 });
             this.selectedButtonIndex = 0
         });
 
-        this.level2.on('selected', () => {
+        this.exit.on('selected', () => {
             this.scene.stop();
             this.scene.start("Game", { level: 2, lifes: 3 });
             this.selectedButtonIndex = 0
         });
 
         this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
-            this.level1?.off('selected')
+            this.credits?.off('selected')
         });
         this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
-            this.level2?.off('selected')
+            this.exit?.off('selected')
         });
-
+        this.button1()
     };
 
     selectButton(index: number) {
@@ -150,7 +210,7 @@ export default class MainMenuScene extends Phaser.Scene {
             }
         }
 
-        //window.tutorial.setPosition(this.cameras.main.width/2,this.cameras.main.height/2);
+        //window.play.setPosition(this.cameras.main.width/2,this.cameras.main.height/2);
         if (this.monchi) {
             this.progress = this.progress + .0031415;
             this.monchi.x = this.monchi.x + .5;

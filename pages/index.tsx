@@ -18,13 +18,13 @@ export default function Home() {
     //Load scenes async when windows is ready
     Promise.all([
       import("@/game/SceneLoader"),
-      import("@/game/Sandbox"),
       import("@/game/Menu"),
       import("@/game/Game"),
       import("@/game/Won"),
       import("@/game/GameOver"),
       import("@/game/UIScene"),
       import("@/game/TutorialText"),
+      import("@/game/Intro"),
       import("@/game/MusicManager")
     ]).then((scenes) => {
       setScenes(scenes.map(s => s.default))

@@ -4,7 +4,7 @@ import Floor, { FloorConfig } from "../assets/Floor";
 import LargeFloor, { LargeFloorConfig } from "../assets/LargeFloor";
 import UIScene from "../UIScene";
 import Game from "../Game";
-import Sandbox from "../Sandbox";
+
 // Scene in class
 class Tutorial {
   isJumping = false;

@@ -65,6 +65,9 @@ export default class Credits extends Phaser.Scene {
 
 
     update() {
+        this.picture1?.update()
+        this.picture2?.update()
+        this.picture3?.update()
         if (this.spaceship) {
             this.spaceship.x = this.spaceship.x + .8;
             this.spaceship.y = this.spaceship.y - .30;

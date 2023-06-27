@@ -199,15 +199,9 @@ export default class Intro extends Phaser.Scene {
                 }
             };
             if (this.cameras.main.width < this.cameras.main.height) {
-                this.noswarText?.setPosition(this.cameras.main.width / 2, this.cameras.main.height / 2);
-                if (this.noswarText) this.studiosText?.setPosition(this.cameras.main.width / 2, this.cameras.main.height / 2 + this.noswarText.height / 1.2);
-                if (this.spaceText) this.spaceText?.setPosition(this.cameras.main.width / 2, this.cameras.main.height / 2 + 200);
                 this.container?.setScale(this.cameras.main.width / this.cameras.main.height)
                 this.noswarLogo?.setScale(.5 * this.cameras.main.width / this.cameras.main.height)
             } else if (this.cameras.main.width >= this.cameras.main.height) {
-                this.noswarText?.setPosition(this.cameras.main.width / 2, this.cameras.main.height / 2);
-                if (this.noswarText) this.studiosText?.setPosition(this.cameras.main.width / 2, this.cameras.main.height / 2 + this.noswarText.height / 1.2);
-                if (this.spaceText) this.spaceText?.setPosition(this.cameras.main.width / 2, this.cameras.main.height / 2 + 200);
                 this.container?.setScale(1)
                 this.noswarLogo?.setScale(.5)
             }

@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 
-export type SceneKeys = "Menu" | "Scenes" | "Tutorial" | "Music" | "Intro";
+export type SceneKeys = "Menu" | "Scenes" | "Tutorial" | "Music" | "Intro" | "LevelMap";
 export type LoadTypes = "image" | "spritesheet" | "audio";
 
 const loadAssets = {
@@ -14,6 +14,15 @@ const loadAssets = {
   "Intro": {
     assets: [
       ["image", "logoNoswar", "/game/logo.png"],
+    ]
+  },
+  "LevelMap": {
+    assets: [
+      ["image", "backgroundLevelMap", "/game/backgroundLevelMap.png"],
+      ["image", "sun", "/game/sun.png"],
+      ["image", "planetTutorial", "/game/planetaTutorial.png"],
+      ["image", "planetLevel1", "/game/planetaLevel1.png"],
+      ["image", "planetLevel2", "/game/planetaLevel2.png"],
     ]
   },
   "Scenes": {
@@ -118,7 +127,7 @@ class SceneLoader extends Phaser.Scene {
       percentText.destroy();
       assetText.destroy();
     });
-    const scenesTitles: Array<SceneKeys> = ["Menu", "Scenes", "Tutorial", "Music", "Intro"];
+    const scenesTitles: Array<SceneKeys> = ["Menu", "Scenes", "Tutorial", "Music", "Intro", "LevelMap"];
     for (let i = 0; i < scenesTitles.length; i++) {
       loadAssets[scenesTitles[i]].assets.map((sceneAssetConfig) => {
         const type = sceneAssetConfig[0] as LoadTypes;

@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import MusicManager from './MusicManager';
-import TextBox from './assets/TextBox';
+
 
 export default class MainMenuScene extends Phaser.Scene {
 
@@ -142,19 +142,19 @@ export default class MainMenuScene extends Phaser.Scene {
 
         this.play.on('selected', () => {
             this.scene.stop();
-            this.scene.start("Game", { level: 0, lifes: 3 });
+            this.scene.start("LevelMap");
             this.selectedButtonIndex = 0
         });
 
         this.credits.on('selected', () => {
             this.scene.stop();
-            this.scene.start("Game", { level: 1, lifes: 3 });
+            this.scene.start("Credits");
             this.selectedButtonIndex = 0
         });
 
         this.exit.on('selected', () => {
             this.scene.stop();
-            this.scene.start("Game", { level: 2, lifes: 3 });
+            this.scene.start("Intro");
             this.selectedButtonIndex = 0
         });
 
@@ -205,7 +205,9 @@ export default class MainMenuScene extends Phaser.Scene {
             if (this.cameras.main) {
                this.container.setPosition(this.cameras.main.width/2 ,this.cameras.main.height/3);
                if(this.cameras.main.width < this.cameras.main.height){
-                   this.container.setScale(2*this.cameras.main.width / this.cameras.main.height)
+                   this.container.setScale(this.cameras.main.width / this.cameras.main.height)
+               } else {
+                this.container.setScale(1)
                }
             }
         }

@@ -117,25 +117,25 @@ export default class MainMenuScene extends Phaser.Scene {
             width = size.width;
             height = size.height;
         }
-
+        
         const [widthButton, heightButton] = [250, 100];
-        this.title = this.add.text(0,-100,"LAS AVENTURAS DE MONCHI",{fontSize: '80px', color: '#c3c5c3'},).setOrigin(0.5)
+        this.title = this.add.text(0,-100,"LAS AVENTURAS DE MONCHI",{fontSize: '80px', fontFamily: 'arcade', color: '#c3c5c3'}).setOrigin(0.5)
         // play button
         this.play = this.add.image(2000, 100, 'glass').setDisplaySize(widthButton, heightButton);
         //window.play = play
-        this.textTut = this.add.text(this.play.x, this.play.y, 'Play').setOrigin(0.5);
+        this.textTut = this.add.text(this.play.x, this.play.y, 'Play',{fontFamily: 'arcade'}).setOrigin(0.5);
 
         // Play level 1 button
         this.credits = this.add.image(this.play.x, this.play.y + this.play.displayHeight + 10, 'glass').setDisplaySize(widthButton, heightButton);
-        this.textLvl1 = this.add.text(this.credits.x, this.credits.y, 'Credits').setOrigin(0.5);
+        this.textLvl1 = this.add.text(this.credits.x, this.credits.y, 'Credits',{fontFamily: 'arcade'}).setOrigin(0.5);
 
         // Play level 2 button
         this.exit = this.add.image(this.credits.x, this.credits.y + this.credits.displayHeight + 10, 'glass').setDisplaySize(widthButton, heightButton);
-        this.textLvl2 = this.add.text(this.exit.x, this.exit.y, 'Exit').setOrigin(0.5);
+        this.textLvl2 = this.add.text(this.exit.x, this.exit.y, 'Exit',{fontFamily: 'arcade'}).setOrigin(0.5);
 
         
         this.buttons = [this.play, this.credits, this.exit];
-        this.buttonSelector = this.add.image(0, 0, 'cursor').setScale(.1).setRotation(-1);
+        this.buttonSelector = this.add.image(this.play.x + this.play.displayWidth * 0.5, this.play.y + 10, 'cursor').setScale(.1).setRotation(-1);
         this.selectButton(0);
         
         this.container.add([this.play, this.credits, this.exit, this.textLvl1, this.textLvl1, this.textLvl2, this.textTut, this.buttonSelector, this.title]);

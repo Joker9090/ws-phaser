@@ -27,6 +27,7 @@ export default function Home() {
       import("@/game/Intro"),
       import("@/game/MusicManager"),
       import("@/game/LevelMap"),
+      import("@/game/Credits"),
       import("@/game/Sandbox"),
     ]).then((scenes) => {
       setScenes(scenes.map(s => s.default))

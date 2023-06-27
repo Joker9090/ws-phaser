@@ -32,7 +32,7 @@ export default class WonScene extends Phaser.Scene {
         const text1 = this.add.text(0,0, data.text, { fontSize: '35px' })
         .setOrigin(0.5)
         .setScale(1);
-        const text2 = this.add.text(0,200, "Press SPACE to play again", { fontSize: '22px' })
+        const text2 = this.add.text(0,200, "Press SPACE to go to Menu", { fontSize: '22px' })
         .setOrigin(0.5)
         .setScale(1);
         this.container?.add([text1,text2]);

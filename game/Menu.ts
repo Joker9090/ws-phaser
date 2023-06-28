@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import BetweenScenes from './BetweenScenes';
 import MusicManager from './MusicManager';
 
 
@@ -94,6 +95,12 @@ export default class MainMenuScene extends Phaser.Scene {
         });
     }
 
+    makeTransition(sceneName: string, data: any) {
+      const getBetweenScenesScene = this.game.scene.getScene("BetweenScenes") as BetweenScenes
+      if (getBetweenScenesScene) getBetweenScenesScene.changeSceneTo(sceneName, data)
+      else this.scene.start(sceneName, data);
+    }
+    
     create() {
         /* Audio */
         const getMusicManagerScene = this.game.scene.getScene("MusicManager") as MusicManager
@@ -142,19 +149,22 @@ export default class MainMenuScene extends Phaser.Scene {
 
         this.play.on('selected', () => {
             this.scene.stop();
-            this.scene.start("LevelMap");
+            this.makeTransition("LevelMap", {})
+            // this.scene.start("LevelMap");
             this.selectedButtonIndex = 0
         });
 
         this.credits.on('selected', () => {
             this.scene.stop();
-            this.scene.start("Credits");
+            this.makeTransition("Credits", {})
+            // this.scene.start("Credits");
             this.selectedButtonIndex = 0
         });
 
         this.exit.on('selected', () => {
             this.scene.stop();
-            this.scene.start("Intro");
+            this.makeTransition("Intro", {})
+            // this.scene.start("Intro");
             this.selectedButtonIndex = 0
         });
 

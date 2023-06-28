@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 
-export type SceneKeys = "Menu" | "Scenes" | "Tutorial" | "Music" | "Intro" | "LevelMap";
+export type SceneKeys = "Menu" | "Scenes" | "Tutorial" | "Music" | "Intro" | "LevelMap" | "BetweenScenes";
 export type LoadTypes = "image" | "spritesheet" | "audio";
 
 const loadAssets = {
@@ -42,20 +42,25 @@ const loadAssets = {
 
   "Tutorial": {
     assets: [
-      ["audio", "song", '/sounds/tutorial.mp3'],
       ["image", "fireball", "/game/fireball.png"],
       ["image", "textBox", "/game/textBox.png"],
     ]
   },
+  "BetweenScenes": {
+    assets: [
+      ["image", "block", "/game/50x50.png"],
+    ]
+  },
   "Music": {
     assets: [
+      
       ["audio", "songTutorial", '/sounds/tutorial.mp3'],
       ["audio", "songLevel1", '/sounds/monchiSpace.mp3'],
       ["audio", "songLevel2", '/sounds/level2.mp3'],
       ["audio", "songWon", '/sounds/won.mp3'],
       ["audio", "songLose", '/sounds/lose.mp3'],
       ["audio", "songMenu", '/sounds/menu.mp3'],
-
+      
     ]
   },
 };
@@ -127,7 +132,7 @@ class SceneLoader extends Phaser.Scene {
       percentText.destroy();
       assetText.destroy();
     });
-    const scenesTitles: Array<SceneKeys> = ["Menu", "Scenes", "Tutorial", "Music", "Intro", "LevelMap"];
+    const scenesTitles: Array<SceneKeys> = ["Menu", "Scenes", "Tutorial", "Music", "Intro", "LevelMap","BetweenScenes"];
     for (let i = 0; i < scenesTitles.length; i++) {
       loadAssets[scenesTitles[i]].assets.map((sceneAssetConfig) => {
         const type = sceneAssetConfig[0] as LoadTypes;

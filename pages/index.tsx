@@ -25,6 +25,7 @@ export default function Home() {
       import("@/game/UIScene"),
       import("@/game/TutorialText"),
       import("@/game/Intro"),
+      import("@/game/BetweenScenes"),
       import("@/game/MusicManager"),
       import("@/game/LevelMap"),
       import("@/game/Credits"),

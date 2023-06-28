@@ -19,18 +19,22 @@ class StartMenu extends Phaser.Scene {
         const width = 300;
         const height = 50;
 
-        var text = this.add.text(x - 5, y + 50, 'Start Game', {
+
+        var text = this.add.text(x - 20, y - 250, 'Who tf keeps throwing saws at me', {
             fontSize: '24px',
             fontFamily: 'Arial',
             color: '#ffffff',
             align: 'center'
-        }).setOrigin(0.5).setDepth(3);
-        var text = this.add.text(x - 5, y - 150, 'Some Name idk', {
-            fontSize: '24px',
-            fontFamily: 'Guardians',
+        }).setOrigin(0.5).setDepth(10).setScale(1.4);
+
+        
+
+        var text = this.add.text(x , y - 220, 'and the quest to find out why im picking up diamonds', {
+            fontSize: '15px',
+            fontFamily: 'Arial',
             color: '#ffffff',
             align: 'center'
-        }).setOrigin(0.5).setDepth(3);
+        }).setOrigin(0.5).setDepth(10);
 
         var text = this.add.text(x - 5, y - 80, 'Warning!', {
             fontSize: '20px',
@@ -51,11 +55,38 @@ class StartMenu extends Phaser.Scene {
         //     color: '#ffffff',
         //     align: 'center'
         // }).setOrigin(0.5).setDepth(3);
+        var logo = this.add.image(x -100, y + 140, "logo").setScale(0.05).setDepth(10)
 
-        var rect = this.add.rectangle(x - 5, y + 50, width, height, 246390).setDepth(2);
+        var text = this.add.text(x + 100, y + 190, 'Start Game', {
+            fontSize: '24px',
+            fontFamily: 'Arial',
+            color: '#ffffff',
+            align: 'center'
+        }).setOrigin(0.5).setDepth(3);
+        var rect = this.add.rectangle(x + 100, y + 190, width / 2, height, 246390).setDepth(2);
         rect.setStrokeStyle(2, 0xffffff);
-        this.add.image(x, y, "menu").setScale(2);
+        this.add.image(x, y, "menu").setScale(3);
         console.log(this.scene.restart, "otherscene")
+
+
+        var rect = this.add.rectangle(x - 10, y -50, width *1.3, height +60,246390).setDepth(2);
+
+
+        var text = this.add.text(x + 5, y + 30, 'Use up and down cursor keys to change direction '
+            , {
+                fontSize: '17px',
+                fontFamily: 'Arial',
+                color: '#ffffff',
+                align: 'center'
+            }).setOrigin(0.5).setDepth(3);
+        var text = this.add.text(x + 5, y + 60, 'Use P to pause '
+            , {
+                fontSize: '17px',
+                fontFamily: 'Arial',
+                color: '#ffffff',
+                align: 'center'
+            }).setOrigin(0.5).setDepth(3);
+
 
         rect.setInteractive();
         rect.on("pointerup", () => {

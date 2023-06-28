@@ -1,11 +1,14 @@
 import Phaser from "phaser";
 import player from "./assets/Player";
 import SceneEvents from "./events/EventCenter";
+import PauseMenu from "./PauseMenu";
+
 
 class Ui extends Phaser.Scene {
   hearts?: Phaser.GameObjects.Group
   quantity: number = 2
   currentIndex: number = 0;
+  PauseMenu?: PauseMenu
   constructor() {
     super({ key: "Ui" })
   }
@@ -24,13 +27,6 @@ class Ui extends Phaser.Scene {
     const menuButton = this.add.image(width - 60, height / 26, "menuButton").setDepth(2).setScale(0.7).setInteractive()
     const iconBG = this.add.image(width - 60, height / 26, "iconBG").setInteractive()
 
-    menuButton.on("pointerdown", () => {
-      console.log("Menu button clicked!");
-    });
-
-    iconBG.on("pointerdown", () => {
-      console.log("iconBG clicked!");
-    });
     const updateHealth = (health: number) => {
       if (this.hearts) {
         const hearts = this.hearts.getChildren();
@@ -50,6 +46,3 @@ class Ui extends Phaser.Scene {
 
 export default Ui
 
-
-// tinte corazon perdido
-// hearts.setTint(681995)

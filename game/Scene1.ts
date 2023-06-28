@@ -55,7 +55,7 @@ class Scene1 extends Phaser.Scene {
     // window.addEventListener('resize', this.resize);
     // this.resize();
     this.map = new Map0(this, this.speed)
-    this.add.image(1000, 400, "background").setScale(6)
+    this.add.image(200, 400, "background").setScale(1)
     this.speed = 2000
     let x = 150
     let y = 620

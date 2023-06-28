@@ -1,9 +1,21 @@
 import Phaser from "phaser";
 import Scene4 from "./Scene4";
 import StartMenu from "./StartMenu";
+import { type } from "os";
 
-const loadAssets = { 
-    "game": {
+export type SceneKeys = "StartMenu" | "Game" | "Music";
+export type LoadTypes = "image" | "spritesheet" | "audio"
+
+
+const loadAssets = {
+    "StartMenu": {
+        assets: [
+            ["image", "menu", "/game/menu.png"],
+            ["image", "menuButton", "/game/menuButton.png"],
+            ["image", "iconBG", "/game/iconBG.png"],
+        ]
+    },
+    "Game": {
         assets: [
             ["image", "plataforma1", "/game/platform1.png"],
             ["image", "plataforma2", "/game/platform2.png"],
@@ -18,10 +30,19 @@ const loadAssets = {
             ["spritesheet", "run", "/game/Run.png", { frameWidth: 128, frameHeight: 128 }],
             ["image", "emptyHeart", "/game/ui_heart_empty.png"],
             ["image", "fullHeart", "/game/ui_heart_full.png"],
-            ["image", "menu", "/game/menu.png"],
-            ["image", "menuButton", "/game/menuButton.png"],
-            ["image", "iconBG", "/game/iconBG.png"],
-            // ["font","rollBox","/css/RollboxRegular-jE2lv.ttf"]
+            ['image', 'flare', 'game/flare.png'],
+            ['image', 'logo', 'game/logo.png']
+
+        ]
+    },
+    "Music": {
+        assets: [
+            ["audio", "BGmusic", "/game/BGmusic.wav"],
+            ["audio", "CoinPickUp", "/game/coinSound.mp3"],
+            ["audio", "Damage", "/game/damage.mp3"],
+            ["audio", "GameOver", "/game/gameOver.mp3"]
+
+
         ]
     }
 }
@@ -29,13 +50,9 @@ const loadAssets = {
 // Scene in class
 class SceneLoader extends Phaser.Scene {
     constructor() {
-        super({ key: 'SceneLoader' })
-    }
+        super({ key: 'SceneLoader' });
+    };
     preload(this: Phaser.Scene) {
-        var progressBar = this.add.graphics();
-        var progressBox = this.add.graphics();
-        progressBox.fillStyle(0x222222, 0.8);
-        progressBox.fillRect(240, 270, 320, 50);
 
         var width = this.cameras.main.width;
         var height = this.cameras.main.height;
@@ -45,9 +62,14 @@ class SceneLoader extends Phaser.Scene {
             text: 'Loading...',
             style: {
                 font: '20px monospace',
-                color: '#ffffff'
+                color: '#ff0000'
             }
         });
+        var progressBar = this.add.graphics();
+        var progressBox = this.add.graphics();
+        progressBox.fillStyle(0x222222, 0.8);
+        progressBox.fillRect(width / 2 - 160, height / 2 + 100, 320, 50);
+
         loadingText.setOrigin(0.5, 0.5);
 
         var percentText = this.make.text({
@@ -56,9 +78,10 @@ class SceneLoader extends Phaser.Scene {
             text: '0%',
             style: {
                 font: '18px monospace',
-                color: '#ffffff'
+                color: '#ff0000'
             }
         });
+
         percentText.setOrigin(0.5, 0.5);
 
         var assetText = this.make.text({
@@ -67,21 +90,23 @@ class SceneLoader extends Phaser.Scene {
             text: '',
             style: {
                 font: '18px monospace',
-                color: '#ffffff'
+                color: '#ff0000'
             }
         });
+
         assetText.setOrigin(0.5, 0.5);
 
         this.load.on('progress', function (value: number) {
             percentText.setText(Number(value * 100) + '%');
             progressBar.clear();
-            progressBar.fillStyle(0xffffff, 1);
-            progressBar.fillRect(250, 280, 300 * value, 30);
+            progressBar.fillStyle(0xff0000, 1);
+            progressBar.fillRect(width / 2 - 160, height / 2 + 100, 300 * value, 30);
         });
 
         this.load.on('fileprogress', function (file: any) {
             assetText.setText('Loading asset: ' + file.key);
         });
+
         this.load.on('complete', function () {
             progressBar.destroy();
             progressBox.destroy();
@@ -89,22 +114,34 @@ class SceneLoader extends Phaser.Scene {
             percentText.destroy();
             assetText.destroy();
         });
-
-        loadAssets["game"].assets.map(([type, name, src, config]: any) => {
-            // @ts-checkts-ignore
-            if (config) this.load[type](name, src, config);
-            else this.load[type](name, src);
-        })
-
-    }
+        const scenesTitles: Array<SceneKeys> = ["StartMenu", "Game", "Music"];
+        for (let i = 0; i < scenesTitles.length; i++) {
+            const assets = loadAssets[scenesTitles[i]].assets
+            assets.map((sceneAssetConfig: any) => {
+                const type = sceneAssetConfig[0] as LoadTypes;
+                const name = sceneAssetConfig[1] as string;
+                const src = sceneAssetConfig[2] as string;
+                const config = sceneAssetConfig[3] as any;
+                if (config) {
+                    this.load[type](name, src, config);
+                }
+                else {
+                    this.load[type](name, src);
+                }
+            });
+        };
+        /*Load Fonts*/
+        // const ArcadeFont = this.add.text(0, 0, ':)', { fontFamily: 'Arcade', })
+    };
 
     create(this: SceneLoader, { level }: any) {
-        this.scene.start("StartMenu", { "data": 1 })
-    }
+        //this.scene.start("Sandbox", { "data": 1 });
+        this.scene.start("StartMenu", { "data": 1 });
+
+    };
 
     update(this: SceneLoader) {
-
-    }
-}
+    };
+};
 
 export default SceneLoader 

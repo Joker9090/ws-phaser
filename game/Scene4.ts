@@ -1,4 +1,4 @@
-import Phaser from "phaser";
+import Phaser, { Cameras } from "phaser";
 import { text } from "stream/consumers";
 import player from "./assets/Player";
 import gameState from "./assets/GameState";
@@ -7,36 +7,11 @@ import Ui from "./UiScene";
 import { mapConfig } from "./maps/MapHandler";
 import SceneEvents from "./events/EventCenter";
 import Menu from "./Menu";
+import PauseMenu from "./PauseMenu";
+
 
 
 const plataformas = ["plataforma3", "plataforma2", "plataforma1"]
-const updatePlatform = (group: Phaser.GameObjects.Group, spriteWidth: number, texture: string, dist: number) => {
-    let _dist = dist ?? 0
-    const child = group.get(spriteWidth - _dist, gameState.sceneHeigth, texture);
-    child.setVisible(true);
-    child.setActive(true);
-    switch (texture) {
-        case "plataforma3":
-        case "plataforma2":
-        case "plataforma1":
-            child.setDepth(2);
-            break;
-        case 'plateau':
-            child.setDepth(1);
-            break;
-        default:
-    }
-}
-
-// const moveBackgroundPlatform = (group: any, platformWidth: number, myTexture: "string", scrollFactor: number) => {
-//     group.children.iterate((child: any) => {
-//         child.x -= scrollFactor;
-//         if (child.x < -(child.displayWidth)) {
-//             group.killAndHide(child);
-//             updatePlatform(group, platformWidth, myTexture, scrollFactor);
-//         }
-//     });
-// };
 
 class Game extends Phaser.Scene {
     secondTimer: number;
@@ -50,8 +25,13 @@ class Game extends Phaser.Scene {
     y: number = 620
     map!: MapHandler
     ui?: Phaser.Scene
-    menu?: Menu
+    menu?: Menu;
+    pauseMenu!: PauseMenu
 
+    private backgroundMusic?: Phaser.Sound.BaseSound;
+    private coinPickUp?: Phaser.Sound.BaseSound;
+    private damage?: Phaser.Sound.BaseSound;
+    private gameOver?: Phaser.Sound.BaseSound;
     constructor() {
         super({ key: "Game" })
         // add Scene
@@ -59,14 +39,10 @@ class Game extends Phaser.Scene {
         this.secondTimer = 0;
         this.healthTimer = 0;
         this.missileScore = 0;
-
-        this.createMissile()
     }
 
 
-    createMissile() {
-        console.log("inicio")
-    }
+
     restart() {
         this.scene.restart()
     }
@@ -76,16 +52,31 @@ class Game extends Phaser.Scene {
         this.scene.pause()
         gameState.score = 0
     }
+
     create() {
+        this.pauseMenu = new PauseMenu(this)
+
+        if (this.pauseMenu && this.input.keyboard) {
+
+            this.input.keyboard.on('keydown-P', () => {
+                this.pauseMenu.open();
+            });
+        }
+        this.cameras.main.flash()
+        this.backgroundMusic = this.sound.add('BGmusic', { volume: 0.2 });
+        this.backgroundMusic.play();
+        this.coinPickUp = this.sound.add('CoinPickUp', { volume: 0.2 });
+        this.damage = this.sound.add('Damage', { volume: 0.2 });
+        this.gameOver = this.sound.add('GameOver', { volume: 0.2 });
         const newY = this.game.canvas.getBoundingClientRect().height / 2
         const newx = this.game.canvas.getBoundingClientRect().width / 4
+
         this.player = new player(this, newx, newY, "run", 0)
         let health = this.player.health
-        this.scene.run("Ui",{health:health})
+        this.scene.run("Ui", { health: health, scene: this })
 
 
         this.player.setGravity(0, 0)
-
         /* Mas Modular */
         this.score = this.add.text(10, 90, 'Score', {
             fontFamily: 'guardians',
@@ -135,21 +126,46 @@ class Game extends Phaser.Scene {
         this.physics.add.overlap(this.map.saws, this.map.diamonds, (saw, singleDiamond) => {
             singleDiamond.destroy();
             saw.destroy()
+
         })
-        
+
         this.physics.add.overlap(this.player, saws, (player, saw) => {
             saw.destroy()
             --health
             console.log("barto overlap", health)
             SceneEvents.emit("updateHealth", health)
+            this.damage?.play()
+            this.cameras.main.shake(200, 0.01);
             if (health <= 0) {
+                this.gameOver?.play()
+                this.backgroundMusic?.stop()
                 this.launchMenu()
             }
         })
 
         this.physics.add.overlap(this.player, diamonds, (player, diamond) => {
+            const _diamond = diamond as Phaser.GameObjects.Image
             gameState.score += 1
-            diamond.destroy()
+            console.log("Diamente")
+            const diamondX = _diamond.x;
+            const diamondY = _diamond.y;
+
+            this.add.particles(0, 0, 'match3', {
+                x: () => {
+                    return diamondX;
+                },
+                y: () => {
+                    return diamondY;
+                },
+                frame: 'flare',
+                speed: 200,
+                lifespan: 700,
+                gravityY: 200,
+                scale: 0.3,
+                stopAfter: 10,
+            });
+            diamond.destroy();
+            this.coinPickUp?.play();
         })
 
         this.physics.add.overlap(this.player, groundGroup, (player, platform) => {
@@ -174,6 +190,7 @@ class Game extends Phaser.Scene {
             this.player.checkMove(this.cursors)
             this.physics.add.collider(this.map.groundGroup, this.player)
         }
+
         if (this.score) {
             this.score.setText(`Score ${gameState.score}`)
         }

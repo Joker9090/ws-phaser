@@ -50,7 +50,7 @@ class Menu extends Phaser.Scene {
         rect.on("pointerup", () => {
             this.scene.stop("Menu")
             a.scene.restart()
-            
+            a.scene.sound.removeAll()
             console.log("restart")
         });
     }

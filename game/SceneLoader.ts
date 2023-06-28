@@ -4,7 +4,7 @@ import StartMenu from "./StartMenu";
 import { type } from "os";
 
 export type SceneKeys = "StartMenu" | "Game" | "Music";
-export type LoadTypes = "image" | "spritesheet" | "audio"
+export type LoadTypes = "image" | "spritesheet" | "audio" | "font"
 
 
 const loadAssets = {
@@ -62,12 +62,12 @@ class SceneLoader extends Phaser.Scene {
             text: 'Loading...',
             style: {
                 font: '20px monospace',
-                color: '#ff0000'
+                color: '#141452'
             }
         });
         var progressBar = this.add.graphics();
         var progressBox = this.add.graphics();
-        progressBox.fillStyle(0x222222, 0.8);
+        progressBox.fillStyle(141452, 0.8);
         progressBox.fillRect(width / 2 - 160, height / 2 + 100, 320, 50);
 
         loadingText.setOrigin(0.5, 0.5);
@@ -78,7 +78,7 @@ class SceneLoader extends Phaser.Scene {
             text: '0%',
             style: {
                 font: '18px monospace',
-                color: '#ff0000'
+                color: '#141452'
             }
         });
 
@@ -90,7 +90,7 @@ class SceneLoader extends Phaser.Scene {
             text: '',
             style: {
                 font: '18px monospace',
-                color: '#ff0000'
+                color: '#141452'
             }
         });
 
@@ -130,8 +130,8 @@ class SceneLoader extends Phaser.Scene {
                 }
             });
         };
-        /*Load Fonts*/
-        // const ArcadeFont = this.add.text(0, 0, ':)', { fontFamily: 'Arcade', })
+        // Load Fonts
+        const ArcadeFont = this.add.text(0, 0, 'PRUEBA TEXTO', { fontFamily: 'Guardians', })
     };
 
     create(this: SceneLoader, { level }: any) {

@@ -25,8 +25,10 @@ class MapHandler {
   sawCreationTime?: Phaser.Time.TimerEvent;
   spikes!: Phaser.GameObjects.Group
   spikesCreationTime!: Phaser.Time.TimerEvent
-  diamonds!: Phaser.GameObjects.Group
+  diamonds!: Phaser.GameObjects.Group;
   diamondCreationTime?: Phaser.Time.TimerEvent;
+  healings!: Phaser.GameObjects.Group;
+  healingsCreationTime!: Phaser.Time.TimerEvent;
   groundGroup!: Phaser.GameObjects.Group;
   upPlatformCreationTime!: Phaser.Time.TimerEvent;
   downPlatformCreationTime!: Phaser.Time.TimerEvent;
@@ -40,7 +42,9 @@ class MapHandler {
   }
 
   createSaw() {
-    const y = Phaser.Math.Between(this.scene.cameras.main.height - 300, this.scene.cameras.main.height -1300)
+    const { top, bottom } = this.config.diamondsY
+    const y = Phaser.Math.Between(top, bottom)
+
     const saw = this.saws.create(this.scene.cameras.main.width + 100, y, "saw").setGravityY(0).setScale(0.7)
     saw.setVelocityX(-300)
     saw.setDepth(6)
@@ -54,6 +58,18 @@ class MapHandler {
       repeat: -1
     })
   }
+
+  createHealings() {
+    const { top, bottom } = this.config.diamondsY
+    const y = Phaser.Math.Between(top,bottom)
+    const heal = this.healings.create(this.scene.cameras.main.width + 100, y, "fullHeart").setGravityY(0).setScale(1.5)
+    heal.setVelocityX(-300)
+    heal.setDepth(6)
+    heal.body.setSize(heal.displayWidth , heal.displayHeight )
+    heal.setFlipX(true)
+    console.log("entro")
+  }
+
 
   createSpikes() {
     const y = 10
@@ -74,6 +90,8 @@ class MapHandler {
     diamond.body.setSize(diamond.displayWidth + 35, diamond.displayHeight + 30)
   }
 
+
+
   createUpPlatform() {
     const offset = this.scene.cameras.main.height - 100
     const y = this.scene.cameras.main.height - offset
@@ -90,21 +108,24 @@ class MapHandler {
     downPlatform.setVelocityX(-300)
     downPlatform.setDepth(6)
     downPlatform.body.setSize(downPlatform.displayWidth - 35, downPlatform.displayHeight - 35)
-
   }
 
   createSawMachine() {
     this.createSaw()
-    const t = this.config.initialDelay - Phaser.Math.Between(100, 400)
-    console.log("SAW t", t)
+    const t = this.config.initialDelay - Phaser.Math.Between(300, 600)
     this.scene.time.delayedCall(t, this.createSawMachine, undefined, this)
   }
   createDiamondMachine() {
     this.createDiamond()
     const t = this.config.initialDelay + Phaser.Math.Between(100, 700)
-
     this.scene.time.delayedCall(t, this.createDiamondMachine, undefined, this)
   }
+  createHealingMachine() {
+    this.createHealings()
+    const t = Phaser.Math.Between(1000,2000)
+    this.scene.time.delayedCall(t, this.createHealingMachine, undefined, this)
+  }
+
   createSpikeMachine() {
     this.createSpikes
     const t = 10
@@ -130,6 +151,8 @@ class MapHandler {
     this.scene.time.delayedCall(this.config.initialDelay, this.createSawMachine, undefined, this)
     this.scene.time.delayedCall(this.config.initialDelay, this.createUpPlatformMachine, undefined, this)
     this.scene.time.delayedCall(this.config.initialDelay, this.createDownPlatformMachine, undefined, this)
+    this.scene.time.delayedCall(this.config.initialDelay + Phaser.Math.Between(1000,2000), this.createHealingMachine, undefined, this)
+
 
 
 
@@ -150,7 +173,7 @@ class MapHandler {
     this.diamonds = this.scene.physics.add.group()
     this.scene.time.delayedCall(this.config.initialDelay, this.createDiamondMachine, undefined, this)
 
-
+    this.healings = this.scene.physics.add.group()
 
     this.groundGroup = this.scene.physics.add.group()
     this.upPlatformCreationTime = this.scene.time.addEvent({

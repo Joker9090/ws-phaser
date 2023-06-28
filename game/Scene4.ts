@@ -94,7 +94,17 @@ class Game extends Phaser.Scene {
 
         /* World Collider, pero podria ir dentro del mapHandler */
         this.physics.world.on('worldbounds', (body: Phaser.Physics.Arcade.Sprite, top: boolean, down: boolean, left: boolean, right: boolean) => {
-            if (down || top) this.launchMenu()
+            if (down || top) {
+                this.gameOver?.play()
+                this.backgroundMusic?.stop()
+                this.launchMenu()
+                --health
+                console.log("barto overlap", health)
+                SceneEvents.emit("updateHealth", health)
+                --health
+                console.log("barto overlap", health)
+                SceneEvents.emit("updateHealth", health)
+            }
 
 
         }, this);
@@ -111,12 +121,24 @@ class Game extends Phaser.Scene {
         this.map.createMap();
 
         // COLLIDERS!
-        const { saws, spikes, diamonds, groundGroup } = this.map;
+        const { saws, spikes, diamonds, groundGroup, healings } = this.map;
 
         this.physics.add.overlap(saws, groundGroup, (saw, floor) => {
             saw.destroy();
 
         })
+
+        this.physics.add.overlap(healings, this.player, (heal, player) => {
+            if (health < 2) {
+                ++health
+                console.log("barto overlap", health)
+                SceneEvents.emit("updateHealth", health)
+                console.log("HEAL")
+                // heal.destroy()
+            }
+        })
+
+
         this.physics.add.overlap(diamonds, groundGroup, (diamond, floor) => {
             diamond.destroy();
         })
@@ -129,19 +151,32 @@ class Game extends Phaser.Scene {
 
         })
 
+        let isCooldown = false;
+
         this.physics.add.overlap(this.player, saws, (player, saw) => {
-            saw.destroy()
-            --health
-            console.log("barto overlap", health)
-            SceneEvents.emit("updateHealth", health)
-            this.damage?.play()
-            this.cameras.main.shake(200, 0.01);
-            if (health <= 0) {
-                this.gameOver?.play()
-                this.backgroundMusic?.stop()
-                this.launchMenu()
+            if (!isCooldown) {
+                console.log(isCooldown);
+                this.player?.setAlpha(0.5);
+                saw.destroy();
+                --health;
+                console.log("barto overlap", health);
+                SceneEvents.emit("updateHealth", health);
+                this.damage?.play();
+                this.cameras.main.shake(200, 0.01);
+                if (health <= 0) {
+                    this.gameOver?.play();
+                    this.backgroundMusic?.stop();
+                    this.launchMenu();
+                }
+        
+                // Set the cooldown
+                isCooldown = true;
+                setTimeout(() => {
+                    this.player?.setAlpha(1)
+                    isCooldown = false;
+                }, 2000); // Cooldown duration in milliseconds (2 seconds)
             }
-        })
+        });
 
         this.physics.add.overlap(this.player, diamonds, (player, diamond) => {
             const _diamond = diamond as Phaser.GameObjects.Image

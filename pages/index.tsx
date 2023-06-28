@@ -3,7 +3,7 @@ import React from 'react';
 import Ui from "../game/UiScene";
 
 <head>
-  <link rel="stylesheet" type="text/css" href="/css/RollboxRegular-jE2lv.ttf"/>
+  <link rel="stylesheet" type="text/css" href="/css/RollboxRegular-jE2lv.ttf" />
 </head>
 export default function Home() {
   const [phaser, setPhaser] = React.useState<typeof Phaser | undefined>()

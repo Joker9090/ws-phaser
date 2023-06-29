@@ -9,6 +9,7 @@ import Tutorial from "./maps/Tutorial";
 import MusicManager from './MusicManager';
 import EventsCenter from './EventsCenter';
 import UIScene from './UIScene';
+import BetweenScenes from "./BetweenScenes";
 
 // Scene in class
 class Game extends Phaser.Scene {
@@ -96,7 +97,7 @@ class Game extends Phaser.Scene {
   rotateCam(time: number) {
     this.cameraNormal = false;
     if (this.canRot) {
-      if (!this.gravityDown){
+      if (!this.gravityDown) {
         EventsCenter.emit('gravityArrow', "down");
       }
       for (let i = 0; i < 25; i++) {
@@ -133,8 +134,9 @@ class Game extends Phaser.Scene {
     this.canWin = false;
     this.canNextLevel = false;
     EventsCenter.emit('gameOver', true)
-    this.scene.start("GameOver");
-    
+    this.makeTransition("GameOver", {})
+    //this.scene.start("GameOver");
+
   };
 
 
@@ -145,14 +147,60 @@ class Game extends Phaser.Scene {
       this.canWin = false;
       this.canNextLevel = false;
       EventsCenter.emit('gameOver', true);
-      this.scene.start("Won", { text: Phrase });
-      this.scene.stop();
+      //this.scene.start("Won", { text: Phrase });
+      this.makeTransition("Won", { text: Phrase })
+    };
+  };
+
+  winTutorial() {
+    if (this.canWin && this.monchi) {
+      this.cameraNormal = true;
+      this.checkPoint = 0;
+      this.canWin = false;
+      this.canNextLevel = false;
+      EventsCenter.emit('gameOver', true);
+      this.scene.restart({ level: 1, lifes: this.lifes });
+      this.UIScene?.scene.restart({ level: 1, lifes: this.lifes, game: this })
     };
   };
 
   movingFloorsGrav() {
     this.monchi?.setVelocityY(300);
   };
+
+  goBack() {
+    const mapa = this.map as Mapa1;
+    const piso = (mapa.pisosBack?.getChildren()[0] as Phaser.GameObjects.Sprite);
+
+
+    if (this.levelIs == 1) {
+      if (this.monchi) {
+        var monchiGravY = this.monchi.body?.gravity.y
+        var fix = this.monchi.x - 4500
+      }
+      this.tweens.addCounter({
+        from: 4500,
+        to: 700,
+        duration: 10 * 1000,
+        ease: window.Phaser.Math.Easing.Linear,
+        yoyo: false,
+        repeat: 0,
+        onStart: () => {
+          mapa.goingBack = true;
+          this.monchi?.setGravityY(8000)
+        },
+        onUpdate: (tween) => {
+          const value = tween.getValue();
+          if (piso) piso.setPosition(value, 1700)
+          //if (this.monchi) this.monchi.setPosition(value, 1700)
+        },
+        onComplete: () => {
+          mapa.goingBack = false;
+          this.monchi?.setGravityY(0)
+        }
+      });
+    }
+  }
 
   movingFloorsGravRot() {
     this.monchi?.setVelocityY(-300);
@@ -332,6 +380,15 @@ class Game extends Phaser.Scene {
     };
   };
 
+  makeTransition(sceneName: string, data: any) {
+    const getBetweenScenesScene = this.game.scene.getScene("BetweenScenes") as BetweenScenes
+    if (getBetweenScenesScene) getBetweenScenesScene.changeSceneTo(sceneName, data)
+    else this.scene.start(sceneName, data);
+    this.time.delayedCall(1000, () => {
+      this.scene.stop()
+    })
+  };
+
   create(this: Game, data: { level: number, lifes: number }) {
     this.checkPoint = 0;
 
@@ -409,21 +466,21 @@ class Game extends Phaser.Scene {
     }, this);
 
     this.timeLevel = 0;
-        var timerEvent = this.time.addEvent({
-            delay: 200,
-            callback: () => {
-                this.timeLevel++;
-                this.timeLevel = this.timeLevel;
-            },
-            callbackScope: this,
-            loop: true
-        });
+    var timerEvent = this.time.addEvent({
+      delay: 200,
+      callback: () => {
+        this.timeLevel++;
+        this.timeLevel = this.timeLevel;
+      },
+      callbackScope: this,
+      loop: true
+    });
   };
 
   update(this: Game) {
     if (this.cameras.main.width < this.cameras.main.height) {
       this.cameras.main.zoom = this.cameras.main.width / this.cameras.main.height
-  }
+    }
 
     if (this.monchi && this.map) {
       if (this.monchi.x > this.map.checkPointPos.x) {
@@ -433,7 +490,8 @@ class Game extends Phaser.Scene {
     if (this.map) this.map.update();
     if (this.EscKeyboard) this.EscKeyboard.on("down", () => {
       EventsCenter.emit('gameOver', true)
-      this.scene.start("Menu");
+      this.makeTransition("Menu", {})
+      //this.scene.start("Menu");
     })
   };
 };

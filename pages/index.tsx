@@ -18,6 +18,7 @@ export default function Home() {
     //Load scenes async when windows is ready
     Promise.all([
       import("@/game/SceneLoader"),
+      import("@/game/DataManager"),
       import("@/game/Menu"),
       import("@/game/Game"),
       import("@/game/Won"),
@@ -29,7 +30,7 @@ export default function Home() {
       import("@/game/MusicManager"),
       import("@/game/LevelMap"),
       import("@/game/Credits"),
-      import("@/game/Sandbox"),
+      //import("@/game/Sandbox"),
     ]).then((scenes) => {
       setScenes(scenes.map(s => s.default))
     })
@@ -50,7 +51,7 @@ export default function Home() {
         physics: {
           default: "arcade",
           arcade: {
-            overlapBias: 10,
+            overlapBias: 4,
             gravity: { y: 1000 },
             debug: true
           }

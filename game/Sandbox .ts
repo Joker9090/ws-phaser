@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import EventsCenter from './EventsCenter';
+import BetweenScenes from './BetweenScenes';
 
 
 
@@ -38,18 +39,23 @@ export default class Sandbox extends Phaser.Scene {
         
     };
 
-
-
+    makeTransition(sceneName: string, data: any) {
+        const getBetweenScenesScene = this.game.scene.getScene("BetweenScenes") as BetweenScenes
+        if (getBetweenScenesScene) getBetweenScenesScene.changeSceneTo(sceneName, data)
+        else this.scene.start(sceneName, data);
+        this.time.delayedCall(1000,()=>{
+            this.scene.stop()
+          })
+      }
 
     update() {
-       
         if (this.EscKeyboard) this.EscKeyboard.on("down", () => {
             EventsCenter.emit('gameOver', true)
-            this.scene.start("Menu");
+            this.makeTransition("Menu", {});
         });
         if (this.cursors) this.cursors.space.on("down", () => {
             EventsCenter.emit('gameOver', true)
-            this.scene.start("Menu");
+            this.makeTransition("Menu", {});
         });
     };
 };

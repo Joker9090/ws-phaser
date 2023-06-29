@@ -15,6 +15,7 @@ class Mapa1 {
     height: 2500,
   };
   pisos?: Phaser.Physics.Arcade.Group;
+  pisosBack?: Phaser.Physics.Arcade.Group;
   pisos2?: Phaser.Physics.Arcade.Group;
   pisos3?: Phaser.Physics.Arcade.Group;
   pisos4?: Phaser.Physics.Arcade.Group;
@@ -24,14 +25,16 @@ class Mapa1 {
   movingFloorRot?: Phaser.Physics.Arcade.Group;
   UIScene?: UIScene
   amountLifes: number = 0;
-  sideGrav: boolean = false
+  sideGrav: boolean = false;
+  goingBack: boolean = false;
+  pisoGoBack?: Phaser.GameObjects.Sprite;
   startingPoint = {
-    x: 500, //500
-    y: 800, //800
+    x: 500, 
+    y: 800, 
   };
   checkPointPos = {
-    x: 3000, //500
-    y: 600, //800
+    x: 3000, 
+    y: 750, 
   };
   background: Phaser.GameObjects.Image;
 
@@ -67,16 +70,20 @@ class Mapa1 {
       if (this.coin) this.scene.physics.add.overlap(this.scene.monchi, this.coin, this.scene.coinCollected, () => true, this.scene);
       if (this.portal) this.scene.physics.add.overlap(this.scene.monchi, this.portal, this.scene.goNextLevel, () => true, this.scene);
       if (this.pisos4) this.scene.physics.add.collider(this.scene.monchi, this.pisos4, this.scene.noFloat, () => true, this.scene);
+      if (this.pisosBack) this.scene.physics.add.collider(this.scene.monchi, this.pisosBack, this.scene.goBack, () => true, this.scene);
+      //if (this.pisoGoBack) this.scene.physics.add.collider(this.scene.monchi, this.pisoGoBack, this.scene.goBack, () => true, this.scene);
       if (this.movingFloor) this.scene.physics.add.collider(this.scene.monchi, this.movingFloor, this.scene.movingFloorsGrav, () => true, this.scene);
       if (this.movingFloorRot) this.scene.physics.add.collider(this.scene.monchi, this.movingFloorRot, this.scene.movingFloorsGravRot, () => true, this.scene);
     };
   };
+
 
   createMap(data: { level: number, lifes: number }) {
 
     this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
     this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });
     this.pisos = this.scene.physics.add.group({ allowGravity: false });
+    this.pisosBack = this.scene.physics.add.group({ allowGravity: false });
     this.pisos2 = this.scene.physics.add.group({ allowGravity: false });
     this.pisos3 = this.scene.physics.add.group({ allowGravity: false });
     this.coin = this.scene.physics.add.group({ allowGravity: false });
@@ -174,7 +181,7 @@ class Mapa1 {
       height: 50,
 
     };
-    const p9 = new Floor(this.scene, p9Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 177, 0));
+    const p9 = new Floor(this.scene, p9Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
 
     const p4Config: LargeFloorConfig = {
       textureA: "plataformaA",
@@ -233,7 +240,7 @@ class Mapa1 {
       }
     };
     const p13 = new Floor(this.scene, p13Config, this.pisos3)
-      .setTint(Phaser.Display.Color.GetColor(255, 177, 0));
+      .setTint(Phaser.Display.Color.GetColor(255, 101, 0));
 
     const p14Config: LargeFloorConfig = {
       textureA: "plataformaA",
@@ -243,8 +250,30 @@ class Mapa1 {
       scale: { width: 0.7, height: 0.7, },
 
     };
-
     const p14 = new LargeFloor(this.scene, p14Config, this.pisos);
+
+    const pBackConfig: FloorConfig = {
+      texture: "plataformaA",
+      pos: { x: 4500, y: 1700, },
+      fix: 10,
+      width: 240,
+      height: 50,
+      scale: { width: 0.7, height: 0.7, },
+      tween: {
+        duration: 10000,
+        paused: true,
+        yoyo: true,
+        repeat: -1,
+        x: "-=4000"
+      }
+    };
+    const pBack = new Floor(this.scene, pBackConfig, this.pisosBack);
+
+
+    //this.pisoGoBack = this.scene.physics.add.sprite(4500, 1700, "plataformaA").setScale(0.7).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
+
+
+
 
     const p15Config: FloorConfig = {
       texture: "plataformaB",
@@ -302,7 +331,7 @@ class Mapa1 {
       height: 50,
       scale: { width: 0.8, height: 0.7, },
     };
-    const p19 = new Floor(this.scene, p19Config, this.pisos4).setTint(Phaser.Display.Color.GetColor(255, 177, 0));
+    const p19 = new Floor(this.scene, p19Config, this.pisos4).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
 
     //Portal, Coin and Asteroids
     const portalConfig: FloorConfig = {
@@ -355,14 +384,17 @@ class Mapa1 {
 
   update() {
     /* Attach controls to player */
-    if (this.scene.monchi && this.scene.cameraNormal) {
-      this.scene.monchi.checkMove(this.scene.cursors);
-      this.animateBackground(this.scene.monchi);
+    if (!this.goingBack) {
+      if (this.scene.monchi && this.scene.cameraNormal) {
+        this.scene.monchi.checkMove(this.scene.cursors);
+      }
+      else if (this.scene.monchi && this.scene.cameraNormal == false) {
+        this.scene.monchi?.checkMoveRot(this.scene.cursors);
+      };
+    } else if (this.goingBack) {
+      if (this.scene.monchi) this.scene.monchi.setY(1700 - this.scene.monchi.displayHeight);
     }
-    else if (this.scene.monchi && this.scene.cameraNormal == false) {
-      this.scene.monchi?.checkMoveRot(this.scene.cursors);
-      this.animateBackground(this.scene.monchi);
-    };
+    if (this.scene.monchi) this.animateBackground(this.scene.monchi);
   };
 };
 

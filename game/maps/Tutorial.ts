@@ -127,7 +127,7 @@ class Tutorial {
       scale: { width: 0.7, height: 0.7, }
     };
     this.pisoFloat = new Floor(this.scene, p3Config, this.pisos2)
-      .setTint(Phaser.Display.Color.GetColor(255, 177, 0))
+      .setTint(Phaser.Display.Color.GetColor(255, 101, 0))
     this.pisoFloat.hasEvent = "Show_Tutorial_Text_1";
 
     const p4Config: LargeFloorConfig = {
@@ -146,7 +146,7 @@ class Tutorial {
       scale: { width: 0.7, height: 0.7, }
     };
     this.pisoNoFloat = new Floor(this.scene, p5Config, this.pisos3)
-      .setTint(Phaser.Display.Color.GetColor(255, 177, 0))
+      .setTint(Phaser.Display.Color.GetColor(255, 101, 0))
     this.pisoNoFloat.hasEvent = "Show_Tutorial_Text_3";
 
 
@@ -220,7 +220,7 @@ class Tutorial {
       if (this.pisos2) this.scene.physics.add.collider(this.scene.monchi, this.pisos2, (a, b) => this.scene.float(a, b, 500), () => true, this.scene);
       if (this.pisos3) this.scene.physics.add.collider(this.scene.monchi, this.pisos3, this.scene.noFloatTutorial, () => true, this.scene);
       if (this.coin) this.scene.physics.add.overlap(this.scene.monchi, this.coin, this.scene.coinCollected, () => true, this.scene);
-      if (this.portal) this.scene.physics.add.overlap(this.scene.monchi, this.portal, () => this.scene.win("Congrats! You've finished the tutorial"), () => true, this.scene);
+      if (this.portal) this.scene.physics.add.overlap(this.scene.monchi, this.portal, this.scene.winTutorial, () => true, this.scene);
     }
 
   }

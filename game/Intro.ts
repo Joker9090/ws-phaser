@@ -104,7 +104,7 @@ export default class Intro extends Phaser.Scene {
       onUpdate: (tween) => {
         const value = tween.getValue();
         if (value >= 0) this.spaceText?.setAlpha(value);
-        if (value >= 0.5) this.finishIntro = true;
+        if (value >= 0.2) this.finishIntro = true;
       },
       onComplete: () => {
         this.pressAnim();
@@ -193,6 +193,9 @@ export default class Intro extends Phaser.Scene {
     const getBetweenScenesScene = this.game.scene.getScene("BetweenScenes") as BetweenScenes
     if (getBetweenScenesScene) getBetweenScenesScene.changeSceneTo(sceneName, data)
     else this.scene.start(sceneName, data);
+    this.time.delayedCall(1000,()=>{
+      this.scene.stop()
+    })
   }
 
   update() {

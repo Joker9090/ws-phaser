@@ -27,7 +27,7 @@ export default class BetweenScenesScene extends Phaser.Scene {
         this.scene.launch(this.newSceneName, this.newSceneWith)
         this.scene.bringToTop()
       }
-      this.turnOf()
+      this.turnOff()
     }
   }
 
@@ -38,7 +38,7 @@ export default class BetweenScenesScene extends Phaser.Scene {
     this.scene.stop()
   }
 
-  turnOf() {
+  turnOff() {
     const self = this;
     let i = 0;
     let ii = 0;
@@ -55,8 +55,7 @@ export default class BetweenScenesScene extends Phaser.Scene {
         delay: i * 50,
         repeat: 0,
         yoyo: false,
-        hold: 1000,
-        repeatDelay: 1000,
+        hold: 200,
         //  onCompleteParams: self,
         onComplete: ii == 107 ? self.finishLogic.bind(self) : () => {}
       });
@@ -74,33 +73,31 @@ export default class BetweenScenesScene extends Phaser.Scene {
     const self = this;
     let i = 0;
     let ii = 0;
-
-
     //@ts-ignore
     this.blocks.children.iterate((c) => {
       const child = c as Phaser.GameObjects.GameObject;
       console.log("ii", ii)
-
+      const {width, height} = this.cameras.main
+      const scale = Math.max(width/20,height/15);
       this.tweens.add({
         targets: child,
-        scale: 2.5,
+        scale: scale,
         angle: 180,
         ease: 'Power2',
         duration: 1000,
         delay: i * 50,
         repeat: 0,
         yoyo: false,
-        hold: 1000,
-        repeatDelay: 1000,
+        hold: 200,
         onComplete: ii == 107 ? self.loadNewScene.bind(self) : () => {}
       });
       i++;
       ii++;
-
+      
       if (i % 12 === 0) {
         i = 0;
       }
-
+      
     });
   }
   create() {
@@ -119,6 +116,11 @@ export default class BetweenScenesScene extends Phaser.Scene {
 
     
    this.turnOn()
+  
+  }
+
+  update(){
+    console.log(this.status)
   }
 };
 

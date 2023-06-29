@@ -1,10 +1,10 @@
 import Phaser from 'phaser';
 import BetweenScenes from './BetweenScenes';
 import MusicManager from './MusicManager';
-
+import DataManager from './DataManager';
 
 export default class MainMenuScene extends Phaser.Scene {
-
+    dataManager?: DataManager;
     cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
     buttons: Phaser.GameObjects.Image[] = [];
     selectedButtonIndex: number = 0;
@@ -19,12 +19,14 @@ export default class MainMenuScene extends Phaser.Scene {
     textLvl1?: Phaser.GameObjects.Text;
     textLvl2?: Phaser.GameObjects.Text;
     container?: Phaser.GameObjects.Container;
+    canChangeScene: boolean = false;
     constructor() {
         super({ key: 'Menu' });
     };
 
     init() {
         this.cursors = this.input.keyboard?.createCursorKeys();
+        this.dataManager = this.game.scene.getScene("DataManager") as DataManager;
     };
 
     /* Debug 
@@ -36,71 +38,96 @@ export default class MainMenuScene extends Phaser.Scene {
     };
     */
 
+
     button1() {
-        /* animation logo after introduction */
-        this.tweens.addCounter({
-            from: 2000,
-            to: 0,
-            duration: 2000,
-            ease: window.Phaser.Math.Easing.Bounce.InOut,
-            yoyo: false,
-            repeat: 0,
-            onUpdate: (tween) => {
-                const value = tween.getValue();
-                if (this.play) this.play.setPosition(value,100);
-                if (this.textTut) this.textTut.setPosition(value,100);
-            },
-            onComplete: () => {
-                this.button2()
-            }
-        });
+        if (!this.dataManager?.menuAnim) {
+            this.tweens.addCounter({
+                from: 2000,
+                to: 0,
+                duration: 4000,
+                ease: window.Phaser.Math.Easing.Bounce.InOut,
+                yoyo: false,
+                repeat: 0,
+                onUpdate: (tween) => {
+                    const value = tween.getValue();
+                    if (this.buttonSelector && this.play) this.buttonSelector.setPosition(this.play.x + this.play.displayWidth * 0.5, this.play.y + 10)
+                    if (this.play) this.play.setPosition(value, 100);
+                    if (this.textTut) this.textTut.setPosition(value, 100);
+                    if (this.play) {
+                        if (this.credits) this.credits.setPosition(value * 2, this.play.y + this.play.displayHeight + 10);
+                        if (this.textLvl1) this.textLvl1.setPosition(value * 2, this.play.y + this.play.displayHeight + 10);
+                    }
+                    if (this.credits) {
+                        if (this.exit) this.exit.setPosition(value * 3, this.credits.y + this.credits.displayHeight + 10);
+                        if (this.textLvl2) this.textLvl2.setPosition(value * 3, this.credits.y + this.credits.displayHeight + 10);
+                    }
+                },
+                onComplete: () => {
+                    this.canChangeScene = true
+                }
+            });
+        } else {
+            this.play?.setPosition(0, 100)
+            this.textTut?.setPosition(0, 100)
+            if (this.play) this.credits?.setPosition(0, this.play.y + this.play.displayHeight + 10)
+            if (this.play) this.textLvl1?.setPosition(0, this.play.y + this.play.displayHeight + 10)
+            if (this.credits) this.exit?.setPosition(0, this.credits.y + this.credits.displayHeight + 10)
+            if (this.credits) this.textLvl2?.setPosition(0, this.credits.y + this.credits.displayHeight + 10)
+            if (this.play) this.buttonSelector?.setPosition(this.play.x + this.play.displayWidth * 0.5, this.play.y + 10)
+        }
     };
-    button2() {
-        /* animation logo after introduction */
+
+    hoverTitle() {
         this.tweens.addCounter({
-            from: 2000,
-            to: 0,
-            duration: 1000,
-            ease: window.Phaser.Math.Easing.Bounce.InOut,
-            yoyo: false,
-            repeat: 0,
+            from: -100,
+            to: -120,
+            duration: 4000,
+            ease: window.Phaser.Math.Easing.Linear,
+            yoyo: true,
+            repeat: -1,
             onUpdate: (tween) => {
                 const value = tween.getValue();
-                if(this.play){
-                    if (this.credits) this.credits.setPosition(value,this.play.y + this.play.displayHeight + 10);
-                    if (this.textLvl1) this.textLvl1.setPosition(value,this.play.y + this.play.displayHeight + 10);
+                if (this.title) {
+                    this.title.setPosition(0, value);
                 }
             },
-            onComplete: () => {
-                this.button3()
-            }
-        });
-    };
-    button3() {
-        /* animation logo after introduction */
-        this.tweens.addCounter({
-            from: 2000,
-            to: 0,
-            duration: 1000,
-            ease: window.Phaser.Math.Easing.Bounce.InOut,
-            yoyo: false,
-            repeat: 0,
-            onUpdate: (tween) => {
-                const value = tween.getValue();
-                if(this.credits){
-                    if (this.exit) this.exit.setPosition(value,this.credits.y + this.credits.displayHeight + 10);
-                    if (this.textLvl2) this.textLvl2.setPosition(value,this.credits.y + this.credits.displayHeight + 10);
-                }
-            }
         });
     }
 
+    titleAnim() {
+        if (!this.dataManager?.menuAnim) {
+            this.tweens.addCounter({
+                from: -1500,
+                to: -100,
+                duration: 4000,
+                ease: window.Phaser.Math.Easing.Bounce.InOut,
+                yoyo: false,
+                repeat: 0,
+                onUpdate: (tween) => {
+                    const value = tween.getValue();
+                    if (this.title) {
+                        this.title.setPosition(0, value);
+                    }
+                },
+                onComplete: () => {
+                    this.hoverTitle();
+                }
+            });
+        } else {
+            this.title?.setPosition(0, -100);
+            this.hoverTitle();
+        }
+    };
+
     makeTransition(sceneName: string, data: any) {
-      const getBetweenScenesScene = this.game.scene.getScene("BetweenScenes") as BetweenScenes
-      if (getBetweenScenesScene) getBetweenScenesScene.changeSceneTo(sceneName, data)
-      else this.scene.start(sceneName, data);
+        const getBetweenScenesScene = this.game.scene.getScene("BetweenScenes") as BetweenScenes
+        if (getBetweenScenesScene) getBetweenScenesScene.changeSceneTo(sceneName, data)
+        else this.scene.start(sceneName, data);
+        this.time.delayedCall(1000, () => {
+            this.scene.stop()
+        })
     }
-    
+
     create() {
         /* Audio */
         const getMusicManagerScene = this.game.scene.getScene("MusicManager") as MusicManager
@@ -114,7 +141,7 @@ export default class MainMenuScene extends Phaser.Scene {
 
         /* Main Scene Menu */
         //this.container = this.add.container(this.game.canvas.getBoundingClientRect().width/2 ,this.game.canvas.getBoundingClientRect().height/3).setDepth(999)
-        this.container = this.add.container(0,0).setDepth(999)
+        this.container = this.add.container(0, 0).setDepth(999)
         this.physics.world.setBounds(0, 0, 5000, 2500);
         this.add.image(900, 500, "background").setScale(.7);
         this.monchi = this.add.sprite(100, 700, "character", 1).setScale(.5);
@@ -124,50 +151,41 @@ export default class MainMenuScene extends Phaser.Scene {
             width = size.width;
             height = size.height;
         }
-        
+
         const [widthButton, heightButton] = [250, 100];
-        this.title = this.add.text(0,-100,"LAS AVENTURAS DE MONCHI",{fontSize: '80px', fontFamily: 'arcade', color: '#c3c5c3'}).setOrigin(0.5)
+        this.title = this.add.text(0, -100, "COSMIC WANDERER", { fontSize: '80px', fontFamily: 'arcade', color: '#c3c5c3' }).setOrigin(0.5)
         // play button
         this.play = this.add.image(2000, 100, 'glass').setDisplaySize(widthButton, heightButton);
         //window.play = play
-        this.textTut = this.add.text(this.play.x, this.play.y, 'Play',{fontFamily: 'arcade'}).setOrigin(0.5);
+        this.textTut = this.add.text(this.play.x, this.play.y, 'Play', { fontFamily: 'arcade' }).setOrigin(0.5);
 
         // Play level 1 button
         this.credits = this.add.image(this.play.x, this.play.y + this.play.displayHeight + 10, 'glass').setDisplaySize(widthButton, heightButton);
-        this.textLvl1 = this.add.text(this.credits.x, this.credits.y, 'Credits',{fontFamily: 'arcade'}).setOrigin(0.5);
+        this.textLvl1 = this.add.text(this.credits.x, this.credits.y, 'Credits', { fontFamily: 'arcade' }).setOrigin(0.5);
 
         // Play level 2 button
         this.exit = this.add.image(this.credits.x, this.credits.y + this.credits.displayHeight + 10, 'glass').setDisplaySize(widthButton, heightButton);
-        this.textLvl2 = this.add.text(this.exit.x, this.exit.y, 'Exit',{fontFamily: 'arcade'}).setOrigin(0.5);
+        this.textLvl2 = this.add.text(this.exit.x, this.exit.y, 'Exit', { fontFamily: 'arcade' }).setOrigin(0.5);
 
-        
+
         this.buttons = [this.play, this.credits, this.exit];
         this.buttonSelector = this.add.image(this.play.x + this.play.displayWidth * 0.5, this.play.y + 10, 'cursor').setScale(.1).setRotation(-1);
         this.selectButton(0);
-        
+
         this.container.add([this.play, this.credits, this.exit, this.textLvl1, this.textLvl1, this.textLvl2, this.textTut, this.buttonSelector, this.title]);
 
         this.play.on('selected', () => {
-            this.scene.stop();
             this.makeTransition("LevelMap", {})
-            // this.scene.start("LevelMap");
             this.selectedButtonIndex = 0
         });
-
         this.credits.on('selected', () => {
-            this.scene.stop();
             this.makeTransition("Credits", {})
-            // this.scene.start("Credits");
             this.selectedButtonIndex = 0
         });
-
         this.exit.on('selected', () => {
-            this.scene.stop();
             this.makeTransition("Intro", {})
-            // this.scene.start("Intro");
             this.selectedButtonIndex = 0
         });
-
         this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
             this.credits?.off('selected')
         });
@@ -175,6 +193,7 @@ export default class MainMenuScene extends Phaser.Scene {
             this.exit?.off('selected')
         });
         this.button1()
+        this.titleAnim()
     };
 
     selectButton(index: number) {
@@ -213,12 +232,12 @@ export default class MainMenuScene extends Phaser.Scene {
     update() {
         if (this.container) {
             if (this.cameras.main) {
-               this.container.setPosition(this.cameras.main.width/2 ,this.cameras.main.height/3);
-               if(this.cameras.main.width < this.cameras.main.height){
-                   this.container.setScale(this.cameras.main.width / this.cameras.main.height)
-               } else {
-                this.container.setScale(1)
-               }
+                this.container.setPosition(this.cameras.main.width / 2, this.cameras.main.height / 3);
+                if (this.cameras.main.width < this.cameras.main.height) {
+                    this.container.setScale(this.cameras.main.width / this.cameras.main.height)
+                } else {
+                    this.container.setScale(1)
+                }
             }
         }
 
@@ -241,7 +260,7 @@ export default class MainMenuScene extends Phaser.Scene {
                 this.selectNextButton(1);
             }
             else if (spaceJustPressed) {
-                this.confirmSelection();
+                if (this.canChangeScene) this.confirmSelection();
             };
         };
     };

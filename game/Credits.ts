@@ -41,8 +41,11 @@ export default class Credits extends Phaser.Scene {
     const getBetweenScenesScene = this.game.scene.getScene("BetweenScenes") as BetweenScenes
     if (getBetweenScenesScene) getBetweenScenesScene.changeSceneTo(sceneName, data)
     else this.scene.start(sceneName, data);
+    this.time.delayedCall(1000,()=>{
+      this.scene.stop()
+    })
   }
-
+  
 
   create() {
     /* Controls */

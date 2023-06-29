@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import EventsCenter from './EventsCenter';
+import BetweenScenes from './BetweenScenes';
 
 
 
@@ -28,7 +29,7 @@ export default class LevelMap extends Phaser.Scene {
     planetSelector!: Phaser.GameObjects.Image;
     selectedPlanetIndex: number = 0;
     /* progress */
-    progress: number = 0;
+    progress: number = 3;
     /* monchi */
     monchi?: Phaser.GameObjects.Sprite;
     constructor() {
@@ -111,17 +112,17 @@ export default class LevelMap extends Phaser.Scene {
 
 
         this.sun = this.add.sprite(width - width / 8, height - height / 4.7, "sun").setScale(0.08).setTint(Phaser.Display.Color.GetColor(5, 5, 5));
-        this.sunText = this.add.text(this.sun.x, this.sun.y + this.sun.displayHeight / 1.5, "Final Level").setOrigin(0.5).setScale(1.2).setVisible(false);
-        //this.sunCon = this.add.container(0, 0, [this.sun, this.sunText])
+        this.sunText = this.add.text(this.sun.x, this.sun.y + this.sun.displayHeight / 1.5, "COMING SOON").setOrigin(0.5).setScale(1.2).setVisible(true);
+
         this.planetLevel2 = this.add.sprite(width - width / 2.8, height - height / 2.8, "planetLevel2").setScale(0.15).setTint(Phaser.Display.Color.GetColor(5, 5, 5));
-        this.level2Text = this.add.text(this.planetLevel2.x, this.planetLevel2.y + this.planetLevel2.displayHeight / 1.5, "Level 2").setOrigin(0.5).setScale(1.2).setVisible(false);
-        //this.planetTutCon = this.add.container(0, 0, [this.sun, this.sunText])
+        this.level2Text = this.add.text(this.planetLevel2.x, this.planetLevel2.y + this.planetLevel2.displayHeight / 1.5, "COMING SOON").setOrigin(0.5).setScale(1.2).setVisible(true);
+   
         this.planetLevel1 = this.add.sprite(width - width / 1.7, height - height / 1.77, "planetLevel1").setScale(0.35).setTint(Phaser.Display.Color.GetColor(5, 5, 5));
-        this.level1Text = this.add.text(this.planetLevel1.x, this.planetLevel1.y + this.planetLevel1.displayHeight / 1.8, "Level 1").setOrigin(0.5).setScale(1.2).setVisible(false);
-        //this.planet1Con = this.add.container(0, 0, [this.sun, this.sunText])
+        this.level1Text = this.add.text(this.planetLevel1.x, this.planetLevel1.y + this.planetLevel1.displayHeight / 1.8, "COMING SOON").setOrigin(0.5).setScale(1.2).setVisible(true);
+   
         this.planetTutorial = this.add.sprite(width - width / 1.2, 200, "planetTutorial").setScale(0.15);
         this.tutorialText = this.add.text(this.planetTutorial.x, this.planetTutorial.y + this.planetTutorial.displayHeight / 1.8, "Tutorial").setOrigin(0.5).setScale(1.2);
-        //this.planet2Con = this.add.container(0, 0, [this.sun, this.sunText])
+       
         this.container.add([this.sun, this.planetTutorial, this.planetLevel1, this.planetLevel2]);
         this.monchi = this.add.sprite(width + 100, 150, "character", 1).setScale(.5).setDepth(9);
 
@@ -149,26 +150,39 @@ export default class LevelMap extends Phaser.Scene {
         this.upDownAnim(this.background, 500, 10, 6000);
 
         this.planetTutorial.on('selected', () => {
-            this.scene.start("Game", { level: 0, lifes: 3 });
+            this.makeTransition("Game", { level: 0, lifes: 3 });
+            //this.scene.start("Game", { level: 0, lifes: 3 });
             this.selectedPlanetIndex = 0
         });
 
         this.planetLevel1.on('selected', () => {
-            this.scene.start("Game", { level: 1, lifes: 3 });
+            this.makeTransition("Game", { level: 1, lifes: 3 });
+            //this.scene.start("Game", { level: 1, lifes: 3 });
             this.selectedPlanetIndex = 0
         });
 
         this.planetLevel2.on('selected', () => {
-            this.scene.start("Game", { level: 2, lifes: 3 });
+            this.makeTransition("Game", { level: 2, lifes: 3 });
+            //this.scene.start("Game", { level: 2, lifes: 3 });
             this.selectedPlanetIndex = 0
         });
 
         this.sun.on('selected', () => {
-            this.scene.start("Game", { level: 3, lifes: 3 });
+            this.makeTransition("Game", { level: 3, lifes: 3 });
+            //this.scene.start("Game", { level: 3, lifes: 3 });
             this.selectedPlanetIndex = 0
         });
 
     };
+
+    makeTransition(sceneName: string, data: any) {
+        const getBetweenScenesScene = this.game.scene.getScene("BetweenScenes") as BetweenScenes
+        if (getBetweenScenesScene) getBetweenScenesScene.changeSceneTo(sceneName, data)
+        else this.scene.start(sceneName, data);
+        this.time.delayedCall(1000,()=>{
+            this.scene.stop()
+          })
+      }
 
     showPlanets(level: number) {
         if (level == 0) {
@@ -216,7 +230,8 @@ export default class LevelMap extends Phaser.Scene {
 
         if (this.EscKeyboard) this.EscKeyboard.on("down", () => {
             EventsCenter.emit('gameOver', true)
-            this.scene.start("Menu");
+            this.makeTransition("Menu", {});
+            //this.scene.start("Menu");
         })
 
         if (this.cursors) {

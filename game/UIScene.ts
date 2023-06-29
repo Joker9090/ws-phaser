@@ -105,7 +105,7 @@ export default class UIScene extends Phaser.Scene {
 
     loseLife(lifes: number) {
         // Remove the object with the highest x position
-        this.cameras.main.flash(500,1);
+        this.cameras.main.flash(700,255,19,30,true);
         if (this.lifesGroup) {
             if (lifes != 0) {
                 let lifeToTheRight = null;

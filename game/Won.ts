@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import MusicManager from "./MusicManager";
+import BetweenScenes from './BetweenScenes';
 
 export default class WonScene extends Phaser.Scene {
     cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -37,7 +38,14 @@ export default class WonScene extends Phaser.Scene {
         .setScale(1);
         this.container?.add([text1,text2]);
     };
-    
+    makeTransition(sceneName: string, data: any) {
+        const getBetweenScenesScene = this.game.scene.getScene("BetweenScenes") as BetweenScenes
+        if (getBetweenScenesScene) getBetweenScenesScene.changeSceneTo(sceneName, data)
+        else this.scene.start(sceneName, data);
+        this.time.delayedCall(1000,()=>{
+            this.scene.stop()
+          })
+      }
     update() {
         if (this.container) {
             if (this.cameras.main) {

@@ -71,7 +71,7 @@ class SceneLoader extends Phaser.Scene {
     super({ key: 'SceneLoader' });
   };
   preload(this: Phaser.Scene) {
-
+    this.cameras.main.setBackgroundColor(Phaser.Display.Color.GetColor(30, 30, 30))
     var width = this.cameras.main.width;
     var height = this.cameras.main.height;
     var loadingText = this.make.text({
@@ -115,7 +115,7 @@ class SceneLoader extends Phaser.Scene {
     assetText.setOrigin(0.5, 0.5);
 
     this.load.on('progress', function (value: number) {
-      percentText.setText(Number(value * 100) + '%');
+      percentText.setText(Math.floor(Number(value * 100)) + '%');
       progressBar.clear();
       progressBar.fillStyle(0xff0000, 1);
       progressBar.fillRect(width / 2 - 160, height / 2 + 100, 300 * value, 30);
@@ -152,9 +152,9 @@ class SceneLoader extends Phaser.Scene {
   };
 
   create(this: SceneLoader, { level }: any) {
-    //this.scene.start("Sandbox", { "data": 1 });
-    this.scene.start("Intro", { "data": 1 });
-    //this.scene.start("Credits", { "data": 1 });
+    this.scene.launch("DataManager", { "data": 1 });
+    this.scene.start("Menu", { "data": 1 });
+    //this.scene.start("Game", { level: 1 , lifes: 3 });
 
   };
 

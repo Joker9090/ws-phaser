@@ -281,7 +281,7 @@ class Mapa2 {
       if (this.portal) this.portal.setTint(0xff0000);
       if (this.pisos) this.scene.physics.add.collider(this.scene.monchi, this.pisos, this.scene.touch, () => true, this.scene);
       if (this.coin) this.scene.physics.add.overlap(this.scene.monchi, this.coin, this.scene.coinCollected, () => true, this.scene);
-      if (this.portal) this.scene.physics.add.overlap(this.scene.monchi, this.portal, () => this.scene.win("Congrats! You've won the game"), () => true, this.scene);
+      if (this.portal) this.scene.physics.add.overlap(this.scene.monchi, this.portal, () => this.scene.win("Congrats! You've finished the tutorial"), () => true, this.scene);
 
     }
 

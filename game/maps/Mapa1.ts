@@ -29,8 +29,8 @@ class Mapa1 {
   goingBack: boolean = false;
   pisoGoBack?: Phaser.GameObjects.Sprite;
   startingPoint = {
-    x: 500, 
-    y: 800, 
+    x: 4900, //500
+    y: 1600, //800
   };
   checkPointPos = {
     x: 3000, 
@@ -267,7 +267,7 @@ class Mapa1 {
         x: "-=4000"
       }
     };
-    const pBack = new Floor(this.scene, pBackConfig, this.pisosBack);
+    const pBack = new Floor(this.scene, pBackConfig, this.pisosBack).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
 
 
     //this.pisoGoBack = this.scene.physics.add.sprite(4500, 1700, "plataformaA").setScale(0.7).setTint(Phaser.Display.Color.GetColor(255, 101, 0));

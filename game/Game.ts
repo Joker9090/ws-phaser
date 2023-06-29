@@ -490,7 +490,7 @@ class Game extends Phaser.Scene {
     if (this.map) this.map.update();
     if (this.EscKeyboard) this.EscKeyboard.on("down", () => {
       EventsCenter.emit('gameOver', true)
-      this.makeTransition("Menu", {})
+      this.makeTransition("LevelMap", {})
       //this.scene.start("Menu");
     })
   };

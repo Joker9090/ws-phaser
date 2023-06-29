@@ -28,8 +28,9 @@ export default class LevelMap extends Phaser.Scene {
     planets: Phaser.GameObjects.Sprite[] = [];
     planetSelector!: Phaser.GameObjects.Image;
     selectedPlanetIndex: number = 0;
+    planetsShown: number = 3;
     /* progress */
-    progress: number = 3;
+    progress: number = 0;
     /* monchi */
     monchi?: Phaser.GameObjects.Sprite;
     constructor() {
@@ -126,19 +127,17 @@ export default class LevelMap extends Phaser.Scene {
         this.container.add([this.sun, this.planetTutorial, this.planetLevel1, this.planetLevel2]);
         this.monchi = this.add.sprite(width + 100, 150, "character", 1).setScale(.5).setDepth(9);
 
-        if (this.progress == 0){
+        if (this.planetsShown == 0){
             this.planets = [this.planetTutorial];
-        } else if (this.progress == 1){
+        } else if (this.planetsShown == 1){
             this.planets = [this.planetTutorial, this.planetLevel1];
-        } else if (this.progress == 2){
+        } else if (this.planetsShown == 2){
             this.planets = [this.planetTutorial, this.planetLevel1, this.planetLevel2];
-        } else if (this.progress == 3){
+        } else if (this.planetsShown == 3){
             this.planets = [this.planetTutorial, this.planetLevel1, this.planetLevel2, this.sun];
         } else {this.planets = [this.planetTutorial, this.planetLevel1, this.planetLevel2, this.sun];};
 
-        this.planetSelector = this.add.image(0, 0, 'cursor').setScale(.1).setRotation(-0.7);
-        this.selectPlanet(0);
-
+        
         this.upDownAnim(this.sun, this.sun.y, 13, 2000);
         this.upDownAnim(this.sunText, this.sunText.y, 13, 2000);
         this.upDownAnim(this.planetTutorial, this.planetTutorial.y, 5, 2500);
@@ -148,31 +147,33 @@ export default class LevelMap extends Phaser.Scene {
         this.upDownAnim(this.planetLevel2, this.planetLevel2.y, 0, 2100);
         this.upDownAnim(this.level2Text, this.level2Text.y, 0, 2100);
         this.upDownAnim(this.background, 500, 10, 6000);
-
+        
         this.planetTutorial.on('selected', () => {
             this.makeTransition("Game", { level: 0, lifes: 3 });
             //this.scene.start("Game", { level: 0, lifes: 3 });
             this.selectedPlanetIndex = 0
         });
-
+        
         this.planetLevel1.on('selected', () => {
             this.makeTransition("Game", { level: 1, lifes: 3 });
             //this.scene.start("Game", { level: 1, lifes: 3 });
             this.selectedPlanetIndex = 0
         });
-
+        
         this.planetLevel2.on('selected', () => {
             this.makeTransition("Game", { level: 2, lifes: 3 });
             //this.scene.start("Game", { level: 2, lifes: 3 });
             this.selectedPlanetIndex = 0
         });
-
+        
         this.sun.on('selected', () => {
             this.makeTransition("Game", { level: 3, lifes: 3 });
             //this.scene.start("Game", { level: 3, lifes: 3 });
             this.selectedPlanetIndex = 0
         });
-
+        
+        this.planetSelector = this.add.image(0, 0, 'cursor').setScale(.1).setRotation(-0.7);
+        this.selectPlanet(0);
     };
 
     makeTransition(sceneName: string, data: any) {
@@ -214,7 +215,7 @@ export default class LevelMap extends Phaser.Scene {
 
 
     update() {
-
+        
         if (this.monchi) {
             this.progress = this.progress + .0031415;
             this.monchi.x = this.monchi.x - .8;
@@ -225,8 +226,8 @@ export default class LevelMap extends Phaser.Scene {
                 this.monchi.y = 150
             }
         };
-
-        this.showPlanets(this.progress);
+        
+        this.showPlanets(this.planetsShown);
 
         if (this.EscKeyboard) this.EscKeyboard.on("down", () => {
             EventsCenter.emit('gameOver', true)

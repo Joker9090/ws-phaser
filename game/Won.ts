@@ -59,9 +59,10 @@ export default class WonScene extends Phaser.Scene {
             const space = this.cursors.space;
             /*Space*/
             space.on('down', () => {
-                this.scene.start("Menu");
+                this.makeTransition("Menu", {})
             });
         };
     };
 };
+
 

@@ -51,7 +51,7 @@ export default function Home() {
         physics: {
           default: "arcade",
           arcade: {
-            overlapBias: 4,
+            overlapBias: 10,
             gravity: { y: 1000 },
             debug: true
           }

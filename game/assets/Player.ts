@@ -1,4 +1,3 @@
-
 import Phaser from "phaser";
 import Game from "../Game";
 import EventsCenter from "../EventsCenter";
@@ -8,13 +7,23 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   isJumping = false;
   scene: Game;
 
-  constructor(scene: Game, x: number, y: number, texture: string | Phaser.Textures.Texture, frame?: string | number | undefined) {
+  constructor(
+    scene: Game,
+    x: number,
+    y: number,
+    texture: string | Phaser.Textures.Texture,
+    frame?: string | number | undefined
+  ) {
     super(scene, x, y, texture);
     this.scene = scene;
 
     /* Monchi animations */
-    const monchiJumpFrames = scene.anims.generateFrameNumbers("character", { frames: [0, 1, 2, 3, 2, 1, 0] });
-    const monchiMoveFrames = scene.anims.generateFrameNumbers("character", { frames: [0, 1, 0, 1, 0] });
+    const monchiJumpFrames = scene.anims.generateFrameNumbers("character", {
+      frames: [0, 1, 2, 3, 2, 1, 0],
+    });
+    const monchiMoveFrames = scene.anims.generateFrameNumbers("character", {
+      frames: [0, 1, 0, 1, 0],
+    });
     const monchiJumpConfig = {
       key: "monchiJump",
       frames: monchiJumpFrames,
@@ -29,8 +38,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     };
 
     /* Monchi animations */
-    scene.anims.create(monchiJumpConfig)
-    scene.anims.create(monchiMoveConfig)
+    scene.anims.create(monchiJumpConfig);
+    scene.anims.create(monchiMoveConfig);
 
     /* Monchi add to physic world */
     scene.physics.add.existing(this);
@@ -40,17 +49,17 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.body?.setOffset(70, 50);
     this.setScale(0.6);
     this.setBounce(0);
-    this.setDepth(10)
+    this.setDepth(10);
     /* Monchi add to scene */
     scene.add.existing(this);
 
     /* Monchi Collission with end of map */
     this.setCollideWorldBounds(true);
     if (this.body) {
-      const body = (this.body as Phaser.Physics.Arcade.Body)
+      const body = this.body as Phaser.Physics.Arcade.Body;
       body.onWorldBounds = true;
-    };
-  };
+    }
+  }
 
   idle() {
     this.isJumping = false;
@@ -63,8 +72,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       this.play("monchiJump");
       this.setVelocityY(-630);
       this.scene.time.delayedCall(600, this.idle, [], this);
-    };
-  };
+    }
+  }
 
   jumpBack() {
     if (!this.isJumping) {
@@ -72,8 +81,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       this.play("monchiJump");
       this.setVelocityY(630);
       this.scene.time.delayedCall(600, this.idle, [], this);
-    };
-  };
+    }
+  }
 
   checkMove(cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined) {
     /* Keywords press */
@@ -84,15 +93,14 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       if (left.isDown) {
         this.setVelocityX(-160);
         this.setFlipX(true);
-        if (!this.isJumping) this.anims.play('monchiMove', true);
-      }
+        if (!this.isJumping) this.anims.play("monchiMove", true);
+      } else if (right.isDown) {
 
       /* Right*/
-      else if (right.isDown) {
         this.setVelocityX(160);
         this.setFlipX(false);
-        if (!this.isJumping) this.anims.play('monchiMove', true);
-      }
+        if (!this.isJumping) this.anims.play("monchiMove", true);
+      } else {
 
       /* Nothing */
       /*
@@ -102,22 +110,20 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.setVelocityX(0);
       }
       */
-      else {
         this.setVelocityX(0);
-      };
+      }
 
       /* Up / Jump */
 
       if (up.isDown && this.body && this.body.touching.down) {
         this.jump();
-      };
+      }
 
       if (up.isDown && this.body && this.body.touching.up) {
         this.jumpBack();
-      };
-    };
-  };
-
+      }
+    }
+  }
 
   checkMoveRot(cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined) {
     /* Keywords press */
@@ -128,18 +134,16 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       if (left.isDown) {
         this.setVelocityX(160);
         this.setFlipX(false);
-        if (!this.isJumping) this.anims.play('monchiMove', true);
-      }
+        if (!this.isJumping) this.anims.play("monchiMove", true);
+      } else if (right.isDown) {
 
       /* Right*/
-      else if (right.isDown) {
         this.setVelocityX(-160);
         this.setFlipX(true);
-        if (!this.isJumping) this.anims.play('monchiMove', true);
-      }
+        if (!this.isJumping) this.anims.play("monchiMove", true);
+      } else {
 
       /* Nothing */
-      else {
         this.setVelocityX(0);
       }
 
@@ -147,15 +151,17 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
       if (up.isDown && this.body && this.body.touching.down) {
         this.jump();
-      };
+      }
 
       if (up.isDown && this.body && this.body.touching.up) {
         this.jumpBack();
-      };
-    };
-  };
+      }
+    }
+  }
 
-  checkSideGravity(cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined) {
+  checkSideGravity(
+    cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined
+  ) {
     /* Keywords press */
     if (cursors) {
       const { up, down, left, right } = cursors;
@@ -164,32 +170,32 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       if (up.isDown) {
         this.setVelocityY(-velocity);
         this.setFlipX(false);
-        if (!this.isJumping) this.anims.play('monchiMove', true);
+        if (!this.isJumping) this.anims.play("monchiMove", true);
       } else if (down.isDown) {
         this.setVelocityY(velocity);
         this.setFlipX(true);
-        if (!this.isJumping) this.anims.play('monchiMove', true);
+        if (!this.isJumping) this.anims.play("monchiMove", true);
       } else {
         this.setVelocityY(0);
-      };
+      }
 
       if (left.isDown) {
         this.setGravityX(-1300);
         this.setFlipY(true);
-        EventsCenter.emit('gravityArrow', "left");
+        EventsCenter.emit("gravityArrow", "left");
         this.setOffset(30, 40);
-
       } else if (right.isDown) {
         this.setGravityX(1300);
         this.setFlipY(false);
-        EventsCenter.emit('gravityArrow', "right");
+        EventsCenter.emit("gravityArrow", "right");
         this.setOffset(80, 40);
-      };
-    };
-  };
+      }
+    }
+  }
 
-
-  checkMoveCreative(cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined) {
+  checkMoveCreative(
+    cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined
+  ) {
     /* Keywords press */
     const velo = 400;
     this.scene.physics.world.gravity.y = 0;
@@ -198,28 +204,24 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       /* Left*/
       if (left.isDown) {
         this.setVelocityX(-velo);
-      }
+      } else if (right.isDown) {
 
       /* Right*/
-      else if (right.isDown) {
         this.setVelocityX(velo);
-      }
+      } else if (down.isDown) {
 
       /* Up*/
-      else if (down.isDown) {
         this.setVelocityY(velo);
-      }
+      } else if (up.isDown) {
       /* Down*/
-      else if (up.isDown) {
         this.setVelocityY(-velo);
-      }
+      } else {
       /* Stop*/
-      else {
         this.setVelocityY(0);
         this.setVelocityX(0);
-      };
-    };
-  };
-};
+      }
+    }
+  }
+}
 
 export default Player;

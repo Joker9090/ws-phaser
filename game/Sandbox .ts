@@ -1,61 +1,56 @@
-import Phaser from 'phaser';
-import EventsCenter from './EventsCenter';
-import BetweenScenes from './BetweenScenes';
-
-
-
-
-export default class Sandbox extends Phaser.Scene {
-    /* map */
-    background?: Phaser.GameObjects.Image;
-    /* controls */
-    EscKeyboard?: Phaser.Input.Keyboard.Key;
-    cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
-    /* EXTRAS */
-    
-
-
-    constructor() {
-        super({ key: 'Sandbox' });
-    };
-
-    init() {
-        this.cursors = this.input.keyboard?.createCursorKeys();
-    };
-
-    preload() {
-        this.load.image("backgroundLevelMap", "game/backgroundLevelMap.png");
-        
-    };
-
-
-    create() {
-        /* Controls */
-        this.background = this.add.image(1000, 500, "backgroundLevelMap").setScale(1.3);
-        this.EscKeyboard = this.input.keyboard?.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
-        this.physics.world.setBounds(0, 0, 5000, 2500);
-        const { width, height } = this.cameras.main;
-
-        
-    };
-
-    makeTransition(sceneName: string, data: any) {
-        const getBetweenScenesScene = this.game.scene.getScene("BetweenScenes") as BetweenScenes
-        if (getBetweenScenesScene) getBetweenScenesScene.changeSceneTo(sceneName, data)
-        else this.scene.start(sceneName, data);
-        this.time.delayedCall(1000,()=>{
-            this.scene.stop()
-          })
-      }
-
-    update() {
-        if (this.EscKeyboard) this.EscKeyboard.on("down", () => {
-            EventsCenter.emit('gameOver', true)
-            this.makeTransition("Menu", {});
-        });
-        if (this.cursors) this.cursors.space.on("down", () => {
-            EventsCenter.emit('gameOver', true)
-            this.makeTransition("Menu", {});
-        });
-    };
+import Phaser from "phaser";
+export type PlanetTween =
+  | Phaser.Tweens.Tween
+  | Phaser.Types.Tweens.TweenBuilderConfig
+  | Phaser.Types.Tweens.TweenChainBuilderConfig
+  | Phaser.Tweens.TweenChain;
+export type PlanetConfig = {
+  planetName: string;
+  scalePlanet: number;
+  scaleSat: number;
+  texturePlanet: string | Phaser.Textures.Texture;
+  textureSat: string | Phaser.Textures.Texture;
+  pos: {
+    x: number;
+    y: number;
+  };
+  tween?: Partial<PlanetTween>;
 };
+export default class Planet extends Phaser.GameObjects.Container {
+  planet?: Phaser.GameObjects.Sprite;
+  sat?: Phaser.GameObjects.Sprite;
+  planetName?: Phaser.GameObjects.Text;
+  scalePlanet?: number;
+  scaleSat?: number;
+
+  constructor(scene: Phaser.Scene, config: PlanetConfig) {
+    super(scene, config.pos.x, config.pos.y);
+    this.scene = scene;
+
+    this.planet = this.scene.add
+      .sprite(0, 0, config.texturePlanet)
+      .setScale(config.scalePlanet);
+    this.sat = this.scene.add
+      .sprite(100, 100, config.textureSat)
+      .setScale(config.scaleSat);
+
+    const planetHeight = this.planet.displayHeight;
+
+    /* TEXT BOX */
+    this.planetName = this.scene.add
+      .text(0, planetHeight, config.planetName, {
+        fontFamily: "Arcade",
+        fontSize: "20px",
+      })
+      .setOrigin(0.5)
+      .setDepth(999);
+
+    scene.add.existing(this);
+    if (config.tween) {
+      const tween = this.scene.tweens.add({
+        ...config.tween,
+        targets: this,
+      });
+    }
+  }
+}

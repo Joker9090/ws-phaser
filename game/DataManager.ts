@@ -1,31 +1,21 @@
-import Phaser from 'phaser';
-import EventsCenter from './EventsCenter';
-import BetweenScenes from './BetweenScenes';
-
-
-
+import Phaser from "phaser";
+import EventsCenter from "./EventsCenter";
+import BetweenScenes from "./BetweenScenes";
 
 export default class DataManager extends Phaser.Scene {
-    menuAnim?: boolean;
-    constructor() {
-        super({ key: 'DataManager' });
-    };
+  menuAnim?: boolean;
+  constructor() {
+    super({ key: "DataManager" });
+  }
 
-    preload() {
+  preload() {}
 
-    };
+  create() {
+    /* UI SCENE  */
+    this.menuAnim = false;
+  }
 
-
-    create() {
-        /* UI SCENE  */
-        this.menuAnim = false;
-        
-       
-    };
-
-
-    update() {
-        if (this.game.scene.getScene("Menu").scene.isActive()) this.menuAnim = true ;
-        console.log(this.menuAnim)
-    };
-};
+  update() {
+    if (this.game.scene.getScene("Menu").scene.isActive()) this.menuAnim = true;
+  }
+}

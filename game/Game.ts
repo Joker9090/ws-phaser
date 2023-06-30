@@ -1,4 +1,3 @@
-
 import Phaser from "phaser";
 
 import Player from "./assets/Player";
@@ -6,10 +5,10 @@ import Player from "./assets/Player";
 import Mapa1 from "./maps/Mapa1";
 import Mapa2 from "./maps/Mapa2";
 import Tutorial from "./maps/Tutorial";
-import MusicManager from './MusicManager';
-import EventsCenter from './EventsCenter';
-import UIScene from './UIScene';
-import BetweenScenes from "./BetweenScenes";
+import MusicManager from "./MusicManager";
+import EventsCenter from "./EventsCenter";
+import UIScene from "./UIScene";
+import BetweenScenes, { BetweenScenesStatus } from "./BetweenScenes";
 // Scene in class
 class Game extends Phaser.Scene {
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -29,7 +28,6 @@ class Game extends Phaser.Scene {
   cameraNormal: boolean = true;
   gravityDown: boolean = true;
 
-
   checkPoint: number = 0;
 
   cameraWidth: number = 0;
@@ -40,8 +38,8 @@ class Game extends Phaser.Scene {
   TutorialTextScene?: Phaser.Scene;
   UIScene?: UIScene;
   constructor() {
-    super({ key: 'Game' });
-  };
+    super({ key: "Game" });
+  }
 
   /* PRELOAD 
   
@@ -65,22 +63,21 @@ class Game extends Phaser.Scene {
   touch() {
     if (this.monchi) {
       this.monchi.idle();
-      this.monchi.setVelocityX(0); //check if working properly
-    };
-  };
+      this.monchi.setVelocityX(0);
+    }
+  }
 
   float(a: any, b: any, time: number) {
-
     /* Event sender for tutorial */
-    [a, b].map(item => {
+    [a, b].map((item) => {
       if (item.hasEvent) {
         if (item.hasEvent == "Show_Tutorial_Text_1") {
-          EventsCenter.emit('float', true)
-          delete item.hasEvent
+          EventsCenter.emit("float", true);
+          delete item.hasEvent;
         }
       }
       return item;
-    })
+    });
     if (this.monchi) {
       this.monchi.setGravityY(-2000);
       this.time.delayedCall(time, () => {
@@ -88,42 +85,48 @@ class Game extends Phaser.Scene {
         this.gravityDown = false;
         this.monchi?.body?.setOffset(70, 0);
         this.monchi?.setBounceY(0);
-        EventsCenter.emit('gravityArrow', "up");
+        EventsCenter.emit("gravityArrow", "up");
       });
-    };
-  };
+    }
+  }
 
   rotateCam(time: number) {
     this.cameraNormal = false;
     if (this.canRot) {
       if (!this.gravityDown) {
-        EventsCenter.emit('gravityArrow', "down");
+        EventsCenter.emit("gravityArrow", "down");
       }
       for (let i = 0; i < 25; i++) {
-        this.time.delayedCall(time * i, () => ((rotate) => {
-          this.cameras.main.setRotation(rotate);
-        })(Math.PI * i / 24));
-        if (i == 24) { this.canRot = false };
-      };
-    };
-  };
+        this.time.delayedCall(time * i, () =>
+          ((rotate) => {
+            this.cameras.main.setRotation(rotate);
+          })((Math.PI * i) / 24)
+        );
+        if (i == 24) {
+          this.canRot = false;
+        }
+      }
+    }
+  }
 
   noFloat() {
     this.cameraNormal = true;
     if (this.monchi) {
       this.monchi?.setGravity(0);
       for (let i = 0; i < 25; i++) {
-        this.time.delayedCall(10 * i, () => ((rotate) => {
-          this.cameras.main.setRotation(rotate);
-        })(3.1415 + 3.1415 * (i) / 24));
-        EventsCenter.emit('gravityArrow', "down");
-      };
+        this.time.delayedCall(10 * i, () =>
+          ((rotate) => {
+            this.cameras.main.setRotation(rotate);
+          })(3.1415 + (3.1415 * i) / 24)
+        );
+        EventsCenter.emit("gravityArrow", "down");
+      }
       this.monchi?.setFlipY(false);
       this.gravityDown = true;
       this.monchi?.body?.setOffset(70, 50);
       this.monchi?.setBounceY(0);
-    };
-  };
+    }
+  }
 
   gameOver() {
     this.lifes = 3;
@@ -132,12 +135,10 @@ class Game extends Phaser.Scene {
     this.timeLevel = 0;
     this.canWin = false;
     this.canNextLevel = false;
-    EventsCenter.emit('gameOver', true)
-    this.makeTransition("GameOver", {})
+    EventsCenter.emit("gameOver", true);
+    this.makeTransition("GameOver", {});
     //this.scene.start("GameOver");
-
-  };
-
+  }
 
   win(Phrase: string) {
     if (this.canWin && this.monchi) {
@@ -145,11 +146,11 @@ class Game extends Phaser.Scene {
       this.checkPoint = 0;
       this.canWin = false;
       this.canNextLevel = false;
-      EventsCenter.emit('gameOver', true);
+      EventsCenter.emit("gameOver", true);
       //this.scene.start("Won", { text: Phrase });
-      this.makeTransition("Won", { text: Phrase })
-    };
-  };
+      this.makeTransition("Won", { text: Phrase });
+    }
+  }
 
   winTutorial() {
     if (this.canWin && this.monchi) {
@@ -157,24 +158,26 @@ class Game extends Phaser.Scene {
       this.checkPoint = 0;
       this.canWin = false;
       this.canNextLevel = false;
-      EventsCenter.emit('gameOver', true);
+      EventsCenter.emit("gameOver", true);
       this.scene.restart({ level: 1, lifes: this.lifes });
-      this.UIScene?.scene.restart({ level: 1, lifes: this.lifes, game: this })
-    };
-  };
+      this.UIScene?.scene.restart({ level: 1, lifes: this.lifes, game: this });
+    }
+  }
 
   movingFloorsGrav() {
     this.monchi?.setVelocityY(300);
-  };
+  }
 
   goBack() {
+    console.log("entro acá tambien");
     if (!this.goingBack) {
-      const mapa = this.map as Mapa1
-      const piso = mapa.pisosBack?.getChildren()[0] as Phaser.GameObjects.Sprite
-      this.goingBack = true
-      this.canRot = true
-      this.checkPoint = 0
-      if (this.monchi) var Xpos = this.monchi.x - 4500
+      const mapa = this.map as Mapa1;
+      const piso =
+        mapa.pisosBack?.getChildren()[0] as Phaser.GameObjects.Sprite;
+      this.goingBack = true;
+      this.canRot = true;
+      this.checkPoint = 0;
+      if (this.monchi) var Xpos = this.monchi.x - 4500;
       if (this.monchi) {
         this.tweens.addCounter({
           from: 4500,
@@ -184,118 +187,119 @@ class Game extends Phaser.Scene {
           yoyo: false,
           repeat: 0,
           onStart: () => {
-            this.physics.world.gravity.y = 0
+            this.physics.world.gravity.y = 0;
           },
           onUpdate: (tween) => {
             const value = tween.getValue();
-            this.monchi?.setPosition(value + Xpos, 1617)
-            piso.setPosition(value, 1700)
+            this.monchi?.setPosition(value + Xpos, 1617);
+            piso.setPosition(value, 1700);
           },
           onComplete: () => {
             this.physics.world.gravity.y = 1000;
-            //piso.setPosition(4500,1700);
-            //this.monchi?.setPosition(500 + Xpos, 1617);
-            //this.monchi?.setVelocity(0);
-          }
+            this.checkPoint = 0;
+          },
         });
-      };
-    };
-  };
+      }
+    }
+  }
 
   movingFloorsGravRot() {
     this.monchi?.setVelocityY(-300);
-  };
+  }
 
   coinCollected(a: any, b: any) {
     /* Event sender for tutorial */
-    [a, b].map(item => {
+    [a, b].map((item) => {
       if (item.hasEvent) {
         if (item.hasEvent == "Show_Tutorial_Text_2") {
-          EventsCenter.emit('coin', true)
-          delete item.hasEvent
+          EventsCenter.emit("coin", true);
+          delete item.hasEvent;
         }
       }
       return item;
-    })
-    if (this.goingBack) {
-      const mapa = this.map as Mapa1
-      const piso = mapa.pisosBack?.getChildren()[0] as Phaser.GameObjects.Sprite
-      this.tweens.addCounter({
-        from: 1100,
-        to: 4500,
-        duration: 5000,
-        ease: window.Phaser.Math.Easing.Linear,
-        yoyo: false,
-        repeat: 0,
-        onStart: () => {
-        },
-        onUpdate: (tween) => {
-          const value = tween.getValue();
-          piso.setPosition(value, 1700)
-        },
-        onComplete: () => {
-          piso.clearTint()
-        }
-      });
+    });
+    if (this.levelIs == 1) {
+      if (this.goingBack) {
+        const mapa = this.map as Mapa1;
+        const piso =
+          mapa.pisosBack?.getChildren()[0] as Phaser.GameObjects.Sprite;
+        this.tweens.addCounter({
+          from: 1100,
+          to: 4500,
+          duration: 5000,
+          ease: window.Phaser.Math.Easing.Linear,
+          yoyo: false,
+          repeat: 0,
+          onStart: () => {},
+          onUpdate: (tween) => {
+            const value = tween.getValue();
+            piso.setPosition(value, 1700);
+          },
+          onComplete: () => {
+            piso.clearTint();
+          },
+        });
+      }
     }
 
     if (this.map?.coin) {
-      EventsCenter.emit('coinCollected', true);
-      (this.map.portal?.getChildren()[0] as Phaser.GameObjects.Image).clearTint();
+      EventsCenter.emit("coinCollected", true);
+      (
+        this.map.portal?.getChildren()[0] as Phaser.GameObjects.Image
+      ).clearTint();
       this.canNextLevel = true;
       this.canWin = true;
       this.map.coin.setVisible(false);
       this.map.coin.clear(true);
-    };
-  };
+    }
+  }
 
   goNextLevel() {
     if (this.canNextLevel && this.monchi) {
       this.timeLevel = 0;
       this.cameraNormal = true;
       this.checkPoint = 0;
-      EventsCenter.emit('nextLevel', true)
+      EventsCenter.emit("nextLevel", true);
       this.canWin = false;
       this.canNextLevel = false;
       this.scene.restart({ level: 2, lifes: this.lifes });
-      this.UIScene?.scene.restart({ level: 2, lifes: this.lifes, game: this })
-    };
-  };
+      this.UIScene?.scene.restart({ level: 2, lifes: this.lifes, game: this });
+    }
+  }
 
   noFloatTutorial(a: any, b: any) {
-
     /* Event sender for tutorial */
-    [a, b].map(item => {
+    [a, b].map((item) => {
       if (item.hasEvent) {
         if (item.hasEvent == "Show_Tutorial_Text_3") {
-          EventsCenter.emit('noFloat', true);
-          EventsCenter.emit('gravityArrow', "down");
+          EventsCenter.emit("noFloat", true);
+          EventsCenter.emit("gravityArrow", "down");
           delete item.hasEvent;
         }
       }
       return item;
-    })
+    });
     if (this.monchi) {
       this.monchi?.setGravity(0);
       this.monchi?.setFlipY(false);
       this.gravityDown = true;
       this.monchi?.body?.setOffset(70, 50);
       this.monchi?.setBounceY(0);
-    };
-  };
+    }
+  }
 
   fireballActFun(a: any, b: any) {
     /* Event sender for tutorial */
-    [a, b].map(item => {
+    [a, b].map((item) => {
       if (item.hasEvent) {
         if (item.hasEvent == "Show_Tutorial_Text_4") {
-          EventsCenter.emit('fire', true)
-          delete item.hasEvent
+          EventsCenter.emit("fire", true);
+          delete item.hasEvent;
         }
       }
       return item;
-    })
-  };
+    });
+  }
 
   loseLevelTutorial() {
     if (this.lifes) {
@@ -303,11 +307,11 @@ class Game extends Phaser.Scene {
       if (this.lifes == 0) {
         this.gameOver();
       } else if (this.lifes > 0 && this.gravityDown && this.monchi) {
-        EventsCenter.emit('die', this.lifes)
+        EventsCenter.emit("die", this.lifes);
         if (this.map) this.monchi.x = this.map.startingPoint.x;
         if (this.map) this.monchi.y = this.map.startingPoint.y;
       } else if (this.lifes > 0 && !this.gravityDown && this.monchi) {
-        EventsCenter.emit('die', this.lifes)
+        EventsCenter.emit("die", this.lifes);
         if (this.map) this.monchi.x = this.map.startingPoint.x;
         if (this.map) this.monchi.y = this.map.startingPoint.y;
         if (this.monchi) {
@@ -318,10 +322,10 @@ class Game extends Phaser.Scene {
             this.monchi?.body?.setOffset(70, 50);
             this.monchi?.setBounceY(0);
           });
-        };
-      };
-    };
-  };
+        }
+      }
+    }
+  }
 
   loseLevel1() {
     if (this.lifes) {
@@ -329,7 +333,7 @@ class Game extends Phaser.Scene {
       if (this.lifes == 0) {
         this.gameOver();
       } else if (this.lifes > 0 && this.checkPoint == 0 && this.monchi) {
-        EventsCenter.emit('die', true)
+        EventsCenter.emit("die", true);
         this.monchi?.setFlipY(false);
         this.monchi?.setBounceY(0);
         this.gravityDown = true;
@@ -339,8 +343,13 @@ class Game extends Phaser.Scene {
         this.cameraNormal = true;
         if (this.map) this.monchi.x = this.map.startingPoint.x;
         if (this.map) this.monchi.y = this.map.startingPoint.y;
-      } else if (this.lifes > 0 && this.checkPoint == 1 && this.monchi && this.cameraNormal == false) {
-        EventsCenter.emit('die', this.lifes)
+      } else if (
+        this.lifes > 0 &&
+        this.checkPoint == 1 &&
+        this.monchi &&
+        this.cameraNormal == false
+      ) {
+        EventsCenter.emit("die", this.lifes);
         this.monchi.setGravityY(-2000);
         this.time.delayedCall(0, () => {
           this.monchi?.setFlipY(true);
@@ -353,8 +362,13 @@ class Game extends Phaser.Scene {
         this.rotateCam(0);
         if (this.map) this.monchi.x = this.map.checkPointPos.x;
         if (this.map) this.monchi.y = this.map.checkPointPos.y;
-      } else if (this.lifes > 0 && this.checkPoint == 1 && this.monchi && this.cameraNormal) {
-        EventsCenter.emit('die', this.lifes)
+      } else if (
+        this.lifes > 0 &&
+        this.checkPoint == 1 &&
+        this.monchi &&
+        this.cameraNormal
+      ) {
+        EventsCenter.emit("die", this.lifes);
         this.monchi.setGravityY(-2000);
         this.time.delayedCall(0, () => {
           this.monchi?.setFlipY(true);
@@ -365,18 +379,18 @@ class Game extends Phaser.Scene {
         this.canRot = true;
         if (this.map) this.monchi.x = this.map.checkPointPos.x;
         if (this.map) this.monchi.y = this.map.checkPointPos.y;
-      };
-    };
-  };
+      }
+    }
+  }
 
   loseLevel2() {
     if (this.lifes) {
       this.lifes -= 1;
-      EventsCenter.emit('gravityArrow', "down");
+      EventsCenter.emit("gravityArrow", "down");
       if (this.lifes == 0) {
         this.gameOver();
       } else if (this.lifes > 0 && this.checkPoint == 0 && this.monchi) {
-        EventsCenter.emit('die', this.lifes);
+        EventsCenter.emit("die", this.lifes);
         this.monchi.setFlipY(false);
         this.physics.world.gravity.y = 1000;
         this.monchi?.setFlipX(false);
@@ -387,7 +401,7 @@ class Game extends Phaser.Scene {
         if (this.map) this.monchi.x = this.map.startingPoint.x;
         if (this.map) this.monchi.y = this.map.startingPoint.y;
       } else if (this.lifes > 0 && this.checkPoint == 1 && this.monchi) {
-        EventsCenter.emit('die', this.lifes)
+        EventsCenter.emit("die", this.lifes);
         this.monchi.setFlipY(false);
         this.physics.world.gravity.y = 1000;
         this.monchi.setFlipX(false);
@@ -397,20 +411,32 @@ class Game extends Phaser.Scene {
         if (this.map) this.map.sideGrav = false;
         if (this.map) this.monchi.x = this.map.checkPointPos.x;
         if (this.map) this.monchi.y = this.map.checkPointPos.y;
-      };
-    };
-  };
+      }
+    }
+  }
 
   makeTransition(sceneName: string, data: any) {
-    const getBetweenScenesScene = this.game.scene.getScene("BetweenScenes") as BetweenScenes
-    if (getBetweenScenesScene) getBetweenScenesScene.changeSceneTo(sceneName, data)
-    else this.scene.start(sceneName, data);
-    this.time.delayedCall(1000, () => {
-      this.scene.stop()
-    })
-  };
+    const getBetweenScenesScene = this.game.scene.getScene(
+      "BetweenScenes"
+    ) as BetweenScenes;
+    if (getBetweenScenesScene) {
+      if (getBetweenScenesScene.status != BetweenScenesStatus.IDLE)
+        return false;
+      getBetweenScenesScene.changeSceneTo(sceneName, data);
+      this.time.delayedCall(1000, () => {
+        console.log("se va a apagar", this);
+        this.scene.stop();
+      });
+    } else {
+      this.scene.start(sceneName, data);
+      this.time.delayedCall(1000, () => {
+        console.log("se va a apagar", this);
+        this.scene.stop();
+      });
+    }
+  }
 
-  create(this: Game, data: { level: number, lifes: number }) {
+  create(this: Game, data: { level: number; lifes: number }) {
     this.checkPoint = 0;
 
     /* CHOSE LEVEL, LIFES AND AUDIO */
@@ -427,14 +453,17 @@ class Game extends Phaser.Scene {
       default:
         this.map = new Tutorial(this);
         break;
-    };
+    }
 
     this.levelIs = data.level;
     this.lifes = data.lifes;
 
     /* Audio */
-    const getMusicManagerScene = this.game.scene.getScene("MusicManager") as MusicManager;
-    if (!getMusicManagerScene.scene.isActive()) this.scene.launch("MusicManager").sendToBack();
+    const getMusicManagerScene = this.game.scene.getScene(
+      "MusicManager"
+    ) as MusicManager;
+    if (!getMusicManagerScene.scene.isActive())
+      this.scene.launch("MusicManager").sendToBack();
     else if (this.levelIs == 0) {
       getMusicManagerScene.playMusic("songTutorial");
     } else if (this.levelIs == 1) {
@@ -445,25 +474,27 @@ class Game extends Phaser.Scene {
 
     /* UI SCENE  */
     const UIScene = this.game.scene.getScene("UIScene");
-    if (!UIScene.scene.isActive()) this.scene.launch(UIScene, { ...data, game: this });
+    if (!UIScene.scene.isActive())
+      this.scene.launch(UIScene, { ...data, game: this });
 
     /* TUTORIAL TEXTS SCENE */
     if (this.levelIs == 0) {
       this.TutorialTextScene = this.game.scene.getScene("TutorialText");
       this.scene.launch(this.TutorialTextScene);
-    };
+    }
 
     /* CREATE MAP */
     this.map.createMap(data);
 
     /* CONTROLS */
-    this.EscKeyboard = this.input.keyboard?.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+    this.EscKeyboard = this.input.keyboard?.addKey(
+      Phaser.Input.Keyboard.KeyCodes.ESC
+    );
     this.cursors = this.input.keyboard?.createCursorKeys();
     const { x, y } = this.map.startingPoint;
     this.monchi = new Player(this, x, y, "character", 2);
     this.canWin = false;
     this.canRot = true;
-
 
     /* CAMERAS */
     this.cameras.main.zoom = 0.95;
@@ -471,20 +502,29 @@ class Game extends Phaser.Scene {
     this.cameraWidth = this.cameras.main.width;
     this.cameraHeight = this.cameras.main.height;
 
-
     /* COLLIDERS */
-    this.map.addColliders()
-    this.physics.world.on('worldbounds', (body: Phaser.Physics.Arcade.Sprite, top: boolean, down: boolean, left: boolean, right: boolean) => {
-      if (down || top || left || right) {
-        if (data.level == 1) {
-          this.loseLevel1();
-        } else if (data.level == 2) {
-          this.loseLevel2();
-        } else if (data.level == 0) {
-          this.loseLevelTutorial();
-        };
-      };
-    }, this);
+    this.map.addColliders();
+    this.physics.world.on(
+      "worldbounds",
+      (
+        body: Phaser.Physics.Arcade.Sprite,
+        top: boolean,
+        down: boolean,
+        left: boolean,
+        right: boolean
+      ) => {
+        if (down || top || left || right) {
+          if (data.level == 1) {
+            this.loseLevel1();
+          } else if (data.level == 2) {
+            this.loseLevel2();
+          } else if (data.level == 0) {
+            this.loseLevelTutorial();
+          }
+        }
+      },
+      this
+    );
 
     this.timeLevel = 0;
     var timerEvent = this.time.addEvent({
@@ -494,28 +534,40 @@ class Game extends Phaser.Scene {
         this.timeLevel = this.timeLevel;
       },
       callbackScope: this,
-      loop: true
+      loop: true,
     });
-  };
+
+    if (this.EscKeyboard)
+      this.EscKeyboard.once(
+        "down",
+        () => {
+          this.monchi?.body?.destroy();
+          this.goingBack = false;
+          console.log("entró acáaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+          this.canWin = false;
+          this.canNextLevel = false;
+          this.canRot = true;
+          EventsCenter.emit("gameOver", true);
+          this.makeTransition("LevelMap", {});
+        },
+        this
+      );
+  }
 
   update(this: Game) {
-
+    console.log(this.goingBack);
     if (this.cameras.main.width < this.cameras.main.height) {
-      this.cameras.main.zoom = this.cameras.main.width / this.cameras.main.height
+      this.cameras.main.zoom =
+        this.cameras.main.width / this.cameras.main.height;
     }
 
     if (this.monchi && this.map) {
       if (this.monchi.x > this.map.checkPointPos.x) {
         this.checkPoint = 1;
-      };
-    };
+      }
+    }
     if (this.map) this.map.update();
-    if (this.EscKeyboard) this.EscKeyboard.on("down", () => {
-      EventsCenter.emit('gameOver', true)
-      this.makeTransition("LevelMap", {})
-      //this.scene.start("Menu");
-    })
-  };
-};
+  }
+}
 
 export default Game;

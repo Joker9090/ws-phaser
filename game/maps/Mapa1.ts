@@ -1,10 +1,11 @@
-
 import Phaser from "phaser";
-import AsteroidGenerator, { AsteroidGeneratorConfig } from "../assets/AsteroidGenerator";
+import AsteroidGenerator, {
+  AsteroidGeneratorConfig,
+} from "../assets/AsteroidGenerator";
 import Floor, { FloorConfig } from "../assets/Floor";
 import LargeFloor, { LargeFloorConfig } from "../assets/LargeFloor";
 import Game from "../Game";
-import UIScene from "../UIScene"
+import UIScene from "../UIScene";
 
 class Mapa1 {
   isJumping = false;
@@ -23,7 +24,7 @@ class Mapa1 {
   portal?: Phaser.Physics.Arcade.Group;
   movingFloor?: Phaser.Physics.Arcade.Group;
   movingFloorRot?: Phaser.Physics.Arcade.Group;
-  UIScene?: UIScene
+  UIScene?: UIScene;
   amountLifes: number = 0;
   sideGrav: boolean = false;
   goingBack: boolean = false;
@@ -33,53 +34,126 @@ class Mapa1 {
     y: 1600, //800
   };
   checkPointPos = {
-    x: 3000, 
-    y: 750, 
+    x: 3000,
+    y: 750,
   };
   background: Phaser.GameObjects.Image;
 
   constructor(scene: Game) {
     this.scene = scene;
-    this.UIScene = this.scene.game.scene.getScene("UIScene") as UIScene
+    this.UIScene = this.scene.game.scene.getScene("UIScene") as UIScene;
     /* World size*/
-    this.scene.physics.world.setBounds(0, 0, this.worldSize.width, this.worldSize.height);
+    this.scene.physics.world.setBounds(
+      0,
+      0,
+      this.worldSize.width,
+      this.worldSize.height
+    );
 
     /* Debug */
     this.debugGraphics = this.scene.add.graphics();
     this.debugGraphics.fillStyle(0x00ff00, 0.5);
-    this.debugGraphics.fillRect(0, 0, this.worldSize.width, this.worldSize.height);
+    this.debugGraphics.fillRect(
+      0,
+      0,
+      this.worldSize.width,
+      this.worldSize.height
+    );
     /* Debug */
 
-    this.background = this.scene.add.image(this.startingPoint.x, this.startingPoint.y, "background").setOrigin(0.5, 0.5);
-  };
+    this.background = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "background")
+      .setOrigin(0.5, 0.5);
+  }
 
   animateBackground(player: Phaser.GameObjects.Sprite) {
     const { x, y } = this.startingPoint;
     const { x: x2, y: y2 } = player;
     const calcDiffX = (x2 - x) / 1.2;
     const calcDiffY = (y2 - y) / 1.2;
-    this.background.setPosition((x + calcDiffX), (y + calcDiffY));
-  };
+    this.background.setPosition(x + calcDiffX, y + calcDiffY);
+  }
 
   addColliders() {
     if (this.scene.monchi) {
       if (this.portal) this.portal.setTint(0xff0000);
-      if (this.pisos) this.scene.physics.add.collider(this.scene.monchi, this.pisos, this.scene.touch, () => true, this.scene);
-      if (this.pisos2) this.scene.physics.add.collider(this.scene.monchi, this.pisos2, (a, b) => this.scene.float(a, b, 1000), () => true, this.scene);
-      if (this.pisos3) this.scene.physics.add.collider(this.scene.monchi, this.pisos3, () => this.scene.rotateCam(10), () => true, this.scene);
-      if (this.coin) this.scene.physics.add.overlap(this.scene.monchi, this.coin, this.scene.coinCollected, () => true, this.scene);
-      if (this.portal) this.scene.physics.add.overlap(this.scene.monchi, this.portal, this.scene.goNextLevel, () => true, this.scene);
-      if (this.pisos4) this.scene.physics.add.collider(this.scene.monchi, this.pisos4, this.scene.noFloat, () => true, this.scene);
-      if (this.pisosBack) this.scene.physics.add.collider(this.scene.monchi, this.pisosBack, this.scene.goBack, () => true, this.scene);
+      if (this.pisos)
+        this.scene.physics.add.collider(
+          this.scene.monchi,
+          this.pisos,
+          this.scene.touch,
+          () => true,
+          this.scene
+        );
+      if (this.pisos2)
+        this.scene.physics.add.collider(
+          this.scene.monchi,
+          this.pisos2,
+          (a, b) => this.scene.float(a, b, 1000),
+          () => true,
+          this.scene
+        );
+      if (this.pisos3)
+        this.scene.physics.add.collider(
+          this.scene.monchi,
+          this.pisos3,
+          () => this.scene.rotateCam(10),
+          () => true,
+          this.scene
+        );
+      if (this.coin)
+        this.scene.physics.add.overlap(
+          this.scene.monchi,
+          this.coin,
+          this.scene.coinCollected,
+          () => true,
+          this.scene
+        );
+      if (this.portal)
+        this.scene.physics.add.overlap(
+          this.scene.monchi,
+          this.portal,
+          this.scene.goNextLevel,
+          () => true,
+          this.scene
+        );
+      if (this.pisos4)
+        this.scene.physics.add.collider(
+          this.scene.monchi,
+          this.pisos4,
+          this.scene.noFloat,
+          () => true,
+          this.scene
+        );
+      if (this.pisosBack)
+        this.scene.physics.add.collider(
+          this.scene.monchi,
+          this.pisosBack,
+          this.scene.goBack,
+          () => true,
+          this.scene
+        );
       //if (this.pisoGoBack) this.scene.physics.add.collider(this.scene.monchi, this.pisoGoBack, this.scene.goBack, () => true, this.scene);
-      if (this.movingFloor) this.scene.physics.add.collider(this.scene.monchi, this.movingFloor, this.scene.movingFloorsGrav, () => true, this.scene);
-      if (this.movingFloorRot) this.scene.physics.add.collider(this.scene.monchi, this.movingFloorRot, this.scene.movingFloorsGravRot, () => true, this.scene);
-    };
-  };
+      if (this.movingFloor)
+        this.scene.physics.add.collider(
+          this.scene.monchi,
+          this.movingFloor,
+          this.scene.movingFloorsGrav,
+          () => true,
+          this.scene
+        );
+      if (this.movingFloorRot)
+        this.scene.physics.add.collider(
+          this.scene.monchi,
+          this.movingFloorRot,
+          this.scene.movingFloorsGravRot,
+          () => true,
+          this.scene
+        );
+    }
+  }
 
-
-  createMap(data: { level: number, lifes: number }) {
-
+  createMap(data: { level: number; lifes: number }) {
     this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
     this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });
     this.pisos = this.scene.physics.add.group({ allowGravity: false });
@@ -94,8 +168,8 @@ class Mapa1 {
 
     const p1Config: FloorConfig = {
       texture: "plataformaA",
-      pos: { x: 500, y: 1000, },
-      scale: { width: 0.7, height: 0.7, },
+      pos: { x: 500, y: 1000 },
+      scale: { width: 0.7, height: 0.7 },
       fix: 10,
       width: 240,
       height: 50,
@@ -104,8 +178,8 @@ class Mapa1 {
 
     const p2Config: FloorConfig = {
       texture: "plataformaA",
-      pos: { x: 800, y: 1800, },
-      scale: { width: 0.7, height: 0.7, },
+      pos: { x: 800, y: 1800 },
+      scale: { width: 0.7, height: 0.7 },
       fix: 10,
       width: 240,
       height: 50,
@@ -114,89 +188,85 @@ class Mapa1 {
         paused: false,
         yoyo: true,
         repeat: -1,
-        y: "-=1000"
-      }
+        y: "-=1000",
+      },
     };
     const p2 = new Floor(this.scene, p2Config, this.movingFloor);
 
     const p3Config: FloorConfig = {
       texture: "plataformaA",
-      pos: { x: 500, y: 1700, },
-      scale: { width: 0.7, height: 0.7, },
+      pos: { x: 500, y: 1700 },
+      scale: { width: 0.7, height: 0.7 },
       fix: 10,
       width: 240,
       height: 50,
     };
     const p3 = new Floor(this.scene, p3Config, this.pisos);
 
-
     const p5Config: FloorConfig = {
       texture: "plataforma2",
-      pos: { x: 1100, y: 800, }, // 1100 800
-      scale: { width: 0.1, height: 0.1, },
+      pos: { x: 1100, y: 800 }, // 1100 800
+      scale: { width: 0.1, height: 0.1 },
       width: 2400,
       height: 300,
     };
     const p5 = new Floor(this.scene, p5Config, this.pisos);
 
-
     const p6Config: FloorConfig = {
       texture: "plataforma2",
-      pos: { x: 1000, y: 1500, },
-      scale: { width: 0.05, height: 0.05, },
+      pos: { x: 1000, y: 1500 },
+      scale: { width: 0.05, height: 0.05 },
       width: 2400,
       height: 100,
-
     };
     const p6 = new Floor(this.scene, p6Config, this.pisos);
 
     const p7Config: FloorConfig = {
       texture: "plataformaA",
-      pos: { x: 1600, y: 1500, },
-      scale: { width: 0.7, height: 0.7, },
+      pos: { x: 1600, y: 1500 },
+      scale: { width: 0.7, height: 0.7 },
       fix: 10,
       width: 240,
       height: 50,
-
     };
     const p7 = new Floor(this.scene, p7Config, this.pisos);
 
     const p8Config: FloorConfig = {
       texture: "plataforma2",
-      pos: { x: 1300, y: 1200, },
-      scale: { width: 0.15, height: 0.1, },
+      pos: { x: 1300, y: 1200 },
+      scale: { width: 0.15, height: 0.1 },
       fix: 20,
       width: 2400,
       height: 100,
-
     };
     const p8 = new Floor(this.scene, p8Config, this.pisos);
 
     const p9Config: FloorConfig = {
       texture: "plataformaA",
-      pos: { x: 1800, y: 1800, },
-      scale: { width: 1, height: 0.7, },
+      pos: { x: 1800, y: 1800 },
+      scale: { width: 1, height: 0.7 },
       fix: 10,
       width: 235,
       height: 50,
-
     };
-    const p9 = new Floor(this.scene, p9Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
+    const p9 = new Floor(this.scene, p9Config, this.pisos2).setTint(
+      Phaser.Display.Color.GetColor(255, 101, 0)
+    );
 
     const p4Config: LargeFloorConfig = {
       textureA: "plataformaA",
       textureB: "plataformaB",
       large: 7,
-      pos: { x: 1500, y: 100, },
-      scale: { width: 0.7, height: 0.7, },
+      pos: { x: 1500, y: 100 },
+      scale: { width: 0.7, height: 0.7 },
     };
 
     const p4 = new LargeFloor(this.scene, p4Config, this.pisos);
 
     const p10Config: FloorConfig = {
       texture: "plataformaB",
-      pos: { x: 2600, y: 250, },
-      scale: { width: 0.85, height: 0.8, },
+      pos: { x: 2600, y: 250 },
+      scale: { width: 0.85, height: 0.8 },
       fix: 10,
       width: 240,
       height: 50,
@@ -206,8 +276,8 @@ class Mapa1 {
 
     const p11Config: FloorConfig = {
       texture: "plataformaB",
-      pos: { x: 2800, y: 400, },
-      scale: { width: 0.85, height: 0.8, },
+      pos: { x: 2800, y: 400 },
+      scale: { width: 0.85, height: 0.8 },
       fix: 10,
       width: 240,
       height: 50,
@@ -216,8 +286,8 @@ class Mapa1 {
 
     const p12Config: FloorConfig = {
       texture: "plataformaB",
-      pos: { x: 3000, y: 550, },
-      scale: { width: 0.85, height: 0.8, },
+      pos: { x: 3000, y: 550 },
+      scale: { width: 0.85, height: 0.8 },
       fix: 10,
       width: 240,
       height: 50,
@@ -226,8 +296,8 @@ class Mapa1 {
 
     const p13Config: FloorConfig = {
       texture: "plataformaB",
-      pos: { x: 3550, y: 700, },
-      scale: { width: 0.7, height: 0.7, },
+      pos: { x: 3550, y: 700 },
+      scale: { width: 0.7, height: 0.7 },
       fix: 10,
       width: 240,
       height: 50,
@@ -236,69 +306,67 @@ class Mapa1 {
         paused: false,
         yoyo: true,
         repeat: -1,
-        x: "-=350"
-      }
+        x: "-=350",
+      },
     };
-    const p13 = new Floor(this.scene, p13Config, this.pisos3)
-      .setTint(Phaser.Display.Color.GetColor(255, 101, 0));
+    const p13 = new Floor(this.scene, p13Config, this.pisos3).setTint(
+      Phaser.Display.Color.GetColor(255, 101, 0)
+    );
 
     const p14Config: LargeFloorConfig = {
       textureA: "plataformaA",
       textureB: "plataformaB",
       large: 5,
-      pos: { x: 4800, y: 1700, },
-      scale: { width: 0.7, height: 0.7, },
-
+      pos: { x: 4800, y: 1700 },
+      scale: { width: 0.7, height: 0.7 },
     };
     const p14 = new LargeFloor(this.scene, p14Config, this.pisos);
 
     const pBackConfig: FloorConfig = {
       texture: "plataformaA",
-      pos: { x: 4500, y: 1700, },
+      pos: { x: 4500, y: 1700 },
       fix: 10,
       width: 240,
       height: 50,
-      scale: { width: 0.7, height: 0.7, },
+      scale: { width: 0.7, height: 0.7 },
       tween: {
         duration: 10000,
         paused: true,
         yoyo: true,
         repeat: -1,
-        x: "-=4000"
-      }
+        x: "-=4000",
+      },
     };
-    const pBack = new Floor(this.scene, pBackConfig, this.pisosBack).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
-
+    const pBack = new Floor(this.scene, pBackConfig, this.pisosBack).setTint(
+      Phaser.Display.Color.GetColor(255, 101, 0)
+    );
 
     //this.pisoGoBack = this.scene.physics.add.sprite(4500, 1700, "plataformaA").setScale(0.7).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
 
-
-
-
     const p15Config: FloorConfig = {
       texture: "plataformaB",
-      pos: { x: 3800, y: 500, },
+      pos: { x: 3800, y: 500 },
       fix: 10,
       width: 240,
       height: 50,
-      scale: { width: 0.7, height: 0.7, },
+      scale: { width: 0.7, height: 0.7 },
     };
     const p15 = new Floor(this.scene, p15Config, this.pisos);
 
     const p16Config: FloorConfig = {
       texture: "plataformaB",
-      pos: { x: 4000, y: 300, },
+      pos: { x: 4000, y: 300 },
       fix: 10,
       width: 240,
       height: 50,
-      scale: { width: 0.8, height: 0.7, },
+      scale: { width: 0.8, height: 0.7 },
     };
     const p16 = new Floor(this.scene, p16Config, this.pisos);
 
     const p17Config: FloorConfig = {
       texture: "plataformaB",
-      pos: { x: 4300, y: 100, },
-      scale: { width: 0.8, height: 0.7, },
+      pos: { x: 4300, y: 100 },
+      scale: { width: 0.8, height: 0.7 },
       fix: 10,
       width: 240,
       height: 50,
@@ -307,47 +375,47 @@ class Mapa1 {
         paused: false,
         yoyo: true,
         repeat: -1,
-        y: "+=500"
-      }
+        y: "+=500",
+      },
     };
     const p17 = new Floor(this.scene, p17Config, this.movingFloorRot);
 
     const p18Config: FloorConfig = {
       texture: "plataformaB",
-      pos: { x: 4600, y: 600, },
+      pos: { x: 4600, y: 600 },
       fix: 10,
       width: 240,
       height: 50,
-      scale: { width: 0.8, height: 0.7, },
+      scale: { width: 0.8, height: 0.7 },
     };
     const p18 = new Floor(this.scene, p18Config, this.pisos);
 
-
     const p19Config: FloorConfig = {
       texture: "plataformaB",
-      pos: { x: 4900, y: 300, },
+      pos: { x: 4900, y: 300 },
       fix: 10,
       width: 240,
       height: 50,
-      scale: { width: 0.8, height: 0.7, },
+      scale: { width: 0.8, height: 0.7 },
     };
-    const p19 = new Floor(this.scene, p19Config, this.pisos4).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
+    const p19 = new Floor(this.scene, p19Config, this.pisos4).setTint(
+      Phaser.Display.Color.GetColor(255, 101, 0)
+    );
 
     //Portal, Coin and Asteroids
     const portalConfig: FloorConfig = {
       texture: "portal",
-      pos: { x: 5400, y: 1590, },
-      scale: { width: 0.1, height: 0.1, },
+      pos: { x: 5400, y: 1590 },
+      scale: { width: 0.1, height: 0.1 },
       width: 1000,
       height: 1500,
-
     };
     const port = new Floor(this.scene, portalConfig, this.portal);
 
     const coinConfig: FloorConfig = {
       texture: "coin",
-      pos: { x: 500, y: 1580, },
-      scale: { width: 0.1, height: 0.1, },
+      pos: { x: 500, y: 1580 },
+      scale: { width: 0.1, height: 0.1 },
       width: 450,
       height: 600,
       fix: 100,
@@ -361,7 +429,7 @@ class Mapa1 {
       delayed: 100,
       direction: 0,
       velocity: 100,
-      scale: .70,
+      scale: 0.7,
       depth: 1,
     };
     const c1 = new AsteroidGenerator(this.scene, c1Config);
@@ -374,28 +442,27 @@ class Mapa1 {
       delayed: 100,
       direction: 1,
       velocity: 100,
-      scale: .50,
+      scale: 0.5,
       depth: 1,
     };
     const c2 = new AsteroidGenerator(this.scene, c2Config);
     c2.start();
-
-  };
+  }
 
   update() {
     /* Attach controls to player */
     if (!this.goingBack) {
       if (this.scene.monchi && this.scene.cameraNormal) {
         this.scene.monchi.checkMove(this.scene.cursors);
-      }
-      else if (this.scene.monchi && this.scene.cameraNormal == false) {
+      } else if (this.scene.monchi && this.scene.cameraNormal == false) {
         this.scene.monchi?.checkMoveRot(this.scene.cursors);
-      };
+      }
     } else if (this.goingBack) {
-      if (this.scene.monchi) this.scene.monchi.setY(1700 - this.scene.monchi.displayHeight);
+      if (this.scene.monchi)
+        this.scene.monchi.setY(1700 - this.scene.monchi.displayHeight);
     }
     if (this.scene.monchi) this.animateBackground(this.scene.monchi);
-  };
-};
+  }
+}
 
 export default Mapa1;

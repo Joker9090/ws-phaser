@@ -26,7 +26,13 @@ export default class LevelMap extends Phaser.Scene {
   planets: Phaser.GameObjects.Sprite[] = [];
   planetSelector!: Phaser.GameObjects.Image;
   selectedPlanetIndex: number = 0;
-  planetsShown: number = 3;
+  planetsShown: number = 0;
+  graphic1?: Phaser.GameObjects.Graphics;
+  graphic2?: Phaser.GameObjects.Graphics;
+  graphic3?: Phaser.GameObjects.Graphics;
+  dist1?: number;
+  dist2?: number;
+  dist3?: number;
   /* progress */
   progress: number = 0;
   /* monchi */
@@ -243,6 +249,13 @@ export default class LevelMap extends Phaser.Scene {
       .setScale(0.1)
       .setRotation(-0.7);
     this.selectPlanet(0);
+
+    this.graphic1 = this.add.graphics({ lineStyle: { color: 0x00ffff } }).setAlpha(0.15);
+    this.graphic2 = this.add.graphics({ lineStyle: { color: 0x00ffff } }).setAlpha(0.15);
+    this.graphic3 = this.add.graphics({ lineStyle: { color: 0x00ffff } }).setAlpha(0.15);
+    this.dist1 = Phaser.Math.Distance.BetweenPoints(this.planetTutorial, this.sun);
+    this.dist2 = Phaser.Math.Distance.BetweenPoints(this.planetLevel1, this.sun);
+    this.dist3 = Phaser.Math.Distance.BetweenPoints(this.planetLevel2, this.sun);
   }
 
   makeTransition(sceneName: string, data: any) {
@@ -293,6 +306,31 @@ export default class LevelMap extends Phaser.Scene {
   }
 
   update() {
+    if(this.graphic1){
+      if(this.dist1){
+        if(this.planetTutorial && this.sun){
+          this.dist1 = Phaser.Math.Distance.BetweenPoints(this.planetTutorial, this.sun);
+          this.graphic1.clear().strokeCircle(this.sun.x, this.sun.y, this.dist1);
+        };
+      };
+    };
+    if(this.graphic2){
+      if(this.dist2){
+        if(this.planetLevel1 && this.sun){
+          this.dist1 = Phaser.Math.Distance.BetweenPoints(this.planetLevel1, this.sun);
+          this.graphic2.clear().strokeCircle(this.sun.x, this.sun.y, this.dist2);
+        };
+      };
+    };
+    if(this.graphic3){
+      if(this.dist3){
+        if(this.planetLevel2 && this.sun){
+          this.dist1 = Phaser.Math.Distance.BetweenPoints(this.planetLevel2, this.sun);
+          this.graphic3.clear().strokeCircle(this.sun.x, this.sun.y, this.dist3);
+        };
+      };
+    };
+      
     if (this.monchi) {
       this.progress = this.progress + 0.0031415;
       this.monchi.x = this.monchi.x - 0.8;

@@ -83,8 +83,10 @@ export default class UIScene extends Phaser.Scene {
       this.gravityArrow?.setRotation(Math.PI);
     } else if (direction == "left") {
       this.gravityArrow?.setRotation(Math.PI/2);
+      this.gravityArrow?.setFlipX(false);
     } else if (direction == "right") {
       this.gravityArrow?.setRotation(-Math.PI/2);
+      this.gravityArrow?.setFlipX(true);
     }
   }
 

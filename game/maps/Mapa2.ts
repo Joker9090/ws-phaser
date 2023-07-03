@@ -282,6 +282,8 @@ class Mapa2 {
     };
     const c2 = new AsteroidGenerator(this.scene, c2Config);
     c2.start();
+
+    this.scene.cameras.main.shake(2000, 0.01);
   }
 
   addColliders() {
@@ -354,11 +356,12 @@ class Mapa2 {
       if (this.scene.monchi) {
         if (this.sideGrav) {
           this.scene.monchi.checkSideGravity(this.scene.cursors);
-        } else if (this.scene.timeLevel < 7) {
-          this.scene.monchi.setVelocityX(200);
-          this.scene.cameras.main.shake(1400, 0.01);
-        } else if (this.scene.timeLevel >= 7) {
-          //this.scene.monchi.setVelocityX(0)
+        } else if (this.scene.timeLevel < 4 ) {
+          this.scene.monchi.setVelocityX(0);
+          this.scene.monchi.setDepth(0);
+        } else if (this.scene.timeLevel >= 4 && this.scene.timeLevel <= 8) {
+          this.scene.monchi.setVelocityX(200)
+        } else {
           this.scene.monchi.checkMove(this.scene.cursors);
         }
         if (this) this.animateBackground(this.scene.monchi);

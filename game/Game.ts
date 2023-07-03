@@ -148,7 +148,7 @@ class Game extends Phaser.Scene {
       this.canNextLevel = false;
       EventsCenter.emit("gameOver", true);
       //this.scene.start("Won", { text: Phrase });
-      this.makeTransition("Won", { text: Phrase });
+      this.makeTransition("LevelMap", {} );
     }
   }
 

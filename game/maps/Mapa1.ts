@@ -30,8 +30,8 @@ class Mapa1 {
   goingBack: boolean = false;
   pisoGoBack?: Phaser.GameObjects.Sprite;
   startingPoint = {
-    x: 4900, //500
-    y: 1600, //800
+    x: 500, //500
+    y: 800, //800
   };
   checkPointPos = {
     x: 3000,
@@ -414,7 +414,7 @@ class Mapa1 {
 
     const coinConfig: FloorConfig = {
       texture: "coin",
-      pos: { x: 500, y: 1580 },
+      pos: { x: 500, y: 1580 }, // 500 1580
       scale: { width: 0.1, height: 0.1 },
       width: 450,
       height: 600,

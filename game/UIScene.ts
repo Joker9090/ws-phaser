@@ -9,8 +9,6 @@ export default class UIScene extends Phaser.Scene {
   tutorialTextBox?: TextBox;
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   gameScene?: Game;
-  UIRectangle1?: Phaser.GameObjects.Rectangle;
-  UIRectangle2?: Phaser.GameObjects.Rectangle;
   TutorialMap?: Tutorial;
   lifesGroup?: Phaser.GameObjects.Group;
   gravityArrow?: Phaser.GameObjects.Image;
@@ -65,13 +63,13 @@ export default class UIScene extends Phaser.Scene {
       this.containerLeft?.add(this.coinUI);
 
       const arrowConfig: UIConfig = {
-        texture: "arrow",
-        pos: { x: lifes * 50 + 250, y: 50 },
+        texture: "fallingGuy",
+        pos: { x: lifes * 50 + 275, y: 50 },
         scale: 0.1,
       };
       this.ArrowOriginalPos = quantityLifes * 50 + 250;
       this.gravityArrow = new UI(this, arrowConfig)
-        .setRotation(Math.PI / 2)
+        .setRotation(0)
         .setScrollFactor(0, 0)
         .setDepth(100);
       this.containerRight?.add(this.gravityArrow);
@@ -80,13 +78,13 @@ export default class UIScene extends Phaser.Scene {
 
   rotateArrow(direction: string) {
     if (direction == "down") {
-      this.gravityArrow?.setRotation(Math.PI / 2);
-    } else if (direction == "up") {
-      this.gravityArrow?.setRotation(-Math.PI / 2);
-    } else if (direction == "left") {
-      this.gravityArrow?.setRotation(Math.PI);
-    } else if (direction == "right") {
       this.gravityArrow?.setRotation(0);
+    } else if (direction == "up") {
+      this.gravityArrow?.setRotation(Math.PI);
+    } else if (direction == "left") {
+      this.gravityArrow?.setRotation(Math.PI/2);
+    } else if (direction == "right") {
+      this.gravityArrow?.setRotation(-Math.PI/2);
     }
   }
 
@@ -118,25 +116,35 @@ export default class UIScene extends Phaser.Scene {
         lifeToTheRight?.destroy();
       }
     }
-  }
+    if (this.gameScene){
+      console.log("entro acá")
+      if (this.gameScene.levelIs == 1){
+        if (this.gameScene.checkPoint == 0){
+          this.rotateArrow("down");
+        } else if(this.gameScene.checkPoint == 1 && this.gameScene.cameraNormal){
+          this.rotateArrow("up");
+        } else if(this.gameScene.checkPoint == 1 && !this.gameScene.cameraNormal){
+          this.rotateArrow("down");
+        }
+      } else if (this.gameScene.levelIs == 2) {
+        this.rotateArrow("down");
+      };
+    };
+  };
 
   closeSign(sign: number) {
     if (sign == 1) {
       this.progressParam = 2;
-      this.UIRectangle1?.setVisible(false);
     } else if (sign == 2) {
-      this.UIRectangle2?.setVisible(false);
       this.progressParam = 4;
     }
   }
 
   showCoin() {
-    this.UIRectangle1?.setVisible(true);
     this.progressParam = 1;
   }
 
   showArrow() {
-    this.UIRectangle2?.setVisible(true);
     this.progressParam = 3;
   }
 
@@ -148,27 +156,7 @@ export default class UIScene extends Phaser.Scene {
     this.lifesGroup = this.add.group();
     this.createUI(data.lifes);
 
-    /* RED BOX TO SHOW UI */
-    this.UIRectangle1 = this.add
-      .rectangle(
-        200,
-        50,
-        260,
-        60,
-        Phaser.Display.Color.GetColor(244, 15, 15),
-        0.5
-      )
-      .setVisible(false);
-    this.UIRectangle2 = this.add
-      .rectangle(
-        400,
-        50,
-        50,
-        60,
-        Phaser.Display.Color.GetColor(244, 15, 15),
-        0.5
-      )
-      .setVisible(false);
+  
 
     /* TIMER */
     this.timerText = this.add
@@ -188,8 +176,7 @@ export default class UIScene extends Phaser.Scene {
       callbackScope: this,
       loop: true,
     });
-    this.containerLeft.add([this.UIRectangle1]);
-    this.containerRight.add([this.UIRectangle2]);
+    
     this.containerText.add([this.timerText]);
 
     this.tweens.addCounter({
@@ -241,6 +228,7 @@ export default class UIScene extends Phaser.Scene {
   }
 
   update() {
+
     this.timerText?.setPosition(
       this.cameras.main.width - this.cameras.main.width / 10,
       50
@@ -256,24 +244,7 @@ export default class UIScene extends Phaser.Scene {
       this.containerText?.setScale(
         this.cameras.main.width / this.cameras.main.height
       );
-    }
-  }
-}
+    };
+  };
+};
 
-/*
-    this.tweens.addCounter({
-      from: 0,
-      to: 60,
-      duration: 10000,
-      ease: window.Phaser.Math.Easing.Sine.InOut,
-      // yoyo: true,
-      repeat: -1,
-      onUpdate: (tween) => {
-        if (this.car) {
-          const value = tween.getValue();
-         
-
-        }
-      }
-    })
-    */

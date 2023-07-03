@@ -16,7 +16,6 @@ export default class BetweenScenesScene extends Phaser.Scene {
   }
 
   changeSceneTo(sceneName: string, data: any) {
-    console.log("trnasición", sceneName, this.status);
     if (this.status == BetweenScenesStatus.IDLE) {
       this.newSceneName = sceneName;
       this.newSceneWith = data;

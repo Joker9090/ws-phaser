@@ -167,13 +167,11 @@ export default class MainMenuScene extends Phaser.Scene {
         return false;
       getBetweenScenesScene.changeSceneTo(sceneName, data);
       this.time.delayedCall(1000, () => {
-        console.log("se va a apagar", this);
         this.scene.stop();
       });
     } else {
       this.scene.start(sceneName, data);
       this.time.delayedCall(1000, () => {
-        console.log("se va a apagar", this);
         this.scene.stop();
       });
     }

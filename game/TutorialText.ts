@@ -38,7 +38,7 @@ export default class TutorialText extends Phaser.Scene {
       this.signNumber = 1;
     } else if (param == 2) {
       this.tutorialTextBox?.setTextBox(
-        "The gravity arrow points to where the gravity is pulling, this allows you to know to where you will be falling!!!!"
+        "This is Victor. Victor is falling, and the direction in which he is falling is determined by the direction of the gravity. Be careful not to fall like Victor."
       );
       this.signNumber = 2;
     } else if (param == 3) {

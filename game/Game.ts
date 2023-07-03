@@ -159,7 +159,8 @@ class Game extends Phaser.Scene {
       this.canWin = false;
       this.canNextLevel = false;
       EventsCenter.emit("gameOver", true);
-      this.scene.restart({ level: 1, lifes: this.lifes });
+      this.makeTransition("Game", { level: 1, lifes: this.lifes });
+      //this.scene.restart({ level: 1, lifes: this.lifes });
       this.UIScene?.scene.restart({ level: 1, lifes: this.lifes, game: this });
     }
   }
@@ -169,7 +170,6 @@ class Game extends Phaser.Scene {
   }
 
   goBack() {
-    console.log("entro acá tambien");
     if (!this.goingBack) {
       const mapa = this.map as Mapa1;
       const piso =
@@ -221,8 +221,7 @@ class Game extends Phaser.Scene {
     if (this.levelIs == 1) {
       if (this.goingBack) {
         const mapa = this.map as Mapa1;
-        const piso =
-          mapa.pisosBack?.getChildren()[0] as Phaser.GameObjects.Sprite;
+        const piso = mapa.pisosBack?.getChildren()[0] as Phaser.GameObjects.Sprite;
         this.tweens.addCounter({
           from: 1100,
           to: 4500,
@@ -239,8 +238,13 @@ class Game extends Phaser.Scene {
             piso.clearTint();
           },
         });
-      }
-    }
+      } else if (!this.goingBack){
+        const mapa = this.map as Mapa1;
+        const piso = mapa.pisosBack?.getChildren()[0] as Phaser.GameObjects.Sprite;
+        piso.clearTint();
+        this.goingBack = true
+      };
+    };
 
     if (this.map?.coin) {
       EventsCenter.emit("coinCollected", true);
@@ -262,7 +266,7 @@ class Game extends Phaser.Scene {
       EventsCenter.emit("nextLevel", true);
       this.canWin = false;
       this.canNextLevel = false;
-      this.scene.restart({ level: 2, lifes: this.lifes });
+      this.makeTransition("Game", { level: 2, lifes: this.lifes });
       this.UIScene?.scene.restart({ level: 2, lifes: this.lifes, game: this });
     }
   }
@@ -424,13 +428,11 @@ class Game extends Phaser.Scene {
         return false;
       getBetweenScenesScene.changeSceneTo(sceneName, data);
       this.time.delayedCall(1000, () => {
-        console.log("se va a apagar", this);
         this.scene.stop();
       });
     } else {
       this.scene.start(sceneName, data);
       this.time.delayedCall(1000, () => {
-        console.log("se va a apagar", this);
         this.scene.stop();
       });
     }
@@ -543,7 +545,6 @@ class Game extends Phaser.Scene {
         () => {
           this.monchi?.body?.destroy();
           this.goingBack = false;
-          console.log("entró acáaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
           this.canWin = false;
           this.canNextLevel = false;
           this.canRot = true;
@@ -555,7 +556,6 @@ class Game extends Phaser.Scene {
   }
 
   update(this: Game) {
-    console.log(this.goingBack);
     if (this.cameras.main.width < this.cameras.main.height) {
       this.cameras.main.zoom =
         this.cameras.main.width / this.cameras.main.height;

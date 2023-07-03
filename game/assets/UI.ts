@@ -27,6 +27,7 @@ class UI extends Phaser.GameObjects.Image {
       this.groupItem = group;
       this.groupItem.add(this);
     }
+    
   }
 }
 

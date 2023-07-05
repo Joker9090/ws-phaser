@@ -114,7 +114,7 @@ class SceneLoader extends Phaser.Scene {
   create(this: SceneLoader, { dataLevel }: any) {
     //this.scene.start("Scene"+level);
     console.log("dataaaaa sceneloader ",dataLevel);
-    this.scene.start("Scene1", { "dataLevel": dataLevel })
+    this.scene.start("Scene1", { "dataLevel": 2 })
   }
 
   update(this: SceneLoader) {

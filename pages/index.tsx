@@ -16,7 +16,7 @@ export default function Home() {
     //Load phaser async when windows is ready
     import("phaser").then(setPhaser) 
     //Load scenes async when windows is ready
-    import("@/game/Scene1").then((scene1) => setScenes([scene1.default]))
+    //import("@/game/Scene1").then((scene1) => setScenes([scene1.default]))
     //import("@/game/assets/GameUI").then((gameUI) => setScenes([gameUI.default]))
 
     Promise.all([

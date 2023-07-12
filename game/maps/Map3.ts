@@ -15,6 +15,7 @@ class Map3 {
   lifeBar?: LifeBar;
   healths?: Health;
   door?: Door;
+  enemies: Enemy[] = [];
   //debugGraphics: Phaser.GameObjects.Graphics
   config: {
     w: number,
@@ -239,6 +240,7 @@ class Map3 {
 
 
     const onCreateEnemy1 = (key: string, index: number, sprite: Enemy) => {
+      this.enemies.push(sprite)
       if (key == "skeleton") {
         const skeletonOnePatrol: PatrolConfig = {
           x: 160,
@@ -269,6 +271,7 @@ class Map3 {
 
 
     const onCreateEnemy2 = (key: string, index: number, sprite: Enemy) => {
+      this.enemies.push(sprite)
       if (key == "skeleton") {
         const skeletonOnePatrol: PatrolConfig = {
           x: 160,

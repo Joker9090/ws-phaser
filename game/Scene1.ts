@@ -16,8 +16,8 @@ import Boss from "./assets/Boss";
 // Scene in class
 class Scene1 extends Phaser.Scene {
   monchi?: Player;
-  skeleton?: Enemy;
-  map?: Map2;
+  // skeleton?: Enemy;
+  map?: Map3;
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   attackZone?: Phaser.GameObjects.Zone;
   lightOnPlayer?:Phaser.GameObjects.Light;
@@ -46,27 +46,14 @@ class Scene1 extends Phaser.Scene {
   }
 
   hitPlayer = (monchi: Player, skeleton: Enemy, scene:Phaser.Scene) => {
-    //console.log("Player colision con enemigo");
+    const weapon = monchi.weapon;
     console.log("Player espada colision con enemigo");
-    skeleton?.receiveDamage();
-    if (monchi && monchi.swordHitBox){
-      monchi.swordHitBox.x = 0;
-      monchi.swordHitBox.y = 0;
-      monchi.swordHitBox.setActive(false);
-
-    }
-    console.log("state skeleton: " + skeleton?.Onstate);
-    if(skeleton && skeleton.Onstate !== "dead") {
-      scene.time.delayedCall(1200, skeleton.idle, [], skeleton);
-    }else if (skeleton?.Onstate === "dead") {
-      scene.time.delayedCall(1200, skeleton.corposeStay, [], skeleton);
-      //this.skeleton.destroy();
-    }
+    skeleton.corposeStay()
   }
 
 
   create(this: Scene1) {
-    this.skeleton?.destroy();
+    // this.skeleton?.destroy();
 
     this.map = new Map3(this);
 
@@ -139,21 +126,24 @@ class Scene1 extends Phaser.Scene {
         this.lightOnPlayer.y= this.monchi.y
       }
       this.monchi.checkMove(this.cursors)
-      if(this.monchi.isAttacking && this.skeleton) {
-        if (Phaser.Geom.Rectangle.Overlaps(this.monchi.swordHitBox.getBounds(), this.skeleton?.getBounds()))
-        {
-                //this.graphics.strokeRectShape(this.rectangles[i]);
-                this.swordHit?.play()
-                this.hitPlayer(this.monchi,this.skeleton,this);
-        }else {
-          this.swordAir?.play();
+      if(this.map) {
+        if(this.monchi.weapon) {
+          if(this.monchi.weapon.hitboxes.length > 0) {
+            for (let i = 0; i < this.map.enemies.length; i++) {
+              const enemy = this.map.enemies[i];
+              for (let k = 0; k < this.monchi.weapon.hitboxes.length; k++) {
+                const hitbox = this.monchi.weapon.hitboxes[k];
+                
+                if (Phaser.Geom.Rectangle.Overlaps(hitbox.getBounds(), enemy.getBounds())){
+                  this.hitPlayer(this.monchi,enemy,this);
+                }
+              }
+            }
+          }
         }
       }
     }
-
-   
   }
-
 }
 
 export default Scene1 

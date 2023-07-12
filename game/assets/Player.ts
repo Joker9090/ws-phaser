@@ -2,16 +2,83 @@ import Phaser from "phaser";
 import LifeBar from "./LifeBar";
 import hitZone from "./hitZone";
 
+
+export type HitboxType = Phaser.GameObjects.Rectangle & { id: string }
+
+
+enum WeaponType { SWORD }
+
+class Weapon {
+  type: WeaponType;
+  scene: Phaser.Scene;
+  player: Player;
+  hitboxes: HitboxType[] = [];
+  hits: number = 0;
+
+  constructor(scene: Phaser.Scene, player: Player, weaponType: WeaponType) {
+    this.type = weaponType;
+    this.scene = scene;
+    this.player = player;
+  }
+
+
+  attack(callbackAttack: Function) {
+    switch (this.type) {
+      case WeaponType.SWORD:
+        this.swordHit();
+        this.scene.time.delayedCall(300, callbackAttack, [], this);
+        break;
+      default:
+        callbackAttack()
+      // nothing
+    }
+  }
+
+  /* SWORD HIT */
+  swordHit() {
+    this.hits++;
+    const id = "SWORD-" + this.hits;
+    const { x, y } = this.player;
+    const direction = (this.player.flipX) ? -20 : 20;
+    const hitbox = this.scene.add.rectangle(x + direction, y, 50, 10, 0xfff, 0.5) as HitboxType;
+
+
+    this.scene.tweens.add({
+      targets: hitbox,
+      yoyo: true,
+      repeat: -1,
+      x: +100,
+      duration: 2000
+    });
+
+    hitbox.id = id;
+    this.hitboxes.push(hitbox);
+    this.scene.add.existing(hitbox);
+    this.scene.time.delayedCall(1000, () => {
+      let newHitboxes = []
+      for (let index = 0; index < this.hitboxes.length; index++) {
+        const h = this.hitboxes[index];
+        if (h.id == id) h.destroy()
+        else newHitboxes.push(h)
+      }
+      console.log(newHitboxes.map(h => h.id))
+      this.hitboxes = [...newHitboxes];
+    }, [], this);
+  }
+}
+
 class Player extends Phaser.Physics.Arcade.Sprite {
   isJumping: boolean = false
   isAttacking: boolean = false
   sprite: string = '';
   life: number = 100;
-  swordHitBox: hitZone;
+  weapon?: Weapon;
+  // swordHitBox: hitZone;
+
   constructor(scene: Phaser.Scene, x: number, y: number, sprite: string, frame: number) {
     super(scene, x, y, sprite, frame)
 
-    this.createAnims(scene,sprite);
+    this.createAnims(scene, sprite);
     this.sprite = sprite;
 
     this.setScale(1)
@@ -31,11 +98,13 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       this.body.setOffset(20, 20);
 
     }
-    this.swordHitBox = new hitZone(scene,100,100,32,64,0xffffff,0.5);
+
+    this.weapon = new Weapon(scene, this, WeaponType.SWORD)
+    // this.swordHitBox = new hitZone(scene,100,100,32,64,0xffffff,0.5);
 
   }
 
-  createAnims(scene: Phaser.Scene,sprite:string ) {
+  createAnims(scene: Phaser.Scene, sprite: string) {
 
     const knightIdleFrames = scene.anims.generateFrameNumbers(sprite, { start: 0, end: 3 });
     //const knightJumpFrames = scene.anims.generateFrameNumbers("knight", {frames: [6,7,8,9,10,11]});
@@ -114,18 +183,18 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   //  }
   //}
 
-  dead(){
+  dead() {
     this.setVelocityX(0);
     this.anims.play(`${this.sprite}DeadFrames`, true);
     //this.Onstate = "dead";
   }
 
-  receivedDamage(dmgRecieved:number) {
+  receivedDamage(dmgRecieved: number) {
 
     this.loseLife(dmgRecieved);
-    if(this.life == 0) {
+    if (this.life == 0) {
       this.dead();
-    }else {
+    } else {
       this.scene.tweens.add({
         targets: this,
         duration: 150,
@@ -153,13 +222,13 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
   takeLife(lifeBar: LifeBar) {
     //const moreLife = 10;
-    if(lifeBar.fullBar) {
-      if(this.life < 100) {
+    if (lifeBar.fullBar) {
+      if (this.life < 100) {
         this.life += 10;
-        if(lifeBar.x + 10 > 100) {
+        if (lifeBar.x + 10 > 100) {
           lifeBar.setBar(lifeBar.fullBar)
-        }else lifeBar.setBar(lifeBar.x + 10);
-      }else if(this.life >= 100) {
+        } else lifeBar.setBar(lifeBar.x + 10);
+      } else if (this.life >= 100) {
         //this.life = 99;
         //lifeBar.setBar(this.life);
       }
@@ -185,23 +254,35 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       this.scene.time.delayedCall(1000, this.idle, [], this);
     }
   }
-  attack() {
-    if (!this.isAttacking) {
-      console.log("attack");
-      this.swordHitBox.attackBox((this.x),(this.y),this.flipX, 10)
-      this.isAttacking = true;
-      this.play(`${this.sprite}AttackFrames`, true);
-      //this.setVelocityY(-730);
-      this.scene.time.delayedCall(600, () => {
-        this.isAttacking = false;
 
-        // this.idle()
-      }, [], this);
+  doAnimationAttack(attackType: WeaponType) {
+    switch (attackType) {
+      case WeaponType.SWORD:
+        this.play(`${this.sprite}AttackFrames`, true);
+        break;
+      default:
+      // nothing
+    }
+  }
+
+  attack() {
+    if (!this.isAttacking && this.weapon) {
+      console.log("attack");
+      this.isAttacking = true;
+
+      this.doAnimationAttack(this.weapon.type)
+      this.weapon.attack(() => {
+        console.log("[Debug] this.weapon.attack", this.isAttacking, this)
+        this.isAttacking = false;
+      });
+
+      //this.swordHitBox.attackBox((this.x),(this.y),this.flipX, 10)
+      //this.setVelocityY(-730);
     }
   }
 
   checkMove(cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined) {
-    
+
 
     /* Keywords press */
     if (cursors) {
@@ -242,7 +323,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       /* Nothing */
       else {
         this.setVelocityX(0)
-        if(!this.isAttacking && !this.isJumping) this.anims.play(`${this.sprite}IdleFrames`, true);
+        if (!this.isAttacking && !this.isJumping) this.anims.play(`${this.sprite}IdleFrames`, true);
       }
 
 

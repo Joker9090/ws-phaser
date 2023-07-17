@@ -141,6 +141,19 @@ class Scene1 extends Phaser.Scene {
     this.playerHurt = this.sound.add("playerHurt",{});
 
 
+
+    /* Audio NEW*/
+    /*const getMusicManagerScene = this.game.scene.getScene("MusicManager") as MusicManager;
+    if (!getMusicManagerScene.scene.isActive()) this.scene.launch("MusicManager").sendToBack();
+    else if (this.dataLevel == 0) {
+      getMusicManagerScene.playMusic("songTutorial");
+    } else if (this.dataLevel == 1) {
+      getMusicManagerScene.playMusic("songLevel1");
+    } else if (this.dataLevel == 2) {
+      getMusicManagerScene.playMusic("songLevel2");
+    }
+    */
+
     /**Darkness implementation */
     this.lights.enable().setAmbientColor(0x000000); //333333 gray
     this.lightOnPlayer = this.lights.addLight(this.monchi.x, this.monchi.y, 190).setColor(0xffffff).setIntensity(1.2); // cambiar luces en bbase a la dificultad elegida

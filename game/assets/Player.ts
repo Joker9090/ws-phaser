@@ -171,8 +171,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   idle() {
     console.log("idle")
     this.isJumping = false;
-    this.setVelocityX(0);
-    this.setVelocityY(0);
+    //this.setVelocityX(0);
+    //this.setVelocityY(0);
     if (!this.isAttacking) this.play(`${this.sprite}IdleFrames`);
   }
 
@@ -182,7 +182,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       this.setVelocityY(-450);
       this.setVelocityX(10);
       this.play(`${this.sprite}Jump`, true);
-      this.scene.time.delayedCall(1000, this.idle, [], this);
+      this.scene.time.delayedCall(800, this.idle, [], this);
     }
   }
   attack() {
@@ -210,7 +210,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       /* Up / Juamp */
       if (up.isDown && this.body && this.body.touching.down) {
         /* Play animation */
-        this.anims.play(`${this.sprite}Jump`, true);
+        //this.anims.play(`${this.sprite}Jump`, true);
         this.jump()
       }
 

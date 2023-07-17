@@ -1,7 +1,16 @@
 import Phaser from "phaser";
 import Scene4 from "./Scene1";
 
+export type SceneKeys = "Menu" | "Scene1";
+
+export type LoadTypes = "image" | "audio" | "spritesheet";
+
 const loadAssets = {
+  "Menu": {
+    assets: [
+
+    ]
+  },
   "Scene1": {
     assets: [
       ["image", "plataformaA", "/game/platform1.png"],
@@ -104,11 +113,24 @@ class SceneLoader extends Phaser.Scene {
       percentText.destroy();
       assetText.destroy();
     });
-    loadAssets["Scene1"].assets.map(([type, name, src,config]: any) => {
-      // @ts-checkts-ignore
-      if(config)this.load[type](name, src, config);
-      else this.load[type](name, src);
-    })
+
+    const sceneTitles: Array <SceneKeys> = ["Menu","Scene1"];
+    for (let i = 0; i < sceneTitles.length; i++) {
+          //loadAssets["Scene1"].assets.map(([type, name, src,config]: any) => {
+      loadAssets[sceneTitles[i]].assets.map((sceneAssetConfig) => {
+        const type = sceneAssetConfig[0] as LoadTypes;
+        const name = sceneAssetConfig[1] as string;
+        const src = sceneAssetConfig[2] as string;
+        const config = sceneAssetConfig[3] as any;
+        if (config) {
+          this.load[type](name, src, config);
+        }
+        else {
+          this.load[type](name, src);
+        }
+      });
+    };
+
   }
 
   create(this: SceneLoader, { dataLevel }: any) {

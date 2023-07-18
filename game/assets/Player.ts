@@ -26,7 +26,7 @@ class Weapon {
     switch (this.type) {
       case WeaponType.SWORD:
         this.swordHit();
-        this.scene.time.delayedCall(300, callbackAttack, [], this);
+        this.scene.time.delayedCall(800, callbackAttack, [], this);
         break;
       default:
         callbackAttack()
@@ -81,21 +81,22 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.createAnims(scene, sprite);
     this.sprite = sprite;
 
-    this.setScale(1)
+    this.setScale(0.3)
     // Agregar el player al mundo visual
     scene.add.existing(this)
     // Agregar el player al mundo fisico
     scene.physics.add.existing(this)
 
     /**Darknes implementation */
-    this.setPipeline('Light2D');
+    //this.setPipeline('Light2D');
 
     this.setCollideWorldBounds(true);
     if (this.body) {
       const body = (this.body as Phaser.Physics.Arcade.Body)
       body.onWorldBounds = true;
-      this.body.setSize(35, 64, true); // GOOOD!
-      this.body.setOffset(20, 20);
+      //this.body.setSize(800, 800, true); // GOOOD!
+      this.body.setSize((this.width/2 - 150),(this.height/2))
+      this.body.setOffset(220, 280);
 
     }
 
@@ -106,14 +107,14 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
   createAnims(scene: Phaser.Scene, sprite: string) {
 
-    const knightIdleFrames = scene.anims.generateFrameNumbers(sprite, { start: 0, end: 3 });
+    const knightIdleFrames = scene.anims.generateFrameNumbers(sprite, { start: 37, end: 41 });// done
     //const knightJumpFrames = scene.anims.generateFrameNumbers("knight", {frames: [6,7,8,9,10,11]});
     const knightJumpFrames = scene.anims.generateFrameNumbers(sprite, { start: 5, end: 10 });
-    const knightMoveFrames = scene.anims.generateFrameNumbers(sprite, { start: 10, end: 14 });
+    const knightMoveFrames = scene.anims.generateFrameNumbers(sprite, { start: 19, end: 35 });// done
     const knightDeadFrames = scene.anims.generateFrameNumbers(sprite, { start: 18, end: 23 });
     const knightDmgFrames = scene.anims.generateFrameNumbers(sprite, { start: 19, end: 20 });
     const knightDefFrames = scene.anims.generateFrameNumbers(sprite, { start: 24, end: 28 });
-    const knightAttackFrames = scene.anims.generateFrameNumbers(sprite, { start: 30, end: 34 });
+    const knightAttackFrames = scene.anims.generateFrameNumbers(sprite, { start: 0, end: 18 });// done
 
     const knightJumpConfig = {
       key: `${sprite}Jump`,
@@ -125,7 +126,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     const knightMoveConfig = {
       key: `${sprite}Move`,
       frames: knightMoveFrames,
-      frameRate: 10,
+      frameRate: 15,
       repeat: 0,
       //yoyo: true,
     }
@@ -133,7 +134,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     const knightIdleFramesConfig = {
       key: `${sprite}IdleFrames`,
       frames: knightIdleFrames,
-      frameRate: 3,
+      frameRate: 6,
       repeat: -1,
     }
 
@@ -161,7 +162,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     const knightAttackFramesConfig = {
       key: `${sprite}AttackFrames`,
       frames: knightAttackFrames,
-      frameRate: 15,
+      frameRate: 25,
       repeat: 0,
     }
 

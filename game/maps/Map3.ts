@@ -21,8 +21,8 @@ class Map3 {
     w: number,
     h: number
   } = {
-      w: 1300,
-      h: 800
+      w: 2900,
+      h: 1000
     }
   constructor(scene: Phaser.Scene) {
     this.scene = scene
@@ -39,7 +39,7 @@ class Map3 {
   }
 
   createMap() {
-    const background = this.scene.add.image(0, 0, "sky").setOrigin(0, 0);
+    const background = this.scene.add.image(0, 0, "BackgroundNew").setOrigin(0, 0).setScale(0.2,0.2);
     // Based on your game size, it may "stretch" and distort.
     background.displayWidth = this.config.w;
     background.displayHeight = this.config.h + 10;
@@ -57,10 +57,10 @@ class Map3 {
     const LargeFloorConfigg: LargeFloorConfig = {
       textureA: "tile1",
       textureB: "tile3",
-      large: 44,
+      large: 123,
       //width:576,
       //height:324, 
-      pos: { x: 20, y: 720 },
+      pos: { x: 20, y: 800 },
       //scale: {width: 1,height: 1,},
       //fix:-9,
 
@@ -140,7 +140,7 @@ class Map3 {
 
     const HealthConfig = {
       x: 1650,
-      y: 985,
+      y: 760,
       sprite: "heartFullUI",
       quantity: 3,
     }
@@ -235,8 +235,8 @@ class Map3 {
     
         p6.hasForce = true; */
 
-    /**Darknes implementation */
-    background.setPipeline('Light2D');
+    /**Darknes implementation */ //Darkness implementation
+    //background.setPipeline('Light2D');
 
 
     const onCreateEnemy1 = (key: string, index: number, sprite: Enemy) => {

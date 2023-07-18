@@ -65,7 +65,8 @@ class Scene1 extends Phaser.Scene {
 
     const floor = this.map.createMap()
     
-    this.monchi = new Player(this, 650, 650, "knight", 2);
+    //this.monchi = new Player(this, 650, 650, "knight", 2);
+    this.monchi = new Player(this, 650, 650, "playerNew", 2);
 
 
 
@@ -82,7 +83,7 @@ class Scene1 extends Phaser.Scene {
     */
 
     /**Darkness implementation */
-    this.lights.enable().setAmbientColor(0x000000); //333333 gray
+    //this.lights.enable().setAmbientColor(0x000000); //333333 gray
     this.lightOnPlayer = this.lights.addLight(this.monchi.x, this.monchi.y, 140).setColor(0xffffff).setIntensity(1.2); // cambiar luces en bbase a la dificultad elegida
 
     const checkFloor = (a: Player,b: Phaser.Physics.Arcade.Sprite ) => {
@@ -92,7 +93,7 @@ class Scene1 extends Phaser.Scene {
 
 
     this.cameras.main.startFollow(this.monchi,true,0.5,0.5, -0, 20);//seguimiento del personaje, apartir de q pixeles alrededor
-    this.cameras.main.setZoom(4);//zoom en la escene sobre lo que este apuntando la camara 3 , 0.5
+    this.cameras.main.setZoom(1.3);//zoom en la escene sobre lo que este apuntando la camara 3 , 0.5 // ultimo 4
 
     this.cursors = this.input.keyboard?.createCursorKeys()
 

@@ -94,7 +94,7 @@ class Health extends Phaser.Physics.Arcade.Sprite {
         duration: 1000
     });*/
     //emmiter <-
-    this.setPipeline('Light2D');
+    //this.setPipeline('Light2D');
         
     
   }

@@ -70,8 +70,8 @@ class Antorcha extends Phaser.Physics.Arcade.Sprite {
         repeat: -1,
         duration: 1000
     });
-    //emmiter <-
-    this.setPipeline('Light2D');
+    //emmiter <-Darknes implementation
+    //this.setPipeline('Light2D');
         
     
   }

@@ -34,8 +34,9 @@ class LargeFloor extends Phaser.GameObjects.Container {
     for (let index = 0; index < config.large; index++) {
       const t = (index  % 2 == 0) ? config.textureA : config.textureB
       const s = scene.add.sprite(index * width,0,t)
+      s.setAlpha(0);
       /**Darknes implementation */
-      s.setPipeline('Light2D');
+      //s.setPipeline('Light2D');
       this.add(s)
       
     }

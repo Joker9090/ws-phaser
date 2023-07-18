@@ -39,8 +39,8 @@ class LargeFloorIsland extends Phaser.GameObjects.Container {
       const s = scene.add.sprite(index * width,0,t)
       const detail = scene.add.sprite(index * width,10,config.textureC)
       /**Darknes implementation */
-      s.setPipeline('Light2D');
-      detail.setPipeline('Light2D');
+      //s.setPipeline('Light2D');
+      //detail.setPipeline('Light2D');
       this.add(s)
       
     }

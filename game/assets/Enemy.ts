@@ -227,7 +227,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
 
 
   patrol(_patrolConfig:PatrolConfig){
-    console.log("patrol log: "+_patrolConfig.x+_patrolConfig.delay+_patrolConfig.flip);
+    //console.log("patrol log: "+_patrolConfig.x+_patrolConfig.delay+_patrolConfig.flip);
     if(this.Onstate != "dead"){
       this.isPatrol = true;
       if(_patrolConfig.flip != null ||_patrolConfig.flip != undefined)this.flipX = _patrolConfig.flip;    

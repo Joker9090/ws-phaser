@@ -8,6 +8,8 @@ import UiModel from "../assets/UIModel";
 import LifeBar from "../assets/LifeBar";
 import Door from "../assets/Door";
 import Enemy, { PatrolConfig } from "../assets/Enemy";
+import EnemyFly from "../assets/EnemyFly";
+import EnemyBoss from "../assets/EnemyBoss";
 
 class Map3 {
   scene: Phaser.Scene;
@@ -158,21 +160,21 @@ class Map3 {
       sprite: "greenBar",
       spriteContainer: "healthBarWithAlpha",
     }
-    const newAntorcha = new Antorcha(this.scene, AntorchaConfig);
-    const newAntorcha2 = new Antorcha(this.scene, AntorchaConfig2);
-    const newAntorcha3 = new Antorcha(this.scene, AntorchaConfig3);
-    const lightOnAntorcha = this.scene.lights.addLight(newAntorcha.x, newAntorcha.y, 200).setColor(0xdc9e7c).setIntensity(1);
-    const lightOnAntorcha2 = this.scene.lights.addLight(newAntorcha2.x, newAntorcha2.y, 200).setColor(0xdc9e7c).setIntensity(1);
-    const lightOnAntorcha3 = this.scene.lights.addLight(newAntorcha3.x, newAntorcha3.y, 200).setColor(0xdc9e7c).setIntensity(1);
+    //const newAntorcha = new Antorcha(this.scene, AntorchaConfig);
+    //const newAntorcha2 = new Antorcha(this.scene, AntorchaConfig2);
+    //const newAntorcha3 = new Antorcha(this.scene, AntorchaConfig3);
+    //const lightOnAntorcha = this.scene.lights.addLight(newAntorcha.x, newAntorcha.y, 200).setColor(0xdc9e7c).setIntensity(1);
+    //const lightOnAntorcha2 = this.scene.lights.addLight(newAntorcha2.x, newAntorcha2.y, 200).setColor(0xdc9e7c).setIntensity(1);
+    //const lightOnAntorcha3 = this.scene.lights.addLight(newAntorcha3.x, newAntorcha3.y, 200).setColor(0xdc9e7c).setIntensity(1);
 
 
-    const newDoor = new Door(this.scene, 1750, 985, "doorCueva", true);
-    const lightOnDoor = this.scene.lights.addLight(newDoor.x, newDoor.y, 200).setColor(0xdc9e7c).setIntensity(0.7);
+    //const newDoor = new Door(this.scene, 1750, 985, "doorCueva", true);
+    //const lightOnDoor = this.scene.lights.addLight(newDoor.x, newDoor.y, 200).setColor(0xdc9e7c).setIntensity(0.7);
 
     const healths = new Health(this.scene, HealthConfig);
     //this.mapElements.add(healths);
     this.healths = healths;
-    this.door = newDoor;
+    //this.door = newDoor;
 
     this.lifeBar = new LifeBar(this.scene, LifeConfig);
     //if(this.lifeBar && this.lifeBar.body)this.lifeBar.body.immovable= true;
@@ -180,10 +182,10 @@ class Map3 {
     //const UI = new UiModel(this.scene,UIConfig,this.mapElements);
     //const nubes = new CloudGenerator(this.scene, CloudGeneratorConfig1);
     //nubes.start();
-    const newIsland2 = new LargeFloorIsland(this.scene, LargeFloorIslandConfig2, this.mapElements)
-    const newIsland = new LargeFloorIsland(this.scene, LargeFloorIslandConfig, this.mapElements)
+    //const newIsland2 = new LargeFloorIsland(this.scene, LargeFloorIslandConfig2, this.mapElements)
+    //const newIsland = new LargeFloorIsland(this.scene, LargeFloorIslandConfig, this.mapElements)
     const newFloor = new LargeFloor(this.scene, LargeFloorConfigg, this.mapElements);
-    const newIsland3 = new LargeFloorIsland(this.scene, LargeFloorIslandConfig3, this.mapElements)
+    //const newIsland3 = new LargeFloorIsland(this.scene, LargeFloorIslandConfig3, this.mapElements)
 
 
 
@@ -239,6 +241,8 @@ class Map3 {
     //background.setPipeline('Light2D');
 
 
+    //OLD SKELETON
+    /*
     const onCreateEnemy1 = (key: string, index: number, sprite: Enemy) => {
       this.enemies.push(sprite)
       if (key == "skeleton") {
@@ -298,6 +302,73 @@ class Map3 {
     }
 
     const enemyMaker2 = new EnemyMaker(this.scene, { x: 50, y: 600 }, enemyMaker2Config)
+    enemyMaker2.start()*/
+
+    /** NEW ENEMYS */
+    const onCreateEnemy1 = (key: string, index: number, sprite: Enemy) => {
+      this.enemies.push(sprite)
+      if (key == "Enemy1" || key == "Enemy2" || key == "Enemy3" || key == "Enemy4" || key == "Enemy5" || key == "Enemy6") {
+        const skeletonOnePatrol: PatrolConfig = {
+          x: 160,
+          delay: 7000,
+          enemyDetect: true,
+          flip: true
+        }
+        sprite.patrol(skeletonOnePatrol);
+      }
+    }
+
+    const enemyMaker1Config = {
+      delay: 600,
+      max: 1,
+      enemies: [
+        // "archimago",
+        "Enemy1",
+        "Enemy2",
+        "Enemy3",
+        "Enemy4",
+        "Enemy5",
+        "Enemy6",
+      ],
+      EnemyClass: EnemyFly,
+      colliders: [newFloor],
+      onCreate: onCreateEnemy1
+    }
+
+    const enemyMaker1 = new EnemyMaker(this.scene, { x: 150, y: 600 }, enemyMaker1Config)
+    enemyMaker1.start()
+
+
+
+    const onCreateEnemy2 = (key: string, index: number, sprite: Enemy) => {
+      this.enemies.push(sprite)
+      if (key == "Boss1" || key == "Boss2" || key == "Boss3" || key == "Boss4" || key == "Boss5" || key == "Boss6") {
+        const skeletonOnePatrol2: PatrolConfig = {
+          x: 160,
+          delay: 7000,
+          enemyDetect: true,
+          flip: false
+        }
+        sprite.patrol(skeletonOnePatrol2);
+      }
+    }
+
+    const enemyMaker2Config = {
+      delay: 600,
+      max: 6,
+      enemies: [
+        // "archimago",
+        "Boss1",
+        "Boss2",
+        "Boss3",
+        "Boss4",
+      ],
+      EnemyClass: EnemyBoss,
+      colliders: [newFloor],
+      onCreate: onCreateEnemy2
+    }
+
+    const enemyMaker2 = new EnemyMaker(this.scene, { x: 1250, y: 600 }, enemyMaker2Config)
     enemyMaker2.start()
 
 
@@ -318,7 +389,7 @@ export type EnemyMakerConfig = {
   delay: number,
   max?: number,
   enemies: string[],
-  EnemyClass: typeof Enemy // Cambiar a la clase del enemigo
+  EnemyClass: typeof Enemy | typeof EnemyFly | typeof EnemyBoss// Cambiar a la clase del enemigo
   colliders: any[],
   onCreate?: (key: string, index: number, sprite: Enemy) => void
 }

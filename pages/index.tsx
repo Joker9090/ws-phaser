@@ -21,6 +21,7 @@ export default function Home() {
 
     Promise.all([
       import("@/game/SceneLoader"),
+      import("@/game/UIScene"),
       import("@/game/Scene1")]).then((scenes) => {
       setScenes(scenes.map(s => s.default))
     })
@@ -45,7 +46,7 @@ export default function Home() {
           arcade: {
             overlapBias: 1058,
             gravity: { y: 900 },
-            debug: false
+            debug: true
           }
         } 
       }

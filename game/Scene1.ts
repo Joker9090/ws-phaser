@@ -12,6 +12,7 @@ import hitZone from "./assets/hitZone";
 import LifeBar from "./assets/LifeBar";
 import Map3 from "./maps/Map3";
 import Boss from "./assets/Boss";
+import EnemyFly from "./assets/EnemyFly";
 
 // Scene in class
 class Scene1 extends Phaser.Scene {
@@ -43,9 +44,10 @@ class Scene1 extends Phaser.Scene {
   init(this:Scene1, {dataLevel}: any)
   {
     this.dataLevel = dataLevel;
+
   }
 
-  hitPlayer = (monchi: Player, skeleton: Enemy, scene:Phaser.Scene) => {
+  hitPlayer = (monchi: Player, skeleton: Enemy| EnemyFly, scene:Phaser.Scene) => {
     const weapon = monchi.weapon;
     console.log("Player espada colision con enemigo");
     skeleton.corposeStay()
@@ -67,6 +69,13 @@ class Scene1 extends Phaser.Scene {
     
     //this.monchi = new Player(this, 650, 650, "knight", 2);
     this.monchi = new Player(this, 650, 650, "playerNew", 2);
+
+    const UIScene = this.game.scene.getScene("UIScene");
+    this.scene.launch(UIScene, { ...this.dataLevel, game: this });
+
+    //const UIScene = this.game.scene.getScene("UIScene");
+    
+    //if (!UIScene.scene.isActive()) this.scene.launch(UIScene, { ...this.dataLevel, game: this });
 
 
 
@@ -93,7 +102,7 @@ class Scene1 extends Phaser.Scene {
 
 
     this.cameras.main.startFollow(this.monchi,true,0.5,0.5, -0, 20);//seguimiento del personaje, apartir de q pixeles alrededor
-    this.cameras.main.setZoom(1.3);//zoom en la escene sobre lo que este apuntando la camara 3 , 0.5 // ultimo 4
+    this.cameras.main.setZoom(0.9);//zoom en la escene sobre lo que este apuntando la camara 3 , 0.5 // ultimo 4 // ultimo ok 1.3
 
     this.cursors = this.input.keyboard?.createCursorKeys()
 

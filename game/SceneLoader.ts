@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 import Scene4 from "./Scene1";
 
-export type SceneKeys = "Menu" | "Scene1";
+export type SceneKeys = "Menu" | "Scene1" | "UIScene";
 
 export type LoadTypes = "image" | "audio" | "spritesheet";
 
@@ -36,6 +36,16 @@ const loadAssets = {
       ["spritesheet", "character", "/game/character.png", { frameWidth: 220, frameHeight: 162}],
       ["spritesheet", "knight", "/game/Knight.png", { frameWidth: 86, frameHeight: 86}],
       ["spritesheet", "playerNew", "/game/playerNew.png", { frameWidth: 800, frameHeight: 800}],
+      ["spritesheet", "Enemy1", "/game/newAssets/Enemy1.png", { frameWidth: 500, frameHeight: 500}],
+      ["spritesheet", "Enemy2", "/game/newAssets/Enemy2.png", { frameWidth: 500, frameHeight: 500}],
+      ["spritesheet", "Enemy3", "/game/newAssets/Enemy3.png", { frameWidth: 500, frameHeight: 500}],
+      ["spritesheet", "Enemy4", "/game/newAssets/Enemy4.png", { frameWidth: 500, frameHeight: 500}],
+      ["spritesheet", "Enemy5", "/game/newAssets/Enemy5.png", { frameWidth: 500, frameHeight: 500}],
+      ["spritesheet", "Enemy6", "/game/newAssets/Enemy6.png", { frameWidth: 500, frameHeight: 500}],
+      ["spritesheet", "Boss1", "/game/newAssets/Boss1.png", { frameWidth: 600, frameHeight: 600}],
+      ["spritesheet", "Boss2", "/game/newAssets/Boss2.png", { frameWidth: 600, frameHeight: 600}],
+      ["spritesheet", "Boss3", "/game/newAssets/Boss3.png", { frameWidth: 600, frameHeight: 600}],
+      ["spritesheet", "Boss4", "/game/newAssets/Boss4.png", { frameWidth: 600, frameHeight: 600}],
       ["spritesheet", "skeleton", "/game/skeleton.png", { frameWidth: 86, frameHeight: 86}],
       ["spritesheet", "archimago", "/game/archimago.png", { frameWidth: 128, frameHeight: 128}],
       ["spritesheet", "antorcha", "/game/Antorcha.png", { frameWidth: 128, frameHeight: 128}],
@@ -48,6 +58,19 @@ const loadAssets = {
       ["audio","playerWalk", "/game/sounds/running-sounds-6003.mp3"],
       ["audio","playerHurt", "/game/sounds/umph-47201.mp3"],
       ["audio","archimagoFire", "/game/sounds/magic-spell-6005.mp3"],
+    ]
+  },
+  "UIScene": {
+    assets: [
+      ["image", "ContenedorBarra", "/game/newUI/ContenedorBarra.png"],
+      ["image", "ContadorEnemigos", "/game/newUI/ContadorEnemigos.png"],
+      ["image", "InsigniaPoder", "/game/newUI/InsigniaPoder.png"],
+      ["image", "SettingsButton", "/game/newUI/SettingsButton.png"],
+      ["image", "CloseButton", "/game/newUI/CloseButton.png"],
+      ["image", "BarraPoder", "/game/newUI/BarraPoder.png"],
+      ["image", "BarraVida", "/game/newUI/BarraVida.png"],
+      ["image", "ContenedorBarraPoder", "/game/newUI/ContenedorBarraPoder.png"],
+      ["image", "FondoBarraVida", "/game/newUI/FondoBarraVida.png"],
     ]
   }
 }
@@ -116,7 +139,7 @@ class SceneLoader extends Phaser.Scene {
       assetText.destroy();
     });
 
-    const sceneTitles: Array <SceneKeys> = ["Menu","Scene1"];
+    const sceneTitles: Array <SceneKeys> = ["Menu","Scene1","UIScene"];
     for (let i = 0; i < sceneTitles.length; i++) {
           //loadAssets["Scene1"].assets.map(([type, name, src,config]: any) => {
       loadAssets[sceneTitles[i]].assets.map((sceneAssetConfig) => {
@@ -139,6 +162,7 @@ class SceneLoader extends Phaser.Scene {
     //this.scene.start("Scene"+level);
     console.log("dataaaaa sceneloader ",dataLevel);
     this.scene.start("Scene1", { "dataLevel": 2 })
+    this.scene.start("UIScene",{ "dataLevel": 2 });
   }
 
   update(this: SceneLoader) {

@@ -41,10 +41,10 @@ class Map3 {
   }
 
   createMap() {
-    const background = this.scene.add.image(0, 0, "BackgroundNew").setOrigin(0, 0).setScale(0.2,0.2);
+    //const background = this.scene.add.image(0, 0, "BackgroundNew").setOrigin(0, 0).setScale(0.2,0.2);
     // Based on your game size, it may "stretch" and distort.
-    background.displayWidth = this.config.w;
-    background.displayHeight = this.config.h + 10;
+    //background.displayWidth = this.config.w;
+    //background.displayHeight = this.config.h + 10;
 
 
     //const nube1 = this.scene.add.image(200,200,"nubee").setScale(0.6).setOrigin(0.5,0.5);
@@ -171,12 +171,12 @@ class Map3 {
     //const newDoor = new Door(this.scene, 1750, 985, "doorCueva", true);
     //const lightOnDoor = this.scene.lights.addLight(newDoor.x, newDoor.y, 200).setColor(0xdc9e7c).setIntensity(0.7);
 
-    const healths = new Health(this.scene, HealthConfig);
+    //const healths = new Health(this.scene, HealthConfig);
     //this.mapElements.add(healths);
-    this.healths = healths;
+    //this.healths = healths;
     //this.door = newDoor;
 
-    this.lifeBar = new LifeBar(this.scene, LifeConfig);
+    //this.lifeBar = new LifeBar(this.scene, LifeConfig);
     //if(this.lifeBar && this.lifeBar.body)this.lifeBar.body.immovable= true;
 
     //const UI = new UiModel(this.scene,UIConfig,this.mapElements);

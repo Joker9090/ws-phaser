@@ -4,6 +4,7 @@ import UI, { UIConfig } from "./assets/UI";
 import TextBox from "./assets/TextBox";
 //import Game from "./Game";
 import EventsCenter from "./EventsCenter";
+import LifeBar from "./assets/LifeBar";
 
 export default class UIScene extends Phaser.Scene {
   tutorialTextBox?: TextBox;
@@ -24,6 +25,7 @@ export default class UIScene extends Phaser.Scene {
   containerLeft?: Phaser.GameObjects.Container;
   containerRight?: Phaser.GameObjects.Container;
   progressParam: number = 0;
+  //playerLifeAvatarContainer?: 
 
   ContenedorBarra?: Phaser.GameObjects.Image;
 
@@ -31,18 +33,52 @@ export default class UIScene extends Phaser.Scene {
     super({ key: "UIScene" });
     
   }
+  preload() {
+  }
 
   create(this: UIScene, data: { level: number }) {
+
+    const newFont = new FontFace("BERNHC","/game/newAssets/fonts/BERNHC.ttf")
     this.containerText = this.add.container(0, 0);
     this.containerLeft = this.add.container(0, 0);
     this.containerRight = this.add.container(0, 0);
     //this.gameScene = this.game.scene.getScene("Game") as Game;
     this.lifesGroup = this.add.group();
     //this.createUI(data.lifes);
+    console.log("DIMENSIONES UI", this.game.canvas.width, this.game.canvas.height);
     console.log("Entro UI SCENE");
-    this.ContenedorBarra = this.add.image(300,700,"ContenedorBarra").setDepth(1);
 
-    const graph = new Phaser.Geom.Rectangle(20,20,500,50)
+    /**VIDA Y AVATAR BASIC */
+    this.ContenedorBarra = this.add.image(150,120,"ContenedorBarra").setDepth(3).setScale(0.7);
+    const HeroeAvatar = this.add.image(128,85,"Heroe1").setDepth(3).setScale(0.13);
+    //const HeroeExp = this.add.text(110,130, "16", {font: newFont.family, fontSize: "23px", color: "#B6DFE9"}).setDepth(1);
+    const HeroeExp = this.add.text(110,130, "16", {fontSize: "23px", color: "#B6DFE9"}).setDepth(3);
+
+    const LifeConfig = {
+      x: 380,
+      y: 80,
+      sprite: "BarraVida",
+      spriteContainer: "FondoBarraVida",
+    }
+    const StaminaConfig = {
+      x: 350,
+      y: 110,
+      sprite: "BarraPoder",
+      spriteContainer: "ContenedorBarraPoder",
+    }
+
+    const lifeBar = new LifeBar(this, LifeConfig);
+    const staminaBar = new LifeBar(this,StaminaConfig)
+
+
+    /**CONTADOR ENEMIGOS BASIC */
+    const contEnemys = this.add.image(this.game.canvas.width - 200,this.game.canvas.height - 100,"ContadorEnemigos").setDepth(1).setScale(0.7);
+    const contEnemyText = this.add.text(this.game.canvas.width - 208,this.game.canvas.height - 70, "3", {fontSize: "23px", color: "#B6DFE9"}).setDepth(1);
+
+    /**InsigniaPoder */
+    const InsigniaPoder = this.add.image(110,this.game.canvas.height - 100,"InsigniaPoder").setScale(0.4);
+
+    
 
   
 

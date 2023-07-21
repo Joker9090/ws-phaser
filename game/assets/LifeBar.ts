@@ -21,8 +21,8 @@ class LifeBar extends Phaser.GameObjects.Container {
     //this.group = group;
     
     //const s = scene.add.sprite(config.x,config.y,config.sprite);
-    const greenBar = this.scene.add.image((config.x /2+config.x /9) , (config.y +(config.y/2.2)),config.sprite).setScale(0.1,0.1).setDepth(2);
-    const greenBarMask = this.scene.add.image((config.x/2+config.x /9) , (config.y +(config.y/2.2)),config.sprite).setScale(0.1,0.1).setDepth(2);
+    const greenBar = this.scene.add.image((config.x /2+config.x /9) , (config.y +(config.y/2.2)),config.sprite).setScale(0.6).setDepth(2).setOrigin(0);
+    const greenBarMask = this.scene.add.image((config.x/2+config.x /9) , (config.y +(config.y/2.2)),config.sprite).setScale(0.6).setDepth(2).setOrigin(0);
     greenBarMask.visible = false;
     greenBarMask.defaultPipeline;
     greenBarMask.resetPipeline;
@@ -31,7 +31,7 @@ class LifeBar extends Phaser.GameObjects.Container {
     greenBar.resetPipeline;
     greenBar.setScrollFactor(0,0);
     //this.UIGame = this.add.image((this.game.canvas.width -(this.game.canvas.width - 82)) , this.game.canvas.height + 86,"healthBarWithAlpha").setScale(0.1,0.1).setDepth(9);
-    const lifeContainer = this.scene.add.image((config.x/2+config.x /9 -7) , (config.y +(config.y/2.2)),config.spriteContainer).setScale(0.1,0.1).setDepth(9);
+    const lifeContainer = this.scene.add.image((config.x/2+config.x /9 -7) , (config.y +(config.y/2.2)),config.spriteContainer).setScale(0.6).setDepth(1).setOrigin(0);
     
     //this.UIGame.
     lifeContainer.defaultPipeline;

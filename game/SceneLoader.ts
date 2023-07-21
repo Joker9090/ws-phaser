@@ -46,6 +46,7 @@ const loadAssets = {
       ["spritesheet", "Boss2", "/game/newAssets/Boss2.png", { frameWidth: 600, frameHeight: 600}],
       ["spritesheet", "Boss3", "/game/newAssets/Boss3.png", { frameWidth: 600, frameHeight: 600}],
       ["spritesheet", "Boss4", "/game/newAssets/Boss4.png", { frameWidth: 600, frameHeight: 600}],
+      ["image", "Heroe1", "/game/newAssets/Heroe.png"],
       ["spritesheet", "skeleton", "/game/skeleton.png", { frameWidth: 86, frameHeight: 86}],
       ["spritesheet", "archimago", "/game/archimago.png", { frameWidth: 128, frameHeight: 128}],
       ["spritesheet", "antorcha", "/game/Antorcha.png", { frameWidth: 128, frameHeight: 128}],

@@ -70,6 +70,8 @@ class Scene1 extends Phaser.Scene {
     //this.monchi = new Player(this, 650, 650, "knight", 2);
     this.monchi = new Player(this, 650, 650, "playerNew", 2);
 
+    
+
     const UIScene = this.game.scene.getScene("UIScene");
     this.scene.launch(UIScene, { ...this.dataLevel, game: this });
 

@@ -11,14 +11,6 @@ export default class UIScene extends Phaser.Scene {
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   //gameScene?: Game;
   //TutorialMap?: Tutorial;
-  lifesGroup?: Phaser.GameObjects.Group;
-  gravityArrow?: Phaser.GameObjects.Image;
-  coinUI?: Phaser.GameObjects.Image;
-  UIboundsCoin: number = 0;
-  UIboundsArrow: number = 0;
-  UIboundsHeart: number = 0;
-  ArrowOriginalPos?: number;
-  CoinOriginalPos?: number;
   timeLevel: number = 0;
   timerText?: Phaser.GameObjects.Text;
   containerText?: Phaser.GameObjects.Container;
@@ -28,6 +20,13 @@ export default class UIScene extends Phaser.Scene {
   //playerLifeAvatarContainer?: 
 
   ContenedorBarra?: Phaser.GameObjects.Image;
+
+
+  /**ELEMENTOS A EXPORTAR PARA USAR EVENTOS */
+  contEnemysInGame?: Phaser.GameObjects.Text;
+  contHeroeExp?: Phaser.GameObjects.Text;
+  lifeBarInGame?: LifeBar;
+  staminaBarInGame?: LifeBar;
 
   constructor() {
     super({ key: "UIScene" });
@@ -43,7 +42,7 @@ export default class UIScene extends Phaser.Scene {
     this.containerLeft = this.add.container(0, 0);
     this.containerRight = this.add.container(0, 0);
     //this.gameScene = this.game.scene.getScene("Game") as Game;
-    this.lifesGroup = this.add.group();
+
     //this.createUI(data.lifes);
     console.log("DIMENSIONES UI", this.game.canvas.width, this.game.canvas.height);
     console.log("Entro UI SCENE");
@@ -52,7 +51,7 @@ export default class UIScene extends Phaser.Scene {
     this.ContenedorBarra = this.add.image(150,120,"ContenedorBarra").setDepth(3).setScale(0.7);
     const HeroeAvatar = this.add.image(128,85,"Heroe1").setDepth(3).setScale(0.13);
     //const HeroeExp = this.add.text(110,130, "16", {font: newFont.family, fontSize: "23px", color: "#B6DFE9"}).setDepth(1);
-    const HeroeExp = this.add.text(110,130, "16", {fontSize: "23px", color: "#B6DFE9"}).setDepth(3);
+    this.contHeroeExp = this.add.text(110,130, "16", {fontSize: "23px", color: "#B6DFE9"}).setDepth(3);
 
     const LifeConfig = {
       x: 380,
@@ -67,13 +66,13 @@ export default class UIScene extends Phaser.Scene {
       spriteContainer: "ContenedorBarraPoder",
     }
 
-    const lifeBar = new LifeBar(this, LifeConfig);
-    const staminaBar = new LifeBar(this,StaminaConfig)
+    this.lifeBarInGame = new LifeBar(this, LifeConfig);
+    this.staminaBarInGame = new LifeBar(this,StaminaConfig)
 
 
     /**CONTADOR ENEMIGOS BASIC */
     const contEnemys = this.add.image(this.game.canvas.width - 200,this.game.canvas.height - 100,"ContadorEnemigos").setDepth(1).setScale(0.7);
-    const contEnemyText = this.add.text(this.game.canvas.width - 208,this.game.canvas.height - 70, "3", {fontSize: "23px", color: "#B6DFE9"}).setDepth(1);
+    this.contEnemysInGame = this.add.text(this.game.canvas.width - 208,this.game.canvas.height - 70, "3", {fontSize: "23px", color: "#B6DFE9"}).setDepth(1);
 
     /**InsigniaPoder */
     const InsigniaPoder = this.add.image(110,this.game.canvas.height - 100,"InsigniaPoder").setScale(0.4);

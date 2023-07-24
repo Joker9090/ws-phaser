@@ -6,7 +6,6 @@ import Map2 from "./maps/Map2";
 import Enemy, { PatrolConfig } from "./assets/Enemy";
 import CloudGenerator from "./assets/CloudGenerator";
 import Antorcha from "./assets/Antorcha";
-import GameUI from "./assets/GameUI";
 import UiModel from "./assets/UIModel";
 import hitZone from "./assets/hitZone";
 import LifeBar from "./assets/LifeBar";
@@ -132,7 +131,7 @@ class Scene1 extends Phaser.Scene {
       if(down && this.monchi && this.map && this.map.lifeBar) {
         this.monchi.receivedDamage(50);
         this.playerHurt?.play();
-        this.map.lifeBar.updateBar(this,-35);
+        this.map.lifeBar.updateBar(-35);
         if(this.monchi.life <= 0) lose();
         // else checkPoint(this.monchi);
       }

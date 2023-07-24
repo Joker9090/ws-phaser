@@ -31,12 +31,13 @@ export default class UIScene extends Phaser.Scene {
   constructor() {
     super({ key: "UIScene" });
     
+    
   }
   preload() {
   }
 
   create(this: UIScene, data: { level: number }) {
-
+    
     const newFont = new FontFace("BERNHC","/game/newAssets/fonts/BERNHC.ttf")
     this.containerText = this.add.container(0, 0);
     this.containerLeft = this.add.container(0, 0);
@@ -75,9 +76,20 @@ export default class UIScene extends Phaser.Scene {
     this.contEnemysInGame = this.add.text(this.game.canvas.width - 208,this.game.canvas.height - 70, "3", {fontSize: "23px", color: "#B6DFE9"}).setDepth(1);
 
     /**InsigniaPoder */
-    const InsigniaPoder = this.add.image(110,this.game.canvas.height - 100,"InsigniaPoder").setScale(0.4);
+    const InsigniaPoder = this.add.image(110,this.game.canvas.height - 100,"InsigniaPoder").setScale(0.4).setDepth(100);
 
-    
+    const dmgSimu = (dmg: number) => {
+      if(dmg == 10) this.lifeBarInGame?.updateBar(100);
+      else if(dmg == 20) this.lifeBarInGame?.updateBar(10);
+      else if(dmg == 30) this.lifeBarInGame?.updateBar(10);
+      else if(dmg == 40) this.lifeBarInGame?.updateBar(10);
+      else if(dmg == 50) this.lifeBarInGame?.updateBar(10);
+      else if(dmg == 60) this.lifeBarInGame?.updateBar(10);
+      else if(dmg == 70) this.lifeBarInGame?.updateBar(10);
+      else if(dmg == 80) this.lifeBarInGame?.updateBar(10);
+      else if(dmg == 90) this.lifeBarInGame?.updateBar(10);
+      else if(dmg == 100) this.lifeBarInGame?.updateBar(10);
+    };
 
   
 
@@ -93,6 +105,7 @@ export default class UIScene extends Phaser.Scene {
       delay: 1000,
       callback: () => {
         this.timeLevel++;
+        dmgSimu(this.timeLevel);
         this.timerText?.setText("Time: " + this.timeLevel);
         this.timeLevel = this.timeLevel;
       },

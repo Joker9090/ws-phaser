@@ -50,14 +50,23 @@ class LifeBar extends Phaser.GameObjects.Container {
 
   }
 
-  updateBar(scene:Phaser.Scene, value: number){
-    if(this.lifeMask){
+  updateBar(value: number){
+   
+    if(this.lifeMask && this.fullBar){
+      console.log("LIFEBAR lifemask pre value: ",this.lifeMask.x);
       if(value < 0){
-        this.lifeMask.x += value;
+        const a = (this.fullBar / 100) * value; 
+        this.lifeMask.x += a;
         //this.greenBar.mask.x += value;
       }else {
-        this.lifeMask.x -= value;
+        const a = (this.fullBar / 100) * value; 
+        this.lifeMask.x -= a;
       }
+      //const a = (this.fullBar / 100) * value; 
+      //const b = this.lifeMask.x - a;
+      //console.log("LIFEBAR CHEQUEO ",a);
+      //console.log("LIFEBAR CHEQUEO2 ",b);
+      console.log("LIFEBAR lifemask post value: ",this.lifeMask.x);
 
     }
 

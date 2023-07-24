@@ -41,10 +41,12 @@ class Map3 {
   }
 
   createMap() {
+    /*
     const background = this.scene.add.image(0, 0, "BackgroundNew").setOrigin(0, 0).setScale(0.2,0.2);
     // Based on your game size, it may "stretch" and distort.
     background.displayWidth = this.config.w;
     background.displayHeight = this.config.h + 10;
+    */
 
 
     //const nube1 = this.scene.add.image(200,200,"nubee").setScale(0.6).setOrigin(0.5,0.5);

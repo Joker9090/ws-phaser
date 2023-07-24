@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import LifeBar from "./LifeBar";
+import LifeBar from "./MultiBar";
 import hitZone from "./hitZone";
 
 

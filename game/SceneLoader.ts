@@ -72,6 +72,8 @@ const loadAssets = {
       ["image", "BarraVida", "/game/newUI/BarraVida.png"],
       ["image", "ContenedorBarraPoder", "/game/newUI/ContenedorBarraPoder.png"],
       ["image", "FondoBarraVida", "/game/newUI/FondoBarraVida.png"],
+      ["image", "ProgresoBorde", "/game/newUI/ProgresoBorde.png"],
+      ["image", "ProgresoRellenop", "/game/newUI/ProgresoRellenop.png"],
     ]
   }
 }

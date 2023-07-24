@@ -4,7 +4,7 @@ import UI, { UIConfig } from "./assets/UI";
 import TextBox from "./assets/TextBox";
 //import Game from "./Game";
 import EventsCenter from "./EventsCenter";
-import LifeBar from "./assets/LifeBar";
+import MultiBar from "./assets/MultiBar";
 
 export default class UIScene extends Phaser.Scene {
   tutorialTextBox?: TextBox;
@@ -25,8 +25,9 @@ export default class UIScene extends Phaser.Scene {
   /**ELEMENTOS A EXPORTAR PARA USAR EVENTOS */
   contEnemysInGame?: Phaser.GameObjects.Text;
   contHeroeExp?: Phaser.GameObjects.Text;
-  lifeBarInGame?: LifeBar;
-  staminaBarInGame?: LifeBar;
+  lifeBarInGame?: MultiBar;
+  staminaBarInGame?: MultiBar;
+  expBarInGame?: MultiBar;
 
   constructor() {
     super({ key: "UIScene" });
@@ -34,6 +35,10 @@ export default class UIScene extends Phaser.Scene {
     
   }
   preload() {
+  }
+
+  lifeUpdate = (life: number) => {
+    console.log("EMITIO VIDA arg:", life);
   }
 
   create(this: UIScene, data: { level: number }) {
@@ -59,16 +64,29 @@ export default class UIScene extends Phaser.Scene {
       y: 80,
       sprite: "BarraVida",
       spriteContainer: "FondoBarraVida",
+      startFull: true,
     }
     const StaminaConfig = {
       x: 350,
       y: 110,
       sprite: "BarraPoder",
       spriteContainer: "ContenedorBarraPoder",
+      startFull: true,
     }
 
-    this.lifeBarInGame = new LifeBar(this, LifeConfig);
-    this.staminaBarInGame = new LifeBar(this,StaminaConfig)
+    const ExpConfig = {
+      x: (this.game.canvas.width/2)+ 180,
+      y: 35,
+      sprite: "ProgresoRellenop",
+      spriteContainer: "ProgresoBorde",
+      startFull: false,
+      scale: 0.8,
+      
+    }
+
+    this.lifeBarInGame = new MultiBar(this, LifeConfig);
+    this.staminaBarInGame = new MultiBar(this,StaminaConfig);
+    this.expBarInGame = new MultiBar(this, ExpConfig);
 
 
     /**CONTADOR ENEMIGOS BASIC */
@@ -79,7 +97,7 @@ export default class UIScene extends Phaser.Scene {
     const InsigniaPoder = this.add.image(110,this.game.canvas.height - 100,"InsigniaPoder").setScale(0.4).setDepth(100);
 
     const dmgSimu = (dmg: number) => {
-      if(dmg == 10) this.lifeBarInGame?.updateBar(100);
+      if(dmg == 10) this.lifeBarInGame?.updateBar(10);
       else if(dmg == 20) this.lifeBarInGame?.updateBar(10);
       else if(dmg == 30) this.lifeBarInGame?.updateBar(10);
       else if(dmg == 40) this.lifeBarInGame?.updateBar(10);
@@ -90,6 +108,8 @@ export default class UIScene extends Phaser.Scene {
       else if(dmg == 90) this.lifeBarInGame?.updateBar(10);
       else if(dmg == 100) this.lifeBarInGame?.updateBar(10);
     };
+
+
 
   
 
@@ -138,6 +158,14 @@ export default class UIScene extends Phaser.Scene {
         }
       },
     });
+
+    /**SCENE HANDLER */
+    EventsCenter.on("lifeUpdate",() => this.lifeUpdate, this);
+    EventsCenter.on("staminaUpdate", () => {});
+    EventsCenter.on("levelUp", () => {});
+    EventsCenter.on("expUpdate", () => {});
+    EventsCenter.on("enemysInMap", () => {});
+    EventsCenter.on("powerChange", () => {});
 
     /* SCENE HANDLER */
     /*

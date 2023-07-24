@@ -8,10 +8,11 @@ import CloudGenerator from "./assets/CloudGenerator";
 import Antorcha from "./assets/Antorcha";
 import UiModel from "./assets/UIModel";
 import hitZone from "./assets/hitZone";
-import LifeBar from "./assets/LifeBar";
+import LifeBar from "./assets/MultiBar";
 import Map3 from "./maps/Map3";
 import Boss from "./assets/Boss";
 import EnemyFly from "./assets/EnemyFly";
+import EventsCenter from "./EventsCenter";
 
 // Scene in class
 class Scene1 extends Phaser.Scene {
@@ -139,6 +140,7 @@ class Scene1 extends Phaser.Scene {
    
     // @ts-ignore
     this.physics.add.collider(this.monchi, floor, checkFloor);
+    EventsCenter.emit("lifeUpdate",3)
     
 
   }

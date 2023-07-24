@@ -5,7 +5,7 @@ import LargeFloorIsland from "../assets/LargeFloorIsland";
 import Antorcha, { AntorchaConfig } from "../assets/Antorcha";
 import Health from "../assets/Health";
 import UiModel from "../assets/UIModel";
-import LifeBar from "../assets/LifeBar";
+import LifeBar from "../assets/MultiBar";
 import Door from "../assets/Door";
 import Enemy, { PatrolConfig } from "../assets/Enemy";
 import EnemyFly from "../assets/EnemyFly";
@@ -357,13 +357,13 @@ class Map3 {
 
     const enemyMaker2Config = {
       delay: 600,
-      max: 6,
+      max: 1,
       enemies: [
         // "archimago",
         "Boss1",
-        "Boss2",
-        "Boss3",
-        "Boss4",
+        //"Boss2",
+        //"Boss3",
+        //"Boss4",
       ],
       EnemyClass: EnemyBoss,
       colliders: [newFloor],

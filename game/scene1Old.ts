@@ -9,7 +9,7 @@ import Antorcha from "./assets/Antorcha";
 import GameUI from "./assets/GameUI";
 import UiModel from "./assets/UIModel";
 import hitZone from "./assets/hitZone";
-import LifeBar from "./assets/LifeBar";
+import LifeBar from "./assets/MultiBar";
 import Map3 from "./maps/Map3";
 import Boss from "./assets/Boss";
 

@@ -5,13 +5,13 @@ import LargeFloorIsland from "../assets/LargeFloorIsland";
 import Antorcha, { AntorchaConfig } from "../assets/Antorcha";
 import Health from "../assets/Health";
 import UiModel from "../assets/UIModel";
-import LifeBar from "../assets/LifeBar";
+import MultiBar from "../assets/MultiBar";
 import Door from "../assets/Door";
 
 class Map2 {
   scene: Phaser.Scene;
   mapElements?: Phaser.Physics.Arcade.Group;
-  lifeBar?: LifeBar;
+  lifeBar?: MultiBar;
   healths?: Health;
   door?: Door;
   //debugGraphics: Phaser.GameObjects.Graphics
@@ -202,6 +202,7 @@ class Map2 {
       y:this.scene.cameras.main.height / 2,
       sprite:"greenBar",
       spriteContainer: "healthBarWithAlpha",
+      startFull: true,
     }
     const newAntorcha = new Antorcha(this.scene,AntorchaConfig);
     const newAntorcha2 = new Antorcha(this.scene,AntorchaConfig2);
@@ -219,7 +220,7 @@ class Map2 {
     this.healths = healths;
     this.door = newDoor;
 
-    this.lifeBar = new LifeBar(this.scene,LifeConfig);
+    this.lifeBar = new MultiBar(this.scene,LifeConfig);
     //if(this.lifeBar && this.lifeBar.body)this.lifeBar.body.immovable= true;
 
     //const UI = new UiModel(this.scene,UIConfig,this.mapElements);

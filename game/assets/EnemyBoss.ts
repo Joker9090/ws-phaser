@@ -64,14 +64,14 @@ class EnemyBoss extends Phaser.Physics.Arcade.Sprite {
     const enemyBossWalkConfig = {
       key: `${sprite}Walk`,
       frames: enemyBossWalkFrames,
-      frameRate: 10,
+      frameRate: 8,
       repeat: -1,
     }
 
     const enemyBossMoveConfig = {
       key: `${sprite}Move`,
       frames: enemyBossMoveFrames,
-      frameRate: 10,
+      frameRate: 8,
       repeat: -1,
     }
 

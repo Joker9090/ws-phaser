@@ -140,7 +140,23 @@ class Scene1 extends Phaser.Scene {
    
     // @ts-ignore
     this.physics.add.collider(this.monchi, floor, checkFloor);
-    EventsCenter.emit("lifeUpdate",3)
+
+
+    /**EMITERS TESTER */
+    
+    //EventsCenter.emit("lifeUpdate",-10) 
+    //EventsCenter.emit("staminaUpdate",-10);
+    //EventsCenter.emit("levelUp",10);
+    //EventsCenter.emit("expUpdate",10);
+    //EventsCenter.emit("enemysInMap",10);
+    setTimeout(() => {
+      EventsCenter.emit("enemysInMap",20);
+      EventsCenter.emit("levelUp",30); 
+    }, 3000);
+
+    //setTimeout(() => {
+    //  EventsCenter.emit("lifeUpdate",-0) 
+    //}, 6000);
     
 
   }

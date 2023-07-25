@@ -23,6 +23,7 @@ export default class UIScene extends Phaser.Scene {
 
 
   /**ELEMENTOS A EXPORTAR PARA USAR EVENTOS */
+
   contEnemysInGame?: Phaser.GameObjects.Text;
   contHeroeExp?: Phaser.GameObjects.Text;
   lifeBarInGame?: MultiBar;
@@ -39,7 +40,35 @@ export default class UIScene extends Phaser.Scene {
 
   lifeUpdate = (life: number) => {
     console.log("EMITIO VIDA arg:", life);
+    this.lifeBarInGame?.updateBar(life);
   }
+
+  staminaUpdate = (stamina: number) => {
+    console.log("EMITIO staminaUpdate arg:", stamina);
+    this.staminaBarInGame?.updateBar(stamina);
+  }
+
+  levelUp = (newLevel: number) => {
+    console.log("EMITIO LEVEL UP arg: ", newLevel);
+    this.contHeroeExp?.setText(""+newLevel);
+  }
+
+  expUpdate = (addExp: number) => {
+    console.log("EMITIO expUpdate arg:", addExp);
+    this.expBarInGame?.updateBar(addExp);
+  }
+
+  enemysInMap = (enemyCounter: number) => {
+    console.log("EMITIO enemysInMap arg: ", enemyCounter);
+    console.log("enemyInMap : ",this.contEnemysInGame?.text.length);
+    //this.contEnemysInGame?.setText
+    if(this.contEnemysInGame) (this.contEnemysInGame?.text.length >= 2) ? this.contEnemysInGame?.setText(""+enemyCounter).setOrigin(0.2,0) : this.contEnemysInGame?.setText(""+enemyCounter).setOrigin(0);
+  }
+  powerChange = (newPower: string) => {
+
+  }
+
+
 
   create(this: UIScene, data: { level: number }) {
     
@@ -96,6 +125,7 @@ export default class UIScene extends Phaser.Scene {
     /**InsigniaPoder */
     const InsigniaPoder = this.add.image(110,this.game.canvas.height - 100,"InsigniaPoder").setScale(0.4).setDepth(100);
 
+    /*
     const dmgSimu = (dmg: number) => {
       if(dmg == 10) this.lifeBarInGame?.updateBar(10);
       else if(dmg == 20) this.lifeBarInGame?.updateBar(10);
@@ -108,6 +138,7 @@ export default class UIScene extends Phaser.Scene {
       else if(dmg == 90) this.lifeBarInGame?.updateBar(10);
       else if(dmg == 100) this.lifeBarInGame?.updateBar(10);
     };
+    */
 
 
 
@@ -125,7 +156,8 @@ export default class UIScene extends Phaser.Scene {
       delay: 1000,
       callback: () => {
         this.timeLevel++;
-        dmgSimu(this.timeLevel);
+        //dmgSimu(this.timeLevel);
+        //this.expUpdate(10);
         this.timerText?.setText("Time: " + this.timeLevel);
         this.timeLevel = this.timeLevel;
       },
@@ -160,12 +192,12 @@ export default class UIScene extends Phaser.Scene {
     });
 
     /**SCENE HANDLER */
-    EventsCenter.on("lifeUpdate",() => this.lifeUpdate, this);
-    EventsCenter.on("staminaUpdate", () => {});
-    EventsCenter.on("levelUp", () => {});
-    EventsCenter.on("expUpdate", () => {});
-    EventsCenter.on("enemysInMap", () => {});
-    EventsCenter.on("powerChange", () => {});
+    EventsCenter.on("lifeUpdate",this.lifeUpdate, this);
+    EventsCenter.on("staminaUpdate",this.staminaUpdate, this);
+    EventsCenter.on("levelUp",this.levelUp, this);
+    EventsCenter.on("expUpdate",this.expUpdate, this);
+    EventsCenter.on("enemysInMap",this.enemysInMap, this);
+    //EventsCenter.on("powerChange", () => {});
 
     /* SCENE HANDLER */
     /*

@@ -60,12 +60,15 @@ class MultiBar extends Phaser.GameObjects.Container {
    
     if(this.lifeMask && this.fullBar){
       console.log("LIFEBAR lifemask pre value: ",this.lifeMask.x);
-      if(value < 0){
-        const a = (this.fullBar / 100) * value; 
-        this.lifeMask.x += a;
+      if(value > 0){
+        console.log("entro if");
+        const a = (this.fullBar / 100) * value;
+        if((this.lifeMask.x + a) > this.fullBar) this.lifeMask.x = this.fullBar
+        else this.lifeMask.x += a;
         //this.greenBar.mask.x += value;
       }else {
-        const a = (this.fullBar / 100) * value; 
+        console.log("entro else");
+        const a = ((this.fullBar / 100) * value) * -1; 
         this.lifeMask.x -= a;
       }
       //const a = (this.fullBar / 100) * value; 

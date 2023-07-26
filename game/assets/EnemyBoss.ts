@@ -228,7 +228,7 @@ class EnemyBoss extends Phaser.Physics.Arcade.Sprite {
 
 
   patrol(_patrolConfig:PatrolConfig){
-    console.log("Boss flip: ", _patrolConfig.flip, this.flipX);
+    //console.log("Boss flip: ", _patrolConfig.flip, this.flipX);
     
     //console.log("patrol log: "+_patrolConfig.x+_patrolConfig.delay+_patrolConfig.flip);
     if(this.Onstate != "dead"){

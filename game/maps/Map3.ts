@@ -5,7 +5,7 @@ import LargeFloorIsland from "../assets/LargeFloorIsland";
 import Antorcha, { AntorchaConfig } from "../assets/Antorcha";
 import Health from "../assets/Health";
 import UiModel from "../assets/UIModel";
-import LifeBar from "../assets/MultiBar";
+import MultiBar from "../assets/MultiBar";
 import Door from "../assets/Door";
 import Enemy, { PatrolConfig } from "../assets/Enemy";
 import EnemyFly from "../assets/EnemyFly";
@@ -14,10 +14,11 @@ import EnemyBoss from "../assets/EnemyBoss";
 class Map3 {
   scene: Phaser.Scene;
   mapElements?: Phaser.Physics.Arcade.Group;
-  lifeBar?: LifeBar;
+  lifeBar?: MultiBar;
+  enemyMakerPoints: EnemyMaker[] = [];
   healths?: Health;
   door?: Door;
-  enemies: Enemy[] = [];
+  enemies: Enemy[]  = [];
   //debugGraphics: Phaser.GameObjects.Graphics
   config: {
     w: number,
@@ -322,15 +323,15 @@ class Map3 {
 
     const enemyMaker1Config = {
       delay: 600,
-      max: 1,
+      max: 3,
       enemies: [
         // "archimago",
-        "Enemy1",
+        //"Enemy1",
         "Enemy2",
         "Enemy3",
         "Enemy4",
         "Enemy5",
-        "Enemy6",
+        //"Enemy6",
       ],
       EnemyClass: EnemyFly,
       colliders: [newFloor],
@@ -339,6 +340,9 @@ class Map3 {
 
     const enemyMaker1 = new EnemyMaker(this.scene, { x: 150, y: 600 }, enemyMaker1Config)
     enemyMaker1.start()
+
+    this.enemyMakerPoints.push(enemyMaker1);
+    
 
 
 
@@ -357,13 +361,13 @@ class Map3 {
 
     const enemyMaker2Config = {
       delay: 600,
-      max: 1,
+      max: 4,
       enemies: [
         // "archimago",
         "Boss1",
-        //"Boss2",
-        //"Boss3",
-        //"Boss4",
+        "Boss2",
+        "Boss3",
+        "Boss4",
       ],
       EnemyClass: EnemyBoss,
       colliders: [newFloor],
@@ -373,8 +377,11 @@ class Map3 {
     const enemyMaker2 = new EnemyMaker(this.scene, { x: 1250, y: 600 }, enemyMaker2Config)
     enemyMaker2.start()
 
+    this.enemyMakerPoints.push(enemyMaker2);
 
-    this.mapElements.addMultiple([newFloor])
+
+    this.mapElements.addMultiple([newFloor]);
+
 
     return this.mapElements;
 
@@ -449,6 +456,10 @@ export class EnemyMaker {
 
   purgeEnemyCreated() {
     this.progress.enemyCreated = 0;
+  }
+
+  getEnemyQuantity () {
+    return this.progress.enemyCreated;
   }
 
   instanceEnemy() {

@@ -8,8 +8,8 @@ import CloudGenerator from "./assets/CloudGenerator";
 import Antorcha from "./assets/Antorcha";
 import UiModel from "./assets/UIModel";
 import hitZone from "./assets/hitZone";
-import LifeBar from "./assets/MultiBar";
-import Map3 from "./maps/Map3";
+import MultiBar from "./assets/MultiBar";
+import Map3, { EnemyMaker } from "./maps/Map3";
 import Boss from "./assets/Boss";
 import EnemyFly from "./assets/EnemyFly";
 import EventsCenter from "./EventsCenter";
@@ -28,12 +28,14 @@ class Scene1 extends Phaser.Scene {
   hitZoneGroup?: Phaser.Physics.Arcade.Group;
   UIGame?: Phaser.GameObjects.Image;
   dataLevel: any;
-  lifePlayer?: LifeBar;
+  lifePlayer?: MultiBar;
   backgroundMusic?: Phaser.Sound.BaseSound;
   backgroundMusic2?: Phaser.Sound.BaseSound;
   swordHit?: Phaser.Sound.BaseSound;
   swordAir?: Phaser.Sound.BaseSound;
   playerHurt?: Phaser.Sound.BaseSound;
+  enemyRespawns?: EnemyMaker[];
+  enemysInGame: Number = 0;
   constructor() {
     super({key: 'Scene1'})
 
@@ -66,6 +68,8 @@ class Scene1 extends Phaser.Scene {
 
 
     const floor = this.map.createMap()
+
+    this.enemyRespawns = this.map.enemyMakerPoints;
     
     //this.monchi = new Player(this, 650, 650, "knight", 2);
     this.monchi = new Player(this, 650, 650, "playerNew", 2);
@@ -74,6 +78,9 @@ class Scene1 extends Phaser.Scene {
 
     const UIScene = this.game.scene.getScene("UIScene");
     this.scene.launch(UIScene, { ...this.dataLevel, game: this });
+
+    //UIScene.
+    //this.lifePlayer = UIScene.lifeBarInGame;
 
     //const UIScene = this.game.scene.getScene("UIScene");
     
@@ -150,8 +157,20 @@ class Scene1 extends Phaser.Scene {
     //EventsCenter.emit("expUpdate",10);
     //EventsCenter.emit("enemysInMap",10);
     setTimeout(() => {
-      EventsCenter.emit("enemysInMap",20);
-      EventsCenter.emit("levelUp",30); 
+      EventsCenter.emit("levelUp",30);
+      //EventsCenter.emit("lifeUpdate",-10) 
+      
+      if(this.enemyRespawns){
+        let numberOfEnemys = 0;
+        for (let i = 0; i < this.enemyRespawns.length; i++) {
+          const element = this.enemyRespawns[i];
+          console.log("this.enemyRespawns: ",element);
+          console.log("CANTIDAD DE ENEMIGOS DE ESE RESPAWN: ",element.getEnemyQuantity());
+          numberOfEnemys += element.getEnemyQuantity()
+        }
+        this.enemysInGame = numberOfEnemys;
+        EventsCenter.emit("enemysInMap",this.enemysInGame);
+      }
     }, 3000);
 
     //setTimeout(() => {

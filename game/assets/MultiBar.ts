@@ -80,6 +80,15 @@ class MultiBar extends Phaser.GameObjects.Container {
     }
 
   }
+  
+  setBarNew(value: number) {
+    if(this.fullBar && this.lifeMask){
+      const a = (this.fullBar / 100) * value
+      if(a < 0) this.lifeMask.x = 0;
+      else this.lifeMask.x = a;
+    }
+
+  }
 
   setBar(value: number){
     if(this.lifeMask){

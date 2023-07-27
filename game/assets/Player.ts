@@ -1,6 +1,8 @@
 import Phaser from "phaser";
 import LifeBar from "./MultiBar";
 import hitZone from "./hitZone";
+import EventsCenter from "../EventsCenter";
+import MultiBar from "./MultiBar";
 
 
 export type HitboxType = Phaser.GameObjects.Rectangle & { id: string }
@@ -72,6 +74,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   isAttacking: boolean = false
   sprite: string = '';
   life: number = 100;
+  playerLvl: number = 1;
+  playerExp: number = 0;
+  playerStamin: number = 100;
+  rechargeStamin: number = 5;
   weapon?: Weapon;
   // swordHitBox: hitZone;
 
@@ -104,6 +110,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     // this.swordHitBox = new hitZone(scene,100,100,32,64,0xffffff,0.5);
 
   }
+
+
 
   createAnims(scene: Phaser.Scene, sprite: string) {
 
@@ -190,10 +198,49 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     //this.Onstate = "dead";
   }
 
+  reLoadStamin() {
+    if(this.playerStamin < 100) {
+      this.playerStamin += this.rechargeStamin;
+      EventsCenter.emit("staminaUpdate",this.rechargeStamin);
+    }
+  }
+
+  dischargeHability (spent: number) {
+    if(spent <= this.playerStamin) {
+      //disparador de habilidad q tenga puesta
+      EventsCenter.emit("staminaUpdate", ((spent)* -1));
+    }else {
+      console.log("No tiene suficiente estamina : ", this.playerStamin);
+    }
+
+  }
+
+  giveExperience(moreExp: number = 10) {
+    this.playerExp += moreExp;
+    if(this.playerExp >= 100) {
+      this.playerLvl += 1;
+      this.playerExp = 0;
+      EventsCenter.emit("levelUp",this.playerLvl);
+      EventsCenter.emit("expUpdate",this.playerExp);
+    } else {
+      EventsCenter.emit("expUpdate",this.playerExp)
+      //setBarNew
+    }
+  }
+
+  getLife() {
+    return this.life;
+  }
+
+  setLife(a:number) {
+    this.life = a;
+  }
+
   receivedDamage(dmgRecieved: number) {
 
     this.loseLife(dmgRecieved);
     if (this.life == 0) {
+      EventsCenter.emit("lifeUpdate",-100) 
       this.dead();
     } else {
       this.scene.tweens.add({
@@ -217,18 +264,19 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     //const dmg ? dmgRecieved : 10;
 
     this.life -= dmgRecieved;
+    EventsCenter.emit("lifeUpdate",(dmgRecieved * -1)) 
     console.log("Vida del caballero: " + this.life);
 
   }
 
-  takeLife(lifeBar: LifeBar) {
+  takeLife(lifeBar: MultiBar) {
     //const moreLife = 10;
     if (lifeBar.fullBar) {
       if (this.life < 100) {
         this.life += 10;
         if (lifeBar.x + 10 > 100) {
           lifeBar.setBar(lifeBar.fullBar)
-        } else lifeBar.setBar(lifeBar.x + 10);
+        } else lifeBar.updateBar(10);
       } else if (this.life >= 100) {
         //this.life = 99;
         //lifeBar.setBar(this.life);

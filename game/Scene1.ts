@@ -73,6 +73,7 @@ class Scene1 extends Phaser.Scene {
     
     //this.monchi = new Player(this, 650, 650, "knight", 2);
     this.monchi = new Player(this, 650, 650, "playerNew", 2);
+    //this.monchi.setLife(50);
 
     
 
@@ -186,7 +187,7 @@ class Scene1 extends Phaser.Scene {
         this.lightOnPlayer.x= this.monchi.x
         this.lightOnPlayer.y= this.monchi.y
       }
-      this.monchi.checkMove(this.cursors)
+      this.monchi.checkMove(this.cursors);
       if(this.map) {
         if(this.monchi.weapon) {
           if(this.monchi.weapon.hitboxes.length > 0) {

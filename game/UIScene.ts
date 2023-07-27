@@ -55,7 +55,7 @@ export default class UIScene extends Phaser.Scene {
 
   expUpdate = (addExp: number) => {
     console.log("EMITIO expUpdate arg:", addExp);
-    this.expBarInGame?.updateBar(addExp);
+    this.expBarInGame?.setBarNew(addExp);
   }
 
   enemysInMap = (enemyCounter: number) => {

@@ -63,7 +63,7 @@ const loadAssets = {
   },
   "UIScene": {
     assets: [
-      ["image", "ContenedorBarra", "/game/newUI/ContenedorBarra.png"],
+      ["image", "ContenedorBarra", "/game/newUI/ContenedorBarra2.png"],
       ["image", "ContadorEnemigos", "/game/newUI/ContadorEnemigos.png"],
       ["image", "InsigniaPoder", "/game/newUI/InsigniaPoder.png"],
       ["image", "SettingsButton", "/game/newUI/SettingsButton.png"],
@@ -74,6 +74,8 @@ const loadAssets = {
       ["image", "FondoBarraVida", "/game/newUI/FondoBarraVida.png"],
       ["image", "ProgresoBorde", "/game/newUI/ProgresoBorde.png"],
       ["image", "ProgresoRellenop", "/game/newUI/ProgresoRellenop.png"],
+      ["image", "baseAvatar", "/game/newUI/baseAvatar.png"],
+      ["image", "fondoAvatar", "/game/newUI/fondoAvatar.png"],
     ]
   }
 }

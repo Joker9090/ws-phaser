@@ -45,12 +45,15 @@ export default class UIScene extends Phaser.Scene {
 
   staminaUpdate = (stamina: number) => {
     console.log("EMITIO staminaUpdate arg:", stamina);
-    this.staminaBarInGame?.updateBar(stamina);
+    this.staminaBarInGame?.setBarNew(stamina);
   }
 
   levelUp = (newLevel: number) => {
     console.log("EMITIO LEVEL UP arg: ", newLevel);
-    this.contHeroeExp?.setText(""+newLevel);
+    let a = newLevel.toString();
+    if(this.contHeroeExp) (this.contHeroeExp.text.length >= 2) ? this.contHeroeExp.setText(a).setOrigin(0.2,0) : this.contHeroeExp.setText(a).setOrigin(0);
+    //this.contHeroeExp?.setText(""+newLevel);
+    
   }
 
   expUpdate = (addExp: number) => {
@@ -60,9 +63,8 @@ export default class UIScene extends Phaser.Scene {
 
   enemysInMap = (enemyCounter: number) => {
     console.log("EMITIO enemysInMap arg: ", enemyCounter);
-    console.log("enemyInMap : ",this.contEnemysInGame?.text.length);
-    //this.contEnemysInGame?.setText
-    if(this.contEnemysInGame) (this.contEnemysInGame?.text.length >= 2) ? this.contEnemysInGame?.setText(""+enemyCounter).setOrigin(0.2,0) : this.contEnemysInGame?.setText(""+enemyCounter).setOrigin(0);
+    let a = enemyCounter.toString();
+    if(this.contEnemysInGame) (this.contEnemysInGame.text.length >= 2) ? this.contEnemysInGame.setText(a).setOrigin(0.2,0) : this.contEnemysInGame.setText(a).setOrigin(0);
   }
   powerChange = (newPower: string) => {
 
@@ -83,10 +85,12 @@ export default class UIScene extends Phaser.Scene {
     console.log("Entro UI SCENE");
 
     /**VIDA Y AVATAR BASIC */
+    const fondoAvatar = this.add.image(124,88,"fondoAvatar").setDepth(3).setScale(0.39);
+    const HeroeAvatar = this.add.image(124,85,"baseAvatar").setDepth(3).setScale(0.3);
     this.ContenedorBarra = this.add.image(150,120,"ContenedorBarra").setDepth(3).setScale(0.7);
-    const HeroeAvatar = this.add.image(128,85,"Heroe1").setDepth(3).setScale(0.13);
     //const HeroeExp = this.add.text(110,130, "16", {font: newFont.family, fontSize: "23px", color: "#B6DFE9"}).setDepth(1);
-    this.contHeroeExp = this.add.text(110,130, "16", {fontSize: "23px", color: "#B6DFE9"}).setDepth(3);
+    this.contHeroeExp = this.add.text(117,128, "1", {fontSize: "23px", color: "#B6DFE9"}).setOrigin(0).setDepth(3);
+   
 
     const LifeConfig = {
       x: 380,

@@ -76,8 +76,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   life: number = 100;
   playerLvl: number = 1;
   playerExp: number = 0;
-  playerStamin: number = 100;
-  rechargeStamin: number = 5;
+  playerStamin: number = 0;
+  rechargeStamin: number = 0.1;
   weapon?: Weapon;
   // swordHitBox: hitZone;
 
@@ -199,9 +199,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   reLoadStamin() {
-    if(this.playerStamin < 100) {
+    if(this.playerStamin < 100 && (this.playerStamin += this.rechargeStamin) < 100 ) {
       this.playerStamin += this.rechargeStamin;
-      EventsCenter.emit("staminaUpdate",this.rechargeStamin);
+      EventsCenter.emit("staminaUpdate",this.playerStamin);
+    }else if ((this.playerStamin += this.rechargeStamin) >= 100) {
+      this.playerStamin = 100;
+      EventsCenter.emit("staminaUpdate",this.playerStamin);
     }
   }
 

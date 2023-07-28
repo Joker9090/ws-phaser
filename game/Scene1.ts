@@ -55,6 +55,20 @@ class Scene1 extends Phaser.Scene {
     skeleton.corposeStay()
   }
 
+  updateEnemyInGame = () => {
+    if(this.enemyRespawns){
+      let numberOfEnemys = 0;
+      for (let i = 0; i < this.enemyRespawns.length; i++) {
+        const element = this.enemyRespawns[i];
+        console.log("this.enemyRespawns: ",element);
+        console.log("CANTIDAD DE ENEMIGOS DE ESE RESPAWN: ",element.getEnemyQuantity());
+        numberOfEnemys += element.getEnemyQuantity()
+      }
+      this.enemysInGame = numberOfEnemys;
+      EventsCenter.emit("enemysInMap",this.enemysInGame);
+    }
+  }
+
 
   create(this: Scene1) {
     // this.skeleton?.destroy();
@@ -126,6 +140,7 @@ class Scene1 extends Phaser.Scene {
       this.scene.restart()
     }
 
+
     const lose = () => {
       
       if(this.monchi){
@@ -157,6 +172,7 @@ class Scene1 extends Phaser.Scene {
     //EventsCenter.emit("levelUp",10);
     //EventsCenter.emit("expUpdate",10);
     //EventsCenter.emit("enemysInMap",10);
+    /*
     setTimeout(() => {
       EventsCenter.emit("levelUp",30);
       //EventsCenter.emit("lifeUpdate",-10) 
@@ -173,16 +189,21 @@ class Scene1 extends Phaser.Scene {
         EventsCenter.emit("enemysInMap",this.enemysInGame);
       }
     }, 3000);
+    */
 
-    //setTimeout(() => {
-    //  EventsCenter.emit("lifeUpdate",-0) 
-    //}, 6000);
+    setTimeout(() => {
+      EventsCenter.emit("staminaUpdate",-100)
+      if(this.monchi)this.monchi.playerStamin = 0; 
+    }, 6000);
     
 
   }
 
   update(this: Scene1) {
+    this.updateEnemyInGame();
     if (this.monchi) {
+      this.monchi.reLoadStamin();
+      this.monchi.giveExperience(0.1);
       if(this.lightOnPlayer){
         this.lightOnPlayer.x= this.monchi.x
         this.lightOnPlayer.y= this.monchi.y

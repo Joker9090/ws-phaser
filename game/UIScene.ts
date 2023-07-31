@@ -29,6 +29,7 @@ export default class UIScene extends Phaser.Scene {
   lifeBarInGame?: MultiBar;
   staminaBarInGame?: MultiBar;
   expBarInGame?: MultiBar;
+  insigniaPoder?: Phaser.GameObjects.Image;
 
   constructor() {
     super({ key: "UIScene" });
@@ -51,7 +52,7 @@ export default class UIScene extends Phaser.Scene {
   levelUp = (newLevel: number) => {
     console.log("EMITIO LEVEL UP arg: ", newLevel);
     let a = newLevel.toString();
-    if(this.contHeroeExp) (this.contHeroeExp.text.length >= 2) ? this.contHeroeExp.setText(a).setOrigin(0.2,0) : this.contHeroeExp.setText(a).setOrigin(0);
+    if(this.contHeroeExp) (this.contHeroeExp.text && this.contHeroeExp.text.length >= 2) ? this.contHeroeExp.setText(""+a).setOrigin(0.2,0) : this.contHeroeExp.setText(""+a).setOrigin(0);
     //this.contHeroeExp?.setText(""+newLevel);
     
   }
@@ -66,6 +67,15 @@ export default class UIScene extends Phaser.Scene {
     let a = enemyCounter.toString();
     if(this.contEnemysInGame) (this.contEnemysInGame.text.length >= 2) ? this.contEnemysInGame.setText(a).setOrigin(0.2,0) : this.contEnemysInGame.setText(a).setOrigin(0);
   }
+
+  powerNeed = (active: boolean) => {
+    if(active) {
+      this.insigniaPoder?.setAlpha(1);
+    }else {
+      this.insigniaPoder?.setAlpha(0.5);
+    }
+  }
+
   powerChange = (newPower: string) => {
 
   }
@@ -127,7 +137,7 @@ export default class UIScene extends Phaser.Scene {
     this.contEnemysInGame = this.add.text(this.game.canvas.width - 208,this.game.canvas.height - 70, "3", {fontSize: "23px", color: "#B6DFE9"}).setDepth(1);
 
     /**InsigniaPoder */
-    const InsigniaPoder = this.add.image(110,this.game.canvas.height - 100,"InsigniaPoder").setScale(0.4).setDepth(100);
+    this.insigniaPoder = this.add.image(110,this.game.canvas.height - 100,"InsigniaPoder").setScale(0.4).setDepth(100);
 
     /*
     const dmgSimu = (dmg: number) => {
@@ -201,6 +211,7 @@ export default class UIScene extends Phaser.Scene {
     EventsCenter.on("levelUp",this.levelUp, this);
     EventsCenter.on("expUpdate",this.expUpdate, this);
     EventsCenter.on("enemysInMap",this.enemysInMap, this);
+    EventsCenter.on("powerNeed", this.powerNeed, this);
     //EventsCenter.on("powerChange", () => {});
 
     /* SCENE HANDLER */

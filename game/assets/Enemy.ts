@@ -207,6 +207,19 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
+  dmgAsWeapon (weaponDmg: number = 1) {
+    let newLife = this.life - weaponDmg;
+    console.log("EnemyFly life: ", newLife);
+    if(newLife <= 0) {
+      this.life = 0;
+      this.dead();
+    } else {
+      this.life = newLife;
+      this.anims.play('enemyFlyDmgFrames', true);
+    }
+
+  }
+
   receiveDamage() {
     const posibility = this.getRandomIntInclusive(3,10);
     console.log("posibility: "+posibility);

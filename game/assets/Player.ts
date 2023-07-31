@@ -78,6 +78,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   playerExp: number = 0;
   playerStamin: number = 0;
   rechargeStamin: number = 0.1;
+  powerDischargeNeed: number = 50;
   weapon?: Weapon;
   // swordHitBox: hitZone;
 
@@ -198,17 +199,26 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     //this.Onstate = "dead";
   }
 
+  checkPowerNeed() {
+    if(this.powerDischargeNeed <= this.playerStamin ) {
+      EventsCenter.emit("powerNeed", true);
+    } else EventsCenter.emit("powerNeed", false);
+  }
+
   reLoadStamin() {
     if(this.playerStamin < 100 && (this.playerStamin += this.rechargeStamin) < 100 ) {
       this.playerStamin += this.rechargeStamin;
+      this.checkPowerNeed();
       EventsCenter.emit("staminaUpdate",this.playerStamin);
     }else if ((this.playerStamin += this.rechargeStamin) >= 100) {
       this.playerStamin = 100;
+      this.checkPowerNeed();
       EventsCenter.emit("staminaUpdate",this.playerStamin);
     }
   }
 
   dischargeHability (spent: number) {
+    // reemplazar por  this.powerDischargeNeed ??
     if(spent <= this.playerStamin) {
       //disparador de habilidad q tenga puesta
       EventsCenter.emit("staminaUpdate", ((spent)* -1));

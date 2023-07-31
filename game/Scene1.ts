@@ -13,6 +13,7 @@ import Map3, { EnemyMaker } from "./maps/Map3";
 import Boss from "./assets/Boss";
 import EnemyFly from "./assets/EnemyFly";
 import EventsCenter from "./EventsCenter";
+import EnemyBoss from "./assets/EnemyBoss";
 
 // Scene in class
 class Scene1 extends Phaser.Scene {
@@ -49,10 +50,11 @@ class Scene1 extends Phaser.Scene {
 
   }
 
-  hitPlayer = (monchi: Player, skeleton: Enemy| EnemyFly, scene:Phaser.Scene) => {
+  hitPlayer = (monchi: Player, skeleton: Enemy| EnemyFly | EnemyBoss, scene:Phaser.Scene) => {
     const weapon = monchi.weapon;
     console.log("Player espada colision con enemigo");
-    skeleton.corposeStay()
+    skeleton.dmgAsWeapon()
+    //skeleton.corposeStay();
   }
 
   updateEnemyInGame = () => {

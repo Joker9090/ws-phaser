@@ -22,6 +22,7 @@ export default function Home() {
     Promise.all([
       import("@/game/SceneLoader"),
       import("@/game/UIScene"),
+      import("@/game/ModalScene"),
       import("@/game/Scene1")]).then((scenes) => {
       setScenes(scenes.map(s => s.default))
     })

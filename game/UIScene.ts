@@ -40,17 +40,17 @@ export default class UIScene extends Phaser.Scene {
   }
 
   lifeUpdate = (life: number) => {
-    console.log("EMITIO VIDA arg:", life);
+    //console.log("EMITIO VIDA arg:", life);
     this.lifeBarInGame?.updateBar(life);
   }
 
   staminaUpdate = (stamina: number) => {
-    console.log("EMITIO staminaUpdate arg:", stamina);
+    //console.log("EMITIO staminaUpdate arg:", stamina);
     this.staminaBarInGame?.setBarNew(stamina);
   }
 
   levelUp = (newLevel: number) => {
-    console.log("EMITIO LEVEL UP arg: ", newLevel);
+    //console.log("EMITIO LEVEL UP arg: ", newLevel);
     let a = newLevel.toString();
     if(this.contHeroeExp) (this.contHeroeExp.text && this.contHeroeExp.text.length >= 2) ? this.contHeroeExp.setText(""+a).setOrigin(0.2,0) : this.contHeroeExp.setText(""+a).setOrigin(0);
     //this.contHeroeExp?.setText(""+newLevel);
@@ -58,12 +58,12 @@ export default class UIScene extends Phaser.Scene {
   }
 
   expUpdate = (addExp: number) => {
-    console.log("EMITIO expUpdate arg:", addExp);
+    //console.log("EMITIO expUpdate arg:", addExp);
     this.expBarInGame?.setBarNew(addExp);
   }
 
   enemysInMap = (enemyCounter: number) => {
-    console.log("EMITIO enemysInMap arg: ", enemyCounter);
+    //console.log("EMITIO enemysInMap arg: ", enemyCounter);
     let a = enemyCounter.toString();
     if(this.contEnemysInGame) (this.contEnemysInGame.text.length >= 2) ? this.contEnemysInGame.setText(a).setOrigin(0.2,0) : this.contEnemysInGame.setText(a).setOrigin(0);
   }
@@ -82,7 +82,9 @@ export default class UIScene extends Phaser.Scene {
 
 
 
-  create(this: UIScene, data: { level: number }) {
+  create(this: UIScene, data: { levelUp: string }) {
+
+    //console.log("Data a UISCENE: ", data);
     
     const newFont = new FontFace("BERNHC","/game/newAssets/fonts/BERNHC.ttf")
     this.containerText = this.add.container(0, 0);
@@ -91,8 +93,8 @@ export default class UIScene extends Phaser.Scene {
     //this.gameScene = this.game.scene.getScene("Game") as Game;
 
     //this.createUI(data.lifes);
-    console.log("DIMENSIONES UI", this.game.canvas.width, this.game.canvas.height);
-    console.log("Entro UI SCENE");
+    //console.log("DIMENSIONES UI", this.game.canvas.width, this.game.canvas.height);
+    //console.log("Entro UI SCENE");
 
     /**VIDA Y AVATAR BASIC */
     const fondoAvatar = this.add.image(124,88,"fondoAvatar").setDepth(3).setScale(0.39);

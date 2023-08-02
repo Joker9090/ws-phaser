@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 import Scene4 from "./Scene1";
 
-export type SceneKeys = "Menu" | "Scene1" | "UIScene";
+export type SceneKeys = "Menu" | "Scene1" | "UIScene" | "ModalScene";
 
 export type LoadTypes = "image" | "audio" | "spritesheet";
 
@@ -77,7 +77,26 @@ const loadAssets = {
       ["image", "baseAvatar", "/game/newUI/baseAvatar.png"],
       ["image", "fondoAvatar", "/game/newUI/fondoAvatar.png"],
     ]
-  }
+  },
+  "ModalScene": {
+    assets: [
+    ["image", "Information3", "/game/newAssets/modals/information/Information3.png"],
+    ["image", "InformationClosebutton", "/game/newAssets/modals/information/InformationClosebutton.png"],
+    ["image", "InformationLogo", "/game/newAssets/modals/information/InformationLogo.png"],
+    ["image", "InformationModal", "/game/newAssets/modals/information/InformationModal.png"],
+    ["image", "InformationTitle", "/game/newAssets/modals/information/InformationTitle.png"],
+    ["image", "LevelRewardAnim1", "/game/newAssets/modals/level/LevelRewardAnim1.png"],
+    ["image", "LevelRewardAnim2", "/game/newAssets/modals/level/LevelRewardAnim2.png"],
+    ["image", "LevelRewardButtonClaimContinue", "/game/newAssets/modals/level/LevelRewardButtonClaimContinue.png"],
+    ["image", "LevelRewardcoins", "/game/newAssets/modals/level/LevelRewardcoins.png"],
+    ["image", "LevelRewardcoins", "/game/newAssets/modals/level/LevelRewardcoins.png"],
+    ["image", "LevelRewardcoinsQty", "/game/newAssets/modals/level/LevelRewardcoinsQty.png"],
+    ["image", "LevelRewardlevel", "/game/newAssets/modals/level/LevelRewardlevel.png"],
+    ["image", "LevelRewardmodal", "/game/newAssets/modals/level/LevelRewardmodal.png"],
+    ["image", "TutorialContinueButton", "/game/newAssets/modals/tutorial/TutorialContinueButton.png"],
+    ["image", "TutorialModal", "/game/newAssets/modals/tutorial/TutorialModal.png"],
+    ["image", "TutorialTitle", "/game/newAssets/modals/tutorial/TutorialTitle.png"],
+  ]},
 }
 
 // Scene in class
@@ -144,7 +163,7 @@ class SceneLoader extends Phaser.Scene {
       assetText.destroy();
     });
 
-    const sceneTitles: Array <SceneKeys> = ["Menu","Scene1","UIScene"];
+    const sceneTitles: Array <SceneKeys> = ["Menu","Scene1","UIScene","ModalScene"];
     for (let i = 0; i < sceneTitles.length; i++) {
           //loadAssets["Scene1"].assets.map(([type, name, src,config]: any) => {
       loadAssets[sceneTitles[i]].assets.map((sceneAssetConfig) => {
@@ -167,7 +186,7 @@ class SceneLoader extends Phaser.Scene {
     //this.scene.start("Scene"+level);
     console.log("dataaaaa sceneloader ",dataLevel);
     this.scene.start("Scene1", { "dataLevel": 2 })
-    this.scene.start("UIScene",{ "dataLevel": 2 });
+    this.scene.start("UIScene",{ "dataLevel": "levelUp" });
   }
 
   update(this: SceneLoader) {

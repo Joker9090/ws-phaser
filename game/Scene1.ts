@@ -62,8 +62,8 @@ class Scene1 extends Phaser.Scene {
       let numberOfEnemys = 0;
       for (let i = 0; i < this.enemyRespawns.length; i++) {
         const element = this.enemyRespawns[i];
-        console.log("this.enemyRespawns: ",element);
-        console.log("CANTIDAD DE ENEMIGOS DE ESE RESPAWN: ",element.getEnemyQuantity());
+        //console.log("this.enemyRespawns: ",element);
+        //console.log("CANTIDAD DE ENEMIGOS DE ESE RESPAWN: ",element.getEnemyQuantity());
         numberOfEnemys += element.getEnemyQuantity()
       }
       this.enemysInGame = numberOfEnemys;
@@ -72,8 +72,15 @@ class Scene1 extends Phaser.Scene {
   }
 
 
+  showNewModal = (type: string, content: number) => {
+    this.scene.pause();
+    this.scene.launch('ModalScene', {type: type, content: content });
+  }
+
+
   create(this: Scene1) {
     // this.skeleton?.destroy();
+
 
     this.map = new Map3(this);
 
@@ -197,6 +204,12 @@ class Scene1 extends Phaser.Scene {
       EventsCenter.emit("staminaUpdate",-100)
       if(this.monchi)this.monchi.playerStamin = 0; 
     }, 6000);
+
+
+    setTimeout(() => {
+      //this.showNewModal("Lvl.up",2);
+      this.showNewModal("Reward",200);
+    }, 8000);
     
 
   }

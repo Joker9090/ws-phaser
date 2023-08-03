@@ -22,6 +22,42 @@ export default class ModalScene extends Phaser.Scene {
   }
 
 
+  createInformationModal = (textInfo: string) => {
+
+    
+    const backgroundModal = this.add.image(this.game.canvas.width/2,this.game.canvas.height/2 - 200, "InformationModal").setDepth(90).setScale(1.2);
+    const principalTitle = this.add.image(this.game.canvas.width/2,this.game.canvas.height/2 - 185,"InformationTitle").setDepth(91);
+
+    const principalTitleText = this.add.text(this.game.canvas.width/2,this.game.canvas.height/2 - 185, "Information",{fontSize: "18px", color: "#B6DFE9"}).setDepth(92).setOrigin(0.5);
+
+
+
+    console.log("modal tutorial background: ", backgroundModal.height, backgroundModal.width);
+
+    const textInfoModal = this.add.text(this.game.canvas.width/2,this.game.canvas.height/2 + 125,""+textInfo).setDepth(92).setOrigin(0.5);
+
+    const buttonImage = this.add.image(this.game.canvas.width/2,this.game.canvas.height/2 + 225,"Information3").setDepth(91);
+
+    const buttonText = this.add.text(this.game.canvas.width/2,this.game.canvas.height/2 + 225, "Continue",{fontSize: "26px", color: "#B6DFE9"}).setDepth(92).setOrigin(0.5);
+
+
+  }
+
+  createTutorialModal = (textInfo: string) => {
+
+    const backgroundModal = this.add.image(this.game.canvas.width/2,this.game.canvas.height/2, "TutorialModal").setDepth(90);
+    const principalImg = this.add.image(this.game.canvas.width/2,this.game.canvas.height/2 - 215, "TutorialTitle").setDepth(91);
+    //const middleImage = this.add.image(this.game.canvas.width/2,this.game.canvas.height/2 + 150, "");
+
+    console.log("modal tutorial background: ", backgroundModal.height, backgroundModal.width);
+
+    const textInfoModal = this.add.text(this.game.canvas.width/2,this.game.canvas.height/2 + 125,""+textInfo).setDepth(92).setOrigin(0.5);
+
+    const buttonImage = this.add.image(this.game.canvas.width/2,this.game.canvas.height/2 + 225,"TutorialContinueButton").setDepth(91);
+
+    const buttonText = this.add.text(this.game.canvas.width/2,this.game.canvas.height/2 + 225, "Continue",{fontSize: "26px", color: "#B6DFE9"}).setDepth(92).setOrigin(0.5);
+
+  }
 
   createLevelReward = (title: string ,content: number) => {
     const backgroundModal = this.add.image(this.game.canvas.width/2,this.game.canvas.height/2,"LevelRewardmodal").setDepth(90);
@@ -89,17 +125,29 @@ export default class ModalScene extends Phaser.Scene {
 
 
 
-  create(this: ModalScene, data: { type: string, content: number }) {
+  create(this: ModalScene, data: { type: string, content: number, textInfo?: string }) {
 
+    //let div = document.getElementById('game-container');
+    //if(div)div.style.backgroundColor = "#4488AA";
+
+    //this.cameras.main.setAlpha(0.5);
     console.log("Data a ModalScene: ", data);
+
+
+    this.cameras.main.fadeIn(3000, 0, 0, 0)
     
     //const newFont = new FontFace("BERNHC","/game/newAssets/fonts/BERNHC.ttf")
 
     switch (data.type) {
       case "Information":
-        
+        if(data.textInfo) {
+          const infoModal = this.createInformationModal(data.textInfo);
+        }
       break;
       case "tutorial":
+        if(data.textInfo) {
+          const tutorialModal = this.createTutorialModal(data.textInfo);
+        }
       
       break;
       case "Lvl.up":

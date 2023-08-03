@@ -72,9 +72,9 @@ class Scene1 extends Phaser.Scene {
   }
 
 
-  showNewModal = (type: string, content: number) => {
+  showNewModal = (type: string, content: number, textInfo?: string) => {
     this.scene.pause();
-    this.scene.launch('ModalScene', {type: type, content: content });
+    this.scene.launch('ModalScene', {type: type, content: content, textInfo: textInfo });
   }
 
 
@@ -208,7 +208,11 @@ class Scene1 extends Phaser.Scene {
 
     setTimeout(() => {
       //this.showNewModal("Lvl.up",2);
+      UIScene.cameras.main.setAlpha(0.5);
+      this.cameras.main.setAlpha(0.5);
       this.showNewModal("Reward",200);
+      //this.showNewModal("tutorial",1,"texto de pruebaaaaa");
+      //this.showNewModal("Information",1,"texto de pruebaaaaa")
     }, 8000);
     
 

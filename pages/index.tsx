@@ -42,6 +42,10 @@ export default function Home() {
           mode: window.Phaser.Scale.FIT
         },
         scene: scenes,
+        audio: {
+          disableWebAudio: true,
+          noAudio: true,
+        },
         physics: {
           default: "arcade",
           arcade: {

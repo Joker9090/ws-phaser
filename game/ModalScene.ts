@@ -17,7 +17,10 @@ export default class ModalScene extends Phaser.Scene {
   card2?: string;
   card3?: string;
   cardsArray?: Phaser.GameObjects.Image[];
-  cardOptions: string[] = ["cardUpDmg","cardUpHeal","cardUpStamin"];
+  cardOptions: string[] = ["cardUpDmg","cardUpHeal","cardUpStamin","cardUpDmg","cardUpHeal","cardUpStamin","cardUpDmg","cardUpHeal","cardUpStamin"];
+  onCard: boolean = false;
+  onCardCircleA?: Phaser.GameObjects.Image;
+  onCardCircleB?: Phaser.GameObjects.Image;
 
   constructor() {
     super({ key: "ModalScene" });
@@ -79,23 +82,32 @@ export default class ModalScene extends Phaser.Scene {
 
     console.log("sendResponseCard: ",cardSelected);
 
-    const posibility = this.getRandomInt(3);
+    const posibility = this.getRandomInt(6);
     console.log("random es : ",posibility);
-    if(posibility >= 3) { //cardUpTroll
-      this.testAnim(card,"cardUpTroll");
-      //limpiar resto de las cargas y emitir un evento
-    } else {
-      this.testAnim(card,this.cardOptions[cardSelected]);
-      //limpiar resto de las cargas y emitir un evento
-    }
+
+    this.testAnim(card,this.cardOptions[posibility]);
+    //limpiar resto de las cargas y emitir un evento
+    
+    const buffSelected = this.cardOptions[posibility];
 
     
     if(this.cardsArray) {
       for (let i = 0; i < this.cardsArray.length; i++) {
-        this.cardsArray[i].setInteractive(false);    
+        this.cardsArray[i].setInteractive(false);
+        if(cardSelected != i)this.cardsArray[i].destroy();
       }
 
     }
+    setTimeout(() => {
+      const princiaplScene = this.game.scene.getScene("Scene1");
+      const UIScene = this.game.scene.getScene("UIScene");
+      UIScene.cameras.main.setAlpha(1);
+      princiaplScene.cameras.main.setAlpha(1);
+      EventsCenter.emit("newBuff",buffSelected );
+      princiaplScene.scene.resume();
+      UIScene.scene.bringToTop();
+      this.scene.remove()
+    },2000)
 
 
 
@@ -103,12 +115,17 @@ export default class ModalScene extends Phaser.Scene {
 
 
   createCardsBack = (cardsNumber: number) => {
-
+    this.cardsArray = [];
     const positionArray = [(this.game.canvas.width / 4),(this.game.canvas.width / 2),(this.game.canvas.width - (this.game.canvas.width / 4))];
     const marginInMonitorW = (this.game.canvas.width / 4);
+
+    this.onCardCircleA = this.add.image(this.game.canvas.width / 2,this.game.canvas.height/2,"LevelRewardAnim1").setScale(1.7).setAlpha(0);
+    this.onCardCircleB = this.add.image(this.game.canvas.width / 2,this.game.canvas.height/2,"LevelRewardAnim2").setScale(1.7).setAlpha(0);
     console.log("ancho total: ",this.game.canvas.width);
     for (let i = 0; i < positionArray.length; i++) {
-      const card = this.add.image(positionArray[i],this.game.canvas.height/2, "cardDown");
+      const card = this.add.image(positionArray[i],this.game.canvas.height/2, "cardDown").setScale(0,0);
+
+
       //if(i == 0) card.setOrigin(0,-0.5);
       //else if(i == 2) card.setOrigin(0,0.5);
       console.log("position x : ",positionArray[i]);
@@ -119,6 +136,9 @@ export default class ModalScene extends Phaser.Scene {
       card.on('pointerdown', () => {
         // Transition to next scene
         //this.testAnim(backgroundModal,"TutorialModal");
+        this.onCardCircleA?.setAlpha(0);
+        this.onCardCircleB?.setAlpha(0);
+        this.onCard = false;
         this.input.setDefaultCursor('pointer');
 
         this.sendResponseCard(i,card);
@@ -128,17 +148,47 @@ export default class ModalScene extends Phaser.Scene {
       card.on('pointerover', () => {
         //buttonContainer.setTintFill(0x11001110, 1);
         //buttonText.setColor("#F9F8F7")
+        this.onCardCircleA?.setX(card.x);
+        this.onCardCircleA?.setY(card.y);
+        this.onCardCircleA?.setAlpha(1);
+
+        this.onCardCircleB?.setX(card.x);
+        this.onCardCircleB?.setY(card.y);
+        this.onCardCircleB?.setAlpha(1);
+
+        this.onCard = true;
         this.input.setDefaultCursor('pointer');
       });
 
       card.on('pointerout', () => {
         //buttonContainer.setTintFill("#F1D69E", 1);
         //buttonText.setColor("#F1D69E")
+        this.onCardCircleA?.setAlpha(0);
+        this.onCardCircleB?.setAlpha(0);
+        this.onCard = false;
         this.input.setDefaultCursor('default');
       });
 
-
+      
       this.cardsArray?.push(card);
+    }
+
+    if(this.cardsArray) {
+      console.log("cardArray lenght: " + this.cardsArray.length);
+      for (let i = 0; i < this.cardsArray.length; i++) {
+  
+        this.tweens.add({
+          targets: this.cardsArray[i],
+          scaleX: 1,
+          scaleY: 1,
+          ease: 'Linear',
+          duration: 1000,
+          repeat: 0,
+          yoyo: false
+        });
+        
+      }
+
     }
 
     
@@ -200,6 +250,7 @@ export default class ModalScene extends Phaser.Scene {
       //add to conteiner
       this.conteinerA?.add([
         backgroundModal,
+        buttonContainer,
         buttonText,
         textTitle,
         this.circuloA,
@@ -215,7 +266,7 @@ export default class ModalScene extends Phaser.Scene {
             scaleX: 1,
             scaleY: 1,
             ease: 'Linear',
-            duration: 8000,
+            duration: 1000,
             repeat: 0,
             yoyo: false
           });
@@ -252,11 +303,12 @@ export default class ModalScene extends Phaser.Scene {
   }
 
   testAnim = (obj:any, frontOfCard: string) => {
+    console.log("test anim card is : " + frontOfCard);
     this.tweens.add({
       targets: obj,
       props: {
-          scaleX: { value: 0, duration: 1000, yoyo: true },
-          texture: { value: frontOfCard, duration: 0, delay: 1000 }
+          scaleX: { value: 0, duration: 400, yoyo: true },
+          texture: { value: frontOfCard, duration: 0, delay: 400 }
       },
       ease: 'Linear'
     });
@@ -344,6 +396,11 @@ export default class ModalScene extends Phaser.Scene {
     if(this.circuloA && this.circuloB) {
       this.circuloA.rotation += 0.001;
       this.circuloB.rotation -= 0.001;
+    }
+
+    if(this.onCard && this.onCardCircleA  && this.onCardCircleB) {
+      this.onCardCircleA.rotation += 0.001;
+      this.onCardCircleB.rotation -= 0.001;
     }
 
   };

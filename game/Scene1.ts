@@ -36,7 +36,8 @@ class Scene1 extends Phaser.Scene {
   swordAir?: Phaser.Sound.BaseSound;
   playerHurt?: Phaser.Sound.BaseSound;
   enemyRespawns?: EnemyMaker[];
-  enemysInGame: Number = 0;
+  enemysInGame: number = 0;
+  firstTime: boolean = true;
   constructor() {
     super({key: 'Scene1'})
 
@@ -54,6 +55,14 @@ class Scene1 extends Phaser.Scene {
     const weapon = monchi.weapon;
     console.log("Player espada colision con enemigo");
     skeleton.dmgAsWeapon()
+    if(skeleton.life == 0) {
+      this.enemysInGame -= 1;
+      EventsCenter.emit("enemysInMap",this.enemysInGame);
+      if (this.enemysInGame <= 1 && this.firstTime) {
+        this.lvlUp(monchi.playerLvl + 1);
+        this.firstTime = false;
+      }
+    }
     //skeleton.corposeStay();
   }
 
@@ -77,6 +86,37 @@ class Scene1 extends Phaser.Scene {
     const ModalScene = this.game.scene.getScene("ModalScene")
     this.scene.launch(ModalScene, {type: type, content: content, textInfo: textInfo, qty: qty });
     ModalScene.scene.bringToTop();
+  }
+
+  updateBuff = (newBuff: string) => {
+    console.log("nuevo buff seleccionado en scene1: ", newBuff);
+    if(this.monchi){
+      switch (newBuff) {
+        case "cardUpDmg":
+          this.monchi.playerDmg++;
+          break;
+        case "cardUpHeal":
+        console.log("buff vida");
+        break;
+        case "cardUpStamin":
+          this.monchi.rechargeStamin = this.monchi.rechargeStamin + 0.2;
+        break;
+      
+        default:
+          break;
+      }
+
+    }
+
+  }
+
+  lvlUp = (newlevel: number) => {
+    const UIScene = this.game.scene.getScene("UIScene");
+    UIScene.cameras.main.setAlpha(0.5);
+    this.cameras.main.setAlpha(0.5);
+    EventsCenter.emit("levelUp",newlevel);
+    this.showNewModal("Lvl.up",newlevel);
+
   }
 
 
@@ -208,24 +248,32 @@ class Scene1 extends Phaser.Scene {
     }, 6000);
 
 
+    
+
+
     setTimeout(() => {
       //UIScene.cameras.main.setAlpha(0.5);
       //this.cameras.main.setAlpha(0.5);
 
       //this.showNewModal("Reward",200,"2",1);
-      this.showNewModal("Lvl.up",3);
+      //this.showNewModal("Lvl.up",3);
       //this.showNewModal("tutorial",1,"texto de pruebaaaaa");
       //this.showNewModal("Information",1,"texto de pruebaaaaa")
     }, 3000);
+
+    //HANDLER?
+    EventsCenter.on("newBuff",this.updateBuff, this);
     
 
   }
 
   update(this: Scene1) {
-    this.updateEnemyInGame();
+    //if(this.enemysInGame == 0) {
+      this.updateEnemyInGame();
+    //}
     if (this.monchi) {
       this.monchi.reLoadStamin();
-      this.monchi.giveExperience(0.1);
+      //this.monchi.giveExperience(0.1);
       if(this.lightOnPlayer){
         this.lightOnPlayer.x= this.monchi.x
         this.lightOnPlayer.y= this.monchi.y

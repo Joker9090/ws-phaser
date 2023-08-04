@@ -79,6 +79,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   playerStamin: number = 0;
   rechargeStamin: number = 0.1;
   powerDischargeNeed: number = 50;
+  playerDmg: number = 1;
   weapon?: Weapon;
   // swordHitBox: hitZone;
 

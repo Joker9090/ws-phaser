@@ -42,11 +42,15 @@ export default class UIScene extends Phaser.Scene {
   lifeUpdate = (life: number) => {
     //console.log("EMITIO VIDA arg:", life);
     this.lifeBarInGame?.updateBar(life);
+    //EventsCenter.removeListener("lifeUpdate");
+    
   }
 
   staminaUpdate = (stamina: number) => {
     //console.log("EMITIO staminaUpdate arg:", stamina);
     this.staminaBarInGame?.setBarNew(stamina);
+    //EventsCenter.removeListener("staminaUpdate");
+    
   }
 
   levelUp = (newLevel: number) => {
@@ -54,18 +58,23 @@ export default class UIScene extends Phaser.Scene {
     let a = newLevel.toString();
     if(this.contHeroeExp) (this.contHeroeExp.text && this.contHeroeExp.text.length >= 2) ? this.contHeroeExp.setText(""+a).setOrigin(0.2,0) : this.contHeroeExp.setText(""+a).setOrigin(0);
     //this.contHeroeExp?.setText(""+newLevel);
+    //EventsCenter.removeListener("levelUp");
     
   }
 
   expUpdate = (addExp: number) => {
     //console.log("EMITIO expUpdate arg:", addExp);
     this.expBarInGame?.setBarNew(addExp);
+    //EventsCenter.removeListener("expUpdate");
+    
   }
 
   enemysInMap = (enemyCounter: number) => {
     //console.log("EMITIO enemysInMap arg: ", enemyCounter);
     let a = enemyCounter.toString();
     if(this.contEnemysInGame) (this.contEnemysInGame.text.length >= 2) ? this.contEnemysInGame.setText(a).setOrigin(0.2,0) : this.contEnemysInGame.setText(a).setOrigin(0);
+    //EventsCenter.removeListener("enemysInMap");
+    
   }
 
   powerNeed = (active: boolean) => {
@@ -74,6 +83,8 @@ export default class UIScene extends Phaser.Scene {
     }else {
       this.insigniaPoder?.setAlpha(0.5);
     }
+    //EventsCenter.removeListener("powerNeed");
+    
   }
 
   powerChange = (newPower: string) => {

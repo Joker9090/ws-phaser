@@ -183,7 +183,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     scene.anims.create(knightDmgFramesConfig)
     scene.anims.create(knightDefFramesConfig)
     scene.anims.create(knightAttackFramesConfig)
-
+  
     this.play(`${sprite}IdleFrames`);
 
   }

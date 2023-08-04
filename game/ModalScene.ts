@@ -150,25 +150,27 @@ export default class ModalScene extends Phaser.Scene {
   }
 
   createLevelReward = (title: string ,content: number, qty?: number) => {
-    const backgroundModal = this.add.image(this.game.canvas.width/2,this.game.canvas.height/2,"LevelRewardmodal").setDepth(90);
+
+    
+    const backgroundModal = this.add.image(0,0,"LevelRewardmodal").setDepth(90)
     
 
-    this.circuloA = this.add.image(this.game.canvas.width/2,this.game.canvas.height/2 - 15,"LevelRewardAnim1").setDepth(91).setOrigin(0.5);
-    this.circuloB = this.add.image(this.game.canvas.width/2,this.game.canvas.height/2 - 15,"LevelRewardAnim2").setDepth(91).setOrigin(0.5);
+    this.circuloA = this.add.image(0,0 - 15,"LevelRewardAnim1").setDepth(91).setOrigin(0.5);
+    this.circuloB = this.add.image(0,0 - 15,"LevelRewardAnim2").setDepth(91).setOrigin(0.5);
 
     //agregar animacion de las luces de atras AQUI
 
     if(title == "Lvl.up"){
-      const textTitle = this.add.text(this.game.canvas.width/2,this.game.canvas.height/2 - 240,title,{fontFamily: "Enchanted Land",fontSize: "70px", color: "#B6DFE9"}).setDepth(92).setOrigin(0.5,0);
+      const textTitle = this.add.text(0,0 - 240,title,{fontFamily: "Enchanted Land",fontSize: "70px", color: "#B6DFE9"}).setDepth(92).setOrigin(0.5,0);
       console.log("Entro lvl up ");
       let a = content.toString();
-      const icon = this.add.image(this.game.canvas.width/2,this.game.canvas.height/2,"LevelRewardlevel").setDepth(92);
-      const lvlText = this.add.text(this.game.canvas.width/2 + 3,this.game.canvas.height/2 - 10,""+a,{fontFamily: "Enchanted Land",fontSize: "70px", color: "#B6DFE9"}).setDepth(92).setOrigin(0.5);
+      const icon = this.add.image(0,0,"LevelRewardlevel").setDepth(92);
+      const lvlText = this.add.text(0 + 3,0 - 10,""+a,{fontFamily: "Enchanted Land",fontSize: "70px", color: "#B6DFE9"}).setDepth(92).setOrigin(0.5);
 
       //agregar boton
-      const buttonContainer = this.add.image(this.game.canvas.width/2,this.game.canvas.height/2 + 150,"LevelRewardButtonClaimContinue").setDepth(92);
+      const buttonContainer = this.add.image(0,0 + 150,"LevelRewardButtonClaimContinue").setDepth(92);
       buttonContainer.setInteractive();
-      const buttonText = this.add.text(this.game.canvas.width/2 + 3,this.game.canvas.height/2 + 148, "Continue",{fontFamily: "Enchanted Land",fontSize: "42px", color: "##F1D69E"}).setDepth(92).setOrigin(0.5);
+      const buttonText = this.add.text(0 + 3,0 + 148, "Continue",{fontFamily: "Enchanted Land",fontSize: "42px", color: "##F1D69E"}).setDepth(92).setOrigin(0.5);
       buttonText.setColor("#F1D69E");
 
       //button functions
@@ -194,15 +196,33 @@ export default class ModalScene extends Phaser.Scene {
 
 
 
-
+      this.conteinerA = this.add.container(this.game.canvas.width/2,this.game.canvas.height/2)
       //add to conteiner
       this.conteinerA?.add([
         backgroundModal,
+        buttonText,
         textTitle,
         this.circuloA,
         this.circuloB,
         icon,
         lvlText]);
+
+        if(this.conteinerA) {
+          this.conteinerA.setScale(0,0)
+
+          this.tweens.add({
+            targets: this.conteinerA,
+            scaleX: 1,
+            scaleY: 1,
+            ease: 'Linear',
+            duration: 8000,
+            repeat: 0,
+            yoyo: false
+          });
+
+          
+        }
+
 
         return this.circuloA;
 

@@ -187,7 +187,7 @@ class SceneLoader extends Phaser.Scene {
     };
 
     /*Load Fonts*/
-    const EnchantedLand = this.add.text(0, 0, ":)", { fontFamily: "Enchanted Land" });
+    const EnchantedLand = this.add.text(0, 0, "Cargando font", { fontFamily: "Enchanted Land" });
 
   }
 

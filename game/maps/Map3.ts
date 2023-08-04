@@ -388,7 +388,7 @@ class Map3 {
 
     this.enemyMakerPoints.push(enemyMaker2);
 
-    //this.loadBackground(this.config.w,this.config.h);
+    this.loadBackground(this.config.w,this.config.h);
 
 
     this.mapElements.addMultiple([newFloor]);

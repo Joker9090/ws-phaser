@@ -74,13 +74,15 @@ class Scene1 extends Phaser.Scene {
 
   showNewModal = (type: string, content: number, textInfo?: string, qty?: number) => {
     this.scene.pause();
-    this.scene.launch('ModalScene', {type: type, content: content, textInfo: textInfo, qty: qty });
+    const ModalScene = this.game.scene.getScene("ModalScene")
+    this.scene.launch(ModalScene, {type: type, content: content, textInfo: textInfo, qty: qty });
+    ModalScene.scene.bringToTop();
   }
 
 
   create(this: Scene1) {
     // this.skeleton?.destroy();
-    const UIScene = this.game.scene.getScene("UIScene");
+    const UIScene = this.game.scene.getScene("UIScene")
     this.scene.launch(UIScene, { ...this.dataLevel, game: this });
 
     this.map = new Map3(this);
@@ -101,7 +103,7 @@ class Scene1 extends Phaser.Scene {
 
     
 
-
+    UIScene.scene.bringToTop();
 
     //UIScene.
     //this.lifePlayer = UIScene.lifeBarInGame;
@@ -211,7 +213,7 @@ class Scene1 extends Phaser.Scene {
       //this.cameras.main.setAlpha(0.5);
 
       //this.showNewModal("Reward",200,"2",1);
-      //this.showNewModal("Lvl.up",3);
+      this.showNewModal("Lvl.up",3);
       //this.showNewModal("tutorial",1,"texto de pruebaaaaa");
       //this.showNewModal("Information",1,"texto de pruebaaaaa")
     }, 3000);

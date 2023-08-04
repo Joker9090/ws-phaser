@@ -104,6 +104,6 @@ a {
 
 @font-face {
   font-family: 'Enchanted Land';
-  src: url('/public/game/newAssets/fonts/Enchanted Land.otf') format("opentype");
+  src: url('/game/newAssets/fonts/Enchanted_Land.otf') format("opentype");
   /* Add more font properties if needed */
 }

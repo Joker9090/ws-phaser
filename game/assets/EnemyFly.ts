@@ -55,10 +55,10 @@ class EnemyFly extends Phaser.Physics.Arcade.Sprite {
     const enemyFlyWalkFrames = scene.anims.generateFrameNumbers(sprite, {start: 0, end:5});
     const enemyFlyMoveFrames = scene.anims.generateFrameNumbers(sprite, { start:0 , end: 0 });
     const enemyFlyDeadFrames = scene.anims.generateFrameNumbers(sprite,{start:0 , end: 0});
-    const enemyFlyDmgFrames = scene.anims.generateFrameNumbers(sprite,{start:7 , end: 8});
+    const enemyFlyDmgFrames = scene.anims.generateFrameNumbers(sprite,{start:12 , end: 17});//done
     const enemyFlyDefFrames = scene.anims.generateFrameNumbers(sprite,{start:0 , end: 0});
     const enemyFlyAttackFrames = scene.anims.generateFrameNumbers(sprite,{start:6 , end: 11});// done
-    const enemyFlyDeadFrame = scene.anims.generateFrameNumbers(sprite,{frames:[1]})
+    const enemyFlyDeadFrame = scene.anims.generateFrameNumbers(sprite,{start:18 , end: 23})//done
 
     const enemyFlyWalkConfig = {
       key: `${sprite}Walk`,
@@ -216,7 +216,7 @@ class EnemyFly extends Phaser.Physics.Arcade.Sprite {
       this.dead();
     } else {
       this.life = newLife;
-      this.anims.play('enemyFlyDmgFrames', true);
+      this.anims.play(`${this.sprite}DmgFrames`, true);
     }
 
   }
@@ -228,7 +228,8 @@ class EnemyFly extends Phaser.Physics.Arcade.Sprite {
       this.anims.play('enemyFlyDefFrames', true);
       //this.scene.time.delayedCall(600, this.patrol, [this.patrolConfig], this);
     }else {
-      this.anims.play('enemyFlyDmgFrames', true);
+      this.anims.play(`${this.sprite}DmgFrames`, true);
+      //this.anims.play('enemyFlyDmgFrames', true);
       this.life= this.life - 1;
       console.log("cantidad de vidas ske: "+this.life);
       if(this.life == 0) {

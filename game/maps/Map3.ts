@@ -41,13 +41,22 @@ class Map3 {
 
   }
 
-  createMap() {
-    /*
-    const background = this.scene.add.image(0, 0, "BackgroundNew").setOrigin(0, 0).setScale(0.2,0.2);
+  loadBackground(w: number, h: number ) {
+
+    const background = this.scene.add.image(0, 0, "BackgroundNew").setOrigin(0, 0).setScale(0.2,0.2).setDepth(-1);
     // Based on your game size, it may "stretch" and distort.
-    background.displayWidth = this.config.w;
-    background.displayHeight = this.config.h + 10;
-    */
+    background.displayWidth = w;
+    background.displayHeight = h + 10;
+
+  }
+
+  createMap() {
+    
+    //const background = this.scene.add.image(0, 0, "BackgroundNew").setOrigin(0, 0).setScale(0.2,0.2).setDepth(1);
+    // Based on your game size, it may "stretch" and distort.
+    //background.displayWidth = this.config.w;
+    //background.displayHeight = this.config.h + 10;
+    
 
 
     //const nube1 = this.scene.add.image(200,200,"nubee").setScale(0.6).setOrigin(0.5,0.5);
@@ -379,6 +388,8 @@ class Map3 {
 
     this.enemyMakerPoints.push(enemyMaker2);
 
+    //this.loadBackground(this.config.w,this.config.h);
+
 
     this.mapElements.addMultiple([newFloor]);
 
@@ -417,7 +428,8 @@ export class EnemyMaker {
   constructor(scene: Phaser.Scene, pos: { x: number, y: number }, config: EnemyMakerConfig) {
     this.scene = scene;
     this.pos = pos;
-    this.config = config
+    this.config = config;
+
   }
 
   changeConfig(config: EnemyMakerConfig) {

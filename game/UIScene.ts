@@ -86,7 +86,7 @@ export default class UIScene extends Phaser.Scene {
 
     //console.log("Data a UISCENE: ", data);
     
-    const newFont = new FontFace("BERNHC","/game/newAssets/fonts/BERNHC.ttf")
+    //const newFont = new FontFace("BERNHC","/game/newAssets/fonts/BERNHC.ttf")
     this.containerText = this.add.container(0, 0);
     this.containerLeft = this.add.container(0, 0);
     this.containerRight = this.add.container(0, 0);
@@ -97,11 +97,11 @@ export default class UIScene extends Phaser.Scene {
     //console.log("Entro UI SCENE");
 
     /**VIDA Y AVATAR BASIC */
-    const fondoAvatar = this.add.image(124,88,"fondoAvatar").setDepth(3).setScale(0.39);
-    const HeroeAvatar = this.add.image(124,85,"baseAvatar").setDepth(3).setScale(0.3);
-    this.ContenedorBarra = this.add.image(150,120,"ContenedorBarra").setDepth(3).setScale(0.7);
+    const fondoAvatar = this.add.image(124,88,"fondoAvatar").setScale(0.39).setDepth(90);
+    const HeroeAvatar = this.add.image(124,85,"baseAvatar").setScale(0.3).setDepth(90);
+    this.ContenedorBarra = this.add.image(150,120,"ContenedorBarra").setScale(0.7).setDepth(90);
     //const HeroeExp = this.add.text(110,130, "16", {font: newFont.family, fontSize: "23px", color: "#B6DFE9"}).setDepth(1);
-    this.contHeroeExp = this.add.text(117,128, "1", {fontSize: "23px", color: "#B6DFE9"}).setOrigin(0).setDepth(3);
+    this.contHeroeExp = this.add.text(120,122, "1", {fontFamily: "Enchanted Land" ,fontSize: "34px", color: "#B6DFE9"}).setOrigin(0).setDepth(90);
    
 
     const LifeConfig = {
@@ -135,8 +135,8 @@ export default class UIScene extends Phaser.Scene {
 
 
     /**CONTADOR ENEMIGOS BASIC */
-    const contEnemys = this.add.image(this.game.canvas.width - 200,this.game.canvas.height - 100,"ContadorEnemigos").setDepth(1).setScale(0.7);
-    this.contEnemysInGame = this.add.text(this.game.canvas.width - 208,this.game.canvas.height - 70, "3", {fontSize: "23px", color: "#B6DFE9"}).setDepth(1);
+    const contEnemys = this.add.image(this.game.canvas.width - 200,this.game.canvas.height - 100,"ContadorEnemigos").setDepth(90).setScale(0.7);
+    this.contEnemysInGame = this.add.text(this.game.canvas.width - 205,this.game.canvas.height - 74, "0", {fontFamily: "Enchanted Land" ,fontSize: "28px", color: "#B6DFE9"}).setDepth(91).setOrigin(0.5);
 
     /**InsigniaPoder */
     this.insigniaPoder = this.add.image(110,this.game.canvas.height - 100,"InsigniaPoder").setScale(0.4).setDepth(100);
@@ -161,7 +161,7 @@ export default class UIScene extends Phaser.Scene {
   
 
     /* TIMER */
-    this.timerText = this.add
+    /*     this.timerText = this.add
       .text(this.cameras.main.width - 120, 50, "Time: 0", { fontSize: "32px" })
       .setOrigin(0.5, 0.5)
       .setScrollFactor(0, 0)
@@ -205,7 +205,7 @@ export default class UIScene extends Phaser.Scene {
           this.containerRight?.setPosition(0, 0);
         }
       },
-    });
+    }); */
 
     /**SCENE HANDLER */
     EventsCenter.on("lifeUpdate",this.lifeUpdate, this);
@@ -243,7 +243,7 @@ export default class UIScene extends Phaser.Scene {
 
   update() {
 
-    this.timerText?.setPosition(
+    /*     this.timerText?.setPosition(
       this.cameras.main.width - this.cameras.main.width / 10,
       50
     );
@@ -258,6 +258,6 @@ export default class UIScene extends Phaser.Scene {
       this.containerText?.setScale(
         this.cameras.main.width / this.cameras.main.height
       );
-    };
+    }; */
   };
 };

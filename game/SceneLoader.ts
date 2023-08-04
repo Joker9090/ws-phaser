@@ -96,6 +96,12 @@ const loadAssets = {
     ["image", "TutorialContinueButton", "/game/newAssets/modals/tutorial/TutorialContinueButton.png"],
     ["image", "TutorialModal", "/game/newAssets/modals/tutorial/TutorialModal.png"],
     ["image", "TutorialTitle", "/game/newAssets/modals/tutorial/TutorialTitle.png"],
+    ["image", "cardDown", "/game/newAssets/modals/cards/cardDown.png"],
+    ["image", "cardUpDmg", "/game/newAssets/modals/cards/cardUpDmg.png"],
+    ["image", "cardUpHeal", "/game/newAssets/modals/cards/cardUpHeal.png"],
+    ["image", "cardUpStamin", "/game/newAssets/modals/cards/cardUpStamin.png"],
+    ["image", "cardUpTroll", "/game/newAssets/modals/cards/cardUpTroll.png"],
+    
   ]},
 }
 
@@ -179,6 +185,9 @@ class SceneLoader extends Phaser.Scene {
         }
       });
     };
+
+    /*Load Fonts*/
+    const EnchantedLand = this.add.text(0, 0, ":)", { fontFamily: "Enchanted Land" });
 
   }
 

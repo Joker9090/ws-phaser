@@ -217,7 +217,7 @@ class EnemyBoss extends Phaser.Physics.Arcade.Sprite {
       this.dead();
     } else {
       this.life = newLife;
-      this.anims.play('enemyBossDmgFrames', true);
+      this.anims.play(`${this.sprite}DmgFrames`, true);
     }
 
   }

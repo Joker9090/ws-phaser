@@ -36,6 +36,8 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     /**Darknes implementation */
     //this.setPipeline('Light2D');
 
+    this.setDepth(9);
+
     this.setCollideWorldBounds(true);
     if(this.body) {
       const body = (this.body as Phaser.Physics.Arcade.Body)

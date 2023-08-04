@@ -107,7 +107,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     }
 
-    this.weapon = new Weapon(scene, this, WeaponType.SWORD)
+    this.weapon = new Weapon(scene, this, WeaponType.SWORD);
+    this.setDepth(10);
     // this.swordHitBox = new hitZone(scene,100,100,32,64,0xffffff,0.5);
 
   }
@@ -120,8 +121,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     //const knightJumpFrames = scene.anims.generateFrameNumbers("knight", {frames: [6,7,8,9,10,11]});
     const knightJumpFrames = scene.anims.generateFrameNumbers(sprite, { start: 5, end: 10 });
     const knightMoveFrames = scene.anims.generateFrameNumbers(sprite, { start: 19, end: 35 });// done
-    const knightDeadFrames = scene.anims.generateFrameNumbers(sprite, { start: 18, end: 23 });
-    const knightDmgFrames = scene.anims.generateFrameNumbers(sprite, { start: 19, end: 20 });
+    const knightDeadFrames = scene.anims.generateFrameNumbers(sprite, { start: 50, end: 65 });//done
+    const knightDmgFrames = scene.anims.generateFrameNumbers(sprite, { start: 43, end: 48 });//done
     const knightDefFrames = scene.anims.generateFrameNumbers(sprite, { start: 24, end: 28 });
     const knightAttackFrames = scene.anims.generateFrameNumbers(sprite, { start: 0, end: 18 });// done
 

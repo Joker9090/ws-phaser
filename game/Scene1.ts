@@ -270,6 +270,8 @@ class Scene1 extends Phaser.Scene {
   update(this: Scene1) {
     //if(this.enemysInGame == 0) {
       this.updateEnemyInGame();
+
+      
     //}
     if (this.monchi) {
       this.monchi.reLoadStamin();
@@ -280,6 +282,10 @@ class Scene1 extends Phaser.Scene {
       }
       this.monchi.checkMove(this.cursors);
       if(this.map) {
+        for (let i = 0; i < this.map.enemies.length; i++) {
+          const enemy = this.map.enemies[i];
+          enemy.updatePositionLifeBar();
+        }
         if(this.monchi.weapon) {
           if(this.monchi.weapon.hitboxes.length > 0) {
             for (let i = 0; i < this.map.enemies.length; i++) {

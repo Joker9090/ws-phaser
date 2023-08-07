@@ -1,6 +1,8 @@
 import Phaser from "phaser";
 import Player from "./Player";
 import hitZone from "./hitZone";
+import MultiBar from "./MultiBar";
+import { loadComponents } from "next/dist/server/load-components";
 
 export type PatrolConfig = {
   x:number,
@@ -17,6 +19,7 @@ class EnemyFly extends Phaser.Physics.Arcade.Sprite {
   isEnemyInFront: boolean = false
   patrolConfig?: PatrolConfig;
   life:number = 3;
+  lifeBar?: MultiBar;
   Onstate?: string = "pasive";
   sprite: string = '';
   newHitBox: hitZone;
@@ -26,10 +29,20 @@ class EnemyFly extends Phaser.Physics.Arcade.Sprite {
 
     this.createAnims(scene,sprite);
 
+    
     this.sprite = sprite;
     this.setScale(0.3)
     // Agregar el player al mundo visual
     scene.add.existing(this)
+    
+    const LifeConfig = {
+      x: x,
+      y: y - 15,
+      sprite: "barraVidaenemigos-front",
+      spriteContainer: "barraVidaenemigos-back",
+      startFull: true,
+    }
+    this.lifeBar = new MultiBar(scene, LifeConfig);
     // Agregar el player al mundo fisico
     scene.physics.add.existing(this)
 
@@ -45,6 +58,12 @@ class EnemyFly extends Phaser.Physics.Arcade.Sprite {
       this.body.setOffset(200, 170);
     }
 
+  
+ 
+    const newContainer = scene.add.container(0,0, [this,this.lifeBar]);
+
+
+
     this.newHitBox = new hitZone(scene,150,150,32,64,0xfafa,0.5);
   }
 
@@ -54,7 +73,7 @@ class EnemyFly extends Phaser.Physics.Arcade.Sprite {
     //const enemyFlyWalkFrames = scene.anims.generateFrameNumbers("enemyFly", {frames: [6,7,8,9,10,11]});
     const enemyFlyWalkFrames = scene.anims.generateFrameNumbers(sprite, {start: 0, end:5});
     const enemyFlyMoveFrames = scene.anims.generateFrameNumbers(sprite, { start:0 , end: 0 });
-    const enemyFlyDeadFrames = scene.anims.generateFrameNumbers(sprite,{start:0 , end: 0});
+    const enemyFlyDeadFrames = scene.anims.generateFrameNumbers(sprite,{start:18 , end: 23});
     const enemyFlyDmgFrames = scene.anims.generateFrameNumbers(sprite,{start:12 , end: 17});//done
     const enemyFlyDefFrames = scene.anims.generateFrameNumbers(sprite,{start:0 , end: 0});
     const enemyFlyAttackFrames = scene.anims.generateFrameNumbers(sprite,{start:6 , end: 11});// done
@@ -84,7 +103,7 @@ class EnemyFly extends Phaser.Physics.Arcade.Sprite {
     const enemyFlyDeadFramesConfig = {
       key: `${sprite}DeadFrames`,
       frames: enemyFlyDeadFrames,
-      frameRate: 15,
+      frameRate: 12,
       //duration:500,
       repeat: 0,
     }
@@ -240,6 +259,13 @@ class EnemyFly extends Phaser.Physics.Arcade.Sprite {
 
   }
 
+  updatePositionLifeBar () {
+    if(this.lifeBar) {
+      this.lifeBar.x = this.x;
+      this.lifeBar.y = this.y - 15;
+    }
+  }
+
 
   patrol(_patrolConfig:PatrolConfig){
     //console.log("patrol log: "+_patrolConfig.x+_patrolConfig.delay+_patrolConfig.flip);
@@ -254,6 +280,7 @@ class EnemyFly extends Phaser.Physics.Arcade.Sprite {
             const newPatrolConfig = _patrolConfig;
             newPatrolConfig.flip = false;
             this.anims.play(`${this.sprite}Walk`, true);
+            //this.updatePositionLifeBar();
             this.scene.time.delayedCall(_patrolConfig.delay, this.patrol, [newPatrolConfig], this);
           }else {
             this.setVelocityX(-_patrolConfig.x);
@@ -262,6 +289,7 @@ class EnemyFly extends Phaser.Physics.Arcade.Sprite {
             const newPatrolConfig = _patrolConfig;
             newPatrolConfig.flip = true;
             this.anims.play(`${this.sprite}Walk`, true);
+            //this.updatePositionLifeBar();
             this.scene.time.delayedCall(_patrolConfig.delay, this.patrol, [newPatrolConfig], this);
           }
         } else {
@@ -332,6 +360,11 @@ class EnemyFly extends Phaser.Physics.Arcade.Sprite {
         this.jump()
       } 
     }
+  }
+
+  update() {
+    console.log("entro update fly");
+    this.updatePositionLifeBar();
   }
 }
 

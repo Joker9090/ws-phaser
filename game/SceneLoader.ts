@@ -51,6 +51,8 @@ const loadAssets = {
       ["spritesheet", "archimago", "/game/archimago.png", { frameWidth: 128, frameHeight: 128}],
       ["spritesheet", "antorcha", "/game/Antorcha.png", { frameWidth: 128, frameHeight: 128}],
       ["spritesheet", "heartFullUI", "/game/UI/heart.png", { frameWidth: 32, frameHeight: 32}],
+      ["image", "barraVidaenemigos-back", "/game/newAssets/barraVidaenemigos-2.png"],
+      ["image", "barraVidaenemigos-front", "/game/newAssets/barraVidaenemigos-3.png"],
       //["audio","backgroundSound", "/game/sounds/a_dungeon_ambience_loop-79423.mp3"],
       //["audio","backgroundSoundBossBattleStart", "/game/sounds/heroic-intro-21468.mp3"],
       //["audio","backgroundSoundBossBattle", "/game/sounds/exiting-spicatos-16208.mp3"],
@@ -113,11 +115,13 @@ class SceneLoader extends Phaser.Scene {
   preload(this: Phaser.Scene) {
     var progressBar = this.add.graphics();
     var progressBox = this.add.graphics();
-    progressBox.fillStyle(0x222222, 0.8);
-    progressBox.fillRect(240, 270, 320, 50);
+    
+    
 
     var width = this.cameras.main.width;
     var height = this.cameras.main.height;
+    progressBox.fillStyle(0x222222, 0.8);
+    progressBox.fillRect(width / 2 - 160, height / 2 + 100, 320, 30);
     var loadingText = this.make.text({
       x: width / 2,
       y: height / 2 - 50,
@@ -155,7 +159,7 @@ class SceneLoader extends Phaser.Scene {
       percentText.setText(Number(value * 100) + '%');
       progressBar.clear();
       progressBar.fillStyle(0xffffff, 1);
-      progressBar.fillRect(250, 280, 300 * value, 30);
+      progressBar.fillRect(width / 2 - 160, height / 2 + 100, 300 * value, 30);
     });
 
     this.load.on('fileprogress', function (file: any) {

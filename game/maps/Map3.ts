@@ -18,7 +18,7 @@ class Map3 {
   enemyMakerPoints: EnemyMaker[] = [];
   healths?: Health;
   door?: Door;
-  enemies: Enemy[]  = [];
+  enemies: Enemy[] | EnemyFly[] | EnemyBoss[]  = [];
   //debugGraphics: Phaser.GameObjects.Graphics
   config: {
     w: number,
@@ -317,7 +317,7 @@ class Map3 {
     enemyMaker2.start()*/
 
     /** NEW ENEMYS */
-    const onCreateEnemy1 = (key: string, index: number, sprite: Enemy) => {
+    const onCreateEnemy1 = (key: string, index: number, sprite: Enemy | EnemyFly | EnemyBoss) => {
       this.enemies.push(sprite)
       if (key == "Enemy1" || key == "Enemy2" || key == "Enemy3" || key == "Enemy4" || key == "Enemy5" || key == "Enemy6") {
         const skeletonOnePatrol: PatrolConfig = {
@@ -355,7 +355,7 @@ class Map3 {
 
 
 
-    const onCreateEnemy2 = (key: string, index: number, sprite: Enemy) => {
+    const onCreateEnemy2 = (key: string, index: number, sprite:  Enemy | EnemyFly | EnemyBoss) => {
       this.enemies.push(sprite)
       if (key == "Boss1" || key == "Boss2" || key == "Boss3" || key == "Boss4" || key == "Boss5" || key == "Boss6") {
         const skeletonOnePatrol2: PatrolConfig = {

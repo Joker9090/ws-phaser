@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import Player from "./Player";
 import hitZone from "./hitZone";
+import MultiBar from "./MultiBar";
 
 export type PatrolConfig = {
   x:number,
@@ -17,6 +18,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
   isEnemyInFront: boolean = false
   patrolConfig?: PatrolConfig;
   life:number = 3;
+  lifeBar?: MultiBar;
   Onstate?: string = "pasive";
   sprite: string = '';
   newHitBox: hitZone;
@@ -35,7 +37,15 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     /**Darknes implementation */
     //this.setPipeline('Light2D');
-
+    const LifeConfig = {
+      x: this.x,
+      y: this.y - 15,
+      sprite: "barraVidaenemigos-front",
+      spriteContainer: "barraVidaenemigos-back",
+      startFull: true,
+    }
+    
+    this.lifeBar = new MultiBar(scene, LifeConfig);
     this.setDepth(9);
 
     this.setCollideWorldBounds(true);
@@ -54,13 +64,13 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     const skeletonIdleFrames = scene.anims.generateFrameNumbers(sprite,{start:0 , end: 5});
     //const skeletonWalkFrames = scene.anims.generateFrameNumbers("skeleton", {frames: [6,7,8,9,10,11]});
-    const skeletonWalkFrames = scene.anims.generateFrameNumbers(sprite, {start: 6, end:11});
-    const skeletonMoveFrames = scene.anims.generateFrameNumbers(sprite, { start:10 , end: 15 });
-    const skeletonDeadFrames = scene.anims.generateFrameNumbers(sprite,{start:18 , end: 23});
-    const skeletonDmgFrames = scene.anims.generateFrameNumbers(sprite,{start:24 , end: 25});
-    const skeletonDefFrames = scene.anims.generateFrameNumbers(sprite,{start:30 , end: 34});
-    const skeletonAttackFrames = scene.anims.generateFrameNumbers(sprite,{start:36 , end: 41});
-    const skeletonDeadFrame = scene.anims.generateFrameNumbers(sprite,{frames:[22]})
+    const skeletonWalkFrames = scene.anims.generateFrameNumbers(sprite, {start: 0, end:5});
+    const skeletonMoveFrames = scene.anims.generateFrameNumbers(sprite, { start:0 , end: 0 });
+    const skeletonDeadFrames = scene.anims.generateFrameNumbers(sprite,{start:0 , end: 0});
+    const skeletonDmgFrames = scene.anims.generateFrameNumbers(sprite,{start:12 , end: 17});
+    const skeletonDefFrames = scene.anims.generateFrameNumbers(sprite,{start:0 , end: 0});
+    const skeletonAttackFrames = scene.anims.generateFrameNumbers(sprite,{start:6 , end: 11});
+    const skeletonDeadFrame = scene.anims.generateFrameNumbers(sprite,{start:18 , end: 23})
 
     const skeletonWalkConfig = {
       key: `${sprite}Walk`,
@@ -239,7 +249,12 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
 
   }
-
+  updatePositionLifeBar () {
+    if(this.lifeBar) {
+      this.lifeBar.x = this.x;
+      this.lifeBar.y = this.y - 15;
+    }
+  }
 
   patrol(_patrolConfig:PatrolConfig){
     //console.log("patrol log: "+_patrolConfig.x+_patrolConfig.delay+_patrolConfig.flip);

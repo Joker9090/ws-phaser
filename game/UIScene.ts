@@ -130,19 +130,19 @@ export default class UIScene extends Phaser.Scene {
       startFull: true,
     }
 
-    const ExpConfig = {
-      x: (this.game.canvas.width/2)+ 180,
-      y: 35,
-      sprite: "ProgresoRellenop",
-      spriteContainer: "ProgresoBorde",
-      startFull: false,
-      scale: 0.8,
+    //const ExpConfig = {
+    //  x: (this.game.canvas.width/2)+ 180,
+    //  y: 35,
+    //  sprite: "ProgresoRellenop",
+    //  spriteContainer: "ProgresoBorde",
+    //  startFull: false,
+    //  scale: 0.8,
       
-    }
+    //}
 
     this.lifeBarInGame = new MultiBar(this, LifeConfig);
     this.staminaBarInGame = new MultiBar(this,StaminaConfig);
-    this.expBarInGame = new MultiBar(this, ExpConfig);
+    //this.expBarInGame = new MultiBar(this, ExpConfig);
 
 
     /**CONTADOR ENEMIGOS BASIC */

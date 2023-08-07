@@ -119,8 +119,26 @@ export default class ModalScene extends Phaser.Scene {
     const positionArray = [(this.game.canvas.width / 4),(this.game.canvas.width / 2),(this.game.canvas.width - (this.game.canvas.width / 4))];
     const marginInMonitorW = (this.game.canvas.width / 4);
 
-    this.onCardCircleA = this.add.image(this.game.canvas.width / 2,this.game.canvas.height/2,"LevelRewardAnim1").setScale(1.7).setAlpha(0);
-    this.onCardCircleB = this.add.image(this.game.canvas.width / 2,this.game.canvas.height/2,"LevelRewardAnim2").setScale(1.7).setAlpha(0);
+    this.onCardCircleA = this.add.image(this.game.canvas.width / 2,this.game.canvas.height/2,"LevelRewardAnim1").setScale(1.9).setAlpha(0);
+    this.onCardCircleB = this.add.image(this.game.canvas.width / 2,this.game.canvas.height/2,"LevelRewardAnim2").setScale(1.9).setAlpha(0);
+
+
+    this.tweens.add({
+      targets: this.onCardCircleA,
+      angle: 360,
+      duration: 8000,
+      yoyo: true,
+      repeat: -1
+    });
+
+    this.tweens.add({
+      targets: this.onCardCircleB,
+      angle: 360,
+      duration: 7000,
+      yoyo: true,
+      repeat: -1
+    });
+
     console.log("ancho total: ",this.game.canvas.width);
     for (let i = 0; i < positionArray.length; i++) {
       const card = this.add.image(positionArray[i],this.game.canvas.height/2, "cardDown").setScale(0,0);
@@ -207,6 +225,22 @@ export default class ModalScene extends Phaser.Scene {
 
     this.circuloA = this.add.image(0,0 - 15,"LevelRewardAnim1").setDepth(91).setOrigin(0.5);
     this.circuloB = this.add.image(0,0 - 15,"LevelRewardAnim2").setDepth(91).setOrigin(0.5);
+
+    this.tweens.add({
+      targets: this.circuloA,
+      angle: 360,
+      duration: 8000,
+      yoyo: true,
+      repeat: -1
+    });
+
+    this.tweens.add({
+      targets: this.circuloB,
+      angle: 360,
+      duration: 7000,
+      yoyo: true,
+      repeat: -1
+    });
 
     //agregar animacion de las luces de atras AQUI
 
@@ -393,15 +427,15 @@ export default class ModalScene extends Phaser.Scene {
   }
 
   update() {
-    if(this.circuloA && this.circuloB) {
-      this.circuloA.rotation += 0.001;
-      this.circuloB.rotation -= 0.001;
-    }
+    //if(this.circuloA && this.circuloB) {
+    //  this.circuloA.rotation += 0.001;
+    //  this.circuloB.rotation -= 0.001;
+    //}
 
-    if(this.onCard && this.onCardCircleA  && this.onCardCircleB) {
-      this.onCardCircleA.rotation += 0.001;
-      this.onCardCircleB.rotation -= 0.001;
-    }
+    //if(this.onCard && this.onCardCircleA  && this.onCardCircleB) {
+    //  this.onCardCircleA.rotation += 0.001;
+    //  this.onCardCircleB.rotation -= 0.001;
+    //}
 
   };
 };

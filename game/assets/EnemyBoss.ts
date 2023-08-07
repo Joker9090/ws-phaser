@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import Player from "./Player";
 import hitZone from "./hitZone";
+import MultiBar from "./MultiBar";
 
 export type PatrolConfig = {
   x:number,
@@ -17,6 +18,7 @@ class EnemyBoss extends Phaser.Physics.Arcade.Sprite {
   isEnemyInFront: boolean = false
   patrolConfig?: PatrolConfig;
   life:number = 3;
+  lifeBar?: MultiBar;
   Onstate?: string = "pasive";
   sprite: string = '';
   newHitBox: hitZone;
@@ -46,6 +48,15 @@ class EnemyBoss extends Phaser.Physics.Arcade.Sprite {
       this.body.setOffset(200, 90);
     }
 
+    const LifeConfig = {
+      x: this.x,
+      y: this.y - 15,
+      sprite: "barraVidaenemigos-front",
+      spriteContainer: "barraVidaenemigos-back",
+      startFull: true,
+    }
+
+    this.lifeBar = new MultiBar(scene, LifeConfig);
     this.newHitBox = new hitZone(scene,150,150,32,64,0xfafa,0.5);
   }
 
@@ -240,6 +251,13 @@ class EnemyBoss extends Phaser.Physics.Arcade.Sprite {
 
   }
 
+  updatePositionLifeBar () {
+    if(this.lifeBar) {
+      this.lifeBar.x = this.x;
+      this.lifeBar.y = this.y - 15;
+    }
+  }
+
 
   patrol(_patrolConfig:PatrolConfig){
     //console.log("Boss flip: ", _patrolConfig.flip, this.flipX);
@@ -334,6 +352,11 @@ class EnemyBoss extends Phaser.Physics.Arcade.Sprite {
         this.jump()
       } 
     }
+  }
+
+  update() {
+    console.log("entro update boss");
+    this.updatePositionLifeBar();
   }
 }
 

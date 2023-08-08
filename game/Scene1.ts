@@ -177,7 +177,9 @@ class Scene1 extends Phaser.Scene {
 
 
     this.cameras.main.startFollow(this.monchi,true,0.5,0.5, -0, 20);//seguimiento del personaje, apartir de q pixeles alrededor
-    this.cameras.main.setZoom(0.9);//zoom en la escene sobre lo que este apuntando la camara 3 , 0.5 // ultimo 4 // ultimo ok 1.3
+    this.cameras.main.setZoom(1.2);//zoom en la escene sobre lo que este apuntando la camara 3 , 0.5 // ultimo 4 // ultimo ok 1.3
+    this.cameras.main.setPosition(0,0);
+    //this.cameras.main.setScroll();
 
     this.cursors = this.input.keyboard?.createCursorKeys()
 

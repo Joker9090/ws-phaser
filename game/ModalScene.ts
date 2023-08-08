@@ -119,8 +119,8 @@ export default class ModalScene extends Phaser.Scene {
     const positionArray = [(this.game.canvas.width / 4),(this.game.canvas.width / 2),(this.game.canvas.width - (this.game.canvas.width / 4))];
     const marginInMonitorW = (this.game.canvas.width / 4);
 
-    this.onCardCircleA = this.add.image(this.game.canvas.width / 2,this.game.canvas.height/2,"LevelRewardAnim1").setScale(1.9).setAlpha(0);
-    this.onCardCircleB = this.add.image(this.game.canvas.width / 2,this.game.canvas.height/2,"LevelRewardAnim2").setScale(1.9).setAlpha(0);
+    this.onCardCircleA = this.add.image(this.game.canvas.width / 2,this.game.canvas.height/2,"LevelRewardAnim1").setScale(2.1).setAlpha(0);
+    this.onCardCircleB = this.add.image(this.game.canvas.width / 2,this.game.canvas.height/2,"LevelRewardAnim2").setScale(2.1).setAlpha(0);
 
 
     this.tweens.add({

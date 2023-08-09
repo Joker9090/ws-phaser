@@ -13,7 +13,7 @@ import Map3, { EnemyMaker } from "./maps/Map3";
 import Boss from "./assets/Boss";
 import EnemyFly from "./assets/EnemyFly";
 import EventsCenter from "./EventsCenter";
-import EnemyBoss from "./assets/EnemyBoss";
+import EnemyBoss, { EnemyFactory } from "./assets/EnemyBoss";
 
 // Scene in class
 class Scene1 extends Phaser.Scene {
@@ -125,6 +125,17 @@ class Scene1 extends Phaser.Scene {
     const UIScene = this.game.scene.getScene("UIScene")
     this.scene.launch(UIScene, { ...this.dataLevel, game: this });
 
+
+    this.monchi = new Player(this, 650, 650, "playerNew", 2);
+
+
+    EventsCenter.on("CreateEnemy",(enemy: EnemyFactory) => {
+      console.log("CREO ACA ALGO?", enemy, this.monchi)
+      if(this.monchi) this.physics.add.collider(this.monchi, enemy, () => {
+        if(this.monchi) enemy.enemyAround(this.monchi, enemy.rangeX, enemy.rangeY)
+      });
+    }, this);
+
     this.map = new Map3(this);
 
     this.cameras.main.setBounds(0, 0, this.map.config.w, this.map.config.h)
@@ -136,11 +147,6 @@ class Scene1 extends Phaser.Scene {
     const floor = this.map.createMap()
 
     this.enemyRespawns = this.map.enemyMakerPoints;
-    
-    //this.monchi = new Player(this, 650, 650, "knight", 2);
-    this.monchi = new Player(this, 650, 650, "playerNew", 2);
-    //this.monchi.setLife(50);
-
     
 
     UIScene.scene.bringToTop();
@@ -177,7 +183,8 @@ class Scene1 extends Phaser.Scene {
 
 
     this.cameras.main.startFollow(this.monchi,true,0.5,0.5, -0, 20);//seguimiento del personaje, apartir de q pixeles alrededor
-    this.cameras.main.setZoom(1.2);//zoom en la escene sobre lo que este apuntando la camara 3 , 0.5 // ultimo 4 // ultimo ok 1.3
+    //this.cameras.main.setZoom(1.2);//zoom en la escene sobre lo que este apuntando la camara 3 , 0.5 // ultimo 4 // ultimo ok 1.3
+    this.cameras.main.setZoom(0.9);
     this.cameras.main.setPosition(0,0);
     //this.cameras.main.setScroll();
 
@@ -217,7 +224,9 @@ class Scene1 extends Phaser.Scene {
     // @ts-ignore
     this.physics.add.collider(this.monchi, floor, checkFloor);
 
-
+    
+    
+   
     /**EMITERS TESTER */
     
     //EventsCenter.emit("lifeUpdate",-10) 
@@ -266,12 +275,11 @@ class Scene1 extends Phaser.Scene {
     //HANDLER?
     EventsCenter.on("newBuff",this.updateBuff, this);
     
-
   }
 
   update(this: Scene1) {
     //if(this.enemysInGame == 0) {
-      this.updateEnemyInGame();
+      // this.updateEnemyInGame();
 
       
     //}
@@ -284,17 +292,12 @@ class Scene1 extends Phaser.Scene {
       }
       this.monchi.checkMove(this.cursors);
       if(this.map) {
-        for (let i = 0; i < this.map.enemies.length; i++) {
-          const enemy = this.map.enemies[i];
-          enemy.updatePositionLifeBar();
-        }
         if(this.monchi.weapon) {
           if(this.monchi.weapon.hitboxes.length > 0) {
             for (let i = 0; i < this.map.enemies.length; i++) {
               const enemy = this.map.enemies[i];
               for (let k = 0; k < this.monchi.weapon.hitboxes.length; k++) {
                 const hitbox = this.monchi.weapon.hitboxes[k];
-                
                 if (Phaser.Geom.Rectangle.Overlaps(hitbox.getBounds(), enemy.getBounds())){
                   this.hitPlayer(this.monchi,enemy,this);
                 }

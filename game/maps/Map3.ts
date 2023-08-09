@@ -9,7 +9,8 @@ import MultiBar from "../assets/MultiBar";
 import Door from "../assets/Door";
 import Enemy, { PatrolConfig } from "../assets/Enemy";
 import EnemyFly from "../assets/EnemyFly";
-import EnemyBoss from "../assets/EnemyBoss";
+import EnemyBoss, { EnemyFactory } from "../assets/EnemyBoss";
+import EventsCenter from "../EventsCenter";
 
 class Map3 {
   scene: Phaser.Scene;
@@ -18,7 +19,7 @@ class Map3 {
   enemyMakerPoints: EnemyMaker[] = [];
   healths?: Health;
   door?: Door;
-  enemies: Enemy[] | EnemyFly[] | EnemyBoss[]  = [];
+  enemies: EnemyBoss[] | EnemyFactory[]  = [];
   //debugGraphics: Phaser.GameObjects.Graphics
   config: {
     w: number,
@@ -31,7 +32,7 @@ class Map3 {
     this.scene = scene
 
 
-    this.scene.physics.world.setBounds(0, 0, this.config.w, this.config.h)
+    // this.scene.physics.world.setBounds(0, 0, this.config.w, this.config.h)
 
     /* Debug */
     //this.debugGraphics = this.scene.add.graphics();
@@ -317,7 +318,7 @@ class Map3 {
     enemyMaker2.start()*/
 
     /** NEW ENEMYS */
-    const onCreateEnemy1 = (key: string, index: number, sprite: Enemy | EnemyFly | EnemyBoss) => {
+    const onCreateEnemy1 = (key: string, index: number, sprite:  EnemyBoss | EnemyFactory) => {
       this.enemies.push(sprite)
       if (key == "Enemy1" || key == "Enemy2" || key == "Enemy3" || key == "Enemy4" || key == "Enemy5" || key == "Enemy6") {
         const skeletonOnePatrol: PatrolConfig = {
@@ -347,15 +348,15 @@ class Map3 {
       onCreate: onCreateEnemy1
     }
 
-    const enemyMaker1 = new EnemyMaker(this.scene, { x: 150, y: 600 }, enemyMaker1Config)
-    enemyMaker1.start()
+    // const enemyMaker1 = new EnemyMaker(this.scene, { x: 150, y: 600 }, enemyMaker1Config)
+    // enemyMaker1.start()
 
-    this.enemyMakerPoints.push(enemyMaker1);
+    // this.enemyMakerPoints.push(enemyMaker1);
     
 
 
 
-    const onCreateEnemy2 = (key: string, index: number, sprite:  Enemy | EnemyFly | EnemyBoss) => {
+    const onCreateEnemy2 = (key: string, index: number, sprite: EnemyFactory) => {
       this.enemies.push(sprite)
       if (key == "Boss1" || key == "Boss2" || key == "Boss3" || key == "Boss4" || key == "Boss5" || key == "Boss6") {
         const skeletonOnePatrol2: PatrolConfig = {
@@ -365,18 +366,20 @@ class Map3 {
           flip: false
         }
         sprite.patrol(skeletonOnePatrol2);
+        console.log("Creo el fuucking enemy")
+        EventsCenter.emit("CreateEnemy",sprite);
       }
     }
 
     const enemyMaker2Config = {
       delay: 600,
-      max: 4,
+      max: 1,
       enemies: [
         // "archimago",
         "Boss1",
-        "Boss2",
-        "Boss3",
-        "Boss4",
+        // "Boss2",
+        // "Boss3",
+        // "Boss4",
       ],
       EnemyClass: EnemyBoss,
       colliders: [newFloor],
@@ -409,9 +412,9 @@ export type EnemyMakerConfig = {
   delay: number,
   max?: number,
   enemies: string[],
-  EnemyClass: typeof Enemy | typeof EnemyFly | typeof EnemyBoss// Cambiar a la clase del enemigo
+  EnemyClass: typeof Enemy | typeof EnemyFly | typeof EnemyBoss // Cambiar a la clase del enemigo
   colliders: any[],
-  onCreate?: (key: string, index: number, sprite: Enemy) => void
+  onCreate?: (key: string, index: number, sprite: Enemy | EnemyFactory) => void
 }
 
 export type EnemyMakerProgress = {

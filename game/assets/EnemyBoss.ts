@@ -11,54 +11,90 @@ export type PatrolConfig = {
   flip?:boolean,
 }
 
-class EnemyBoss extends Phaser.Physics.Arcade.Sprite {
+export class EnemyFactory extends Phaser.Physics.Arcade.Sprite {
   isJumping: boolean = false
   isAttacking: boolean = false
   isPatrol: boolean = false;
+  followingWho?: Phaser.GameObjects.Sprite;
   isEnemyInFront: boolean = false
   patrolConfig?: PatrolConfig;
-  life:number = 3;
+  life: number = 3;
   lifeBar?: MultiBar;
   Onstate?: string = "pasive";
   sprite: string = '';
   newHitBox: hitZone;
+  rangeX: number = 100;
+  rangeY: number = 100;
 
-  constructor(scene: Phaser.Scene, x: number, y: number, sprite: string, frame: number,life?: number) {
+  constructor(scene: Phaser.Scene, x: number, y: number, sprite: string, frame: number, hitzone: hitZone, life?: number) {
     super(scene, x, y, sprite, frame)
-
-    this.createAnims(scene,sprite);
-
+    this.newHitBox = hitzone;
     this.sprite = sprite;
-    this.setScale(0.5)
-    this.flipX = true;
-    // Agregar el player al mundo visual
-    scene.add.existing(this)
-    // Agregar el player al mundo fisico
-    scene.physics.add.existing(this)
 
-    /**Darknes implementation */
-    //this.setPipeline('Light2D');
-
-    this.setCollideWorldBounds(true);
-    if(this.body) {
-      const body = (this.body as Phaser.Physics.Arcade.Body)
-      body.onWorldBounds = true;
-      //this.body.setSize(35,80,true); // GOOOD!
-      this.body.setSize(200, 385, true); // GOOOD!
-      this.body.setOffset(200, 90);
-    }
-
-    const LifeConfig = {
-      x: this.x,
-      y: this.y - 15,
-      sprite: "barraVidaenemigos-front",
-      spriteContainer: "barraVidaenemigos-back",
-      startFull: true,
-    }
-
-    this.lifeBar = new MultiBar(scene, LifeConfig);
-    this.newHitBox = new hitZone(scene,150,150,32,64,0xfafa,0.5);
   }
+
+  patrol(_patrolConfig:PatrolConfig){
+    //console.log("Boss flip: ", _patrolConfig.flip, this.flipX);
+      this.patrolConfig = _patrolConfig;
+    //console.log("patrol log: "+_patrolConfig.x+_patrolConfig.delay+_patrolConfig.flip);
+    if(this.Onstate != "dead"){
+      this.isPatrol = true;
+      if(_patrolConfig.flip != null ||_patrolConfig.flip != undefined)this.flipX = _patrolConfig.flip;    
+      if(_patrolConfig.enemyDetect){
+        if(!this.isEnemyInFront){
+          if(this.flipX) {
+            this.setVelocityX(_patrolConfig.x);
+            //_patrolConfig.flip = true;
+            const newPatrolConfig = _patrolConfig;
+            newPatrolConfig.flip = false;
+            this.anims.play(`${this.sprite}Walk`, true);
+            this.scene.time.delayedCall(_patrolConfig.delay, this.patrol, [newPatrolConfig], this);
+          }else {
+            this.setVelocityX(-_patrolConfig.x);
+            this.flipX = false;
+            //_patrolConfig.flip = true;
+            const newPatrolConfig = _patrolConfig;
+            newPatrolConfig.flip = true;
+            this.anims.play(`${this.sprite}Walk`, true);
+            this.scene.time.delayedCall(_patrolConfig.delay, this.patrol, [newPatrolConfig], this);
+          }
+        } else {
+          this.isPatrol = false;
+          this.attack();
+  
+        }
+      }else {
+        this.anims.play(`${this.sprite}Walk`, true);
+      }
+
+    }
+
+  }
+
+  attack() {
+    if (!this.isAttacking) {
+      console.log("attack enemyBoss");
+      // this.newHitBox.attackBox((this.x),(this.y),!this.flipX, 20)
+      this.isAttacking = true;
+      this.flipX = !this.flipX;
+      console.log("`${this.sprite}AttackFrames`",`${this.sprite}AttackFrames`)
+      this.play(`${this.sprite}AttackFrames`, true);
+      //this.setVelocityY(-730);
+      this.scene.time.delayedCall(600, () => {
+        console.log("ENTRO ACA ??",this)
+
+        this.isAttacking = false;
+        this.isPatrol = true;
+        this.isEnemyInFront = false;
+        if(this.patrolConfig) {
+          
+          this.scene.time.delayedCall(this.patrolConfig.delay, this.patrol, [this.patrolConfig], this);
+        }
+        // this.idle()
+      }, [], this);
+    }
+  }
+
 
   createAnims(scene: Phaser.Scene, sprite: string) {
 
@@ -182,22 +218,15 @@ class EnemyBoss extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
-  enemyAround(target:Player,maxRange: number) {
+  enemyAround(target:Phaser.GameObjects.Sprite, maxRangeX: number, maxRangeY: number) {
     console.log("depth esqueleto ",this.depth);
     const dx = this.x - target.x;
     const dy = this.y - target.y;
-    //console.log("EnemyBoss around dx value: "+dx);
-    if (Math.abs(dx) < maxRange && Math.abs(dy) < 2) {
-      //EnemyBoss.setVelocityX(Math.sign(dx) * SPEED);
+    if (Math.abs(dx) < maxRangeX && Math.abs(dy) < maxRangeY) {
       this.isEnemyInFront = true;
       this.setVelocityX(0);
-      //console.log("EnemyBoss around state from enemyBoss: "+this.isEnemyInFront);
-    } else if(Math.abs(dx) > maxRange&& Math.abs(dy) > 2){
+    } else if(Math.abs(dx) > maxRangeX && Math.abs(dy) > maxRangeY){
       this.isEnemyInFront = false;
-      //if(this.patrolConfig) {
-        //this.patrolConfig.flip = this.flipX;
-        //this.patrol(this.patrolConfig);
-      //}
     }
 
   }
@@ -259,58 +288,8 @@ class EnemyBoss extends Phaser.Physics.Arcade.Sprite {
   }
 
 
-  patrol(_patrolConfig:PatrolConfig){
-    //console.log("Boss flip: ", _patrolConfig.flip, this.flipX);
-    
-    //console.log("patrol log: "+_patrolConfig.x+_patrolConfig.delay+_patrolConfig.flip);
-    if(this.Onstate != "dead"){
-      this.isPatrol = true;
-      if(_patrolConfig.flip != null ||_patrolConfig.flip != undefined)this.flipX = _patrolConfig.flip;    
-      if(_patrolConfig.enemyDetect){
-        if(!this.isEnemyInFront){
-          if(this.flipX) {
-            this.setVelocityX(_patrolConfig.x);
-            //_patrolConfig.flip = true;
-            const newPatrolConfig = _patrolConfig;
-            newPatrolConfig.flip = false;
-            this.anims.play(`${this.sprite}Walk`, true);
-            this.scene.time.delayedCall(_patrolConfig.delay, this.patrol, [newPatrolConfig], this);
-          }else {
-            this.setVelocityX(-_patrolConfig.x);
-            this.flipX = false;
-            //_patrolConfig.flip = true;
-            const newPatrolConfig = _patrolConfig;
-            newPatrolConfig.flip = true;
-            this.anims.play(`${this.sprite}Walk`, true);
-            this.scene.time.delayedCall(_patrolConfig.delay, this.patrol, [newPatrolConfig], this);
-          }
-        } else {
-          this.isPatrol = false;
-          this.attack();
   
-        }
-      }else {
-        this.anims.play(`${this.sprite}Walk`, true);
-      }
-
-    }
-
-  }
-  attack() {
-    if (!this.isAttacking) {
-      console.log("attack enemyBoss");
-      this.newHitBox.attackBox((this.x),(this.y),!this.flipX, 20)
-      this.isAttacking = true;
-      this.flipX = !this.flipX;
-      this.play(`${this.sprite}AttackFrames`, true);
-      //this.setVelocityY(-730);
-      this.scene.time.delayedCall(600, () => {
-        this.isAttacking = false;
-
-        // this.idle()
-      }, [], this);
-    }
-  }
+  
 
   checkMove(cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined) {
 
@@ -355,9 +334,54 @@ class EnemyBoss extends Phaser.Physics.Arcade.Sprite {
   }
 
   update() {
-    console.log("entro update boss");
-    this.updatePositionLifeBar();
+    // console.log("entro update boss");
+    // this.updatePositionLifeBar();
   }
+}
+
+
+
+class EnemyBoss extends EnemyFactory {
+  rangeX: number = 200;
+  rangeY: number = 20;
+
+  constructor(scene: Phaser.Scene, x: number, y: number, sprite: string, frame: number,life?: number) {
+    super(scene, x, y, sprite, frame, new hitZone(scene,150,150,32,64,0xfafa,0.5))
+
+    this.createAnims(scene,sprite);
+
+    this.sprite = sprite;
+    this.setScale(0.5)
+    this.flipX = true;
+    // Agregar el player al mundo visual
+    scene.add.existing(this)
+    // Agregar el player al mundo fisico
+    scene.physics.add.existing(this)
+
+    /**Darknes implementation */
+    //this.setPipeline('Light2D');
+
+    this.setCollideWorldBounds(true);
+    if(this.body) {
+      const body = (this.body as Phaser.Physics.Arcade.Body)
+      body.onWorldBounds = true;
+      //this.body.setSize(35,80,true); // GOOOD!
+      this.body.setSize(200, 385, true); // GOOOD!
+      this.body.setOffset(200, 90);
+    }
+
+    const LifeConfig = {
+      x: this.x,
+      y: this.y - 15,
+      sprite: "barraVidaenemigos-front",
+      spriteContainer: "barraVidaenemigos-back",
+      startFull: true,
+    }
+
+    this.lifeBar = new MultiBar(scene, LifeConfig);
+  }
+
+
 }
 
 export default EnemyBoss

@@ -1,10 +1,5 @@
-import Phaser, { GameObjects } from "phaser";
-//import Tutorial from "./maps/Tutorial";
-import UI, { UIConfig } from "./assets/UI";
-import TextBox from "./assets/TextBox";
-//import Game from "./Game";
+import Phaser from "phaser";
 import EventsCenter from "./EventsCenter";
-import MultiBar from "./assets/MultiBar";
 
 export default class ModalScene extends Phaser.Scene {
   circuloA?: Phaser.GameObjects.Image;

@@ -22,6 +22,8 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
   Onstate?: string = "pasive";
   sprite: string = '';
   newHitBox: hitZone;
+  rangeX: number = 80;
+  rangeY: number = 10;
 
   constructor(scene: Phaser.Scene, x: number, y: number, sprite: string, frame: number,life?: number) {
     super(scene, x, y, sprite, frame)

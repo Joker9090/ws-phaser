@@ -8,6 +8,7 @@ export type MultiBarConfig = {
     spriteContainer: string,
     startFull: boolean,
     scale?:number,
+    addContainer?: Phaser.GameObjects.Container,
 
 }
 // Scene in class
@@ -16,6 +17,7 @@ class MultiBar extends Phaser.GameObjects.Container {
   lifeMask?:Phaser.GameObjects.Image;
   fullBar?: number;
   scaleForBar?: number = 0.6;
+  testBar?: Phaser.GameObjects.Image;
   //group: Phaser.Physics.Arcade.Group;
   
   constructor(scene: Phaser.Scene, config: MultiBarConfig,group?: Phaser.Physics.Arcade.Group , frame?: string | number | undefined) {
@@ -44,6 +46,8 @@ class MultiBar extends Phaser.GameObjects.Container {
     //greenBar.setOrigin(1.1,0.5)
     greenBar.mask = new Phaser.Display.Masks.BitmapMask(this.scene, greenBarMask);
     
+    this.testBar = greenBar;
+
     this.lifeMask = greenBarMask;
     this.fullBar = this.lifeMask.x;
     if(!config.startFull) {
@@ -52,12 +56,39 @@ class MultiBar extends Phaser.GameObjects.Container {
     //greenBarMask.x -= 35;
     //greenBarMask.x= 200;
 
+    if(config.addContainer) {
+      config.addContainer.add([
+      greenBar,
+      greenBarMask,
+      lifeContainer])
+    }
     scene.add.existing(this)
 
   }
 
+  toggleDisabled(isActive: boolean){
+    console.log("llega: ",isActive);
+    let newSprite = "";
+    if(!isActive && this.lifeMask){
+      newSprite = "SettingsBarraVolumenApagado";
+
+    }else {
+      newSprite = "SettingsBarraVolumenEncendido";
+    }
+
+    console.log("Sprite es : ",newSprite);
+    this.scene.tweens.add({
+      targets: [this.testBar],
+      props: {
+          texture: { value: newSprite, duration: 0, delay: 50 }
+      },
+      ease: 'Linear'
+    });
+
+  }
+
   updateBar(value: number){
-   
+    // en music y sound 85 de lifemask por click
     if(this.lifeMask && this.fullBar){
       console.log("LIFEBAR lifemask pre value: ",this.lifeMask.x);
       if(value > 0){
@@ -68,8 +99,9 @@ class MultiBar extends Phaser.GameObjects.Container {
         //this.greenBar.mask.x += value;
       }else {
         console.log("entro else");
-        const a = ((this.fullBar / 100) * value) * -1; 
-        this.lifeMask.x -= a;
+        const a = ((this.fullBar / 100) * value) * -1;
+        if((this.lifeMask.x - a) < 511) this.lifeMask.x = 511;
+        else this.lifeMask.x -= a;
       }
       //const a = (this.fullBar / 100) * value; 
       //const b = this.lifeMask.x - a;

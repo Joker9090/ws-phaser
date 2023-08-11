@@ -20,6 +20,7 @@ export default class UIScene extends Phaser.Scene {
   //playerLifeAvatarContainer?: 
 
   ContenedorBarra?: Phaser.GameObjects.Image;
+  settingsUI?: Phaser.GameObjects.Image;
 
 
   /**ELEMENTOS A EXPORTAR PARA USAR EVENTOS */
@@ -91,6 +92,13 @@ export default class UIScene extends Phaser.Scene {
 
   }
 
+  showNewModal = (type: string, content: number, textInfo?: string, qty?: number) => {
+    this.scene.pause();
+    const ModalScene = this.game.scene.getScene("ModalScene")
+    this.scene.launch(ModalScene, {type: type, content: content, textInfo: textInfo, qty: qty });
+    ModalScene.scene.bringToTop();
+  }
+
 
 
   create(this: UIScene, data: { levelUp: string }) {
@@ -147,10 +155,39 @@ export default class UIScene extends Phaser.Scene {
 
     /**CONTADOR ENEMIGOS BASIC */
     const contEnemys = this.add.image(this.game.canvas.width - 200,this.game.canvas.height - 100,"ContadorEnemigos").setDepth(90).setScale(0.7);
-    this.contEnemysInGame = this.add.text(this.game.canvas.width - 205,this.game.canvas.height - 74, "0", {fontFamily: "Enchanted Land" ,fontSize: "28px", color: "#B6DFE9"}).setDepth(91).setOrigin(0.5);
+    this.contEnemysInGame = this.add.text(this.game.canvas.width - 200,this.game.canvas.height - 62, "0", {fontFamily: "Enchanted Land" ,fontSize: "28px", color: "#B6DFE9"}).setDepth(91).setOrigin(0.5);
 
     /**InsigniaPoder */
     this.insigniaPoder = this.add.image(110,this.game.canvas.height - 100,"InsigniaPoder").setScale(0.4).setDepth(100);
+
+    //Settings
+
+    this.settingsUI = this.add.image(this.game.canvas.width - 200, 100, "SettingsButton").setDepth(100).setScale(0.5);
+    this.settingsUI.setInteractive();
+
+
+    this.settingsUI.on('pointerdown', () => {
+      console.log("Click en settings");
+      const princiPalScene = this.game.scene.getScene("Scene1")
+      princiPalScene.scene.pause();
+      const UIScene = this.game.scene.getScene("UIScene");
+      UIScene.cameras.main.setAlpha(0.88);
+      this.cameras.main.setAlpha(0.88);
+      this.showNewModal("Settings",1);
+
+    });
+
+    this.settingsUI.on('pointerover', () => {
+      //buttonContainer.setTintFill(0x11001110, 1);
+      //buttonText.setColor("#F9F8F7")
+      this.input.setDefaultCursor('pointer');
+    });
+
+    this.settingsUI.on('pointerout', () => {
+      //buttonContainer.setTintFill("#F1D69E", 1);
+      //buttonText.setColor("#F1D69E")
+      this.input.setDefaultCursor('default');
+    });
 
     /*
     const dmgSimu = (dmg: number) => {
@@ -170,53 +207,6 @@ export default class UIScene extends Phaser.Scene {
 
 
   
-
-    /* TIMER */
-    /*     this.timerText = this.add
-      .text(this.cameras.main.width - 120, 50, "Time: 0", { fontSize: "32px" })
-      .setOrigin(0.5, 0.5)
-      .setScrollFactor(0, 0)
-      .setDepth(100)
-      .setSize(50, 50);
-    this.timeLevel = 0;
-    var timerEvent = this.time.addEvent({
-      delay: 1000,
-      callback: () => {
-        this.timeLevel++;
-        //dmgSimu(this.timeLevel);
-        //this.expUpdate(10);
-        this.timerText?.setText("Time: " + this.timeLevel);
-        this.timeLevel = this.timeLevel;
-      },
-      callbackScope: this,
-      loop: true,
-    });
-    
-    this.containerText.add([this.timerText]);
-
-    this.tweens.addCounter({
-      from: 0,
-      to: 30,
-      duration: 1000,
-      ease: window.Phaser.Math.Easing.Sine.InOut,
-      yoyo: true,
-      repeat: -1,
-      onUpdate: (tween) => {
-        let originalPosition = 0;
-        if (this.progressParam == 1) {
-          this.containerRight?.setPosition(0, 0);
-          const value = tween.getValue();
-          this.containerLeft?.setPosition(0, value);
-        } else if (this.progressParam == 3) {
-          this.containerLeft?.setPosition(0, 0);
-          const value = tween.getValue();
-          this.containerRight?.setPosition(0, value);
-        } else {
-          this.containerLeft?.setPosition(0, 0);
-          this.containerRight?.setPosition(0, 0);
-        }
-      },
-    }); */
 
     /**SCENE HANDLER */
     EventsCenter.on("lifeUpdate",this.lifeUpdate, this);
@@ -241,34 +231,10 @@ export default class UIScene extends Phaser.Scene {
       EventsCenter.removeListener("gameOver", this.closeSign, this);
       //EventsCenter.on('rotateCam', this.rotateArrow, this);
       this.scene.stop();
-    });
-    EventsCenter.on("gravityArrow", this.rotateArrow, this);
-    //EventsCenter.on('rotateCam', this.rotateArrow, this);
-    EventsCenter.on("die", this.loseLife, this);
-    EventsCenter.on("coinCollected", this.coinCollected, this);
-    EventsCenter.on("nextLevel", this.nextLevel, this);
-    EventsCenter.on("coin", this.showCoin, this);
-    EventsCenter.on("noFloat", this.showArrow, this);
-    EventsCenter.on("closeSign", this.closeSign, this);*/
+    });*/
   }
 
   update() {
 
-    /*     this.timerText?.setPosition(
-      this.cameras.main.width - this.cameras.main.width / 10,
-      50
-    );
-    if (this.cameras.main.width < this.cameras.main.height) {
-      this.timerText?.setPosition(160, 100);
-      this.containerLeft?.setScale(
-        this.cameras.main.width / this.cameras.main.height
-      );
-      this.containerRight?.setScale(
-        this.cameras.main.width / this.cameras.main.height
-      );
-      this.containerText?.setScale(
-        this.cameras.main.width / this.cameras.main.height
-      );
-    }; */
   };
 };

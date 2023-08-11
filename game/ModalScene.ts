@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import EventsCenter from "./EventsCenter";
+import MultiBar from "./assets/MultiBar";
 
 export default class ModalScene extends Phaser.Scene {
   circuloA?: Phaser.GameObjects.Image;
@@ -16,6 +17,9 @@ export default class ModalScene extends Phaser.Scene {
   onCard: boolean = false;
   onCardCircleA?: Phaser.GameObjects.Image;
   onCardCircleB?: Phaser.GameObjects.Image;
+
+  musicToggle: boolean = true;
+  soundToggle: boolean = true;
 
   constructor() {
     super({ key: "ModalScene" });
@@ -114,8 +118,16 @@ export default class ModalScene extends Phaser.Scene {
     const positionArray = [(this.game.canvas.width / 4),(this.game.canvas.width / 2),(this.game.canvas.width - (this.game.canvas.width / 4))];
     const marginInMonitorW = (this.game.canvas.width / 4);
 
-    this.onCardCircleA = this.add.image(this.game.canvas.width / 2,this.game.canvas.height/2,"LevelRewardAnim1").setScale(2.1).setAlpha(0);
-    this.onCardCircleB = this.add.image(this.game.canvas.width / 2,this.game.canvas.height/2,"LevelRewardAnim2").setScale(2.1).setAlpha(0);
+    let scaleToCards = 1;
+    let scaleToCircle = 2.1;
+
+    if(this.game.canvas.width < 1450) {
+      scaleToCards = 0.5;
+      scaleToCircle = 1.2;
+    }
+
+    this.onCardCircleA = this.add.image(this.game.canvas.width / 2,this.game.canvas.height/2,"LevelRewardAnim1").setScale(scaleToCircle).setAlpha(0);
+    this.onCardCircleB = this.add.image(this.game.canvas.width / 2,this.game.canvas.height/2,"LevelRewardAnim2").setScale(scaleToCircle).setAlpha(0);
 
 
     this.tweens.add({
@@ -192,8 +204,8 @@ export default class ModalScene extends Phaser.Scene {
   
         this.tweens.add({
           targets: this.cardsArray[i],
-          scaleX: 1,
-          scaleY: 1,
+          scaleX: scaleToCards,
+          scaleY: scaleToCards,
           ease: 'Linear',
           duration: 1000,
           repeat: 0,
@@ -210,6 +222,268 @@ export default class ModalScene extends Phaser.Scene {
     //if(posibility == 1) {
 
     //}
+  }
+
+  createNewToggleButtomWithBar = (title: string,firstText: string, secondText: string, xPos: number, yPos: number) => {
+    const buttonContainer = this.add.container(this.game.canvas.width/2 ,this.game.canvas.height/2);
+
+    const principalText = this.add.text(0 + xPos,0 + yPos,title,{fontFamily: "Enchanted Land",fontSize: "70px", color: "#F1D69E"}).setDepth(92).setOrigin(0.5,0);
+
+    const onText = this.add.text(0 + xPos,0 + yPos,firstText,{fontFamily: "Enchanted Land",fontSize: "40px", color: "#F1D69E"}).setDepth(92).setOrigin(0.5,0);
+    const offText = this.add.text(0+ xPos,0 + yPos,secondText,{fontFamily: "Enchanted Land",fontSize: "40px", color: "#F1D69E"}).setDepth(92).setOrigin(0.5,0);
+
+    const togglebuttonBg = this.add.image(0 + xPos,0 + yPos,"SettingsToggleFondo").setDepth(90);
+    const togglebutton = this.add.image(0 + xPos,0 + yPos,"SettingsToggleOn").setDepth(90);
+
+    const soundDown = this.add.image(0 + xPos,0 + yPos,"SettingsVolumedown").setDepth(92);
+    const soundUp = this.add.image(0 + xPos,0+ yPos,"SettingsVolumeup").setDepth(92);
+
+    const barConfig = {
+      x: 350,
+      y: 110,
+      sprite: "SettingsBarraVolumenEncendido",
+      spriteContainer: "SettingsBarraVolumenFondo",
+      startFull: true,
+    }
+
+    const bar = new MultiBar(this,barConfig);
+
+    buttonContainer.add([
+      principalText,
+      onText,
+      offText,
+      togglebuttonBg,
+      togglebutton,
+      soundDown,
+      soundUp,
+      bar
+    ])
+
+    return buttonContainer;
+  }
+
+  createSettingsModal = () => {
+
+    const backgroundModal = this.add.image(0 ,0,"SettingsPanel").setDepth(90);
+    //const headerBackground = this.add.image(this.game.canvas.width/2 ,this.game.canvas.height/2,"SettingsHeader").setDepth(90);
+
+    const containerSettings = this.add.container(this.game.canvas.width/2 ,this.game.canvas.height/2);
+
+    //const musicSwith = this.createNewToggleButtomWithBar("Music","On","Off",200,200);
+
+    //const soundSwith = this.createNewToggleButtomWithBar("Sound","On","Off",400,400);
+
+
+    //music
+    const MusicprincipalText = this.add.text(0 - 150  ,0 - 360 ,"Music",{fontFamily: "Enchanted Land",fontSize: "60px", color: "#3A2412"}).setDepth(92).setOrigin(0.5,0);
+
+    const MusiconText = this.add.text(0 + 125 ,0 - 350 ,"On",{fontFamily: "Enchanted Land",fontSize: "30px", color: "#3A2412"}).setDepth(92).setOrigin(0,0);
+    const MusicoffText = this.add.text(0 + 205,0 - 350 ,"Off",{fontFamily: "Enchanted Land",fontSize: "30px", color: "#3A2412"}).setDepth(92).setOrigin(0,0);
+
+    const MusictogglebuttonBg = this.add.image(0+ 180 ,0 - 330 ,"SettingsToggleFondo").setDepth(90);
+    const Musictogglebutton = this.add.image(0+ 170 ,0 - 334 ,"SettingsToggleOn").setDepth(90);
+
+    const MusicsoundDown = this.add.image(0 - 200 ,0 - 260 ,"SettingsVolumedown").setDepth(92);
+    const MusicsoundUp = this.add.image(0 + 215 ,0 - 260,"SettingsVolumeup").setDepth(92);
+
+    const MusicbarConfig = {
+      x: this.game.canvas.width/2 + 380,
+      y: this.game.canvas.height/2 - 390,
+      sprite: "SettingsBarraVolumenEncendido",
+      spriteContainer: "SettingsBarraVolumenFondo",
+      startFull: true,
+      scale: 0.9,
+      //addContainer:containerSettings,
+    }
+
+    const Musicbar = new MultiBar(this,MusicbarConfig);
+    Musicbar.setDepth(92);
+
+
+    //Sound
+    const principalText = this.add.text(0 - 150  ,0 - 150 ,"Sound",{fontFamily: "Enchanted Land",fontSize: "60px", color: "#3A2412"}).setDepth(92).setOrigin(0.5,0);
+
+    const onText = this.add.text(0 + 125 ,0 - 145 ,"On",{fontFamily: "Enchanted Land",fontSize: "30px", color: "#3A2412"}).setDepth(92).setOrigin(0,0);
+    const offText = this.add.text(0 + 205,0 - 145 ,"Off",{fontFamily: "Enchanted Land",fontSize: "30px", color: "#3A2412"}).setDepth(92).setOrigin(0,0);
+
+    const togglebuttonBg = this.add.image(0 + 180 ,0 - 127 ,"SettingsToggleFondo").setDepth(90);
+    const togglebutton = this.add.image(0 + 170 ,0 - 130 ,"SettingsToggleOn").setDepth(90);
+
+    const soundDown = this.add.image(0 -200 ,0 - 50 ,"SettingsVolumedown").setDepth(92);
+    const soundUp = this.add.image(0+ 215 ,0 - 50,"SettingsVolumeup").setDepth(92);
+
+    const barConfig = {
+      x: this.game.canvas.width/2 + 380,
+      y: this.game.canvas.height/2 - 245,
+      sprite: "SettingsBarraVolumenEncendido",
+      spriteContainer: "SettingsBarraVolumenFondo",
+      startFull: true,
+      scale: 0.9,
+      //addContainer:containerSettings,
+    }
+    
+    const bar = new MultiBar(this,barConfig);
+    bar.setDepth(999);
+
+    const closeButton = this.add.image(0,0 + 95,"LevelRewardButtonClaimContinue").setDepth(92);
+    const buttonText = this.add.text(0 + 3,0 + 95, "Close",{fontFamily: "Enchanted Land",fontSize: "42px", color: "##F1D69E"}).setDepth(92).setOrigin(0.5);
+    buttonText.setColor("#F1D69E");
+
+    // interactives
+
+    closeButton.setInteractive();
+
+    closeButton.on('pointerdown', () => {
+      const princiaplScene = this.game.scene.getScene("Scene1");
+      const UIScene = this.game.scene.getScene("UIScene");
+      UIScene.cameras.main.setAlpha(1);
+      princiaplScene.cameras.main.setAlpha(1);
+      this.input.setDefaultCursor('default');
+      princiaplScene.scene.resume();
+      UIScene.scene.bringToTop();
+      this.scene.remove()
+
+    });
+
+    closeButton.on('pointerover', () => {
+      //buttonContainer.setTintFill(0x11001110, 1);
+      buttonText.setColor("#F9F8F7")
+      this.input.setDefaultCursor('pointer');
+    });
+
+    closeButton.on('pointerout', () => {
+      //buttonContainer.setTintFill("#F1D69E", 1);
+      buttonText.setColor("#F1D69E")
+      this.input.setDefaultCursor('default');
+    });
+
+    Musictogglebutton.setInteractive()
+
+    Musictogglebutton.on('pointerdown', () => {
+      this.musicToggle = !this.musicToggle;
+      this.toggleAnim(Musictogglebutton,this.musicToggle,true);
+      console.log("manda : ", this.musicToggle);
+      Musicbar.toggleDisabled(this.musicToggle);
+
+    });
+
+    Musictogglebutton.on('pointerover', () => {
+      this.input.setDefaultCursor('pointer');
+    });
+
+    Musictogglebutton.on('pointerout', () => {
+      this.input.setDefaultCursor('default');
+    });
+    
+    togglebutton.setInteractive()
+
+    togglebutton.on('pointerdown', () => {
+      this.soundToggle = !this.soundToggle;
+      this.toggleAnim(togglebutton,this.soundToggle,true);
+      bar.toggleDisabled(this.soundToggle);
+
+    });
+
+    togglebutton.on('pointerover', () => {
+      this.input.setDefaultCursor('pointer');
+    });
+
+    togglebutton.on('pointerout', () => {
+      this.input.setDefaultCursor('default');
+    });
+
+
+    MusicsoundDown.setInteractive();
+
+    MusicsoundDown.on('pointerdown', () => {
+      Musicbar.updateBar(-10);
+      this.input.setDefaultCursor('default');
+    });
+
+    MusicsoundDown.on('pointerover', () => {
+      this.input.setDefaultCursor('pointer');
+    });
+
+    MusicsoundDown.on('pointerout', () => {
+      this.input.setDefaultCursor('default');
+    });
+
+    
+
+    MusicsoundUp.setInteractive();
+
+    MusicsoundUp.on('pointerdown', () => {
+      Musicbar.updateBar(10);
+      this.input.setDefaultCursor('default');
+    });
+
+    MusicsoundUp.on('pointerover', () => {
+      this.input.setDefaultCursor('pointer');
+    });
+
+    MusicsoundUp.on('pointerout', () => {
+      this.input.setDefaultCursor('default');
+    });
+
+    soundDown.setInteractive();
+
+    soundDown.on('pointerdown', () => {
+      bar.updateBar(-10);
+      this.input.setDefaultCursor('default');
+    });
+
+    soundDown.on('pointerover', () => {
+      this.input.setDefaultCursor('pointer');
+    });
+
+    soundDown.on('pointerout', () => {
+      this.input.setDefaultCursor('default');
+    });
+
+    soundUp.setInteractive();
+
+    soundUp.on('pointerdown', () => {
+      bar.updateBar(10);
+      this.input.setDefaultCursor('default');
+    });
+
+    soundUp.on('pointerover', () => {
+      this.input.setDefaultCursor('pointer');
+    });
+
+    soundUp.on('pointerout', () => {
+      this.input.setDefaultCursor('default');
+    });
+
+
+
+    containerSettings.add([
+      backgroundModal,
+      MusicprincipalText,
+      MusiconText,
+      MusicoffText,
+      MusictogglebuttonBg,
+      Musictogglebutton,
+      MusicsoundDown,
+      MusicsoundUp,
+      Musicbar,
+      principalText,
+      onText,
+      offText,
+      togglebuttonBg,
+      togglebutton,
+      soundDown,
+      soundUp,
+      bar,
+      closeButton,
+      buttonText,
+    ])
+    
+
+
+
+
+
   }
 
   createLevelReward = (title: string ,content: number, qty?: number) => {
@@ -343,6 +617,28 @@ export default class ModalScene extends Phaser.Scene {
     });
   }
 
+  toggleAnim = (obj:Phaser.GameObjects.Image, isActive: boolean, type: boolean) => {
+    let valueMove = -18;
+    let newSprite = "SettingsToggleOn";
+    if(!isActive) {
+      valueMove = +18;
+      newSprite = "SettingsToggleOff";
+    }
+
+    this.tweens.add({
+      targets: obj,
+      props: {
+        x: { value: obj.x + valueMove, duration: 100, yoyo: false },
+        texture: { value: newSprite, duration: 0, delay: 100 }
+      },
+      ease: 'Linear',
+      onComplete: () => {
+        //enviar que active o desactive el sonido con event
+      }
+    });
+
+  }
+
 
 
   create(this: ModalScene, data: { type: string, content: number,qty?: number, textInfo?: string }) {
@@ -383,6 +679,8 @@ export default class ModalScene extends Phaser.Scene {
         }
         //this.testAnim(rewardCard);
       break;
+      case "Settings":
+        const settings = this.createSettingsModal();
     
       default:
         break;
@@ -422,15 +720,6 @@ export default class ModalScene extends Phaser.Scene {
   }
 
   update() {
-    //if(this.circuloA && this.circuloB) {
-    //  this.circuloA.rotation += 0.001;
-    //  this.circuloB.rotation -= 0.001;
-    //}
-
-    //if(this.onCard && this.onCardCircleA  && this.onCardCircleB) {
-    //  this.onCardCircleA.rotation += 0.001;
-    //  this.onCardCircleB.rotation -= 0.001;
-    //}
 
   };
 };

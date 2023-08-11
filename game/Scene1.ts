@@ -112,8 +112,8 @@ class Scene1 extends Phaser.Scene {
 
   lvlUp = (newlevel: number) => {
     const UIScene = this.game.scene.getScene("UIScene");
-    UIScene.cameras.main.setAlpha(0.5);
-    this.cameras.main.setAlpha(0.5);
+    UIScene.cameras.main.setAlpha(0.88);
+    this.cameras.main.setAlpha(0.88);
     EventsCenter.emit("levelUp",newlevel);
     this.showNewModal("Lvl.up",newlevel);
 
@@ -263,6 +263,10 @@ class Scene1 extends Phaser.Scene {
 
 
     setTimeout(() => {
+      //const UIScene = this.game.scene.getScene("UIScene");
+      //UIScene.cameras.main.setAlpha(0.88);
+      //this.cameras.main.setAlpha(0.88);
+      //this.showNewModal("Settings",1);
       //UIScene.cameras.main.setAlpha(0.5);
       //this.cameras.main.setAlpha(0.5);
 

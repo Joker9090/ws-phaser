@@ -21,6 +21,8 @@ export default function Home() {
 
     Promise.all([
       import("@/game/SceneLoader"),
+      import("@/game/Intro"),
+      import("@/game/Menu"),
       import("@/game/UIScene"),
       import("@/game/ModalScene"),
       import("@/game/Scene1")]).then((scenes) => {

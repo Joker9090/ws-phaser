@@ -1,16 +1,26 @@
 import Phaser from "phaser";
 import Scene4 from "./Scene1";
 
-export type SceneKeys = "Menu" | "Scene1" | "UIScene" | "ModalScene";
+export type SceneKeys = "Intro" |"Menu" | "Scene1" | "UIScene" | "ModalScene";
 
 export type LoadTypes = "image" | "spritesheet";
 
 const loadAssets = {
   "Menu": {
     assets: [
-
+      ["image", "borde", "/game/newAssets/intro/borde.png"],
+      ["image", "hojas", "/game/newAssets/intro/hojas.png"],
+      ["image", "Play", "/game/newAssets/intro/Play.png"],
+      ["image", "sombraPersonaje", "/game/newAssets/intro/sombraPersonaje.png"],
+      ["image", "titulo", "/game/newAssets/intro/titulo.png"],
+      ["image", "bg", "/game/newAssets/intro/bg.png"],
     ]
   },
+  "Intro": {
+    assets: [
+    ["image", "logoNoswar", "/game/logoNoswar.png"],
+    
+  ]},
   "Scene1": {
     assets: [
       //["image", "plataformaA", "/game/platform1.png"],
@@ -103,6 +113,17 @@ const loadAssets = {
     ["image", "cardUpHeal", "/game/newAssets/modals/cards/cardUpHeal.png"],
     ["image", "cardUpStamin", "/game/newAssets/modals/cards/cardUpStamin.png"],
     ["image", "cardUpTroll", "/game/newAssets/modals/cards/cardUpTroll.png"],
+    ["image", "SettingsBarraVolumenApagado", "/game/newAssets/modals/settings/SettingsBarraVolumenApagado.png"],
+    ["image", "SettingsBarraVolumenEncendido", "/game/newAssets/modals/settings/SettingsBarraVolumenEncendido.png"],
+    ["image", "SettingsBarraVolumenFondo", "/game/newAssets/modals/settings/SettingsBarraVolumenFondo.png"],
+    ["image", "SettingsBotonClose", "/game/newAssets/modals/settings/SettingsBotonClose.png"],
+    ["image", "SettingsHeader", "/game/newAssets/modals/settings/SettingsHeader.png"],
+    ["image", "SettingsPanel", "/game/newAssets/modals/settings/SettingsPanel.png"],
+    ["image", "SettingsToggleFondo", "/game/newAssets/modals/settings/SettingsToggleFondo.png"],
+    ["image", "SettingsToggleOff", "/game/newAssets/modals/settings/SettingsToggleOff.png"],
+    ["image", "SettingsToggleOn", "/game/newAssets/modals/settings/SettingsToggleOn.png"],
+    ["image", "SettingsVolumedown", "/game/newAssets/modals/settings/SettingsVolumedown.png"],
+    ["image", "SettingsVolumeup", "/game/newAssets/modals/settings/SettingsVolumeup.png"],
     
   ]},
 }
@@ -156,7 +177,7 @@ class SceneLoader extends Phaser.Scene {
     assetText.setOrigin(0.5, 0.5);
 
     this.load.on('progress', function (value: number) {
-      percentText.setText(Number(value * 100) + '%');
+      percentText.setText(Math.round(Number(value * 100)) + '%');
       progressBar.clear();
       progressBar.fillStyle(0xffffff, 1);
       progressBar.fillRect(width / 2 - 160, height / 2 + 100, 300 * value, 30);
@@ -173,7 +194,7 @@ class SceneLoader extends Phaser.Scene {
       assetText.destroy();
     });
 
-    const sceneTitles: Array <SceneKeys> = ["Menu","Scene1","UIScene","ModalScene"];
+    const sceneTitles: Array <SceneKeys> = ["Intro","Menu","Scene1","UIScene","ModalScene"];
     for (let i = 0; i < sceneTitles.length; i++) {
           //loadAssets["Scene1"].assets.map(([type, name, src,config]: any) => {
       loadAssets[sceneTitles[i]].assets.map((sceneAssetConfig) => {
@@ -197,9 +218,11 @@ class SceneLoader extends Phaser.Scene {
 
   create(this: SceneLoader, { dataLevel }: any) {
     //this.scene.start("Scene"+level);
+
+    this.scene.start("Intro");
     console.log("dataaaaa sceneloader ",dataLevel);
-    this.scene.start("Scene1", { "dataLevel": 2 })
-    this.scene.start("UIScene",{ "dataLevel": "levelUp" });
+    //this.scene.start("Scene1", { "dataLevel": 2 })
+    //this.scene.start("UIScene",{ "dataLevel": "levelUp" });
   }
 
   update(this: SceneLoader) {

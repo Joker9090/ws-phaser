@@ -53,7 +53,7 @@ export default function Home() {
           arcade: {
             overlapBias: 10,
             gravity: { y: 1000 },
-            debug: true
+            //debug: true
           }
         }
       }

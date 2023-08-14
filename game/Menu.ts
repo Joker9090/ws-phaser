@@ -20,6 +20,7 @@ export default class MainMenuScene extends Phaser.Scene {
   textLvl2?: Phaser.GameObjects.Text;
   container?: Phaser.GameObjects.Container;
   canChangeScene: boolean = false;
+  offsetButton: number = 10;
   constructor() {
     super({ key: "Menu" });
   }
@@ -60,24 +61,24 @@ export default class MainMenuScene extends Phaser.Scene {
             if (this.credits)
               this.credits.setPosition(
                 value * 2,
-                this.play.y + this.play.displayHeight + 10
+                this.play.y + this.play.displayHeight + this.offsetButton
               );
             if (this.textLvl1)
               this.textLvl1.setPosition(
                 value * 2,
-                this.play.y + this.play.displayHeight + 10
+                this.play.y + this.play.displayHeight + this.offsetButton
               );
           }
           if (this.credits) {
             if (this.exit)
               this.exit.setPosition(
                 value * 3,
-                this.credits.y + this.credits.displayHeight + 10
+                this.credits.y + this.credits.displayHeight + this.offsetButton
               );
             if (this.textLvl2)
               this.textLvl2.setPosition(
                 value * 3,
-                this.credits.y + this.credits.displayHeight + 10
+                this.credits.y + this.credits.displayHeight + this.offsetButton
               );
           }
         },
@@ -91,22 +92,22 @@ export default class MainMenuScene extends Phaser.Scene {
       if (this.play)
         this.credits?.setPosition(
           0,
-          this.play.y + this.play.displayHeight + 10
+          this.play.y + this.play.displayHeight + this.offsetButton
         );
       if (this.play)
         this.textLvl1?.setPosition(
           0,
-          this.play.y + this.play.displayHeight + 10
+          this.play.y + this.play.displayHeight + this.offsetButton
         );
       if (this.credits)
         this.exit?.setPosition(
           0,
-          this.credits.y + this.credits.displayHeight + 10
+          this.credits.y + this.credits.displayHeight + this.offsetButton
         );
       if (this.credits)
         this.textLvl2?.setPosition(
           0,
-          this.credits.y + this.credits.displayHeight + 10
+          this.credits.y + this.credits.displayHeight + this.offsetButton
         );
       if (this.play)
         this.buttonSelector?.setPosition(

@@ -19,7 +19,7 @@ const loadAssets = {
         "spritesheet",
         "character",
         "/game/character.png",
-        { frameWidth: 220, frameHeight: 162 },
+        { frameWidth: 330, frameHeight: 450 },
       ],
     ],
   },
@@ -169,7 +169,7 @@ class SceneLoader extends Phaser.Scene {
 
   create(this: SceneLoader, { level }: any) {
     this.scene.launch("DataManager", { data: 1 });
-    //this.scene.start("Intro", { data: 1 });
+    // this.scene.start("Intro", { data: 1 });
     this.scene.start("Game", { level: 1, lifes: 8 });
   }
 

@@ -83,7 +83,7 @@ class Game extends Phaser.Scene {
       this.time.delayedCall(time, () => {
         this.monchi?.setFlipY(true);
         this.gravityDown = false;
-        this.monchi?.body?.setOffset(70, 0);
+        this.monchi?.body?.setOffset(0, 15);
         this.monchi?.setBounceY(0);
         EventsCenter.emit("gravityArrow", "up");
       });

@@ -6,7 +6,6 @@ import EventsCenter from "../EventsCenter";
 class Player extends Phaser.Physics.Arcade.Sprite {
   isJumping = false;
   scene: Game;
-
   constructor(
     scene: Game,
     x: number,
@@ -19,8 +18,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     /* Monchi animations */
     const monchiJumpFrames = scene.anims.generateFrameNumbers("character", {
-      frames: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12],
+      frames: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 12]
     });
+
     const monchiMoveFrames = scene.anims.generateFrameNumbers("character", {
       frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
     });
@@ -30,8 +30,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     const monchiJumpConfig = {
       key: "monchiJump",
       frames: monchiJumpFrames,
-      frameRate: 12,
-      repeat: 0,
+      frameRate: 20,
+      repeat: 1,
     };
     const monchiMoveConfig = {
       key: "monchiMove",
@@ -39,6 +39,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       frameRate: 10,
       repeat: 0,
     };
+
     const monchiIdleConfig = {
       key: "monchiIdle",
       frames: monchiIdleFrames,
@@ -55,8 +56,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     scene.physics.add.existing(this);
 
     /* Monchi change size and bounce */
+
     this.body?.setSize(250, 300);
-    this.body?.setOffset(0, 100);
+    this.body?.setOffset(0, 120);
     this.setScale(0.3);
     this.setBounce(0);
     this.setDepth(10);
@@ -104,16 +106,24 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       if (left.isDown) {
         this.setVelocityX(-160);
         this.setFlipX(true);
-        this.body?.setOffset(70, 100);
+        this.setOffset(70, 120)
+        if (this.flipY === true) {
+          this.setOffset(70, 15)
+        }
         if (!this.isJumping) this.anims.play("monchiMove", true);
       } else if (right.isDown) {
 
         /* Right*/
         this.setVelocityX(160);
-        this.body?.setOffset(0, 100);
+        this.setOffset(0, 120)
+        if (this.flipY === true) {
+          this.setOffset(0, 15)
+        }
         this.setFlipX(false);
         if (!this.isJumping) this.anims.play("monchiMove", true);
-      } else {
+      }
+
+      else {
 
         /* Nothing */
         /*
@@ -124,6 +134,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         }
         */
         this.setVelocityX(0);
+
+
         if (!this.isJumping) this.anims.play("monchiIdle", true);
 
       }
@@ -149,12 +161,13 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       if (left.isDown) {
         this.setVelocityX(160);
         this.setFlipX(false);
-        this.body?.setOffset(50, 100);
+        // this.body?.setOffset(0, -100);
         if (!this.isJumping) this.anims.play("monchiMove", true);
       } else if (right.isDown) {
 
         /* Right*/
         this.setVelocityX(-160);
+        // this.body?.setOffset(0, -100);
         this.setFlipX(true);
         if (!this.isJumping) this.anims.play("monchiMove", true);
       } else {
@@ -183,7 +196,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     if (cursors) {
       const { up, down, left, right } = cursors;
       const velocity = 300;
-      this.body?.setOffset(0, 150);
+      // this.body?.setOffset(0, 150);
       if (up.isDown) {
         this.setVelocityY(-velocity);
         this.setFlipX(false);
@@ -200,12 +213,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.setGravityX(-1300);
         this.setFlipY(true);
         EventsCenter.emit("gravityArrow", "left");
-        this.setOffset(3000, 2000);
+        // this.setOffset(300, 200);
       } else if (right.isDown) {
         this.setGravityX(1300);
         this.setFlipY(false);
         EventsCenter.emit("gravityArrow", "right");
-        this.setOffset(80, 40);
+        // this.setOffset(80, 40);
       }
     }
   }
@@ -221,12 +234,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       /* Left*/
       if (left.isDown) {
         this.setVelocityX(-velo);
-        this.body?.setOffset(0, 150);
+        // this.body?.setOffset(0, 150);
       } else if (right.isDown) {
 
         /* Right*/
         this.setVelocityX(velo);
-        this.body?.setOffset(0, 150);
+        // this.body?.setOffset(0, 150);
       } else if (down.isDown) {
 
         /* Up*/

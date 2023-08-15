@@ -1,2 +1,0 @@
-1. animacion salto se corta si te vmoves en el aire
-2. offset en gravedad inversa 

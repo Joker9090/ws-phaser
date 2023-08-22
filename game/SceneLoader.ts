@@ -11,9 +11,14 @@ const loadAssets = {
       ["image", "borde", "/game/newAssets/intro/borde.png"],
       ["image", "hojas", "/game/newAssets/intro/hojas.png"],
       ["image", "Play", "/game/newAssets/intro/Play.png"],
+      ["image", "Play1", "/game/newAssets/intro/play1.png"],
+      ["image", "Play2", "/game/newAssets/intro/play2.png"],
       ["image", "sombraPersonaje", "/game/newAssets/intro/sombraPersonaje.png"],
       ["image", "titulo", "/game/newAssets/intro/titulo.png"],
       ["image", "bg", "/game/newAssets/intro/bg.png"],
+      ["image", "fondoGrande", "/game/newAssets/intro/fondoGrande.png"],
+      ["image", "bordeGrande", "/game/newAssets/intro/bordeGrande.png"],
+      ["image", "hojasGrande", "/game/newAssets/intro/hojasGrande.png"],
     ]
   },
   "Intro": {

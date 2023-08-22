@@ -18,7 +18,7 @@ class EnemyFly extends Phaser.Physics.Arcade.Sprite {
   isPatrol: boolean = false;
   isEnemyInFront: boolean = false
   patrolConfig?: PatrolConfig;
-  life:number = 3;
+  life:number = 100;
   lifeBar?: MultiBar;
   Onstate?: string = "pasive";
   sprite: string = '';

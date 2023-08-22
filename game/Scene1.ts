@@ -93,13 +93,26 @@ class Scene1 extends Phaser.Scene {
     if(this.monchi){
       switch (newBuff) {
         case "cardUpDmg":
-          this.monchi.playerDmg++;
+          //this.monchi.playerDmg++;
+          console.log("Daño era :",this.monchi.playerDmg);
+          this.monchi.buffDmg++;
+          this.monchi.playerDmg += this.monchi.buffDmg;
+          console.log("Daño es :",this.monchi.playerDmg);
+          console.log("Estadistica final queda: ",this.monchi.playerDmg);
           break;
         case "cardUpHeal":
-        console.log("buff vida");
+        console.log("buff vida era: ",this.monchi.buffLife);
+        this.monchi.buffLife+= 10;
+        this.monchi.life += this.monchi.buffLife;
+        console.log("buff vida es: ",this.monchi.buffLife);
+        console.log("Estadistica final queda: ",this.monchi.life);
         break;
         case "cardUpStamin":
-          this.monchi.rechargeStamin = this.monchi.rechargeStamin + 0.2;
+          console.log("buff stamina era: ",this.monchi.buffStamin);
+          this.monchi.buffStamin+= 0.1;
+          this.monchi.rechargeStamin += this.monchi.buffStamin;
+          console.log("buff stamina es: ",this.monchi.buffStamin);
+          console.log("Estadistica final queda: ",this.monchi.rechargeStamin);
         break;
       
         default:

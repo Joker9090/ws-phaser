@@ -69,6 +69,7 @@ class Weapon {
   }
 }
 
+
 class Player extends Phaser.Physics.Arcade.Sprite {
   isJumping: boolean = false
   isAttacking: boolean = false
@@ -80,6 +81,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   rechargeStamin: number = 0.1;
   powerDischargeNeed: number = 50;
   playerDmg: number = 1;
+  buffLife:  number = 0;
+  buffStamin: number = 0;
+  buffDmg: number = 0;
   weapon?: Weapon;
   // swordHitBox: hitZone;
 

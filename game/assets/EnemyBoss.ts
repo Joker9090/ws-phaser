@@ -18,7 +18,7 @@ export class EnemyFactory extends Phaser.Physics.Arcade.Sprite {
   followingWho?: Phaser.GameObjects.Sprite;
   isEnemyInFront: boolean = false
   patrolConfig?: PatrolConfig;
-  life: number = 3;
+  life: number = 100;
   lifeBar?: MultiBar;
   Onstate?: string = "pasive";
   sprite: string = '';

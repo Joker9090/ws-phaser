@@ -339,9 +339,10 @@ export default class ModalScene extends Phaser.Scene {
       UIScene.cameras.main.setAlpha(1);
       princiaplScene.cameras.main.setAlpha(1);
       this.input.setDefaultCursor('default');
+      princiaplScene.scene.bringToTop();
       princiaplScene.scene.resume();
       UIScene.scene.bringToTop();
-      this.scene.remove()
+      //this.scene.remove()
 
     });
 

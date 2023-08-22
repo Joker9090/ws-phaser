@@ -3,13 +3,12 @@ import Floor, { FloorConfig } from "../assets/Floor";
 import LargeFloor, { LargeFloorConfig } from "../assets/LargeFloor";
 import UIScene from "../UIScene";
 import Game from "../Game";
-import Sandbox2 from "../Sandbox2";
 
 // Scene in class
 class Tutorial {
   isJumping = false;
   debugGraphics: Phaser.GameObjects.Graphics;
-  scene: Game | Sandbox2;
+  scene: Game ;
   worldSize = {
     width: 5000,
     height: 2500,
@@ -45,7 +44,7 @@ class Tutorial {
   pisoCoin?: Floor;
   pisoNoFloat?: Floor;
 
-  constructor(scene: Game | Sandbox2) {
+  constructor(scene: Game ) {
     this.scene = scene;
     this.UIScene = this.scene.game.scene.getScene("UIScene") as UIScene;
     /* World size*/
@@ -68,13 +67,14 @@ class Tutorial {
     /* Debug */
     this.background = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "background")
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5, 0.5)
+      .setScale(2,2);
   }
 
   animateBackground(player: Phaser.GameObjects.Sprite) {
     const { x, y } = this.startingPoint;
     const { x: x2, y: y2 } = player;
-    const calcDiffX = (x2 - x) / 1.2;
+    const calcDiffX = (x2 - x) / 1.2; //mas grande menos movimiento
     const calcDiffY = (y2 - y) / 1.2;
     this.background.setPosition(x + calcDiffX, y + calcDiffY);
   }
@@ -91,12 +91,14 @@ class Tutorial {
 
     /* Platforms */
     const p0Config: LargeFloorConfig = {
-      textureA: "plataformaA",
-      textureB: "plataformaB",
+      textureA: "plataformaLarga2",
+      textureB: "plataformaLarga2",
       large: 20,
       pos: { x: 500, y: 2000 },
       scale: { width: 0.7, height: 0.7 },
       rotated: false,
+      gap: 0,
+      fix: 0,
     };
     const p0 = new LargeFloor(this.scene, p0Config, this.pisos);
     /*
@@ -111,22 +113,24 @@ class Tutorial {
     const debug = new LargeFloor(this.scene, debugConfig, this.pisos);
     */
     const p1Config: LargeFloorConfig = {
-      textureA: "plataformaA",
-      textureB: "plataformaB",
+      textureA: "plataformaLarga2",
+      textureB: "plataformaLarga2",
       large: 2,
       pos: { x: 1000, y: 1850 },
       scale: { width: 0.7, height: 0.7 },
       rotated: false,
+      gap: 0,
     };
     const p1 = new LargeFloor(this.scene, p1Config, this.pisos);
 
     const p2Config: LargeFloorConfig = {
-      textureA: "plataformaA",
-      textureB: "plataformaB",
+      textureA: "plataformaLarga2",
+      textureB: "plataformaLarga2",
       large: 3,
       pos: { x: 1300, y: 1700 },
       scale: { width: 0.7, height: 0.7 },
       rotated: false,
+      gap: 0,
     };
     const p2 = new LargeFloor(this.scene, p2Config, this.pisos);
 
@@ -141,12 +145,13 @@ class Tutorial {
     this.pisoFloat.hasEvent = "Show_Tutorial_Text_1";
 
     const p4Config: LargeFloorConfig = {
-      textureA: "plataformaA",
-      textureB: "plataformaB",
+      textureA: "plataformaLarga2",
+      textureB: "plataformaLarga2 ",
       large: 5,
       pos: { x: 1500, y: 400 },
       scale: { width: 0.7, height: 0.7 },
       rotated: false,
+      gap: 0,
     };
     const p4 = new LargeFloor(this.scene, p4Config, this.pisos);
 
@@ -196,11 +201,11 @@ class Tutorial {
 
     const coinConfig: FloorConfig = {
       texture: "coin",
-      pos: { x: 1500, y: 450 }, // 500 1580
-      scale: { width: 0.1, height: 0.1 },
-      width: 450,
-      height: 600,
-      fix: 100,
+      pos: { x: 1500, y: 450 }, 
+      scale: { width: 1, height: 1 },
+      width: 50,
+      height: 120,
+      fix: 0,
     };
     this.pisoCoin = new Floor(this.scene, coinConfig, this.coin);
     this.pisoCoin.hasEvent = "Show_Tutorial_Text_2";

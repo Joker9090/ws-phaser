@@ -26,7 +26,7 @@ export default class LevelMap extends Phaser.Scene {
   planets: Phaser.GameObjects.Sprite[] = [];
   planetSelector!: Phaser.GameObjects.Image;
   selectedPlanetIndex: number = 0;
-  planetsShown: number = 0;
+  planetsShown: number = 3;
   graphic1?: Phaser.GameObjects.Graphics;
   graphic2?: Phaser.GameObjects.Graphics;
   graphic3?: Phaser.GameObjects.Graphics;

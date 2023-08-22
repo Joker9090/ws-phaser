@@ -499,7 +499,7 @@ class Game extends Phaser.Scene {
     this.canRot = true;
 
     /* CAMERAS */
-    this.cameras.main.zoom = 0.95;
+    this.cameras.main.zoom = 0.5;
     this.cameras.main.startFollow(this.monchi);
     this.cameraWidth = this.cameras.main.width;
     this.cameraHeight = this.cameras.main.height;

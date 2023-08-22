@@ -21,6 +21,7 @@ export type LargeFloorConfig = {
   };
   large: number;
   rotated?: boolean;
+  gap: number;
 };
 // Scene in class
 class LargeFloor extends Phaser.GameObjects.Container {
@@ -28,7 +29,7 @@ class LargeFloor extends Phaser.GameObjects.Container {
   scene: Phaser.Scene;
   group: Phaser.Physics.Arcade.Group;
   parts: Phaser.Physics.Arcade.Sprite[];
-
+  gap: number = 0;
   constructor(
     scene: Phaser.Scene,
     config: LargeFloorConfig,
@@ -40,15 +41,17 @@ class LargeFloor extends Phaser.GameObjects.Container {
     const rota = config.rotated ?? false;
     this.scene = scene;
     this.group = group;
-    const width = config.width ?? 210;
-    const height = config.height ?? 40;
+    const width = config.width ?? 403;
+    const height = config.height ?? 93;
     const fix = config.fix ?? 13;
+    this.gap = config.gap
 
     //Intercalates the two textures
     for (let index = 0; index < config.large; index++) {
       const t = index % 2 == 0 ? config.textureA : config.textureB;
-      const s = scene.add.sprite(index * width, 0, t);
-      this.add(s);
+      const s = scene.add.sprite(index * width  + this.gap, 0, t);
+      this.add(s)
+      this.sendToBack(s)
     }
 
     //Set scale
@@ -57,7 +60,7 @@ class LargeFloor extends Phaser.GameObjects.Container {
     }
 
     //Set depth and add floor to world
-    this.setDepth(10);
+    //this.setDepth(10);
     scene.add.existing(this);
     this.group.add(this);
 
@@ -67,7 +70,7 @@ class LargeFloor extends Phaser.GameObjects.Container {
       if (rota) {
         body.setOffset(0, -90);
       } else {
-        body.setOffset(-110, -50);
+        body.setOffset(-200, -50);
       }
 
       if (rota && body) {

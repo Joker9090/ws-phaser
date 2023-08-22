@@ -148,7 +148,7 @@ class Game extends Phaser.Scene {
       this.canNextLevel = false;
       EventsCenter.emit("gameOver", true);
       //this.scene.start("Won", { text: Phrase });
-      this.makeTransition("LevelMap", {} );
+      this.makeTransition("LevelMap", {});
     }
   }
 
@@ -229,7 +229,7 @@ class Game extends Phaser.Scene {
           ease: window.Phaser.Math.Easing.Linear,
           yoyo: false,
           repeat: 0,
-          onStart: () => {},
+          onStart: () => { },
           onUpdate: (tween) => {
             const value = tween.getValue();
             piso.setPosition(value, 1700);
@@ -238,7 +238,7 @@ class Game extends Phaser.Scene {
             piso.clearTint();
           },
         });
-      } else if (!this.goingBack){
+      } else if (!this.goingBack) {
         const mapa = this.map as Mapa1;
         const piso = mapa.pisosBack?.getChildren()[0] as Phaser.GameObjects.Sprite;
         piso.clearTint();
@@ -499,7 +499,7 @@ class Game extends Phaser.Scene {
     this.canRot = true;
 
     /* CAMERAS */
-    this.cameras.main.zoom = 0.5;
+    this.cameras.main.zoom = 0.9;
     this.cameras.main.startFollow(this.monchi);
     this.cameraWidth = this.cameras.main.width;
     this.cameraHeight = this.cameras.main.height;

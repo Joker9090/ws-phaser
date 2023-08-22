@@ -8,7 +8,7 @@ import Game from "../Game";
 class Tutorial {
   isJumping = false;
   debugGraphics: Phaser.GameObjects.Graphics;
-  scene: Game ;
+  scene: Game;
   worldSize = {
     width: 5000,
     height: 2500,
@@ -44,7 +44,7 @@ class Tutorial {
   pisoCoin?: Floor;
   pisoNoFloat?: Floor;
 
-  constructor(scene: Game ) {
+  constructor(scene: Game) {
     this.scene = scene;
     this.UIScene = this.scene.game.scene.getScene("UIScene") as UIScene;
     /* World size*/
@@ -66,9 +66,37 @@ class Tutorial {
     );
     /* Debug */
     this.background = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "background")
+      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg1")
       .setOrigin(0.5, 0.5)
-      .setScale(2,2);
+      .setScale(4, 4);
+    // this.background = this.scene.add
+    //   .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg2")
+    //   .setOrigin(0.5, 0.5)
+    //   .setScale(4, 4);
+    // this.background = this.scene.add
+    //   .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg3")
+    //   .setOrigin(0.5, 0.5)
+    //   .setScale(4, 4);
+    // this.background = this.scene.add
+    //   .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg4")
+    //   .setOrigin(0.5, 0.5)
+    //   .setScale(4, 4);
+    // this.background = this.scene.add
+    //   .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg5")
+    //   .setOrigin(0.5, 0.5)
+    //   .setScale(4, 4);
+    // this.background = this.scene.add
+    //   .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg6")
+    //   .setOrigin(0.5, 0.5)
+    //   .setScale(4, 4);
+    // this.background = this.scene.add
+    //   .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg7")
+    //   .setOrigin(0.5, 0.5)
+    //   .setScale(4, 4);
+    // this.background = this.scene.add
+    //   .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg8")
+    //   .setOrigin(0.5, 0.5)
+    //   .setScale(4, 4);
   }
 
   animateBackground(player: Phaser.GameObjects.Sprite) {
@@ -93,7 +121,7 @@ class Tutorial {
     const p0Config: LargeFloorConfig = {
       textureA: "plataformaLarga2",
       textureB: "plataformaLarga2",
-      large: 20,
+      large: 10,
       pos: { x: 500, y: 2000 },
       scale: { width: 0.7, height: 0.7 },
       rotated: false,
@@ -115,29 +143,31 @@ class Tutorial {
     const p1Config: LargeFloorConfig = {
       textureA: "plataformaLarga2",
       textureB: "plataformaLarga2",
-      large: 2,
-      pos: { x: 1000, y: 1850 },
+      large: 1,
+      pos: { x: 1000, y: 1820 },
       scale: { width: 0.7, height: 0.7 },
       rotated: false,
       gap: 0,
+      fix:0
     };
     const p1 = new LargeFloor(this.scene, p1Config, this.pisos);
 
     const p2Config: LargeFloorConfig = {
       textureA: "plataformaLarga2",
       textureB: "plataformaLarga2",
-      large: 3,
+      large: 2,
       pos: { x: 1300, y: 1700 },
       scale: { width: 0.7, height: 0.7 },
       rotated: false,
       gap: 0,
+      fix:0,
     };
     const p2 = new LargeFloor(this.scene, p2Config, this.pisos);
 
     const p3Config: FloorConfig = {
       texture: "plataformaA",
-      pos: { x: 1750, y: 1550 },
-      scale: { width: 0.7, height: 0.7 },
+      pos: { x: 1750, y: 1480 },
+      scale: { width: 0.9, height: 0.7 },
     };
     this.pisoFloat = new Floor(this.scene, p3Config, this.pisos2).setTint(
       Phaser.Display.Color.GetColor(255, 101, 0)
@@ -146,12 +176,13 @@ class Tutorial {
 
     const p4Config: LargeFloorConfig = {
       textureA: "plataformaLarga2",
-      textureB: "plataformaLarga2 ",
-      large: 5,
-      pos: { x: 1500, y: 400 },
+      textureB: "plataformaLarga2",
+      large: 2,
+      pos: { x: 1600, y: 400 },
       scale: { width: 0.7, height: 0.7 },
       rotated: false,
       gap: 0,
+      fix:0,
     };
     const p4 = new LargeFloor(this.scene, p4Config, this.pisos);
 
@@ -201,7 +232,7 @@ class Tutorial {
 
     const coinConfig: FloorConfig = {
       texture: "coin",
-      pos: { x: 1500, y: 450 }, 
+      pos: { x: 1500, y: 450 },
       scale: { width: 1, height: 1 },
       width: 50,
       height: 120,
@@ -226,7 +257,7 @@ class Tutorial {
     this.fireballTextActivator.hasEvent = "Show_Tutorial_Text_4";
   }
 
-  fireballActFunction() {}
+  fireballActFunction() { }
 
   addColliders() {
     if (this.scene.monchi) {

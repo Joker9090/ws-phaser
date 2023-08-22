@@ -1,4 +1,0 @@
-1.ajustar largeFloorConfig para que use la textura de plataforma larga
-2.ajustar tamaño sprite del cristal en el juego 
-3.ver errores de primer load 
-4.anims LevelMap (done)

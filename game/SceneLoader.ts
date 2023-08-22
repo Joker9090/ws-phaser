@@ -79,14 +79,24 @@ const loadAssets = {
       ["image", "plataformaLarga2", "/game/plataformaLarga.png"],
       ["image", "plataformaCorta", "/game/plataformaCorta1.png"],
       ["image", "plataformaCorta2", "/game/plataformaCorta2.png"],
-
+      ["image", "fallingGuy", "/game/fallingGuy.png"],
       ["image", "asteroid", "/game/asteroid.png"],
       ["image", "asteroid2", "/game/asteroid2.png"],
       ["image", "coin", "/game/cristal.png"],
       ["image", "portal", "/game/portal.png"],
       ["image", "heart", "/game/heart.png"],
       ["image", "arrow", "/game/arrow.png"],
-      ["image", "fallingGuy", "/game/fallingGuy.png"],
+      ["image", "lvl1bg1", "/game/lvl1bg1.png"],
+      ["image", "lvl1bg2", "/game/lvl1bg2.png"],
+      ["image", "lvl1bg3", "/game/lvl1bg3.png"],
+      ["image", "lvl1bg4", "/game/lvl1bg4.png"],
+      ["image", "lvl1bg5", "/game/lvl1bg5.png"],
+      ["image", "lvl1bg6", "/game/lvl1bg6.png"],
+      ["image", "lvl1bg7", "/game/lvl1bg7.png"],
+      ["image", "lvl1bg8", "/game/lvl1bg8.png"],
+
+
+
     ],
   },
 
@@ -208,7 +218,7 @@ class SceneLoader extends Phaser.Scene {
 
   create(this: SceneLoader, { level }: any) {
     this.scene.launch("DataManager", { data: 1 });
-   //this.scene.start("Intro", { data: 1 });
+    //this.scene.start("Intro", { data: 1 });
     this.scene.start("Game", { level: 0, lifes: 8 });
   }
 

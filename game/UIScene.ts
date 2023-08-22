@@ -67,14 +67,16 @@ export default class UIScene extends Phaser.Scene {
 
       const arrowConfig: UIConfig = {
         texture: "fallingGuy",
-        pos: { x: lifes * 50 + 275, y: 50 },
-        scale: 0.1,
+        pos: { x: lifes * 50 + 275, y: 60 },
+        scale: 1,
       };
       this.ArrowOriginalPos = quantityLifes * 50 + 250;
       this.gravityArrow = new UI(this, arrowConfig)
         .setRotation(0)
         .setScrollFactor(0, 0)
-        .setDepth(100);
+        .setDepth(100)
+        .setScale(0.1)
+        .setTint(150,150,150);
       this.containerRight?.add(this.gravityArrow);
     }
   }

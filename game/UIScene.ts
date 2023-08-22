@@ -52,14 +52,17 @@ export default class UIScene extends Phaser.Scene {
 
       const coinConf: UIConfig = {
         texture: "coin",
-        pos: { x: lifes * 50 + 150, y: 50 },
+        pos: { x: lifes * 50 + 150, y: 60 },
         scale: 0.1,
       };
       this.CoinOriginalPos = quantityLifes * 50 + 150;
       this.coinUI = new UI(this, coinConf)
         .setTint(Phaser.Display.Color.GetColor(0, 0, 0))
         .setScrollFactor(0, 0)
-        .setDepth(100);
+        .setDepth(100)
+        .setScale(0.9)
+        .setRotation(0.7)
+        ;
       this.containerLeft?.add(this.coinUI);
 
       const arrowConfig: UIConfig = {

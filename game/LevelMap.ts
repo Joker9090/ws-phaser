@@ -45,7 +45,7 @@ export default class LevelMap extends Phaser.Scene {
     this.cursors = this.input.keyboard?.createCursorKeys();
   }
 
-  preload() {}
+  preload() { }
 
   upDownAnim(
     planet:
@@ -112,12 +112,18 @@ export default class LevelMap extends Phaser.Scene {
     );
 
     const { width, height } = this.cameras.main;
-    this.container = this.add.container(0, 0).setDepth(999);
+    this.container = this.add.container(0, 0).setDepth(10);
     this.physics.world.setBounds(0, 0, 5000, 2500);
 
-    this.background = this.add
-      .image(1000, 500, "backgroundLevelMap")
-      .setScale(1.3);
+    this.background = this.add.image(1000, 500, "background").setScale(1.3);
+    this.background = this.add.image(1000, 500, "background2").setScale(1.3);
+    this.background = this.add.image(1000, 500, "background3").setScale(1.3);
+    this.background = this.add.image(1000, 500, "background5").setScale(1.3);
+    this.add.image(this.cameras.main.width - 1750, 800, "nube1").setScale(0.7);
+    this.add.image(this.cameras.main.width - 60, 600, "nube2").setScale(0.7);
+    this.add.image(this.cameras.main.width - 1800, 60, "nube4");
+    this.add.image(this.cameras.main.width - 1700, 160, "nube5").setScale(0.7);
+
 
     this.sun = this.add
       .sprite(width - width / 8, height - height / 4.7, "sun")
@@ -134,9 +140,20 @@ export default class LevelMap extends Phaser.Scene {
       .setVisible(true);
 
     this.planetLevel2 = this.add
-      .sprite(width - width / 2.8, height - height / 2.8, "planetLevel2")
-      .setScale(0.15)
+      .sprite(width - width / 2.8, height - height / 2.8, "lvl2", 1)
+      .setScale(0.95)
       .setTint(Phaser.Display.Color.GetColor(5, 5, 5));
+
+    const lvl2frames = this.anims.generateFrameNumbers("lvl2", { frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39] });
+    const lvl2Config = {
+      key: "lvl2",
+      frames: lvl2frames,
+      frameRate: 12,
+      repeat: -1,
+    };
+    this.anims.create(lvl2Config);
+    this.planetLevel2.anims.play("lvl2")
+
     this.level2Text = this.add
       .text(
         this.planetLevel2.x,
@@ -147,10 +164,22 @@ export default class LevelMap extends Phaser.Scene {
       .setScale(1.2)
       .setVisible(true);
 
+
     this.planetLevel1 = this.add
-      .sprite(width - width / 1.7, height - height / 1.77, "planetLevel1")
-      .setScale(0.35)
+      .sprite(width - width / 1.7, height - height / 1.77, "lvl1", 1)
+      .setScale(1.3)
       .setTint(Phaser.Display.Color.GetColor(5, 5, 5));
+
+    const lvl1Frames = this.anims.generateFrameNumbers("lvl1", { frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39] });
+    const lvl1Config = {
+      key: "lvl1",
+      frames: lvl1Frames,
+      frameRate: 12,
+      repeat: -1,
+    };
+    this.anims.create(lvl1Config);
+    this.planetLevel1.anims.play("lvl1")
+
     this.level1Text = this.add
       .text(
         this.planetLevel1.x,
@@ -161,9 +190,19 @@ export default class LevelMap extends Phaser.Scene {
       .setScale(1.2)
       .setVisible(true);
 
-    this.planetTutorial = this.add
-      .sprite(width - width / 1.2, 200, "planetTutorial")
-      .setScale(0.15);
+
+    this.planetTutorial = this.add.sprite(width - width / 1.2, 200, "Tutorial", 1).setScale(1);
+    const planetTutorialFrames = this.anims.generateFrameNumbers("tutorial", { frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39] });
+    const planetTutorialConfig = {
+      key: "planetTutorial",
+      frames: planetTutorialFrames,
+      frameRate: 12,
+      repeat: -1,
+    };
+    this.anims.create(planetTutorialConfig);
+    this.planetTutorial.anims.play("planetTutorial");
+
+
     this.tutorialText = this.add
       .text(
         this.planetTutorial.x,
@@ -180,10 +219,9 @@ export default class LevelMap extends Phaser.Scene {
       this.planetLevel2,
     ]);
     this.monchi = this.add
-      .sprite(width + 100, 150, "character", 1)
+      .sprite(width + 100, 150, "character", 20)
       .setScale(0.5)
       .setDepth(9);
-
     if (this.planetsShown == 0) {
       this.planets = [this.planetTutorial];
     } else if (this.planetsShown == 1) {
@@ -247,8 +285,12 @@ export default class LevelMap extends Phaser.Scene {
     this.planetSelector = this.add
       .image(0, 0, "cursor")
       .setScale(0.1)
-      .setRotation(-0.7);
-    this.selectPlanet(0);
+      .setRotation(-0.7)
+      .setDepth(10); // Set a higher depth value to bring it to the front
+
+    this.selectPlanet(0)
+
+
 
     this.graphic1 = this.add.graphics({ lineStyle: { color: 0x00ffff } }).setAlpha(0.15);
     this.graphic2 = this.add.graphics({ lineStyle: { color: 0x00ffff } }).setAlpha(0.15);
@@ -306,31 +348,31 @@ export default class LevelMap extends Phaser.Scene {
   }
 
   update() {
-    if(this.graphic1){
-      if(this.dist1){
-        if(this.planetTutorial && this.sun){
+    if (this.graphic1) {
+      if (this.dist1) {
+        if (this.planetTutorial && this.sun) {
           this.dist1 = Phaser.Math.Distance.BetweenPoints(this.planetTutorial, this.sun);
           this.graphic1.clear().strokeCircle(this.sun.x, this.sun.y, this.dist1);
         };
       };
     };
-    if(this.graphic2){
-      if(this.dist2){
-        if(this.planetLevel1 && this.sun){
+    if (this.graphic2) {
+      if (this.dist2) {
+        if (this.planetLevel1 && this.sun) {
           this.dist1 = Phaser.Math.Distance.BetweenPoints(this.planetLevel1, this.sun);
           this.graphic2.clear().strokeCircle(this.sun.x, this.sun.y, this.dist2);
         };
       };
     };
-    if(this.graphic3){
-      if(this.dist3){
-        if(this.planetLevel2 && this.sun){
+    if (this.graphic3) {
+      if (this.dist3) {
+        if (this.planetLevel2 && this.sun) {
           this.dist1 = Phaser.Math.Distance.BetweenPoints(this.planetLevel2, this.sun);
           this.graphic3.clear().strokeCircle(this.sun.x, this.sun.y, this.dist3);
         };
       };
     };
-      
+
     if (this.monchi) {
       this.progress = this.progress + 0.0031415;
       this.monchi.x = this.monchi.x - 0.8;

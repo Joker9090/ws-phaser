@@ -14,7 +14,7 @@ export default class MainMenuScene extends Phaser.Scene {
   play?: Phaser.GameObjects.Image;
   credits?: Phaser.GameObjects.Image;
   exit?: Phaser.GameObjects.Image;
-  title?: Phaser.GameObjects.Text;
+  title?: Phaser.GameObjects.Image;
   textTut?: Phaser.GameObjects.Text;
   textLvl1?: Phaser.GameObjects.Text;
   textLvl2?: Phaser.GameObjects.Text;
@@ -192,12 +192,30 @@ export default class MainMenuScene extends Phaser.Scene {
     this.scene.bringToTop().resume();
     //window.scene = this
 
+
     /* Main Scene Menu */
     //this.container = this.add.container(this.game.canvas.getBoundingClientRect().width/2 ,this.game.canvas.getBoundingClientRect().height/3).setDepth(999)
     this.container = this.add.container(0, 0).setDepth(999);
     this.physics.world.setBounds(0, 0, 5000, 2500);
-    this.add.image(900, 500, "background").setScale(0.7);
-    this.monchi = this.add.sprite(100, 700, "character", 1).setScale(0.5);
+    this.add.image(900, 500, "background").setScale(1.2);
+    this.add.image(900, 500, "background2");
+    this.add.image(900, 500, "background3");
+    this.add.image(1200, 550, "menuAsteroids").setScale(1.3).setDepth(1);
+    this.add.image(200, 500, "menuAsteroidsSmall").setScale(1.3).setDepth(1);
+    this.add.image(900, 500, "background5").setScale(1.5);
+
+    this.add.image(this.cameras.main.width - 1700, 900, "planeta1").setScale(0.9);
+    this.add.image(this.cameras.main.width - 1750, 800, "nube1").setScale(0.7);
+    this.add.image(this.cameras.main.width - 1700, 600, "astronauta").setScale(0.6);
+    this.add.image(this.cameras.main.width - 80, 400, "nube2").setScale(0.7);
+    this.add.image(this.cameras.main.width - 150, 150, "planeta2").setScale(0.6);
+    this.add.image(this.cameras.main.width - 1800, 60, "nube4");
+    this.add.image(this.cameras.main.width - 1700, 160, "nube5").setScale(0.7);
+
+  
+    // this.add.image(900, 500, "planeta2");
+
+    // this.monchi = this.add.sprite(100, 700, "character", 1).setScale(0.5);
     let { width, height } = this.scale;
     if (this.game.config.canvas) {
       const size = this.game.config.canvas.getBoundingClientRect();
@@ -206,13 +224,14 @@ export default class MainMenuScene extends Phaser.Scene {
     }
 
     const [widthButton, heightButton] = [250, 100];
-    this.title = this.add
-      .text(0, -100, "COSMIC WANDERER", {
-        fontSize: "80px",
-        fontFamily: "arcade",
-        color: "#c3c5c3",
-      })
-      .setOrigin(0.5);
+    // this.title = this.add
+    //   .text(0, -100, "COSMIC WANDERER", {
+    //     fontSize: "80px",
+    //     fontFamily: "arcade",
+    //     color: "#c3c5c3",
+    //   })
+    //   .setOrigin(0.5);
+    this.title = this.add.image(0, -100, "menuLogo").setOrigin(0.5).setScale(0.8)
     // play button
     this.play = this.add
       .image(2000, 100, "glass")
@@ -290,10 +309,10 @@ export default class MainMenuScene extends Phaser.Scene {
   selectButton(index: number) {
     const currentButton = this.buttons[this.selectedButtonIndex];
     // set the current selected button to a white tint
-    currentButton.setTint(0xffffff);
+    currentButton.setTexture("glass");
     const button = this.buttons[index];
     // set the newly selected button to a green tint
-    button.setTint(0x66ff7f);
+    button.setTexture("hover");
     // move the hand cursor to the right edge
     this.buttonSelector.x = button.x + button.displayWidth * 0.5;
     this.buttonSelector.y = button.y + 10;
@@ -316,6 +335,7 @@ export default class MainMenuScene extends Phaser.Scene {
     // get the currently selected button
     const button = this.buttons[this.selectedButtonIndex];
     // emit the 'selected' event
+    button.setTexture("click")
     button.emit("selected");
   }
 

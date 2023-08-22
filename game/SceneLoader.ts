@@ -14,6 +14,23 @@ const loadAssets = {
   Menu: {
     assets: [
       ["image", "glass", "/game/glass.png"],
+      ["image", "hover", "/game/hover.png"],
+      ["image", "click", "/game/click.png"],
+      ["image", "background", "/game/bg1.png"],
+      ["image", "background2", "/game/bg2.png"],
+      ["image", "background3", "/game/bg3.png"],
+      ["image", "background5", "/game/bg5.png"],
+      ["image", "astronauta", "/game/astronauta.png"],
+      ["image", "nube4", "/game/nube4.png"],
+      ["image", "nube5", "/game/nube5.png"],
+      ["image", "nube2", "/game/nube2.png"],
+      ["image", "nube1", "/game/nube1.png"],
+      ["image", "menuAsteroids", "/game/meteoritos2.png"],
+      ["image", "menuAsteroidsSmall", "/game/meteoritos1.png"],
+
+      ["image", "planeta1", "/game/planeta1.png"],
+      ["image", "planeta2", "/game/planeta2.png"],
+      ["image", "menuLogo", "/game/menuLogo.png"],
       ["image", "cursor", "/game/cursor.png"],
       [
         "spritesheet",
@@ -30,20 +47,41 @@ const loadAssets = {
     assets: [
       ["image", "backgroundLevelMap", "/game/backgroundLevelMap.png"],
       ["image", "sun", "/game/sun.png"],
-      ["image", "planetTutorial", "/game/planetaTutorial.png"],
-      ["image", "planetLevel1", "/game/planetaLevel1.png"],
-      ["image", "planetLevel2", "/game/planetaLevel2.png"],
+      ["image", "planetTutorial", "/game/planetTutorialSprite.png"],
+      ["image", "planetLevel1", "/game/planetlvl1.png"],
+      ["image", "planetLevel2", "/game/planetlvl2.png"],
+      [
+        "spritesheet",
+        "tutorial",
+        "/game/tutorial.png",
+        { frameWidth: 150, frameHeight: 150 },
+      ],
+      [
+        "spritesheet",
+        "lvl1",
+        "/game/lvl1.png",
+        { frameWidth: 150, frameHeight: 150 },
+      ],
+      [
+        "spritesheet",
+        "lvl2",
+        "/game/lvl2.png",
+        { frameWidth: 150, frameHeight: 150 },
+      ],
     ],
   },
   Scenes: {
     assets: [
-      ["image", "background", "/game/background.png"],
-      ["image", "plataformaA", "/game/platform1.png"],
-      ["image", "plataformaB", "/game/platform1B.png"],
-      ["image", "plataforma2", "/game/platform2.png"],
+
+      ["image", "plataformaA", "/game/plataforma.png"],
+      ["image", "plataformaB", "/game/plataforma2.png"],
+      ["image", "plataformaLarga", "/game/plataformaLarga.png"],
+      ["image", "plataformaCorta", "/game/plataformaCorta.png"],
+      ["image", "plataformaCorta2", "/game/plataformaCorta2.png"],
+
       ["image", "asteroid", "/game/asteroid.png"],
       ["image", "asteroid2", "/game/asteroid2.png"],
-      ["image", "coin", "/game/coin.png"],
+      ["image", "coin", "/game/cristal.png"],
       ["image", "portal", "/game/portal.png"],
       ["image", "heart", "/game/heart.png"],
       ["image", "arrow", "/game/arrow.png"],
@@ -169,11 +207,11 @@ class SceneLoader extends Phaser.Scene {
 
   create(this: SceneLoader, { level }: any) {
     this.scene.launch("DataManager", { data: 1 });
-    // this.scene.start("Intro", { data: 1 });
-    this.scene.start("Game", { level: 1, lifes: 8 });
+    this.scene.start("Intro", { data: 1 });
+    // this.scene.start("Game", { level: 1, lifes: 8 });
   }
 
-  update(this: SceneLoader) {}
+  update(this: SceneLoader) { }
 }
 
 export default SceneLoader;

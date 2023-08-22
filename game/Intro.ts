@@ -26,18 +26,19 @@ export default class Intro extends Phaser.Scene {
   */
 
   create() {
+    this.makeTransition("LevelMap", { data: 1 });
     this.cameras.main.setBackgroundColor(
       Phaser.Display.Color.GetColor(30, 30, 30)
     );
     /* Audio */
-    const getMusicManagerScene = this.game.scene.getScene(
-      "MusicManager"
-    ) as MusicManager;
-    if (!getMusicManagerScene.scene.isActive())
-      this.scene.launch("MusicManager").sendToBack();
-    else {
-      getMusicManagerScene.playMusic("songMenu");
-    }
+    // const getMusicManagerScene = this.game.scene.getScene(
+    //   "MusicManager"
+    // ) as MusicManager;
+    // if (!getMusicManagerScene.scene.isActive())
+    //   this.scene.launch("MusicManager").sendToBack();
+    // else {
+    //   getMusicManagerScene.playMusic("songMenu");
+    // }
     const { width, height } = this.cameras.main;
     this.container = this.add.container(width / 2, height / 2).setDepth(999);
     this.noswarText = this.add
@@ -223,6 +224,7 @@ export default class Intro extends Phaser.Scene {
   }
 
   update() {
+    
     if (this.finishIntro) {
       this.noswarText?.setPosition(
         this.cameras.main.width / 2,

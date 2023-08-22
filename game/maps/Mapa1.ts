@@ -37,7 +37,7 @@ class Mapa1 {
     x: 3000,
     y: 750,
   };
-  background: Phaser.GameObjects.Image;
+  background?: Phaser.GameObjects.Image;
 
   constructor(scene: Game) {
     this.scene = scene;
@@ -64,6 +64,8 @@ class Mapa1 {
     this.background = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "background")
       .setOrigin(0.5, 0.5);
+
+
   }
 
   animateBackground(player: Phaser.GameObjects.Sprite) {
@@ -71,7 +73,7 @@ class Mapa1 {
     const { x: x2, y: y2 } = player;
     const calcDiffX = (x2 - x) / 1.2;
     const calcDiffY = (y2 - y) / 1.2;
-    this.background.setPosition(x + calcDiffX, y + calcDiffY);
+    this.background?.setPosition(x + calcDiffX, y + calcDiffY);
   }
 
   addColliders() {
@@ -416,8 +418,8 @@ class Mapa1 {
       texture: "coin",
       pos: { x: 500, y: 1580 }, // 500 1580
       scale: { width: 0.1, height: 0.1 },
-      width: 450,
-      height: 600,
+      width: 50,
+      height: 60,
       fix: 100,
     };
     const coin = new Floor(this.scene, coinConfig, this.coin);

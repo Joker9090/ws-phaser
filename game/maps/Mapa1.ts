@@ -62,9 +62,37 @@ class Mapa1 {
     /* Debug */
 
     this.background = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "background")
-      .setOrigin(0.5, 0.5);
-
+      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg1")
+      .setOrigin(0.5, 0.5)
+      .setScale(8,8);
+    this.background = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg2")
+      .setOrigin(0.5, 0.5)
+      .setScale(8,8);
+    this.background = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg3")
+      .setOrigin(0.5, 0.5)
+      .setScale(8,8);
+    this.background = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg4")
+      .setOrigin(0.5, 0.5)
+      .setScale(8,8);
+    this.background = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg5")
+      .setOrigin(0.5, 0.5)
+      .setScale(8,8);
+    this.background = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg6")
+      .setOrigin(0.5, 0.5)
+      .setScale(8,8);
+    this.background = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg7")
+      .setOrigin(0.5, 0.5)
+      .setScale(8,8);
+    this.background = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg8")
+      .setOrigin(0.5, 0.5)
+      .setScale(8,8);
 
   }
 
@@ -169,21 +197,21 @@ class Mapa1 {
     this.amountLifes = data.lifes;
 
     const p1Config: FloorConfig = {
-      texture: "plataformaA",
+      texture: "plataformaLarga2",
       pos: { x: 500, y: 1000 },
-      scale: { width: 0.7, height: 0.7 },
-      fix: 10,
-      width: 240,
+      scale: { width: 0.4, height: 0.7 },
+      // fix: 20,
+      width: 390,
       height: 50,
     };
     const p1 = new Floor(this.scene, p1Config, this.pisos);
 
     const p2Config: FloorConfig = {
-      texture: "plataformaA",
+      texture: "plataformaLarga2",
       pos: { x: 800, y: 1800 },
-      scale: { width: 0.7, height: 0.7 },
-      fix: 10,
-      width: 240,
+      scale: { width: 0.5, height: 0.7 },
+      fix: 25,
+      width: 390,
       height: 50,
       tween: {
         duration: 4500,
@@ -199,56 +227,77 @@ class Mapa1 {
       texture: "plataformaA",
       pos: { x: 500, y: 1700 },
       scale: { width: 0.7, height: 0.7 },
-      fix: 10,
-      width: 240,
+      fix: 25,
+      width: 140,
       height: 50,
     };
     const p3 = new Floor(this.scene, p3Config, this.pisos);
 
     const p5Config: FloorConfig = {
-      texture: "plataforma2",
+      texture: "plataformaA",
       pos: { x: 1100, y: 800 }, // 1100 800
-      scale: { width: 0.1, height: 0.1 },
-      width: 2400,
-      height: 300,
+      scale: { width: 0.7, height: 0.7 },
+      width: 140,
+      height: 50,
     };
     const p5 = new Floor(this.scene, p5Config, this.pisos);
 
-    const p6Config: FloorConfig = {
-      texture: "plataforma2",
+    // const p6Config: FloorConfig = {
+    //   texture: "plataformaB",
+    //   pos: { x: 1000, y: 1500 },
+    //   scale: { width: 0.05, height: 0.05 },
+    //   width: 2400,
+    //   height: 100,
+    // };
+    const p6Config: LargeFloorConfig = {
+      textureA: "plataformaLarga2",
+      textureB: "plataformaLarga2",
       pos: { x: 1000, y: 1500 },
-      scale: { width: 0.05, height: 0.05 },
-      width: 2400,
-      height: 100,
+      scale: { width: 0.3, height: 0.5 },
+      // width: 2400,
+      // height: 100,
+      large: 1,
+      gap: 0,
     };
-    const p6 = new Floor(this.scene, p6Config, this.pisos);
+    const p6 = new LargeFloor(this.scene, p6Config, this.pisos);
 
     const p7Config: FloorConfig = {
       texture: "plataformaA",
       pos: { x: 1600, y: 1500 },
       scale: { width: 0.7, height: 0.7 },
-      fix: 10,
-      width: 240,
+      fix: 25,
+      width: 140,
       height: 50,
     };
     const p7 = new Floor(this.scene, p7Config, this.pisos);
 
-    const p8Config: FloorConfig = {
-      texture: "plataforma2",
+    // const p8Config: FloorConfig = {
+    //   texture: "plataformaLarga",
+    //   pos: { x: 1300, y: 1200 },
+    //   scale: { width: 1, height: 0.1 },
+    //   fix: 20,
+    //   width: 2400,
+    //   height: 100,
+
+    // };
+    const p8Config: LargeFloorConfig = {
+      textureA: "plataformaLarga2",
+      textureB: "plataformaLarga2",
+      large: 1,
       pos: { x: 1300, y: 1200 },
-      scale: { width: 0.15, height: 0.1 },
-      fix: 20,
-      width: 2400,
-      height: 100,
+      scale: { width: 0.7, height: 0.7 },
+      rotated: false,
+      gap: 0,
+      fix: 0,
     };
-    const p8 = new Floor(this.scene, p8Config, this.pisos);
+    const p8 = new LargeFloor(this.scene, p8Config, this.pisos);
 
     const p9Config: FloorConfig = {
       texture: "plataformaA",
       pos: { x: 1800, y: 1800 },
-      scale: { width: 1, height: 0.7 },
+      scale: { width: 1.2, height: 0.7 },
       fix: 10,
-      width: 235,
+      width: 180,
       height: 50,
     };
     const p9 = new Floor(this.scene, p9Config, this.pisos2).setTint(
@@ -256,9 +305,11 @@ class Mapa1 {
     );
 
     const p4Config: LargeFloorConfig = {
-      textureA: "plataformaA",
-      textureB: "plataformaB",
+      textureA: "plataformaLarga2",
+      textureB: "plataformaLarga2",
       large: 7,
+      gap: 0,
+      fix: -20,
       pos: { x: 1500, y: 100 },
       scale: { width: 0.7, height: 0.7 },
     };
@@ -268,31 +319,31 @@ class Mapa1 {
     const p10Config: FloorConfig = {
       texture: "plataformaB",
       pos: { x: 2600, y: 250 },
-      scale: { width: 0.85, height: 0.8 },
-      fix: 10,
-      width: 240,
-      height: 50,
+      scale: { width: 1, height: 0.8 },
+      fix: 25,
+      width: 140,
+      height: 90,
     };
 
     const p10 = new Floor(this.scene, p10Config, this.pisos);
 
     const p11Config: FloorConfig = {
-      texture: "plataformaB",
+      texture: "plataformaA",
       pos: { x: 2800, y: 400 },
-      scale: { width: 0.85, height: 0.8 },
-      fix: 10,
-      width: 240,
-      height: 50,
+      scale: { width: 1, height: 0.8 },
+      fix: 25,
+      width: 140,
+      height: 90,
     };
     const p11 = new Floor(this.scene, p11Config, this.pisos);
 
     const p12Config: FloorConfig = {
       texture: "plataformaB",
       pos: { x: 3000, y: 550 },
-      scale: { width: 0.85, height: 0.8 },
-      fix: 10,
-      width: 240,
-      height: 50,
+      scale: { width: 1, height: 0.8 },
+      fix: 25,
+      width: 140,
+      height: 90,
     };
     const p12 = new Floor(this.scene, p12Config, this.pisos);
 
@@ -300,9 +351,9 @@ class Mapa1 {
       texture: "plataformaB",
       pos: { x: 3550, y: 700 },
       scale: { width: 0.7, height: 0.7 },
-      fix: 10,
-      width: 240,
-      height: 50,
+      fix: 25,
+      width: 140,
+      height: 90,
       tween: {
         duration: 5000,
         paused: false,
@@ -316,10 +367,12 @@ class Mapa1 {
     );
 
     const p14Config: LargeFloorConfig = {
-      textureA: "plataformaA",
-      textureB: "plataformaB",
-      large: 5,
+      textureA: "plataformaLarga",
+      textureB: "plataformaLarga",
+      large: 2,
+      gap: 0,
       pos: { x: 4800, y: 1700 },
+      // pos: { x: 500, y: 600 },
       scale: { width: 0.7, height: 0.7 },
     };
     const p14 = new LargeFloor(this.scene, p14Config, this.pisos);
@@ -327,10 +380,12 @@ class Mapa1 {
     const pBackConfig: FloorConfig = {
       texture: "plataformaA",
       pos: { x: 4500, y: 1700 },
-      fix: 10,
-      width: 240,
-      height: 50,
-      scale: { width: 0.7, height: 0.7 },
+      // pos: { x: 500, y: 600 },
+
+      fix: 20,
+      width: 150,
+      height: 90,
+      scale: { width: 1, height: 1 },
       tween: {
         duration: 10000,
         paused: true,
@@ -348,30 +403,35 @@ class Mapa1 {
     const p15Config: FloorConfig = {
       texture: "plataformaB",
       pos: { x: 3800, y: 500 },
-      fix: 10,
-      width: 240,
-      height: 50,
-      scale: { width: 0.7, height: 0.7 },
+      // pos: { x: 500, y: 600 },
+      
+      fix: 20,
+      width: 150,
+      height: 90,
+      scale: { width: 1, height: 0.7 },
     };
     const p15 = new Floor(this.scene, p15Config, this.pisos);
 
     const p16Config: FloorConfig = {
-      texture: "plataformaB",
+      texture: "plataformaA",
       pos: { x: 4000, y: 300 },
+      // pos: { x: 500, y: 600 },
       fix: 10,
-      width: 240,
-      height: 50,
-      scale: { width: 0.8, height: 0.7 },
+      width: 170,
+      height: 90,
+      scale: { width: 1, height: 0.7 },
     };
     const p16 = new Floor(this.scene, p16Config, this.pisos);
 
     const p17Config: FloorConfig = {
       texture: "plataformaB",
+      // 4300 100
+      // pos: { x: 500, y: 600 },
       pos: { x: 4300, y: 100 },
-      scale: { width: 0.8, height: 0.7 },
-      fix: 10,
-      width: 240,
-      height: 50,
+      scale: { width: 1, height: 0.7 },
+      fix: 20,
+      width: 150,
+      height: 90,
       tween: {
         duration: 5000,
         paused: false,
@@ -385,20 +445,22 @@ class Mapa1 {
     const p18Config: FloorConfig = {
       texture: "plataformaB",
       pos: { x: 4600, y: 600 },
-      fix: 10,
-      width: 240,
+      // pos: { x: 300, y: 500 },
+      fix: 20,
+      width: 150,
       height: 50,
-      scale: { width: 0.8, height: 0.7 },
+      scale: { width: 1, height: 0.7 },
     };
     const p18 = new Floor(this.scene, p18Config, this.pisos);
 
     const p19Config: FloorConfig = {
       texture: "plataformaB",
       pos: { x: 4900, y: 300 },
-      fix: 10,
-      width: 240,
-      height: 50,
-      scale: { width: 0.8, height: 0.7 },
+      // pos: { x: 300, y: 700 },
+      fix: 20,
+      width: 150,
+      height: 90,
+      scale: { width: 1, height: 1 },
     };
     const p19 = new Floor(this.scene, p19Config, this.pisos4).setTint(
       Phaser.Display.Color.GetColor(255, 101, 0)
@@ -414,14 +476,17 @@ class Mapa1 {
     };
     const port = new Floor(this.scene, portalConfig, this.portal);
 
+
+
     const coinConfig: FloorConfig = {
       texture: "coin",
-      pos: { x: 500, y: 1580 }, // 500 1580
-      scale: { width: 0.1, height: 0.1 },
+      pos: { x: 500, y: 1580 },
+      scale: { width: 1, height: 0.5 },
       width: 50,
-      height: 60,
-      fix: 100,
+      height: 120,
+      fix: 0,
     };
+
     const coin = new Floor(this.scene, coinConfig, this.coin);
 
     const c1Config: AsteroidGeneratorConfig = {

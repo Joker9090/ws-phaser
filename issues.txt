@@ -1,0 +1,3 @@
+1.plataformas con movimiento lateral deberian arrastrar al pj
+2.body offset cuando rota la camara
+3.lvl2

@@ -13,6 +13,8 @@ export default class UIScene extends Phaser.Scene {
   lifesGroup?: Phaser.GameObjects.Group;
   gravityArrow?: Phaser.GameObjects.Image;
   coinUI?: Phaser.GameObjects.Image;
+  uiContainer?: Phaser.GameObjects.Image
+  uiIndicator?: Phaser.GameObjects.Image
   UIboundsCoin: number = 0;
   UIboundsArrow: number = 0;
   UIboundsHeart: number = 0;
@@ -36,11 +38,11 @@ export default class UIScene extends Phaser.Scene {
     if (lifes) {
       for (let i = 0; i < lifes; i++) {
         quantityLifes += 1;
-        xpos = 100 + i * 50;
+        xpos = 205 + i * 50;
         const lifeConfig: UIConfig = {
-          texture: "heart",
-          pos: { x: xpos, y: 50 },
-          scale: 0.1,
+          texture: "uiLifeSection",
+          pos: { x: xpos, y: 80 },
+          scale: 0.9,
         };
         const coras = new UI(this, lifeConfig, this.lifesGroup).setScrollFactor(
           0,
@@ -50,34 +52,56 @@ export default class UIScene extends Phaser.Scene {
         this.lifesGroup?.setDepth(100);
       }
 
+      const uiContainer: UIConfig = {
+        texture: "uiEmpty",
+        pos: { x: 200, y: 60 },
+        scale: 0.9,
+      };
+      const uiIndicator: UIConfig = {
+        texture: "uiGravity",
+        pos: { x: 100, y: 60 },
+        scale: 0.9,
+      };
+      this.uiIndicator = new UI(this, uiIndicator).setScrollFactor(0, 0);
+      this.uiContainer = new UI(this, uiContainer)
+        // .setTint(Phaser.Display.Color.GetColor(0, 0, 0))
+        .setScrollFactor(0, 0)
+        .setDepth(100)
+
+        // .setRotation(0.7)
+        ;
+      this.containerLeft?.add(this.uiContainer);
+      this.containerLeft?.add(this.uiIndicator);
+
+
       const coinConf: UIConfig = {
         texture: "coin",
-        pos: { x: lifes * 50 + 150, y: 60 },
-        scale: 0.1,
+        pos: { x: lifes + 95, y: 60 },
+        scale: 0.5,
       };
       this.CoinOriginalPos = quantityLifes * 50 + 150;
       this.coinUI = new UI(this, coinConf)
         .setTint(Phaser.Display.Color.GetColor(0, 0, 0))
         .setScrollFactor(0, 0)
         .setDepth(100)
-        .setScale(0.9)
-        .setRotation(0.7)
+        // .setScale(0.9)
+        // .setRotation(0.7)
         ;
       this.containerLeft?.add(this.coinUI);
 
-      const arrowConfig: UIConfig = {
-        texture: "fallingGuy",
-        pos: { x: lifes * 50 + 275, y: 60 },
-        scale: 1,
-      };
-      this.ArrowOriginalPos = quantityLifes * 50 + 250;
-      this.gravityArrow = new UI(this, arrowConfig)
-        .setRotation(0)
-        .setScrollFactor(0, 0)
-        .setDepth(100)
-        .setScale(0.1)
-        .setTint(150,150,150);
-      this.containerRight?.add(this.gravityArrow);
+      // const arrowConfig: UIConfig = {
+      //   texture: "fallingGuy",
+      //   pos: { x: lifes * 50 + 275, y: 60 },
+      //   scale: 1,
+      // };
+      // this.ArrowOriginalPos = quantityLifes * 50 + 250;
+      // this.gravityArrow = new UI(this, arrowConfig)
+      //   .setRotation(0)
+      //   .setScrollFactor(0, 0)
+      //   .setDepth(100)
+      //   .setScale(0.1)
+      //   .setTint(150, 150, 150);
+      // this.containerRight?.add(this.gravityArrow);
     }
   }
 
@@ -86,12 +110,17 @@ export default class UIScene extends Phaser.Scene {
       this.gravityArrow?.setRotation(0);
     } else if (direction == "up") {
       this.gravityArrow?.setRotation(Math.PI);
+      this.uiIndicator?.setRotation(Math.PI).setPosition(100, 60);
     } else if (direction == "left") {
-      this.gravityArrow?.setRotation(Math.PI/2);
+      this.gravityArrow?.setRotation(Math.PI / 2);
+      this.uiIndicator?.setRotation(Math.PI / 2);
       this.gravityArrow?.setFlipX(false);
+      this.uiIndicator?.setFlipX(false);
     } else if (direction == "right") {
-      this.gravityArrow?.setRotation(-Math.PI/2);
+      this.gravityArrow?.setRotation(-Math.PI / 2);
+      this.uiIndicator?.setRotation(-Math.PI / 2).setPosition(100, 60);
       this.gravityArrow?.setFlipX(true);
+      this.uiIndicator?.setFlipX(true);
     }
   }
 
@@ -123,14 +152,14 @@ export default class UIScene extends Phaser.Scene {
         lifeToTheRight?.destroy();
       }
     }
-    if (this.gameScene){
+    if (this.gameScene) {
       console.log("entro acá")
-      if (this.gameScene.levelIs == 1){
-        if (this.gameScene.checkPoint == 0){
+      if (this.gameScene.levelIs == 1) {
+        if (this.gameScene.checkPoint == 0) {
           this.rotateArrow("down");
-        } else if(this.gameScene.checkPoint == 1 && this.gameScene.cameraNormal){
+        } else if (this.gameScene.checkPoint == 1 && this.gameScene.cameraNormal) {
           this.rotateArrow("up");
-        } else if(this.gameScene.checkPoint == 1 && !this.gameScene.cameraNormal){
+        } else if (this.gameScene.checkPoint == 1 && !this.gameScene.cameraNormal) {
           this.rotateArrow("down");
         }
       } else if (this.gameScene.levelIs == 2) {
@@ -163,11 +192,11 @@ export default class UIScene extends Phaser.Scene {
     this.lifesGroup = this.add.group();
     this.createUI(data.lifes);
 
-  
+
 
     /* TIMER */
     this.timerText = this.add
-      .text(this.cameras.main.width - 120, 50, "Time: 0", { fontSize: "32px" })
+      .text(this.cameras.main.width - 120, 50, "0", { fontSize: "32px" })
       .setOrigin(0.5, 0.5)
       .setScrollFactor(0, 0)
       .setDepth(100)
@@ -176,14 +205,20 @@ export default class UIScene extends Phaser.Scene {
     var timerEvent = this.time.addEvent({
       delay: 1000,
       callback: () => {
+        let minutes = 0
         this.timeLevel++;
-        this.timerText?.setText("Time: " + this.timeLevel);
+        this.timerText?.setText("" + this.timeLevel);
+        // if (this.timeLevel > 10) {
+        //   minutes++
+        //   this.timeLevel = 0
+        //   this.timerText?.setText(`${minutes}:${this.timeLevel}`)
+        // }
         this.timeLevel = this.timeLevel;
       },
       callbackScope: this,
       loop: true,
     });
-    
+
     this.containerText.add([this.timerText]);
 
     this.tweens.addCounter({
@@ -237,8 +272,9 @@ export default class UIScene extends Phaser.Scene {
   update() {
 
     this.timerText?.setPosition(
-      this.cameras.main.width - this.cameras.main.width / 10,
-      50
+      // this.cameras.main.width - this.cameras.main.width / 10,
+      // 50
+      this.cameras.main.width - this.cameras.main.width / 1.15, 45
     );
     if (this.cameras.main.width < this.cameras.main.height) {
       this.timerText?.setPosition(160, 100);

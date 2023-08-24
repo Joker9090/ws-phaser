@@ -69,34 +69,34 @@ class Tutorial {
       .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg1")
       .setOrigin(0.5, 0.5)
       .setScale(4, 4);
-    // this.background = this.scene.add
-    //   .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg2")
-    //   .setOrigin(0.5, 0.5)
-    //   .setScale(4, 4);
-    // this.background = this.scene.add
-    //   .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg3")
-    //   .setOrigin(0.5, 0.5)
-    //   .setScale(4, 4);
-    // this.background = this.scene.add
-    //   .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg4")
-    //   .setOrigin(0.5, 0.5)
-    //   .setScale(4, 4);
-    // this.background = this.scene.add
-    //   .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg5")
-    //   .setOrigin(0.5, 0.5)
-    //   .setScale(4, 4);
-    // this.background = this.scene.add
-    //   .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg6")
-    //   .setOrigin(0.5, 0.5)
-    //   .setScale(4, 4);
-    // this.background = this.scene.add
-    //   .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg7")
-    //   .setOrigin(0.5, 0.5)
-    //   .setScale(4, 4);
-    // this.background = this.scene.add
-    //   .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg8")
-    //   .setOrigin(0.5, 0.5)
-    //   .setScale(4, 4);
+    this.background = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg2")
+      .setOrigin(0.5, 0.5)
+      .setScale(4, 4);
+    this.background = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg3")
+      .setOrigin(0.5, 0.5)
+      .setScale(4, 4);
+    this.background = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg4")
+      .setOrigin(0.5, 0.5)
+      .setScale(4, 4);
+    this.background = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg5")
+      .setOrigin(0.5, 0.5)
+      .setScale(4, 4);
+    this.background = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg6")
+      .setOrigin(0.5, 0.5)
+      .setScale(4, 4);
+    this.background = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg7")
+      .setOrigin(0.5, 0.5)
+      .setScale(4, 4);
+    this.background = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg8")
+      .setOrigin(0.5, 0.5)
+      .setScale(4, 4);
   }
 
   animateBackground(player: Phaser.GameObjects.Sprite) {
@@ -165,8 +165,8 @@ class Tutorial {
     const p2 = new LargeFloor(this.scene, p2Config, this.pisos);
 
     const p3Config: FloorConfig = {
-      texture: "plataformaA",
-      pos: { x: 1750, y: 1480 },
+      texture: "plataformaB",
+      pos: { x: 1940, y: 1580 },
       scale: { width: 0.9, height: 0.7 },
     };
     this.pisoFloat = new Floor(this.scene, p3Config, this.pisos2).setTint(
@@ -188,7 +188,7 @@ class Tutorial {
 
     const p5Config: FloorConfig = {
       texture: "plataformaB",
-      pos: { x: 2350, y: 250 },
+      pos: { x: 2250, y: 250 },
       scale: { width: 0.7, height: 0.7 },
     };
     this.pisoNoFloat = new Floor(this.scene, p5Config, this.pisos3).setTint(

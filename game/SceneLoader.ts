@@ -86,6 +86,10 @@ const loadAssets = {
       ["image", "portal", "/game/portal.png"],
       ["image", "heart", "/game/heart.png"],
       ["image", "arrow", "/game/arrow.png"],
+      ["image", "uiFull", "/game/uiLifeFull.png"],
+      ["image", "uiEmpty", "/game/uiLifeEmpty.png"],
+      ["image", "uiLifeSection", "/game/uiLifeSection.png"],
+      ["image", "uiGravity", "/game/uiGravityIndicator.png"],
       ["image", "lvl1bg1", "/game/lvl1bg1.png"],
       ["image", "lvl1bg2", "/game/lvl1bg2.png"],
       ["image", "lvl1bg3", "/game/lvl1bg3.png"],
@@ -219,7 +223,7 @@ class SceneLoader extends Phaser.Scene {
   create(this: SceneLoader, { level }: any) {
     this.scene.launch("DataManager", { data: 1 });
     //this.scene.start("Intro", { data: 1 });
-    this.scene.start("Game", { level: 0, lifes: 8 });
+    this.scene.start("Game", { level: 1, lifes: 3 });
   }
 
   update(this: SceneLoader) { }

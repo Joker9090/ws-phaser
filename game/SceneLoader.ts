@@ -77,6 +77,8 @@ const loadAssets = {
       ["image", "plataformaB", "/game/plataforma2.png"],
       ["image", "plataformaLarga", "/game/plataformaLarga2.png"],
       ["image", "plataformaLarga2", "/game/plataformaLarga.png"],
+      ["image", "platformA", "/game/platform1.png"],
+      ["image", "platformB", "/game/platform1B.png"],
       ["image", "plataformaCorta", "/game/plataformaCorta1.png"],
       ["image", "plataformaCorta2", "/game/plataformaCorta2.png"],
       ["image", "fallingGuy", "/game/fallingGuy.png"],
@@ -223,7 +225,7 @@ class SceneLoader extends Phaser.Scene {
   create(this: SceneLoader, { level }: any) {
     this.scene.launch("DataManager", { data: 1 });
     //this.scene.start("Intro", { data: 1 });
-    this.scene.start("Game", { level: 1, lifes: 3 });
+    this.scene.start("Game", { level: 2, lifes: 3 });
   }
 
   update(this: SceneLoader) { }

@@ -72,20 +72,57 @@ class Mapa2 {
   }
 
   createMap(data: { level: number; lifes: number }) {
+
+    this.background = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg1")
+      .setOrigin(0.5, 0.5)
+      .setScale(8, 8);
+    this.background = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg2")
+      .setOrigin(0.5, 0.5)
+      .setScale(8, 8);
+    this.background = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg3")
+      .setOrigin(0.5, 0.5)
+      .setScale(8, 8);
+    this.background = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg4")
+      .setOrigin(0.5, 0.5)
+      .setScale(8, 8);
+    this.background = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg5")
+      .setOrigin(0.5, 0.5)
+      .setScale(8, 8);
+    this.background = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg6")
+      .setOrigin(0.5, 0.5)
+      .setScale(8, 8);
+    this.background = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg7")
+      .setOrigin(0.5, 0.5)
+      .setScale(8, 8);
+    this.background = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg8")
+      .setOrigin(0.5, 0.5)
+      .setScale(8, 8);
+
     this.pisos = this.scene.physics.add.group({ allowGravity: false });
     this.coin = this.scene.physics.add.group({ allowGravity: false });
     this.portal = this.scene.physics.add.group({ allowGravity: false });
     this.fireballGroup = this.scene.physics.add.group({ allowGravity: false });
     this.portalInit = this.scene.physics.add.group({ allowGravity: false });
-this.scene.cameras.main.setZoom(0.2)
+    // this.scene.cameras.main.setZoom(0.2)
     /* Platforms */
+
+
+
 
     const p1Config: LargeFloorConfig = {
       textureA: "plataformaLarga",
-      gap:0,
+      gap: 0,
       textureB: "plataformaLarga",
-      large: 3,
-      pos: { x: 400, y: 300 },
+      large: 2,
+      pos: { x: 500, y: 300 },
       scale: { width: 0.7, height: 0.7 },
       rotated: false,
     };
@@ -93,8 +130,8 @@ this.scene.cameras.main.setZoom(0.2)
 
     const p2Config: LargeFloorConfig = {
       textureA: "plataformaLarga",
-      gap:0,
       textureB: "plataformaLarga",
+      gap: 0,
       large: 3,
       pos: { x: 1400, y: 100 },
       scale: { width: 0.7, height: 0.7 },
@@ -104,9 +141,9 @@ this.scene.cameras.main.setZoom(0.2)
 
     const p3Config: LargeFloorConfig = {
       textureA: "plataformaLarga",
-      gap:0,
+      gap: 0,
       textureB: "plataformaLarga",
-      large: 7,
+      large: 4,
       pos: { x: 1045, y: 460 },
       scale: { width: 0.7, height: 0.7 },
       rotated: true,
@@ -114,104 +151,113 @@ this.scene.cameras.main.setZoom(0.2)
     const p3 = new LargeFloor(this.scene, p3Config, this.pisos);
 
     const p4Config: LargeFloorConfig = {
-      textureA: "plataformaA",
-      gap:0,
-      textureB: "plataformaA",
-      large: 5,
+      textureA: "plataformaLarga",
+      textureB: "plataformaLarga",
+      gap: 0,
+      large: 3,
       pos: { x: 1400, y: 1130 },
       scale: { width: 0.7, height: 0.7 },
       rotated: true,
     };
     const p4 = new LargeFloor(this.scene, p4Config, this.pisos);
 
-    // const p5Config: LargeFloorConfig = {
-    //   textureA: "plataformaA",
-    //   gap:0,
-    //   textureB: "plataformaA",
-    //   large: 5,
-    //   pos: { x: 720, y: 1870 },
-    //   scale: { width: 0.7, height: 0.7 },
-    //   rotated: false,
-    // };
-    // const p5 = new LargeFloor(this.scene, p5Config, this.pisos);
+    const p5Config: LargeFloorConfig = {
+      textureA: "plataformaLarga",
+      gap: 0,
+      textureB: "plataformaLarga",
+      large: 3,
+      pos: { x: 720, y: 1970 },
+      scale: { width: 0.7, height: 0.7 },
+      rotated: false,
+    };
+    const p5 = new LargeFloor(this.scene, p5Config, this.pisos);
 
-    // const p6Config: LargeFloorConfig = {
-    //   textureA: "plataformaA",
-    //   gap:0,
-    //   textureB: "plataformaA",
-    //   large: 7,
-    //   pos: { x: 590, y: 1300 },
-    //   scale: { width: 0.7, height: 0.7 },
-    //   rotated: true,
-    // };
-    // const p6 = new LargeFloor(this.scene, p6Config, this.pisos);
+    const p6Config: LargeFloorConfig = {
+      textureA: "plataformaLarga",
+      gap: 0,
+      textureB: "plataformaLarga",
+      large: 4,
+      pos: { x: 590, y: 1400 },
+      scale: { width: 0.7, height: 0.7 },
+      rotated: true,
+    };
+    const p6 = new LargeFloor(this.scene, p6Config, this.pisos);
 
-    // const p7Config: LargeFloorConfig = {
-    //   textureA: "plataformaA",
-    //   gap:0,
-    //   textureB: "plataformaA",
-    //   large: 12,
-    //   pos: { x: 200, y: 1000 },
-    //   rotated: true,
-    //   scale: { width: 0.7, height: 0.7 },
-    // };
-    // const p7 = new LargeFloor(this.scene, p7Config, this.pisos);
+    const p7Config: LargeFloorConfig = {
+      textureA: "plataformaLarga",
+      gap: 0,
+      textureB: "plataformaLarga",
+      large: 7,
+      pos: { x: 200, y: 1000 },
+      rotated: true,
+      scale: { width: 0.7, height: 0.7 },
+    };
+    const p7 = new LargeFloor(this.scene, p7Config, this.pisos);
 
-    // const p8Config: LargeFloorConfig = {
-    //   textureA: "plataformaA",
-    //   gap:0,
-    //   textureB: "plataformaA",
-    //   large: 4,
-    //   pos: { x: 900, y: 2200 },
-    //   scale: { width: 0.7, height: 0.7 },
-    //   rotated: true,
-    // };
-    // const p8 = new LargeFloor(this.scene, p8Config, this.pisos);
+    const p8Config: LargeFloorConfig = {
+      textureA: "plataformaLarga",
+      gap: 0,
+      textureB: "plataformaLarga",
+      large: 2,
+      pos: { x: 900, y: 2300 },
+      scale: { width: 0.7, height: 0.7 },
+      rotated: true,
+    };
+    const p8 = new LargeFloor(this.scene, p8Config, this.pisos);
 
-    // const p9Config: LargeFloorConfig = {
-    //   textureA: "plataformaA",
-    //   gap:0,
-    //   textureB: "plataformaA",
-    //   large: 4,
-    //   pos: { x: 1200, y: 1970 },
-    //   scale: { width: 0.7, height: 0.7 },
-    //   rotated: true,
-    // };
-    // const p9 = new LargeFloor(this.scene, p9Config, this.pisos);
+    const p9Config: LargeFloorConfig = {
+      textureA: "plataformaLarga",
+      gap: 0,
+      textureB: "plataformaLarga",
+      large: 2,
+      pos: { x: 1200, y: 1970 },
+      scale: { width: 0.7, height: 0.7 },
+      rotated: true,
+    };
+    const p9 = new LargeFloor(this.scene, p9Config, this.pisos);
 
-    // const p10Config: LargeFloorConfig = {
-    //   textureA: "plataformaA",
-    //   gap:0,
-    //   textureB: "plataformaA",
-    //   large: 4,
-    //   pos: { x: 1500, y: 2200 },
-    //   scale: { width: 0.7, height: 0.7 },
-    //   rotated: true,
-    // };
-    // const p10 = new LargeFloor(this.scene, p10Config, this.pisos);
+    const p10Config: LargeFloorConfig = {
+      textureA: "plataformaLarga",
+      gap: 0,
+      textureB: "plataformaLarga",
+      large: 2,
+      pos: { x: 1500, y: 2300 },
+      scale: { width: 0.7, height: 0.7 },
+      rotated: true,
+    };
+    const p10 = new LargeFloor(this.scene, p10Config, this.pisos);
 
-    // const p11Config: LargeFloorConfig = {
-    //   textureA: "plataformaA",
-    //   gap:0,
-    //   textureB: "plataformaA",
-    //   large: 7,
-    //   pos: { x: 1900, y: 1600 },
-    //   scale: { width: 0.7, height: 0.7 },
-    //   rotated: true,
-    // };
-    // const p11 = new LargeFloor(this.scene, p11Config, this.pisos);
+    const p11Config: LargeFloorConfig = {
+      textureA: "plataformaLarga",
+      gap: 0,
+      textureB: "plataformaLarga",
+      large: 4,
+      pos: { x: 1900, y: 1600 },
+      scale: { width: 0.7, height: 0.7 },
+      rotated: true,
+    };
+    const p11 = new LargeFloor(this.scene, p11Config, this.pisos);
 
-    // const p12Config: LargeFloorConfig = {
-    //   textureA: "plataformaA",
-    //   gap:0,
-    //   textureB: "plataformaA",
-    //   large: 7,
-    //   pos: { x: 2300, y: 1350 },
-    //   scale: { width: 0.7, height: 0.7 },
-    //   rotated: true,
-    // };
-    // const p12 = new LargeFloor(this.scene, p12Config, this.pisos);
-
+    const p12Config: LargeFloorConfig = {
+      textureA: "plataformaLarga",
+      gap: 0,
+      textureB: "plataformaLarga",
+      large: 2,
+      pos: { x: 2300, y: 1350 },
+      scale: { width: 0.7, height: 0.7 },
+      rotated: true,
+    };
+    const p12 = new LargeFloor(this.scene, p12Config, this.pisos);
+    const p13Config: LargeFloorConfig = {
+      textureA: "plataformaLarga",
+      gap: 0,
+      textureB: "plataformaLarga",
+      large: 2,
+      pos: { x: 2300, y: 2050 },
+      scale: { width: 0.7, height: 0.7 },
+      rotated: true,
+    };
+    const p13 = new LargeFloor(this.scene, p13Config, this.pisos);
     /* Portal, Coin, Fireball and Asteroids */
 
     const portalConfig: FloorConfig = {
@@ -261,13 +307,13 @@ this.scene.cameras.main.setZoom(0.2)
 
     const coinConfig: FloorConfig = {
       texture: "coin",
-      pos: { x: 1000, y: 350 }, // 500 1580
-      scale: { width: 0.1, height: 0.1 },
-      width: 450,
-      height: 600,
-      fix: 100,
+      pos: { x: 1000, y: 1250 }, // 500 1580
+      scale: { width: 1, height: 1 },
+      width: 50,
+      height: 120,
+      fix: 0,
     };
-    const coin = new Floor(this.scene, coinConfig, this.coin).setVisible(false);
+    const coin = new Floor(this.scene, coinConfig, this.coin).setVisible(true);
 
     const c1Config: AsteroidGeneratorConfig = {
       texture: "asteroid",
@@ -368,7 +414,7 @@ this.scene.cameras.main.setZoom(0.2)
       if (this.scene.monchi) {
         if (this.sideGrav) {
           this.scene.monchi.checkSideGravity(this.scene.cursors);
-        } else if (this.scene.timeLevel < 4 ) {
+        } else if (this.scene.timeLevel < 4) {
           this.scene.monchi.setVelocityX(0);
           this.scene.monchi.setDepth(0);
         } else if (this.scene.timeLevel >= 4 && this.scene.timeLevel <= 8) {

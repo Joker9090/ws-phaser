@@ -22,6 +22,7 @@ export default class UIScene extends Phaser.Scene {
   CoinOriginalPos?: number;
   timeLevel: number = 0;
   timerText?: Phaser.GameObjects.Text;
+  minutes: number = 0
   containerText?: Phaser.GameObjects.Container;
   containerLeft?: Phaser.GameObjects.Container;
   containerRight?: Phaser.GameObjects.Container;
@@ -110,7 +111,7 @@ export default class UIScene extends Phaser.Scene {
       this.gravityArrow?.setRotation(0);
     } else if (direction == "up") {
       this.gravityArrow?.setRotation(Math.PI);
-      this.uiIndicator?.setRotation(Math.PI).setPosition(100, 60);
+      this.uiIndicator?.setRotation(Math.PI).setPosition(95, 60);
     } else if (direction == "left") {
       this.gravityArrow?.setRotation(Math.PI / 2);
       this.uiIndicator?.setRotation(Math.PI / 2);
@@ -196,18 +197,34 @@ export default class UIScene extends Phaser.Scene {
 
     /* TIMER */
     this.timerText = this.add
-      .text(this.cameras.main.width - 120, 50, "0", { fontSize: "32px" })
+      .text(300, 50, `${this.minutes}:${this.timeLevel}`, { fontSize: "32px" })
       .setOrigin(0.5, 0.5)
       .setScrollFactor(0, 0)
       .setDepth(100)
-      .setSize(50, 50);
+      .setSize(50, 50)
+      .setPosition(250,45);
     this.timeLevel = 0;
     var timerEvent = this.time.addEvent({
       delay: 1000,
       callback: () => {
-        let minutes = 0
         this.timeLevel++;
-        this.timerText?.setText("" + this.timeLevel);
+        this.timerText?.setText(`${this.minutes}:${this.timeLevel}`);
+        // if (this.timeLevel > 10) {
+        //   minutes++
+        //   this.timeLevel = 0
+        //   this.timerText?.setText(`${minutes}:${this.timeLevel}`)
+        // }
+        this.timeLevel = this.timeLevel;
+      },
+      callbackScope: this,
+      loop: true,
+    });
+    var timerEvent = this.time.addEvent({
+      delay: 60000,
+      callback: () => {
+        this.minutes++;
+        this.timeLevel = 0
+        this.timerText?.setText(`${this.minutes}:${this.timeLevel}`);
         // if (this.timeLevel > 10) {
         //   minutes++
         //   this.timeLevel = 0
@@ -271,13 +288,13 @@ export default class UIScene extends Phaser.Scene {
 
   update() {
 
-    this.timerText?.setPosition(
-      // this.cameras.main.width - this.cameras.main.width / 10,
-      // 50
-      this.cameras.main.width - this.cameras.main.width / 1.15, 45
-    );
+    // this.timerText?.setPosition(
+    //   // this.cameras.main.width - this.cameras.main.width / 10,
+    //   // // 50
+    //   // this.cameras.main.width - this.cameras.main.width / 1.15, 45
+    // );
     if (this.cameras.main.width < this.cameras.main.height) {
-      this.timerText?.setPosition(160, 100);
+      // this.timerText?.setPosition(160, 100);
       this.containerLeft?.setScale(
         this.cameras.main.width / this.cameras.main.height
       );

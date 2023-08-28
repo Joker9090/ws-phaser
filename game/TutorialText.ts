@@ -22,6 +22,7 @@ export default class TutorialText extends Phaser.Scene {
     this.gameScene = this.game.scene.getScene("Game");
   }
 
+
   DisplayText(param: number) {
     if (param <= 3) {
       this.gameScene?.scene.pause();

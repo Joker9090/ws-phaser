@@ -56,7 +56,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     scene.physics.add.existing(this);
 
     /* Monchi change size and bounce */
-
     this.body?.setSize(250, 300);
     this.body?.setOffset(0, 120);
     this.setScale(0.3);
@@ -196,28 +195,34 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     if (cursors) {
       const { up, down, left, right } = cursors;
       const velocity = 300;
-      // this.body?.setOffset(0, 150);
+      this.body?.setSize(300, 250).setOffset(0,150)
       if (up.isDown) {
         this.setVelocityY(-velocity);
         this.setFlipX(false);
         if (!this.isJumping) this.anims.play("monchiMove", true);
+        // this.setOffset(0, 100)
+        // this.setOffset(10,130)
       } else if (down.isDown) {
         this.setVelocityY(velocity);
         this.setFlipX(true);
+        this.setOffset(10, 40)
         if (!this.isJumping) this.anims.play("monchiMove", true);
       } else {
         this.setVelocityY(0);
+        
       }
 
       if (left.isDown) {
         this.setGravityX(-1300);
         this.setFlipY(true);
         EventsCenter.emit("gravityArrow", "left");
+        // this.setOffset(80, 90)
         // this.setOffset(300, 200);
       } else if (right.isDown) {
         this.setGravityX(1300);
         this.setFlipY(false);
         EventsCenter.emit("gravityArrow", "right");
+        // this.setOffset(80, -20)
         // this.setOffset(80, 40);
       }
     }

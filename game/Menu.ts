@@ -200,9 +200,9 @@ export default class MainMenuScene extends Phaser.Scene {
     this.add.image(900, 500, "background").setScale(1.2);
     this.add.image(900, 500, "background2");
     this.add.image(900, 500, "background3");
+    this.add.image(900, 500, "background5").setScale(1.5);
     this.add.image(1200, 550, "menuAsteroids").setScale(1.3).setDepth(1);
     this.add.image(200, 500, "menuAsteroidsSmall").setScale(1.3).setDepth(1);
-    this.add.image(900, 500, "background5").setScale(1.5);
 
     this.add.image(this.cameras.main.width - 1700, 900, "planeta1").setScale(0.9);
     this.add.image(this.cameras.main.width - 1750, 800, "nube1").setScale(0.7);
@@ -212,7 +212,7 @@ export default class MainMenuScene extends Phaser.Scene {
     this.add.image(this.cameras.main.width - 1800, 60, "nube4");
     this.add.image(this.cameras.main.width - 1700, 160, "nube5").setScale(0.7);
 
-  
+
     // this.add.image(900, 500, "planeta2");
 
     // this.monchi = this.add.sprite(100, 700, "character", 1).setScale(0.5);

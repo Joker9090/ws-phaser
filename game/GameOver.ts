@@ -6,6 +6,7 @@ import BetweenScenes, { BetweenScenesStatus } from "./BetweenScenes";
 export default class GameOver extends Phaser.Scene {
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   container?: Phaser.GameObjects.Container;
+  background?: Phaser.GameObjects.Image
   constructor() {
     super({ key: "GameOver" });
   }
@@ -42,6 +43,42 @@ export default class GameOver extends Phaser.Scene {
       .setOrigin(0.5)
       .setScale(1);
     this.container.add([text1, text2]);
+
+
+
+    this.background = this.add
+      .image(500, 800, "lvl1bg1")
+      .setOrigin(0.5, 0.5)
+      .setScale(8, 8);
+    this.background = this.add
+      .image(500, 800, "lvl1bg2")
+      .setOrigin(0.5, 0.5)
+      .setScale(8, 8);
+    this.background = this.add
+      .image(500, 800, "lvl1bg3")
+      .setOrigin(0.5, 0.5)
+      .setScale(8, 8);
+    this.background = this.add
+      .image(500, 800, "lvl1bg4")
+      .setOrigin(0.5, 0.5)
+      .setScale(8, 8);
+    this.background = this.add
+      .image(500, 800, "lvl1bg5")
+      .setOrigin(0.5, 0.5)
+      .setScale(8, 8);
+    this.background = this.add
+      .image(500, 800, "lvl1bg6")
+      .setOrigin(0.5, 0.5)
+      .setScale(8, 8);
+    this.background = this.add
+      .image(500, 800, "lvl1bg7")
+      .setOrigin(0.5, 0.5)
+      .setScale(8, 8);
+    this.background = this.add
+      .image(500, 800, "lvl1bg8")
+      .setOrigin(0.5, 0.5)
+      .setScale(8, 8);
+
   }
 
   makeTransition(sceneName: string, data: any) {

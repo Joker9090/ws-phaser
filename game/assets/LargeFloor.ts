@@ -67,8 +67,9 @@ class LargeFloor extends Phaser.GameObjects.Container {
     if (this.body) {
       const body = this.body as Phaser.Physics.Arcade.Body;
       body.setImmovable(true);
+      // hitboxes largefloors
       if (rota) {
-        body.setOffset(0, -90);
+        body.setOffset(-50, -200);
       } else {
         body.setOffset(-200, -50);
       }

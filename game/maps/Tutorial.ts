@@ -343,7 +343,6 @@ class Tutorial {
 
   update() {
     this.showMap();
-
     if (this.tutorialState == 1) {
       if (this) {
         if (this.scene.monchi) {

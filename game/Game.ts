@@ -386,7 +386,7 @@ class Game extends Phaser.Scene {
       }
     }
   }
-
+  // hitbox el vago en respawn
   loseLevel2() {
     if (this.lifes) {
       this.lifes -= 1;
@@ -398,9 +398,11 @@ class Game extends Phaser.Scene {
         this.monchi.setFlipY(false);
         this.physics.world.gravity.y = 1000;
         this.monchi?.setFlipX(false);
-        this.monchi.setRotation(0).setSize(73, 110).setOffset(70, 50);
+        this.monchi.setRotation(0);
         this.cameras.main.setRotation(0);
         this.monchi.setGravityX(0);
+        this.monchi.setSize(250,300)
+
         if (this.map) this.map.sideGrav = false;
         if (this.map) this.monchi.x = this.map.startingPoint.x;
         if (this.map) this.monchi.y = this.map.startingPoint.y;
@@ -408,11 +410,11 @@ class Game extends Phaser.Scene {
         EventsCenter.emit("die", this.lifes);
         this.monchi.setFlipY(false);
         this.physics.world.gravity.y = 1000;
-        this.monchi.setFlipX(false);
-        this.monchi.setRotation(0).setSize(73, 110).setOffset(70, 50);
+        this.monchi.setFlipX(true);
+        this.monchi.setRotation(0);
         this.cameras.main.setRotation(0);
-        this.monchi.setGravityX(0);
-        if (this.map) this.map.sideGrav = false;
+        this.monchi.setSize(300, 250)
+        if (this.map) this.map.sideGrav = true;
         if (this.map) this.monchi.x = this.map.checkPointPos.x;
         if (this.map) this.monchi.y = this.map.checkPointPos.y;
       }

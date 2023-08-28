@@ -31,7 +31,6 @@ export default class UIScene extends Phaser.Scene {
   constructor() {
     super({ key: "UIScene" });
   }
-
   createUI(lifes: number) {
     let quantityLifes = 0;
     let xpos = 0;
@@ -111,15 +110,15 @@ export default class UIScene extends Phaser.Scene {
       this.gravityArrow?.setRotation(0);
     } else if (direction == "up") {
       this.gravityArrow?.setRotation(Math.PI);
-      this.uiIndicator?.setRotation(Math.PI).setPosition(95, 60);
+      this.uiIndicator?.setRotation(Math.PI).setPosition(98, 60);
     } else if (direction == "left") {
       this.gravityArrow?.setRotation(Math.PI / 2);
-      this.uiIndicator?.setRotation(Math.PI / 2);
+      this.uiIndicator?.setRotation(Math.PI / 2).setPosition(95, 63);
       this.gravityArrow?.setFlipX(false);
       this.uiIndicator?.setFlipX(false);
     } else if (direction == "right") {
       this.gravityArrow?.setRotation(-Math.PI / 2);
-      this.uiIndicator?.setRotation(-Math.PI / 2).setPosition(100, 60);
+      this.uiIndicator?.setRotation(-Math.PI / 2).setPosition(100, 63);
       this.gravityArrow?.setFlipX(true);
       this.uiIndicator?.setFlipX(true);
     }
@@ -142,17 +141,23 @@ export default class UIScene extends Phaser.Scene {
         let lifeToTheRight = null;
         let highestX = Number.NEGATIVE_INFINITY;
         for (let i = 0; i < this.lifesGroup.getLength(); i++) {
-          const child = this.lifesGroup.getChildren()[
-            i
-          ] as Phaser.GameObjects.Image;
+          const child = this.lifesGroup.getChildren()[i] as Phaser.GameObjects.Image;
           if (child.x > highestX) {
             lifeToTheRight = child;
             highestX = child.x;
+
+            console.log(child.x, "child.x")
+            console.log(lifeToTheRight, "lifeToTheRigth")
           }
         }
-        lifeToTheRight?.destroy();
+        // lifeToTheRight?.setTexture('uiLifeSectionEmpty');
+        lifeToTheRight?.destroy()
       }
     }
+
+
+
+
     if (this.gameScene) {
       console.log("entro acá")
       if (this.gameScene.levelIs == 1) {
@@ -168,6 +173,10 @@ export default class UIScene extends Phaser.Scene {
       };
     };
   };
+
+
+  // Call this function whenever you want to change the texture of the next object
+
 
   closeSign(sign: number) {
     if (sign == 1) {
@@ -202,7 +211,7 @@ export default class UIScene extends Phaser.Scene {
       .setScrollFactor(0, 0)
       .setDepth(100)
       .setSize(50, 50)
-      .setPosition(250,45);
+      .setPosition(250, 45);
     this.timeLevel = 0;
     var timerEvent = this.time.addEvent({
       delay: 1000,
@@ -236,7 +245,7 @@ export default class UIScene extends Phaser.Scene {
       loop: true,
     });
 
-    this.containerText.add([this.timerText]);
+    this.containerLeft.add([this.timerText]);
 
     this.tweens.addCounter({
       from: 0,

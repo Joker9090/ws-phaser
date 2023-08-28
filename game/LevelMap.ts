@@ -162,7 +162,9 @@ export default class LevelMap extends Phaser.Scene {
       )
       .setOrigin(0.5)
       .setScale(1.2)
-      .setVisible(true);
+      .setVisible(true)
+      .setTint(0, 0, 0)
+      ;
 
 
     this.planetLevel1 = this.add

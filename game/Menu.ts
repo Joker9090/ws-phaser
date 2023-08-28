@@ -212,7 +212,7 @@ export default class MainMenuScene extends Phaser.Scene {
       x: targetX + 200,
       y: targetY + 200,
       delay: 2000,
-      duration: 10000, // Duration of the tween in milliseconds
+      duration: 8000, // Duration of the tween in milliseconds
       ease: 'Linear',
       repeat: -1,
     }) // Easing function

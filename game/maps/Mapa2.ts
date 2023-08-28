@@ -80,14 +80,14 @@ class Mapa2 {
     const { x: x2, y: y2 } = player;
     const calcDiffX = (x2 - x) / 1.2;
     const calcDiffY = (y2 - y) / 1.2;
-    this.backgroundLayer1?.setPosition(x + calcDiffX + 10, y + calcDiffY);
-    this.backgroundLayer2?.setPosition(x + calcDiffX + 35, y + calcDiffY);
-    this.backgroundLayer3?.setPosition(x + calcDiffX + 60, y + calcDiffY);
-    this.backgroundLayer4?.setPosition(x + calcDiffX + 45, y + calcDiffY);
-    this.backgroundLayer5?.setPosition(x + calcDiffX + 30, y + calcDiffY);
-    this.backgroundLayer6?.setPosition(x + calcDiffX + 15, y + calcDiffY);
-    this.backgroundLayer7?.setPosition(x + calcDiffX + 30, y + calcDiffY);
-    this.backgroundLayer8?.setPosition(x + calcDiffX + 22, y + calcDiffY);
+    // this.backgroundLayer1?.setPosition(x + calcDiffX + 10, y + calcDiffY);
+    // this.backgroundLayer2?.setPosition(x + calcDiffX + 35, y + calcDiffY);
+    // this.backgroundLayer3?.setPosition(x + calcDiffX + 60, y + calcDiffY);
+    // this.backgroundLayer4?.setPosition(x + calcDiffX + 45, y + calcDiffY);
+    // this.backgroundLayer5?.setPosition(x + calcDiffX + 30, y + calcDiffY);
+    // this.backgroundLayer6?.setPosition(x + calcDiffX + 15, y + calcDiffY);
+    // this.backgroundLayer7?.setPosition(x + calcDiffX + 30, y + calcDiffY);
+    // this.backgroundLayer8?.setPosition(x + calcDiffX + 22, y + calcDiffY);
   }
 
   createMap(data: { level: number; lifes: number }) {

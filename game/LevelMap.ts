@@ -142,9 +142,11 @@ export default class LevelMap extends Phaser.Scene {
     this.planetLevel2 = this.add
       .sprite(width - width / 2.8, height - height / 2.8, "lvl2", 1)
       .setScale(0.95)
-      .setTint(Phaser.Display.Color.GetColor(5, 5, 5));
+      .setTint(0, 0, 0);
 
-    const lvl2frames = this.anims.generateFrameNumbers("lvl2", { frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39] });
+    const lvl2frames = this.anims.generateFrameNumbers("lvl2", {
+      frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39],
+    });
     const lvl2Config = {
       key: "lvl2",
       frames: lvl2frames,
@@ -152,8 +154,7 @@ export default class LevelMap extends Phaser.Scene {
       repeat: -1,
     };
     this.anims.create(lvl2Config);
-    this.planetLevel2.anims.play("lvl2")
-
+    this.planetLevel2.anims.play("lvl2");
     this.level2Text = this.add
       .text(
         this.planetLevel2.x,
@@ -163,7 +164,7 @@ export default class LevelMap extends Phaser.Scene {
       .setOrigin(0.5)
       .setScale(1.2)
       .setVisible(true)
-      .setTint(0, 0, 0)
+
       ;
 
 
@@ -180,8 +181,7 @@ export default class LevelMap extends Phaser.Scene {
       repeat: -1,
     };
     this.anims.create(lvl1Config);
-    this.planetLevel1.anims.play("lvl1")
-
+ this.planetLevel1.anims.play("lvl1")
     this.level1Text = this.add
       .text(
         this.planetLevel1.x,

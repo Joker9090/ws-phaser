@@ -26,7 +26,7 @@ export default class Intro extends Phaser.Scene {
   */
 
   create() {
-    this.makeTransition("LevelMap", { data: 1 });
+    // this.makeTransition("LevelMap", { data: 1 });
     this.cameras.main.setBackgroundColor(
       Phaser.Display.Color.GetColor(30, 30, 30)
     );

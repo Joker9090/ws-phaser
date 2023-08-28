@@ -201,9 +201,31 @@ export default class MainMenuScene extends Phaser.Scene {
     this.add.image(900, 500, "background2");
     this.add.image(900, 500, "background3");
     this.add.image(900, 500, "background5").setScale(1.5);
-    this.add.image(1200, 550, "menuAsteroids").setScale(1.3).setDepth(1);
-    this.add.image(200, 500, "menuAsteroidsSmall").setScale(1.3).setDepth(1);
+    const asteroids = this.add.image(-200, -200, "menuAsteroids").setScale(1.3).setDepth(1);
 
+    const targetX = this.cameras.main.width; // Adjust the value to control the horizontal movement
+    const targetY = this.cameras.main.height; // Adjust the value to control the vertical movement
+
+    // Create a tween for diagonal movement
+    this.tweens.add({
+      targets: asteroids,
+      x: targetX + 200,
+      y: targetY + 200,
+      delay: 2000,
+      duration: 10000, // Duration of the tween in milliseconds
+      ease: 'Linear',
+      repeat: -1,
+    }) // Easing function
+    const asteroidsSmall = this.add.image(-200, 0, "menuAsteroidsSmall").setScale(1.3).setDepth(1);
+    this.tweens.add({
+      targets: asteroidsSmall,
+      x: targetX + 300,
+      y: targetY + 300,
+      delay: 1300,
+      duration: 10000, // Duration of the tween in milliseconds
+      ease: 'Linear',
+      repeat: -1,
+    })
     this.add.image(this.cameras.main.width - 1700, 900, "planeta1").setScale(0.9);
     this.add.image(this.cameras.main.width - 1750, 800, "nube1").setScale(0.7);
     this.add.image(this.cameras.main.width - 1700, 600, "astronauta").setScale(0.6);

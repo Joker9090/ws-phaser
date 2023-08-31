@@ -107,7 +107,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.setFlipX(true);
         this.setOffset(70, 120)
         if (this.flipY === true) {
-          this.setOffset(70, 15)
+          this.setOffset(70, 20)
         }
         if (!this.isJumping) this.anims.play("monchiMove", true);
       } else if (right.isDown) {
@@ -116,7 +116,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.setVelocityX(160);
         this.setOffset(0, 120)
         if (this.flipY === true) {
-          // this.setOffset(0, 15)
+          this.setOffset(0, 20)
         }
         this.setFlipX(false);
         if (!this.isJumping) this.anims.play("monchiMove", true);

@@ -360,6 +360,7 @@ class Mapa1 {
         yoyo: true,
         repeat: -1,
         x: "-=350",
+        
       },
     };
     const p13 = new Floor(this.scene, p13Config, this.pisos3).setTint(

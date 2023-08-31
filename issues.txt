@@ -1,24 +1,13 @@
+TO DO
 1.plataformas con movimiento lateral deberian arrastrar al pj
 3.intro freezea a veces(creo es la primera vez que la calleas)
 5.arrow no cambia cuando baja la gravedad
 
-
-
-prototipo fix musica levelmap 
-this.musicManager = new MusicManager
-    if (this.musicManager?.name === "songTutorial" || this.musicManager?.name === "songLevel1" || this.musicManager?.name === "songLevel2") {
-      const getMusicManagerScene = this.game.scene.getScene(
-        "MusicManager"
-      ) as MusicManager;
-      if (!getMusicManagerScene.scene.isActive())
-        this.scene.launch("MusicManager").sendToBack();
-      else {
-        getMusicManagerScene.playMusic("songMenu");
-      }
-    }
-
-
+FINISHED
+8.fix collider on rotate gravity
+COMMITTED
+commit 31/8 09:14hs
 2.body offset cuando rota la camara [done]
-4.sigue sonando la musica de los niveles si salis de ellos,menu music se resetea entre levels y menu
+4.sigue sonando la musica de los niveles si salis de ellos,menu music se resetea entre levels y menu[done]
 6.demasiado espacio entre monchi y plataformas tutorial [done]
 7.respawn despues de cambiar la gravedad sin el flix x [done]

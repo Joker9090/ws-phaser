@@ -278,7 +278,6 @@ class Game extends Phaser.Scene {
         if (item.hasEvent == "Show_Tutorial_Text_3") {
           EventsCenter.emit("noFloat", true);
           EventsCenter.emit("gravityArrow", "down");
-          console.log("pabajo mi loco")
           // delete item.hasEvent;
         }
       }

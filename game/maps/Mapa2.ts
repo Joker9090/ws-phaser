@@ -6,6 +6,7 @@ import Floor, { FloorConfig } from "../assets/Floor";
 import LargeFloor, { LargeFloorConfig } from "../assets/LargeFloor";
 import Game from "../Game";
 import UIScene from "../UIScene";
+import EventsCenter from "../EventsCenter";
 // Scene in class
 class Mapa2 {
   isJumping = false;
@@ -91,7 +92,7 @@ class Mapa2 {
   }
 
   createMap(data: { level: number; lifes: number }) {
-
+    EventsCenter.emit("gravityArrow", "down");
     this.backgroundLayer1 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg1")
       .setOrigin(0.5, 0.5)

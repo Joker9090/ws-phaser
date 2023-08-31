@@ -116,7 +116,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.setVelocityX(160);
         this.setOffset(0, 120)
         if (this.flipY === true) {
-          this.setOffset(0, 15)
+          // this.setOffset(0, 15)
         }
         this.setFlipX(false);
         if (!this.isJumping) this.anims.play("monchiMove", true);
@@ -160,14 +160,16 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       if (left.isDown) {
         this.setVelocityX(160);
         this.setFlipX(false);
-        // this.body?.setOffset(0, -100);
+        this.setOffset(20, 0)
         if (!this.isJumping) this.anims.play("monchiMove", true);
+        console.log("pala izquierda loco")
       } else if (right.isDown) {
 
         /* Right*/
         this.setVelocityX(-160);
-        // this.body?.setOffset(0, -100);
+        this.body?.setOffset(100, 0);
         this.setFlipX(true);
+        console.log("pala derecha loco")
         if (!this.isJumping) this.anims.play("monchiMove", true);
       } else {
 
@@ -195,7 +197,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     if (cursors) {
       const { up, down, left, right } = cursors;
       const velocity = 300;
-      this.body?.setSize(300, 250).setOffset(0,150)
+      this.body?.setSize(300, 250).setOffset(0, 150)
       if (up.isDown) {
         this.setVelocityY(-velocity);
         this.setFlipX(false);
@@ -205,11 +207,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       } else if (down.isDown) {
         this.setVelocityY(velocity);
         this.setFlipX(true);
-        this.setOffset(10, 40)
+        this.setOffset(0, 40)
         if (!this.isJumping) this.anims.play("monchiMove", true);
       } else {
         this.setVelocityY(0);
-        
       }
 
       if (left.isDown) {

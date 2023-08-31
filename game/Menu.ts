@@ -186,7 +186,10 @@ export default class MainMenuScene extends Phaser.Scene {
     if (!getMusicManagerScene.scene.isActive())
       this.scene.launch("MusicManager").sendToBack();
     else {
-      getMusicManagerScene.playMusic("songMenu");
+      if (getMusicManagerScene.music?.key !== "songMenu") {
+        getMusicManagerScene.stopMusic()
+        getMusicManagerScene.playMusic("songMenu")
+      }
     }
 
     this.scene.bringToTop().resume();

@@ -34,12 +34,12 @@ export default class TutorialText extends Phaser.Scene {
       );
     } else if (param == 1) {
       this.tutorialTextBox?.setTextBox(
-        "Coins are needed in order to win the game, you can see if you've collected it here next to your lifes!"
+        "crystals are needed in order to win the game, you can see if you've collected it here next to your lifes!"
       );
       this.signNumber = 1;
     } else if (param == 2) {
       this.tutorialTextBox?.setTextBox(
-        "This is Victor. Victor is falling, and the direction in which he is falling is determined by the direction of the gravity. Be careful not to fall like Victor."
+        "check out the gravity indicator around the crystal to see where gravity's pushing you"
       );
       this.signNumber = 2;
     } else if (param == 3) {

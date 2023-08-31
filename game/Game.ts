@@ -278,7 +278,8 @@ class Game extends Phaser.Scene {
         if (item.hasEvent == "Show_Tutorial_Text_3") {
           EventsCenter.emit("noFloat", true);
           EventsCenter.emit("gravityArrow", "down");
-          delete item.hasEvent;
+          console.log("pabajo mi loco")
+          // delete item.hasEvent;
         }
       }
       return item;
@@ -401,7 +402,7 @@ class Game extends Phaser.Scene {
         this.monchi.setRotation(0);
         this.cameras.main.setRotation(0);
         this.monchi.setGravityX(0);
-        this.monchi.setSize(250,300)
+        this.monchi.setSize(250, 300)
 
         if (this.map) this.map.sideGrav = false;
         if (this.map) this.monchi.x = this.map.startingPoint.x;
@@ -411,7 +412,7 @@ class Game extends Phaser.Scene {
         this.monchi.setFlipY(false);
         this.physics.world.gravity.y = 1000;
         this.monchi.setFlipX(true);
-        this.monchi.setRotation(0);
+        this.monchi.setRotation(-Math.PI / 2);
         this.cameras.main.setRotation(0);
         this.monchi.setSize(300, 250)
         if (this.map) this.map.sideGrav = true;
@@ -475,6 +476,8 @@ class Game extends Phaser.Scene {
     } else if (this.levelIs == 2) {
       getMusicManagerScene.playMusic("songLevel2");
     }
+
+
 
     /* UI SCENE  */
     const UIScene = this.game.scene.getScene("UIScene");
@@ -552,6 +555,9 @@ class Game extends Phaser.Scene {
           this.canRot = true;
           EventsCenter.emit("gameOver", true);
           this.makeTransition("LevelMap", {});
+          if (getMusicManagerScene.music?.key !== "songMenu")
+            getMusicManagerScene.stopMusic()
+          getMusicManagerScene.playMusic("songMenu")
         },
         this
       );

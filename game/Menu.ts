@@ -172,7 +172,7 @@ export default class MainMenuScene extends Phaser.Scene {
       });
     } else {
       this.scene.start(sceneName, data);
-      this.time.delayedCall(1000, () => {
+      this.time.delayedCall(800, () => {
         this.scene.stop();
       });
     }

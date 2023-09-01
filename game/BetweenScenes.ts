@@ -10,6 +10,8 @@ export default class BetweenScenesScene extends Phaser.Scene {
   blocks?: Phaser.GameObjects.Group;
   newSceneName?: string;
   newSceneWith?: any;
+  firstRender: boolean = true
+  startTime: number = 0
   constructor() {
     super({ key: "BetweenScenes" });
     this.status = BetweenScenesStatus.IDLE;
@@ -61,7 +63,7 @@ export default class BetweenScenesScene extends Phaser.Scene {
         yoyo: false,
         hold: 200,
         //  onCompleteParams: self,
-        onComplete: ii == 107 ? self.finishLogic.bind(self) : () => {},
+        onComplete: ii == 107 ? self.finishLogic.bind(self) : () => { },
       });
 
       i++;
@@ -91,7 +93,7 @@ export default class BetweenScenesScene extends Phaser.Scene {
         repeat: 0,
         yoyo: false,
         hold: 200,
-        onComplete: ii == 107 ? self.loadNewScene.bind(self) : () => {},
+        onComplete: ii == 107 ? self.loadNewScene.bind(self) : () => { },
       });
       i++;
       ii++;
@@ -101,7 +103,27 @@ export default class BetweenScenesScene extends Phaser.Scene {
       }
     });
   }
+
   create() {
+    // this.blocks = this.add.group({
+    //   key: "block",
+    //   repeat: 107,
+    //   setScale: { x: 0, y: 0 },
+    // });
+
+    // const { width, height } = this.cameras.main;
+    // Phaser.Actions.GridAlign(this.blocks.getChildren(), {
+    //   width: 12,
+    //   height: 9,
+    //   cellWidth: width / 12,
+    //   cellHeight: height / 9,
+    //   x: 0,
+    //   y: 0,
+    // });
+    // setTimeout(() => {
+    //   this.turnOn();
+    // }, 1000)
+
     this.blocks = this.add.group({
       key: "block",
       repeat: 107,
@@ -118,8 +140,19 @@ export default class BetweenScenesScene extends Phaser.Scene {
       y: 0,
     });
 
-    this.turnOn();
   }
 
-  update() {}
+  update(time: number) {
+    if (this.startTime == 0) {
+      this.startTime = time
+    }
+
+    // console.log(time)
+
+    if (this.firstRender && time - this.startTime > 900) {
+      this.firstRender = false
+      // console.log("JOTA")
+      this.turnOn();
+    }
+  }
 }

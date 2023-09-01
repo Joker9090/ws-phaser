@@ -225,8 +225,8 @@ class SceneLoader extends Phaser.Scene {
 
   create(this: SceneLoader, { level }: any) {
     // this.scene.launch("DataManager", { data: 1 });
-    //this.scene.start("Tutorial", { data: 1 });
-    this.scene.start("Game", { level: 0, lifes: 3 });
+    this.scene.start("Menu", { data: 1 });
+    // this.scene.start("Game", { level: 0, lifes: 3 });
   }
 
   update(this: SceneLoader) { }

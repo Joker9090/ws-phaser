@@ -32,6 +32,7 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
     config: FloorConfig,
     group: Phaser.Physics.Arcade.Group,
     frame?: string | number | undefined
+
   ) {
     super(scene, config.pos.x, config.pos.y, config.texture);
     this.scene = scene;
@@ -60,7 +61,13 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
         targets: this,
       });
     }
+
+
+
+ 
+
   }
+  
 }
 
 export default Floor;

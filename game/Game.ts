@@ -449,7 +449,7 @@ class Game extends Phaser.Scene {
         this.map = new Tutorial(this);
         break;
       case 1:
-        this.map = new Mapa1(this);
+        this.map = new Mapa1(this, this.monchi!);
         break;
       case 2:
         this.map = new Mapa2(this);
@@ -458,7 +458,6 @@ class Game extends Phaser.Scene {
         this.map = new Tutorial(this);
         break;
     }
-
     this.levelIs = data.level;
     this.lifes = data.lifes;
 

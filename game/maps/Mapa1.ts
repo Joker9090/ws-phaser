@@ -1,4 +1,4 @@
-import Phaser from "phaser";
+import Phaser, { Physics } from "phaser";
 import AsteroidGenerator, {
   AsteroidGeneratorConfig,
 } from "../assets/AsteroidGenerator";
@@ -6,6 +6,7 @@ import Floor, { FloorConfig } from "../assets/Floor";
 import LargeFloor, { LargeFloorConfig } from "../assets/LargeFloor";
 import Game from "../Game";
 import UIScene from "../UIScene";
+import Player from "../assets/Player";
 
 class Mapa1 {
   isJumping = false;
@@ -24,11 +25,13 @@ class Mapa1 {
   portal?: Phaser.Physics.Arcade.Group;
   movingFloor?: Phaser.Physics.Arcade.Group;
   movingFloorRot?: Phaser.Physics.Arcade.Group;
+  p13!: Floor
   UIScene?: UIScene;
   amountLifes: number = 0;
   sideGrav: boolean = false;
   goingBack: boolean = false;
   pisoGoBack?: Phaser.GameObjects.Sprite;
+  monchi?: Player
   startingPoint = {
     x: 500, //500
     y: 800, //800
@@ -39,8 +42,10 @@ class Mapa1 {
   };
   background?: Phaser.GameObjects.Image;
 
-  constructor(scene: Game) {
+  constructor(scene: Game, monchi: Player) {
     this.scene = scene;
+    this.monchi = monchi
+
     this.UIScene = this.scene.game.scene.getScene("UIScene") as UIScene;
     /* World size*/
     this.scene.physics.world.setBounds(
@@ -64,35 +69,35 @@ class Mapa1 {
     this.background = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg1")
       .setOrigin(0.5, 0.5)
-      .setScale(8,8);
+      .setScale(8, 8);
     this.background = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg2")
       .setOrigin(0.5, 0.5)
-      .setScale(8,8);
+      .setScale(8, 8);
     this.background = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg3")
       .setOrigin(0.5, 0.5)
-      .setScale(8,8);
+      .setScale(8, 8);
     this.background = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg4")
       .setOrigin(0.5, 0.5)
-      .setScale(8,8);
+      .setScale(8, 8);
     this.background = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg5")
       .setOrigin(0.5, 0.5)
-      .setScale(8,8);
+      .setScale(8, 8);
     this.background = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg6")
       .setOrigin(0.5, 0.5)
-      .setScale(8,8);
+      .setScale(8, 8);
     this.background = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg7")
       .setOrigin(0.5, 0.5)
-      .setScale(8,8);
+      .setScale(8, 8);
     this.background = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg8")
       .setOrigin(0.5, 0.5)
-      .setScale(8,8);
+      .setScale(8, 8);
 
   }
 
@@ -346,27 +351,9 @@ class Mapa1 {
       height: 90,
     };
     const p12 = new Floor(this.scene, p12Config, this.pisos);
+    // p13 here
 
-    const p13Config: FloorConfig = {
-      texture: "plataformaB",
-      pos: { x: 3550, y: 700 },
-      scale: { width: 0.7, height: 0.7 },
-      fix: 25,
-      width: 140,
-      height: 90,
-      tween: {
-        duration: 5000,
-        paused: false,
-        yoyo: true,
-        repeat: -1,
-        x: "-=350",
-        
-      },
-    };
-    const p13 = new Floor(this.scene, p13Config, this.pisos3).setTint(
-      Phaser.Display.Color.GetColor(255, 101, 0)
-    );
-
+    // p13 here
     const p14Config: LargeFloorConfig = {
       textureA: "plataformaLarga",
       textureB: "plataformaLarga",
@@ -405,7 +392,7 @@ class Mapa1 {
       texture: "plataformaB",
       pos: { x: 3800, y: 500 },
       // pos: { x: 500, y: 600 },
-      
+
       fix: 20,
       width: 150,
       height: 90,
@@ -515,9 +502,32 @@ class Mapa1 {
     };
     const c2 = new AsteroidGenerator(this.scene, c2Config);
     c2.start();
-  }
 
+
+    const p13Config: FloorConfig = {
+      texture: "plataformaB",
+      pos: { x: 3550, y: 700 },
+      scale: { width: 0.7, height: 0.7 },
+      fix: 25,
+      width: 140,
+      height: 90,
+      tween: {
+        duration: 5000,
+        paused: false,
+        yoyo: true,
+        repeat: -1,
+        x: "-=350",
+
+      },
+    };
+    const p13 = new Floor(this.scene, p13Config, this.pisos3).setTint(
+      Phaser.Display.Color.GetColor(255, 101, 0)
+    );
+    this.p13 = p13
+    console.log(this.scene.monchi, "monchi")
+  }
   update() {
+
     /* Attach controls to player */
     if (!this.goingBack) {
       if (this.scene.monchi && this.scene.cameraNormal) {
@@ -530,7 +540,10 @@ class Mapa1 {
         this.scene.monchi.setY(1700 - this.scene.monchi.displayHeight);
     }
     if (this.scene.monchi) this.animateBackground(this.scene.monchi);
+
   }
+
+
 }
 
 export default Mapa1;

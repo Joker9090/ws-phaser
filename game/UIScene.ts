@@ -108,7 +108,6 @@ export default class UIScene extends Phaser.Scene {
   rotateArrow(direction: string) {
     if (direction == "down") {
       this.gravityArrow?.setRotation(0);
-      console.log("pabajo miloco")
     } else if (direction == "up") {
       this.gravityArrow?.setRotation(Math.PI);
       this.uiIndicator?.setRotation(Math.PI).setPosition(98, 60);

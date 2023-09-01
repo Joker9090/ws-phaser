@@ -19,6 +19,7 @@ export type FloorConfig = {
     height: number;
   };
   tween?: Partial<FloorTween>;
+  friction?: number;
 };
 
 // Scene in class
@@ -40,6 +41,7 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
     const width = config.width ?? 120;
     const height = config.height ?? 108;
     const fix = config.fix ?? 20;
+    const friction = config.friction ?? 1;
     if (config.scale) {
       this.setScale(config.scale.width, config.scale.height);
     }
@@ -55,6 +57,7 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
     this.group.add(this);
     this.setImmovable(true);
     this.setCollideWorldBounds(true);
+    if(friction) this.setFriction(friction)
     if (config.tween) {
       const tween = this.scene.tweens.add({
         ...config.tween,

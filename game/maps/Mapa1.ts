@@ -25,15 +25,15 @@ class Mapa1 {
   portal?: Phaser.Physics.Arcade.Group;
   movingFloor?: Phaser.Physics.Arcade.Group;
   movingFloorRot?: Phaser.Physics.Arcade.Group;
-  p13!: Floor
+  p13!: Floor;
   UIScene?: UIScene;
   amountLifes: number = 0;
   sideGrav: boolean = false;
   goingBack: boolean = false;
   pisoGoBack?: Phaser.GameObjects.Sprite;
-  monchi?: Player
+  monchi?: Player;
   startingPoint = {
-    x: 500, //500
+    x: 1700, //500
     y: 800, //800
   };
   checkPointPos = {
@@ -44,7 +44,7 @@ class Mapa1 {
 
   constructor(scene: Game, monchi: Player) {
     this.scene = scene;
-    this.monchi = monchi
+    this.monchi = monchi;
 
     this.UIScene = this.scene.game.scene.getScene("UIScene") as UIScene;
     /* World size*/
@@ -98,7 +98,6 @@ class Mapa1 {
       .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg8")
       .setOrigin(0.5, 0.5)
       .setScale(8, 8);
-
   }
 
   animateBackground(player: Phaser.GameObjects.Sprite) {
@@ -132,7 +131,10 @@ class Mapa1 {
         this.scene.physics.add.collider(
           this.scene.monchi,
           this.pisos3,
-          () => this.scene.rotateCam(10),
+          () => {
+            this.scene.rotateCam(10);
+            console.log(this.pisos3);
+          },
           () => true,
           this.scene
         );
@@ -164,6 +166,7 @@ class Mapa1 {
         this.scene.physics.add.collider(
           this.scene.monchi,
           this.pisosBack,
+          //()=>{},
           this.scene.goBack,
           () => true,
           this.scene
@@ -385,6 +388,7 @@ class Mapa1 {
     const pBack = new Floor(this.scene, pBackConfig, this.pisosBack).setTint(
       Phaser.Display.Color.GetColor(255, 101, 0)
     );
+    pBack.setFrictionX(1)
 
     //this.pisoGoBack = this.scene.physics.add.sprite(4500, 1700, "plataformaA").setScale(0.7).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
 
@@ -464,8 +468,6 @@ class Mapa1 {
     };
     const port = new Floor(this.scene, portalConfig, this.portal);
 
-
-
     const coinConfig: FloorConfig = {
       texture: "coin",
       pos: { x: 500, y: 1580 },
@@ -503,10 +505,9 @@ class Mapa1 {
     const c2 = new AsteroidGenerator(this.scene, c2Config);
     c2.start();
 
-
     const p13Config: FloorConfig = {
       texture: "plataformaB",
-      pos: { x: 3550, y: 700 },
+      pos: { x: 3550, y: 700 }, //3550 700
       scale: { width: 0.7, height: 0.7 },
       fix: 25,
       width: 140,
@@ -517,17 +518,18 @@ class Mapa1 {
         yoyo: true,
         repeat: -1,
         x: "-=350",
-
       },
     };
     const p13 = new Floor(this.scene, p13Config, this.pisos3).setTint(
-      Phaser.Display.Color.GetColor(255, 101, 0)
+      Phaser.Display.Color.GetColor(0, 0, 0)
     );
-    this.p13 = p13
-    console.log(this.scene.monchi, "monchi")
+    this.p13 = p13;
+    console.log(this.scene.monchi, "monchi");
+    this.p13.setFrictionX(1);
+
   }
   update() {
-
+    this.p13.setFrictionX(1);
     /* Attach controls to player */
     if (!this.goingBack) {
       if (this.scene.monchi && this.scene.cameraNormal) {
@@ -540,10 +542,7 @@ class Mapa1 {
         this.scene.monchi.setY(1700 - this.scene.monchi.displayHeight);
     }
     if (this.scene.monchi) this.animateBackground(this.scene.monchi);
-
   }
-
-
 }
 
 export default Mapa1;

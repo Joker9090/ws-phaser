@@ -310,15 +310,15 @@ export default class MainMenuScene extends Phaser.Scene {
     ]);
 
     this.play.on("selected", () => {
-      this.makeTransition("LevelMap", {});
+      this.makeTransition("LevelMap", { data: 1 });
       this.selectedButtonIndex = 0;
     });
     this.credits.on("selected", () => {
-      this.makeTransition("Credits", {});
+      this.makeTransition("Credits", { data: 1 });
       this.selectedButtonIndex = 0;
     });
     this.exit.on("selected", () => {
-      this.makeTransition("Intro", {});
+      this.makeTransition("Intro", { data: 1 });
       this.selectedButtonIndex = 0;
     });
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {

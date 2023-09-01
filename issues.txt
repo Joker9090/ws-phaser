@@ -1,3 +1,14 @@
+
+
+
+
+
+
+
+
+
+
+
 TO DO
 1.plataformas con movimiento lateral deberian arrastrar al pj
 3.intro freezea a veces(creo es la primera vez que la calleas)

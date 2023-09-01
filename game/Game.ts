@@ -28,7 +28,7 @@ class Game extends Phaser.Scene {
   cameraNormal: boolean = true;
   gravityDown: boolean = true;
 
-  checkPoint: number = 0;
+  checkPoint: number = 1;
 
   cameraWidth: number = 0;
   cameraHeight: number = 0;
@@ -191,7 +191,7 @@ class Game extends Phaser.Scene {
           },
           onUpdate: (tween) => {
             const value = tween.getValue();
-            this.monchi?.setPosition(value + Xpos, 1617);
+            //this.monchi?.setPosition(value + Xpos, 1617);
             piso.setPosition(value, 1700);
           },
           onComplete: () => {
@@ -562,6 +562,7 @@ class Game extends Phaser.Scene {
   }
 
   update(this: Game) {
+
     if (this.cameras.main.width < this.cameras.main.height) {
       this.cameras.main.zoom =
         this.cameras.main.width / this.cameras.main.height;

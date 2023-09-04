@@ -105,6 +105,7 @@ export default class BetweenScenesScene extends Phaser.Scene {
   }
 
   create() {
+    this.firstRender = true
     // this.blocks = this.add.group({
     //   key: "block",
     //   repeat: 107,

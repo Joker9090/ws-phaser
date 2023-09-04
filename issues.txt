@@ -1,18 +1,9 @@
-
-
-
-
-
-
-
-
-
-
-
 TO DO
 1.plataformas con movimiento lateral deberian arrastrar al pj
-3.intro freezea a veces(creo es la primera vez que la calleas)
-5.arrow no cambia cuando baja la gravedad
+9.solucionar backgrounds
+10.pulir hitboxes
+11.animar backgrounds una vez esten pulidos
+
 
 IDEAS
 1.setear en el update del nivel un if que verifique el collide entreplataforma y Player
@@ -22,6 +13,8 @@ y si es que setee el x del player a la suma de la diferencia entre el x actual d
 FINISHED
 
 COMMITTED
+3.intro freezea a veces(creo es la primera vez que la calleas)
+5.arrow no cambia cuando baja la gravedad
 commit 31/8 09:14hs
 2.body offset cuando rota la camara [done]
 4.sigue sonando la musica de los niveles si salis de ellos,menu music se resetea entre levels y menu[done]

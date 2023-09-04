@@ -21,6 +21,15 @@ export default class MainMenuScene extends Phaser.Scene {
   container?: Phaser.GameObjects.Container;
   canChangeScene: boolean = false;
   offsetButton: number = 10;
+  planet2?: Phaser.GameObjects.Image
+  background1?: Phaser.GameObjects.Image
+  background2?: Phaser.GameObjects.Image
+  background3?: Phaser.GameObjects.Image
+  background4?: Phaser.GameObjects.Image
+  startingPoint = {
+    x: 600, //600
+    y: 1800, //1800
+  };
   constructor() {
     super({ key: "Menu" });
   }
@@ -177,8 +186,55 @@ export default class MainMenuScene extends Phaser.Scene {
       });
     }
   }
-
+  scaleBg(background: Phaser.GameObjects.Image) {
+    background.displayHeight = this.cameras.main.displayHeight
+    background.displayWidth = this.cameras.main.displayWidth
+    background.y = this.cameras.main.displayHeight / 2
+    background.x = this.cameras.main.displayWidth / 2
+  }
   create() {
+    this.background1 = this.add.image(900, 500, "background")
+    this.background2 = this.add.image(900, 500, "background2").setScale(1.1)
+    this.background3 = this.add.image(900, 500, "background3").setScale(1.1);
+    this.background4 = this.add.image(900, 500, "background5")
+    this.scaleBg(this.background1)
+    // this.scaleBg(this.background2)
+    // this.scaleBg(this.background3)
+    this.scaleBg(this.background4)
+    const tween2 = this.tweens.add({
+      targets: this.background2,
+      x: "-=80",
+      ease: 'sine.inout',
+      duration: 8000,
+      yoyo: true,
+      repeat: -1,
+    })
+    const tween3 = this.tweens.add({
+      targets: this.background3,
+      x: "-=80",
+      ease: 'sine.inout',
+      duration: 7800,
+      yoyo: true,
+      repeat: -1,
+    })
+    const p2Tween = this.tweens.add({
+      targets: this.planet2,
+      y: "-=4000",
+      ease: 'sine.inout',
+      duration: 7800,
+      yoyo: true,
+      repeat: -1,
+    })
+    const asteroids = this.add.image(-200, -200, "menuAsteroids").setScale(1.3).setDepth(1);
+    this.add.image(this.cameras.main.width - 1700, 900, "planeta1").setScale(0.9);
+    this.add.image(this.cameras.main.width - 1750, 800, "nube1").setScale(0.7);
+    this.add.image(this.cameras.main.width - 1700, 600, "astronauta").setScale(0.6);
+    this.add.image(this.cameras.main.width - 80, 400, "nube2").setScale(0.7);
+    this.planet2 = this.add.image(this.cameras.main.width - 150, 150, "planeta2").setScale(0.6);
+    this.add.image(this.cameras.main.width - 1800, 60, "nube4");
+    this.add.image(this.cameras.main.width - 1700, 160, "nube5").setScale(0.7);
+
+
     /* Audio */
     const getMusicManagerScene = this.game.scene.getScene(
       "MusicManager"
@@ -200,11 +256,7 @@ export default class MainMenuScene extends Phaser.Scene {
     //this.container = this.add.container(this.game.canvas.getBoundingClientRect().width/2 ,this.game.canvas.getBoundingClientRect().height/3).setDepth(999)
     this.container = this.add.container(0, 0).setDepth(999);
     this.physics.world.setBounds(0, 0, 5000, 2500);
-    this.add.image(900, 500, "background").setScale(1.2);
-    this.add.image(900, 500, "background2");
-    this.add.image(900, 500, "background3");
-    this.add.image(900, 500, "background5").setScale(1.5);
-    const asteroids = this.add.image(-200, -200, "menuAsteroids").setScale(1.3).setDepth(1);
+
 
     const targetX = this.cameras.main.width; // Adjust the value to control the horizontal movement
     const targetY = this.cameras.main.height; // Adjust the value to control the vertical movement
@@ -229,13 +281,7 @@ export default class MainMenuScene extends Phaser.Scene {
       ease: 'Linear',
       repeat: -1,
     })
-    this.add.image(this.cameras.main.width - 1700, 900, "planeta1").setScale(0.9);
-    this.add.image(this.cameras.main.width - 1750, 800, "nube1").setScale(0.7);
-    this.add.image(this.cameras.main.width - 1700, 600, "astronauta").setScale(0.6);
-    this.add.image(this.cameras.main.width - 80, 400, "nube2").setScale(0.7);
-    this.add.image(this.cameras.main.width - 150, 150, "planeta2").setScale(0.6);
-    this.add.image(this.cameras.main.width - 1800, 60, "nube4");
-    this.add.image(this.cameras.main.width - 1700, 160, "nube5").setScale(0.7);
+
 
 
     // this.add.image(900, 500, "planeta2");

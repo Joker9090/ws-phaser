@@ -34,6 +34,14 @@ class Tutorial {
     y: 1800,
   };
   background: Phaser.GameObjects.Image;
+  background2: Phaser.GameObjects.Image;
+  background3: Phaser.GameObjects.Image;
+  background4: Phaser.GameObjects.Image;
+  background5: Phaser.GameObjects.Image;
+  background6: Phaser.GameObjects.Image;
+  background7: Phaser.GameObjects.Image;
+  background8: Phaser.GameObjects.Image;
+
   sideGrav: boolean = false;
   UIScene: UIScene;
   tutorialState: number = 1;
@@ -67,44 +75,60 @@ class Tutorial {
     /* Debug */
     this.background = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg1")
-      .setOrigin(0.5, 0.5)
-      .setScale(4, 4);
-    this.background = this.scene.add
+      .setOrigin(0.5, 0.5);
+    this.background2 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg2")
       .setOrigin(0.5, 0.5)
-      .setScale(4, 4);
-    this.background = this.scene.add
+    this.background3 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg3")
       .setOrigin(0.5, 0.5)
-      .setScale(4, 4);
-    this.background = this.scene.add
+    this.background4 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg4")
       .setOrigin(0.5, 0.5)
-      .setScale(4, 4);
-    this.background = this.scene.add
+    this.background5 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg5")
       .setOrigin(0.5, 0.5)
-      .setScale(4, 4);
-    this.background = this.scene.add
+    this.background6 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg6")
       .setOrigin(0.5, 0.5)
-      .setScale(4, 4);
-    this.background = this.scene.add
+    this.background7 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg7")
       .setOrigin(0.5, 0.5)
-      .setScale(4, 4);
-    this.background = this.scene.add
+    this.background8 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg8")
       .setOrigin(0.5, 0.5)
-      .setScale(4, 4);
   }
-
+  scaleBg() {
+    this.background.displayHeight = this.scene.cameras.main.displayHeight + 100
+    this.background.displayWidth = this.scene.cameras.main.displayWidth + 100
+    this.background2.displayHeight = this.scene.cameras.main.displayHeight + 100
+    this.background2.displayWidth = this.scene.cameras.main.displayWidth + 100
+    this.background3.displayHeight = this.scene.cameras.main.displayHeight + 100
+    this.background3.displayWidth = this.scene.cameras.main.displayWidth + 100
+    this.background4.displayHeight = this.scene.cameras.main.displayHeight + 100
+    this.background4.displayWidth = this.scene.cameras.main.displayWidth + 100
+    this.background5.displayHeight = this.scene.cameras.main.displayHeight + 100
+    this.background5.displayWidth = this.scene.cameras.main.displayWidth + 100
+    this.background6.displayHeight = this.scene.cameras.main.displayHeight + 100
+    this.background6.displayWidth = this.scene.cameras.main.displayWidth + 100
+    this.background7.displayHeight = this.scene.cameras.main.displayHeight + 100
+    this.background7.displayWidth = this.scene.cameras.main.displayWidth + 100
+    this.background8.displayHeight = this.scene.cameras.main.displayHeight + 100
+    this.background8.displayWidth = this.scene.cameras.main.displayWidth + 100
+  }
   animateBackground(player: Phaser.GameObjects.Sprite) {
     const { x, y } = this.startingPoint;
     const { x: x2, y: y2 } = player;
-    const calcDiffX = (x2 - x) / 1.2; //mas grande menos movimiento
-    const calcDiffY = (y2 - y) / 1.2;
+    const calcDiffX = (x2 - x) / 1; //mas grande menos movimiento
+    const calcDiffY = (y2 - y) / 1;
     this.background.setPosition(x + calcDiffX, y + calcDiffY);
+    this.background2.setPosition(x + calcDiffX, y + calcDiffY);
+    this.background3.setPosition(x + calcDiffX, y + calcDiffY);
+    this.background4.setPosition(x + calcDiffX, y + calcDiffY);
+    this.background5.setPosition(x + calcDiffX, y + calcDiffY);
+    this.background6.setPosition(x + calcDiffX, y + calcDiffY);
+    this.background7.setPosition(x + calcDiffX, y + calcDiffY);
+    this.background8.setPosition(x + calcDiffX, y + calcDiffY);
   }
 
   createMap(data: { level: number; lifes: number }) {
@@ -148,7 +172,7 @@ class Tutorial {
       scale: { width: 0.7, height: 0.7 },
       rotated: false,
       gap: 0,
-      fix:0
+      fix: 0
     };
     const p1 = new LargeFloor(this.scene, p1Config, this.pisos);
 
@@ -160,7 +184,7 @@ class Tutorial {
       scale: { width: 0.7, height: 0.7 },
       rotated: false,
       gap: 0,
-      fix:0,
+      fix: 0,
     };
     const p2 = new LargeFloor(this.scene, p2Config, this.pisos);
 
@@ -182,7 +206,7 @@ class Tutorial {
       scale: { width: 0.7, height: 0.7 },
       rotated: false,
       gap: 0,
-      fix:0,
+      fix: 0,
     };
     const p4 = new LargeFloor(this.scene, p4Config, this.pisos);
 
@@ -348,6 +372,7 @@ class Tutorial {
         if (this.scene.monchi) {
           this.scene.monchi.checkMove(this.scene.cursors);
           if (this) this.animateBackground(this.scene.monchi);
+          if (this) this.scaleBg()
         }
       }
     }

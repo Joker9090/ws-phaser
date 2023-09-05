@@ -194,45 +194,51 @@ export default class MainMenuScene extends Phaser.Scene {
   }
   create() {
     this.background1 = this.add.image(900, 500, "background")
-    this.background2 = this.add.image(900, 500, "background2").setScale(1.1)
-    this.background3 = this.add.image(900, 500, "background3").setScale(1.1);
+    this.background2 = this.add.image(900, 500, "background2").setScale(1.3)
+    this.background3 = this.add.image(900, 500, "background3").setScale(1.3);
     this.background4 = this.add.image(900, 500, "background5")
-    this.scaleBg(this.background1)
-    // this.scaleBg(this.background2)
-    // this.scaleBg(this.background3)
-    this.scaleBg(this.background4)
-    const tween2 = this.tweens.add({
-      targets: this.background2,
-      x: "-=80",
-      ease: 'sine.inout',
-      duration: 8000,
-      yoyo: true,
-      repeat: -1,
-    })
-    const tween3 = this.tweens.add({
-      targets: this.background3,
-      x: "-=80",
-      ease: 'sine.inout',
-      duration: 7800,
-      yoyo: true,
-      repeat: -1,
-    })
-    const p2Tween = this.tweens.add({
-      targets: this.planet2,
-      y: "-=4000",
-      ease: 'sine.inout',
-      duration: 7800,
-      yoyo: true,
-      repeat: -1,
-    })
     const asteroids = this.add.image(-200, -200, "menuAsteroids").setScale(1.3).setDepth(1);
     this.add.image(this.cameras.main.width - 1700, 900, "planeta1").setScale(0.9);
-    this.add.image(this.cameras.main.width - 1750, 800, "nube1").setScale(0.7);
     this.add.image(this.cameras.main.width - 1700, 600, "astronauta").setScale(0.6);
-    this.add.image(this.cameras.main.width - 80, 400, "nube2").setScale(0.7);
-    this.planet2 = this.add.image(this.cameras.main.width - 150, 150, "planeta2").setScale(0.6);
-    this.add.image(this.cameras.main.width - 1800, 60, "nube4");
     this.add.image(this.cameras.main.width - 1700, 160, "nube5").setScale(0.7);
+    this.scaleBg(this.background1)
+    this.scaleBg(this.background4)
+    this.tweens.add({
+      targets: [this.background2, this.background3],
+      x: "-=5",
+      y: "+=5",
+      duration: 3000,
+      yoyo: true,
+      loop: -1
+    });
+    this.tweens.add({
+      targets: this.add.image(this.cameras.main.width - 150, 150, "planeta2"),
+      x: "+=10",
+      y: "-=15",
+      duration: 5000,
+      yoyo: true,
+      loop: -1
+    });
+    this.tweens.add({
+      targets: [
+        this.add.image(this.cameras.main.width - 1750, 800, "nube1"),
+        this.add.image(this.cameras.main.width - 80, 400, "nube2"),
+      ],
+      x: "-=15",
+      y: "+=5",
+      duration: 4000,
+      yoyo: true,
+      loop: -1
+    });
+
+    this.tweens.add({
+      targets: this.add.image(this.cameras.main.width - 1800, 60, "nube4"),
+      x: "+=12",
+      y: "-=14",
+      yoyo: true,
+      loop: -1,
+      duration: 4000,
+    })
 
 
     /* Audio */

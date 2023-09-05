@@ -150,7 +150,7 @@ export default class BetweenScenesScene extends Phaser.Scene {
 
     // console.log(time)
 
-    if (this.firstRender && time - this.startTime > 900) {
+    if (this.firstRender && time - this.startTime > 1000) {
       this.firstRender = false
       // console.log("JOTA")
       this.turnOn();

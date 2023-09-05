@@ -116,14 +116,50 @@ export default class LevelMap extends Phaser.Scene {
     this.physics.world.setBounds(0, 0, 5000, 2500);
 
     this.background = this.add.image(1000, 500, "background").setScale(1.3);
-    this.background = this.add.image(1000, 500, "background2").setScale(1.3);
-    this.background = this.add.image(1000, 500, "background3").setScale(1.3);
-    this.background = this.add.image(1000, 500, "background5").setScale(1.3);
-    this.add.image(this.cameras.main.width - 1750, 800, "nube1").setScale(0.7);
-    this.add.image(this.cameras.main.width - 60, 600, "nube2").setScale(0.7);
-    this.add.image(this.cameras.main.width - 1800, 60, "nube4");
-    this.add.image(this.cameras.main.width - 1700, 160, "nube5").setScale(0.7);
-
+    this.tweens.add({
+      targets: this.background = this.add.image(1000, 500, "background3"),
+      x: "-=30",
+      duration: 10000,
+      yoyo: true,
+      repeat: -1
+    })
+    this.tweens.add({
+      targets: this.background = this.add.image(1000, 500, "background2"),
+      y: "-=30",
+      duration: 10000,
+      yoyo: true,
+      repeat: -1
+    })
+    this.tweens.add({
+      targets: this.add.image(this.cameras.main.width - 1750, 800, "nube1"),
+      y: "-=30",
+      duration: 10000,
+      yoyo: true,
+      repeat: -1
+    })
+    this.tweens.add({
+      targets: this.add.image(this.cameras.main.width - 30, 400, "nube2").setScale(0.7).setRotation(-0.5),
+      y: "-=30",
+      duration: 10000,
+      yoyo: true,
+      repeat: -1
+    })
+    this.tweens.add({
+      targets: this.add.image(this.cameras.main.width - 30, 400, "nube2").setScale(0.7).setRotation(-0.5),
+      y: "-=30",
+      duration: 10000,
+      yoyo: true,
+      repeat: -1
+    })
+    this.tweens.add({
+      targets: this.add.image(this.cameras.main.width - 1800, 60, "nube4").setRotation(0.4),
+      y: "-=30",
+      duration: 10000,
+      yoyo: true,
+      repeat: -1
+    })
+    
+    this.add.image(this.cameras.main.width - 1700, 360, "nube5").setScale(0.7);
 
     this.sun = this.add
       .sprite(width - width / 8, height - height / 4.7, "sun")
@@ -181,7 +217,7 @@ export default class LevelMap extends Phaser.Scene {
       repeat: -1,
     };
     this.anims.create(lvl1Config);
- this.planetLevel1.anims.play("lvl1")
+    this.planetLevel1.anims.play("lvl1")
     this.level1Text = this.add
       .text(
         this.planetLevel1.x,

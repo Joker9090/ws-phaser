@@ -234,6 +234,7 @@ class Mapa1 {
   }
 
   createMap(data: { level: number; lifes: number }) {
+    this.scaleBg()
     this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
     this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });
     this.pisos = this.scene.physics.add.group({ allowGravity: false });
@@ -397,8 +398,29 @@ class Mapa1 {
     };
     const p12 = new Floor(this.scene, p12Config, this.pisos);
     // p13 here
-
+    const p13Config: FloorConfig = {
+      texture: "plataformaB",
+      pos: { x: 3550, y: 700 }, //3550 700
+      scale: { width: 0.7, height: 0.7 },
+      fix: 25,
+      width: 140,
+      height: 90,
+      tween: {
+        duration: 5000,
+        paused: false,
+        yoyo: true,
+        repeat: -1,
+        x: "-=350",
+      },
+    };
+    const p13 = new Floor(this.scene, p13Config, this.pisos3).setTint(
+      Phaser.Display.Color.GetColor(255, 101, 0)
+    );
+    this.p13 = p13;
+    console.log(this.scene.monchi, "monchi");
+    this.p13.setFrictionX(1);
     // p13 here
+
     const p14Config: LargeFloorConfig = {
       textureA: "plataformaLarga",
       textureB: "plataformaLarga",
@@ -482,7 +504,7 @@ class Mapa1 {
       // pos: { x: 300, y: 500 },
       fix: 20,
       width: 150,
-      height: 50,
+      height: 90,
       scale: { width: 1, height: 0.7 },
     };
     const p18 = new Floor(this.scene, p18Config, this.pisos);
@@ -547,27 +569,8 @@ class Mapa1 {
     const c2 = new AsteroidGenerator(this.scene, c2Config);
     c2.start();
 
-    const p13Config: FloorConfig = {
-      texture: "plataformaB",
-      pos: { x: 3550, y: 700 }, //3550 700
-      scale: { width: 0.7, height: 0.7 },
-      fix: 25,
-      width: 140,
-      height: 90,
-      tween: {
-        duration: 5000,
-        paused: false,
-        yoyo: true,
-        repeat: -1,
-        x: "-=350",
-      },
-    };
-    const p13 = new Floor(this.scene, p13Config, this.pisos3).setTint(
-      Phaser.Display.Color.GetColor(0, 0, 0)
-    );
-    this.p13 = p13;
-    console.log(this.scene.monchi, "monchi");
-    this.p13.setFrictionX(1);
+
+
 
   }
   update() {
@@ -584,6 +587,7 @@ class Mapa1 {
         this.scene.monchi.setY(1700 - this.scene.monchi.displayHeight);
     }
     if (this.scene.monchi) this.animateBackground(this.scene.monchi);
+    this.scaleBg()
   }
 }
 

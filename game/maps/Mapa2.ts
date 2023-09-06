@@ -448,7 +448,7 @@ class Mapa2 {
         this.coin?.setVisible(true);
       }
     }
-   this. scaleBg()
+    this.scaleBg()
     if (this.scene.cursors) {
       if (this.scene.monchi) {
         if (this.sideGrav) {
@@ -466,6 +466,14 @@ class Mapa2 {
       }
     }
   }
+  // sideGravFunction(cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
+
+  //   if (cursors) {
+  //     const { up, down, left, right } = cursors
+  //     const velocity = 300
+  //     if (up.isDown){}
+  //   }
+  // }
 }
 
 export default Mapa2;

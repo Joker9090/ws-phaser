@@ -41,7 +41,7 @@ export default class UIScene extends Phaser.Scene {
         xpos = 205 + i * 50;
         const lifeConfig: UIConfig = {
           texture: "uiLifeSection",
-          pos: { x: xpos, y: 80 },
+          pos: { x: xpos, y: 90 },
           scale: 0.9,
         };
         const coras = new UI(this, lifeConfig, this.lifesGroup).setScrollFactor(
@@ -54,12 +54,12 @@ export default class UIScene extends Phaser.Scene {
 
       const uiContainer: UIConfig = {
         texture: "uiEmpty",
-        pos: { x: 200, y: 60 },
+        pos: { x: 200, y: 70 },
         scale: 0.9,
       };
       const uiIndicator: UIConfig = {
         texture: "uiGravity",
-        pos: { x: 100, y: 60 },
+        pos: { x: 100, y: 70 },
         scale: 0.9,
       };
       this.uiIndicator = new UI(this, uiIndicator).setScrollFactor(0, 0);
@@ -75,8 +75,8 @@ export default class UIScene extends Phaser.Scene {
 
 
       const coinConf: UIConfig = {
+        pos: { x: lifes + 95, y: 70 },
         texture: "coin",
-        pos: { x: lifes + 95, y: 60 },
         scale: 0.5,
       };
       this.CoinOriginalPos = quantityLifes * 50 + 150;
@@ -108,18 +108,18 @@ export default class UIScene extends Phaser.Scene {
   rotateArrow(direction: string) {
     if (direction == "down") {
       this.gravityArrow?.setRotation(0);
-      this.uiIndicator?.setRotation(0).setPosition(98, 60);
+      this.uiIndicator?.setRotation(0).setPosition(98, 70);
     } else if (direction == "up") {
       this.gravityArrow?.setRotation(Math.PI);
-      this.uiIndicator?.setRotation(Math.PI).setPosition(98, 60);
+      this.uiIndicator?.setRotation(Math.PI).setPosition(98, 70);
     } else if (direction == "left") {
       this.gravityArrow?.setRotation(Math.PI / 2);
-      this.uiIndicator?.setRotation(Math.PI / 2).setPosition(95, 63);
+      this.uiIndicator?.setRotation(Math.PI / 2).setPosition(95, 73);
       this.gravityArrow?.setFlipX(false);
       this.uiIndicator?.setFlipX(false);
     } else if (direction == "right") {
       this.gravityArrow?.setRotation(-Math.PI / 2);
-      this.uiIndicator?.setRotation(-Math.PI / 2).setPosition(100, 63);
+      this.uiIndicator?.setRotation(-Math.PI / 2).setPosition(100, 73);
       this.gravityArrow?.setFlipX(true);
       this.uiIndicator?.setFlipX(true);
     }
@@ -212,7 +212,7 @@ export default class UIScene extends Phaser.Scene {
       .setScrollFactor(0, 0)
       .setDepth(100)
       .setSize(50, 50)
-      .setPosition(250, 45);
+      .setPosition(250, 55);
     this.timeLevel = 0;
     var timerEvent = this.time.addEvent({
       delay: 1000,

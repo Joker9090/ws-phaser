@@ -1,7 +1,5 @@
 import Phaser from "phaser";
-
 import Player from "./assets/Player";
-
 import Mapa1 from "./maps/Mapa1";
 import Mapa2 from "./maps/Mapa2";
 import Tutorial from "./maps/Tutorial";
@@ -83,7 +81,7 @@ class Game extends Phaser.Scene {
       this.time.delayedCall(time, () => {
         this.monchi?.setFlipY(true);
         this.gravityDown = false;
-        this.monchi?.body?.setOffset(0, 15);
+        this.monchi?.body?.setOffset(0, 40);
         this.monchi?.setBounceY(0);
         EventsCenter.emit("gravityArrow", "up");
       });
@@ -100,7 +98,8 @@ class Game extends Phaser.Scene {
         this.time.delayedCall(time * i, () =>
           ((rotate) => {
             this.cameras.main.setRotation(rotate);
-          })((Math.PI * i) / 24)
+          })((Math.PI * i) / 24),
+
         );
         if (i == 24) {
           this.canRot = false;
@@ -402,7 +401,6 @@ class Game extends Phaser.Scene {
         this.cameras.main.setRotation(0);
         this.monchi.setGravityX(0);
         this.monchi.setSize(250, 300)
-
         if (this.map) this.map.sideGrav = false;
         if (this.map) this.monchi.x = this.map.startingPoint.x;
         if (this.map) this.monchi.y = this.map.startingPoint.y;

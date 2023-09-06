@@ -57,7 +57,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     /* Monchi change size and bounce */
     this.body?.setSize(250, 300);
-    this.body?.setOffset(0, 120);
+    this.body?.setOffset(0, 100);
     this.setScale(0.3);
     this.setBounce(0);
     this.setDepth(10);
@@ -105,23 +105,22 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       if (left.isDown) {
         this.setVelocityX(-160);
         this.setFlipX(true);
-        this.setOffset(70, 120)
+        this.setOffset(80, 100)
         if (this.flipY === true) {
-          this.setOffset(70, 20)
+          this.setOffset(70, 40)
         }
         if (!this.isJumping) this.anims.play("monchiMove", true);
       } else if (right.isDown) {
 
         /* Right*/
         this.setVelocityX(160);
-        this.setOffset(0, 120)
+        this.setOffset(0, 100)
         if (this.flipY === true) {
-          this.setOffset(0, 20)
+          this.setOffset(0, 40)
         }
         this.setFlipX(false);
         if (!this.isJumping) this.anims.play("monchiMove", true);
       }
-
       else {
 
         /* Nothing */
@@ -143,6 +142,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
       if (up.isDown && this.body && this.body.touching.down) {
         this.jump();
+        if (this.flipY) {
+          this.setVelocityY(-300)
+        }
       }
 
       if (up.isDown && this.body && this.body.touching.up) {
@@ -160,16 +162,16 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       if (left.isDown) {
         this.setVelocityX(160);
         this.setFlipX(false);
-        this.setOffset(20, 0)
+        this.setOffset(20, 40)
         if (!this.isJumping) this.anims.play("monchiMove", true);
-    
+
       } else if (right.isDown) {
 
         /* Right*/
         this.setVelocityX(-160);
-        this.body?.setOffset(100, 0);
+        this.body?.setOffset(100, 40);
         this.setFlipX(true);
-     
+
         if (!this.isJumping) this.anims.play("monchiMove", true);
       } else {
 
@@ -185,6 +187,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
       if (up.isDown && this.body && this.body.touching.up) {
         this.jumpBack();
+
+
       }
     }
   }
@@ -193,21 +197,22 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined
   ) {
     /* Keywords press */
+    
 
     if (cursors) {
       const { up, down, left, right } = cursors;
       const velocity = 300;
-      this.body?.setSize(300, 250).setOffset(0, 150)
+      this.body?.setSize(300, 250)
       if (up.isDown) {
         this.setVelocityY(-velocity);
         this.setFlipX(false);
         if (!this.isJumping) this.anims.play("monchiMove", true);
         // this.setOffset(0, 100)
-        // this.setOffset(10,130)
-      } else if (down.isDown) {
+      } else if (down.isDown && this.body) {
         this.setVelocityY(velocity);
         this.setFlipX(true);
-        this.setOffset(0, 40)
+        // this.setScale(-0.3,0.2)
+        this.body.offset.y = 40
         if (!this.isJumping) this.anims.play("monchiMove", true);
       } else {
         this.setVelocityY(0);
@@ -257,6 +262,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         /* Stop*/
         this.setVelocityY(0);
         this.setVelocityX(0);
+
       }
     }
   }

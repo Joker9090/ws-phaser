@@ -23,7 +23,14 @@ class Mapa2 {
   changer?: Phaser.GameObjects.Image;
   portalInit?: Phaser.Physics.Arcade.Group;
   fireballGroup?: Phaser.Physics.Arcade.Group;
-
+  background: Phaser.GameObjects.Image
+  background2: Phaser.GameObjects.Image
+  background3: Phaser.GameObjects.Image
+  background4: Phaser.GameObjects.Image
+  background5: Phaser.GameObjects.Image
+  background6: Phaser.GameObjects.Image
+  background7: Phaser.GameObjects.Image
+  background8: Phaser.GameObjects.Image
   UIScene?: UIScene;
 
   startingPoint = {
@@ -34,14 +41,7 @@ class Mapa2 {
     x: 600,
     y: 140,
   };
-  backgroundLayer1?: Phaser.GameObjects.Image;
-  backgroundLayer2?: Phaser.GameObjects.Image;
-  backgroundLayer3?: Phaser.GameObjects.Image;
-  backgroundLayer4?: Phaser.GameObjects.Image;
-  backgroundLayer5?: Phaser.GameObjects.Image;
-  backgroundLayer6?: Phaser.GameObjects.Image;
-  backgroundLayer7?: Phaser.GameObjects.Image;
-  backgroundLayer8?: Phaser.GameObjects.Image;
+
   sideGrav: boolean = false;
 
   constructor(scene: Game) {
@@ -66,66 +66,87 @@ class Mapa2 {
       this.worldSize.height
     );
     /* Debug */
-    this.backgroundLayer1 = this.scene.add.image(this.startingPoint.x, this.startingPoint.y, "background").setOrigin(0.5, 0.5);
-    this.backgroundLayer2 = this.scene.add.image(this.startingPoint.x, this.startingPoint.y, "background").setOrigin(0.5, 0.5);
-    this.backgroundLayer3 = this.scene.add.image(this.startingPoint.x, this.startingPoint.y, "background").setOrigin(0.5, 0.5);
-    this.backgroundLayer4 = this.scene.add.image(this.startingPoint.x, this.startingPoint.y, "background").setOrigin(0.5, 0.5);
-    this.backgroundLayer5 = this.scene.add.image(this.startingPoint.x, this.startingPoint.y, "background").setOrigin(0.5, 0.5);
-    this.backgroundLayer6 = this.scene.add.image(this.startingPoint.x, this.startingPoint.y, "background").setOrigin(0.5, 0.5);
-    this.backgroundLayer7 = this.scene.add.image(this.startingPoint.x, this.startingPoint.y, "background").setOrigin(0.5, 0.5);
-    this.backgroundLayer8 = this.scene.add.image(this.startingPoint.x, this.startingPoint.y, "background").setOrigin(0.5, 0.5);
-  }
 
+    this.background = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg1")
+      .setOrigin(0.5, 0.5);
+    this.background2 = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg2")
+      .setOrigin(0.5, 0.5)
+    this.background3 = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg3")
+      .setOrigin(0.5, 0.5)
+    this.background4 = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg4")
+      .setOrigin(0.5, 0.5)
+    this.background5 = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg5")
+      .setOrigin(0.5, 0.5)
+    this.background6 = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg6")
+      .setOrigin(0.5, 0.5)
+    this.background7 = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg7")
+      .setOrigin(0.5, 0.5)
+    this.background8 = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg8")
+      .setOrigin(0.5, 0.5)
+  }
+  scaleBg() {
+    if (this.scene.cameras.main.displayWidth > 1200) {
+      this.background.displayHeight = this.scene.cameras.main.displayHeight + 100
+      this.background.displayWidth = this.scene.cameras.main.displayWidth + 100
+      this.background2.displayHeight = this.scene.cameras.main.displayHeight + 100
+      this.background2.displayWidth = this.scene.cameras.main.displayWidth + 100
+      this.background3.displayHeight = this.scene.cameras.main.displayHeight + 100
+      this.background3.displayWidth = this.scene.cameras.main.displayWidth + 100
+      this.background4.displayHeight = this.scene.cameras.main.displayHeight + 100
+      this.background4.displayWidth = this.scene.cameras.main.displayWidth + 100
+      this.background5.displayHeight = this.scene.cameras.main.displayHeight + 100
+      this.background5.displayWidth = this.scene.cameras.main.displayWidth + 100
+      this.background6.displayHeight = this.scene.cameras.main.displayHeight + 100
+      this.background6.displayWidth = this.scene.cameras.main.displayWidth + 100
+      this.background7.displayHeight = this.scene.cameras.main.displayHeight + 100
+      this.background7.displayWidth = this.scene.cameras.main.displayWidth + 100
+      this.background8.displayHeight = this.scene.cameras.main.displayHeight + 100
+      this.background8.displayWidth = this.scene.cameras.main.displayWidth + 100
+    } else {
+      this.background.displayWidth = 1200
+      this.background2.displayWidth = 1200
+      this.background3.displayWidth = 1200
+      this.background4.displayWidth = 1200
+      this.background5.displayWidth = 1200
+      this.background6.displayWidth = 1200
+      this.background7.displayWidth = 1200
+      this.background8.displayWidth = 1200
+      this.background.displayHeight = this.scene.cameras.main.displayHeight + 100
+      this.background2.displayHeight = this.scene.cameras.main.displayHeight + 100
+      this.background3.displayHeight = this.scene.cameras.main.displayHeight + 100
+      this.background4.displayHeight = this.scene.cameras.main.displayHeight + 100
+      this.background5.displayHeight = this.scene.cameras.main.displayHeight + 100
+      this.background6.displayHeight = this.scene.cameras.main.displayHeight + 100
+      this.background7.displayHeight = this.scene.cameras.main.displayHeight + 100
+      this.background8.displayHeight = this.scene.cameras.main.displayHeight + 100
+    }
+  }
   animateBackground(player: Phaser.GameObjects.Sprite) {
     const { x, y } = this.startingPoint;
     const { x: x2, y: y2 } = player;
-    const calcDiffX = (x2 - x) / 1.2;
-    const calcDiffY = (y2 - y) / 1.2;
-    // this.backgroundLayer1?.setPosition(x + calcDiffX + 10, y + calcDiffY);
-    // this.backgroundLayer2?.setPosition(x + calcDiffX + 35, y + calcDiffY);
-    // this.backgroundLayer3?.setPosition(x + calcDiffX + 60, y + calcDiffY);
-    // this.backgroundLayer4?.setPosition(x + calcDiffX + 45, y + calcDiffY);
-    // this.backgroundLayer5?.setPosition(x + calcDiffX + 30, y + calcDiffY);
-    // this.backgroundLayer6?.setPosition(x + calcDiffX + 15, y + calcDiffY);
-    // this.backgroundLayer7?.setPosition(x + calcDiffX + 30, y + calcDiffY);
-    // this.backgroundLayer8?.setPosition(x + calcDiffX + 22, y + calcDiffY);
+    const calcDiffX = (x2 - x) / 1; //mas grande menos movimiento
+    const calcDiffY = (y2 - y) / 1;
+    this.background.setPosition(x + calcDiffX, y + calcDiffY);
+    this.background2.setPosition(x + calcDiffX, y + calcDiffY);
+    this.background3.setPosition(x + calcDiffX, y + calcDiffY);
+    this.background4.setPosition(x + calcDiffX, y + calcDiffY);
+    this.background5.setPosition(x + calcDiffX, y + calcDiffY);
+    this.background6.setPosition(x + calcDiffX, y + calcDiffY);
+    this.background7.setPosition(x + calcDiffX, y + calcDiffY);
+    this.background8.setPosition(x + calcDiffX, y + calcDiffY);
   }
 
   createMap(data: { level: number; lifes: number }) {
+    console.log("cameras", this.scene.cameras.main)
     EventsCenter.emit("gravityArrow", "down");
-    this.backgroundLayer1 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg1")
-      .setOrigin(0.5, 0.5)
-      .setScale(8, 8);
-    this.backgroundLayer2 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg2")
-      .setOrigin(0.5, 0.5)
-      .setScale(8, 8);
-    this.backgroundLayer3 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg3")
-      .setOrigin(0.5, 0.5)
-      .setScale(8, 8);
-    this.backgroundLayer4 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg4")
-      .setOrigin(0.5, 0.5)
-      .setScale(8, 8);
-    this.backgroundLayer5 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg5")
-      .setOrigin(0.5, 0.5)
-      .setScale(8, 8);
-    this.backgroundLayer6 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg6")
-      .setOrigin(0.5, 0.5)
-      .setScale(8, 8);
-    this.backgroundLayer7 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg7")
-      .setOrigin(0.5, 0.5)
-      .setScale(8, 8);
-    this.backgroundLayer8 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg8")
-      .setOrigin(0.5, 0.5)
-      .setScale(8, 8);
-
     this.pisos = this.scene.physics.add.group({ allowGravity: false });
     this.coin = this.scene.physics.add.group({ allowGravity: false });
     this.portal = this.scene.physics.add.group({ allowGravity: false });
@@ -133,9 +154,6 @@ class Mapa2 {
     this.portalInit = this.scene.physics.add.group({ allowGravity: false });
     // this.scene.cameras.main.setZoom(0.2)
     /* Platforms */
-
-
-
 
     const p1Config: LargeFloorConfig = {
       textureA: "plataformaLarga",
@@ -361,7 +379,7 @@ class Mapa2 {
     const c2 = new AsteroidGenerator(this.scene, c2Config);
     c2.start();
 
-    this.scene.cameras.main.shake(2000, 0.01);
+    // this.scene.cameras.main.shake(2000, 0.01);
   }
 
   addColliders() {
@@ -419,8 +437,8 @@ class Mapa2 {
           // hitbox vago de costado
           this.scene.monchi
             .setRotation(-Math.PI / 2)
-            // .setSize(300, 200)
-            // .setOffset(80, 120);
+          // .setSize(300, 200)
+          // .setOffset(80, 120);
           firstChange = false;
         }
       }
@@ -430,6 +448,7 @@ class Mapa2 {
         this.coin?.setVisible(true);
       }
     }
+   this. scaleBg()
     if (this.scene.cursors) {
       if (this.scene.monchi) {
         if (this.sideGrav) {
@@ -443,6 +462,7 @@ class Mapa2 {
           this.scene.monchi.checkMove(this.scene.cursors);
         }
         if (this) this.animateBackground(this.scene.monchi);
+
       }
     }
   }

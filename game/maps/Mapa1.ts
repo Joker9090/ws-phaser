@@ -40,7 +40,14 @@ class Mapa1 {
     x: 3000,
     y: 750,
   };
-  background?: Phaser.GameObjects.Image;
+  background: Phaser.GameObjects.Image;
+  background2: Phaser.GameObjects.Image;
+  background3: Phaser.GameObjects.Image;
+  background4: Phaser.GameObjects.Image;
+  background5: Phaser.GameObjects.Image;
+  background6: Phaser.GameObjects.Image;
+  background7: Phaser.GameObjects.Image;
+  background8: Phaser.GameObjects.Image;
 
   constructor(scene: Game, monchi: Player) {
     this.scene = scene;
@@ -68,44 +75,79 @@ class Mapa1 {
 
     this.background = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg1")
-      .setOrigin(0.5, 0.5)
-      .setScale(8, 8);
-    this.background = this.scene.add
+      .setOrigin(0.5, 0.5);
+    this.background2 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg2")
       .setOrigin(0.5, 0.5)
-      .setScale(8, 8);
-    this.background = this.scene.add
+    this.background3 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg3")
       .setOrigin(0.5, 0.5)
-      .setScale(8, 8);
-    this.background = this.scene.add
+    this.background4 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg4")
       .setOrigin(0.5, 0.5)
-      .setScale(8, 8);
-    this.background = this.scene.add
+    this.background5 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg5")
       .setOrigin(0.5, 0.5)
-      .setScale(8, 8);
-    this.background = this.scene.add
+    this.background6 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg6")
       .setOrigin(0.5, 0.5)
-      .setScale(8, 8);
-    this.background = this.scene.add
+    this.background7 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg7")
       .setOrigin(0.5, 0.5)
-      .setScale(8, 8);
-    this.background = this.scene.add
+    this.background8 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg8")
       .setOrigin(0.5, 0.5)
-      .setScale(8, 8);
   }
-
+  scaleBg() {
+    if (this.scene.cameras.main.displayWidth > 1200) {
+      this.background.displayHeight = this.scene.cameras.main.displayHeight + 100
+      this.background.displayWidth = this.scene.cameras.main.displayWidth + 100
+      this.background2.displayHeight = this.scene.cameras.main.displayHeight + 100
+      this.background2.displayWidth = this.scene.cameras.main.displayWidth + 100
+      this.background3.displayHeight = this.scene.cameras.main.displayHeight + 100
+      this.background3.displayWidth = this.scene.cameras.main.displayWidth + 100
+      this.background4.displayHeight = this.scene.cameras.main.displayHeight + 100
+      this.background4.displayWidth = this.scene.cameras.main.displayWidth + 100
+      this.background5.displayHeight = this.scene.cameras.main.displayHeight + 100
+      this.background5.displayWidth = this.scene.cameras.main.displayWidth + 100
+      this.background6.displayHeight = this.scene.cameras.main.displayHeight + 100
+      this.background6.displayWidth = this.scene.cameras.main.displayWidth + 100
+      this.background7.displayHeight = this.scene.cameras.main.displayHeight + 100
+      this.background7.displayWidth = this.scene.cameras.main.displayWidth + 100
+      this.background8.displayHeight = this.scene.cameras.main.displayHeight + 100
+      this.background8.displayWidth = this.scene.cameras.main.displayWidth + 100
+    } else {
+      this.background.displayWidth = 1200
+      this.background2.displayWidth = 1200
+      this.background3.displayWidth = 1200
+      this.background4.displayWidth = 1200
+      this.background5.displayWidth = 1200
+      this.background6.displayWidth = 1200
+      this.background7.displayWidth = 1200
+      this.background8.displayWidth = 1200
+      this.background.displayHeight = this.scene.cameras.main.displayHeight + 100
+      this.background2.displayHeight = this.scene.cameras.main.displayHeight + 100
+      this.background3.displayHeight = this.scene.cameras.main.displayHeight + 100
+      this.background4.displayHeight = this.scene.cameras.main.displayHeight + 100
+      this.background5.displayHeight = this.scene.cameras.main.displayHeight + 100
+      this.background6.displayHeight = this.scene.cameras.main.displayHeight + 100
+      this.background7.displayHeight = this.scene.cameras.main.displayHeight + 100
+      this.background8.displayHeight = this.scene.cameras.main.displayHeight + 100
+    }
+  }
   animateBackground(player: Phaser.GameObjects.Sprite) {
     const { x, y } = this.startingPoint;
     const { x: x2, y: y2 } = player;
-    const calcDiffX = (x2 - x) / 1.2;
-    const calcDiffY = (y2 - y) / 1.2;
-    this.background?.setPosition(x + calcDiffX, y + calcDiffY);
+    const calcDiffX = (x2 - x) / 1; //mas grande menos movimiento
+    const calcDiffY = (y2 - y) / 1;
+    this.background.setPosition(x + calcDiffX, y + calcDiffY);
+    this.background2.setPosition(x + calcDiffX, y + calcDiffY);
+    this.background3.setPosition(x + calcDiffX, y + calcDiffY);
+    this.background4.setPosition(x + calcDiffX, y + calcDiffY);
+    this.background5.setPosition(x + calcDiffX, y + calcDiffY);
+    this.background6.setPosition(x + calcDiffX, y + calcDiffY);
+    this.background7.setPosition(x + calcDiffX, y + calcDiffY);
+    this.background8.setPosition(x + calcDiffX, y + calcDiffY);
   }
 
   addColliders() {

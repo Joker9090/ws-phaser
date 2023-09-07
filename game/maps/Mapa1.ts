@@ -138,7 +138,7 @@ class Mapa1 {
   animateBackground(player: Phaser.GameObjects.Sprite) {
     const { x, y } = this.startingPoint;
     const { x: x2, y: y2 } = player;
-    const calcDiffX = (x2 - x) / 1; //mas grande menos movimiento
+    const calcDiffX = (x2 - x) / 1 //mas grande menos movimiento
     const calcDiffY = (y2 - y) / 1;
     this.background.setPosition(x + calcDiffX, y + calcDiffY);
     this.background2.setPosition(x + calcDiffX, y + calcDiffY);

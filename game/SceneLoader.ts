@@ -7,7 +7,9 @@ export type SceneKeys =
   | "Music"
   | "Intro"
   | "LevelMap"
+  | "Sandbox"
   | "BetweenScenes";
+
 export type LoadTypes = "image" | "spritesheet" | "audio";
 
 const loadAssets = {
@@ -41,6 +43,9 @@ const loadAssets = {
     ],
   },
   Intro: {
+    assets: [["image", "logoNoswar", "/game/logo.png"]],
+  },
+  Sandbox: {
     assets: [["image", "logoNoswar", "/game/logo.png"]],
   },
   LevelMap: {
@@ -205,6 +210,7 @@ class SceneLoader extends Phaser.Scene {
       "Intro",
       "LevelMap",
       "BetweenScenes",
+      "Sandbox",
     ];
     for (let i = 0; i < scenesTitles.length; i++) {
       loadAssets[scenesTitles[i]].assets.map((sceneAssetConfig) => {
@@ -224,12 +230,14 @@ class SceneLoader extends Phaser.Scene {
   }
 
   create(this: SceneLoader, { level }: any) {
-    // this.scene.launch("DataManager", { data: 1 });
+    // this.scene.start("Sandbox", { data: 1 });
     // this.scene.start("Menu", { data: 1 });
     this.scene.start("Game", { level: 1, lifes: 3 });
   }
 
-  update(this: SceneLoader) { }
+  update(this: SceneLoader) { 
+    console.log(this.game.scene.scenes)
+  }
 } 
 
 export default SceneLoader;

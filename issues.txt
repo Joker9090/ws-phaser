@@ -1,6 +1,6 @@
 TO DO
-1.plataformas con movimiento lateral deberian arrastrar al pj
-2.pulir movimiento bg
+1.plataformas con movimiento lateral deberian arrastrar al pj LISTO
+2.pulir movimiento bg 
 
 
 

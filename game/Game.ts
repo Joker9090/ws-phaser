@@ -113,8 +113,9 @@ class Game extends Phaser.Scene {
     if (this.monchi) {
       this.monchi?.setGravity(0);
       for (let i = 0; i < 25; i++) {
-        this.time.delayedCall(10 * i, () =>
+        this.time.delayedCall(1000 * i, () =>
           ((rotate) => {
+            this.cameras.main.zoom = (Math.sin(3.1415 + (3.1415 * i) / 24)+1);
             this.cameras.main.setRotation(rotate);
           })(3.1415 + (3.1415 * i) / 24)
         );

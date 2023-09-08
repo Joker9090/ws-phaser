@@ -18,10 +18,10 @@ const loadAssets = {
       ["image", "glass", "/game/glass.png"],
       ["image", "hover", "/game/hover.png"],
       ["image", "click", "/game/click.png"],
-      ["image", "background", "/game/bg1.png"],
-      ["image", "background2", "/game/bg2.png"],
-      ["image", "background3", "/game/bg3.png"],
-      ["image", "background5", "/game/bg5.png"],
+      ["image", "background", "/game/menuBg1.png"],
+      ["image", "background2", "/game/menuBg2.png"],
+      ["image", "background3", "/game/menuBg3.png"],
+      ["image", "background5", "/game/menuBg4.png"],
       ["image", "astronauta", "/game/astronauta.png"],
       ["image", "nube4", "/game/nube4.png"],
       ["image", "nube5", "/game/nube5.png"],
@@ -107,8 +107,12 @@ const loadAssets = {
       ["image", "lvl1bg7", "/game/lvl1bg7.png"],
       ["image", "lvl1bg8", "/game/lvl1bg8.png"],
 
-
-
+      ["image", "newBg1", "/game/bg1.png"],
+      ["image", "newBg2", "/game/bg2.png"],
+      ["image", "newBg3", "/game/bg3.png"],
+      ["image", "newBg4", "/game/bg4.png"],
+      ["image", "newBg5", "/game/bg5.png"],
+      ["image", "newBg6", "/game/bg6.png"],
     ],
   },
 
@@ -231,13 +235,13 @@ class SceneLoader extends Phaser.Scene {
 
   create(this: SceneLoader, { level }: any) {
     // this.scene.start("Sandbox", { data: 1 });
-    // this.scene.start("Menu", { data: 1 });
-    this.scene.start("Game", { level: 1, lifes: 3 });
+    this.scene.start("Menu", { data: 1 });  
+    // this.scene.start("Game", { level: 1, lifes: 3 });
   }
 
-  update(this: SceneLoader) { 
+  update(this: SceneLoader) {
     console.log(this.game.scene.scenes)
   }
-} 
+}
 
 export default SceneLoader;

@@ -97,9 +97,15 @@ class Game extends Phaser.Scene {
       for (let i = 0; i < 25; i++) {
         this.time.delayedCall(time * i, () =>
           ((rotate) => {
+            if (i > 0 && i <= 20) {
+              console.log(i, "acaaa")
+              this.cameras.main.zoom = 1.3;
+            } else {
+              this.cameras.main.zoom = 0.9;
+
+            }
             this.cameras.main.setRotation(rotate);
           })((Math.PI * i) / 24),
-
         );
         if (i == 24) {
           this.canRot = false;
@@ -113,9 +119,16 @@ class Game extends Phaser.Scene {
     if (this.monchi) {
       this.monchi?.setGravity(0);
       for (let i = 0; i < 25; i++) {
-        this.time.delayedCall(1000 * i, () =>
+        this.time.delayedCall(10 * i, () =>
           ((rotate) => {
-            this.cameras.main.zoom = (Math.sin(3.1415 + (3.1415 * i) / 24)+1);
+            if (i > 0 && i <= 20) {
+              console.log(i, "acaaa")
+              this.cameras.main.zoom = 1.3;
+            } else {
+              this.cameras.main.zoom = 0.9;
+
+            }
+            // this.cameras.main.zoom = (Math.sin(3.1415 + (3.1415 * i) / 24) + 1);
             this.cameras.main.setRotation(rotate);
           })(3.1415 + (3.1415 * i) / 24)
         );

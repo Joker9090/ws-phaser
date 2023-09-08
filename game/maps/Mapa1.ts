@@ -25,7 +25,7 @@ class Mapa1 {
   portal?: Phaser.Physics.Arcade.Group;
   movingFloor?: Phaser.Physics.Arcade.Group;
   movingFloorRot?: Phaser.Physics.Arcade.Group;
-  p13!: Floor;
+  p13!: Phaser.GameObjects.Sprite;
   UIScene?: UIScene;
   amountLifes: number = 0;
   sideGrav: boolean = false;
@@ -46,8 +46,6 @@ class Mapa1 {
   background4: Phaser.GameObjects.Image;
   background5: Phaser.GameObjects.Image;
   background6: Phaser.GameObjects.Image;
-  background7: Phaser.GameObjects.Image;
-  background8: Phaser.GameObjects.Image;
 
   constructor(scene: Game, monchi: Player) {
     this.scene = scene;
@@ -73,81 +71,90 @@ class Mapa1 {
     );
     /* Debug */
 
+    // this.background = this.scene.add
+    //   .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg1")
+    //   .setOrigin(0.5, 0.5);
+    // this.background2 = this.scene.add
+    //   .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg2")
+    //   .setOrigin(0.5, 0.5)
+    // this.background3 = this.scene.add
+    //   .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg3")
+    //   .setOrigin(0.5, 0.5)
+    // this.background4 = this.scene.add
+    //   .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg4")
+    //   .setOrigin(0.5, 0.5)
+    // this.background5 = this.scene.add
+    //   .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg5")
+    //   .setOrigin(0.5, 0.5)
+    // this.background6 = this.scene.add
+    //   .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg6")
+    //   .setOrigin(0.5, 0.5)
+
     this.background = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg1")
+      .image(this.startingPoint.x, this.startingPoint.y, "newBg1")
       .setOrigin(0.5, 0.5);
     this.background2 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg2")
-      .setOrigin(0.5, 0.5)
+      .image(this.startingPoint.x, this.startingPoint.y, "newBg2")
+      .setOrigin(0.5, 0.5);
     this.background3 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg3")
-      .setOrigin(0.5, 0.5)
+      .image(this.startingPoint.x, this.startingPoint.y, "newBg3")
+      .setOrigin(0.5, 0.5);
     this.background4 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg4")
-      .setOrigin(0.5, 0.5)
+      .image(this.startingPoint.x, this.startingPoint.y, "newBg4")
+      .setOrigin(0.5, 0.5);
     this.background5 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg5")
-      .setOrigin(0.5, 0.5)
+      .image(this.startingPoint.x, this.startingPoint.y, "newBg5")
+      .setOrigin(0.5, 0.5);
     this.background6 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg6")
-      .setOrigin(0.5, 0.5)
-    this.background7 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg7")
-      .setOrigin(0.5, 0.5)
-    this.background8 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg8")
-      .setOrigin(0.5, 0.5)
+      .image(this.startingPoint.x, this.startingPoint.y, "newBg6")
+      .setOrigin(0.5, 0.5);
+
   }
-  scaleBg() {
-    if (this.scene.cameras.main.displayWidth > 1200) {
-      this.background.displayHeight = this.scene.cameras.main.displayHeight + 100
-      this.background.displayWidth = this.scene.cameras.main.displayWidth + 100
-      this.background2.displayHeight = this.scene.cameras.main.displayHeight + 100
-      this.background2.displayWidth = this.scene.cameras.main.displayWidth + 100
-      this.background3.displayHeight = this.scene.cameras.main.displayHeight + 100
-      this.background3.displayWidth = this.scene.cameras.main.displayWidth + 100
-      this.background4.displayHeight = this.scene.cameras.main.displayHeight + 100
-      this.background4.displayWidth = this.scene.cameras.main.displayWidth + 100
-      this.background5.displayHeight = this.scene.cameras.main.displayHeight + 100
-      this.background5.displayWidth = this.scene.cameras.main.displayWidth + 100
-      this.background6.displayHeight = this.scene.cameras.main.displayHeight + 100
-      this.background6.displayWidth = this.scene.cameras.main.displayWidth + 100
-      this.background7.displayHeight = this.scene.cameras.main.displayHeight + 100
-      this.background7.displayWidth = this.scene.cameras.main.displayWidth + 100
-      this.background8.displayHeight = this.scene.cameras.main.displayHeight + 100
-      this.background8.displayWidth = this.scene.cameras.main.displayWidth + 100
-    } else {
-      this.background.displayWidth = 1200
-      this.background2.displayWidth = 1200
-      this.background3.displayWidth = 1200
-      this.background4.displayWidth = 1200
-      this.background5.displayWidth = 1200
-      this.background6.displayWidth = 1200
-      this.background7.displayWidth = 1200
-      this.background8.displayWidth = 1200
-      this.background.displayHeight = this.scene.cameras.main.displayHeight + 100
-      this.background2.displayHeight = this.scene.cameras.main.displayHeight + 100
-      this.background3.displayHeight = this.scene.cameras.main.displayHeight + 100
-      this.background4.displayHeight = this.scene.cameras.main.displayHeight + 100
-      this.background5.displayHeight = this.scene.cameras.main.displayHeight + 100
-      this.background6.displayHeight = this.scene.cameras.main.displayHeight + 100
-      this.background7.displayHeight = this.scene.cameras.main.displayHeight + 100
-      this.background8.displayHeight = this.scene.cameras.main.displayHeight + 100
-    }
-  }
+  // scaleBg() {
+  //   if (this.scene.cameras.main.displayWidth > 1200) {
+  //     this.background.displayHeight = this.scene.cameras.main.displayHeight + 100
+  //     // this.background.displayWidth = this.scene.cameras.main.displayWidth + 100
+  //     this.background2.displayHeight = this.scene.cameras.main.displayHeight + 100
+  //     // this.background2.displayWidth = this.scene.cameras.main.displayWidth + 100
+  //     this.background3.displayHeight = this.scene.cameras.main.displayHeight + 100
+  //     // this.background3.displayWidth = this.scene.cameras.main.displayWidth + 100
+  //     this.background4.displayHeight = this.scene.cameras.main.displayHeight + 100
+  //     // this.background4.displayWidth = this.scene.cameras.main.displayWidth + 100
+  //     this.background5.displayHeight = this.scene.cameras.main.displayHeight + 100
+  //     // this.background5.displayWidth = this.scene.cameras.main.displayWidth + 100
+  //     this.background6.displayHeight = this.scene.cameras.main.displayHeight + 100
+  //     // this.background6.displayWidth = this.scene.cameras.main.displayWidth + 100
+
+  //   } else {
+  //     // this.background.displayWidth = 1200
+  //     // this.background2.displayWidth = 1200
+  //     // this.background3.displayWidth = 1200
+  //     // this.background4.displayWidth = 1200
+  //     // this.background5.displayWidth = 1200
+  //     // this.background6.displayWidth = 1200
+
+  //     this.background.displayHeight = this.scene.cameras.main.displayHeight + 500
+  //     this.background2.displayHeight = this.scene.cameras.main.displayHeight + 500
+  //     this.background3.displayHeight = this.scene.cameras.main.displayHeight + 500
+  //     this.background4.displayHeight = this.scene.cameras.main.displayHeight + 500
+  //     this.background5.displayHeight = this.scene.cameras.main.displayHeight + 500
+  //     this.background6.displayHeight = this.scene.cameras.main.displayHeight + 500
+
+  //   }
+  // }
   animateBackground(player: Phaser.GameObjects.Sprite) {
     const { x, y } = this.startingPoint;
     const { x: x2, y: y2 } = player;
-    const calcDiffX = (x2 - x) / 1 //mas grande menos movimiento
-    const calcDiffY = (y2 - y) / 1;
+    const calcDiffX = (x2 - x) / 1//mas grande menos movimiento
+    const calcDiffY = (y2 - y) / 1.1;
     this.background.setPosition(x + calcDiffX, y + calcDiffY);
     this.background2.setPosition(x + calcDiffX, y + calcDiffY);
     this.background3.setPosition(x + calcDiffX, y + calcDiffY);
     this.background4.setPosition(x + calcDiffX, y + calcDiffY);
     this.background5.setPosition(x + calcDiffX, y + calcDiffY);
     this.background6.setPosition(x + calcDiffX, y + calcDiffY);
-    this.background7.setPosition(x + calcDiffX, y + calcDiffY);
-    this.background8.setPosition(x + calcDiffX, y + calcDiffY);
+    // this.background7.setPosition(x + calcDiffX, y + calcDiffY);
+    // this.background8.setPosition(x + calcDiffX, y + calcDiffY);
   }
 
   addColliders() {
@@ -234,7 +241,7 @@ class Mapa1 {
   }
 
   createMap(data: { level: number; lifes: number }) {
-    this.scaleBg()
+    // this.scaleBg()
     this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
     this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });
     this.pisos = this.scene.physics.add.group({ allowGravity: false });
@@ -416,9 +423,10 @@ class Mapa1 {
     const p13 = new Floor(this.scene, p13Config, this.pisos3).setTint(
       Phaser.Display.Color.GetColor(255, 101, 0)
     );
-    this.p13 = p13;
+
+
     console.log(this.scene.monchi, "monchi");
-    this.p13.setFrictionX(1);
+    // this.p13.setFrictionX(1);
     // p13 here
 
     const p14Config: LargeFloorConfig = {
@@ -574,7 +582,7 @@ class Mapa1 {
 
   }
   update() {
-    this.p13.setFrictionX(1);
+    // this.p13.setFrictionX(1);
     /* Attach controls to player */
     if (!this.goingBack) {
       if (this.scene.monchi && this.scene.cameraNormal) {
@@ -587,7 +595,7 @@ class Mapa1 {
         this.scene.monchi.setY(1700 - this.scene.monchi.displayHeight);
     }
     if (this.scene.monchi) this.animateBackground(this.scene.monchi);
-    this.scaleBg()
+    // this.scaleBg()
   }
 }
 

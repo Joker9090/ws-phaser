@@ -1,6 +1,10 @@
 TO DO
 1.plataformas con movimiento lateral deberian arrastrar al pj LISTO
+1'.crear grupo moving floor
 2.pulir movimiento bg 
+2'.cambiar backgrounds a los nuevos cambiar el movimiento
+3.cambiar cristal y agregarle brillo
+
 
 
 

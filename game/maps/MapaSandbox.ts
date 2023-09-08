@@ -3,6 +3,7 @@ import Floor, { FloorConfig } from "../assets/Floor";
 import Player from "../assets/Player";
 import Sandbox from "../Sandbox";
 import LargeFloor, { LargeFloorConfig } from "../assets/LargeFloor";
+import MovingFloor, { MovingFloorConfig } from "../assets/MovingFloor";
 
 class MapaSandbox {
   debugGraphics: Phaser.GameObjects.Graphics;
@@ -48,9 +49,24 @@ class MapaSandbox {
     );
     /* Debug */
 
+    // this.background = this.scene.add
+    //   .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg1")
+    //   .setOrigin(0.5, 0.5);
+
     this.background = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg1")
+      .image(this.startingPoint.x, this.startingPoint.y, "newBg1")
+      .setOrigin(0.5, 0.5); this.background = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "newBg2")
+      .setOrigin(0.5, 0.5); this.background = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "newBg3")
+      .setOrigin(0.5, 0.5); this.background = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "newBg4")
+      .setOrigin(0.5, 0.5); this.background = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "newBg5")
+      .setOrigin(0.5, 0.5); this.background = this.scene.add
+      .image(this.startingPoint.x, this.startingPoint.y, "newBg6")
       .setOrigin(0.5, 0.5);
+
   }
 
   addColliders() {
@@ -58,13 +74,11 @@ class MapaSandbox {
       if (this.pisosMov) {
         this.scene.physics.add.collider(this.scene.monchi, this.pisosMov);
       }
-      if (this.pisos)
-      {
-          this.scene.physics.add.collider(this.scene.monchi, this.pisos);
+      if (this.pisos) {
+        this.scene.physics.add.collider(this.scene.monchi, this.pisos);
       }
-      if (this.piso2)
-      {
-          this.scene.physics.add.collider(this.scene.monchi, this.piso2);
+      if (this.piso2) {
+        this.scene.physics.add.collider(this.scene.monchi, this.piso2);
       }
     }
   }
@@ -72,13 +86,44 @@ class MapaSandbox {
   createMap() {
     this.pisos = this.scene.physics.add.group({ allowGravity: false });
     this.pisosMov = this.scene.physics.add.group({ allowGravity: false });
-    this.piso2 = this.scene.physics.add.sprite(500,600,"plataformaLarga2")
-    .setGravityY(-1000)
-    .setImmovable(true)
-    .setVelocityX(100)
-    
-  
-    
+    this.piso2 = this.scene.physics.add.sprite(500, 600, "plataformaLarga2")
+      .setGravityY(-1000)
+      .setImmovable(true)
+      .setVelocityX(10)
+
+
+    const movingFloorCOnfig: MovingFloorConfig = {
+      texture: "plataformaLarga2",
+      pos: { x: 500, y: 600 },
+      scale: { width: 0.7, height: 0.7 },
+      width: 390,
+      height: 50,
+      tween: {
+        duration: 4500,
+        paused: false,
+        yoyo: true,
+        repeat: -1,
+        x: "-=500",
+      },
+    }
+const movingFloor = new MovingFloor(this.scene,movingFloorCOnfig,this.pisosMov)
+
+    // const p2 = new Floor(this.scene, p2Config, this.pisosMov);
+    // const p2Config: FloorConfig = {
+    //   texture: "plataformaLarga2",
+    //   pos: { x: 500, y: 600 },
+    //   scale: { width: 0.5, height: 0.7 },
+    //   fix: 25,
+    //   width: 390,
+    //   height: 50,
+    //   tween: {
+    //     duration: 4500,
+    //     paused: false,
+    //     yoyo: true,
+    //     repeat: -1,
+    //     x: "-=500",
+    //   },
+    // };
     const p1Config: LargeFloorConfig = {
       textureA: "plataformaLarga2",
       textureB: "plataformaLarga2",
@@ -90,22 +135,6 @@ class MapaSandbox {
       gap: 20,
     };
     const p1 = new LargeFloor(this.scene, p1Config, this.pisos);
-    const p2Config: FloorConfig = {
-      texture: "plataformaLarga2",
-      pos: { x: 500, y: 600 },
-      scale: { width: 0.5, height: 0.7 },
-      fix: 25,
-      width: 390,
-      height: 50,
-      tween: {
-        duration: 4500,
-        paused: false,
-        yoyo: true,
-        repeat: -1,
-        x: "-=500",
-      },
-    };
-    const p2 = new Floor(this.scene, p2Config, this.pisosMov);
   }
   update() {
     if (this.scene.monchi) this.scene.monchi.checkMove(this.scene.cursors);

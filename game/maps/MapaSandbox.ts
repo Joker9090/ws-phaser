@@ -1,9 +1,7 @@
 import Phaser, { Physics } from "phaser";
-import Floor, { FloorConfig } from "../assets/Floor";
 import Player from "../assets/Player";
 import Sandbox from "../Sandbox";
 import LargeFloor, { LargeFloorConfig } from "../assets/LargeFloor";
-import MovingFloor, { MovingFloorConfig } from "../assets/MovingFloor";
 
 class MapaSandbox {
   debugGraphics: Phaser.GameObjects.Graphics;
@@ -26,7 +24,7 @@ class MapaSandbox {
   staticFloor?: Phaser.Physics.Arcade.Sprite;
   pisos?: Phaser.Physics.Arcade.Group;
   pisosMov?: Phaser.Physics.Arcade.Group;
-  piso2?: Phaser.GameObjects.Sprite
+  piso2?: Phaser.GameObjects.Sprite;
   constructor(scene: Sandbox, monchi: Player) {
     this.scene = scene;
     this.monchi = monchi;
@@ -55,18 +53,22 @@ class MapaSandbox {
 
     this.background = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg1")
-      .setOrigin(0.5, 0.5); this.background = this.scene.add
+      .setOrigin(0.5, 0.5);
+    this.background = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg2")
-      .setOrigin(0.5, 0.5); this.background = this.scene.add
+      .setOrigin(0.5, 0.5);
+    this.background = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg3")
-      .setOrigin(0.5, 0.5); this.background = this.scene.add
+      .setOrigin(0.5, 0.5);
+    this.background = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg4")
-      .setOrigin(0.5, 0.5); this.background = this.scene.add
+      .setOrigin(0.5, 0.5);
+    this.background = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg5")
-      .setOrigin(0.5, 0.5); this.background = this.scene.add
+      .setOrigin(0.5, 0.5);
+    this.background = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg6")
       .setOrigin(0.5, 0.5);
-
   }
 
   addColliders() {
@@ -85,45 +87,28 @@ class MapaSandbox {
 
   createMap() {
     this.pisos = this.scene.physics.add.group({ allowGravity: false });
-    this.pisosMov = this.scene.physics.add.group({ allowGravity: false });
-    this.piso2 = this.scene.physics.add.sprite(500, 600, "plataformaLarga2")
+
+    
+
+    this.piso2 = this.scene.physics.add
+      .sprite(500, 600, "plataformaLarga2")
       .setGravityY(-1000)
       .setImmovable(true)
-      .setVelocityX(10)
+      .setVelocityX(100)
 
 
-    const movingFloorCOnfig: MovingFloorConfig = {
-      texture: "plataformaLarga2",
-      pos: { x: 500, y: 600 },
-      scale: { width: 0.7, height: 0.7 },
-      width: 390,
-      height: 50,
-      tween: {
-        duration: 4500,
-        paused: false,
-        yoyo: true,
-        repeat: -1,
-        x: "-=500",
-      },
-    }
-const movingFloor = new MovingFloor(this.scene,movingFloorCOnfig,this.pisosMov)
+      
+    const tween = this.scene.tweens.add({
+      duration: 4500,
+      paused: false,
+      yoyo: true,
+      repeat: -1,
+      targets: this.piso2.body?.velocity,
+      x: "-=200",
+    });
 
-    // const p2 = new Floor(this.scene, p2Config, this.pisosMov);
-    // const p2Config: FloorConfig = {
-    //   texture: "plataformaLarga2",
-    //   pos: { x: 500, y: 600 },
-    //   scale: { width: 0.5, height: 0.7 },
-    //   fix: 25,
-    //   width: 390,
-    //   height: 50,
-    //   tween: {
-    //     duration: 4500,
-    //     paused: false,
-    //     yoyo: true,
-    //     repeat: -1,
-    //     x: "-=500",
-    //   },
-    // };
+   
+
     const p1Config: LargeFloorConfig = {
       textureA: "plataformaLarga2",
       textureB: "plataformaLarga2",

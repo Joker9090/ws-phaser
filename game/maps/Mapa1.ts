@@ -406,13 +406,15 @@ class Mapa1 {
     };
     const p12 = new Floor(this.scene, p12Config, this.pisos);
     // p13 here
-    const p13Config: MovingFloorConfig = {
+    const p13Config: FloorConfig = {
       texture: "plataformaB",
-      pos: { x: 500, y: 700 }, //3550 700
+      pos: { x: 700, y: 900 }, //3550 700
       scale: { width: 0.7, height: 0.3 },
       fix: 25,
       width: 140,
       height: 60,
+      
+      /*
       tween: {
         duration: 5000,
         paused: false,
@@ -420,12 +422,20 @@ class Mapa1 {
         repeat: -1,
         x: "-=350",
       },
-      player: this.monchi,
+      */
     };
-    const p13 = new MovingFloor(this.scene, p13Config, this.pisos3).setTint(
+    const p13 = new Floor(this.scene, p13Config, this.pisos3).setTint(
       Phaser.Display.Color.GetColor(255, 101, 0)
-    );
+    ).setVelocityX(100);
 
+    this.scene.tweens.add({
+      duration: 4500,
+      paused: false,
+      yoyo: true,
+      repeat: -1,
+      targets: p13.body?.velocity,
+      x: "-=200",
+    })
 
     console.log(this.scene.monchi, "monchi");
     // this.p13.setFrictionX(1);

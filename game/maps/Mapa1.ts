@@ -3,6 +3,7 @@ import AsteroidGenerator, {
   AsteroidGeneratorConfig,
 } from "../assets/AsteroidGenerator";
 import Floor, { FloorConfig } from "../assets/Floor";
+import MovingFloor, { MovingFloorConfig } from "../assets/MovingFloor";
 import LargeFloor, { LargeFloorConfig } from "../assets/LargeFloor";
 import Game from "../Game";
 import UIScene from "../UIScene";
@@ -405,13 +406,13 @@ class Mapa1 {
     };
     const p12 = new Floor(this.scene, p12Config, this.pisos);
     // p13 here
-    const p13Config: FloorConfig = {
+    const p13Config: MovingFloorConfig = {
       texture: "plataformaB",
-      pos: { x: 3550, y: 700 }, //3550 700
-      scale: { width: 0.7, height: 0.7 },
+      pos: { x: 500, y: 700 }, //3550 700
+      scale: { width: 0.7, height: 0.3 },
       fix: 25,
       width: 140,
-      height: 90,
+      height: 60,
       tween: {
         duration: 5000,
         paused: false,
@@ -419,8 +420,9 @@ class Mapa1 {
         repeat: -1,
         x: "-=350",
       },
+      player: this.monchi,
     };
-    const p13 = new Floor(this.scene, p13Config, this.pisos3).setTint(
+    const p13 = new MovingFloor(this.scene, p13Config, this.pisos3).setTint(
       Phaser.Display.Color.GetColor(255, 101, 0)
     );
 

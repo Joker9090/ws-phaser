@@ -1,11 +1,13 @@
 import Phaser from "phaser";
+import Floor from "./Floor";
+import Player from "./Player";
 export type MoovingFloorTween =
     | Phaser.Tweens.Tween
     | Phaser.Types.Tweens.TweenBuilderConfig
     | Phaser.Types.Tweens.TweenChainBuilderConfig
     | Phaser.Tweens.TweenChain;
 export type MovingFloorConfig = {
-    texture: string | Phaser.Textures.Texture;
+    texture: string;
     width?: number;
     height?: number;
     fix?: number;
@@ -19,6 +21,7 @@ export type MovingFloorConfig = {
     };
     tween?: Partial<MoovingFloorTween>;
     friction?: number;
+    player?: Player;
 };
 
 
@@ -27,6 +30,7 @@ class MovingFloor extends Phaser.GameObjects.Sprite {
     scene: Phaser.Scene;
     hasEvent?: string;
     group: Phaser.Physics.Arcade.Group;
+    Floors?: Phaser.Physics.Arcade.Group
     constructor(
         scene: Phaser.Scene,
         config: MovingFloorConfig,
@@ -45,24 +49,44 @@ class MovingFloor extends Phaser.GameObjects.Sprite {
         if (config.scale) {
             this.setScale(config.scale.width, config.scale.height);
         }
+
+
+
+        this.Floors = this.scene.physics.add.group({
+            key: config.texture,
+            frameQuantity: 1,
+            setXY: { x: config.pos.x, y: config.pos.y },
+            immovable: true,
+            allowGravity: false,
+            frictionX: 1,
+
+        })
+        const floor = this.Floors.getChildren()
+        console.log("existe el player bro", config.player)
+
         /* Floor add to physic world */
-        scene.physics.add.existing(this);
+        floor.forEach(floor => {
+            scene.physics.add.existing(floor);
+        });
+        scene.physics.add.collider(floor, config.player!)
 
         /* Floor add to scene */
-        scene.add.existing(this);
-        this.setDepth(10);
-        this.setSize(width, height);
-        if (this.body instanceof Phaser.Physics.Arcade.Body) {
-            this.body.setImmovable(true);
-            console.log("lo es")
-        }
+        // scene.add.existing(this);
+
+
         // this.body?.gameObject.setOffset(fix, 0)
         // this.body?.gameObject.setBounce(0);
-        this.group.add(this);
         // this.body?.gameObject.setImmovable(true);
         // this.body?.gameObject.setCollideWorldBounds(true);
         // if (friction) this.body?.gameObject.setFriction(friction)
 
+        if (this.body instanceof Phaser.Physics.Arcade.Body) {
+            this.body.setImmovable(true);
+            console.log("lo es")
+        }
+        // this.group.add(this);
+        this.setDepth(10);
+        this.setSize(width, height);
 
         if (config.tween) {
             const tween = this.scene.tweens.add({

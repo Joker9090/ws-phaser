@@ -1,17 +1,6 @@
 TO DO
 1.plataformas con movimiento lateral deberian arrastrar al pj LISTO
 1'.crear grupo moving floor
-2.pulir movimiento bg 
-2'.cambiar backgrounds a los nuevos cambiar el movimiento
+2.pulir movimiento bg [Esperando review]
+2'.cambiar backgrounds a los nuevos cambiar el movimiento [done]
 3.cambiar cristal y agregarle brillo
-
-
-
-
-
-
-
-IDEAS
-1.setear en el update del nivel un if que verifique el collide entreplataforma y Player
-y si es que setee el x del player a la suma de la diferencia entre el x actual del player y el x de la plataforma
-

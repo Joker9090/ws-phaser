@@ -6,7 +6,7 @@ import BetweenScenes, { BetweenScenesStatus } from "./BetweenScenes";
 
 export default class Credits extends Phaser.Scene {
   /* map */
-  background?: Phaser.GameObjects.Image;
+  // background?: Phaser.GameObjects.Image;
   picture1?: Phaser.GameObjects.Container;
   picture2?: Phaser.GameObjects.Container;
   picture3?: Phaser.GameObjects.Container;
@@ -17,14 +17,39 @@ export default class Credits extends Phaser.Scene {
   personTextBox1?: TextBox;
   personTextBox2?: TextBox;
   personTextBox3?: TextBox;
+  background?: Phaser.GameObjects.Image;
+  background2?: Phaser.GameObjects.Image;
+  background3?: Phaser.GameObjects.Image;
+  background4?: Phaser.GameObjects.Image;
+  background5?: Phaser.GameObjects.Image;
+  background6?: Phaser.GameObjects.Image;
   constructor() {
     super({ key: "Credits" });
+
+
+
   }
 
   init() {
     this.cursors = this.input.keyboard?.createCursorKeys();
   }
+  scaleBg() {
+    if (this.cameras.main.displayWidth > 2000 && this.background && this.background2 && this.background3 && this.background4 && this.background5 && this.background6) {
+      this.background.displayHeight = this.cameras.main.displayHeight * 1.6
+      this.background.displayWidth = this.cameras.main.displayWidth * 1.6
+      this.background2.displayHeight = this.cameras.main.displayHeight * 1.6
+      this.background2.displayWidth = this.cameras.main.displayWidth * 1.6
+      this.background3.displayHeight = this.cameras.main.displayHeight * 1.6
+      this.background3.displayWidth = this.cameras.main.displayWidth * 1.6
+      this.background4.displayHeight = this.cameras.main.displayHeight * 1.6
+      this.background4.displayWidth = this.cameras.main.displayWidth * 1.6
+      this.background5.displayHeight = this.cameras.main.displayHeight * 1.6
+      this.background5.displayWidth = this.cameras.main.displayWidth * 1.6
+      this.background6.displayHeight = this.cameras.main.displayHeight * 1.6
+      this.background6.displayWidth = this.cameras.main.displayWidth * 1.6
 
+    }
+  }
   preload() {
     this.load.image("backgroundLevelMap", "game/backgroundLevelMap.png");
     this.load.image("spaceship", "game/spaceship.png");
@@ -57,8 +82,60 @@ export default class Credits extends Phaser.Scene {
   create() {
     /* Controls */
     this.background = this.add
-      .image(1000, 500, "backgroundLevelMap")
-      .setScale(1.3);
+      .image(this.cameras.main.displayWidth / 2, this.cameras.main.displayHeight / 2, "newBg1")
+      .setOrigin(0.5, 0.5).setScale(1);
+    this.background2 = this.add
+      .image(this.cameras.main.displayWidth / 2, this.cameras.main.displayHeight / 2, "newBg2")
+      .setOrigin(0.5, 0.5).setScale(1);
+    this.background3 = this.add
+      .image(this.cameras.main.displayWidth / 2, this.cameras.main.displayHeight / 2, "newBg3")
+      .setOrigin(0.5, 0.5).setScale(1);
+    this.background4 = this.add
+      .image(this.cameras.main.displayWidth / 2, this.cameras.main.displayHeight / 2, "newBg4")
+      .setOrigin(0.5, 0.5).setScale(1);
+    this.background5 = this.add
+      .image(this.cameras.main.displayWidth / 2, this.cameras.main.displayHeight / 2, "newBg5")
+      .setOrigin(0.5, 0.5).setScale(1);
+    this.background6 = this.add
+      .image(this.cameras.main.displayWidth / 2, this.cameras.main.displayHeight / 2, "newBg6")
+      .setOrigin(0.5, 0.5).setScale(1);
+    this.scaleBg()
+    this.tweens.add({
+      targets: this.background,
+      yoyo: true,
+      repeat: -1,
+      x: "+=10",
+      y: "-=10",
+      duration: 3000
+    }); this.tweens.add({
+      targets: this.background2,
+      yoyo: true,
+      repeat: -1,
+      x: "+=10",
+      y: "-=10",
+      duration: 3000
+    }); this.tweens.add({
+      targets: this.background3,
+      yoyo: true,
+      repeat: -1,
+      x: "+=10",
+      y: "-=10",
+      duration: 3000
+    }); this.tweens.add({
+      targets: this.background4,
+      yoyo: true,
+      repeat: -1,
+      x: "+=10",
+      y: "-=10",
+      duration: 3000
+    }); this.tweens.add({
+      targets: this.background,
+      yoyo: true,
+      repeat: -1,
+      x: "+=10",
+      y: "-=10",
+      duration: 3000
+    })
     this.EscKeyboard = this.input.keyboard?.addKey(
       Phaser.Input.Keyboard.KeyCodes.ESC
     );

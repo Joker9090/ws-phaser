@@ -214,11 +214,22 @@ export default class UIScene extends Phaser.Scene {
       .setSize(50, 50)
       .setPosition(250, 55);
     this.timeLevel = 0;
+    this.timerText?.setText(`0${this.minutes}:0${this.timeLevel}`);
     var timerEvent = this.time.addEvent({
       delay: 1000,
       callback: () => {
         this.timeLevel++;
-        this.timerText?.setText(`${this.minutes}:${this.timeLevel}`);
+
+
+        if (this.minutes < 10 && this.timeLevel < 10) {
+          this.timerText?.setText(`0${this.minutes}:0${this.timeLevel}`);
+        } else if (this.minutes >= 10 && this.timeLevel >= 10) {
+          this.timerText?.setText(`${this.minutes}:${this.timeLevel}`);
+        } else if (this.minutes < 10 && this.timeLevel >= 10) {
+          this.timerText?.setText(`0${this.minutes}:${this.timeLevel}`);
+        } else if (this.timeLevel < 10 && this.minutes >= 10) {
+          this.timerText?.setText(`${this.minutes}:0${this.timeLevel}`);
+        }
         // if (this.timeLevel > 10) {
         //   minutes++
         //   this.timeLevel = 0

@@ -74,7 +74,7 @@ class Mapa1 {
 
     // this.background = this.scene.add
     //   .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg1")
-    //   .setOrigin(0.5, 0.5);
+    //   .setOrigin(0.5, 0.5).setScale(2);
     // this.background2 = this.scene.add
     //   .image(this.startingPoint.x, this.startingPoint.y, "lvl1bg2")
     //   .setOrigin(0.5, 0.5)
@@ -93,22 +93,22 @@ class Mapa1 {
 
     this.background = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg1")
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5, 0.5).setScale(2);
     this.background2 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg2")
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5, 0.5).setScale(2);
     this.background3 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg3")
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5, 0.5).setScale(2);
     this.background4 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg4")
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5, 0.5).setScale(2);
     this.background5 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg5")
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5, 0.5).setScale(2);
     this.background6 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg6")
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5, 0.5).setScale(2);
 
   }
   // scaleBg() {
@@ -147,7 +147,7 @@ class Mapa1 {
     const { x, y } = this.startingPoint;
     const { x: x2, y: y2 } = player;
     const calcDiffX = (x2 - x) / 1//mas grande menos movimiento
-    const calcDiffY = (y2 - y) / 1.1;
+    const calcDiffY = (y2 - y - this.scene.cameras.main.displayHeight / 6) / 1;
     this.background.setPosition(x + calcDiffX, y + calcDiffY);
     this.background2.setPosition(x + calcDiffX, y + calcDiffY);
     this.background3.setPosition(x + calcDiffX, y + calcDiffY);
@@ -408,12 +408,12 @@ class Mapa1 {
     // p13 here
     const p13Config: FloorConfig = {
       texture: "plataformaB",
-      pos: { x: 700, y: 900 }, //3550 700
-      scale: { width: 0.7, height: 0.3 },
+      pos: { x: 3400, y: 700 }, //3550 700
+      scale: { width: 0.7, height: 0.7 },
       fix: 25,
       width: 140,
-      height: 60,
-      
+      height: 90,
+
       /*
       tween: {
         duration: 5000,
@@ -426,7 +426,7 @@ class Mapa1 {
     };
     const p13 = new Floor(this.scene, p13Config, this.pisos3).setTint(
       Phaser.Display.Color.GetColor(255, 101, 0)
-    ).setVelocityX(100);
+    ).setVelocityX(150);
 
     this.scene.tweens.add({
       duration: 4500,
@@ -434,7 +434,7 @@ class Mapa1 {
       yoyo: true,
       repeat: -1,
       targets: p13.body?.velocity,
-      x: "-=200",
+      x: "-=300",
     })
 
     console.log(this.scene.monchi, "monchi");

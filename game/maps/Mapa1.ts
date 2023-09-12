@@ -3,7 +3,7 @@ import AsteroidGenerator, {
   AsteroidGeneratorConfig,
 } from "../assets/AsteroidGenerator";
 import Floor, { FloorConfig } from "../assets/Floor";
-import MovingFloor, { MovingFloorConfig } from "../assets/MovingFloor";
+
 import LargeFloor, { LargeFloorConfig } from "../assets/LargeFloor";
 import Game from "../Game";
 import UIScene from "../UIScene";
@@ -93,22 +93,22 @@ class Mapa1 {
 
     this.background = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg1")
-      .setOrigin(0.5, 0.5).setScale(2);
+      .setOrigin(0.5, 0.5).setScale(1.8);
     this.background2 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg2")
-      .setOrigin(0.5, 0.5).setScale(2);
+      .setOrigin(0.5, 0.5).setScale(1.8);
     this.background3 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg3")
-      .setOrigin(0.5, 0.5).setScale(2);
+      .setOrigin(0.5, 0.5).setScale(1.8);
     this.background4 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg4")
-      .setOrigin(0.5, 0.5).setScale(2);
+      .setOrigin(0.5, 0.5).setScale(1.8);
     this.background5 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg5")
-      .setOrigin(0.5, 0.5).setScale(2);
+      .setOrigin(0.5, 0.5).setScale(1.8);
     this.background6 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg6")
-      .setOrigin(0.5, 0.5).setScale(2);
+      .setOrigin(0.5, 0.5).setScale(1.8);
 
   }
   // scaleBg() {
@@ -147,7 +147,7 @@ class Mapa1 {
     const { x, y } = this.startingPoint;
     const { x: x2, y: y2 } = player;
     const calcDiffX = (x2 - x) / 1//mas grande menos movimiento
-    const calcDiffY = (y2 - y - this.scene.cameras.main.displayHeight / 6) / 1;
+    const calcDiffY = (y2 - y - this.scene.cameras.main.displayHeight / 6) / 1.3;
     this.background.setPosition(x + calcDiffX, y + calcDiffY);
     this.background2.setPosition(x + calcDiffX, y + calcDiffY);
     this.background3.setPosition(x + calcDiffX, y + calcDiffY);
@@ -157,7 +157,6 @@ class Mapa1 {
     // this.background7.setPosition(x + calcDiffX, y + calcDiffY);
     // this.background8.setPosition(x + calcDiffX, y + calcDiffY);
   }
-
   addColliders() {
     if (this.scene.monchi) {
       if (this.portal) this.portal.setTint(0xff0000);
@@ -555,13 +554,13 @@ class Mapa1 {
     const coinConfig: FloorConfig = {
       texture: "coin",
       pos: { x: 500, y: 1580 },
-      scale: { width: 1, height: 0.5 },
-      width: 50,
-      height: 120,
-      fix: 0,
+      scale: { width: 0.15, height: 0.15 },
+      width: 10,
+      height: 18,
+      fix: 10,
     };
 
-    const coin = new Floor(this.scene, coinConfig, this.coin);
+    const coin = new Floor(this.scene, coinConfig, this.coin).setBodySize(140, 180);
 
     const c1Config: AsteroidGeneratorConfig = {
       texture: "asteroid",

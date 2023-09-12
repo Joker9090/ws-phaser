@@ -1,5 +1,4 @@
 TO DO
-1.plataformas con movimiento lateral deberian arrastrar al pj [DONE By Ari]
-2.pulir movimiento bg [Esperando review]
-2'.cambiar backgrounds a los nuevos cambiar el movimiento [done]
-3.cambiar cristal y agregarle brillo
+1.cambiar cristal y agregarle brillo
+2.pulir movimiento bg
+3.pared vertical mapa2

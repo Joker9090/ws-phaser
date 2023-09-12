@@ -77,7 +77,7 @@ export default class UIScene extends Phaser.Scene {
       const coinConf: UIConfig = {
         pos: { x: lifes + 95, y: 70 },
         texture: "coin",
-        scale: 0.5,
+        scale: 0.15,
       };
       this.CoinOriginalPos = quantityLifes * 50 + 150;
       this.coinUI = new UI(this, coinConf)

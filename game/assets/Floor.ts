@@ -57,6 +57,7 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
     this.group.add(this);
     this.setImmovable(true);
     this.setCollideWorldBounds(true);
+    
     if(friction) this.setFriction(friction)
     if (config.tween) {
       const tween = this.scene.tweens.add({

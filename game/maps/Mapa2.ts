@@ -68,22 +68,22 @@ class Mapa2 {
 
     this.background = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg1")
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5, 0.5).setScale(1.7);
     this.background2 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg2")
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5, 0.5).setScale(1.7);
     this.background3 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg3")
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5, 0.5).setScale(1.7);
     this.background4 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg4")
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5, 0.5).setScale(1.7);
     this.background5 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg5")
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5, 0.5).setScale(1.7);
     this.background6 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg6")
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5, 0.5).setScale(1.7);
   }
   // scaleBg() {
   //   if (this.scene.cameras.main.displayWidth > 1200) {
@@ -126,7 +126,7 @@ class Mapa2 {
     const { x, y } = this.startingPoint;
     const { x: x2, y: y2 } = player;
     const calcDiffX = (x2 - x) / 1//mas grande menos movimiento
-    const calcDiffY = (y2 - y) / 1.1;
+    const calcDiffY = (y2 - y - this.scene.cameras.main.displayHeight / 6) / 1;
     this.background.setPosition(x + calcDiffX, y + calcDiffY);
     this.background2.setPosition(x + calcDiffX, y + calcDiffY);
     this.background3.setPosition(x + calcDiffX, y + calcDiffY);
@@ -146,6 +146,7 @@ class Mapa2 {
     this.fireballGroup = this.scene.physics.add.group({ allowGravity: false });
     this.portalInit = this.scene.physics.add.group({ allowGravity: false });
     // this.scene.cameras.main.setZoom(0.2)
+    this.scene.cameras.main.shake(2000, 0.05);
     /* Platforms */
 
     const p1Config: LargeFloorConfig = {
@@ -339,12 +340,12 @@ class Mapa2 {
     const coinConfig: FloorConfig = {
       texture: "coin",
       pos: { x: 1000, y: 105 + 1250 }, // 500 1580
-      scale: { width: 1, height: 1 },
-      width: 50,
-      height: 120,
-      fix: 0,
+      scale: { width: 0.15, height: 0.15 },
+      width: 10,
+      height: 18,
+      fix: 10,
     };
-    const coin = new Floor(this.scene, coinConfig, this.coin).setVisible(true);
+    const coin = new Floor(this.scene, coinConfig, this.coin).setVisible(true).setBodySize(140, 180);
 
     const c1Config: AsteroidGeneratorConfig = {
       texture: "asteroid",

@@ -353,7 +353,7 @@ class Game extends Phaser.Scene {
         this.monchi?.setFlipY(false);
         this.monchi?.setBounceY(0);
         this.gravityDown = true;
-        this.monchi?.body?.setOffset(70, 50);
+        this.monchi?.body?.setOffset(0, 100);
         this.cameras.main.setRotation(0);
         this.monchi?.setGravity(0);
         this.cameraNormal = true;

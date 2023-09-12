@@ -73,24 +73,24 @@ class Tutorial {
       this.worldSize.height
     );
     /* Debug */
-     this.background = this.scene.add
+    this.background = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg1")
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5, 0.5).setScale(1.7);
     this.background2 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg2")
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5, 0.5).setScale(1.7);
     this.background3 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg3")
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5, 0.5).setScale(1.7);
     this.background4 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg4")
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5, 0.5).setScale(1.7);
     this.background5 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg5")
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5, 0.5).setScale(1.7);
     this.background6 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg6")
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5, 0.5).setScale(1.7);
   }
   // scaleBg() {
   //   if (this.scene.cameras.main.displayWidth > 1200) {
@@ -133,7 +133,7 @@ class Tutorial {
     const { x, y } = this.startingPoint;
     const { x: x2, y: y2 } = player;
     const calcDiffX = (x2 - x) / 1//mas grande menos movimiento
-    const calcDiffY = (y2 - y) / 1.1;
+    const calcDiffY = (y2 - y - this.scene.cameras.main.displayHeight / 6) / 1.3;
     this.background.setPosition(x + calcDiffX, y + calcDiffY);
     this.background2.setPosition(x + calcDiffX, y + calcDiffY);
     this.background3.setPosition(x + calcDiffX, y + calcDiffY);
@@ -270,12 +270,12 @@ class Tutorial {
     const coinConfig: FloorConfig = {
       texture: "coin",
       pos: { x: 1500, y: 450 },
-      scale: { width: 1, height: 1 },
-      width: 50,
-      height: 120,
-      fix: 0,
+      scale: { width: 0.15, height: 0.15 },
+      width: 10,
+      height: 18,
+      fix: 10,
     };
-    this.pisoCoin = new Floor(this.scene, coinConfig, this.coin);
+    this.pisoCoin = new Floor(this.scene, coinConfig, this.coin).setBodySize(140, 180);
     this.pisoCoin.hasEvent = "Show_Tutorial_Text_2";
 
     const fireballTextConfig: FloorConfig = {

@@ -266,6 +266,7 @@ class Game extends Phaser.Scene {
       this.canNextLevel = true;
       this.canWin = true;
       this.map.coin.setVisible(false);
+      this.map.aura?.setVisible(false)
       this.map.coin.clear(true);
     }
   }
@@ -453,7 +454,6 @@ class Game extends Phaser.Scene {
 
   create(this: Game, data: { level: number; lifes: number }) {
     this.checkPoint = 0;
-
     /* CHOSE LEVEL, LIFES AND AUDIO */
     switch (data.level) {
       case 0:
@@ -486,7 +486,7 @@ class Game extends Phaser.Scene {
       getMusicManagerScene.playMusic("songLevel2");
     }
 
-
+  
 
     /* UI SCENE  */
     const UIScene = this.game.scene.getScene("UIScene");

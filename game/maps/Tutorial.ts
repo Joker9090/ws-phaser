@@ -18,6 +18,7 @@ class Tutorial {
   pisos2?: Phaser.Physics.Arcade.Group;
   pisos3?: Phaser.Physics.Arcade.Group;
   coin?: Phaser.Physics.Arcade.Group;
+  aura?: Phaser.Physics.Arcade.Group;
   portal?: Phaser.Physics.Arcade.Group;
   lifesGroup?: Phaser.GameObjects.Group;
   fireballAct?: Phaser.Physics.Arcade.Group;
@@ -47,7 +48,6 @@ class Tutorial {
   tutorialState: number = 1;
   timedEvent?: Phaser.Time.TimerEvent;
   previewCamara?: Phaser.Cameras.Scene2D.Camera;
-
   pisoFloat?: Floor;
   pisoCoin?: Floor;
   pisoNoFloat?: Floor;
@@ -92,43 +92,23 @@ class Tutorial {
       .image(this.startingPoint.x, this.startingPoint.y, "newBg6")
       .setOrigin(0.5, 0.5).setScale(1.7);
   }
-  // scaleBg() {
-  //   if (this.scene.cameras.main.displayWidth > 1200) {
-  //     this.background.displayHeight = this.scene.cameras.main.displayHeight + 100
-  //     this.background.displayWidth = this.scene.cameras.main.displayWidth + 100
-  //     this.background2.displayHeight = this.scene.cameras.main.displayHeight + 100
-  //     this.background2.displayWidth = this.scene.cameras.main.displayWidth + 100
-  //     this.background3.displayHeight = this.scene.cameras.main.displayHeight + 100
-  //     this.background3.displayWidth = this.scene.cameras.main.displayWidth + 100
-  //     this.background4.displayHeight = this.scene.cameras.main.displayHeight + 100
-  //     this.background4.displayWidth = this.scene.cameras.main.displayWidth + 100
-  //     this.background5.displayHeight = this.scene.cameras.main.displayHeight + 100
-  //     this.background5.displayWidth = this.scene.cameras.main.displayWidth + 100
-  //     this.background6.displayHeight = this.scene.cameras.main.displayHeight + 100
-  //     this.background6.displayWidth = this.scene.cameras.main.displayWidth + 100
-  //     this.background7.displayHeight = this.scene.cameras.main.displayHeight + 100
-  //     this.background7.displayWidth = this.scene.cameras.main.displayWidth + 100
-  //     this.background8.displayHeight = this.scene.cameras.main.displayHeight + 100
-  //     this.background8.displayWidth = this.scene.cameras.main.displayWidth + 100
-  //   } else {
-  //     this.background.displayWidth = 1200
-  //     this.background2.displayWidth = 1200
-  //     this.background3.displayWidth = 1200
-  //     this.background4.displayWidth = 1200
-  //     this.background5.displayWidth = 1200
-  //     this.background6.displayWidth = 1200
-  //     this.background7.displayWidth = 1200
-  //     this.background8.displayWidth = 1200
-  //     this.background.displayHeight = this.scene.cameras.main.displayHeight + 100
-  //     this.background2.displayHeight = this.scene.cameras.main.displayHeight + 100
-  //     this.background3.displayHeight = this.scene.cameras.main.displayHeight + 100
-  //     this.background4.displayHeight = this.scene.cameras.main.displayHeight + 100
-  //     this.background5.displayHeight = this.scene.cameras.main.displayHeight + 100
-  //     this.background6.displayHeight = this.scene.cameras.main.displayHeight + 100
-  //     this.background7.displayHeight = this.scene.cameras.main.displayHeight + 100
-  //     this.background8.displayHeight = this.scene.cameras.main.displayHeight + 100
-  //   }
-  // }
+  scaleBg() {
+    if (this.scene.cameras.main.displayWidth > 2000) {
+      this.background.displayHeight = this.scene.cameras.main.displayHeight * 1.6
+      this.background.displayWidth = this.scene.cameras.main.displayWidth * 1.6
+      this.background2.displayHeight = this.scene.cameras.main.displayHeight * 1.6
+      this.background2.displayWidth = this.scene.cameras.main.displayWidth * 1.6
+      this.background3.displayHeight = this.scene.cameras.main.displayHeight * 1.6
+      this.background3.displayWidth = this.scene.cameras.main.displayWidth * 1.6
+      this.background4.displayHeight = this.scene.cameras.main.displayHeight * 1.6
+      this.background4.displayWidth = this.scene.cameras.main.displayWidth * 1.6
+      this.background5.displayHeight = this.scene.cameras.main.displayHeight * 1.6
+      this.background5.displayWidth = this.scene.cameras.main.displayWidth * 1.6
+      this.background6.displayHeight = this.scene.cameras.main.displayHeight * 1.6
+      this.background6.displayWidth = this.scene.cameras.main.displayWidth * 1.6
+
+    }
+  }
   animateBackground(player: Phaser.GameObjects.Sprite) {
     const { x, y } = this.startingPoint;
     const { x: x2, y: y2 } = player;
@@ -149,10 +129,13 @@ class Tutorial {
     this.pisos2 = this.scene.physics.add.group({ allowGravity: false });
     this.pisos3 = this.scene.physics.add.group({ allowGravity: false });
     this.coin = this.scene.physics.add.group({ allowGravity: false });
+    this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
     this.portal = this.scene.physics.add.group({ allowGravity: false });
     this.fireballGroup = this.scene.physics.add.group({ allowGravity: false });
     this.portalInit = this.scene.physics.add.group({ allowGravity: false });
     this.fireballAct = this.scene.physics.add.group({ allowGravity: false });
+    const aura = this.scene.add.sprite(500, 1580, "auraTuto").setScale(0.6)
+    this.aura.add(aura)
 
     /* Platforms */
     const p0Config: LargeFloorConfig = {
@@ -380,7 +363,7 @@ class Tutorial {
 
   update() {
     this.showMap();
-    // if (this) this.scaleBg()
+    if (this) this.scaleBg()
     if (this.tutorialState == 1) {
       if (this) {
         if (this.scene.monchi) {

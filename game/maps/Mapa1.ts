@@ -24,6 +24,7 @@ class Mapa1 {
   pisos4?: Phaser.Physics.Arcade.Group;
   coin?: Phaser.Physics.Arcade.Group;
   portal?: Phaser.Physics.Arcade.Group;
+  aura?: Phaser.Physics.Arcade.Group;
   movingFloor?: Phaser.Physics.Arcade.Group;
   movingFloorRot?: Phaser.Physics.Arcade.Group;
   p13!: Phaser.GameObjects.Sprite;
@@ -47,7 +48,7 @@ class Mapa1 {
   background4: Phaser.GameObjects.Image;
   background5: Phaser.GameObjects.Image;
   background6: Phaser.GameObjects.Image;
-
+  cristal?: Floor;
   constructor(scene: Game, monchi: Player) {
     this.scene = scene;
     this.monchi = monchi;
@@ -111,38 +112,23 @@ class Mapa1 {
       .setOrigin(0.5, 0.5).setScale(1.8);
 
   }
-  // scaleBg() {
-  //   if (this.scene.cameras.main.displayWidth > 1200) {
-  //     this.background.displayHeight = this.scene.cameras.main.displayHeight + 100
-  //     // this.background.displayWidth = this.scene.cameras.main.displayWidth + 100
-  //     this.background2.displayHeight = this.scene.cameras.main.displayHeight + 100
-  //     // this.background2.displayWidth = this.scene.cameras.main.displayWidth + 100
-  //     this.background3.displayHeight = this.scene.cameras.main.displayHeight + 100
-  //     // this.background3.displayWidth = this.scene.cameras.main.displayWidth + 100
-  //     this.background4.displayHeight = this.scene.cameras.main.displayHeight + 100
-  //     // this.background4.displayWidth = this.scene.cameras.main.displayWidth + 100
-  //     this.background5.displayHeight = this.scene.cameras.main.displayHeight + 100
-  //     // this.background5.displayWidth = this.scene.cameras.main.displayWidth + 100
-  //     this.background6.displayHeight = this.scene.cameras.main.displayHeight + 100
-  //     // this.background6.displayWidth = this.scene.cameras.main.displayWidth + 100
+  scaleBg() {
+    if (this.scene.cameras.main.displayWidth > 2000) {
+      this.background.displayHeight = this.scene.cameras.main.displayHeight * 1.6
+      this.background.displayWidth = this.scene.cameras.main.displayWidth * 1.6
+      this.background2.displayHeight = this.scene.cameras.main.displayHeight * 1.6
+      this.background2.displayWidth = this.scene.cameras.main.displayWidth * 1.6
+      this.background3.displayHeight = this.scene.cameras.main.displayHeight * 1.6
+      this.background3.displayWidth = this.scene.cameras.main.displayWidth * 1.6
+      this.background4.displayHeight = this.scene.cameras.main.displayHeight * 1.6
+      this.background4.displayWidth = this.scene.cameras.main.displayWidth * 1.6
+      this.background5.displayHeight = this.scene.cameras.main.displayHeight * 1.6
+      this.background5.displayWidth = this.scene.cameras.main.displayWidth * 1.6
+      this.background6.displayHeight = this.scene.cameras.main.displayHeight * 1.6
+      this.background6.displayWidth = this.scene.cameras.main.displayWidth * 1.6
 
-  //   } else {
-  //     // this.background.displayWidth = 1200
-  //     // this.background2.displayWidth = 1200
-  //     // this.background3.displayWidth = 1200
-  //     // this.background4.displayWidth = 1200
-  //     // this.background5.displayWidth = 1200
-  //     // this.background6.displayWidth = 1200
-
-  //     this.background.displayHeight = this.scene.cameras.main.displayHeight + 500
-  //     this.background2.displayHeight = this.scene.cameras.main.displayHeight + 500
-  //     this.background3.displayHeight = this.scene.cameras.main.displayHeight + 500
-  //     this.background4.displayHeight = this.scene.cameras.main.displayHeight + 500
-  //     this.background5.displayHeight = this.scene.cameras.main.displayHeight + 500
-  //     this.background6.displayHeight = this.scene.cameras.main.displayHeight + 500
-
-  //   }
-  // }
+    }
+  }
   animateBackground(player: Phaser.GameObjects.Sprite) {
     const { x, y } = this.startingPoint;
     const { x: x2, y: y2 } = player;
@@ -192,6 +178,7 @@ class Mapa1 {
           this.scene.monchi,
           this.coin,
           this.scene.coinCollected,
+
           () => true,
           this.scene
         );
@@ -249,10 +236,13 @@ class Mapa1 {
     this.pisos2 = this.scene.physics.add.group({ allowGravity: false });
     this.pisos3 = this.scene.physics.add.group({ allowGravity: false });
     this.coin = this.scene.physics.add.group({ allowGravity: false });
+    this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
     this.portal = this.scene.physics.add.group({ allowGravity: false });
     this.pisos4 = this.scene.physics.add.group({ allowGravity: false });
-
     this.amountLifes = data.lifes;
+    const aura = this.scene.add.sprite(500, 1580, "auraTuto").setScale(0.6)
+    this.aura.add(aura)
+
 
     const p1Config: FloorConfig = {
       texture: "plataformaLarga2",
@@ -560,7 +550,7 @@ class Mapa1 {
       fix: 10,
     };
 
-    const coin = new Floor(this.scene, coinConfig, this.coin).setBodySize(140, 180);
+    this.cristal = new Floor(this.scene, coinConfig, this.coin).setBodySize(140, 180);
 
     const c1Config: AsteroidGeneratorConfig = {
       texture: "asteroid",
@@ -606,8 +596,7 @@ class Mapa1 {
         this.scene.monchi.setY(1700 - this.scene.monchi.displayHeight);
     }
     if (this.scene.monchi) this.animateBackground(this.scene.monchi);
-    // this.scaleBg()
+    this.scaleBg()
   }
 }
-
 export default Mapa1;

@@ -1,4 +1,7 @@
 TO DO
-1.cambiar cristal y agregarle brillo
-2.pulir movimiento bg
+1.agregar animacion brillo
+2.agrandar el bg en caso de ser mayor a 2k [donde]
 3.pared vertical mapa2
+4.animacion monchimove cuando la camra rota [done]
+5.bg en creditos, win y lose
+6.agregar ceros al timer

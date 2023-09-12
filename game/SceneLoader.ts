@@ -90,6 +90,7 @@ const loadAssets = {
       ["image", "asteroid", "/game/asteroid.png"],
       ["image", "asteroid2", "/game/asteroid2.png"],
       ["image", "coin", "/game/cristal.png"],
+      ["image", "auraTuto", "/game/auraCristalTuto.png"],
       ["image", "portal", "/game/portal.png"],
       ["image", "heart", "/game/heart.png"],
       ["image", "arrow", "/game/arrow.png"],

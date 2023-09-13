@@ -73,42 +73,43 @@ class Tutorial {
       this.worldSize.height
     );
     /* Debug */
+
     this.background = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg1")
-      .setOrigin(0.5, 0.5).setScale(1.7);
+      .setOrigin(0.5, 0.5).setScale(1.8);
     this.background2 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg2")
-      .setOrigin(0.5, 0.5).setScale(1.7);
+      .setOrigin(0.5, 0.5).setScale(1.8);
     this.background3 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg3")
-      .setOrigin(0.5, 0.5).setScale(1.7);
+      .setOrigin(0.5, 0.5).setScale(1.8);
     this.background4 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg4")
-      .setOrigin(0.5, 0.5).setScale(1.7);
+      .setOrigin(0.5, 0.5).setScale(1.8);
     this.background5 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg5")
-      .setOrigin(0.5, 0.5).setScale(1.7);
+      .setOrigin(0.5, 0.5).setScale(1.8);
     this.background6 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg6")
-      .setOrigin(0.5, 0.5).setScale(1.7);
+      .setOrigin(0.5, 0.5).setScale(1.8);
   }
-  scaleBg() {
-    if (this.scene.cameras.main.displayWidth > 2000) {
-      this.background.displayHeight = this.scene.cameras.main.displayHeight * 1.6
-      this.background.displayWidth = this.scene.cameras.main.displayWidth * 1.6
-      this.background2.displayHeight = this.scene.cameras.main.displayHeight * 1.6
-      this.background2.displayWidth = this.scene.cameras.main.displayWidth * 1.6
-      this.background3.displayHeight = this.scene.cameras.main.displayHeight * 1.6
-      this.background3.displayWidth = this.scene.cameras.main.displayWidth * 1.6
-      this.background4.displayHeight = this.scene.cameras.main.displayHeight * 1.6
-      this.background4.displayWidth = this.scene.cameras.main.displayWidth * 1.6
-      this.background5.displayHeight = this.scene.cameras.main.displayHeight * 1.6
-      this.background5.displayWidth = this.scene.cameras.main.displayWidth * 1.6
-      this.background6.displayHeight = this.scene.cameras.main.displayHeight * 1.6
-      this.background6.displayWidth = this.scene.cameras.main.displayWidth * 1.6
+  // scaleBg() {
+  //   if (this.scene.cameras.main.displayWidth > 2000) {
+  //     this.background.displayHeight = this.scene.cameras.main.displayHeight * 1.6
+  //     this.background.displayWidth = this.scene.cameras.main.displayWidth * 1.6
+  //     this.background2.displayHeight = this.scene.cameras.main.displayHeight * 1.6
+  //     this.background2.displayWidth = this.scene.cameras.main.displayWidth * 1.6
+  //     this.background3.displayHeight = this.scene.cameras.main.displayHeight * 1.6
+  //     this.background3.displayWidth = this.scene.cameras.main.displayWidth * 1.6
+  //     this.background4.displayHeight = this.scene.cameras.main.displayHeight * 1.6
+  //     this.background4.displayWidth = this.scene.cameras.main.displayWidth * 1.6
+  //     this.background5.displayHeight = this.scene.cameras.main.displayHeight * 1.6
+  //     this.background5.displayWidth = this.scene.cameras.main.displayWidth * 1.6
+  //     this.background6.displayHeight = this.scene.cameras.main.displayHeight * 1.6
+  //     this.background6.displayWidth = this.scene.cameras.main.displayWidth * 1.6
 
-    }
-  }
+  //   }
+  // }
   animateBackground(player: Phaser.GameObjects.Sprite) {
     const { x, y } = this.startingPoint;
     const { x: x2, y: y2 } = player;
@@ -134,9 +135,15 @@ class Tutorial {
     this.fireballGroup = this.scene.physics.add.group({ allowGravity: false });
     this.portalInit = this.scene.physics.add.group({ allowGravity: false });
     this.fireballAct = this.scene.physics.add.group({ allowGravity: false });
-    const aura = this.scene.add.sprite(500, 1580, "auraTuto").setScale(0.6)
+    const aura = this.scene.add.sprite(1500, 450, "auraTuto").setScale(0.6)
     this.aura.add(aura)
-
+    this.scene.tweens.add({
+      targets: aura,
+      alpha: 0.4,
+      duration: 1000,
+      yoyo: true,
+      repeat: -1
+    })
     /* Platforms */
     const p0Config: LargeFloorConfig = {
       textureA: "plataformaLarga2",
@@ -363,7 +370,7 @@ class Tutorial {
 
   update() {
     this.showMap();
-    if (this) this.scaleBg()
+    // if (this) this.scaleBg()
     if (this.tutorialState == 1) {
       if (this) {
         if (this.scene.monchi) {

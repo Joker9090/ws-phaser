@@ -111,9 +111,9 @@ export default class Credits extends Phaser.Scene {
       targets: this.background2,
       yoyo: true,
       repeat: -1,
-      x: "+=10",
+      x: "+=3",
       y: "-=10",
-      duration: 3000
+      duration: 5000
     }); this.tweens.add({
       targets: this.background3,
       yoyo: true,

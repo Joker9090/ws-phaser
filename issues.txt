@@ -1,3 +1,2 @@
 TO DO
-1.agregar animacion brillo
 3.pared vertical mapa2

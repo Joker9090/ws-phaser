@@ -67,42 +67,44 @@ class Mapa2 {
     );
     /* Debug */
 
+
     this.background = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg1")
-      .setOrigin(0.5, 0.5).setScale(1.7);
+      .setOrigin(0.5, 0.5).setScale(1.8);
     this.background2 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg2")
-      .setOrigin(0.5, 0.5).setScale(1.7);
+      .setOrigin(0.5, 0.5).setScale(1.8);
     this.background3 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg3")
-      .setOrigin(0.5, 0.5).setScale(1.7);
+      .setOrigin(0.5, 0.5).setScale(1.8);
     this.background4 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg4")
-      .setOrigin(0.5, 0.5).setScale(1.7);
+      .setOrigin(0.5, 0.5).setScale(1.8);
     this.background5 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg5")
-      .setOrigin(0.5, 0.5).setScale(1.7);
+      .setOrigin(0.5, 0.5).setScale(1.8);
     this.background6 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg6")
-      .setOrigin(0.5, 0.5).setScale(1.7);
+      .setOrigin(0.5, 0.5).setScale(1.8);
   }
-  scaleBg() {
-    if (this.scene.cameras.main.displayWidth > 2000) {
-      this.background.displayHeight = this.scene.cameras.main.displayHeight * 1.6
-      this.background.displayWidth = this.scene.cameras.main.displayWidth * 1.6
-      this.background2.displayHeight = this.scene.cameras.main.displayHeight * 1.6
-      this.background2.displayWidth = this.scene.cameras.main.displayWidth * 1.6
-      this.background3.displayHeight = this.scene.cameras.main.displayHeight * 1.6
-      this.background3.displayWidth = this.scene.cameras.main.displayWidth * 1.6
-      this.background4.displayHeight = this.scene.cameras.main.displayHeight * 1.6
-      this.background4.displayWidth = this.scene.cameras.main.displayWidth * 1.6
-      this.background5.displayHeight = this.scene.cameras.main.displayHeight * 1.6
-      this.background5.displayWidth = this.scene.cameras.main.displayWidth * 1.6
-      this.background6.displayHeight = this.scene.cameras.main.displayHeight * 1.6
-      this.background6.displayWidth = this.scene.cameras.main.displayWidth * 1.6
-
-    }
-  }
+  // scaleBg() {
+  //   if (this.scene.cameras.main.displayWidth >= 2000) {
+  //     this.background.displayHeight = this.scene.cameras.main.displayHeight * 1.6
+  //     this.background.displayWidth = this.scene.cameras.main.displayWidth * 1.6
+  //     this.background2.displayHeight = this.scene.cameras.main.displayHeight * 1.6
+  //     this.background2.displayWidth = this.scene.cameras.main.displayWidth * 1.6
+  //     this.background3.displayHeight = this.scene.cameras.main.displayHeight * 1.6
+  //     this.background3.displayWidth = this.scene.cameras.main.displayWidth * 1.6
+  //     this.background4.displayHeight = this.scene.cameras.main.displayHeight * 1.6
+  //     this.background4.displayWidth = this.scene.cameras.main.displayWidth * 1.6
+  //     this.background5.displayHeight = this.scene.cameras.main.displayHeight * 1.6
+  //     this.background5.displayWidth = this.scene.cameras.main.displayWidth * 1.6
+  //     this.background6.displayHeight = this.scene.cameras.main.displayHeight * 1.6
+  //     this.background6.displayWidth = this.scene.cameras.main.displayWidth * 1.6
+  //   } else {
+  //     return null
+  //   }
+  // }
   animateBackground(player: Phaser.GameObjects.Sprite) {
     const { x, y } = this.startingPoint;
     const { x: x2, y: y2 } = player;
@@ -127,9 +129,15 @@ class Mapa2 {
     this.fireballGroup = this.scene.physics.add.group({ allowGravity: false });
     this.portalInit = this.scene.physics.add.group({ allowGravity: false });
     this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
-    const aura = this.scene.add.sprite(500, 1580, "auraTuto").setScale(0.6)
+    const aura = this.scene.add.sprite(1000, 1355, "auraTuto").setScale(0.6)
     this.aura.add(aura)
-
+    this.scene.tweens.add({
+      targets: aura,
+      alpha: 0.4,
+      duration: 1000,
+      yoyo: true,
+      repeat: -1
+    })
     // this.scene.cameras.main.setZoom(0.2)
     this.scene.cameras.main.shake(2000, 0.05);
     /* Platforms */
@@ -172,7 +180,7 @@ class Mapa2 {
       textureB: "plataformaLarga",
       gap: 0,
       large: 3,
-      pos: { x: 1400, y: 150 + 1130 },
+      pos: { x: 1400, y: 1370 },
       scale: { width: 0.7, height: 0.7 },
       rotated: true,
     };
@@ -324,7 +332,7 @@ class Mapa2 {
 
     const coinConfig: FloorConfig = {
       texture: "coin",
-      pos: { x: 1000, y: 105 + 1250 }, // 500 1580
+      pos: { x: 1000, y:  1355 }, // 500 1580
       scale: { width: 0.15, height: 0.15 },
       width: 10,
       height: 18,
@@ -427,7 +435,7 @@ class Mapa2 {
         this.coin?.setVisible(true);
       }
     }
-    this.scaleBg()
+    // this.scaleBg()
     if (this.scene.cursors) {
       if (this.scene.monchi) {
         if (this.sideGrav) {

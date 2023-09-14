@@ -1,2 +1,6 @@
 TO DO
 3.pared vertical mapa2
+
+
+
+las vidas se pierden en game.ts

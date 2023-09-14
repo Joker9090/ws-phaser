@@ -26,7 +26,7 @@ export default class LevelMap extends Phaser.Scene {
   planets: Phaser.GameObjects.Sprite[] = [];
   planetSelector!: Phaser.GameObjects.Image;
   selectedPlanetIndex: number = 0;
-  planetsShown: number = 0;
+  planetsShown: number = 3;
   graphic1?: Phaser.GameObjects.Graphics;
   graphic2?: Phaser.GameObjects.Graphics;
   graphic3?: Phaser.GameObjects.Graphics;
@@ -303,7 +303,7 @@ export default class LevelMap extends Phaser.Scene {
     });
 
     this.planetLevel1.on("selected", () => {
-      this.makeTransition("Game", { level: 1, lifes: 3 });
+      this.makeTransition("Game", { level: 3, lifes: 3 });
       //this.scene.start("Game", { level: 1, lifes: 3 });
       this.selectedPlanetIndex = 0;
     });

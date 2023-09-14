@@ -332,7 +332,7 @@ class Mapa2 {
 
     const coinConfig: FloorConfig = {
       texture: "coin",
-      pos: { x: 1000, y:  1355 }, // 500 1580
+      pos: { x: 1000, y: 1355 }, // 500 1580
       scale: { width: 0.15, height: 0.15 },
       width: 10,
       height: 18,
@@ -400,8 +400,9 @@ class Mapa2 {
         this.scene.physics.add.overlap(
           this.scene.monchi,
           this.portal,
-          () => this.scene.win("Congrats! You've finished the tutorial"),
-          () => true,
+          // () => this.scene.win("Congrats! You've finished the tutorial"),
+          () => this.scene.winMapa2()
+          , () => true,
           this.scene
         );
     }

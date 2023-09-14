@@ -3,6 +3,8 @@ import Player from "./assets/Player";
 import Mapa1 from "./maps/Mapa1";
 import Mapa2 from "./maps/Mapa2";
 import Tutorial from "./maps/Tutorial";
+import p2Mapa1 from "./maps/planet2/p2Mapa1";
+
 import MusicManager from "./MusicManager";
 import EventsCenter from "./EventsCenter";
 import UIScene from "./UIScene";
@@ -13,7 +15,7 @@ class Game extends Phaser.Scene {
   EscKeyboard?: Phaser.Input.Keyboard.Key;
   monchi?: Player;
   graphics?: Phaser.GameObjects.Graphics;
-  map?: Mapa1 | Mapa2 | Tutorial;
+  map?: Mapa1 | Mapa2 | Tutorial | p2Mapa1;
   lifes?: number;
   levelIs?: number;
   timeLevel: number = 0;
@@ -120,14 +122,6 @@ class Game extends Phaser.Scene {
       for (let i = 0; i < 25; i++) {
         this.time.delayedCall(10 * i, () =>
           ((rotate) => {
-            // if (i > 0 && i <= 20) {
-            //   console.log(i, "acaaa")
-            //   this.cameras.main.zoom = 1.3;
-            // } else {
-            //   this.cameras.main.zoom = 0.9;
-
-            // }
-            // this.cameras.main.zoom = (Math.sin(3.1415 + (3.1415 * i) / 24) + 1);
             this.cameras.main.setRotation(rotate);
           })(3.1415 + (3.1415 * i) / 24)
         );
@@ -284,6 +278,19 @@ class Game extends Phaser.Scene {
     }
   }
 
+  winMapa2() {
+    if (this.canNextLevel && this.monchi) {
+      this.timeLevel = 0;
+      this.cameraNormal = true;
+      this.checkPoint = 0;
+      EventsCenter.emit("nextLevel", true);
+      this.canWin = false;
+      this.canNextLevel = false;
+      this.makeTransition("Game", { level: 3, lifes: this.lifes });
+      this.UIScene?.scene.restart({ level: 3, lifes: this.lifes, game: this });
+    }
+  }
+
   noFloatTutorial(a: any, b: any) {
     /* Event sender for tutorial */
     [a, b].map((item) => {
@@ -399,6 +406,61 @@ class Game extends Phaser.Scene {
       }
     }
   }
+  // losePlanet2Level1() {
+  //   if (this.lifes) {
+  //     this.lifes -= 1;
+  //     if (this.lifes == 0) {
+  //       this.gameOver();
+  //     } else if (this.lifes > 0 && this.checkPoint == 0 && this.monchi) {
+  //       EventsCenter.emit("die", true);
+  //       this.monchi?.setFlipY(false);
+  //       this.monchi?.setBounceY(0);
+  //       this.gravityDown = true;
+  //       this.monchi?.body?.setOffset(0, 100);
+  //       this.cameras.main.setRotation(0);
+  //       this.monchi?.setGravity(0);
+  //       this.cameraNormal = true;
+  //       if (this.map) this.monchi.x = this.map.startingPoint.x;
+  //       if (this.map) this.monchi.y = this.map.startingPoint.y;
+  //     } else if (
+  //       this.lifes > 0 &&
+  //       this.checkPoint == 1 &&
+  //       this.monchi &&
+  //       this.cameraNormal == false
+  //     ) {
+  //       EventsCenter.emit("die", this.lifes);
+  //       this.monchi.setGravityY(-2000);
+  //       this.time.delayedCall(0, () => {
+  //         this.monchi?.setFlipY(true);
+  //         this.gravityDown = false;
+  //         this.monchi?.body?.setOffset(70, 0);
+  //         this.monchi?.setBounceY(0);
+  //       });
+  //       this.cameraNormal = true;
+  //       this.canRot = true;
+  //       this.rotateCam(0);
+  //       if (this.map) this.monchi.x = this.map.checkPointPos.x;
+  //       if (this.map) this.monchi.y = this.map.checkPointPos.y;
+  //     } else if (
+  //       this.lifes > 0 &&
+  //       this.checkPoint == 1 &&
+  //       this.monchi &&
+  //       this.cameraNormal
+  //     ) {
+  //       EventsCenter.emit("die", this.lifes);
+  //       this.monchi.setGravityY(-2000);
+  //       this.time.delayedCall(0, () => {
+  //         this.monchi?.setFlipY(true);
+  //         this.gravityDown = false;
+  //         this.monchi?.body?.setOffset(70, 0);
+  //         this.monchi?.setBounceY(0);
+  //       });
+  //       this.canRot = true;
+  //       if (this.map) this.monchi.x = this.map.checkPointPos.x;
+  //       if (this.map) this.monchi.y = this.map.checkPointPos.y;
+  //     }
+  //   }
+  // }
   // hitbox el vago en respawn
   loseLevel2() {
     if (this.lifes) {
@@ -465,6 +527,9 @@ class Game extends Phaser.Scene {
       case 2:
         this.map = new Mapa2(this);
         break;
+      case 3:
+        this.map = new p2Mapa1(this, this.monchi!);
+        break;
       default:
         this.map = new Tutorial(this);
         break;
@@ -486,7 +551,7 @@ class Game extends Phaser.Scene {
       getMusicManagerScene.playMusic("songLevel2");
     }
 
-  
+
 
     /* UI SCENE  */
     const UIScene = this.game.scene.getScene("UIScene");

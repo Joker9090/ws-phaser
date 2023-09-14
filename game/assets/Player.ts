@@ -218,6 +218,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         if (!this.isJumping) this.anims.play("monchiMove", true);
       } else {
         this.setVelocityY(0);
+        if (!this.isJumping) this.anims.play("monchiIdle", true);
+
       }
 
       if (left.isDown) {

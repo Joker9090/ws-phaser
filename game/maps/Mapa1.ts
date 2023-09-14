@@ -17,10 +17,15 @@ class Mapa1 {
     width: 10000,
     height: 2500,
   };
+  // normales
   pisos?: Phaser.Physics.Arcade.Group;
+  // de vuelta al inicio
   pisosBack?: Phaser.Physics.Arcade.Group;
+  // float
   pisos2?: Phaser.Physics.Arcade.Group;
+  // rotyate cam
   pisos3?: Phaser.Physics.Arcade.Group;
+  //  no float
   pisos4?: Phaser.Physics.Arcade.Group;
   coin?: Phaser.Physics.Arcade.Group;
   portal?: Phaser.Physics.Arcade.Group;
@@ -228,21 +233,20 @@ class Mapa1 {
   }
 
   createMap(data: { level: number; lifes: number }) {
-
     this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
     this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });
     this.pisos = this.scene.physics.add.group({ allowGravity: false });
     this.pisosBack = this.scene.physics.add.group({ allowGravity: false });
     this.pisos2 = this.scene.physics.add.group({ allowGravity: false });
     this.pisos3 = this.scene.physics.add.group({ allowGravity: false });
+    this.pisos4 = this.scene.physics.add.group({ allowGravity: false });
+    this.amountLifes = data.lifes;
     this.coin = this.scene.physics.add.group({ allowGravity: false });
     this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
     this.portal = this.scene.physics.add.group({ allowGravity: false });
-    this.pisos4 = this.scene.physics.add.group({ allowGravity: false });
-    this.amountLifes = data.lifes;
     const aura = this.scene.add.sprite(500, 1580, "auraTuto").setScale(0.6)
     this.aura.add(aura)
-
+    
     this.scene.tweens.add({
       targets: aura,
       alpha: 0.4,

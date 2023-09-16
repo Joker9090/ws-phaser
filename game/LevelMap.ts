@@ -315,7 +315,7 @@ export default class LevelMap extends Phaser.Scene {
     });
 
     this.sun.on("selected", () => {
-      this.makeTransition("Game", { level: 3, lifes: 3 });
+      this.makeTransition("Game", { level: 6, lifes: 3 });
       //this.scene.start("Game", { level: 3, lifes: 3 });
       this.selectedPlanetIndex = 0;
     });

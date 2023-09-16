@@ -9,13 +9,16 @@ import MusicManager from "./MusicManager";
 import EventsCenter from "./EventsCenter";
 import UIScene from "./UIScene";
 import BetweenScenes, { BetweenScenesStatus } from "./BetweenScenes";
+import p2Mapa2 from "./maps/planet2/p2Mapa2";
+import p2Mapa3 from "./maps/planet2/p2Mapa3";
+import p3Mapa1 from "./maps/planet3/p3Mapa1";
 // Scene in class
 class Game extends Phaser.Scene {
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   EscKeyboard?: Phaser.Input.Keyboard.Key;
   monchi?: Player;
   graphics?: Phaser.GameObjects.Graphics;
-  map?: Mapa1 | Mapa2 | Tutorial | p2Mapa1;
+  map?: Mapa1 | Mapa2 | Tutorial | p2Mapa1 | p2Mapa2 | p2Mapa3 | p3Mapa1;
   lifes?: number;
   levelIs?: number;
   timeLevel: number = 0;
@@ -79,6 +82,7 @@ class Game extends Phaser.Scene {
       return item;
     });
     if (this.monchi) {
+
       this.monchi.setGravityY(-2000);
       this.time.delayedCall(time, () => {
         this.monchi?.setFlipY(true);
@@ -89,7 +93,30 @@ class Game extends Phaser.Scene {
       });
     }
   }
+  floatnRotate(a: any, b: any, time: number) {
+    /* Event sender for tutorial */
+    [a, b].map((item) => {
+      if (item.hasEvent) {
+        if (item.hasEvent == "Show_Tutorial_Text_1") {
+          EventsCenter.emit("float", true);
+          delete item.hasEvent;
+        }
+      }
+      return item;
+    });
+    if (this.monchi) {
+      this.rotateCam(time)
+      this.monchi.setGravityY(-2000);
+      this.time.delayedCall(time, () => {
+        this.monchi?.setFlipY(true);
+        this.gravityDown = false;
+        this.monchi?.body?.setOffset(0, 40);
+        this.monchi?.setBounceY(0);
+        EventsCenter.emit("gravityArrow", "up");
 
+      });
+    }
+  }
   rotateCam(time: number) {
     this.cameraNormal = false;
     if (this.canRot) {
@@ -290,7 +317,42 @@ class Game extends Phaser.Scene {
       this.UIScene?.scene.restart({ level: 3, lifes: this.lifes, game: this });
     }
   }
-
+  winp2Mapa1() {
+    if (this.canNextLevel && this.monchi) {
+      this.timeLevel = 0;
+      this.cameraNormal = true;
+      this.checkPoint = 0;
+      EventsCenter.emit("nextLevel", true);
+      this.canWin = false;
+      this.canNextLevel = false;
+      this.makeTransition("Game", { level: 4, lifes: this.lifes });
+      this.UIScene?.scene.restart({ level: 4, lifes: this.lifes, game: this });
+    }
+  }
+  winp2Mapa2() {
+    if (this.canNextLevel && this.monchi) {
+      this.timeLevel = 0;
+      this.cameraNormal = true;
+      this.checkPoint = 0;
+      EventsCenter.emit("nextLevel", true);
+      this.canWin = false;
+      this.canNextLevel = false;
+      this.makeTransition("Game", { level: 5, lifes: this.lifes });
+      this.UIScene?.scene.restart({ level: 5, lifes: this.lifes, game: this });
+    }
+  }
+  winp2Mapa3() {
+    if (this.canNextLevel && this.monchi) {
+      this.timeLevel = 0;
+      this.cameraNormal = true;
+      this.checkPoint = 0;
+      EventsCenter.emit("nextLevel", true);
+      this.canWin = false;
+      this.canNextLevel = false;
+      this.makeTransition("LevelMap", { data: 1 });
+      this.UIScene?.scene.restart({ level: 6, lifes: this.lifes, game: this });
+    }
+  }
   noFloatTutorial(a: any, b: any) {
     /* Event sender for tutorial */
     [a, b].map((item) => {
@@ -406,61 +468,61 @@ class Game extends Phaser.Scene {
       }
     }
   }
-  // losePlanet2Level1() {
-  //   if (this.lifes) {
-  //     this.lifes -= 1;
-  //     if (this.lifes == 0) {
-  //       this.gameOver();
-  //     } else if (this.lifes > 0 && this.checkPoint == 0 && this.monchi) {
-  //       EventsCenter.emit("die", true);
-  //       this.monchi?.setFlipY(false);
-  //       this.monchi?.setBounceY(0);
-  //       this.gravityDown = true;
-  //       this.monchi?.body?.setOffset(0, 100);
-  //       this.cameras.main.setRotation(0);
-  //       this.monchi?.setGravity(0);
-  //       this.cameraNormal = true;
-  //       if (this.map) this.monchi.x = this.map.startingPoint.x;
-  //       if (this.map) this.monchi.y = this.map.startingPoint.y;
-  //     } else if (
-  //       this.lifes > 0 &&
-  //       this.checkPoint == 1 &&
-  //       this.monchi &&
-  //       this.cameraNormal == false
-  //     ) {
-  //       EventsCenter.emit("die", this.lifes);
-  //       this.monchi.setGravityY(-2000);
-  //       this.time.delayedCall(0, () => {
-  //         this.monchi?.setFlipY(true);
-  //         this.gravityDown = false;
-  //         this.monchi?.body?.setOffset(70, 0);
-  //         this.monchi?.setBounceY(0);
-  //       });
-  //       this.cameraNormal = true;
-  //       this.canRot = true;
-  //       this.rotateCam(0);
-  //       if (this.map) this.monchi.x = this.map.checkPointPos.x;
-  //       if (this.map) this.monchi.y = this.map.checkPointPos.y;
-  //     } else if (
-  //       this.lifes > 0 &&
-  //       this.checkPoint == 1 &&
-  //       this.monchi &&
-  //       this.cameraNormal
-  //     ) {
-  //       EventsCenter.emit("die", this.lifes);
-  //       this.monchi.setGravityY(-2000);
-  //       this.time.delayedCall(0, () => {
-  //         this.monchi?.setFlipY(true);
-  //         this.gravityDown = false;
-  //         this.monchi?.body?.setOffset(70, 0);
-  //         this.monchi?.setBounceY(0);
-  //       });
-  //       this.canRot = true;
-  //       if (this.map) this.monchi.x = this.map.checkPointPos.x;
-  //       if (this.map) this.monchi.y = this.map.checkPointPos.y;
-  //     }
-  //   }
-  // }
+  losePlanet2Level1() {
+    if (this.lifes) {
+      this.lifes -= 1;
+      if (this.lifes == 0) {
+        this.gameOver();
+      } else if (this.lifes > 0 && this.checkPoint == 0 && this.monchi) {
+        EventsCenter.emit("die", true);
+        this.monchi?.setFlipY(false);
+        this.monchi?.setBounceY(0);
+        this.gravityDown = true;
+        this.monchi?.body?.setOffset(0, 100);
+        this.cameras.main.setRotation(0);
+        this.monchi?.setGravity(0);
+        this.cameraNormal = true;
+        if (this.map) this.monchi.x = this.map.startingPoint.x;
+        if (this.map) this.monchi.y = this.map.startingPoint.y;
+      } else if (
+        this.lifes > 0 &&
+        this.checkPoint == 1 &&
+        this.monchi &&
+        this.cameraNormal == false
+      ) {
+        EventsCenter.emit("die", this.lifes);
+        this.monchi.setGravityY(-2000);
+        this.time.delayedCall(0, () => {
+          this.monchi?.setFlipY(true);
+          this.gravityDown = false;
+          this.monchi?.body?.setOffset(70, 0);
+          this.monchi?.setBounceY(0);
+        });
+        this.cameraNormal = true;
+        this.canRot = true;
+        this.rotateCam(0);
+        if (this.map) this.monchi.x = this.map.checkPointPos.x;
+        if (this.map) this.monchi.y = this.map.checkPointPos.y;
+      } else if (
+        this.lifes > 0 &&
+        this.checkPoint == 1 &&
+        this.monchi &&
+        this.cameraNormal
+      ) {
+        EventsCenter.emit("die", this.lifes);
+        this.monchi.setGravityY(-2000);
+        this.time.delayedCall(0, () => {
+          this.monchi?.setFlipY(true);
+          this.gravityDown = false;
+          this.monchi?.body?.setOffset(70, 0);
+          this.monchi?.setBounceY(0);
+        });
+        this.canRot = true;
+        if (this.map) this.monchi.x = this.map.checkPointPos.x;
+        if (this.map) this.monchi.y = this.map.checkPointPos.y;
+      }
+    }
+  }
   // hitbox el vago en respawn
   loseLevel2() {
     if (this.lifes) {
@@ -529,6 +591,15 @@ class Game extends Phaser.Scene {
         break;
       case 3:
         this.map = new p2Mapa1(this, this.monchi!);
+        break;
+      case 4:
+        this.map = new p2Mapa2(this, this.monchi!);
+        break;
+      case 5:
+        this.map = new p2Mapa3(this, this.monchi!);
+        break;
+      case 6:
+        this.map = new p3Mapa1(this, this.monchi!);
         break;
       default:
         this.map = new Tutorial(this);

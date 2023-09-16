@@ -20,6 +20,7 @@ export type FloorConfig = {
   };
   tween?: Partial<FloorTween>;
   friction?: number;
+  rotated?: boolean;
 };
 
 // Scene in class
@@ -41,6 +42,7 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
     const width = config.width ?? 120;
     const height = config.height ?? 108;
     const fix = config.fix ?? 20;
+    const rota = config.rotated ?? false;
     const friction = config.friction ?? 1;
     if (config.scale) {
       this.setScale(config.scale.width, config.scale.height);
@@ -57,8 +59,8 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
     this.group.add(this);
     this.setImmovable(true);
     this.setCollideWorldBounds(true);
-    
-    if(friction) this.setFriction(friction)
+
+    if (friction) this.setFriction(friction)
     if (config.tween) {
       const tween = this.scene.tweens.add({
         ...config.tween,
@@ -67,11 +69,27 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
     }
 
 
+    if (this.body) {
+      const body = this.body as Phaser.Physics.Arcade.Body;
+      body.setImmovable(true);
+      // hitboxes largefloors
+      if (rota) {
+        body.setOffset(-50, -200);
+      } else {
+        body.setOffset(-200, -50);
+      }
 
- 
+      if (rota && body) {
+        body.setSize(height + fix, width);
+        this.setRotation(Math.PI / 2);
+      } else {
+        body.setSize(width + fix, height + fix);
+      }
+    }
+
 
   }
-  
+
 }
 
 export default Floor;

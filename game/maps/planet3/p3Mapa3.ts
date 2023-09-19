@@ -9,7 +9,7 @@ import UIScene from "../../UIScene";
 import EventsCenter from "../../EventsCenter";
 import Player from "@/game/assets/Player";
 // Scene in class
-class p3Mapa1 {
+class p3Mapa3 {
     isJumping = false;
     debugGraphics: Phaser.GameObjects.Graphics;
     scene: Game;
@@ -167,7 +167,7 @@ class p3Mapa1 {
 
         const portalInicioConfig: FloorConfig = {
             texture: "portal",
-            pos: { x: 470, y: 1300 },
+            pos: { x: 390, y: 1300 },
             scale: { width: 0.1, height: 0.1 },
             width: 1000,
             height: 1500,
@@ -179,154 +179,140 @@ class p3Mapa1 {
             this.portalInit
         ).setDepth(1);
 
-        const p1Config: LargeFloorConfig = {
-            textureA: "plataformaLarga",
-            gap: 0,
-            textureB: "plataformaLarga",
-            large: 4,
-            pos: { x: 370, y: 1650 },
-            scale: { width: 0.5, height: 0.7 },
-            rotated: false,
-        };
-        const p1 = new LargeFloor(this.scene, p1Config, this.pisos);
-
-
-        const p2Config: FloorConfig = {
-            texture: "plataformaLarga2",
-            pos: { x: 1430, y: 2050 },
-            scale: { width: 0.5, height: 0.7 },
-            width: 390,
-            height: 50,
-            rotated: false,
-        };
-        const p2 = new Floor(this.scene, p2Config, this.pisos2);
-
-        const p3Config: FloorConfig = {
-            texture: "plataformaLarga2",
-            pos: { x: 1400, y: 450 },
-            scale: { width: 0.5, height: 0.7 },
-            width: 390,
-            height: 50,
-            rotated: false,
-        };
-        const p3 = new Floor(this.scene, p3Config, this.pisos);
-
-        const p4Config: FloorConfig = {
-            texture: "plataformaLarga2",
-            pos: { x: 1800, y: 450 },
-            scale: { width: 0.5, height: 0.7 },
-            width: 390,
-            height: 50,
-            rotated: false,
-        };
-        const p4 = new Floor(this.scene, p4Config, this.pisos);
-        const p5Config: FloorConfig = {
+        const p1Config: FloorConfig = {
             texture: "plataformaB",
-            pos: { x: 2100, y: 450 },
-            scale: { width: 0.5, height: 0.7 },
+            pos: { x: this.startingPoint.x, y: this.startingPoint.y + 120 },
+            scale: { width: 0.7, height: 0.7 },
+            fix: 25,
             width: 140,
             height: 50,
-            rotated: false,
-            tween: {
-                duration: 2000,
-                paused: false,
-                yoyo: true,
-                repeat: -1,
-                y: "+=300",
-            }
-        };
-        const p5 = new Floor(this.scene, p5Config, this.pisos3)
+        }
+        const p1 = new Floor(this.scene, p1Config, this.pisos)
+
+        const p2Config: FloorConfig = {
+            texture: "plataformaB",
+            pos: { x: this.startingPoint.x + 200, y: this.startingPoint.y + 120 },
+            scale: { width: 0.7, height: 0.7 },
+            fix: 25,
+            width: 140,
+            height: 50,
+        }
+        const p2 = new Floor(this.scene, p2Config, this.pisos).setVelocityY(300)
+        this.scene.tweens.add({
+            duration: 3500,
+            paused: false,
+            yoyo: true,
+            repeat: -1,
+            targets: p2.body?.velocity,
+            y: "-=600",
+        })
+
+
+        const p3Config: FloorConfig = {
+            texture: "plataformaB",
+            pos: { x: this.startingPoint.x + 400, y: this.startingPoint.y - 300 },
+            scale: { width: 0.7, height: 0.7 },
+            fix: 25,
+            width: 140,
+            height: 50,
+        }
+        const p3 = new Floor(this.scene, p3Config, this.pisos)
+
+        const p4Config: FloorConfig = {
+            texture: "plataformaB",
+            pos: { x: this.startingPoint.x + 900, y: this.startingPoint.y - 300 },
+            scale: { width: 0.7, height: 0.7 },
+            fix: 25,
+            width: 140,
+            height: 50,
+        }
+        const p4 = new Floor(this.scene, p4Config, this.pisos).setVelocityX(300)
+        this.scene.tweens.add({
+            duration: 3500,
+            paused: false,
+            yoyo: true,
+            repeat: -1,
+            targets: p4.body?.velocity,
+            x: "-=600",
+        })
+
+
+        const p5Config: FloorConfig = {
+            texture: "plataformaB",
+            pos: { x: this.startingPoint.x + 1490, y: this.startingPoint.y - 390 },
+            scale: { width: 0.7, height: 0.7 },
+            fix: 25,
+            width: 140,
+            height: 50,
+        }
+        const p5 = new Floor(this.scene, p5Config, this.pisos).setVelocityY(400)
+        this.scene.tweens.add({
+            duration: 2500,
+            paused: false,
+            yoyo: true,
+            repeat: -1,
+            targets: p5.body?.velocity,
+            y: "-=800",
+        })
         const p6Config: FloorConfig = {
-            texture: "plataformaLarga2",
-            pos: { x: 2300, y: 800 },
-            scale: { width: 0.5, height: 0.7 },
-            width: 340,
-            height: 50,
-            rotated: false,
-
-        };
-        const p6 = new Floor(this.scene, p6Config, this.pisos4)
-
-        // const p7Config: FloorConfig = {
-        //     texture: "plataformaLarga2",
-        //     pos: { x: 2350, y: 1300 },
-        //     scale: { width: 0.5, height: 0.7 },
-        //     width: 340,
-        //     height: 50,
-        //     rotated: false,
-        // };
-        // const p7 = new Floor(this.scene, p7Config, this.pisos)
-
-        const p8Config: LargeFloorConfig = {
-            textureA: "plataformaLarga2",
-            textureB: "plataformaLarga2",
-            large: 3,
-            gap: 0,
-            pos: { x: 2800, y: 1100 },
+            texture: "plataformaB",
+            pos: { x: this.startingPoint.x + 1590, y: this.startingPoint.y + 200 },
             scale: { width: 0.7, height: 0.7 },
-            width: 380,
-            fix: 20,
+            fix: 25,
+            width: 140,
             height: 50,
-            rotated: true,
-        };
-        const p8 = new LargeFloor(this.scene, p8Config, this.pisos)
+        }
+        const p6 = new Floor(this.scene, p6Config, this.pisos).setVelocityX(400)
+        this.scene.tweens.add({
+            duration: 2500,
+            paused: false,
+            yoyo: true,
+            repeat: -1,
+            targets: p6.body?.velocity,
+            x: "-=800",
+        })
 
 
-        const p9Config: LargeFloorConfig = {
-            textureA: "plataformaLarga2",
-            textureB: "plataformaLarga2",
-            large: 3,
-            gap: 0,
-            pos: { x: 1900, y: 800 },
+        const p7Config: FloorConfig = {
+            texture: "plataformaB",
+            pos: { x: this.startingPoint.x + 1990, y: this.startingPoint.y + 300 },
             scale: { width: 0.7, height: 0.7 },
-            width: 380,
-            fix: 20,
+            fix: 25,
+            width: 140,
             height: 50,
-            rotated: true,
-        };
-        const p9 = new LargeFloor(this.scene, p8Config, this.pisos)
-
-
-        const p10Config: LargeFloorConfig = {
-            textureA: "plataformaLarga2",
-            textureB: "plataformaLarga2",
-            large: 3,
-            gap: 0,
-            pos: { x: 2500, y: 400 },
-            scale: { width: 0.7, height: 0.7 },
-            width: 380,
-            fix: 20,
-            height: 50,
-            rotated: true,
-        };
-        const p10 = new LargeFloor(this.scene, p10Config, this.pisos)
-
-        const p11Config: LargeFloorConfig = {
-            textureA: "plataformaLarga2",
-            textureB: "plataformaLarga2",
-            large: 1,
-            gap: 0,
-            pos: { x: 2800, y: 50 },
-            scale: { width: 0.7, height: 0.7 },
-            width: 380,
-            fix: 20,
-            height: 50,
-            rotated: true,
-        };
-        const p11 = new LargeFloor(this.scene, p11Config, this.pisos)
+        }
+        const p7 = new Floor(this.scene, p7Config, this.pisos)
         /* Portal, Coin, Fireball and Asteroids */
+
+        // const fireballConfig: FloorConfig = {
+        //     texture: "fireball",
+        //     pos: { x: this.startingPoint.x + 1300, y: this.startingPoint.y - 120 }, // 500 1580
+        //     scale: { width: 0.2, height: 0.2 },
+        //     width: 200,
+        //     height: 200,
+        //     fix: 250,
+        //     tween: {
+        //         duration: 1800,
+        //         paused: false,
+        //         yoyo: true,
+        //         repeat: -1,
+        //         y: "-=500",
+        //     },
+        // };
+        // const fireball = new Floor(this.scene, fireballConfig, this.fireballGroup)
+        //     .setAngularVelocity(30)
+        // // .setOffset(220, 100);
 
         const portalConfig: FloorConfig = {
             texture: "portal",
-            pos: { x: 2700, y: 10 },
+            pos: { x: this.startingPoint.x + 1990, y: this.startingPoint.y + 100 },
             scale: { width: 0.1, height: 0.1 },
             width: 1000,
             height: 1500,
-            rotated: true
         };
 
         const port = new Floor(this.scene, portalConfig, this.portal)
-            // .setRotation(Math.PI / 2)
+            .setRotation(Math.PI / 2)
             .setSize(1400, 800);
 
         const c1Config: AsteroidGeneratorConfig = {
@@ -356,7 +342,7 @@ class p3Mapa1 {
         c2.start();
         const coinConfig: FloorConfig = {
             texture: "coin",
-            pos: { x: 2300, y: 1100 },
+            pos: { x: 2280, y: 1500 },
             scale: { width: 0.15, height: 0.15 },
             width: 10,
             height: 18,
@@ -391,7 +377,7 @@ class p3Mapa1 {
                 this.scene.physics.add.collider(
                     this.scene.monchi,
                     this.pisos2,
-                    (a, b) => this.scene.float(a, b, 600),
+                    (a, b) => this.scene.float(a, b, 300),
                     () => true,
                     this.scene
                 );
@@ -445,7 +431,7 @@ class p3Mapa1 {
                 this.scene.physics.add.overlap(
                     this.scene.monchi,
                     this.portal,
-                    this.scene.winp3Mapa1,
+                    this.scene.winp3Mapa2,
                     () => true,
                     this.scene
                 );
@@ -453,48 +439,22 @@ class p3Mapa1 {
     }
 
     update() {
-        let firstChange = false;
-        if (this.scene.monchi) {
-            if (
-                this.scene.monchi.x > 2300
-            ) {
-                this.sideGrav = true;
-                firstChange = true;
-            }
-            if (this.sideGrav) {
-                this.scene.physics.world.gravity.y = 0;
-                if (firstChange) {
-                    // hitbox vago de costado
-                    this.scene.monchi
-                        .setRotation(-Math.PI / 2)
-                    // .setSize(300, 200)
-                    // .setOffset(80, 120);
-                    firstChange = false;
-                }
-            }
-        }
-        if (this.scene.monchi) {
-            if (this.scene.monchi.y > 1100) {
-                this.coin?.setVisible(true);
-            }
-        }
-        // this.scaleBg()
-        if (this.scene.cursors) {
-            if (this.scene.monchi) {
-                if (this.sideGrav) {
-                    this.scene.monchi.checkSideGravity(this.scene.cursors);
-                } {
-                    this.scene.monchi.checkMove(this.scene.cursors);
-                }
-                if (this) this.animateBackground(this.scene.monchi);
 
+        if (!this.goingBack) {
+            if (this.scene.monchi && this.scene.cameraNormal) {
+                this.scene.monchi.checkMove(this.scene.cursors);
+            } else if (this.scene.monchi && this.scene.cameraNormal == false) {
+                this.scene.monchi?.checkMoveRot(this.scene.cursors);
             }
+        } else if (this.goingBack) {
+            if (this.scene.monchi)
+                this.scene.monchi.setY(1700 - this.scene.monchi.displayHeight);
         }
+        if (this.scene.monchi) this.animateBackground(this.scene.monchi);
     }
-
 
 }
 
 
 
-export default p3Mapa1;
+export default p3Mapa3;

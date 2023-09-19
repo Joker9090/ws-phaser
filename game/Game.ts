@@ -12,13 +12,15 @@ import BetweenScenes, { BetweenScenesStatus } from "./BetweenScenes";
 import p2Mapa2 from "./maps/planet2/p2Mapa2";
 import p2Mapa3 from "./maps/planet2/p2Mapa3";
 import p3Mapa1 from "./maps/planet3/p3Mapa1";
+import p3Mapa2 from "./maps/planet3/p3Mapa2";
+import p3Mapa3 from "./maps/planet3/p3Mapa3";
 // Scene in class
 class Game extends Phaser.Scene {
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   EscKeyboard?: Phaser.Input.Keyboard.Key;
   monchi?: Player;
   graphics?: Phaser.GameObjects.Graphics;
-  map?: Mapa1 | Mapa2 | Tutorial | p2Mapa1 | p2Mapa2 | p2Mapa3 | p3Mapa1;
+  map?: Mapa1 | Mapa2 | Tutorial | p2Mapa1 | p2Mapa2 | p2Mapa3 | p3Mapa1 | p3Mapa2 | p3Mapa3;
   lifes?: number;
   levelIs?: number;
   timeLevel: number = 0;
@@ -87,7 +89,7 @@ class Game extends Phaser.Scene {
       this.time.delayedCall(time, () => {
         this.monchi?.setFlipY(true);
         this.gravityDown = false;
-        this.monchi?.body?.setOffset(0, 40);
+        this.monchi?.body?.setOffset(0, 70);
         this.monchi?.setBounceY(0);
         EventsCenter.emit("gravityArrow", "up");
       });
@@ -156,7 +158,7 @@ class Game extends Phaser.Scene {
       }
       this.monchi?.setFlipY(false);
       this.gravityDown = true;
-      this.monchi?.body?.setOffset(70, 50);
+      this.monchi?.body?.setOffset(70, 100);
       this.monchi?.setBounceY(0);
     }
   }
@@ -349,8 +351,32 @@ class Game extends Phaser.Scene {
       EventsCenter.emit("nextLevel", true);
       this.canWin = false;
       this.canNextLevel = false;
-      this.makeTransition("LevelMap", { data: 1 });
+      this.makeTransition("Game", { level: 6, lifes: this.lifes });
       this.UIScene?.scene.restart({ level: 6, lifes: this.lifes, game: this });
+    }
+  }
+  winp3Mapa1() {
+    if (this.canNextLevel && this.monchi) {
+      this.timeLevel = 0;
+      this.cameraNormal = true;
+      this.checkPoint = 0;
+      EventsCenter.emit("nextLevel", true);
+      this.canWin = false;
+      this.canNextLevel = false;
+      this.makeTransition("Game", { level: 7, lifes: this.lifes })
+      this.UIScene?.scene.restart({ level: 7, lifes: this.lifes, game: this });
+    }
+  }
+  winp3Mapa2() {
+    if (this.canNextLevel && this.monchi) {
+      this.timeLevel = 0;
+      this.cameraNormal = true;
+      this.checkPoint = 0;
+      EventsCenter.emit("nextLevel", true);
+      this.canWin = false;
+      this.canNextLevel = false;
+      this.makeTransition("Game", { level: 8, lifes: this.lifes })
+      this.UIScene?.scene.restart({ level: 8, lifes: this.lifes, game: this });
     }
   }
   noFloatTutorial(a: any, b: any) {
@@ -601,6 +627,13 @@ class Game extends Phaser.Scene {
       case 6:
         this.map = new p3Mapa1(this, this.monchi!);
         break;
+      case 7:
+        this.map = new p3Mapa2(this, this.monchi!);
+        break;
+      case 8:
+        this.map = new p3Mapa3(this, this.monchi!);
+        break;
+     
       default:
         this.map = new Tutorial(this);
         break;

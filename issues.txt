@@ -1,5 +1,12 @@
 TO DO
-3.pared vertical mapa2
+1.agregar out of world deaths
+2.arreglar respawns levels p2,3 y 4 
+3.agregar graficos nuevos 
+4.playtestear y buscar nuevos errores
+5.arreglar sideGravity en el que corresponda
+6.terminar p3 y sol
+
+
 
 
 

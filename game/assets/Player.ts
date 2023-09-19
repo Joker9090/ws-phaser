@@ -163,14 +163,14 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       if (left.isDown) {
         this.setVelocityX(160);
         this.setFlipX(false);
-        this.setOffset(5, 40);
+        this.setOffset(5, 100);
         console.log("izquierda")
         if (!this.isJumping) this.anims.play("monchiMove", true);
       } else if (right.isDown) {
 
         /* Right*/
         this.setVelocityX(-160);
-        this.body?.setOffset(100, 40);
+        this.body?.setOffset(100, 100);
         this.setFlipX(true);
         console.log("derecha")
         if (!this.isJumping) this.anims.play("monchiMove", true);

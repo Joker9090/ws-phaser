@@ -158,7 +158,7 @@ export default class LevelMap extends Phaser.Scene {
       yoyo: true,
       repeat: -1
     })
-    
+
     this.add.image(this.cameras.main.width - 1700, 360, "nube5").setScale(0.7);
 
     this.sun = this.add
@@ -309,13 +309,13 @@ export default class LevelMap extends Phaser.Scene {
     });
 
     this.planetLevel2.on("selected", () => {
-      this.makeTransition("Game", { level: 2, lifes: 3 });
+      this.makeTransition("Game", { level: 6, lifes: 3 });
       //this.scene.start("Game", { level: 2, lifes: 3 });
       this.selectedPlanetIndex = 0;
     });
 
     this.sun.on("selected", () => {
-      this.makeTransition("Game", { level: 6, lifes: 3 });
+      this.makeTransition("Game", { level: 9, lifes: 3 });
       //this.scene.start("Game", { level: 3, lifes: 3 });
       this.selectedPlanetIndex = 0;
     });

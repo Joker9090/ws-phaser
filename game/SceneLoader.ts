@@ -237,7 +237,7 @@ class SceneLoader extends Phaser.Scene {
   create(this: SceneLoader, { level }: any) {
     // this.scene.start("Sandbox", { data: 1 });
     // this.scene.start("LevelMap", { data: 1 });  
-    this.scene.start("Game", { level: 8, lifes: 3 });
+    this.scene.start("Game", { level: 10, lifes: 3 });
   }
 
   update(this: SceneLoader) {

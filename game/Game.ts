@@ -14,13 +14,20 @@ import p2Mapa3 from "./maps/planet2/p2Mapa3";
 import p3Mapa1 from "./maps/planet3/p3Mapa1";
 import p3Mapa2 from "./maps/planet3/p3Mapa2";
 import p3Mapa3 from "./maps/planet3/p3Mapa3";
+import sMapa1 from "./maps/sun/sMapa1";
+import sMapa2 from "./maps/sun/sMapa2";
+
 // Scene in class
 class Game extends Phaser.Scene {
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   EscKeyboard?: Phaser.Input.Keyboard.Key;
   monchi?: Player;
   graphics?: Phaser.GameObjects.Graphics;
-  map?: Mapa1 | Mapa2 | Tutorial | p2Mapa1 | p2Mapa2 | p2Mapa3 | p3Mapa1 | p3Mapa2 | p3Mapa3;
+  map?:
+    Mapa1 | Mapa2 | Tutorial |
+    p2Mapa1 | p2Mapa2 | p2Mapa3 |
+    p3Mapa1 | p3Mapa2 | p3Mapa3 |
+    sMapa1 | sMapa2;
   lifes?: number;
   levelIs?: number;
   timeLevel: number = 0;
@@ -47,7 +54,7 @@ class Game extends Phaser.Scene {
   }
 
   /* PRELOAD 
-  
+   
   preload(this: Phaser.Scene) {
     this.load.spritesheet("character", "/game/character.png", { frameWidth: 220, frameHeight: 162 });
     this.load.image("background", "/game/background.png");
@@ -379,6 +386,42 @@ class Game extends Phaser.Scene {
       this.UIScene?.scene.restart({ level: 8, lifes: this.lifes, game: this });
     }
   }
+  winp3Mapa3() {
+    if (this.canNextLevel && this.monchi) {
+      this.timeLevel = 0;
+      this.cameraNormal = true;
+      this.checkPoint = 0;
+      EventsCenter.emit("nextLevel", true);
+      this.canWin = false;
+      this.canNextLevel = false;
+      this.makeTransition("Game", { level: 9, lifes: this.lifes })
+      this.UIScene?.scene.restart({ level: 9, lifes: this.lifes, game: this });
+    }
+  }
+  winSMapa1() {
+    if (this.canNextLevel && this.monchi) {
+      this.timeLevel = 0;
+      this.cameraNormal = true;
+      this.checkPoint = 0;
+      EventsCenter.emit("nextLevel", true);
+      this.canWin = false;
+      this.canNextLevel = false;
+      this.makeTransition("Game", { level: 10, lifes: this.lifes })
+      this.UIScene?.scene.restart({ level: 10, lifes: this.lifes, game: this });
+    }
+  }
+  winSMapa2() {
+    if (this.canNextLevel && this.monchi) {
+      this.timeLevel = 0;
+      this.cameraNormal = true;
+      this.checkPoint = 0;
+      EventsCenter.emit("nextLevel", true);
+      this.canWin = false;
+      this.canNextLevel = false;
+      this.makeTransition("Game", { level: 11, lifes: this.lifes })
+      this.UIScene?.scene.restart({ level: 11, lifes: this.lifes, game: this });
+    }
+  }
   noFloatTutorial(a: any, b: any) {
     /* Event sender for tutorial */
     [a, b].map((item) => {
@@ -633,7 +676,12 @@ class Game extends Phaser.Scene {
       case 8:
         this.map = new p3Mapa3(this, this.monchi!);
         break;
-     
+      case 9:
+        this.map = new sMapa1(this, this.monchi!);
+        break;
+      case 10:
+        this.map = new sMapa2(this, this.monchi!);
+        break;
       default:
         this.map = new Tutorial(this);
         break;

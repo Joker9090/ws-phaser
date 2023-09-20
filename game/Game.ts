@@ -16,6 +16,7 @@ import p3Mapa2 from "./maps/planet3/p3Mapa2";
 import p3Mapa3 from "./maps/planet3/p3Mapa3";
 import sMapa1 from "./maps/sun/sMapa1";
 import sMapa2 from "./maps/sun/sMapa2";
+import sMapa3 from "./maps/sun/sMapa3";
 
 // Scene in class
 class Game extends Phaser.Scene {
@@ -27,7 +28,7 @@ class Game extends Phaser.Scene {
     Mapa1 | Mapa2 | Tutorial |
     p2Mapa1 | p2Mapa2 | p2Mapa3 |
     p3Mapa1 | p3Mapa2 | p3Mapa3 |
-    sMapa1 | sMapa2;
+    sMapa1 | sMapa2 | sMapa3;
   lifes?: number;
   levelIs?: number;
   timeLevel: number = 0;
@@ -422,6 +423,19 @@ class Game extends Phaser.Scene {
       this.UIScene?.scene.restart({ level: 11, lifes: this.lifes, game: this });
     }
   }
+
+  winSMapa3() {
+    if (this.canNextLevel && this.monchi) {
+      this.timeLevel = 0;
+      this.cameraNormal = true;
+      this.checkPoint = 0;
+      EventsCenter.emit("nextLevel", true);
+      this.canWin = false;
+      this.canNextLevel = false;
+      this.makeTransition("LevelMap", { data: 1 })
+      this.UIScene?.scene.restart({ level: 11, lifes: this.lifes, game: this });
+    }
+  }
   noFloatTutorial(a: any, b: any) {
     /* Event sender for tutorial */
     [a, b].map((item) => {
@@ -681,6 +695,9 @@ class Game extends Phaser.Scene {
         break;
       case 10:
         this.map = new sMapa2(this, this.monchi!);
+        break;
+      case 11:
+        this.map = new sMapa3(this, this.monchi!);
         break;
       default:
         this.map = new Tutorial(this);

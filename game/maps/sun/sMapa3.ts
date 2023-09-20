@@ -450,7 +450,7 @@ class sMapa3 {
         c2.start();
         const coinConfig: FloorConfig = {
             texture: "coin",
-            pos: { x: this.startingPoint.x + 600, y: this.startingPoint.y + 1300 },
+            pos: { x:this.startingPoint.x + 1680, y: this.startingPoint.y + 1000 },
             scale: { width: 0.15, height: 0.15 },
             width: 10,
             height: 18,
@@ -539,7 +539,7 @@ class sMapa3 {
                 this.scene.physics.add.overlap(
                     this.scene.monchi,
                     this.portal,
-                    this.scene.winSMapa2,
+                    this.scene.winSMapa3,
                     () => true,
                     this.scene
                 );

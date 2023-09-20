@@ -309,11 +309,11 @@ class p2Mapa2 {
 
         const fireball = new Floor(this.scene, fireballConfig, this.fireballGroup)
             .setAngularVelocity(30)
-            // .setOffset(220, 100);
+        // .setOffset(220, 100);
 
         const coinConfig: FloorConfig = {
             texture: "coin",
-            pos: { x: startingPoint.x + 100, y: startingPoint.y - 1420 },
+            pos: { x: this.startingPoint.x + 100, y: this.startingPoint.y - 1420, },
             scale: { width: 0.15, height: 0.15 },
             width: 10,
             height: 18,
@@ -324,7 +324,7 @@ class p2Mapa2 {
 
         const portalConfig: FloorConfig = {
             texture: "portal",
-            pos: {x: startingPoint.x + 1600, y: startingPoint.y - 120 },
+            pos: { x: startingPoint.x + 1600, y: startingPoint.y - 120 },
             scale: { width: 0.1, height: 0.1 },
             width: 1000,
             height: 1500,
@@ -332,7 +332,7 @@ class p2Mapa2 {
 
         const port = new Floor(this.scene, portalConfig, this.portal)
             // .setRotation(Math.PI / 2)
-            .setSize(1400, 800);
+            .setSize(800, 1400);
 
 
 

@@ -152,7 +152,7 @@ class sMapa1 {
         this.fireballGroup = this.scene.physics.add.group({ allowGravity: false });
         this.portalInit = this.scene.physics.add.group({ allowGravity: false });
         this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
-        const aura = this.scene.add.sprite(1000, 1355, "auraTuto").setScale(0.6)
+        const aura = this.scene.add.sprite(this.startingPoint.x + 900, this.startingPoint.y - 1200, "auraTuto").setScale(0.6)
         this.aura.add(aura)
         this.scene.tweens.add({
             targets: aura,
@@ -448,7 +448,7 @@ class sMapa1 {
                 this.scene.physics.add.overlap(
                     this.scene.monchi,
                     this.portal,
-                    this.scene.winp3Mapa2,
+                    this.scene.winSMapa1,
                     () => true,
                     this.scene
                 );

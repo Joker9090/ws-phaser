@@ -381,7 +381,7 @@ class Mapa1 {
       scale: { width: 1, height: 0.8 },
       fix: 25,
       width: 140,
-      height: 90,
+      height: 50,
     };
 
     const p10 = new Floor(this.scene, p10Config, this.pisos);
@@ -392,7 +392,7 @@ class Mapa1 {
       scale: { width: 1, height: 0.8 },
       fix: 25,
       width: 140,
-      height: 90,
+      height: 50,
     };
     const p11 = new Floor(this.scene, p11Config, this.pisos);
 
@@ -402,7 +402,7 @@ class Mapa1 {
       scale: { width: 1, height: 0.8 },
       fix: 25,
       width: 140,
-      height: 90,
+      height: 50,
     };
     const p12 = new Floor(this.scene, p12Config, this.pisos);
     // p13 here

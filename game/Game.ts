@@ -433,7 +433,7 @@ class Game extends Phaser.Scene {
       this.canWin = false;
       this.canNextLevel = false;
       this.makeTransition("LevelMap", { data: 1 })
-      this.UIScene?.scene.restart({ level: 11, lifes: this.lifes, game: this });
+      // this.UIScene?.scene.restart({ level: 11, lifes: this.lifes, game: this });
     }
   }
   noFloatTutorial(a: any, b: any) {

@@ -152,7 +152,7 @@ class sMapa2 {
         this.fireballGroup = this.scene.physics.add.group({ allowGravity: false });
         this.portalInit = this.scene.physics.add.group({ allowGravity: false });
         this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
-        const aura = this.scene.add.sprite(this.startingPoint.x + 1680, this.startingPoint.y + 1000, "auraTuto").setScale(0.6)
+        const aura = this.scene.add.sprite(this.startingPoint.x + 3500,this.startingPoint.y - 760, "auraTuto").setScale(0.6)
         this.aura.add(aura)
         this.scene.tweens.add({
             targets: aura,

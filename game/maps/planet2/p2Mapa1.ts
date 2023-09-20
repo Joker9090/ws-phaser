@@ -149,7 +149,8 @@ class p2Mapa1 {
         this.fireballGroup = this.scene.physics.add.group({ allowGravity: false });
         this.portalInit = this.scene.physics.add.group({ allowGravity: false });
         this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
-        const aura = this.scene.add.sprite(1000, 1355, "auraTuto").setScale(0.6)
+        const aura = this.scene.add.sprite(2300, 1100, "auraTuto").setScale(0.6)
+      
         this.aura.add(aura)
         this.scene.tweens.add({
             targets: aura,
@@ -218,7 +219,7 @@ class p2Mapa1 {
             pos: { x: 1570, y: 1050 },
             scale: { width: 0.8, height: 0.7 },
             width: 385,
-            height: 95,
+            height: 70,
             rotated: false,
         };
         const p4 = new LargeFloor(this.scene, p4Config, this.pisos);
@@ -228,7 +229,7 @@ class p2Mapa1 {
             pos: { x: 2370, y: 1050 },
             scale: { width: 0.8, height: 0.7 },
             width: 385,
-            height: 95,
+            height: 50,
         };
         const p5 = new Floor(this.scene, p5Config, this.pisos);
 
@@ -257,7 +258,7 @@ class p2Mapa1 {
             pos: { x: 3370, y: 1050 },
             scale: { width: 0.8, height: 0.7 },
             width: 385,
-            height: 95,
+            height: 100,
         };
         const p7 = new Floor(this.scene, p7Config, this.pisos);
 
@@ -287,6 +288,12 @@ class p2Mapa1 {
             height: 90,
         };
         const p9 = new LargeFloor(this.scene, p9Config, this.pisos);
+
+
+
+
+        /* Portal, Coin, Fireball and Asteroids */
+
         const fireballConfig: FloorConfig = {
             texture: "fireball",
             pos: { x: 3600, y: 1100 }, // 500 1580
@@ -304,11 +311,7 @@ class p2Mapa1 {
         };
         const fireball = new Floor(this.scene, fireballConfig, this.fireballGroup)
             .setAngularVelocity(30)
-            .setOffset(220, 100);
 
-
-
-        /* Portal, Coin, Fireball and Asteroids */
 
         const portalConfig: FloorConfig = {
             texture: "portal",
@@ -320,7 +323,7 @@ class p2Mapa1 {
 
         const port = new Floor(this.scene, portalConfig, this.portal)
             // .setRotation(Math.PI / 2)
-            .setSize(1400, 800);
+            .setSize(800, 1400);
 
         const c1Config: AsteroidGeneratorConfig = {
             texture: "asteroid",

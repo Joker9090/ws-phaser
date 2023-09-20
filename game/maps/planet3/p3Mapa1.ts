@@ -327,7 +327,7 @@ class p3Mapa1 {
 
         const port = new Floor(this.scene, portalConfig, this.portal)
             // .setRotation(Math.PI / 2)
-            .setSize(1400, 800);
+            .setSize(800, 1400);
 
         const c1Config: AsteroidGeneratorConfig = {
             texture: "asteroid",

@@ -150,7 +150,7 @@ class p2Mapa3 {
         this.fireballGroup = this.scene.physics.add.group({ allowGravity: false });
         this.portalInit = this.scene.physics.add.group({ allowGravity: false });
         this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
-        const aura = this.scene.add.sprite(1000, 1355, "auraTuto").setScale(0.6)
+        const aura = this.scene.add.sprite(2300, 1100, "auraTuto").setScale(0.6)
         this.aura.add(aura)
         this.scene.tweens.add({
             targets: aura,
@@ -182,6 +182,7 @@ class p2Mapa3 {
             pos: { x: this.startingPoint.x, y: this.startingPoint.y + 200 },
             scale: { width: 0.5, height: 0.7 },
             width: 350,
+            height: 50,
             rotated: false,
         }
         const p1 = new Floor(this.scene, p1Config, this.pisos);
@@ -192,6 +193,7 @@ class p2Mapa3 {
             pos: { x: this.startingPoint.x + 240, y: this.startingPoint.y + 40 },
             scale: { width: 0.5, height: 0.7 },
             width: 350,
+            height: 50,
             rotated: false,
         }
         const p2 = new Floor(this.scene, p2Config, this.pisos);
@@ -201,6 +203,7 @@ class p2Mapa3 {
             pos: { x: this.startingPoint.x + 480, y: this.startingPoint.y - 80 },
             scale: { width: 0.5, height: 0.7 },
             width: 350,
+            height: 50,
             rotated: false,
         }
         const p3 = new Floor(this.scene, p3Config, this.pisos);
@@ -213,7 +216,9 @@ class p2Mapa3 {
             height: 30,
             rotated: false,
         }
-        const p4 = new Floor(this.scene, p4Config, this.pisos2);
+        const p4 = new Floor(this.scene, p4Config, this.pisos2).setTint(
+            Phaser.Display.Color.GetColor(255, 101, 0)
+        );;
 
 
         const p5Config: FloorConfig = {
@@ -253,7 +258,10 @@ class p2Mapa3 {
             width: 140,
             height: 30,
         };
-        const p7 = new Floor(this.scene, p7Config, this.pisos4);
+        const p7 = new Floor(this.scene, p7Config, this.pisos4).setTint(
+            Phaser.Display.Color.GetColor(255, 101, 0)
+        );
+
 
 
         const p8Config: LargeFloorConfig = {
@@ -278,7 +286,10 @@ class p2Mapa3 {
             width: 140,
             height: 30,
         };
-        const p9 = new Floor(this.scene, p9Config, this.pisos2);
+        const p9 = new Floor(this.scene, p9Config, this.pisos2).setTint(
+            Phaser.Display.Color.GetColor(255, 101, 0)
+        );
+
 
 
         const p10Config: FloorConfig = {
@@ -304,14 +315,14 @@ class p2Mapa3 {
 
         const portalConfig: FloorConfig = {
             texture: "portal",
-            pos: { x:this.startingPoint.x + 3100,y: this.startingPoint.y - 200 },
+            pos: { x: this.startingPoint.x + 3100, y: this.startingPoint.y - 200 },
             scale: { width: 0.1, height: 0.1 },
             width: 700,
             height: 1500,
         };
 
         const port = new Floor(this.scene, portalConfig, this.portal);
-            // .setRotation(Math.PI / 2);
+        // .setRotation(Math.PI / 2);
 
         const c1Config: AsteroidGeneratorConfig = {
             texture: "asteroid",

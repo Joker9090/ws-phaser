@@ -220,7 +220,7 @@ class p3Mapa3 {
 
         const p4Config: FloorConfig = {
             texture: "plataformaB",
-            pos: { x: this.startingPoint.x + 900, y: this.startingPoint.y - 300 },
+            pos: { x: this.startingPoint.x + 800, y: this.startingPoint.y - 300 },
             scale: { width: 0.7, height: 0.7 },
             fix: 25,
             width: 140,
@@ -228,7 +228,7 @@ class p3Mapa3 {
         }
         const p4 = new Floor(this.scene, p4Config, this.pisos).setVelocityX(300)
         this.scene.tweens.add({
-            duration: 3500,
+            duration: 2300,
             paused: false,
             yoyo: true,
             repeat: -1,
@@ -239,7 +239,7 @@ class p3Mapa3 {
 
         const p5Config: FloorConfig = {
             texture: "plataformaB",
-            pos: { x: this.startingPoint.x + 1490, y: this.startingPoint.y - 390 },
+            pos: { x: this.startingPoint.x + 1290, y: this.startingPoint.y - 150 },
             scale: { width: 0.7, height: 0.7 },
             fix: 25,
             width: 140,
@@ -256,7 +256,7 @@ class p3Mapa3 {
         })
         const p6Config: FloorConfig = {
             texture: "plataformaB",
-            pos: { x: this.startingPoint.x + 1590, y: this.startingPoint.y + 200 },
+            pos: { x: this.startingPoint.x + 1390, y: this.startingPoint.y - 10 },
             scale: { width: 0.7, height: 0.7 },
             fix: 25,
             width: 140,
@@ -275,7 +275,7 @@ class p3Mapa3 {
 
         const p7Config: FloorConfig = {
             texture: "plataformaB",
-            pos: { x: this.startingPoint.x + 1990, y: this.startingPoint.y + 300 },
+            pos: { x: this.startingPoint.x + 1900, y: this.startingPoint.y + 250 },
             scale: { width: 0.7, height: 0.7 },
             fix: 25,
             width: 140,
@@ -342,7 +342,7 @@ class p3Mapa3 {
         c2.start();
         const coinConfig: FloorConfig = {
             texture: "coin",
-            pos: { x: 2280, y: 1500 },
+            pos: { x: 1780, y: 1500 },
             scale: { width: 0.15, height: 0.15 },
             width: 10,
             height: 18,

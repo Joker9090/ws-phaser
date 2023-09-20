@@ -152,7 +152,7 @@ class p3Mapa1 {
         this.fireballGroup = this.scene.physics.add.group({ allowGravity: false });
         this.portalInit = this.scene.physics.add.group({ allowGravity: false });
         this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
-        const aura = this.scene.add.sprite(1000, 1355, "auraTuto").setScale(0.6)
+        const aura = this.scene.add.sprite(2380, 1300, "auraTuto").setScale(0.6)
         this.aura.add(aura)
         this.scene.tweens.add({
             targets: aura,
@@ -381,8 +381,8 @@ class p3Mapa1 {
         };
 
         const port = new Floor(this.scene, portalConfig, this.portal)
-            .setRotation(Math.PI / 2)
-            .setSize(1400, 800);
+            // .setRotation(Math.PI / 2)
+            .setSize(800, 1400);
 
         const c1Config: AsteroidGeneratorConfig = {
             texture: "asteroid",

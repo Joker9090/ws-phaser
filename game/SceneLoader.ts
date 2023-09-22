@@ -169,6 +169,9 @@ const loadAssets = {
 
       ["image", "sol", "/game/lvl3/background/sol.png"],
       ["image", "brilloSol", "/game/lvl3/background/solBrillo.png"],
+      ["image", "plataformaSun", "/game/lvl3/plataforma.png"],
+
+
     ],
 
 
@@ -294,7 +297,7 @@ class SceneLoader extends Phaser.Scene {
   create(this: SceneLoader, { level }: any) {
     // this.scene.start("Sandbox", { data: 1 });
     // this.scene.start("Menu", { data: 1 });  
-    this.scene.start("Game", { level: 9, lifes: 3 });
+    this.scene.start("Game", { level: 11, lifes: 3 });
   }
 
   update(this: SceneLoader) {

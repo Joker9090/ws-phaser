@@ -42,6 +42,10 @@ class sMapa3 {
     background4: Phaser.GameObjects.Image
     background5: Phaser.GameObjects.Image
     background6: Phaser.GameObjects.Image
+    background7: Phaser.GameObjects.Image
+    background8: Phaser.GameObjects.Image
+    background9: Phaser.GameObjects.Image
+    background10: Phaser.GameObjects.Image
     aura?: Phaser.Physics.Arcade.Group;
     UIScene?: UIScene;
     monchi: Player;
@@ -82,25 +86,36 @@ class sMapa3 {
         );
         /* Debug */
 
-
         this.background = this.scene.add
-            .image(this.startingPoint.x, this.startingPoint.y, "newBg1")
+            .image(this.startingPoint.x, this.startingPoint.y, "bgSun1")
             .setOrigin(0.5, 0.5).setScale(1.8);
         this.background2 = this.scene.add
-            .image(this.startingPoint.x, this.startingPoint.y, "newBg2")
+            .image(this.startingPoint.x, this.startingPoint.y, "bgSun2")
             .setOrigin(0.5, 0.5).setScale(1.8);
         this.background3 = this.scene.add
-            .image(this.startingPoint.x, this.startingPoint.y, "newBg3")
+            .image(this.startingPoint.x, this.startingPoint.y, "bgSun3")
             .setOrigin(0.5, 0.5).setScale(1.8);
         this.background4 = this.scene.add
-            .image(this.startingPoint.x, this.startingPoint.y, "newBg4")
+            .image(this.startingPoint.x, this.startingPoint.y, "bgSun4")
             .setOrigin(0.5, 0.5).setScale(1.8);
         this.background5 = this.scene.add
-            .image(this.startingPoint.x, this.startingPoint.y, "newBg5")
-            .setOrigin(0.5, 0.5).setScale(1.8);
+            .image(this.startingPoint.x, this.startingPoint.y, "planetaSun1")
+            .setOrigin(0.5, 0.5).setScale(0.9);
         this.background6 = this.scene.add
-            .image(this.startingPoint.x, this.startingPoint.y, "newBg6")
-            .setOrigin(0.5, 0.5).setScale(1.8);
+            .image(this.startingPoint.x, this.startingPoint.y, "planetaSun2")
+            .setOrigin(0.5, 0.5);
+        this.background7 = this.scene.add
+            .image(this.startingPoint.x, this.startingPoint.y, "planetaSun3")
+            .setOrigin(0.5, 0.5);
+        this.background8 = this.scene.add
+            .image(this.startingPoint.x, this.startingPoint.y, "planetaSun4")
+            .setOrigin(0.5, 0.5).setScale(0.7);
+        this.background9 = this.scene.add
+            .image(this.startingPoint.x, this.startingPoint.y, "sol")
+            .setOrigin(0.5, 0.5).setScale(0.7);
+        this.background10 = this.scene.add
+            .image(this.startingPoint.x, this.startingPoint.y, "brilloSol")
+            .setOrigin(0.5, 0.5).setScale(0.7);
     }
     // scaleBg() {
     //   if (this.scene.cameras.main.displayWidth >= 2000) {
@@ -129,8 +144,13 @@ class sMapa3 {
         this.background2.setPosition(x + calcDiffX, y + calcDiffY);
         this.background3.setPosition(x + calcDiffX, y + calcDiffY);
         this.background4.setPosition(x + calcDiffX, y + calcDiffY);
-        this.background5.setPosition(x + calcDiffX, y + calcDiffY);
-        this.background6.setPosition(x + calcDiffX, y + calcDiffY);
+        this.background5.setPosition(x + calcDiffX - 900, y + calcDiffY + 100);
+        this.background6.setPosition(x + calcDiffX, y + calcDiffY - 300);
+        this.background7.setPosition(x + calcDiffX - 100, y + calcDiffY - 180);
+        this.background8.setPosition(x + calcDiffX + 1000, y + calcDiffY - 200);
+        this.background9.setPosition(x + calcDiffX, y + calcDiffY + 700);
+        this.background10.setPosition(x + calcDiffX, y + calcDiffY + 700);
+
         // this.background7.setPosition(x + calcDiffX, y + calcDiffY);
         // this.background8.setPosition(x + calcDiffX, y + calcDiffY);
     }
@@ -179,74 +199,61 @@ class sMapa3 {
             this.portalInit
         ).setDepth(1);
 
-        const p1Config: LargeFloorConfig = {
-            textureA: "plataformaLarga2",
-            textureB: "plataformaLarga2",
+        const p1Config: FloorConfig = {
+            texture: "plataformaSun",
             pos: { x: this.startingPoint.x, y: this.startingPoint.y + 120 },
             scale: { width: 0.7, height: 0.7 },
             fix: 60,
-            gap: 0,
             width: 350,
             height: 30,
-            large: 1,
         }
-        const p1 = new LargeFloor(this.scene, p1Config, this.pisos)
+        const p1 = new Floor(this.scene, p1Config, this.pisos)
 
-        const p2Config: LargeFloorConfig = {
-            textureA: "plataformaLarga2",
-            textureB: "plataformaLarga2",
+        const p2Config: FloorConfig = {
+            texture: "plataformaSun",
             pos: { x: this.startingPoint.x + 800, y: this.startingPoint.y + 120 },
             scale: { width: 0.7, height: 0.7 },
             fix: 60,
-            gap: 0,
-            width: 400,
-            height: 50,
-            large: 1,
+            width: 50,
+            height: 400,
             rotated: true
         }
-        const p2 = new LargeFloor(this.scene, p2Config, this.pisos)
+        const p2 = new Floor(this.scene, p2Config, this.pisos)
 
-        const p3Config: LargeFloorConfig = {
-            textureA: "plataformaLarga2",
-            textureB: "plataformaLarga2",
+        const p3Config: FloorConfig = {
+            texture: "plataformaSun",
             pos: { x: this.startingPoint.x + 300, y: this.startingPoint.y + 490 },
             scale: { width: 0.7, height: 0.7 },
             fix: 60,
-            gap: 0,
-            width: 400,
-            height: 50,
-            large: 1,
+            width: 50,
+            height: 400,
             rotated: true
         }
-        const p3 = new LargeFloor(this.scene, p3Config, this.pisos)
+        const p3 = new Floor(this.scene, p3Config, this.pisos)
 
-        const p4Config: LargeFloorConfig = {
-            textureA: "plataformaLarga2",
-            textureB: "plataformaLarga2",
+        const p4Config: FloorConfig = {
+            texture: "plataformaSun",
             pos: { x: this.startingPoint.x + 800, y: this.startingPoint.y + 790 },
             scale: { width: 0.7, height: 0.7 },
             fix: 60,
-            gap: 0,
-            width: 400,
-            height: 50,
-            large: 1,
+            width: 50,
+            height: 400,
             rotated: true
         }
-        const p4 = new LargeFloor(this.scene, p4Config, this.pisos)
+        const p4 = new Floor(this.scene, p4Config, this.pisos)
 
-        const p5Config: LargeFloorConfig = {
-            textureA: "plataformaLarga2",
-            textureB: "plataformaLarga2",
+        const p5Config: FloorConfig = {
+            texture: "plataformaSun",
             pos: { x: this.startingPoint.x + 300, y: this.startingPoint.y + 1290 },
             scale: { width: 0.7, height: 0.7 },
             fix: 60,
-            gap: 0,
-            width: 400,
-            height: 50,
-            large: 1,
+
+            width: 50,
+            height: 400,
+
             rotated: true
         }
-        const p5 = new LargeFloor(this.scene, p5Config, this.pisos)
+        const p5 = new Floor(this.scene, p5Config, this.pisos)
 
         const p6Config: LargeFloorConfig = {
             textureA: "plataformaLarga2",
@@ -277,19 +284,16 @@ class sMapa3 {
         const p7 = new LargeFloor(this.scene, p7Config, this.pisos)
 
 
-        const p8Config: LargeFloorConfig = {
-            textureA: "plataformaLarga2",
-            textureB: "plataformaLarga2",
+        const p8Config: FloorConfig = {
+            texture: "plataformaSun",
             pos: { x: this.startingPoint.x + 1880, y: this.startingPoint.y },
             scale: { width: 0.7, height: 0.7 },
             fix: 60,
-            gap: 0,
-            width: 400,
-            height: 50,
-            large: 1,
+            width: 50,
+            height: 400,
             rotated: true
         }
-        const p8 = new LargeFloor(this.scene, p8Config, this.pisos)
+        const p8 = new Floor(this.scene, p8Config, this.pisos)
 
         const p9Config: LargeFloorConfig = {
             textureA: "plataformaLarga2",
@@ -319,19 +323,16 @@ class sMapa3 {
         }
         const p10 = new LargeFloor(this.scene, p10Config, this.pisos)
 
-        const p11Config: LargeFloorConfig = {
-            textureA: "plataformaLarga2",
-            textureB: "plataformaLarga2",
+        const p11Config: FloorConfig = {
+            texture:"plataformaSun",
             pos: { x: this.startingPoint.x + 2990, y: this.startingPoint.y - 300 },
             scale: { width: 0.7, height: 0.7 },
             fix: 60,
-            gap: 0,
-            width: 400,
-            height: 50,
-            large: 1,
+            width: 50,
+            height: 400,
             rotated: true
         }
-        const p11 = new LargeFloor(this.scene, p11Config, this.pisos)
+        const p11 = new Floor(this.scene, p11Config, this.pisos)
 
         /* Portal, Coin, Fireball and Asteroids */
 
@@ -340,8 +341,8 @@ class sMapa3 {
             texture: "fireball",
             pos: { x: this.startingPoint.x + 500, y: this.startingPoint.y + 1400 }, // 500 1580
             scale: { width: 0.2, height: 0.2 },
-            width: 400,
-            height: 400,
+            width: 200,
+            height: 200,
             fix: 250,
             tween: {
                 duration: 1600,
@@ -359,8 +360,8 @@ class sMapa3 {
             texture: "fireball",
             pos: { x: this.startingPoint.x + 1100, y: this.startingPoint.y }, // 500 1580
             scale: { width: 0.2, height: 0.2 },
-            width: 400,
-            height: 400,
+            width: 200,
+            height: 200,
             fix: 250,
             tween: {
                 duration: 1700,
@@ -379,8 +380,8 @@ class sMapa3 {
             texture: "fireball",
             pos: { x: this.startingPoint.x + 1600, y: this.startingPoint.y }, // 500 1580
             scale: { width: 0.2, height: 0.2 },
-            width: 400,
-            height: 400,
+            width: 200,
+            height: 200,
             fix: 250,
             tween: {
                 duration: 1800,
@@ -398,8 +399,8 @@ class sMapa3 {
             texture: "fireball",
             pos: { x: this.startingPoint.x + 2300, y: this.startingPoint.y }, // 500 1580
             scale: { width: 0.2, height: 0.2 },
-            width: 400,
-            height: 400,
+            width: 200,
+            height: 200,
             fix: 250,
             tween: {
                 duration: 1790,

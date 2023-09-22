@@ -325,10 +325,17 @@ class Game extends Phaser.Scene {
       EventsCenter.emit("nextLevel", true);
       this.canWin = false;
       this.canNextLevel = false;
-      if (nextLevel === 3 || nextLevel === 6 || nextLevel === 9) {
-        this.stagePoint = this.stagePoint + 1;
+      if (nextLevel === 3) {
+        this.stagePoint = 1;
         this.makeTransition("LevelMap", { stagePoint: this.stagePoint });
-      } else if (nextLevel === 12) {
+      } else if (nextLevel === 6) {
+        this.stagePoint = 2;
+        this.makeTransition("LevelMap", { stagePoint: this.stagePoint });
+      } else if (nextLevel === 9) {
+        this.stagePoint = 3;
+        this.makeTransition("LevelMap", { stagePoint: this.stagePoint });
+      }
+      else if (nextLevel === 12) {
         this.makeTransition("Won", { stagePoint: this.stagePoint });
       }
       else {

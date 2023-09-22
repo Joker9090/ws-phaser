@@ -86,22 +86,22 @@ class p2Mapa1 {
 
         this.background = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "bg1Lvl1")
-            .setOrigin(0.5, 0.5);
+            .setOrigin(0.5, 0.5).setScale(1.3);
         this.background2 = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "bg2Lvl1")
-            .setOrigin(0.5, 0.5);
+            .setOrigin(0.5, 0.5).setScale(1.3);
         this.background3 = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "bg3Lvl1")
-            .setOrigin(0.5, 0.5);
+            .setOrigin(0.5, 0.5).setScale(1.3);
         this.background4 = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "bg4Lvl1")
-            .setOrigin(0.5, 0.5);
+            .setOrigin(0.5, 0.5).setScale(1.3);
         this.background5 = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "bg5Lvl1")
-            .setOrigin(0.5, 0.5);
+            .setOrigin(0.5, 0.5).setScale(1.3);
         this.background6 = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "bg6Lvl1")
-            .setOrigin(0.5, 0.5);
+            .setOrigin(0.5, 0.5).setScale(1.3);
         this.background7 = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "filtroFondo")
             .setOrigin(0.5, 0.5).setScale(2, 2);
@@ -186,22 +186,21 @@ class p2Mapa1 {
             this.portalInit
         ).setDepth(1);
 
-        const p1Config: LargeFloorConfig = {
-            textureA: "plataformaLarga",
-            textureB: "plataformaLarga",
-            gap: 0,
-            large: 4,
-            pos: { x: 370, y: 1650 },
-            scale: { width: 0.5, height: 0.7 },
+        const p1Config: FloorConfig = {
+            texture: "plataformaLvl1",
+            pos: { x: 570, y: 1650 },
+            scale: { width: 1, height: 0.3 },
             rotated: false,
+            width: 425,
+            height: 245
         };
-        const p1 = new LargeFloor(this.scene, p1Config, this.pisos);
+        const p1 = new Floor(this.scene, p1Config, this.pisos);
 
 
 
         const p2Config: FloorConfig = {
             texture: "plataformaLvl1",
-            pos: { x: 1270, y: 1850 },
+            pos: { x: 1070, y: 1850 },
             scale: { width: 0.3, height: 0.3 },
             width: 425,
             height: 245
@@ -211,7 +210,7 @@ class p2Mapa1 {
 
         const p3Config: FloorConfig = {
             texture: "plataformaLvl1",
-            pos: { x: 1620, y: 2050 },
+            pos: { x: 1420, y: 2050 },
             scale: { width: 0.3, height: 0.3 },
             width: 425,
             height: 245
@@ -220,22 +219,21 @@ class p2Mapa1 {
         const p3 = new Floor(this.scene, p3Config, this.pisos2).setTint(
             Phaser.Display.Color.GetColor(255, 101, 0)
         );
-        const p4Config: LargeFloorConfig = {
-            textureA: "plataformaLarga2",
-            textureB: "plataformaLarga2",
-            large: 2,
-            gap: 0,
+        const p4Config: FloorConfig = {
+            texture: "plataformaLvl1",
             pos: { x: 1570, y: 1050 },
-            scale: { width: 0.8, height: 0.7 },
-            width: 385,
-            height: 70,
+            scale: { width: 0.8, height: 0.5 },
+            width: 455,
+            height: 110,
+            fix: 60,
             rotated: false,
+            inverted: true
         };
-        const p4 = new LargeFloor(this.scene, p4Config, this.pisos);
+        const p4 = new Floor(this.scene, p4Config, this.pisos);
 
         const p5Config: FloorConfig = {
             texture: "plataformaLvl1",
-            pos: { x: 2270, y: 1050 },
+            pos: { x: 1970, y: 1050 },
             scale: { width: 0.3, height: 0.3 },
             width: 425,
             height: 245,
@@ -245,10 +243,10 @@ class p2Mapa1 {
 
         const p6Config: FloorConfig = {
             texture: "plataformaLvl1",
-            pos: { x: 2800, y: 900 }, //3550 700
+            pos: { x: 2600, y: 900 }, //3550 700
             scale: { width: 0.3, height: 0.3 },
             width: 425,
-            height: 245,
+            height: 205,
             inverted: true
         };
         const p6 = new Floor(this.scene, p6Config, this.pisos3).setTint(
@@ -265,7 +263,7 @@ class p2Mapa1 {
 
         const p7Config: FloorConfig = {
             texture: "plataformaLvl1",
-            pos: { x: 3370, y: 1050 },
+            pos: { x: 3170, y: 1050 },
             scale: { width: 0.3, height: 0.3 },
             width: 425,
             height: 245,
@@ -277,7 +275,7 @@ class p2Mapa1 {
 
         const p8Config: FloorConfig = {
             texture: "plataformaLvl1",
-            pos: { x: 3770, y: 850 },
+            pos: { x: 3570, y: 850 },
             scale: { width: 0.3, height: 0.3 },
             width: 425,
             height: 245,
@@ -288,18 +286,17 @@ class p2Mapa1 {
         );
 
 
-        const p9Config: LargeFloorConfig = {
-            textureA: "plataformaLarga2",
-            textureB: "plataformaLarga2",
-            large: 3,
-            gap: 0,
-            pos: { x: 3770, y: 2850 },
+        const p9Config: FloorConfig = {
+            texture: "plataformaLvl1",
+            pos: { x: 3570, y: 2850 },
+            // pos: { x: this.startingPoint.x, y: this.startingPoint.y },
             // pos: { x: this.startingPoint.x - 110, y: this.startingPoint.y - 200 },
-            scale: { width: 0.8, height: 0.7 },
-            width: 390,
+            scale: { width: 0.8, height: 0.8 },
+            fix:130,
+            width: 400,
             height: 90,
         };
-        const p9 = new LargeFloor(this.scene, p9Config, this.pisos);
+        const p9 = new Floor(this.scene, p9Config, this.pisos);
 
 
 

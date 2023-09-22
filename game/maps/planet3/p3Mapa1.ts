@@ -226,21 +226,21 @@ class p3Mapa1 {
             this.portalInit
         ).setDepth(1);
 
-        const p1Config: LargeFloorConfig = {
-            textureA: "plataformaLarga",
-            gap: 0,
-            textureB: "plataformaLarga",
-            large: 4,
-            pos: { x: 370, y: 1650 },
-            scale: { width: 0.5, height: 0.7 },
+        const p1Config: FloorConfig = {
+            pos: { x: 730, y: 1700 },
+            texture: "plataformaLvl2",
+            scale: { width: 1.8, height: 0.7 },
             rotated: false,
+            width: 400,
+            height: 110,
+            // fix: 100
         };
-        const p1 = new LargeFloor(this.scene, p1Config, this.pisos).setDepth(2);
+        const p1 = new Floor(this.scene, p1Config, this.pisos);
 
 
         const p2Config: FloorConfig = {
             texture: "plataformaLvl2",
-            pos: { x: 1430, y: 2050 },
+            pos: { x: 1470, y: 1850 },
             scale: { width: 0.5, height: 0.7 },
             width: 390,
             height: 50,
@@ -310,56 +310,59 @@ class p3Mapa1 {
         // };
         // const p7 = new Floor(this.scene, p7Config, this.pisos)
 
-        const p8Config: LargeFloorConfig = {
-            textureA: "plataformaLarga2",
-            textureB: "plataformaLarga2",
-            large: 3,
-            gap: 0,
-            pos: { x: 2800, y: 1100 },
-            scale: { width: 0.7, height: 0.7 },
-            width: 380,
+        // const p8Config: FloorConfig = {
+        //     pos: { x: 2800, y: 1100 },
+        //     texture: "plataformaLvl2",
+        //     scale: { width: 1.8, height: 0.7 },
+        //     width: 800,
+        //     height: 110,
+        //     rotated: true,
+        // };
+        // const p8 = new Floor(this.scene, p8Config, this.pisos).setDepth(2)
+
+
+        const p9Config: FloorConfig = {
+            texture: "plataformaLvl2",
+            pos: { x: 2700, y: 800 },
+            // pos: { x: this.startingPoint.x, y: this.startingPoint.y - 600 },
+            scale: { width: 0.8, height: 0.7 },
             fix: 20,
-            height: 50,
+            height: 490,
+            width: 110,
             rotated: true,
         };
-        const p8 = new LargeFloor(this.scene, p8Config, this.pisos).setDepth(2)
+        const p9 = new Floor(this.scene, p9Config, this.pisos).setDepth(2)
 
-
-        const p9Config: LargeFloorConfig = {
-            textureA: "plataformaLarga2",
-            textureB: "plataformaLarga2",
-            large: 3,
-            gap: 0,
-            pos: { x: 1900, y: 800 },
-            scale: { width: 0.7, height: 0.7 },
-            width: 380,
+        const p12Config: FloorConfig = {
+            texture: "plataformaLvl2",
+            pos: { x: 2300, y: 1300 },
+            // pos: { x: this.startingPoint.x, y: this.startingPoint.y - 600 },
+            scale: { width: 0.8, height: 0.7 },
             fix: 20,
-            height: 50,
+            height: 110,
+            width: 490,
+            // rotated: true,
+        };
+        const p12 = new Floor(this.scene, p12Config, this.pisos).setDepth(2)
+
+
+        const p10Config: FloorConfig = {
+            texture: "plataformaLvl2",
+            pos: { x: 3200, y: 400 },
+            scale: { width: 0.7, height: 0.7 },
+            width: 50,
+            fix: 20,
+            height: 380,
             rotated: true,
         };
-        const p9 = new LargeFloor(this.scene, p8Config, this.pisos).setDepth(2)
-
-
-        const p10Config: LargeFloorConfig = {
-            textureA: "plataformaLarga2",
-            textureB: "plataformaLarga2",
-            large: 3,
-            gap: 0,
-            pos: { x: 2500, y: 400 },
-            scale: { width: 0.7, height: 0.7 },
-            width: 380,
-            fix: 20,
-            height: 50,
-            rotated: true,
-        };
-        const p10 = new LargeFloor(this.scene, p10Config, this.pisos).setDepth(2)
+        const p10 = new Floor(this.scene, p10Config, this.pisos).setDepth(2)
 
         const p11Config: LargeFloorConfig = {
             textureA: "plataformaLvl2",
             textureB: "plataformaLvl2",
             large: 1,
             gap: 0,
-            pos: { x: 2800, y: 50 },
+            pos: { x: 3400, y: 50 },
             scale: { width: 0.7, height: 0.7 },
             width: 380,
             fix: 20,
@@ -371,7 +374,7 @@ class p3Mapa1 {
 
         const portalConfig: FloorConfig = {
             texture: "portal",
-            pos: { x: 2700, y: 10 },
+            pos: { x: 2900, y: 10 },
             scale: { width: 0.1, height: 0.1 },
             width: 1000,
             height: 1500,
@@ -536,7 +539,10 @@ class p3Mapa1 {
             if (this.scene.monchi) {
                 if (this.sideGrav) {
                     this.scene.monchi.checkSideGravity(this.scene.cursors);
-                } else {
+                } else if (this.scene.monchi && this.scene.cameraNormal == false) {
+                    this.scene.monchi?.checkMoveRot(this.scene.cursors);
+                }
+                else {
                     this.scene.monchi.checkMove(this.scene.cursors);
                 }
                 if (this) this.animateBackground(this.scene.monchi);

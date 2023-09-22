@@ -270,18 +270,15 @@ class p2Mapa3 {
 
 
 
-        const p8Config: LargeFloorConfig = {
-            textureA: "plataformaLarga2",
-            textureB: "plataformaLarga2",
-            large: 2,
-            gap: 0,
-            pos: { x: this.startingPoint.x + 2300, y: this.startingPoint.y + 360 },
+        const p8Config: FloorConfig = {
+            texture:"plataformaLvl1",
+            pos: { x: this.startingPoint.x + 2500, y: this.startingPoint.y + 360 },
             scale: { width: 0.7, height: 0.7 },
-            fix: 25,
+            fix: 170,
             width: 340,
             height: 30,
         };
-        const p8 = new LargeFloor(this.scene, p8Config, this.pisos);
+        const p8 = new Floor(this.scene, p8Config, this.pisos);
 
 
         const p9Config: FloorConfig = {

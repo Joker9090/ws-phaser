@@ -412,7 +412,7 @@ class Mapa1 {
       scale: { width: 0.7, height: 0.7 },
       fix: 25,
       width: 140,
-      height: 90,
+      height: 50,
 
       /*
       tween: {
@@ -459,7 +459,7 @@ class Mapa1 {
 
       fix: 20,
       width: 150,
-      height: 90,
+      height: 50,
       scale: { width: 1, height: 1 },
       tween: {
         duration: 10000,
@@ -483,7 +483,7 @@ class Mapa1 {
 
       fix: 20,
       width: 150,
-      height: 90,
+      height: 50,
       scale: { width: 1, height: 0.7 },
     };
     const p15 = new Floor(this.scene, p15Config, this.pisos);
@@ -494,7 +494,7 @@ class Mapa1 {
       // pos: { x: 500, y: 600 },
       fix: 10,
       width: 170,
-      height: 90,
+      height: 50,
       scale: { width: 1, height: 0.7 },
     };
     const p16 = new Floor(this.scene, p16Config, this.pisos);
@@ -507,7 +507,7 @@ class Mapa1 {
       scale: { width: 1, height: 0.7 },
       fix: 20,
       width: 150,
-      height: 90,
+      height: 50,
       tween: {
         duration: 5000,
         paused: false,
@@ -524,7 +524,7 @@ class Mapa1 {
       // pos: { x: 300, y: 500 },
       fix: 20,
       width: 150,
-      height: 90,
+      height: 50,
       scale: { width: 1, height: 0.7 },
     };
     const p18 = new Floor(this.scene, p18Config, this.pisos);
@@ -535,7 +535,7 @@ class Mapa1 {
       // pos: { x: 300, y: 700 },
       fix: 20,
       width: 150,
-      height: 90,
+      height: 50,
       scale: { width: 1, height: 1 },
     };
     const p19 = new Floor(this.scene, p19Config, this.pisos4).setTint(

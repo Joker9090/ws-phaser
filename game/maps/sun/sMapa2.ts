@@ -42,6 +42,10 @@ class sMapa2 {
     background4: Phaser.GameObjects.Image
     background5: Phaser.GameObjects.Image
     background6: Phaser.GameObjects.Image
+    background7: Phaser.GameObjects.Image
+    background8: Phaser.GameObjects.Image
+    background9: Phaser.GameObjects.Image
+    background10: Phaser.GameObjects.Image
     aura?: Phaser.Physics.Arcade.Group;
     UIScene?: UIScene;
     monchi: Player;
@@ -84,23 +88,35 @@ class sMapa2 {
 
 
         this.background = this.scene.add
-            .image(this.startingPoint.x, this.startingPoint.y, "newBg1")
+            .image(this.startingPoint.x, this.startingPoint.y, "bgSun1")
             .setOrigin(0.5, 0.5).setScale(1.8);
         this.background2 = this.scene.add
-            .image(this.startingPoint.x, this.startingPoint.y, "newBg2")
+            .image(this.startingPoint.x, this.startingPoint.y, "bgSun2")
             .setOrigin(0.5, 0.5).setScale(1.8);
         this.background3 = this.scene.add
-            .image(this.startingPoint.x, this.startingPoint.y, "newBg3")
+            .image(this.startingPoint.x, this.startingPoint.y, "bgSun3")
             .setOrigin(0.5, 0.5).setScale(1.8);
         this.background4 = this.scene.add
-            .image(this.startingPoint.x, this.startingPoint.y, "newBg4")
+            .image(this.startingPoint.x, this.startingPoint.y, "bgSun4")
             .setOrigin(0.5, 0.5).setScale(1.8);
         this.background5 = this.scene.add
-            .image(this.startingPoint.x, this.startingPoint.y, "newBg5")
-            .setOrigin(0.5, 0.5).setScale(1.8);
+            .image(this.startingPoint.x, this.startingPoint.y, "planetaSun1")
+            .setOrigin(0.5, 0.5).setScale(0.9);
         this.background6 = this.scene.add
-            .image(this.startingPoint.x, this.startingPoint.y, "newBg6")
-            .setOrigin(0.5, 0.5).setScale(1.8);
+            .image(this.startingPoint.x, this.startingPoint.y, "planetaSun2")
+            .setOrigin(0.5, 0.5);
+        this.background7 = this.scene.add
+            .image(this.startingPoint.x, this.startingPoint.y, "planetaSun3")
+            .setOrigin(0.5, 0.5);
+        this.background8 = this.scene.add
+            .image(this.startingPoint.x, this.startingPoint.y, "planetaSun4")
+            .setOrigin(0.5, 0.5).setScale(0.7);
+        this.background9 = this.scene.add
+            .image(this.startingPoint.x, this.startingPoint.y, "sol")
+            .setOrigin(0.5, 0.5).setScale(0.7);
+        this.background10 = this.scene.add
+            .image(this.startingPoint.x, this.startingPoint.y, "brilloSol")
+            .setOrigin(0.5, 0.5).setScale(0.7);
     }
     // scaleBg() {
     //   if (this.scene.cameras.main.displayWidth >= 2000) {
@@ -129,8 +145,13 @@ class sMapa2 {
         this.background2.setPosition(x + calcDiffX, y + calcDiffY);
         this.background3.setPosition(x + calcDiffX, y + calcDiffY);
         this.background4.setPosition(x + calcDiffX, y + calcDiffY);
-        this.background5.setPosition(x + calcDiffX, y + calcDiffY);
-        this.background6.setPosition(x + calcDiffX, y + calcDiffY);
+        this.background5.setPosition(x + calcDiffX - 900, y + calcDiffY + 100);
+        this.background6.setPosition(x + calcDiffX, y + calcDiffY - 300);
+        this.background7.setPosition(x + calcDiffX - 100, y + calcDiffY - 180);
+        this.background8.setPosition(x + calcDiffX + 1000, y + calcDiffY - 200);
+        this.background9.setPosition(x + calcDiffX, y + calcDiffY + 700);
+        this.background10.setPosition(x + calcDiffX, y + calcDiffY + 700);
+
         // this.background7.setPosition(x + calcDiffX, y + calcDiffY);
         // this.background8.setPosition(x + calcDiffX, y + calcDiffY);
     }
@@ -152,7 +173,7 @@ class sMapa2 {
         this.fireballGroup = this.scene.physics.add.group({ allowGravity: false });
         this.portalInit = this.scene.physics.add.group({ allowGravity: false });
         this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
-        const aura = this.scene.add.sprite(this.startingPoint.x + 3500,this.startingPoint.y - 760, "auraTuto").setScale(0.6)
+        const aura = this.scene.add.sprite(this.startingPoint.x + 3500, this.startingPoint.y - 760, "auraTuto").setScale(0.6)
         this.aura.add(aura)
         this.scene.tweens.add({
             targets: aura,
@@ -193,11 +214,11 @@ class sMapa2 {
         const p1 = new LargeFloor(this.scene, p1Config, this.pisos)
 
         const p2Config: FloorConfig = {
-            texture: "plataformaA",
+            texture: "plataformaSun",
             pos: { x: this.startingPoint.x + 860, y: this.startingPoint.y + 120 },
             scale: { width: 0.7, height: 0.7 },
-            fix: 25,
-            width: 140,
+            fix: 100,
+            width: 120,
             height: 50,
         }
         const p2 = new Floor(this.scene, p2Config, this.pisos).setVelocityX(-190);
@@ -212,11 +233,11 @@ class sMapa2 {
         })
 
         const p3Config: FloorConfig = {
-            texture: "plataformaA",
+            texture: "plataformaSun",
             pos: { x: this.startingPoint.x + 1260, y: this.startingPoint.y + 120 },
             scale: { width: 0.7, height: 0.7 },
-            fix: 25,
-            width: 140,
+            fix: 100,
+            width: 120,
             height: 50,
         }
         const p3 = new Floor(this.scene, p3Config, this.pisos).setVelocityY(-650);
@@ -448,7 +469,7 @@ class sMapa2 {
                 this.scene.physics.add.overlap(
                     this.scene.monchi,
                     this.portal,
-                  ()=>  this.scene.winLevel(11),
+                    () => this.scene.winLevel(11),
                     () => true,
                     this.scene
                 );

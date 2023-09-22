@@ -17,6 +17,7 @@ export type LargeFloorIslandConfig = {
     height: number,
   },
   large: number,
+  rotated:boolean,
 }
 // Scene in class
 class LargeFloorIsland extends Phaser.GameObjects.Container {
@@ -47,6 +48,7 @@ class LargeFloorIsland extends Phaser.GameObjects.Container {
     if (config.scale) {
       this.setScale(config.scale.width, config.scale.height)
     }
+
     this.setSize((width * config.large), height)
     scene.add.existing(this);
     this.group.add(this)

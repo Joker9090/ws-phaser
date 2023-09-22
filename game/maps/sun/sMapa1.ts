@@ -200,18 +200,16 @@ class sMapa1 {
             this.portalInit
         ).setDepth(1);
 
-        const p1Config: LargeFloorConfig = {
-            textureA: "plataformaLarga2",
-            textureB: "plataformaLarga2",
+        const p1Config: FloorConfig = {
+            texture: "plataformaSun",
             pos: { x: this.startingPoint.x, y: this.startingPoint.y + 120 },
-            scale: { width: 0.7, height: 0.7 },
-            fix: 25,
-            gap: 0,
-            width: 380,
+            scale: { width: 2, height: 0.7 },
+            // fix: 25,
+            width: 420,
             height: 50,
-            large: 4,
+
         }
-        const p1 = new LargeFloor(this.scene, p1Config, this.pisos)
+        const p1 = new Floor(this.scene, p1Config, this.pisos)
 
         const p2Config: LargeFloorConfig = {
             textureA: "plataformaLarga2",

@@ -76,7 +76,7 @@ export default class WonScene extends Phaser.Scene {
       .image(this.cameras.main.displayWidth / 2, this.cameras.main.displayHeight / 2, "newBg6")
       .setOrigin(0.5, 0.5).setScale(1);
     const text1 = this.add
-      .text(0, 0, data.text, { fontSize: "35px" })
+      .text(0, 0, "¡congratulations, you've won!", { fontSize: "35px" })
       .setOrigin(0.5)
       .setScale(1);
     const text2 = this.add

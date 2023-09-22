@@ -208,26 +208,28 @@ class p2Mapa2 {
             this.portalInit
         ).setDepth(1);
 
-        const p1Config: LargeFloorConfig = {
-            textureA: "plataformaLarga",
-            textureB: "plataformaLarga",
-            gap: 0,
-            large: 2,
+        const p1Config: FloorConfig = {
+            texture: "plataformaLvl1",
             pos: { x: startingPoint.x, y: startingPoint.y + 150 },
             scale: { width: 0.5, height: 0.7 },
             rotated: false,
+            width: 400,
+            height: 110,
+            fix:100
         };
-        const p1 = new LargeFloor(this.scene, p1Config, this.pisos);
-        const p2Config: LargeFloorConfig = {
-            textureA: "plataformaLarga",
-            textureB: "plataformaLarga",
-            gap: 0,
-            large: 2,
-            pos: { x: startingPoint.x + 700, y: startingPoint.y - 320 },
-            // scale: { width: 0.5, height: 0.7 },
+        const p1 = new Floor(this.scene, p1Config, this.pisos);
+        const p2Config: FloorConfig = {
+            texture: "plataformaLvl1",
             rotated: true,
+            scale: { width: 0.8, height: 0.7 },
+            width: 120,
+            height: 400,
+            fix:100,
+            // inverted:true,
+            pos: { x: startingPoint.x + 700, y: startingPoint.y - 290 },
+            // scale: { width: 0.5, height: 0.7 },
         };
-        const p2 = new LargeFloor(this.scene, p2Config, this.pisos);
+        const p2 = new Floor(this.scene, p2Config, this.pisos).setFlipY(true);
         const p3Config: FloorConfig = {
             texture: "plataformaLvl1",
             pos: { x: startingPoint.x + 200, y: startingPoint.y - 820 },

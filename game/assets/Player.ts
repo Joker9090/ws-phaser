@@ -143,6 +143,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
       if (up.isDown && this.body && this.body.touching.down) {
         this.jump();
+        EventsCenter.emit('planetShown')
+
         if (this.flipY) {
           this.setVelocityY(-300)
         }
@@ -201,7 +203,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     /* Keywords press */
 
 
+
     if (cursors) {
+      console.log(this.body?.gravity, "cursors")
+      console.log(this.body?.velocity, "cursors velocity")
       const { up, down, left, right } = cursors;
       const velocity = 300;
       this.body?.setSize(300, 250)
@@ -224,6 +229,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
       if (left.isDown) {
         this.setGravityX(-1300);
+        console.log(this.body?.gravity, "left")
+        console.log(this.body?.velocity, "left velocity")
+
         this.setFlipY(true);
         EventsCenter.emit("gravityArrow", "left");
         // this.setOffset(80, 90)

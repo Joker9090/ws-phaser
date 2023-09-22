@@ -191,7 +191,7 @@ class Mapa1 {
         this.scene.physics.add.overlap(
           this.scene.monchi,
           this.portal,
-          this.scene.goNextLevel,
+          () => this.scene.winLevel(2),
           () => true,
           this.scene
         );
@@ -246,7 +246,7 @@ class Mapa1 {
     this.portal = this.scene.physics.add.group({ allowGravity: false });
     const aura = this.scene.add.sprite(500, 1580, "auraTuto").setScale(0.6)
     this.aura.add(aura)
-    
+
     this.scene.tweens.add({
       targets: aura,
       alpha: 0.4,

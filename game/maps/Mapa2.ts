@@ -328,7 +328,7 @@ class Mapa2 {
     };
     const fireball = new Floor(this.scene, fireballConfig, this.fireballGroup)
       .setAngularVelocity(30)
-      .setOffset(220, 100);
+
 
     const coinConfig: FloorConfig = {
       texture: "coin",
@@ -401,7 +401,7 @@ class Mapa2 {
           this.scene.monchi,
           this.portal,
           // () => this.scene.win("Congrats! You've finished the tutorial"),
-          () => this.scene.winMapa2()
+          () => this.scene.winLevel(3)
           , () => true,
           this.scene
         );

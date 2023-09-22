@@ -42,6 +42,10 @@ class sMapa1 {
     background4: Phaser.GameObjects.Image
     background5: Phaser.GameObjects.Image
     background6: Phaser.GameObjects.Image
+    background7: Phaser.GameObjects.Image
+    background8: Phaser.GameObjects.Image
+    background9: Phaser.GameObjects.Image
+    background10: Phaser.GameObjects.Image
     aura?: Phaser.Physics.Arcade.Group;
     UIScene?: UIScene;
     monchi: Player;
@@ -84,23 +88,35 @@ class sMapa1 {
 
 
         this.background = this.scene.add
-            .image(this.startingPoint.x, this.startingPoint.y, "newBg1")
+            .image(this.startingPoint.x, this.startingPoint.y, "bgSun1")
             .setOrigin(0.5, 0.5).setScale(1.8);
         this.background2 = this.scene.add
-            .image(this.startingPoint.x, this.startingPoint.y, "newBg2")
+            .image(this.startingPoint.x, this.startingPoint.y, "bgSun2")
             .setOrigin(0.5, 0.5).setScale(1.8);
         this.background3 = this.scene.add
-            .image(this.startingPoint.x, this.startingPoint.y, "newBg3")
+            .image(this.startingPoint.x, this.startingPoint.y, "bgSun3")
             .setOrigin(0.5, 0.5).setScale(1.8);
         this.background4 = this.scene.add
-            .image(this.startingPoint.x, this.startingPoint.y, "newBg4")
+            .image(this.startingPoint.x, this.startingPoint.y, "bgSun4")
             .setOrigin(0.5, 0.5).setScale(1.8);
         this.background5 = this.scene.add
-            .image(this.startingPoint.x, this.startingPoint.y, "newBg5")
-            .setOrigin(0.5, 0.5).setScale(1.8);
+            .image(this.startingPoint.x, this.startingPoint.y, "planetaSun1")
+            .setOrigin(0.5, 0.5).setScale(0.9);
         this.background6 = this.scene.add
-            .image(this.startingPoint.x, this.startingPoint.y, "newBg6")
-            .setOrigin(0.5, 0.5).setScale(1.8);
+            .image(this.startingPoint.x, this.startingPoint.y, "planetaSun2")
+            .setOrigin(0.5, 0.5);
+        this.background7 = this.scene.add
+            .image(this.startingPoint.x, this.startingPoint.y, "planetaSun3")
+            .setOrigin(0.5, 0.5);
+        this.background8 = this.scene.add
+            .image(this.startingPoint.x, this.startingPoint.y, "planetaSun4")
+            .setOrigin(0.5, 0.5).setScale(0.7);
+        this.background9 = this.scene.add
+            .image(this.startingPoint.x, this.startingPoint.y, "sol")
+            .setOrigin(0.5, 0.5).setScale(0.7);
+        this.background10 = this.scene.add
+            .image(this.startingPoint.x, this.startingPoint.y, "brilloSol")
+            .setOrigin(0.5, 0.5).setScale(0.7);
     }
     // scaleBg() {
     //   if (this.scene.cameras.main.displayWidth >= 2000) {
@@ -129,8 +145,13 @@ class sMapa1 {
         this.background2.setPosition(x + calcDiffX, y + calcDiffY);
         this.background3.setPosition(x + calcDiffX, y + calcDiffY);
         this.background4.setPosition(x + calcDiffX, y + calcDiffY);
-        this.background5.setPosition(x + calcDiffX, y + calcDiffY);
-        this.background6.setPosition(x + calcDiffX, y + calcDiffY);
+        this.background5.setPosition(x + calcDiffX - 900, y + calcDiffY + 100);
+        this.background6.setPosition(x + calcDiffX, y + calcDiffY - 300);
+        this.background7.setPosition(x + calcDiffX - 100, y + calcDiffY - 180);
+        this.background8.setPosition(x + calcDiffX + 1000, y + calcDiffY - 200);
+        this.background9.setPosition(x + calcDiffX, y + calcDiffY + 700);
+        this.background10.setPosition(x + calcDiffX, y + calcDiffY + 700);
+
         // this.background7.setPosition(x + calcDiffX, y + calcDiffY);
         // this.background8.setPosition(x + calcDiffX, y + calcDiffY);
     }
@@ -377,7 +398,7 @@ class sMapa1 {
                 this.scene.physics.add.collider(
                     this.scene.monchi,
                     this.fireballGroup,
-                    () => this.scene.losePlanet2Level1(),
+                    () => this.scene.lose(),
                     () => true,
                     this.scene
                 );
@@ -448,7 +469,7 @@ class sMapa1 {
                 this.scene.physics.add.overlap(
                     this.scene.monchi,
                     this.portal,
-                    this.scene.winSMapa1,
+                    () => this.scene.winLevel(10),
                     () => true,
                     this.scene
                 );

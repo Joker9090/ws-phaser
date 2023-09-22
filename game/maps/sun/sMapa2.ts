@@ -377,7 +377,7 @@ class sMapa2 {
                 this.scene.physics.add.collider(
                     this.scene.monchi,
                     this.fireballGroup,
-                    () => this.scene.losePlanet2Level1(),
+                    () => this.scene.lose(),
                     () => true,
                     this.scene
                 );
@@ -448,7 +448,7 @@ class sMapa2 {
                 this.scene.physics.add.overlap(
                     this.scene.monchi,
                     this.portal,
-                    this.scene.winSMapa2,
+                  ()=>  this.scene.winLevel(11),
                     () => true,
                     this.scene
                 );

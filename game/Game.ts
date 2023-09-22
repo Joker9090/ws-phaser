@@ -42,7 +42,7 @@ class Game extends Phaser.Scene {
   gravityDown: boolean = true;
 
   checkPoint: number = 1;
-
+  stagePoint: any = 0;
   cameraWidth: number = 0;
   cameraHeight: number = 0;
 
@@ -54,6 +54,9 @@ class Game extends Phaser.Scene {
     super({ key: "Game" });
   }
 
+  init(this: Game, { stagePoint }: any) {
+    if (stagePoint != undefined) this.stagePoint = stagePoint
+  }
   /* PRELOAD 
    
   preload(this: Phaser.Scene) {
@@ -203,7 +206,6 @@ class Game extends Phaser.Scene {
       this.canNextLevel = false;
       EventsCenter.emit("gameOver", true);
       this.makeTransition("Game", { level: 1, lifes: this.lifes });
-      //this.scene.restart({ level: 1, lifes: this.lifes });
       this.UIScene?.scene.restart({ level: 1, lifes: this.lifes, game: this });
     }
   }
@@ -315,7 +317,7 @@ class Game extends Phaser.Scene {
     }
   }
 
-  winMapa2() {
+  winLevel(nextLevel: number) {
     if (this.canNextLevel && this.monchi) {
       this.timeLevel = 0;
       this.cameraNormal = true;
@@ -323,117 +325,16 @@ class Game extends Phaser.Scene {
       EventsCenter.emit("nextLevel", true);
       this.canWin = false;
       this.canNextLevel = false;
-      this.makeTransition("Game", { level: 3, lifes: this.lifes });
-      this.UIScene?.scene.restart({ level: 3, lifes: this.lifes, game: this });
-    }
-  }
-  winp2Mapa1() {
-    if (this.canNextLevel && this.monchi) {
-      this.timeLevel = 0;
-      this.cameraNormal = true;
-      this.checkPoint = 0;
-      EventsCenter.emit("nextLevel", true);
-      this.canWin = false;
-      this.canNextLevel = false;
-      this.makeTransition("Game", { level: 4, lifes: this.lifes });
-      this.UIScene?.scene.restart({ level: 4, lifes: this.lifes, game: this });
-    }
-  }
-  winp2Mapa2() {
-    if (this.canNextLevel && this.monchi) {
-      this.timeLevel = 0;
-      this.cameraNormal = true;
-      this.checkPoint = 0;
-      EventsCenter.emit("nextLevel", true);
-      this.canWin = false;
-      this.canNextLevel = false;
-      this.makeTransition("Game", { level: 5, lifes: this.lifes });
-      this.UIScene?.scene.restart({ level: 5, lifes: this.lifes, game: this });
-    }
-  }
-  winp2Mapa3() {
-    if (this.canNextLevel && this.monchi) {
-      this.timeLevel = 0;
-      this.cameraNormal = true;
-      this.checkPoint = 0;
-      EventsCenter.emit("nextLevel", true);
-      this.canWin = false;
-      this.canNextLevel = false;
-      this.makeTransition("Game", { level: 6, lifes: this.lifes });
-      this.UIScene?.scene.restart({ level: 6, lifes: this.lifes, game: this });
-    }
-  }
-  winp3Mapa1() {
-    if (this.canNextLevel && this.monchi) {
-      this.timeLevel = 0;
-      this.cameraNormal = true;
-      this.checkPoint = 0;
-      EventsCenter.emit("nextLevel", true);
-      this.canWin = false;
-      this.canNextLevel = false;
-      this.makeTransition("Game", { level: 7, lifes: this.lifes })
-      this.UIScene?.scene.restart({ level: 7, lifes: this.lifes, game: this });
-    }
-  }
-  winp3Mapa2() {
-    if (this.canNextLevel && this.monchi) {
-      this.timeLevel = 0;
-      this.cameraNormal = true;
-      this.checkPoint = 0;
-      EventsCenter.emit("nextLevel", true);
-      this.canWin = false;
-      this.canNextLevel = false;
-      this.makeTransition("Game", { level: 8, lifes: this.lifes })
-      this.UIScene?.scene.restart({ level: 8, lifes: this.lifes, game: this });
-    }
-  }
-  winp3Mapa3() {
-    if (this.canNextLevel && this.monchi) {
-      this.timeLevel = 0;
-      this.cameraNormal = true;
-      this.checkPoint = 0;
-      EventsCenter.emit("nextLevel", true);
-      this.canWin = false;
-      this.canNextLevel = false;
-      this.makeTransition("Game", { level: 9, lifes: this.lifes })
-      this.UIScene?.scene.restart({ level: 9, lifes: this.lifes, game: this });
-    }
-  }
-  winSMapa1() {
-    if (this.canNextLevel && this.monchi) {
-      this.timeLevel = 0;
-      this.cameraNormal = true;
-      this.checkPoint = 0;
-      EventsCenter.emit("nextLevel", true);
-      this.canWin = false;
-      this.canNextLevel = false;
-      this.makeTransition("Game", { level: 10, lifes: this.lifes })
-      this.UIScene?.scene.restart({ level: 10, lifes: this.lifes, game: this });
-    }
-  }
-  winSMapa2() {
-    if (this.canNextLevel && this.monchi) {
-      this.timeLevel = 0;
-      this.cameraNormal = true;
-      this.checkPoint = 0;
-      EventsCenter.emit("nextLevel", true);
-      this.canWin = false;
-      this.canNextLevel = false;
-      this.makeTransition("Game", { level: 11, lifes: this.lifes })
-      this.UIScene?.scene.restart({ level: 11, lifes: this.lifes, game: this });
-    }
-  }
-
-  winSMapa3() {
-    if (this.canNextLevel && this.monchi) {
-      this.timeLevel = 0;
-      this.cameraNormal = true;
-      this.checkPoint = 0;
-      EventsCenter.emit("nextLevel", true);
-      this.canWin = false;
-      this.canNextLevel = false;
-      this.makeTransition("LevelMap", { data: 1 })
-      // this.UIScene?.scene.restart({ level: 11, lifes: this.lifes, game: this });
+      if (nextLevel === 3 || nextLevel === 6 || nextLevel === 9) {
+        this.stagePoint = this.stagePoint + 1;
+        this.makeTransition("LevelMap", { stagePoint: this.stagePoint });
+      } else if (nextLevel === 12) {
+        this.makeTransition("Won", { stagePoint: this.stagePoint });
+      }
+      else {
+        this.makeTransition("Game", { level: nextLevel, lifes: this.lifes });
+        this.UIScene?.scene.restart({ level: nextLevel, lifes: this.lifes, game: this });
+      }
     }
   }
   noFloatTutorial(a: any, b: any) {
@@ -551,12 +452,12 @@ class Game extends Phaser.Scene {
       }
     }
   }
-  losePlanet2Level1() {
+  lose() {
     if (this.lifes) {
       this.lifes -= 1;
       if (this.lifes == 0) {
         this.gameOver();
-      } else if (this.lifes > 0 && this.checkPoint == 0 && this.monchi) {
+      } else if (this.lifes > 0 && this.monchi) {
         EventsCenter.emit("die", true);
         this.monchi?.setFlipY(false);
         this.monchi?.setBounceY(0);
@@ -567,45 +468,10 @@ class Game extends Phaser.Scene {
         this.cameraNormal = true;
         if (this.map) this.monchi.x = this.map.startingPoint.x;
         if (this.map) this.monchi.y = this.map.startingPoint.y;
-      } else if (
-        this.lifes > 0 &&
-        this.checkPoint == 1 &&
-        this.monchi &&
-        this.cameraNormal == false
-      ) {
-        EventsCenter.emit("die", this.lifes);
-        this.monchi.setGravityY(-2000);
-        this.time.delayedCall(0, () => {
-          this.monchi?.setFlipY(true);
-          this.gravityDown = false;
-          this.monchi?.body?.setOffset(70, 0);
-          this.monchi?.setBounceY(0);
-        });
-        this.cameraNormal = true;
-        this.canRot = true;
-        this.rotateCam(0);
-        if (this.map) this.monchi.x = this.map.checkPointPos.x;
-        if (this.map) this.monchi.y = this.map.checkPointPos.y;
-      } else if (
-        this.lifes > 0 &&
-        this.checkPoint == 1 &&
-        this.monchi &&
-        this.cameraNormal
-      ) {
-        EventsCenter.emit("die", this.lifes);
-        this.monchi.setGravityY(-2000);
-        this.time.delayedCall(0, () => {
-          this.monchi?.setFlipY(true);
-          this.gravityDown = false;
-          this.monchi?.body?.setOffset(70, 0);
-          this.monchi?.setBounceY(0);
-        });
-        this.canRot = true;
-        if (this.map) this.monchi.x = this.map.checkPointPos.x;
-        if (this.map) this.monchi.y = this.map.checkPointPos.y;
       }
     }
   }
+
   // hitbox el vago en respawn
   loseLevel2() {
     if (this.lifes) {
@@ -659,7 +525,7 @@ class Game extends Phaser.Scene {
     }
   }
 
-  create(this: Game, data: { level: number; lifes: number }) {
+  create(this: Game, data: { level: number; lifes: number, stagePoint: number }) {
     this.checkPoint = 0;
     /* CHOSE LEVEL, LIFES AND AUDIO */
     switch (data.level) {
@@ -797,7 +663,7 @@ class Game extends Phaser.Scene {
           this.canNextLevel = false;
           this.canRot = true;
           EventsCenter.emit("gameOver", true);
-          this.makeTransition("LevelMap", {});
+          this.makeTransition("LevelMap", { stagePoint: this.stagePoint });
           if (getMusicManagerScene.music?.key !== "songMenu")
             getMusicManagerScene.stopMusic()
           getMusicManagerScene.playMusic("songMenu")
@@ -807,7 +673,7 @@ class Game extends Phaser.Scene {
   }
 
   update(this: Game) {
-
+    // console.log("aca", this.stagePoint)
     if (this.cameras.main.width < this.cameras.main.height) {
       this.cameras.main.zoom =
         this.cameras.main.width / this.cameras.main.height;

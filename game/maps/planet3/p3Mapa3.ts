@@ -42,6 +42,15 @@ class p3Mapa3 {
     background4: Phaser.GameObjects.Image
     background5: Phaser.GameObjects.Image
     background6: Phaser.GameObjects.Image
+    background7: Phaser.GameObjects.Image
+    background8: Phaser.GameObjects.Image
+    background9: Phaser.GameObjects.Image
+    background10: Phaser.GameObjects.Image
+    background11: Phaser.GameObjects.Image
+    background12: Phaser.GameObjects.Image
+    background13: Phaser.GameObjects.Image
+    background14: Phaser.GameObjects.Image
+    background15: Phaser.GameObjects.Image
     aura?: Phaser.Physics.Arcade.Group;
     UIScene?: UIScene;
     monchi: Player;
@@ -82,25 +91,52 @@ class p3Mapa3 {
         );
         /* Debug */
 
-
         this.background = this.scene.add
-            .image(this.startingPoint.x, this.startingPoint.y, "newBg1")
+            .image(this.startingPoint.x, this.startingPoint.y, "bg")
             .setOrigin(0.5, 0.5).setScale(1.8);
         this.background2 = this.scene.add
-            .image(this.startingPoint.x, this.startingPoint.y, "newBg2")
+            .image(this.startingPoint.x, this.startingPoint.y, "nube1")
             .setOrigin(0.5, 0.5).setScale(1.8);
         this.background3 = this.scene.add
-            .image(this.startingPoint.x, this.startingPoint.y, "newBg3")
+            .image(this.startingPoint.x, this.startingPoint.y, "nube2")
             .setOrigin(0.5, 0.5).setScale(1.8);
         this.background4 = this.scene.add
-            .image(this.startingPoint.x, this.startingPoint.y, "newBg4")
+            .image(this.startingPoint.x, this.startingPoint.y, "nube3")
             .setOrigin(0.5, 0.5).setScale(1.8);
         this.background5 = this.scene.add
-            .image(this.startingPoint.x, this.startingPoint.y, "newBg5")
+            .image(this.startingPoint.x, this.startingPoint.y, "nube4")
             .setOrigin(0.5, 0.5).setScale(1.8);
         this.background6 = this.scene.add
-            .image(this.startingPoint.x, this.startingPoint.y, "newBg6")
+            .image(this.startingPoint.x, this.startingPoint.y, "nube5")
             .setOrigin(0.5, 0.5).setScale(1.8);
+        this.background7 = this.scene.add
+            .image(this.startingPoint.x, this.startingPoint.y, "nube6")
+            .setOrigin(0.5, 0.5).setScale(1.8);
+        this.background8 = this.scene.add
+            .image(this.startingPoint.x, this.startingPoint.y, "nube6")
+            .setOrigin(0.5, 0.5).setScale(1.8);
+        this.background9 = this.scene.add
+            .image(this.startingPoint.x, this.startingPoint.y, "arbol")
+            .setOrigin(0.5, 0.5).setDepth(1).setScale(0.8);
+        this.background10 = this.scene.add
+            .image(this.startingPoint.x, this.startingPoint.y, "arbol2")
+            .setOrigin(0.5, 0.5).setDepth(1).setScale(0.8);
+        this.background11 = this.scene.add
+            .image(this.startingPoint.x, this.startingPoint.y, "pisoLvl2")
+            .setOrigin(0.5, 0.5).setDepth(0);
+
+        this.background12 = this.scene.add
+            .image(this.startingPoint.x, this.startingPoint.y, "starsLvl2")
+            .setOrigin(0.5, 0.5).setDepth(0);
+        this.background13 = this.scene.add
+            .image(this.startingPoint.x, this.startingPoint.y, "stars2Lvl2")
+            .setOrigin(0.5, 0.5).setDepth(0);
+        this.background14 = this.scene.add
+            .image(this.startingPoint.x, this.startingPoint.y, "stars3Lvl2")
+            .setOrigin(0.5, 0.5).setDepth(0);
+        this.background15 = this.scene.add
+            .image(this.startingPoint.x, this.startingPoint.y, "stars4Lvl2")
+            .setOrigin(0.5, 0.5).setDepth(0);
     }
     // scaleBg() {
     //   if (this.scene.cameras.main.displayWidth >= 2000) {
@@ -131,6 +167,16 @@ class p3Mapa3 {
         this.background4.setPosition(x + calcDiffX, y + calcDiffY);
         this.background5.setPosition(x + calcDiffX, y + calcDiffY);
         this.background6.setPosition(x + calcDiffX, y + calcDiffY);
+        this.background7.setPosition(x + calcDiffX, y + calcDiffY);
+        this.background8.setPosition(x + calcDiffX, y + calcDiffY);
+        this.background9.setPosition(x - 700 + calcDiffX, y + calcDiffY + 200);
+        this.background10.setPosition(x - 400 + calcDiffX, y + calcDiffY + 300);
+        this.background11.setPosition(x + calcDiffX - 300, y + calcDiffY + 600);
+        this.background12.setPosition(x + calcDiffX + 200, y + calcDiffY - 200);
+        this.background13.setPosition(x + calcDiffX + 111, y + calcDiffY - 150);
+        this.background14.setPosition(x + calcDiffX + 320, y + calcDiffY);
+
+        // this.background6.setPosition(x + calcDiffX, y + calcDiffY);
         // this.background7.setPosition(x + calcDiffX, y + calcDiffY);
         // this.background8.setPosition(x + calcDiffX, y + calcDiffY);
     }
@@ -152,7 +198,7 @@ class p3Mapa3 {
         this.fireballGroup = this.scene.physics.add.group({ allowGravity: false });
         this.portalInit = this.scene.physics.add.group({ allowGravity: false });
         this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
-        const aura = this.scene.add.sprite(1000, 1355, "auraTuto").setScale(0.6)
+        const aura = this.scene.add.sprite(1680, 1500, "auraTuto").setScale(0.6)
         this.aura.add(aura)
         this.scene.tweens.add({
             targets: aura,
@@ -180,21 +226,21 @@ class p3Mapa3 {
         ).setDepth(1);
 
         const p1Config: FloorConfig = {
-            texture: "plataformaB",
+            texture: "plataformaLvl2",
             pos: { x: this.startingPoint.x, y: this.startingPoint.y + 120 },
-            scale: { width: 0.7, height: 0.7 },
+            scale: { width: 0.3, height: 0.7 },
             fix: 25,
-            width: 140,
+            width: 340,
             height: 50,
         }
         const p1 = new Floor(this.scene, p1Config, this.pisos)
 
         const p2Config: FloorConfig = {
-            texture: "plataformaB",
+            texture: "plataformaLvl2",
             pos: { x: this.startingPoint.x + 200, y: this.startingPoint.y + 120 },
-            scale: { width: 0.7, height: 0.7 },
+            scale: { width: 0.3, height: 0.7 },
             fix: 25,
-            width: 140,
+            width: 340,
             height: 50,
         }
         const p2 = new Floor(this.scene, p2Config, this.pisos).setVelocityY(300)
@@ -209,21 +255,21 @@ class p3Mapa3 {
 
 
         const p3Config: FloorConfig = {
-            texture: "plataformaB",
+            texture: "plataformaLvl2",
             pos: { x: this.startingPoint.x + 400, y: this.startingPoint.y - 300 },
-            scale: { width: 0.7, height: 0.7 },
+            scale: { width: 0.3, height: 0.7 },
             fix: 25,
-            width: 140,
+            width: 340,
             height: 50,
         }
         const p3 = new Floor(this.scene, p3Config, this.pisos)
 
         const p4Config: FloorConfig = {
-            texture: "plataformaB",
+            texture: "plataformaLvl2",
             pos: { x: this.startingPoint.x + 800, y: this.startingPoint.y - 300 },
-            scale: { width: 0.7, height: 0.7 },
+            scale: { width: 0.3, height: 0.7 },
             fix: 25,
-            width: 140,
+            width: 340,
             height: 50,
         }
         const p4 = new Floor(this.scene, p4Config, this.pisos).setVelocityX(300)
@@ -238,11 +284,11 @@ class p3Mapa3 {
 
 
         const p5Config: FloorConfig = {
-            texture: "plataformaB",
+            texture: "plataformaLvl2",
             pos: { x: this.startingPoint.x + 1290, y: this.startingPoint.y - 150 },
-            scale: { width: 0.7, height: 0.7 },
+            scale: { width: 0.3, height: 0.7 },
             fix: 25,
-            width: 140,
+            width: 340,
             height: 50,
         }
         const p5 = new Floor(this.scene, p5Config, this.pisos).setVelocityY(400)
@@ -255,11 +301,11 @@ class p3Mapa3 {
             y: "-=800",
         })
         const p6Config: FloorConfig = {
-            texture: "plataformaB",
-            pos: { x: this.startingPoint.x + 1390, y: this.startingPoint.y - 10 },
-            scale: { width: 0.7, height: 0.7 },
+            texture: "plataformaLvl2",
+            pos: { x: this.startingPoint.x + 1690, y: this.startingPoint.y - 10 },
+            scale: { width: 0.3, height: 0.7 },
             fix: 25,
-            width: 140,
+            width: 340,
             height: 50,
         }
         const p6 = new Floor(this.scene, p6Config, this.pisos).setVelocityX(400)
@@ -274,11 +320,11 @@ class p3Mapa3 {
 
 
         const p7Config: FloorConfig = {
-            texture: "plataformaB",
+            texture: "plataformaLvl2",
             pos: { x: this.startingPoint.x + 1900, y: this.startingPoint.y + 250 },
-            scale: { width: 0.7, height: 0.7 },
+            scale: { width: 0.3, height: 0.7 },
             fix: 25,
-            width: 140,
+            width: 340,
             height: 50,
         }
         const p7 = new Floor(this.scene, p7Config, this.pisos)
@@ -312,8 +358,8 @@ class p3Mapa3 {
         };
 
         const port = new Floor(this.scene, portalConfig, this.portal)
-            .setRotation(Math.PI / 2)
-            .setSize(1400, 800);
+            // .setRotation(Math.PI / 2)
+            .setSize(800, 1400);
 
         const c1Config: AsteroidGeneratorConfig = {
             texture: "asteroid",
@@ -342,7 +388,7 @@ class p3Mapa3 {
         c2.start();
         const coinConfig: FloorConfig = {
             texture: "coin",
-            pos: { x: 1780, y: 1500 },
+            pos: { x: 1680, y: 1500 },
             scale: { width: 0.15, height: 0.15 },
             width: 10,
             height: 18,
@@ -360,7 +406,7 @@ class p3Mapa3 {
                 this.scene.physics.add.collider(
                     this.scene.monchi,
                     this.fireballGroup,
-                    () => this.scene.losePlanet2Level1(),
+                    () => this.scene.lose(),
                     () => true,
                     this.scene
                 );
@@ -431,7 +477,7 @@ class p3Mapa3 {
                 this.scene.physics.add.overlap(
                     this.scene.monchi,
                     this.portal,
-                    this.scene.winp3Mapa2,
+                    () => this.scene.winLevel(9),
                     () => true,
                     this.scene
                 );

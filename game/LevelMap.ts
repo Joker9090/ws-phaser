@@ -26,7 +26,7 @@ export default class LevelMap extends Phaser.Scene {
   planets: Phaser.GameObjects.Sprite[] = [];
   planetSelector!: Phaser.GameObjects.Image;
   selectedPlanetIndex: number = 0;
-  planetsShown: number = 3;
+  planetsShown: number = 0;
   graphic1?: Phaser.GameObjects.Graphics;
   graphic2?: Phaser.GameObjects.Graphics;
   graphic3?: Phaser.GameObjects.Graphics;
@@ -41,8 +41,10 @@ export default class LevelMap extends Phaser.Scene {
     super({ key: "LevelMap" });
   }
 
-  init() {
+  init(this: LevelMap,{ stagePoint }: any) {
     this.cursors = this.input.keyboard?.createCursorKeys();
+    // console.log(stagePoint, "aca");
+    this.planetsShown = stagePoint;
   }
 
   preload() { }
@@ -105,7 +107,13 @@ export default class LevelMap extends Phaser.Scene {
     button.emit("selected");
   }
 
+  setPlanetsShown() {
+
+    console.log(this.planetsShown, "planetas")
+  }
+
   create() {
+    EventsCenter.on("planetShown", this.setPlanetsShown, this)
     /* Controls */
     this.EscKeyboard = this.input.keyboard?.addKey(
       Phaser.Input.Keyboard.KeyCodes.ESC

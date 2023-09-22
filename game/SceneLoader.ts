@@ -99,14 +99,6 @@ const loadAssets = {
       ["image", "uiLifeSection", "/game/uiLifeSection.png"],
       ["image", "uiLifeSectionEmpty", "/game/uiLifeSectionEmpty.png"],
       ["image", "uiGravity", "/game/uiGravityIndicator.png"],
-      ["image", "lvl1bg1", "/game/lvl1bg1.png"],
-      ["image", "lvl1bg2", "/game/lvl1bg2.png"],
-      ["image", "lvl1bg3", "/game/lvl1bg3.png"],
-      ["image", "lvl1bg4", "/game/lvl1bg4.png"],
-      ["image", "lvl1bg5", "/game/lvl1bg5.png"],
-      ["image", "lvl1bg6", "/game/lvl1bg6.png"],
-      ["image", "lvl1bg7", "/game/lvl1bg7.png"],
-      ["image", "lvl1bg8", "/game/lvl1bg8.png"],
 
       ["image", "newBg1", "/game/bg1.png"],
       ["image", "newBg2", "/game/bg2.png"],
@@ -114,7 +106,72 @@ const loadAssets = {
       ["image", "newBg4", "/game/bg4.png"],
       ["image", "newBg5", "/game/bg5.png"],
       ["image", "newBg6", "/game/bg6.png"],
+
+
+      ["image", "bg1Lvl1", "/game/lvl1/background/bg1.png"],
+      ["image", "bg2Lvl1", "/game/lvl1/background/bg2.png"],
+      ["image", "bg3Lvl1", "/game/lvl1/background/bg3.png"],
+      ["image", "bg4Lvl1", "/game/lvl1/background/bg4.png"],
+      ["image", "bg5Lvl1", "/game/lvl1/background/bg5.png"],
+      ["image", "bg6Lvl1", "/game/lvl1/background/bg6.png"],
+      ["image", "bg7Lvl1", "/game/lvl1/background/bg7.png"],
+
+      ["image", "filtroFondo", "/game/lvl1/background/filtroFondo.png"],
+      ["image", "newBg6", "/game/lvl1/background/filtroPiso.png"],
+      ["image", "texturaPiso", "/game/lvl1/background/texturaPiso.png"],
+      ["image", "piedras", "/game/lvl1/background/piedras.png"],
+
+
+      ["image", "plataformaLvl1", "/game/lvl1/plataformas/plataforma.png"],
+      ["image", "plataformaInicioLvl1", "/game/lvl1/plataformas/plataformaFin.png"],
+      ["image", "plataformaMedioLvl1", "/game/lvl1/plataformas/plataformaInicio.png"],
+      ["image", "plataformaFinLvl1", "/game/lvl1/plataformas/plataformaMedio.png"],
+
+
+      ["image", "piedra1", "/game/lvl1/plataformas/plataformaMedio.png"],
+      ["image", "piedra2", "/game/lvl1/plataformas/plataformaMedio.png"],
+      ["image", "piedra3", "/game/lvl1/plataformas/plataformaMedio.png"],
+
+      // planeta2
+      ["image", "bg", "/game/lvl2/background/bg.png"],
+      ["image", "nube1", "/game/lvl2/background/nube1.png"],
+      ["image", "nube2", "/game/lvl2/background/nube2.png"],
+      ["image", "nube3", "/game/lvl2/background/nube3.png"],
+      ["image", "nube4", "/game/lvl2/background/nube4.png"],
+      ["image", "nube5", "/game/lvl2/background/nube5.png"],
+      ["image", "nube6", "/game/lvl2/background/nube6.png"],
+      ["image", "arbol", "/game/lvl2/background/arbol.png"],
+      ["image", "arbol2", "/game/lvl2/background/arbol2.png"],
+      ["image", "pisoLvl2", "/game/lvl2/background/piso_2.png"],
+      ["image", "plataformaLvl2", "/game/lvl2/plataforma/plataforma.png"],
+
+      ["image", "plataformaInicioLvl2", "/game/lvl2/plataforma/plataformaInicio.png"],
+      ["image", "plataformaMedioLvl2", "/game/lvl2/plataforma/plataformaMedio.png"],
+      ["image", "plataformaFinLvl2", "/game/lvl2/plataforma/plataformaFin.png"],
+
+      ["image", "starsLvl2", "/game/lvl2/background/stars.png"],
+      ["image", "stars2Lvl2", "/game/lvl2/background/stars2.png"],
+      ["image", "stars3Lvl2", "/game/lvl2/background/stars3.png"],
+      ["image", "stars4Lvl2", "/game/lvl2/background/stars4.png"],
+
+      // sun
+
+      ["image", "bgSun1", "/game/lvl3/background/bg1.png"],
+      ["image", "bgSun2", "/game/lvl3/background/bg2.png"],
+      ["image", "bgSun3", "/game/lvl3/background/bg3.png"],
+      ["image", "bgSun4", "/game/lvl3/background/bg4.png"],
+      ["image", "bgSun5", "/game/lvl3/background/bg5.png"],
+
+      ["image", "planetaSun1", "/game/lvl3/background/planet1.png"],
+      ["image", "planetaSun2", "/game/lvl3/background/planet2.png"],
+      ["image", "planetaSun3", "/game/lvl3/background/planet3.png"],
+      ["image", "planetaSun4", "/game/lvl3/background/planet4.png"],
+
+      ["image", "sol", "/game/lvl3/background/sol.png"],
+      ["image", "brilloSol", "/game/lvl3/background/solBrillo.png"],
     ],
+
+
   },
 
   Tutorial: {
@@ -237,7 +294,7 @@ class SceneLoader extends Phaser.Scene {
   create(this: SceneLoader, { level }: any) {
     // this.scene.start("Sandbox", { data: 1 });
     // this.scene.start("Menu", { data: 1 });  
-    this.scene.start("Game", { level: 11, lifes: 3 });
+    this.scene.start("Game", { level: 9, lifes: 3 });
   }
 
   update(this: SceneLoader) {

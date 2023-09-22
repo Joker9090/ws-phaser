@@ -1,21 +1,8 @@
 TO DO
-1.agregar out of world deaths
-2.arreglar respawns levels nuevos
-5.arreglar sideGravity en el que corresponda
-7.modificar levelMap para que cambie planetas mostrados 
-12.portal p2 mapa1,mapa2  no llevas al siguiente nivel
-
-
-
-
-
-planeta3
-13.sidegravity mapa1
-15.portal mapa3 te lleva al mismo nivel
-
+1.agregar out of world deaths (revisar)
+7.modificar levelMap para que cambie planetas mostrados (terminar el evento planetShown)
 
 
 
 3.agregar graficos nuevos 
-9.offset fireballs 
-las vidas se pierden en game.ts
+

@@ -21,6 +21,7 @@ export type FloorConfig = {
   tween?: Partial<FloorTween>;
   friction?: number;
   rotated?: boolean;
+  inverted?: boolean
 };
 
 // Scene in class
@@ -43,6 +44,7 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
     const height = config.height ?? 108;
     const fix = config.fix ?? 20;
     const rota = config.rotated ?? false;
+    const invrt = config.inverted ?? false
     const friction = config.friction ?? 1;
     if (config.scale) {
       this.setScale(config.scale.width, config.scale.height);
@@ -82,6 +84,13 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
       if (rota && body) {
         body.setSize(height + fix, width);
         this.setRotation(Math.PI / 2);
+      } else {
+        body.setSize(width + fix, height + fix);
+      }
+
+      if (invrt && body) {
+        // body.setSize(height, width);
+        this.setRotation(Math.PI );
       } else {
         body.setSize(width + fix, height + fix);
       }

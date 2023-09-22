@@ -255,7 +255,7 @@ class Tutorial {
     };
     const fireball = new Floor(this.scene, fireballConfig, this.fireballGroup)
       .setAngularVelocity(30)
-      .setOffset(220, 100);
+      // .setOffset(220, 100);
 
     const coinConfig: FloorConfig = {
       texture: "coin",

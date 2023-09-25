@@ -132,7 +132,7 @@ class p2Mapa1 {
         const calcDiffY = (y2 - y - this.scene.cameras.main.displayHeight / 6) / 1;
         this.background.setPosition(x + calcDiffX, y + calcDiffY);
         this.background2.setPosition(x + calcDiffX, y + calcDiffY);
-        this.background3.setPosition(x + calcDiffX +600, y + calcDiffY).setScale(0.7);
+        this.background3.setPosition(x + calcDiffX + 600, y + calcDiffY).setScale(0.7);
         this.background4.setPosition(x + calcDiffX - 500, y + calcDiffY).setScale(0.7);
         this.background5.setPosition(x + calcDiffX, y + calcDiffY).setDepth(2);
         this.background6.setPosition(x + calcDiffX - 800, y + calcDiffY).setDepth(3);
@@ -186,15 +186,21 @@ class p2Mapa1 {
             this.portalInit
         ).setDepth(1);
 
-        const p1Config: FloorConfig = {
-            texture: "plataformaLvl1",
-            pos: { x: 570, y: 1650 },
-            scale: { width: 1, height: 0.3 },
+        const p1Config: LargeFloorConfig = {
+            pos: { x: 370, y: 1650 },
+            textureA: "plataformaInicioLvl1",
+            textureB: "plataformaMedioLvl1",
+            textureC: "plataformaFinLvl1",
+            scale: { width: 0.5, height: 0.5 },
             rotated: false,
-            width: 425,
-            height: 245
+            width: 234,
+            height: 246,
+            gap: -320,
+            fix: 0,
+            large: 4,
+            planeta: 2
         };
-        const p1 = new Floor(this.scene, p1Config, this.pisos);
+        const p1 = new LargeFloor(this.scene, p1Config, this.pisos).setDepth(9);
 
 
 
@@ -219,17 +225,24 @@ class p2Mapa1 {
         const p3 = new Floor(this.scene, p3Config, this.pisos2).setTint(
             Phaser.Display.Color.GetColor(255, 101, 0)
         );
-        const p4Config: FloorConfig = {
-            texture: "plataformaLvl1",
-            pos: { x: 1570, y: 1050 },
-            scale: { width: 0.8, height: 0.5 },
-            width: 455,
-            height: 110,
-            fix: 60,
+
+
+        const p4Config: LargeFloorConfig = {
+            pos: { x: 1270, y: 870 },
+            textureA: "plataformaInicioLvl1",
+            textureB: "plataformaMedioLvl1",
+            textureC: "plataformaFinLvl1",
+            scale: { width: 0.5, height: 0.5 },
             rotated: false,
-            inverted: true
+            width: 234,
+            height: 246,
+            gap: -320,
+            fix: 0,
+            large: 3,
+            planeta: 2,
+           
         };
-        const p4 = new Floor(this.scene, p4Config, this.pisos);
+        const p4 = new LargeFloor(this.scene, p4Config, this.pisos);
 
         const p5Config: FloorConfig = {
             texture: "plataformaLvl1",
@@ -334,7 +347,7 @@ class p2Mapa1 {
             // .setRotation(Math.PI / 2)
             .setSize(800, 1400);
 
-    
+
         const coinConfig: FloorConfig = {
             texture: "cristalLvl1",
             // pos: { x: 2300, y: 1100 },

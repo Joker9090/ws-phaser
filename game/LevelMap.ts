@@ -26,7 +26,7 @@ export default class LevelMap extends Phaser.Scene {
   planets: Phaser.GameObjects.Sprite[] = [];
   planetSelector!: Phaser.GameObjects.Image;
   selectedPlanetIndex: number = 0;
-  planetsShown: number = 0;
+  planetsShown: number = 2;
   graphic1?: Phaser.GameObjects.Graphics;
   graphic2?: Phaser.GameObjects.Graphics;
   graphic3?: Phaser.GameObjects.Graphics;
@@ -41,7 +41,7 @@ export default class LevelMap extends Phaser.Scene {
     super({ key: "LevelMap" });
   }
 
-  init(this: LevelMap,{ stagePoint }: any) {
+  init(this: LevelMap, { stagePoint }: any) {
     this.cursors = this.input.keyboard?.createCursorKeys();
     // console.log(stagePoint, "aca");
     this.planetsShown = stagePoint;
@@ -169,19 +169,7 @@ export default class LevelMap extends Phaser.Scene {
 
     this.add.image(this.cameras.main.width - 1700, 360, "nube5").setScale(0.7);
 
-    this.sun = this.add
-      .sprite(width - width / 8, height - height / 4.7, "sun")
-      .setScale(0.08)
-      .setTint(Phaser.Display.Color.GetColor(5, 5, 5));
-    this.sunText = this.add
-      .text(
-        this.sun.x,
-        this.sun.y + this.sun.displayHeight / 1.5,
-        "COMING SOON"
-      )
-      .setOrigin(0.5)
-      .setScale(1.2)
-      .setVisible(true);
+
 
     this.planetLevel2 = this.add
       .sprite(width - width / 2.8, height - height / 2.8, "lvl2", 1)
@@ -207,11 +195,31 @@ export default class LevelMap extends Phaser.Scene {
       )
       .setOrigin(0.5)
       .setScale(1.2)
-      .setVisible(true)
+      .setVisible(true);
 
-      ;
+    this.sun = this.add
+      .sprite(width - width / 12, height - height / 9.7, "sun")
+      .setScale(2.5)
+      .setTint(Phaser.Display.Color.GetColor(5, 5, 5));
+    const sunFrames = this.anims.generateFrameNumbers("sun", { frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39] });
+    const sunConfig = {
+      key: "sun",
+      frames: sunFrames,
+      frameRate: 12,
+      repeat: -1,
+    };
+    this.anims.create(sunConfig);
+    this.sun.anims.play("sun");
 
-
+    this.sunText = this.add
+      .text(
+        this.sun.x,
+        this.sun.y + this.sun.displayHeight / 1.5,
+        "COMING SOON"
+      )
+      .setOrigin(0.5)
+      .setScale(1.2)
+      .setVisible(true);
     this.planetLevel1 = this.add
       .sprite(width - width / 1.7, height - height / 1.77, "lvl1", 1)
       .setScale(1.3)
@@ -267,7 +275,7 @@ export default class LevelMap extends Phaser.Scene {
     this.monchi = this.add
       .sprite(width + 100, 150, "character", 20)
       .setScale(0.5)
-      .setDepth(9);
+      .setDepth(99);
     if (this.planetsShown == 0) {
       this.planets = [this.planetTutorial];
     } else if (this.planetsShown == 1) {

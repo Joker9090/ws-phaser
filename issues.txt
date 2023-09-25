@@ -1,8 +1,5 @@
 TO DO
 1.agregar out of world deaths (revisar)
-7.modificar levelMap para que cambie planetas mostrados (terminar el evento planetShown)
+2.agregar plataformas largas
 
-
-
-3.agregar graficos nuevos 
-
+pedirle las correcciones a flor

@@ -140,7 +140,7 @@ class sMapa1 {
         const { x, y } = this.startingPoint;
         const { x: x2, y: y2 } = player;
         const calcDiffX = (x2 - x) / 1//mas grande menos movimiento
-        const calcDiffY = (y2 - y - this.scene.cameras.main.displayHeight / 6) / 1;
+        const calcDiffY = (y2 - y - this.scene.cameras.main.displayHeight / 6) ;
         this.background.setPosition(x + calcDiffX, y + calcDiffY);
         this.background2.setPosition(x + calcDiffX, y + calcDiffY);
         this.background3.setPosition(x + calcDiffX, y + calcDiffY);

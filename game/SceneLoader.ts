@@ -51,10 +51,10 @@ const loadAssets = {
   LevelMap: {
     assets: [
       ["image", "backgroundLevelMap", "/game/backgroundLevelMap.png"],
-      ["image", "sun", "/game/sun.png"],
-      ["image", "planetTutorial", "/game/planetTutorialSprite.png"],
-      ["image", "planetLevel1", "/game/planetlvl1.png"],
-      ["image", "planetLevel2", "/game/planetlvl2.png"],
+      // ["image", "sun", "/game/sun.png"],
+      // ["image", "planetTutorial", "/game/planetTutorialSprite.png"],
+      // ["image", "planetLevel1", "/game/planetlvl1.png"],
+      // ["image", "planetLevel2", "/game/planetlvl2.png"],
       [
         "spritesheet",
         "tutorial",
@@ -71,6 +71,12 @@ const loadAssets = {
         "spritesheet",
         "lvl2",
         "/game/lvl2.png",
+        { frameWidth: 150, frameHeight: 150 },
+      ],
+      [
+        "spritesheet",
+        "sun",
+        "/game/sun.png",
         { frameWidth: 150, frameHeight: 150 },
       ],
     ],
@@ -123,9 +129,9 @@ const loadAssets = {
       ["image", "cristalLvl1", "/game/lvl1/cristalLvl1.png"],
 
       ["image", "plataformaLvl1", "/game/lvl1/plataformas/plataforma.png"],
-      ["image", "plataformaInicioLvl1", "/game/lvl1/plataformas/plataformaFin.png"],
-      ["image", "plataformaMedioLvl1", "/game/lvl1/plataformas/plataformaInicio.png"],
-      ["image", "plataformaFinLvl1", "/game/lvl1/plataformas/plataformaMedio.png"],
+      ["image", "plataformaInicioLvl1", "/game/lvl1/plataformas/plataformaInicio.png"],
+      ["image", "plataformaMedioLvl1", "/game/lvl1/plataformas/plataformaMedio.png"],
+      ["image", "plataformaFinLvl1", "/game/lvl1/plataformas/plataformaFin.png"],
 
 
       ["image", "piedra1", "/game/lvl1/plataformas/plataformaMedio.png"],
@@ -298,8 +304,8 @@ class SceneLoader extends Phaser.Scene {
 
   create(this: SceneLoader, { level }: any) {
     // this.scene.start("Sandbox", { data: 1 });
-    this.scene.start("Credits", { data: 1 });  
-    // this.scene.start("Game", { level: 0, lifes: 3 });
+    // this.scene.start("Menu", { data: 1 });
+    this.scene.start("Game", { level: 3, lifes: 3 });
   }
 
   update(this: SceneLoader) {

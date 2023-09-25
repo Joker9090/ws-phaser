@@ -643,6 +643,8 @@ class Game extends Phaser.Scene {
             this.loseLevel2();
           } else if (data.level == 0) {
             this.loseLevelTutorial();
+          } else {
+            this.lose()
           }
         }
       },

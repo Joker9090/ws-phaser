@@ -86,22 +86,22 @@ class p2Mapa1 {
 
         this.background = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "bg1Lvl1")
-            .setOrigin(0.5, 0.5).setScale(1.3);
+            .setOrigin(0.5, 0.5);
         this.background2 = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "bg2Lvl1")
-            .setOrigin(0.5, 0.5).setScale(1.3);
+            .setOrigin(0.5, 0.5);
         this.background3 = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "bg3Lvl1")
-            .setOrigin(0.5, 0.5).setScale(1.3);
+            .setOrigin(0.5, 0.5);
         this.background4 = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "bg4Lvl1")
-            .setOrigin(0.5, 0.5).setScale(1.3);
+            .setOrigin(0.5, 0.5);
         this.background5 = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "bg5Lvl1")
-            .setOrigin(0.5, 0.5).setScale(1.3);
+            .setOrigin(0.5, 0.5);
         this.background6 = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "bg6Lvl1")
-            .setOrigin(0.5, 0.5).setScale(1.3);
+            .setOrigin(0.5, 0.5);
         this.background7 = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "filtroFondo")
             .setOrigin(0.5, 0.5).setScale(2, 2);
@@ -130,13 +130,13 @@ class p2Mapa1 {
         const { x: x2, y: y2 } = player;
         const calcDiffX = (x2 - x) / 1//mas grande menos movimiento
         const calcDiffY = (y2 - y - this.scene.cameras.main.displayHeight / 6) / 1;
-        this.background.setPosition(x + calcDiffX, y + calcDiffY + 300);
-        this.background2.setPosition(x + calcDiffX, y + calcDiffY + 300);
-        this.background3.setPosition(x + calcDiffX, y + calcDiffY + 300);
-        this.background4.setPosition(x + calcDiffX, y + calcDiffY + 300);
-        this.background5.setPosition(x + calcDiffX, y + calcDiffY + 300);
-        this.background6.setPosition(x + calcDiffX, y + calcDiffY + 300);
-        this.background7.setPosition(x + calcDiffX, y + calcDiffY + 300);
+        this.background.setPosition(x + calcDiffX, y + calcDiffY);
+        this.background2.setPosition(x + calcDiffX, y + calcDiffY);
+        this.background3.setPosition(x + calcDiffX +600, y + calcDiffY).setScale(0.7);
+        this.background4.setPosition(x + calcDiffX - 500, y + calcDiffY).setScale(0.7);
+        this.background5.setPosition(x + calcDiffX, y + calcDiffY).setDepth(2);
+        this.background6.setPosition(x + calcDiffX - 800, y + calcDiffY).setDepth(3);
+        this.background7.setPosition(x + calcDiffX, y + calcDiffY).setDepth(4);
 
 
         // this.background7.setPosition(x + calcDiffX, y + calcDiffY);
@@ -158,7 +158,7 @@ class p2Mapa1 {
         this.fireballGroup = this.scene.physics.add.group({ allowGravity: false });
         this.portalInit = this.scene.physics.add.group({ allowGravity: false });
         this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
-        const aura = this.scene.add.sprite(2970, 1100, "auraTuto").setScale(0.6)
+        const aura = this.scene.add.sprite(2970, 1100, "auraLvl1").setScale(0.6)
 
         this.aura.add(aura)
         this.scene.tweens.add({
@@ -292,7 +292,7 @@ class p2Mapa1 {
             // pos: { x: this.startingPoint.x, y: this.startingPoint.y },
             // pos: { x: this.startingPoint.x - 110, y: this.startingPoint.y - 200 },
             scale: { width: 0.8, height: 0.8 },
-            fix:130,
+            fix: 130,
             width: 400,
             height: 90,
         };
@@ -334,33 +334,9 @@ class p2Mapa1 {
             // .setRotation(Math.PI / 2)
             .setSize(800, 1400);
 
-        const c1Config: AsteroidGeneratorConfig = {
-            texture: "asteroid",
-            x: -100,
-            y: 150 + 1700,
-            delayed: 100,
-            direction: 0,
-            velocity: 100,
-            scale: 0.7,
-            depth: 1,
-        };
-        const c1 = new AsteroidGenerator(this.scene, c1Config);
-        c1.start();
-
-        const c2Config: AsteroidGeneratorConfig = {
-            texture: "asteroid2",
-            x: 3000,
-            y: 150 + 800,
-            delayed: 100,
-            direction: 1,
-            velocity: 100,
-            scale: 0.5,
-            depth: 1,
-        };
-        const c2 = new AsteroidGenerator(this.scene, c2Config);
-        c2.start();
+    
         const coinConfig: FloorConfig = {
-            texture: "coin",
+            texture: "cristalLvl1",
             // pos: { x: 2300, y: 1100 },
             pos: { x: 2970, y: 1100 },
             scale: { width: 0.15, height: 0.15 },

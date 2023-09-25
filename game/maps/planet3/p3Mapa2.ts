@@ -197,7 +197,7 @@ class p3Mapa1 {
         this.fireballGroup = this.scene.physics.add.group({ allowGravity: false });
         this.portalInit = this.scene.physics.add.group({ allowGravity: false });
         this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
-        const aura = this.scene.add.sprite(2380, 1300, "auraTuto").setScale(0.6)
+        const aura = this.scene.add.sprite(2380, 1300, "auraLvl2").setScale(0.6)
         this.aura.add(aura)
         this.scene.tweens.add({
             targets: aura,

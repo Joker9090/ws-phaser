@@ -82,17 +82,18 @@ class p2Mapa2 {
         const { x: x2, y: y2 } = player;
         const calcDiffX = (x2 - x) / 1//mas grande menos movimiento
         const calcDiffY = (y2 - y - this.scene.cameras.main.displayHeight / 6) / 1;
-        this.background.setPosition(x + calcDiffX, y + calcDiffY + 300);
-        this.background2.setPosition(x + calcDiffX, y + calcDiffY + 300);
-        this.background3.setPosition(x + calcDiffX, y + calcDiffY + 300);
-        this.background4.setPosition(x + calcDiffX, y + calcDiffY + 300);
-        this.background5.setPosition(x + calcDiffX, y + calcDiffY + 300);
-        this.background6.setPosition(x + calcDiffX, y + calcDiffY + 300);
-        this.background7.setPosition(x + calcDiffX, y + calcDiffY + 300);
+        this.background.setPosition(x + calcDiffX, y + calcDiffY);
+        this.background2.setPosition(x + calcDiffX, y + calcDiffY);
+        this.background3.setPosition(x + calcDiffX +600, y + calcDiffY).setScale(0.7);
+        this.background4.setPosition(x + calcDiffX - 500, y + calcDiffY).setScale(0.7);
+        this.background5.setPosition(x + calcDiffX, y + calcDiffY).setDepth(2);
+        this.background6.setPosition(x + calcDiffX - 800, y + calcDiffY).setDepth(3);
+        this.background7.setPosition(x + calcDiffX, y + calcDiffY).setDepth(4);
+
+
         // this.background7.setPosition(x + calcDiffX, y + calcDiffY);
         // this.background8.setPosition(x + calcDiffX, y + calcDiffY);
     }
-
 
     addColliders() {
         if (this.scene.monchi) {
@@ -181,7 +182,7 @@ class p2Mapa2 {
         this.fireballGroup = this.scene.physics.add.group({ allowGravity: false });
         this.portalInit = this.scene.physics.add.group({ allowGravity: false });
         this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
-        const aura = this.scene.add.sprite(this.startingPoint.x + 100, this.startingPoint.y - 1420, "auraTuto").setScale(0.6)
+        const aura = this.scene.add.sprite(this.startingPoint.x + 100, this.startingPoint.y - 1420, "auralvl1").setScale(0.6)
         this.aura.add(aura)
         this.scene.tweens.add({
             targets: aura,
@@ -215,7 +216,7 @@ class p2Mapa2 {
             rotated: false,
             width: 400,
             height: 110,
-            fix:100
+            fix: 100
         };
         const p1 = new Floor(this.scene, p1Config, this.pisos);
         const p2Config: FloorConfig = {
@@ -224,7 +225,7 @@ class p2Mapa2 {
             scale: { width: 0.8, height: 0.7 },
             width: 120,
             height: 400,
-            fix:100,
+            fix: 100,
             // inverted:true,
             pos: { x: startingPoint.x + 700, y: startingPoint.y - 290 },
             // scale: { width: 0.5, height: 0.7 },
@@ -312,7 +313,7 @@ class p2Mapa2 {
         // .setOffset(220, 100);
 
         const coinConfig: FloorConfig = {
-            texture: "coin",
+            texture: "cristal",
             pos: { x: this.startingPoint.x + 100, y: this.startingPoint.y - 1420, },
             scale: { width: 0.15, height: 0.15 },
             width: 10,

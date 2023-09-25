@@ -115,12 +115,12 @@ const loadAssets = {
       ["image", "bg5Lvl1", "/game/lvl1/background/bg5.png"],
       ["image", "bg6Lvl1", "/game/lvl1/background/bg6.png"],
       ["image", "bg7Lvl1", "/game/lvl1/background/bg7.png"],
-
       ["image", "filtroFondo", "/game/lvl1/background/filtroFondo.png"],
-      ["image", "newBg6", "/game/lvl1/background/filtroPiso.png"],
+      ["image", "filtroPiso", "/game/lvl1/background/filtroPiso.png"],
       ["image", "texturaPiso", "/game/lvl1/background/texturaPiso.png"],
       ["image", "piedras", "/game/lvl1/background/piedras.png"],
-
+      ["image", "auraLvl1", "/game/lvl1/auraCristalLvl1.png"],
+      ["image", "cristalLvl1", "/game/lvl1/cristalLvl1.png"],
 
       ["image", "plataformaLvl1", "/game/lvl1/plataformas/plataforma.png"],
       ["image", "plataformaInicioLvl1", "/game/lvl1/plataformas/plataformaFin.png"],
@@ -144,6 +144,8 @@ const loadAssets = {
       ["image", "arbol2", "/game/lvl2/background/arbol2.png"],
       ["image", "pisoLvl2", "/game/lvl2/background/piso_2.png"],
       ["image", "plataformaLvl2", "/game/lvl2/plataforma/plataforma.png"],
+      ["image", "auraLvl2", "/game/lvl2/auraCristalLvl2.png"],
+      ["image", "cristalLvl2", "/game/lvl2/cristalLvl2.png"],
 
       ["image", "plataformaInicioLvl2", "/game/lvl2/plataforma/plataformaInicio.png"],
       ["image", "plataformaMedioLvl2", "/game/lvl2/plataforma/plataformaMedio.png"],
@@ -296,8 +298,8 @@ class SceneLoader extends Phaser.Scene {
 
   create(this: SceneLoader, { level }: any) {
     // this.scene.start("Sandbox", { data: 1 });
-    // this.scene.start("Menu", { data: 1 });  
-    this.scene.start("Game", { level: 11, lifes: 3 });
+    this.scene.start("Credits", { data: 1 });  
+    // this.scene.start("Game", { level: 0, lifes: 3 });
   }
 
   update(this: SceneLoader) {

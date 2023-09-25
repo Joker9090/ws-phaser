@@ -10,6 +10,8 @@ export default class Credits extends Phaser.Scene {
   picture1?: Phaser.GameObjects.Container;
   picture2?: Phaser.GameObjects.Container;
   picture3?: Phaser.GameObjects.Container;
+  picture4?: Phaser.GameObjects.Container;
+
   spaceship?: Phaser.GameObjects.Image;
   /* controls */
   EscKeyboard?: Phaser.Input.Keyboard.Key;
@@ -17,6 +19,7 @@ export default class Credits extends Phaser.Scene {
   personTextBox1?: TextBox;
   personTextBox2?: TextBox;
   personTextBox3?: TextBox;
+  personTextBox4?: TextBox;
   background?: Phaser.GameObjects.Image;
   background2?: Phaser.GameObjects.Image;
   background3?: Phaser.GameObjects.Image;
@@ -57,6 +60,8 @@ export default class Credits extends Phaser.Scene {
     this.load.image("ari", "game/ari.png");
     this.load.image("flor", "game/flor.png");
     this.load.image("barto", "game/barto.png");
+    this.load.image("J", "game/J.png");
+
     this.load.image("textBox", "game/textBox.png");
   }
 
@@ -148,54 +153,77 @@ export default class Credits extends Phaser.Scene {
       "ari",
       "pictureBox",
       0.15
-    ).setDepth(99);
+    ).setDepth(99).setScale(0.5);
     this.picture2 = new PictureCredits(
       this,
-      width / 2,
+      width / 2.5,
       (height * 1.5) / 4,
       "flor",
       "pictureBox",
-      0.15
-    ).setDepth(99);
+      0.15,
+    ).setDepth(99).setScale(0.5);
     this.picture3 = new PictureCredits(
       this,
-      (width * 4) / 5,
+      width / 1.7,
       (height * 1.5) / 4,
       "barto",
       "pictureBox",
-      0.15
-    ).setDepth(99);
+      0.15,
+      { x: -15, y: 0 }
+    ).setDepth(99).setScale(0.5);
+
+    this.picture4 = new PictureCredits(
+      this,
+      (width * 4) / 5,
+      (height * 1.5) / 4,
+      "J",
+      "pictureBox",
+      0.15,
+      { x: -15, y: 0 }
+    ).setDepth(99).setScale(0.5);
+
 
     this.personTextBox1 = new TextBox(
       this,
-      width / 5,
-      (height * 3) / 4,
+      width / 5.1,
+      (height * 3) / 4.5,
       "textBox",
       400
     )
       .setDepth(99)
-      .setVisible(true);
+      .setVisible(true).setScale(0.5);
     this.personTextBox1.setTextBox("Nano - Developer");
     this.personTextBox2 = new TextBox(
       this,
-      width / 2,
-      (height * 3) / 4,
+      width / 2.5,
+      (height * 3) / 4.5,
       "textBox",
       400
     )
       .setDepth(99)
-      .setVisible(true);
+      .setVisible(true).setScale(0.5);
     this.personTextBox2.setTextBox("Flor - Graphics Designer");
     this.personTextBox3 = new TextBox(
       this,
-      (width * 4) / 5,
-      (height * 3) / 4,
+      (width * 4) / 6.8,
+      (height * 3) / 4.5,
       "textBox",
       400
     )
       .setDepth(99)
-      .setVisible(true);
+      .setVisible(true).setScale(0.5);
     this.personTextBox3.setTextBox("???? - Developer");
+
+    this.personTextBox4 = new TextBox(
+      this,
+      (width * 4) / 5,
+      (height * 3) / 4.5,
+      "textBox",
+      400
+    )
+      .setDepth(99)
+      .setVisible(true).setScale(0.5);
+    this.personTextBox4.setTextBox("J - Developer");
 
     this.physics.world.setBounds(0, 0, 5000, 2500);
     this.add
@@ -219,6 +247,41 @@ export default class Credits extends Phaser.Scene {
       .setRotation(0)
       .setScale(0.5)
       .setAlpha(0.5);
+
+    this.tweens.add({
+      targets: this.picture1,
+      y: "-=10",
+      duration: 2000,
+      repeat: -1,
+      yoyo: true,
+      delay: 150,
+      // ease: 'back.in'
+    });
+    this.tweens.add({
+      targets: this.picture2,
+      y: "-=10",
+      duration: 2000,
+      repeat: -1,
+      yoyo: true,
+      delay: 100,
+      // ease: 'back.in'
+    }); this.tweens.add({
+      targets: this.picture3,
+      y: "-=10",
+      duration: 2000,
+      repeat: -1,
+      yoyo: true,
+      delay: 120,
+      // ease: 'back.in'
+    }); this.tweens.add({
+      targets: this.picture4,
+      y: "-=10",
+      duration: 2000,
+      repeat: -1,
+      yoyo: true,
+      delay: 130,
+      // ease: 'back.in'
+    });
   }
 
   update() {

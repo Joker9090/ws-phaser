@@ -13,7 +13,8 @@ class PictureCredits extends Phaser.GameObjects.Container {
     y: number,
     texture: string | Phaser.Textures.Texture,
     textureBox: string | Phaser.Textures.Texture,
-    scaleBox: number
+    scaleBox: number,
+    fix?: { x: number, y: number },
   ) {
     super(scene);
     this.scene = scene;
@@ -25,7 +26,11 @@ class PictureCredits extends Phaser.GameObjects.Container {
       .setOrigin(0.5)
       .setScale(scaleBox)
       .setRotation(this.randomNumber);
-    this.picture = this.scene.add.sprite(0, 0, texture).setOrigin(0.5);
+    if (fix) {
+      this.picture = this.scene.add.sprite(fix.x, fix.y, texture).setOrigin(0.5);
+    } else {
+      this.picture = this.scene.add.sprite(0, 0, texture).setOrigin(0.5);
+    }
     this.add([this.picture, this.pictureBox]);
     scene.add.existing(this);
     this.setPosition(x, y);

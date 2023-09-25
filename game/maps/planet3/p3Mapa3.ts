@@ -198,7 +198,7 @@ class p3Mapa3 {
         this.fireballGroup = this.scene.physics.add.group({ allowGravity: false });
         this.portalInit = this.scene.physics.add.group({ allowGravity: false });
         this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
-        const aura = this.scene.add.sprite(1680, 1500, "auraTuto").setScale(0.6)
+        const aura = this.scene.add.sprite(1680, 1500, "auraLvl2").setScale(0.6)
         this.aura.add(aura)
         this.scene.tweens.add({
             targets: aura,
@@ -387,7 +387,7 @@ class p3Mapa3 {
         const c2 = new AsteroidGenerator(this.scene, c2Config);
         c2.start();
         const coinConfig: FloorConfig = {
-            texture: "coin",
+            texture: "cristalLvl2",
             pos: { x: 1680, y: 1500 },
             scale: { width: 0.15, height: 0.15 },
             width: 10,

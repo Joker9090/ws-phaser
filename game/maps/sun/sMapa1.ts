@@ -8,6 +8,7 @@ import Game from "../../Game";
 import UIScene from "../../UIScene";
 import EventsCenter from "../../EventsCenter";
 import Player from "@/game/assets/Player";
+import portal, { portalConfig } from "@/game/assets/portal";
 // Scene in class
 class sMapa1 {
     isJumping = false;
@@ -61,6 +62,7 @@ class sMapa1 {
     sideGrav: boolean = false;
     goingBack: any;
     cristal?: Floor;
+    collected: Boolean = false;
 
     constructor(scene: Game, monchi: Player) {
         this.scene = scene;
@@ -140,7 +142,7 @@ class sMapa1 {
         const { x, y } = this.startingPoint;
         const { x: x2, y: y2 } = player;
         const calcDiffX = (x2 - x) / 1//mas grande menos movimiento
-        const calcDiffY = (y2 - y - this.scene.cameras.main.displayHeight / 6) ;
+        const calcDiffY = (y2 - y - this.scene.cameras.main.displayHeight / 6);
         this.background.setPosition(x + calcDiffX, y + calcDiffY);
         this.background2.setPosition(x + calcDiffX, y + calcDiffY);
         this.background3.setPosition(x + calcDiffX, y + calcDiffY);
@@ -186,41 +188,50 @@ class sMapa1 {
         // this.scene.cameras.main.shake(2000, 0.05);
         /* Platforms */
 
-        const portalInicioConfig: FloorConfig = {
-            texture: "portal",
+        const portalInicioConfig: portalConfig = {
+            spriteSheet: "portal4",
             pos: { x: 390, y: 1300 },
-            scale: { width: 0.1, height: 0.1 },
+            // scale: { width: 0.1, height: 0.1 },
             width: 1000,
             height: 1500,
+            scene: this.scene,
+            collected: true
         };
 
-        const portInicio = new Floor(
+        const portInicio = new portal(
             this.scene,
             portalInicioConfig,
             this.portalInit
         ).setDepth(1);
 
-        const p1Config: FloorConfig = {
-            texture: "plataformaSun",
-            pos: { x: this.startingPoint.x, y: this.startingPoint.y + 120 },
-            scale: { width: 2, height: 0.7 },
-            // fix: 25,
-            width: 420,
-            height: 50,
+        const p1Config: LargeFloorConfig = {
+            gap: -350,
+            textureA: "plataformaInicioSun",
+            textureB: "plataformaMedioSun",
+            textureC: "plataformaFinSun",
+            pos: { x: this.startingPoint.x, y: this.startingPoint.y + 320 },
+            scale: { width: 0.7, height: 0.7 },
+            // fix: 190,
+            width: 300,
+            large: 4,
+            height: 100,
+            planeta: 4
 
         }
-        const p1 = new Floor(this.scene, p1Config, this.pisos)
+        const p1 = new LargeFloor(this.scene, p1Config, this.pisos)
 
         const p2Config: LargeFloorConfig = {
-            textureA: "plataformaLarga2",
-            textureB: "plataformaLarga2",
+            textureA: "plataformaInicioSun",
+            textureB: "plataformaMedioSun",
+            textureC: "plataformaFinSun",
             pos: { x: this.startingPoint.x + 1200, y: this.startingPoint.y - 200 },
-            scale: { width: 0.7, height: 0.7 },
-            fix: 25,
-            gap: 0,
-            width: 380,
-            height: 50,
+            scale: { width: 0.8, height: 0.7 },
+            fix: -180,
+            gap: -410,
+            width: 300,
+            height: 340,
             large: 4,
+            planeta: 4,
             rotated: true,
         }
 
@@ -241,62 +252,65 @@ class sMapa1 {
 
         // const p3 = new LargeFloor(this.scene, p3Config, this.pisos)
 
-        const p4Config: LargeFloorConfig = {
-            textureA: "plataformaLarga2",
-            textureB: "plataformaLarga2",
+        const p4Config: FloorConfig = {
+            texture: "plataformaSun",
             pos: { x: this.startingPoint.x + 800, y: this.startingPoint.y + 1000 },
             scale: { width: 0.7, height: 0.7 },
             fix: 25,
-            gap: 0,
-            width: 380,
-            height: 50,
-            large: 1,
+            width: 100,
+            height: 300,
             rotated: true,
         }
 
-        const p4 = new LargeFloor(this.scene, p4Config, this.pisos)
+        const p4 = new Floor(this.scene, p4Config, this.pisos)
 
         const p5Config: LargeFloorConfig = {
-            textureA: "plataformaLarga2",
-            textureB: "plataformaLarga2",
+            textureA: "plataformaInicioSun",
+            textureB: "plataformaMedioSun",
+            textureC: "plataformaFinSun",
             pos: { x: this.startingPoint.x + 1800, y: this.startingPoint.y + 300 },
             scale: { width: 0.7, height: 0.7 },
             fix: 25,
-            gap: 0,
-            width: 380,
-            height: 50,
+            gap: -350,
+            width: 300,
+            height: 150,
             large: 3,
             rotated: true,
+            planeta: 4
         }
 
         const p5 = new LargeFloor(this.scene, p5Config, this.pisos)
 
         const p6Config: LargeFloorConfig = {
-            textureA: "plataformaLarga2",
-            textureB: "plataformaLarga2",
+            textureA: "plataformaInicioSun",
+            textureB: "plataformaMedioSun",
+            textureC: "plataformaFinSun",
             pos: { x: this.startingPoint.x + 1800, y: this.startingPoint.y - 900 },
             scale: { width: 0.7, height: 0.7 },
             fix: 25,
-            gap: 0,
-            width: 380,
-            height: 50,
+            gap: -350,
+            width: 300,
+            height: 150,
             large: 3,
             rotated: true,
+            planeta: 4
         }
 
         const p6 = new LargeFloor(this.scene, p6Config, this.pisos)
 
         const p7Config: LargeFloorConfig = {
-            textureA: "plataformaLarga2",
-            textureB: "plataformaLarga2",
+            textureA: "plataformaInicioSun",
+            textureB: "plataformaMedioSun",
+            textureC: "plataformaFinSun",
             pos: { x: this.startingPoint.x + 800, y: this.startingPoint.y - 1200 },
             scale: { width: 0.7, height: 0.7 },
             fix: 25,
-            gap: 0,
-            width: 380,
-            height: 50,
-            large: 1,
+            gap: -350,
+            width: 300,
+            height: 150,
+            large: 2,
             rotated: true,
+            planeta: 4
         }
 
         const p7 = new LargeFloor(this.scene, p7Config, this.pisos)
@@ -304,7 +318,7 @@ class sMapa1 {
 
         const fireballConfig: FloorConfig = {
             texture: "fireball",
-            pos: { x: this.startingPoint.x + 500, y: this.startingPoint.y }, // 500 1580
+            pos: { x: this.startingPoint.x + 500, y: this.startingPoint.y + 100 }, // 500 1580
             scale: { width: 0.2, height: 0.2 },
             width: 200,
             height: 200,
@@ -329,7 +343,7 @@ class sMapa1 {
             height: 200,
             fix: 250,
             tween: {
-                duration: 1000,
+                duration: 2500,
                 paused: false,
                 yoyo: true,
                 repeat: -1,
@@ -339,15 +353,17 @@ class sMapa1 {
         const fireball2 = new Floor(this.scene, fireballConfig2, this.fireballGroup)
             .setAngularVelocity(30)
         // .setOffset(220, 100);
-        const portalConfig: FloorConfig = {
-            texture: "portal",
+        const portalConfig: portalConfig = {
+            spriteSheet: "portal4",
             pos: { x: this.startingPoint.x + 1000, y: this.startingPoint.y + 1000 },
-            scale: { width: 0.1, height: 0.1 },
+            // scale: { width: 0.1, height: 0.1 },
             width: 1000,
             height: 1500,
+            scene: this.scene,
+            collected: this.collected
         };
 
-        const port = new Floor(this.scene, portalConfig, this.portal)
+        const port = new portal(this.scene, portalConfig, this.portal)
             .setRotation(Math.PI / 2)
             .setSize(1400, 800);
 

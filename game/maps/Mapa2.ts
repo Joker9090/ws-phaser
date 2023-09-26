@@ -7,6 +7,7 @@ import LargeFloor, { LargeFloorConfig } from "../assets/LargeFloor";
 import Game from "../Game";
 import UIScene from "../UIScene";
 import EventsCenter from "../EventsCenter";
+import portal, { portalConfig } from "../assets/portal";
 // Scene in class
 class Mapa2 {
   isJumping = false;
@@ -43,6 +44,7 @@ class Mapa2 {
   };
 
   sideGrav: boolean = false;
+  collected: any;
 
   constructor(scene: Game) {
     this.scene = scene;
@@ -285,31 +287,35 @@ class Mapa2 {
     const p13 = new LargeFloor(this.scene, p13Config, this.pisos);
     /* Portal, Coin, Fireball and Asteroids */
 
-    const portalConfig: FloorConfig = {
-      texture: "portal",
+    // const portalConfig: FloorConfig = {
+    //   texture: "portal",
+    //   pos: { x: 2220, y: 150 + 2150 },
+    //   scale: { width: 0.1, height: 0.1 },
+    //   width: 1000,
+    //   height: 1500,
+    // };
+    const portalConfig: portalConfig = {
+      spriteSheet: "portal1",
+      width: 1400,
+      height: 800,
       pos: { x: 2220, y: 150 + 2150 },
-      scale: { width: 0.1, height: 0.1 },
-      width: 1000,
-      height: 1500,
-    };
-
-    const port = new Floor(this.scene, portalConfig, this.portal)
+      scene: this.scene,
+      collected: this.collected
+    }
+    const port = new portal(this.scene, portalConfig, this.portal)
       .setRotation(Math.PI / 2)
-      .setSize(1400, 800);
 
-    const portalInicioConfig: FloorConfig = {
-      texture: "portal",
+    const portalInicioConfig: portalConfig = {
+      spriteSheet: "portal1",
       pos: { x: 400, y: 150 + 150 },
-      scale: { width: 0.1, height: 0.1 },
+      // scale: { width: 0.1, height: 0.1 },
       width: 1000,
       height: 1500,
+      collected: true,
+      scene: this.scene
     };
 
-    const portInicio = new Floor(
-      this.scene,
-      portalInicioConfig,
-      this.portalInit
-    ).setDepth(1);
+    const portInicio = new portal(this.scene, portalInicioConfig, this.portal).setDepth(1);
 
     const fireballConfig: FloorConfig = {
       texture: "fireball",

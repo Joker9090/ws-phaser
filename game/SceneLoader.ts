@@ -79,6 +79,27 @@ const loadAssets = {
         "/game/sun.png",
         { frameWidth: 150, frameHeight: 150 },
       ],
+      [
+        "spritesheet",
+        "portal1",
+        "/game/portal1.png",
+        { frameWidth: 100, frameHeight: 150 },
+      ], [
+        "spritesheet",
+        "portal2",
+        "/game/portal2.png",
+        { frameWidth: 100, frameHeight: 150 },
+      ], [
+        "spritesheet",
+        "portal3",
+        "/game/portal3.png",
+        { frameWidth: 100, frameHeight: 150 },
+      ], [
+        "spritesheet",
+        "portal4",
+        "/game/portal4.png",
+        { frameWidth: 100, frameHeight: 150 },
+      ],
     ],
   },
   Scenes: {
@@ -178,6 +199,10 @@ const loadAssets = {
       ["image", "sol", "/game/lvl3/background/sol.png"],
       ["image", "brilloSol", "/game/lvl3/background/solBrillo.png"],
       ["image", "plataformaSun", "/game/lvl3/plataforma.png"],
+      ["image", "plataformaInicioSun", "/game/lvl3/plataformaInicioSun.png"],
+      ["image", "plataformaMedioSun", "/game/lvl3/plataformaMedioSun.png"],
+      ["image", "plataformaFinSun", "/game/lvl3/plataformaFinSun.png"],
+
 
 
     ],
@@ -305,7 +330,7 @@ class SceneLoader extends Phaser.Scene {
   create(this: SceneLoader, { level }: any) {
     // this.scene.start("Sandbox", { data: 1 });
     // this.scene.start("Menu", { data: 1 });
-    this.scene.start("Game", { level: 3, lifes: 3 });
+    this.scene.start("Game", { level: 1, lifes: 3 });
   }
 
   update(this: SceneLoader) {

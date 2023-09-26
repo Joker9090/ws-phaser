@@ -8,6 +8,7 @@ import Game from "../../Game";
 import UIScene from "../../UIScene";
 import EventsCenter from "../../EventsCenter";
 import Player from "@/game/assets/Player";
+import portal, { portalConfig } from "@/game/assets/portal";
 // Scene in class
 class p3Mapa1 {
     isJumping = false;
@@ -15,7 +16,7 @@ class p3Mapa1 {
     scene: Game;
     worldSize = {
         width: 4500,
-        height: 3000,
+        height: 3800,
     };
     // normales
     pisos?: Phaser.Physics.Arcade.Group;
@@ -66,6 +67,7 @@ class p3Mapa1 {
     sideGrav: boolean = false;
     goingBack: any;
     cristal?: Floor;
+    collected: Boolean = false;
 
     constructor(scene: Game, monchi: Player) {
         this.scene = scene;
@@ -170,11 +172,11 @@ class p3Mapa1 {
         this.background6.setPosition(x + calcDiffX, y + calcDiffY);
         this.background7.setPosition(x + calcDiffX, y + calcDiffY);
         this.background8.setPosition(x + calcDiffX, y + calcDiffY);
-        this.background9.setPosition(x - 700 + calcDiffX, y + calcDiffY + 200);
-        this.background10.setPosition(x - 400 + calcDiffX, y + calcDiffY + 300);
-        this.background11.setPosition(x + calcDiffX - 300, y + calcDiffY + 600);
-        this.background12.setPosition(x + calcDiffX + 200, y + calcDiffY - 200);
-        this.background13.setPosition(x + calcDiffX + 111, y + calcDiffY - 150);
+        this.background9.setPosition(x - 700 + calcDiffX, y + calcDiffY + 200).setScale(2);
+        this.background10.setPosition(x - 400 + calcDiffX, y + calcDiffY + 300).setScale(2);
+        this.background11.setPosition(x + calcDiffX - 300, y + calcDiffY + 800)
+        this.background12.setPosition(x + calcDiffX + 200, y + calcDiffY - 200).setScale(2);
+        this.background13.setPosition(x + calcDiffX + 111, y + calcDiffY - 150).setScale(2);
         this.background14.setPosition(x + calcDiffX + 320, y + calcDiffY);
 
         // this.background6.setPosition(x + calcDiffX, y + calcDiffY);
@@ -193,7 +195,7 @@ class p3Mapa1 {
         this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
         this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });
         this.coin = this.scene.physics.add.group({ allowGravity: false });
-        this.portal = this.scene.physics.add.group({ allowGravity: false });
+        this.portal = this.scene.physics.add.group({ allowGravity: false }).setDepth(3);
         this.fireballGroup = this.scene.physics.add.group({ allowGravity: false });
         this.portalInit = this.scene.physics.add.group({ allowGravity: false });
         this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
@@ -210,15 +212,17 @@ class p3Mapa1 {
         // this.scene.cameras.main.shake(2000, 0.05);
         /* Platforms */
 
-        const portalInicioConfig: FloorConfig = {
-            texture: "portal",
+        const portalInicioConfig: portalConfig = {
+            spriteSheet: "portal3",
             pos: { x: 470, y: 1300 },
-            scale: { width: 0.1, height: 0.1 },
+            // scale: { width: 0.1, height: 0.1 },
             width: 1000,
             height: 1500,
+            scene: this.scene,
+            collected: true
         };
 
-        const portInicio = new Floor(
+        const portInicio = new portal(
             this.scene,
             portalInicioConfig,
             this.portalInit
@@ -375,7 +379,7 @@ class p3Mapa1 {
 
         const p12Config: FloorConfig = {
             texture: "plataformaLvl2",
-            pos: { x: this.startingPoint.x + 3820, y: this.startingPoint.y - 320 },
+            pos: { x: this.startingPoint.x + 4020, y: this.startingPoint.y - 320 },
             scale: { width: 0.3, height: 0.7 },
             fix: 25,
             width: 290,
@@ -417,43 +421,45 @@ class p3Mapa1 {
             .setAngularVelocity(30)
         // .setOffset(220, 100);
 
-        const portalConfig: FloorConfig = {
-            texture: "portal",
+        const portalConfig: portalConfig = {
+            spriteSheet: "portal3",
             pos: { x: this.startingPoint.x + 4000, y: this.startingPoint.y + 500 },
-            scale: { width: 0.1, height: 0.1 },
-            width: 1000,
-            height: 1500,
+            // scale: { width: 0.1, height: 0.1 },
+            width: 800,
+            height: 1400,
+            scene: this.scene,
+            collected: this.collected
         };
 
-        const port = new Floor(this.scene, portalConfig, this.portal)
+        const port = new portal(this.scene, portalConfig, this.portal)
             // .setRotation(Math.PI / 2)
-            .setSize(800, 1400);
+            ;
 
-        const c1Config: AsteroidGeneratorConfig = {
-            texture: "asteroid",
-            x: -100,
-            y: 150 + 1700,
-            delayed: 100,
-            direction: 0,
-            velocity: 100,
-            scale: 0.7,
-            depth: 1,
-        };
-        const c1 = new AsteroidGenerator(this.scene, c1Config);
-        c1.start();
+        // const c1Config: AsteroidGeneratorConfig = {
+        //     texture: "asteroid",
+        //     x: -100,
+        //     y: 150 + 1700,
+        //     delayed: 100,
+        //     direction: 0,
+        //     velocity: 100,
+        //     scale: 0.7,
+        //     depth: 1,
+        // };
+        // const c1 = new AsteroidGenerator(this.scene, c1Config);
+        // c1.start();
 
-        const c2Config: AsteroidGeneratorConfig = {
-            texture: "asteroid2",
-            x: 3000,
-            y: 150 + 800,
-            delayed: 100,
-            direction: 1,
-            velocity: 100,
-            scale: 0.5,
-            depth: 1,
-        };
-        const c2 = new AsteroidGenerator(this.scene, c2Config);
-        c2.start();
+        // const c2Config: AsteroidGeneratorConfig = {
+        //     texture: "asteroid2",
+        //     x: 3000,
+        //     y: 150 + 800,
+        //     delayed: 100,
+        //     direction: 1,
+        //     velocity: 100,
+        //     scale: 0.5,
+        //     depth: 1,
+        // };
+        // const c2 = new AsteroidGenerator(this.scene, c2Config);
+        // c2.start();
         const coinConfig: FloorConfig = {
             texture: "coin",
             pos: { x: 2380, y: 1300 },

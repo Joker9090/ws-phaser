@@ -295,7 +295,7 @@ class Game extends Phaser.Scene {
       EventsCenter.emit("coinCollected", true);
       (
         this.map.portal?.getChildren()[0] as Phaser.GameObjects.Image
-      ).clearTint();
+      );
       this.canNextLevel = true;
       this.canWin = true;
       this.map.coin.setVisible(false);

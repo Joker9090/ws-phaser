@@ -23,7 +23,9 @@ export type LargeFloorConfig = {
   large: number;
   rotated?: boolean;
   gap: number;
-  planeta?: number
+  planeta?: number;
+  inverted?: boolean;
+  invertedOffset?: number
 };
 // Scene in class
 class LargeFloor extends Phaser.GameObjects.Container {
@@ -68,7 +70,26 @@ class LargeFloor extends Phaser.GameObjects.Container {
           }
 
         }
-      } else {
+      }else if(config.planeta === 4){
+        for (let index = 1; index <= config.large; index++) {
+
+          if (index === 1) {
+            const s = scene.add.sprite(index * width + this.gap + 13, 0, config.textureA);
+            this.add(s).setDepth(9)
+          } else if (index === config.large) {
+            const s = scene.add.sprite(index * width + this.gap + 65, 0, config.textureC);
+            this.add(s).setDepth(9)
+          } else {
+            const s = scene.add.sprite(index * width + this.gap + 42, 0, config.textureB);
+            this.add(s)
+            if (config.scale) {
+              s.setScale(config.scale?.width + 0.34, config.scale?.height +0.30)
+            }
+          }
+
+        }
+      }
+       else {
         for (let index = 1; index <= config.large; index++) {
 
           if (index === 1) {
@@ -108,7 +129,7 @@ class LargeFloor extends Phaser.GameObjects.Container {
     if (this.body) {
 
       const body = this.body as Phaser.Physics.Arcade.Body;
- 
+
       body.setImmovable(true);
       // hitboxes largefloors
       if (rota) {
@@ -120,9 +141,14 @@ class LargeFloor extends Phaser.GameObjects.Container {
       if (rota && body) {
         body.setSize(height + fix, width * config.large);
         this.setRotation(Math.PI / 2);
-      } else {
-        body.setSize(width * config.large + fix, height + fix).setOffset(-160,-130);
+      } else if (config.inverted && config.invertedOffset) {
+        body.setSize(width * config.large + fix, height + fix).setOffset(config.invertedOffset, -130);
+        this.setRotation(Math.PI);
       }
+      else {
+        body.setSize(width * config.large + fix, height + fix).setOffset(-160, -130);
+      }
+
     }
   }
 }

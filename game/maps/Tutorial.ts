@@ -3,6 +3,7 @@ import Floor, { FloorConfig } from "../assets/Floor";
 import LargeFloor, { LargeFloorConfig } from "../assets/LargeFloor";
 import UIScene from "../UIScene";
 import Game from "../Game";
+import portal, { portalConfig } from "../assets/portal";
 
 // Scene in class
 class Tutorial {
@@ -51,6 +52,7 @@ class Tutorial {
   pisoFloat?: Floor;
   pisoCoin?: Floor;
   pisoNoFloat?: Floor;
+  collected: boolean = false;
 
   constructor(scene: Game) {
     this.scene = scene;
@@ -225,18 +227,22 @@ class Tutorial {
 
     /* Portal, Coin, Fireball and Asteroids */
 
-    const portalConfig: FloorConfig = {
-      texture: "portal",
-      pos: { x: 3250, y: 1875 },
-      scale: { width: 0.1, height: 0.1 },
-      width: 1000,
-      height: 1500,
-    };
+    // const portalConfig: FloorConfig = {
+    //   texture: "portal",
+    //   pos: { x: 350, y: 1875 },
+    //   scale: { width: 0.8, height: 0.8 },
 
-    const port = new Floor(this.scene, portalConfig, this.portal).setSize(
-      800,
-      1400
-    );
+    // };
+    const portalConfig: portalConfig = {
+      spriteSheet: "portal1",
+      width: 800,
+      heigth: 1400,
+      pos: { x: 3250, y: 1875 },
+      scene: this.scene,
+      collected: this.collected
+    }
+
+    const port = new portal(this.scene, portalConfig, this.portal)
 
     const fireballConfig: FloorConfig = {
       texture: "fireball",
@@ -255,7 +261,7 @@ class Tutorial {
     };
     const fireball = new Floor(this.scene, fireballConfig, this.fireballGroup)
       .setAngularVelocity(30)
-      // .setOffset(220, 100);
+    // .setOffset(220, 100);
 
     const coinConfig: FloorConfig = {
       texture: "coin",
@@ -267,7 +273,6 @@ class Tutorial {
     };
     this.pisoCoin = new Floor(this.scene, coinConfig, this.coin).setBodySize(140, 180);
     this.pisoCoin.hasEvent = "Show_Tutorial_Text_2";
-
     const fireballTextConfig: FloorConfig = {
       texture: "coin",
       pos: { x: 2750, y: 1885 },
@@ -285,7 +290,10 @@ class Tutorial {
   }
 
   fireballActFunction() { }
-
+  collectCoin() {
+    this.scene.coinCollected
+    this.collected = true
+  }
   addColliders() {
     if (this.scene.monchi) {
       if (this.fireballGroup && this.scene.loseLevelTutorial)

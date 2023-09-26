@@ -8,6 +8,7 @@ import LargeFloor, { LargeFloorConfig } from "../assets/LargeFloor";
 import Game from "../Game";
 import UIScene from "../UIScene";
 import Player from "../assets/Player";
+import portal, { portalConfig } from "../assets/portal";
 
 class Mapa1 {
   isJumping = false;
@@ -54,6 +55,7 @@ class Mapa1 {
   background5: Phaser.GameObjects.Image;
   background6: Phaser.GameObjects.Image;
   cristal?: Floor;
+  collected: Boolean = false;
   constructor(scene: Game, monchi: Player) {
     this.scene = scene;
     this.monchi = monchi;
@@ -543,14 +545,16 @@ class Mapa1 {
     );
 
     //Portal, Coin and Asteroids
-    const portalConfig: FloorConfig = {
-      texture: "portal",
+    const portalConfig: portalConfig = {
+      spriteSheet: "portal1",
       pos: { x: 5400, y: 1590 },
-      scale: { width: 0.1, height: 0.1 },
+      // scale: { width: 0.1, height: 0.1 },
       width: 1000,
       height: 1500,
+      scene: this.scene,
+      collected: this.collected
     };
-    const port = new Floor(this.scene, portalConfig, this.portal);
+    const port = new portal(this.scene, portalConfig, this.portal);
 
     const coinConfig: FloorConfig = {
       texture: "coin",

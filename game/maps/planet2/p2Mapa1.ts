@@ -8,6 +8,7 @@ import Game from "../../Game";
 import UIScene from "../../UIScene";
 import EventsCenter from "../../EventsCenter";
 import Player from "@/game/assets/Player";
+import portal, { portalConfig } from "@/game/assets/portal";
 // Scene in class
 class p2Mapa1 {
     isJumping = false;
@@ -58,6 +59,7 @@ class p2Mapa1 {
     sideGrav: boolean = false;
     goingBack: any;
     cristal?: Floor;
+    collected: Boolean = false;
 
     constructor(scene: Game, monchi: Player) {
         this.scene = scene;
@@ -172,15 +174,17 @@ class p2Mapa1 {
         // this.scene.cameras.main.shake(2000, 0.05);
         /* Platforms */
 
-        const portalInicioConfig: FloorConfig = {
-            texture: "portal",
+        const portalInicioConfig: portalConfig = {
+            spriteSheet: "portal2",
             pos: { x: 400, y: 1300 },
-            scale: { width: 0.1, height: 0.1 },
+            // scale: { width: 0.1, height: 0.1 },
             width: 1000,
             height: 1500,
+            collected: this.collected,
+            scene: this.scene
         };
 
-        const portInicio = new Floor(
+        const portInicio = new portal(
             this.scene,
             portalInicioConfig,
             this.portalInit
@@ -228,7 +232,7 @@ class p2Mapa1 {
 
 
         const p4Config: LargeFloorConfig = {
-            pos: { x: 1270, y: 870 },
+            pos: { x: 1490, y: 870 },
             textureA: "plataformaInicioLvl1",
             textureB: "plataformaMedioLvl1",
             textureC: "plataformaFinLvl1",
@@ -240,13 +244,14 @@ class p2Mapa1 {
             fix: 0,
             large: 3,
             planeta: 2,
-           
+            invertedOffset: -560,
+            inverted: true
         };
         const p4 = new LargeFloor(this.scene, p4Config, this.pisos);
 
         const p5Config: FloorConfig = {
             texture: "plataformaLvl1",
-            pos: { x: 1970, y: 1050 },
+            pos: { x: 1800, y: 870 },
             scale: { width: 0.3, height: 0.3 },
             width: 425,
             height: 245,
@@ -264,14 +269,14 @@ class p2Mapa1 {
         };
         const p6 = new Floor(this.scene, p6Config, this.pisos3).setTint(
             Phaser.Display.Color.GetColor(255, 101, 0)
-        ).setVelocityX(300);
+        ).setVelocityX(400);
         this.scene.tweens.add({
             duration: 4500,
             paused: false,
             yoyo: true,
             repeat: -1,
             targets: p6.body?.velocity,
-            x: "-=600",
+            x: "-=800",
         })
 
         const p7Config: FloorConfig = {
@@ -335,15 +340,17 @@ class p2Mapa1 {
         //     .setAngularVelocity(30)
 
 
-        const portalConfig: FloorConfig = {
-            texture: "portal",
+        const portalConfig: portalConfig = {
+            spriteSheet: "portal2",
             pos: { x: 4000, y: 2750 },
-            scale: { width: 0.1, height: 0.1 },
+            // scale: { width: 0.1, height: 0.1 },
             width: 1000,
             height: 1500,
+            collected: true,
+            scene: this.scene
         };
 
-        const port = new Floor(this.scene, portalConfig, this.portal)
+        const port = new portal(this.scene, portalConfig, this.portal)
             // .setRotation(Math.PI / 2)
             .setSize(800, 1400);
 

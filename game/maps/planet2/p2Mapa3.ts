@@ -8,6 +8,7 @@ import Game from "../../Game";
 import UIScene from "../../UIScene";
 import EventsCenter from "../../EventsCenter";
 import Player from "@/game/assets/Player";
+import portal, { portalConfig } from "@/game/assets/portal";
 // Scene in class
 class p2Mapa3 {
     isJumping = false;
@@ -57,6 +58,7 @@ class p2Mapa3 {
     sideGrav: boolean = false;
     goingBack: any;
     cristal?: Floor;
+    collected: Boolean = false;
 
     constructor(scene: Game, monchi: Player) {
         this.scene = scene;
@@ -85,22 +87,22 @@ class p2Mapa3 {
 
         this.background = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "bg1Lvl1")
-            .setOrigin(0.5, 0.5).setScale(0.8);
+            .setOrigin(0.5, 0.5);
         this.background2 = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "bg2Lvl1")
-            .setOrigin(0.5, 0.5).setScale(0.8);
+            .setOrigin(0.5, 0.5);
         this.background3 = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "bg3Lvl1")
-            .setOrigin(0.5, 0.5).setScale(0.8);
+            .setOrigin(0.5, 0.5);
         this.background4 = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "bg4Lvl1")
-            .setOrigin(0.5, 0.5).setScale(0.8);
+            .setOrigin(0.5, 0.5);
         this.background5 = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "bg5Lvl1")
-            .setOrigin(0.5, 0.5).setScale(0.8);
+            .setOrigin(0.5, 0.5);
         this.background6 = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "bg6Lvl1")
-            .setOrigin(0.5, 0.5).setScale(0.8);
+            .setOrigin(0.5, 0.5);
         this.background7 = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "filtroFondo")
             .setOrigin(0.5, 0.5).setScale(2, 2);
@@ -130,16 +132,15 @@ class p2Mapa3 {
         const calcDiffY = (y2 - y - this.scene.cameras.main.displayHeight / 6) / 1;
         this.background.setPosition(x + calcDiffX, y + calcDiffY);
         this.background2.setPosition(x + calcDiffX, y + calcDiffY);
-        this.background3.setPosition(x + calcDiffX + 600, y + calcDiffY).setScale(0.7);
-        this.background4.setPosition(x + calcDiffX - 500, y + calcDiffY).setScale(0.7);
+        this.background3.setPosition(x + calcDiffX + 600, y + calcDiffY);
+        this.background4.setPosition(x + calcDiffX - 500, y + calcDiffY + 55);
         this.background5.setPosition(x + calcDiffX, y + calcDiffY).setDepth(2);
         this.background6.setPosition(x + calcDiffX - 800, y + calcDiffY).setDepth(3);
         this.background7.setPosition(x + calcDiffX, y + calcDiffY).setDepth(4);
-
-
         // this.background7.setPosition(x + calcDiffX, y + calcDiffY);
         // this.background8.setPosition(x + calcDiffX, y + calcDiffY);
     }
+
 
     createMap(data: { level: number; lifes: number }) {
         console.log("cameras", this.scene.cameras.main)
@@ -169,15 +170,17 @@ class p2Mapa3 {
         // this.scene.cameras.main.shake(2000, 0.05);
         /* Platforms */
 
-        const portalInicioConfig: FloorConfig = {
-            texture: "portal",
+        const portalInicioConfig: portalConfig = {
+            spriteSheet: "portal2",
             pos: { x: 400, y: 1300 },
-            scale: { width: 0.1, height: 0.1 },
-            width: 1000,
-            height: 1500,
+            // scale: { width: 0.1, height: 0.1 },
+            width: 800,
+            height: 1400,
+            collected: true,
+            scene: this.scene
         };
 
-        const portInicio = new Floor(
+        const portInicio = new portal(
             this.scene,
             portalInicioConfig,
             this.portalInit
@@ -316,18 +319,20 @@ class p2Mapa3 {
         const p11 = new Floor(this.scene, p11Config, this.pisos);
         /* Portal, Coin, Fireball and Asteroids */
 
-        const portalConfig: FloorConfig = {
-            texture: "portal",
+        const portalConfig: portalConfig = {
+            spriteSheet: "portal2",
             pos: { x: this.startingPoint.x + 3100, y: this.startingPoint.y - 200 },
-            scale: { width: 0.1, height: 0.1 },
+            // scale: { width: 0.1, height: 0.1 },
             width: 700,
             height: 1500,
+            scene: this.scene,
+            collected: this.collected
         };
 
-        const port = new Floor(this.scene, portalConfig, this.portal);
+        const port = new portal(this.scene, portalConfig, this.portal);
         // .setRotation(Math.PI / 2);
 
-  
+
         const coinConfig: FloorConfig = {
             texture: "cristalLvl1",
             pos: { x: 2300, y: 1100 },

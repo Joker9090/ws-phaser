@@ -219,7 +219,8 @@ class p3Mapa1 {
             width: 1000,
             height: 1500,
             scene: this.scene,
-            collected: true
+            collected: true,
+            frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
         };
 
         const portInicio = new portal(
@@ -402,13 +403,15 @@ class p3Mapa1 {
 
         /* Portal, Coin, Fireball and Asteroids */
 
-        const fireballConfig: FloorConfig = {
-            texture: "fireball",
+        const fireballConfig: portalConfig = {
+            spriteSheet: "meteorito",
             pos: { x: this.startingPoint.x + 2110, y: this.startingPoint.y - 120 }, // 500 1580
-            scale: { width: 0.2, height: 0.2 },
+            // scale: { width: 0.2, height: 0.2 },
             width: 200,
             height: 200,
-            fix: 250,
+            // fix: 250,
+            scene:this.scene,
+            frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 
             tween: {
                 duration: 800,
                 paused: false,
@@ -417,8 +420,8 @@ class p3Mapa1 {
                 x: "-=400",
             },
         };
-        const fireball = new Floor(this.scene, fireballConfig, this.fireballGroup)
-            .setAngularVelocity(30)
+        const fireball = new portal(this.scene, fireballConfig, this.fireballGroup)
+            // .setAngularVelocity(30)
         // .setOffset(220, 100);
 
         const portalConfig: portalConfig = {
@@ -428,7 +431,8 @@ class p3Mapa1 {
             width: 800,
             height: 1400,
             scene: this.scene,
-            collected: this.collected
+            collected: this.collected,
+            frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
         };
 
         const port = new portal(this.scene, portalConfig, this.portal)

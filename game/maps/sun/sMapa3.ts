@@ -194,7 +194,8 @@ class sMapa3 {
             width: 1000,
             height: 1500,
             scene: this.scene,
-            collected: true
+            collected: true,
+            frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
         };
 
         const portInicio = new portal(
@@ -349,13 +350,15 @@ class sMapa3 {
         /* Portal, Coin, Fireball and Asteroids */
 
 
-        const fireballConfig: FloorConfig = {
-            texture: "fireball",
+        const fireballConfig: portalConfig = {
+            spriteSheet: "meteorito",
             pos: { x: this.startingPoint.x + 500, y: this.startingPoint.y + 1400 }, // 500 1580
-            scale: { width: 0.2, height: 0.2 },
+            // scale: { width: 0.2, height: 0.2 },
             width: 200,
             height: 200,
-            fix: 250,
+            // fix: 250,
+            scene: this.scene,
+            frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
             tween: {
                 duration: 1600,
                 paused: false,
@@ -364,17 +367,18 @@ class sMapa3 {
                 y: "-=1300",
             },
         };
-        const fireball = new Floor(this.scene, fireballConfig, this.fireballGroup)
-            .setAngularVelocity(30)
+        const fireball = new portal(this.scene, fireballConfig, this.fireballGroup)
 
 
-        const fireballConfig2: FloorConfig = {
-            texture: "fireball",
+        const fireballConfig2: portalConfig = {
+            spriteSheet: "meteorito",
             pos: { x: this.startingPoint.x + 1100, y: this.startingPoint.y }, // 500 1580
-            scale: { width: 0.2, height: 0.2 },
+            // scale: { width: 0.2, height: 0.2 },
             width: 200,
             height: 200,
-            fix: 250,
+            // fix: 250,
+            scene: this.scene,
+            frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
             tween: {
                 duration: 1700,
                 paused: false,
@@ -383,18 +387,17 @@ class sMapa3 {
                 y: "+=1300",
             },
         };
-        const fireball2 = new Floor(this.scene, fireballConfig2, this.fireballGroup)
-            .setAngularVelocity(30)
-        // .setOffset(220, 100);
+        const fireball2 = new portal(this.scene, fireballConfig2, this.fireballGroup)
 
-
-        const fireballConfig3: FloorConfig = {
-            texture: "fireball",
+        const fireballConfig3: portalConfig = {
+            spriteSheet: "meteorito",
             pos: { x: this.startingPoint.x + 1600, y: this.startingPoint.y }, // 500 1580
-            scale: { width: 0.2, height: 0.2 },
+            // scale: { width: 0.2, height: 0.2 },
             width: 200,
             height: 200,
-            fix: 250,
+            // fix: 250,
+            scene: this.scene,
+            frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
             tween: {
                 duration: 1800,
                 paused: false,
@@ -403,17 +406,19 @@ class sMapa3 {
                 y: "+=1300",
             },
         };
-        const fireball3 = new Floor(this.scene, fireballConfig3, this.fireballGroup)
-            .setAngularVelocity(30)
+        const fireball3 = new portal(this.scene, fireballConfig3, this.fireballGroup)
 
 
-        const fireballConfig4: FloorConfig = {
-            texture: "fireball",
+
+        const fireballConfig4: portalConfig = {
+            spriteSheet: "meteorito",
             pos: { x: this.startingPoint.x + 2300, y: this.startingPoint.y }, // 500 1580
-            scale: { width: 0.2, height: 0.2 },
+            // scale: { width: 0.2, height: 0.2 },
             width: 200,
             height: 200,
-            fix: 250,
+            // fix: 250,
+            scene: this.scene,
+            frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
             tween: {
                 duration: 1790,
                 paused: false,
@@ -422,17 +427,19 @@ class sMapa3 {
                 y: "+=1300",
             },
         };
-        const fireball4 = new Floor(this.scene, fireballConfig4, this.fireballGroup)
-            .setAngularVelocity(30)
-        const portalConfig: FloorConfig = {
-            texture: "portal",
+        const fireball4 = new portal(this.scene, fireballConfig4, this.fireballGroup)
+        const portalConfig: portalConfig = {
+            spriteSheet: "portal",
             pos: { x: this.startingPoint.x + 2830, y: this.startingPoint.y - 300 },
-            scale: { width: 0.1, height: 0.1 },
+            // scale: { width: 0.1, height: 0.1 },
             width: 1000,
             height: 1500,
+            collected: this.collected,
+            scene: this.scene,
+            frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
         };
 
-        const port = new Floor(this.scene, portalConfig, this.portal)
+        const port = new portal(this.scene, portalConfig, this.portal)
             .setRotation(Math.PI / 2)
             .setSize(1400, 800);
 

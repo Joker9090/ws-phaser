@@ -152,6 +152,8 @@ class Mapa2 {
       pos: { x: 370, y: 150 + 300 },
       scale: { width: 0.5, height: 0.7 },
       rotated: false,
+      planeta: 1
+
     };
     const p1 = new LargeFloor(this.scene, p1Config, this.pisos);
 
@@ -163,6 +165,8 @@ class Mapa2 {
       pos: { x: 1400, y: 150 + 100 },
       scale: { width: 0.7, height: 0.7 },
       rotated: true,
+      planeta: 1
+
     };
     const p2 = new LargeFloor(this.scene, p2Config, this.pisos);
 
@@ -174,6 +178,8 @@ class Mapa2 {
       pos: { x: 1045, y: 150 + 460 },
       scale: { width: 0.7, height: 0.7 },
       rotated: true,
+      planeta: 1
+
     };
     const p3 = new LargeFloor(this.scene, p3Config, this.pisos);
 
@@ -185,6 +191,8 @@ class Mapa2 {
       pos: { x: 1400, y: 1370 },
       scale: { width: 0.7, height: 0.7 },
       rotated: true,
+      planeta: 1
+
     };
     const p4 = new LargeFloor(this.scene, p4Config, this.pisos);
 
@@ -196,6 +204,8 @@ class Mapa2 {
       pos: { x: 720, y: 150 + 1970 },
       scale: { width: 0.7, height: 0.7 },
       rotated: false,
+      planeta: 1
+
     };
     const p5 = new LargeFloor(this.scene, p5Config, this.pisos);
 
@@ -207,6 +217,8 @@ class Mapa2 {
       pos: { x: 590, y: 150 + 1400 },
       scale: { width: 0.7, height: 0.7 },
       rotated: true,
+      planeta: 1
+
     };
     const p6 = new LargeFloor(this.scene, p6Config, this.pisos);
 
@@ -218,6 +230,8 @@ class Mapa2 {
       pos: { x: 200, y: 150 + 1000 },
       rotated: true,
       scale: { width: 0.7, height: 0.7 },
+      planeta: 1
+
     };
     const p7 = new LargeFloor(this.scene, p7Config, this.pisos);
 
@@ -229,6 +243,8 @@ class Mapa2 {
       pos: { x: 900, y: 150 + 2300 },
       scale: { width: 0.7, height: 0.7 },
       rotated: true,
+      planeta: 1
+
     };
     const p8 = new LargeFloor(this.scene, p8Config, this.pisos);
 
@@ -240,6 +256,8 @@ class Mapa2 {
       pos: { x: 1200, y: 150 + 2100 },
       scale: { width: 0.7, height: 0.7 },
       rotated: true,
+      planeta: 1
+
     };
     const p9 = new LargeFloor(this.scene, p9Config, this.pisos).setDepth(0);
 
@@ -251,6 +269,8 @@ class Mapa2 {
       pos: { x: 1500, y: 150 + 2300 },
       scale: { width: 0.7, height: 0.7 },
       rotated: true,
+      planeta: 1
+
     };
     const p10 = new LargeFloor(this.scene, p10Config, this.pisos);
 
@@ -262,6 +282,8 @@ class Mapa2 {
       pos: { x: 1900, y: 150 + 1600 },
       scale: { width: 0.7, height: 0.7 },
       rotated: true,
+      planeta: 1
+
     };
     const p11 = new LargeFloor(this.scene, p11Config, this.pisos);
 
@@ -273,6 +295,7 @@ class Mapa2 {
       pos: { x: 2300, y: 150 + 1350 },
       scale: { width: 0.7, height: 0.7 },
       rotated: true,
+      planeta: 1
     };
     const p12 = new LargeFloor(this.scene, p12Config, this.pisos);
     const p13Config: LargeFloorConfig = {
@@ -283,6 +306,7 @@ class Mapa2 {
       pos: { x: 2300, y: 150 + 2050 },
       scale: { width: 0.7, height: 0.7 },
       rotated: true,
+      planeta: 1
     };
     const p13 = new LargeFloor(this.scene, p13Config, this.pisos);
     /* Portal, Coin, Fireball and Asteroids */
@@ -300,7 +324,8 @@ class Mapa2 {
       height: 800,
       pos: { x: 2220, y: 150 + 2150 },
       scene: this.scene,
-      collected: this.collected
+      collected: this.collected,
+      frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
     }
     const port = new portal(this.scene, portalConfig, this.portal)
       .setRotation(Math.PI / 2)
@@ -312,18 +337,19 @@ class Mapa2 {
       width: 1000,
       height: 1500,
       collected: true,
-      scene: this.scene
+      scene: this.scene,
+      frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
     };
 
     const portInicio = new portal(this.scene, portalInicioConfig, this.portal).setDepth(1);
 
-    const fireballConfig: FloorConfig = {
-      texture: "fireball",
+    const fireballConfig: portalConfig = {
+      spriteSheet: "meteorito",
       pos: { x: 1910, y: 150 + 1450 }, // 500 1580
-      scale: { width: 0.2, height: 0.2 },
+      // scale: { width: 0.2, height: 0.2 },
       width: 400,
       height: 400,
-      fix: 250,
+      // fix: 250,
       tween: {
         duration: 800,
         paused: false,
@@ -331,11 +357,10 @@ class Mapa2 {
         repeat: -1,
         y: "-=200",
       },
+      scene: this.scene,
+      frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
     };
-    const fireball = new Floor(this.scene, fireballConfig, this.fireballGroup)
-      .setAngularVelocity(30)
-
-
+    const fireball = new portal(this.scene, fireballConfig, this.fireballGroup)
     const coinConfig: FloorConfig = {
       texture: "coin",
       pos: { x: 1000, y: 1355 }, // 500 1580

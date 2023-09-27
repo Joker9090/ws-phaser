@@ -155,7 +155,8 @@ class Tutorial {
       scale: { width: 0.7, height: 0.7 },
       rotated: false,
       gap: 0,
-      fix: 0,
+      planeta: 1
+      // fix: 100,
     };
     const p0 = new LargeFloor(this.scene, p0Config, this.pisos);
     /*
@@ -177,7 +178,8 @@ class Tutorial {
       scale: { width: 0.7, height: 0.7 },
       rotated: false,
       gap: 0,
-      fix: 0
+      fix: 0,
+      planeta: 1
     };
     const p1 = new LargeFloor(this.scene, p1Config, this.pisos);
 
@@ -190,6 +192,7 @@ class Tutorial {
       rotated: false,
       gap: 0,
       fix: 0,
+      planeta: 1
     };
     const p2 = new LargeFloor(this.scene, p2Config, this.pisos);
 
@@ -212,6 +215,7 @@ class Tutorial {
       rotated: false,
       gap: 0,
       fix: 0,
+      planeta: 1
     };
     const p4 = new LargeFloor(this.scene, p4Config, this.pisos);
 
@@ -236,21 +240,24 @@ class Tutorial {
     const portalConfig: portalConfig = {
       spriteSheet: "portal1",
       width: 800,
-      heigth: 1400,
+      height: 1400,
       pos: { x: 3250, y: 1875 },
       scene: this.scene,
-      collected: this.collected
+      collected: this.collected,
+      frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
     }
 
     const port = new portal(this.scene, portalConfig, this.portal)
 
-    const fireballConfig: FloorConfig = {
-      texture: "fireball",
+    const fireballConfig: portalConfig = {
+      spriteSheet: "meteorito",
       pos: { x: 2850, y: 1875 }, // 500 1580
-      scale: { width: 0.2, height: 0.2 },
+      // scale: { width: 0.2, height: 0.2 },
       width: 400,
       height: 400,
-      fix: 250,
+      // fix: 250,
+      scene: this.scene,
+      frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 
       tween: {
         duration: 800,
         paused: false,
@@ -259,8 +266,8 @@ class Tutorial {
         y: "-=200",
       },
     };
-    const fireball = new Floor(this.scene, fireballConfig, this.fireballGroup)
-      .setAngularVelocity(30)
+    const fireball = new portal(this.scene, fireballConfig, this.fireballGroup).setScale(0.7)
+    // .setAngularVelocity(30)
     // .setOffset(220, 100);
 
     const coinConfig: FloorConfig = {

@@ -169,7 +169,7 @@ class Game extends Phaser.Scene {
       }
       this.monchi?.setFlipY(false);
       this.gravityDown = true;
-      this.monchi?.body?.setOffset(70, 100);
+      this.monchi?.body?.setOffset(0, 100);
       this.monchi?.setBounceY(0);
     }
   }
@@ -360,7 +360,7 @@ class Game extends Phaser.Scene {
       this.monchi?.setGravity(0);
       this.monchi?.setFlipY(false);
       this.gravityDown = true;
-      this.monchi?.body?.setOffset(70, 50);
+      this.monchi?.body?.setOffset(0, 100);
       this.monchi?.setBounceY(0);
     }
   }

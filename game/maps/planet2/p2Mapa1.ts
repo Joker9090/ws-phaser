@@ -9,6 +9,7 @@ import UIScene from "../../UIScene";
 import EventsCenter from "../../EventsCenter";
 import Player from "@/game/assets/Player";
 import portal, { portalConfig } from "@/game/assets/portal";
+import Bottom, { bottomConfig } from "@/game/assets/Bottom";
 // Scene in class
 class p2Mapa1 {
     isJumping = false;
@@ -43,6 +44,7 @@ class p2Mapa1 {
     background5: Phaser.GameObjects.Image
     background6: Phaser.GameObjects.Image
     background7: Phaser.GameObjects.Image
+    background8: any;
     aura?: Phaser.Physics.Arcade.Group;
     UIScene?: UIScene;
     monchi: Player;
@@ -88,45 +90,28 @@ class p2Mapa1 {
 
         this.background = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "bg1Lvl1")
-            .setOrigin(0.5, 0.5);
+            .setOrigin(0.5, 0.5).setScale(1, 1.7);
         this.background2 = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "bg2Lvl1")
-            .setOrigin(0.5, 0.5);
+            .setOrigin(0.5, 0.5).setScale(1, 1.7);
         this.background3 = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "bg3Lvl1")
-            .setOrigin(0.5, 0.5);
+            .setOrigin(0.5, 0.5).setScale(1, 1.7);
         this.background4 = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "bg4Lvl1")
-            .setOrigin(0.5, 0.5);
+            .setOrigin(0.5, 0.5).setScale(1, 1.7);
         this.background5 = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "bg5Lvl1")
-            .setOrigin(0.5, 0.5);
+            .setOrigin(0.5, 0.5).setScale(1, 1.7);
         this.background6 = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "bg6Lvl1")
-            .setOrigin(0.5, 0.5);
+            .setOrigin(0.5, 0.5).setScale(1, 1.7);
         this.background7 = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "filtroFondo")
-            .setOrigin(0.5, 0.5).setScale(2, 2);
+            .setOrigin(0.5, 0.5).setScale(1, 1.7);
 
     }
-    // scaleBg() {
-    //   if (this.scene.cameras.main.displayWidth >= 2000) {
-    //     this.background.displayHeight = this.scene.cameras.main.displayHeight * 1.6
-    //     this.background.displayWidth = this.scene.cameras.main.displayWidth * 1.6
-    //     this.background2.displayHeight = this.scene.cameras.main.displayHeight * 1.6
-    //     this.background2.displayWidth = this.scene.cameras.main.displayWidth * 1.6
-    //     this.background3.displayHeight = this.scene.cameras.main.displayHeight * 1.6
-    //     this.background3.displayWidth = this.scene.cameras.main.displayWidth * 1.6
-    //     this.background4.displayHeight = this.scene.cameras.main.displayHeight * 1.6
-    //     this.background4.displayWidth = this.scene.cameras.main.displayWidth * 1.6
-    //     this.background5.displayHeight = this.scene.cameras.main.displayHeight * 1.6
-    //     this.background5.displayWidth = this.scene.cameras.main.displayWidth * 1.6
-    //     this.background6.displayHeight = this.scene.cameras.main.displayHeight * 1.6
-    //     this.background6.displayWidth = this.scene.cameras.main.displayWidth * 1.6
-    //   } else {
-    //     return null
-    //   }
-    // }
+
     animateBackground(player: Phaser.GameObjects.Sprite) {
         const { x, y } = this.startingPoint;
         const { x: x2, y: y2 } = player;
@@ -134,15 +119,12 @@ class p2Mapa1 {
         const calcDiffY = (y2 - y - this.scene.cameras.main.displayHeight / 6) / 1;
         this.background.setPosition(x + calcDiffX, y + calcDiffY);
         this.background2.setPosition(x + calcDiffX, y + calcDiffY);
-        this.background3.setPosition(x + calcDiffX + 600, y + calcDiffY).setScale(0.7);
-        this.background4.setPosition(x + calcDiffX - 500, y + calcDiffY).setScale(0.7);
+        this.background3.setPosition(x + calcDiffX + 600, y + calcDiffY);
+        this.background4.setPosition(x + calcDiffX - 500, y + calcDiffY);
         this.background5.setPosition(x + calcDiffX, y + calcDiffY).setDepth(2);
-        this.background6.setPosition(x + calcDiffX - 800, y + calcDiffY).setDepth(3);
+        this.background6.setPosition(x + calcDiffX - 800, y + calcDiffY + 200).setScale(0.7).setDepth(3);
         this.background7.setPosition(x + calcDiffX, y + calcDiffY).setDepth(4);
-
-
-        // this.background7.setPosition(x + calcDiffX, y + calcDiffY);
-        // this.background8.setPosition(x + calcDiffX, y + calcDiffY);
+        this.background8.setPosition(x + calcDiffX - 900, y + calcDiffY + 670).setDepth(2);
     }
 
     createMap(data: { level: number; lifes: number }) {
@@ -160,7 +142,7 @@ class p2Mapa1 {
         this.fireballGroup = this.scene.physics.add.group({ allowGravity: false });
         this.portalInit = this.scene.physics.add.group({ allowGravity: false });
         this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
-        const aura = this.scene.add.sprite(2970, 1100, "auraLvl1").setScale(0.6)
+        const aura = this.scene.add.sprite(2970, 1100, "auraLvl1").setScale(0.6).setDepth(99)
 
         this.aura.add(aura)
         this.scene.tweens.add({
@@ -180,16 +162,32 @@ class p2Mapa1 {
             // scale: { width: 0.1, height: 0.1 },
             width: 1000,
             height: 1500,
-            collected: this.collected,
-            scene: this.scene
+            collected: true,
+            scene: this.scene,
+            frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
         };
 
         const portInicio = new portal(
             this.scene,
             portalInicioConfig,
             this.portalInit
-        ).setDepth(1);
+        ).setDepth(3);
 
+        const bottomConfig: LargeFloorConfig = {
+            pos: { x: -100, y: this.startingPoint.y + 600 },
+            textureA: "texturaPiso",
+            textureB: "texturaPiso",
+            scale: { width: 0.5, height: 0.5 },
+            rotated: false,
+            width: 234,
+            height: 246,
+            gap: -320,
+            fix: 0,
+            large: this.scene.cameras.main.width,
+            planeta: 2,
+            noBody: true
+        };
+        this.background8 = new LargeFloor(this.scene, bottomConfig, this.pisos)
         const p1Config: LargeFloorConfig = {
             pos: { x: 370, y: 1650 },
             textureA: "plataformaInicioLvl1",
@@ -261,13 +259,13 @@ class p2Mapa1 {
 
         const p6Config: FloorConfig = {
             texture: "plataformaLvl1",
-            pos: { x: 2600, y: 900 }, //3550 700
+            pos: { x: 2500, y: 900 }, //3550 700
             scale: { width: 0.3, height: 0.3 },
             width: 425,
             height: 205,
             inverted: true
         };
-        const p6 = new Floor(this.scene, p6Config, this.pisos3).setTint(
+        const p6 = new Floor(this.scene, p6Config, this.pisos).setTint(
             Phaser.Display.Color.GetColor(255, 101, 0)
         ).setVelocityX(400);
         this.scene.tweens.add({
@@ -321,13 +319,15 @@ class p2Mapa1 {
 
         /* Portal, Coin, Fireball and Asteroids */
 
-        const fireballConfig: FloorConfig = {
-            texture: "fireball",
+        const fireballConfig: portalConfig = {
+            spriteSheet: "meteorito",
             pos: { x: 3600, y: 1100 }, // 500 1580
-            scale: { width: 0.2, height: 0.2 },
+            // scale: { width: 0.2, height: 0.2 },
             width: 400,
             height: 400,
-            fix: 250,
+            // fix: 250,
+            scene: this.scene,
+            frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
             tween: {
                 duration: 4500,
                 paused: false,
@@ -347,13 +347,13 @@ class p2Mapa1 {
             width: 1000,
             height: 1500,
             collected: true,
-            scene: this.scene
+            scene: this.scene,
+            frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
         };
 
         const port = new portal(this.scene, portalConfig, this.portal)
             // .setRotation(Math.PI / 2)
             .setSize(800, 1400);
-
 
         const coinConfig: FloorConfig = {
             texture: "cristalLvl1",

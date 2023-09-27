@@ -16,7 +16,7 @@ class p3Mapa1 {
     scene: Game;
     worldSize = {
         width: 4500,
-        height: 3800,
+        height: 4500,
     };
     // normales
     pisos?: Phaser.Physics.Arcade.Group;
@@ -174,7 +174,7 @@ class p3Mapa1 {
         this.background8.setPosition(x + calcDiffX, y + calcDiffY);
         this.background9.setPosition(x - 700 + calcDiffX, y + calcDiffY + 200).setScale(2);
         this.background10.setPosition(x - 400 + calcDiffX, y + calcDiffY + 300).setScale(2);
-        this.background11.setPosition(x + calcDiffX - 300, y + calcDiffY + 600).setScale(2);
+        this.background11.setPosition(x + calcDiffX - 300, y + calcDiffY + 800);
         this.background12.setPosition(x + calcDiffX + 200, y + calcDiffY - 200).setScale(2);
         this.background13.setPosition(x + calcDiffX + 111, y + calcDiffY - 150).setScale(2);
         this.background14.setPosition(x + calcDiffX + 320, y + calcDiffY);
@@ -222,6 +222,7 @@ class p3Mapa1 {
             height: 1500,
             scene: this.scene,
             collected: true,
+            frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
         };
 
         const portInicio = new portal(
@@ -257,7 +258,7 @@ class p3Mapa1 {
         const p3Config: FloorConfig = {
             texture: "plataformaLvl2",
             pos: { x: 1400, y: 450 },
-            scale: { width: 0.3, height: 0.7 },
+            scale: { width: 0.6, height: 0.7 },
             width: 390,
             height: 50,
             rotated: false,
@@ -291,7 +292,9 @@ class p3Mapa1 {
                 y: "+=300",
             }
         };
-        const p5 = new Floor(this.scene, p5Config, this.pisos3).setDepth(2)
+        const p5 = new Floor(this.scene, p5Config, this.pisos3).setDepth(2).setTint(
+            Phaser.Display.Color.GetColor(255, 101, 0)
+        );
         const p6Config: FloorConfig = {
             texture: "plataformaLvl2",
             pos: { x: 2300, y: 800 },
@@ -302,7 +305,9 @@ class p3Mapa1 {
             inverted: true,
 
         };
-        const p6 = new Floor(this.scene, p6Config, this.pisos4).setDepth(2)
+        const p6 = new Floor(this.scene, p6Config, this.pisos4).setDepth(2).setTint(
+            Phaser.Display.Color.GetColor(255, 101, 0)
+        );
 
         // const p7Config: FloorConfig = {
         //     texture: "plataformaLarga2",
@@ -347,7 +352,9 @@ class p3Mapa1 {
             width: 490,
             // rotated: true,
         };
-        const p12 = new Floor(this.scene, p12Config, this.pisos).setDepth(2)
+        const p12 = new Floor(this.scene, p12Config, this.pisos).setDepth(2).setTint(
+            Phaser.Display.Color.GetColor(255, 101, 0)
+        );
 
 
         const p10Config: FloorConfig = {
@@ -366,7 +373,7 @@ class p3Mapa1 {
             textureB: "plataformaLvl2",
             large: 1,
             gap: 0,
-            pos: { x: 3400, y: 50 },
+            pos: { x: 3400, y: 150 },
             scale: { width: 0.7, height: 0.7 },
             width: 380,
             fix: 20,
@@ -378,13 +385,14 @@ class p3Mapa1 {
 
         const portalConfig: portalConfig = {
             spriteSheet: "portal3",
-            pos: { x: 2900, y: 10 },
+            pos: { x: 2900, y: 200 },
             // scale: { width: 0.1, height: 0.1 },
             width: 1000,
             height: 1500,
             // rotated: true
             scene: this.scene,
-            collected: this.collected
+            collected: this.collected,
+            frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
         };
 
         const port = new portal(this.scene, portalConfig, this.portal).setDepth(2)

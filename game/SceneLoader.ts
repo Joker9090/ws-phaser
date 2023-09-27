@@ -99,7 +99,12 @@ const loadAssets = {
         "portal4",
         "/game/portal4.png",
         { frameWidth: 100, frameHeight: 150 },
-      ],
+      ], [
+        "spritesheet",
+        "meteorito",
+        "/game/meteorito.png",
+        { frameWidth: 140, frameHeight: 300 },
+      ]
     ],
   },
   Scenes: {
@@ -330,7 +335,7 @@ class SceneLoader extends Phaser.Scene {
   create(this: SceneLoader, { level }: any) {
     // this.scene.start("Sandbox", { data: 1 });
     // this.scene.start("Menu", { data: 1 });
-    this.scene.start("Game", { level: 1, lifes: 3 });
+    this.scene.start("Game", { level: 3, lifes: 3 });
   }
 
   update(this: SceneLoader) {

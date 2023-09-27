@@ -195,7 +195,8 @@ class sMapa2 {
             width: 1000,
             height: 1500,
             scene: this.scene,
-            collected: true
+            collected: true,
+            frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
         };
 
         const portInicio = new portal(
@@ -366,7 +367,8 @@ class sMapa2 {
             width: 1000,
             height: 1500,
             scene: this.scene,
-            collected: this.collected
+            collected: this.collected,
+            frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
         };
 
         const port = new portal(this.scene, portalConfig, this.portal)

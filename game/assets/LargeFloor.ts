@@ -25,7 +25,8 @@ export type LargeFloorConfig = {
   gap: number;
   planeta?: number;
   inverted?: boolean;
-  invertedOffset?: number
+  invertedOffset?: number,
+  noBody?: boolean,
 };
 // Scene in class
 class LargeFloor extends Phaser.GameObjects.Container {
@@ -70,7 +71,7 @@ class LargeFloor extends Phaser.GameObjects.Container {
           }
 
         }
-      }else if(config.planeta === 4){
+      } else if (config.planeta === 4) {
         for (let index = 1; index <= config.large; index++) {
 
           if (index === 1) {
@@ -83,13 +84,13 @@ class LargeFloor extends Phaser.GameObjects.Container {
             const s = scene.add.sprite(index * width + this.gap + 42, 0, config.textureB);
             this.add(s)
             if (config.scale) {
-              s.setScale(config.scale?.width + 0.34, config.scale?.height +0.30)
+              s.setScale(config.scale?.width + 0.34, config.scale?.height + 0.30)
             }
           }
 
         }
       }
-       else {
+      else {
         for (let index = 1; index <= config.large; index++) {
 
           if (index === 1) {
@@ -129,24 +130,29 @@ class LargeFloor extends Phaser.GameObjects.Container {
     if (this.body) {
 
       const body = this.body as Phaser.Physics.Arcade.Body;
-
-      body.setImmovable(true);
-      // hitboxes largefloors
-      if (rota) {
-        body.setOffset(-50, -200);
+      if (config.noBody) {
+        body.setSize(0, 0)
       } else {
-        body.setOffset(-200, -50);
-      }
+        body.setImmovable(true);
+        // hitboxes largefloors
+        if (rota) {
+          body.setOffset(-50, -200);
+        } else {
+          body.setOffset(-200, -50);
+        }
 
-      if (rota && body) {
-        body.setSize(height + fix, width * config.large);
-        this.setRotation(Math.PI / 2);
-      } else if (config.inverted && config.invertedOffset) {
-        body.setSize(width * config.large + fix, height + fix).setOffset(config.invertedOffset, -130);
-        this.setRotation(Math.PI);
-      }
-      else {
-        body.setSize(width * config.large + fix, height + fix).setOffset(-160, -130);
+        if (rota && body) {
+          body.setSize(height + fix, width * config.large);
+          this.setRotation(Math.PI / 2);
+        } else if (config.inverted && config.invertedOffset) {
+          body.setSize(width * config.large + fix, height + fix).setOffset(config.invertedOffset, -130);
+          this.setRotation(Math.PI);
+        }
+        else if (config.planeta != 1) {
+          body.setSize(width * config.large + fix, height + fix).setOffset(-160, -130);
+        } else {
+          body.setSize(width * config.large + fix, height + fix)
+        }
       }
 
     }

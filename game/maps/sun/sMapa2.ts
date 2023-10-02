@@ -192,8 +192,8 @@ class sMapa2 {
             spriteSheet: "portal4",
             pos: { x: 390, y: 1300 },
             // scale: { width: 0.1, height: 0.1 },
-            width: 1000,
-            height: 1500,
+            width: 100,
+            height: 200,
             scene: this.scene,
             collected: true,
             frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
@@ -360,21 +360,21 @@ class sMapa2 {
         /* Portal, Coin, Fireball and Asteroids */
 
 
-        const portalConfig: portalConfig = {
+        const portalConfig: FloorConfig = {
             spriteSheet: "portal4",
+            texture: "portal4",
             pos: { x: this.startingPoint.x + 2000, y: this.startingPoint.y + 1000 },
-            // scale: { width: 0.1, height: 0.1 },
-            width: 1000,
-            height: 1500,
-            scene: this.scene,
-            collected: this.collected,
+            // scale: { width: 0.8, height: 0.8 },
+            // pos: { x: this.startingPoint.x, y: this.startingPoint.y },
+            width: 100,
+            height: 100,
+            // scene: this.scene,
+            // collected: this.collected,
             frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
         };
 
-        const port = new portal(this.scene, portalConfig, this.portal)
+        const port = new Floor(this.scene, portalConfig, this.portal)
             .setRotation(Math.PI / 2)
-            .setSize(1400, 800);
-
         const c1Config: AsteroidGeneratorConfig = {
             texture: "asteroid",
             x: -100,

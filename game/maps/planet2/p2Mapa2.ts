@@ -10,8 +10,8 @@ class p2Mapa2 {
     isJumping = false;
     scene: Game;
     worldSize = {
-        width: 4500,
-        height: 4500
+        width: 6500,
+        height: 6500
     };
     checkPointPos = {
         x: 400,
@@ -91,11 +91,10 @@ class p2Mapa2 {
         this.background3.setPosition(x + calcDiffX + 600, y + calcDiffY);
         this.background4.setPosition(x + calcDiffX - 500, y + calcDiffY);
         this.background5.setPosition(x + calcDiffX, y + calcDiffY).setDepth(2);
-        this.background6.setPosition(x + calcDiffX - 800, y + calcDiffY + 200).setScale(0.7).setDepth(3);
+        this.background6.setPosition(x + calcDiffX - 800, y + calcDiffY + 220).setScale(0.7).setDepth(3);
         this.background7.setPosition(x + calcDiffX, y + calcDiffY).setDepth(4);
-        this.background8.setPosition(x + calcDiffX - 900, y + calcDiffY + 670).setDepth(2);
+        this.background8.setPosition(x + calcDiffX - 900, y + calcDiffY + 700).setDepth(2);
     }
-
     addColliders() {
         if (this.scene.monchi) {
             if (this.fireballGroup)
@@ -183,7 +182,7 @@ class p2Mapa2 {
         this.fireballGroup = this.scene.physics.add.group({ allowGravity: false });
         this.portalInit = this.scene.physics.add.group({ allowGravity: false });
         this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
-        const aura = this.scene.add.sprite(this.startingPoint.x + 100, this.startingPoint.y - 1420, "auraLvl1").setScale(0.6)
+        const aura = this.scene.add.sprite(this.startingPoint.x + 100, this.startingPoint.y - 1220, "auraLvl1").setScale(0.6)
         this.aura.add(aura)
         this.scene.tweens.add({
             targets: aura,
@@ -198,7 +197,7 @@ class p2Mapa2 {
 
         const portalInicioConfig: portalConfig = {
             spriteSheet: "portal2",
-            pos: { x: this.startingPoint.x - 50, y: this.startingPoint.y - 100 },
+            pos: { x: this.startingPoint.x - 50, y: this.startingPoint.y +100 },
             // scale: { width: 0.1, height: 0.1 },
             width: 800,
             height: 1400,
@@ -215,7 +214,7 @@ class p2Mapa2 {
 
 
         const bottomConfig: LargeFloorConfig = {
-            pos: { x: -100, y: this.startingPoint.y + 600 },
+            pos: { x: -100, y: this.startingPoint.y + 800 },
             textureA: "texturaPiso",
             textureB: "texturaPiso",
             scale: { width: 0.5, height: 0.5 },
@@ -232,7 +231,7 @@ class p2Mapa2 {
 
         const p1Config: FloorConfig = {
             texture: "plataformaLvl1",
-            pos: { x: startingPoint.x, y: startingPoint.y + 150 },
+            pos: { x: startingPoint.x, y: startingPoint.y + 350 },
             scale: { width: 0.5, height: 0.7 },
             rotated: false,
             width: 400,
@@ -248,13 +247,13 @@ class p2Mapa2 {
             height: 400,
             fix: 100,
             // inverted:true,
-            pos: { x: startingPoint.x + 700, y: startingPoint.y - 290 },
+            pos: { x: startingPoint.x + 700, y: startingPoint.y - 90 },
             // scale: { width: 0.5, height: 0.7 },
         };
         const p2 = new Floor(this.scene, p2Config, this.pisos).setFlipY(true);
         const p3Config: FloorConfig = {
             texture: "plataformaLvl1",
-            pos: { x: startingPoint.x + 200, y: startingPoint.y - 820 },
+            pos: { x: startingPoint.x + 200, y: startingPoint.y - 620 },
             scale: { width: 0.3, height: 0.3 },
             width: 245,
             height: 425,
@@ -264,7 +263,7 @@ class p2Mapa2 {
         const p3 = new Floor(this.scene, p3Config, this.pisos);
         const p4Config: FloorConfig = {
             texture: "plataformaLvl1",
-            pos: { x: startingPoint.x + 200, y: startingPoint.y - 1220 },
+            pos: { x: startingPoint.x + 200, y: startingPoint.y - 1020 },
             scale: { width: 0.3, height: 0.3 },
             width: 245,
             height: 425,
@@ -275,7 +274,7 @@ class p2Mapa2 {
 
         const p5Config: FloorConfig = {
             texture: "plataformaLvl1",
-            pos: { x: startingPoint.x + 1300, y: startingPoint.y - 1320 },
+            pos: { x: startingPoint.x + 1300, y: startingPoint.y - 1120 },
             scale: { width: 0.3, height: 0.3 },
             width: 245,
             height: 425,
@@ -285,7 +284,7 @@ class p2Mapa2 {
 
         const p6Config: FloorConfig = {
             texture: "plataformaLvl1",
-            pos: { x: startingPoint.x + 1600, y: startingPoint.y - 820 },
+            pos: { x: startingPoint.x + 1600, y: startingPoint.y - 620 },
             scale: { width: 0.3, height: 0.3 },
             width: 245,
             height: 425,
@@ -295,7 +294,7 @@ class p2Mapa2 {
 
         const p7Config: FloorConfig = {
             texture: "plataformaLvl1",
-            pos: { x: startingPoint.x + 1000, y: startingPoint.y - 520 },
+            pos: { x: startingPoint.x + 1000, y: startingPoint.y - 320 },
             scale: { width: 0.3, height: 0.3 },
             width: 245,
             height: 425,
@@ -305,7 +304,7 @@ class p2Mapa2 {
 
         const p8Config: FloorConfig = {
             texture: "plataformaLvl1",
-            pos: { x: startingPoint.x + 1800, y: startingPoint.y - 120 },
+            pos: { x: startingPoint.x + 1800, y: startingPoint.y +80},
             scale: { width: 0.3, height: 0.3 },
             width: 245,
             height: 425,
@@ -314,31 +313,34 @@ class p2Mapa2 {
         };
         const p8 = new Floor(this.scene, p8Config, this.pisos).setFlipY(true);
 
-        const fireballConfig: portalConfig = {
+        const fireballConfig: FloorConfig = {
             spriteSheet: "meteorito",
-            pos: { x: startingPoint.x + 1600, y: startingPoint.y - 1120 }, // 500 1580
+            texture: "meteorito",
+            pos: { x: this.worldSize.width + 200, y: startingPoint.y - 980 }, // 500 1580
             // scale: { width: 0.2, height: 0.2 },
-            width: 400,
-            height: 400,
+            width: 200,
+            height: 100,
             // fix: 250,
-            scene: this.scene,
+            // scene: this.scene,
             frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
             tween: {
-                duration: 1500,
+                duration: 2900,
                 paused: false,
-                yoyo: true,
+                // yoyo: true,
                 repeat: -1,
-                x: "-=700",
+                x: "-=6500",
+                scaleX: 0.3,
+                scaleY: 0.3
             },
         };
 
-        const fireball = new portal(this.scene, fireballConfig, this.fireballGroup)
+        const fireball = new Floor(this.scene, fireballConfig, this.fireballGroup).setRotation(Math.PI / 2).setScale(2)
         // .setAngularVelocity(30)
         // .setOffset(220, 100);
 
         const coinConfig: FloorConfig = {
             texture: "cristalLvl1",
-            pos: { x: this.startingPoint.x + 100, y: this.startingPoint.y - 1420, },
+            pos: { x: this.startingPoint.x + 100, y: this.startingPoint.y - 1220, },
             scale: { width: 0.15, height: 0.15 },
             width: 10,
             height: 18,
@@ -347,18 +349,19 @@ class p2Mapa2 {
 
         this.cristal = new Floor(this.scene, coinConfig, this.coin).setBodySize(140, 180);
 
-        const portalConfig: portalConfig = {
+        const portalConfig: FloorConfig = {
             spriteSheet: "portal2",
-            pos: { x: startingPoint.x + 1600, y: startingPoint.y - 120 },
+            texture: "portal2",
+            pos: { x: startingPoint.x + 1600, y: startingPoint.y - 80 },
             // scale: { width: 0.1, height: 0.1 },
-            width: 800,
-            height: 1400,
-            scene: this.scene,
-            collected: this.collected,
+            width: 100,
+            height: 200,
+            // scene: this.scene,
+            // collected: this.collected,
             frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
         };
 
-        const port = new portal(this.scene, portalConfig, this.portal);
+        const port = new Floor(this.scene, portalConfig, this.portal);
 
 
 

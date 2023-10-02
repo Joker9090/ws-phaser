@@ -122,9 +122,9 @@ class p2Mapa1 {
         this.background3.setPosition(x + calcDiffX + 600, y + calcDiffY);
         this.background4.setPosition(x + calcDiffX - 500, y + calcDiffY);
         this.background5.setPosition(x + calcDiffX, y + calcDiffY).setDepth(2);
-        this.background6.setPosition(x + calcDiffX - 800, y + calcDiffY + 200).setScale(0.7).setDepth(3);
+        this.background6.setPosition(x + calcDiffX - 800, y + calcDiffY + 220).setScale(0.7).setDepth(3);
         this.background7.setPosition(x + calcDiffX, y + calcDiffY).setDepth(4);
-        this.background8.setPosition(x + calcDiffX - 900, y + calcDiffY + 670).setDepth(2);
+        this.background8.setPosition(x + calcDiffX - 900, y + calcDiffY + 700).setDepth(2);
     }
 
     createMap(data: { level: number; lifes: number }) {
@@ -156,18 +156,19 @@ class p2Mapa1 {
         // this.scene.cameras.main.shake(2000, 0.05);
         /* Platforms */
 
-        const portalInicioConfig: portalConfig = {
+        const portalInicioConfig: FloorConfig = {
             spriteSheet: "portal2",
+            texture: "portal2",
             pos: { x: 400, y: 1300 },
             // scale: { width: 0.1, height: 0.1 },
-            width: 1000,
-            height: 1500,
-            collected: true,
-            scene: this.scene,
+            width: 100,
+            height: 100,
+            // collected: true,
+            // scene: this.scene,
             frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
         };
 
-        const portInicio = new portal(
+        const portInicio = new Floor(
             this.scene,
             portalInicioConfig,
             this.portalInit
@@ -319,41 +320,42 @@ class p2Mapa1 {
 
         /* Portal, Coin, Fireball and Asteroids */
 
-        const fireballConfig: portalConfig = {
+        const fireballConfig: FloorConfig = {
             spriteSheet: "meteorito",
-            pos: { x: 3600, y: 1100 }, // 500 1580
+            texture: "meteorito",
+            pos: { x: this.worldSize.width + 100, y: 980 }, // 500 1580
             // scale: { width: 0.2, height: 0.2 },
-            width: 400,
-            height: 400,
+            width: 200,
+            height: 100,
             // fix: 250,
-            scene: this.scene,
+            // scene: this.scene,
             frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
             tween: {
                 duration: 4500,
                 paused: false,
-                yoyo: true,
+                // yoyo: true,
                 repeat: -1,
-                x: "-=2300",
+                x: "-=4800",
             },
         };
-        // const fireball = new Floor(this.scene, fireballConfig, this.fireballGroup)
+        const fireball = new Floor(this.scene, fireballConfig, this.fireballGroup).setRotation(Math.PI / 2).setScale(0.5)
         //     .setAngularVelocity(30)
 
 
-        const portalConfig: portalConfig = {
+        const portalConfig: FloorConfig = {
             spriteSheet: "portal2",
+            texture: "portal2",
+
             pos: { x: 4000, y: 2750 },
             // scale: { width: 0.1, height: 0.1 },
-            width: 1000,
-            height: 1500,
-            collected: true,
-            scene: this.scene,
+            width: 100,
+            height: 100,
+            // collected: this.collected,
+            // scene: this.scene,
             frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
         };
 
-        const port = new portal(this.scene, portalConfig, this.portal)
-            // .setRotation(Math.PI / 2)
-            .setSize(800, 1400);
+        const port = new Floor(this.scene, portalConfig, this.portal);
 
         const coinConfig: FloorConfig = {
             texture: "cristalLvl1",
@@ -365,7 +367,7 @@ class p2Mapa1 {
             fix: 10,
         };
 
-        this.cristal = new Floor(this.scene, coinConfig, this.coin).setBodySize(140, 180);
+        this.cristal = new Floor(this.scene, coinConfig, this.coin)
 
         // this.scene.cameras.main.shake(2000, 0.01);
     }

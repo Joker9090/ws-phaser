@@ -318,16 +318,17 @@ class Mapa2 {
     //   width: 1000,
     //   height: 1500,
     // };
-    const portalConfig: portalConfig = {
+    const portalConfig: FloorConfig = {
       spriteSheet: "portal1",
+      texture: "portal1",
       width: 1400,
       height: 800,
       pos: { x: 2220, y: 150 + 2150 },
-      scene: this.scene,
-      collected: this.collected,
+      // scene: this.scene,
+      // collected: this.collected,
       frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
     }
-    const port = new portal(this.scene, portalConfig, this.portal)
+    const port = new Floor(this.scene, portalConfig, this.portal)
       .setRotation(Math.PI / 2)
 
     const portalInicioConfig: portalConfig = {
@@ -343,24 +344,27 @@ class Mapa2 {
 
     const portInicio = new portal(this.scene, portalInicioConfig, this.portal).setDepth(1);
 
-    const fireballConfig: portalConfig = {
+    const fireballConfig: FloorConfig = {
       spriteSheet: "meteorito",
-      pos: { x: 1910, y: 150 + 1450 }, // 500 1580
+      texture: "meteorito",
+      pos: { x: this.worldSize.width + 200, y: 1700 }, // 500 1580
       // scale: { width: 0.2, height: 0.2 },
-      width: 400,
-      height: 400,
+      width: 200,
+      height: 100,
       // fix: 250,
+
       tween: {
-        duration: 800,
+        duration: 1900,
         paused: false,
-        yoyo: true,
+        // yoyo: true,
         repeat: -1,
-        y: "-=200",
+        x: "-=4000",
       },
-      scene: this.scene,
+      // scene: this.scene,
       frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
     };
-    const fireball = new portal(this.scene, fireballConfig, this.fireballGroup)
+    const fireball = new Floor(this.scene, fireballConfig, this.fireballGroup).setRotation(Math.PI / 2)
+
     const coinConfig: FloorConfig = {
       texture: "coin",
       pos: { x: 1000, y: 1355 }, // 500 1580
@@ -432,8 +436,8 @@ class Mapa2 {
           this.scene.monchi,
           this.portal,
           // () => this.scene.win("Congrats! You've finished the tutorial"),
-          () => this.scene.winLevel(3)
-          , () => true,
+          () => this.scene.winLevel(3),
+          () => true,
           this.scene
         );
     }

@@ -350,96 +350,101 @@ class sMapa3 {
         /* Portal, Coin, Fireball and Asteroids */
 
 
-        const fireballConfig: portalConfig = {
+        const fireballConfig: FloorConfig = {
             spriteSheet: "meteorito",
-            pos: { x: this.startingPoint.x + 500, y: this.startingPoint.y + 1400 }, // 500 1580
+            texture: "meteorito",
+            pos: { x: this.startingPoint.x + 500, y: this.startingPoint.y -3000}, // 500 1580
             // scale: { width: 0.2, height: 0.2 },
-            width: 200,
+            width: 100,
             height: 200,
             // fix: 250,
-            scene: this.scene,
+            // scene: this.scene,
             frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
             tween: {
-                duration: 1600,
+                duration: 6000,
                 paused: false,
-                yoyo: true,
+                // yoyo: true,
                 repeat: -1,
-                y: "-=1300",
+                y: "+=9000",
             },
         };
-        const fireball = new portal(this.scene, fireballConfig, this.fireballGroup)
+        const fireball = new Floor(this.scene, fireballConfig, this.fireballGroup)
 
 
-        const fireballConfig2: portalConfig = {
+        const fireballConfig2: FloorConfig = {
             spriteSheet: "meteorito",
-            pos: { x: this.startingPoint.x + 1100, y: this.startingPoint.y }, // 500 1580
+            texture: "meteorito",
+            pos: { x: this.startingPoint.x + 1100, y: this.startingPoint.y - 2000 }, // 500 1580
             // scale: { width: 0.2, height: 0.2 },
-            width: 200,
+            width: 100,
             height: 200,
             // fix: 250,
-            scene: this.scene,
+            // scene: this.scene,
             frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
             tween: {
                 duration: 1700,
                 paused: false,
-                yoyo: true,
+                // yoyo: true,
                 repeat: -1,
-                y: "+=1300",
+                y: "+=4300",
             },
         };
-        const fireball2 = new portal(this.scene, fireballConfig2, this.fireballGroup)
+        const fireball2 = new Floor(this.scene, fireballConfig2, this.fireballGroup)
 
-        const fireballConfig3: portalConfig = {
+        const fireballConfig3: FloorConfig = {
             spriteSheet: "meteorito",
+            texture: "meteorito",
             pos: { x: this.startingPoint.x + 1600, y: this.startingPoint.y }, // 500 1580
             // scale: { width: 0.2, height: 0.2 },
-            width: 200,
+            width: 100,
             height: 200,
             // fix: 250,
-            scene: this.scene,
+            // scene: this.scene,
             frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
             tween: {
                 duration: 1800,
                 paused: false,
-                yoyo: true,
+                // yoyo: true,
                 repeat: -1,
                 y: "+=1300",
             },
         };
-        const fireball3 = new portal(this.scene, fireballConfig3, this.fireballGroup)
+        // const fireball3 = new Floor(this.scene, fireballConfig3, this.fireballGroup)
 
 
 
-        const fireballConfig4: portalConfig = {
+        const fireballConfig4: FloorConfig = {
             spriteSheet: "meteorito",
-            pos: { x: this.startingPoint.x + 2300, y: this.startingPoint.y }, // 500 1580
+            texture: "meteorito",
+            pos: { x: this.startingPoint.x + 2300, y: this.worldSize.height - 140 }, // 500 1580
             // scale: { width: 0.2, height: 0.2 },
-            width: 200,
+            width: 100,
             height: 200,
             // fix: 250,
-            scene: this.scene,
+            // scene: this.scene,
             frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
             tween: {
                 duration: 1790,
                 paused: false,
-                yoyo: true,
+                // yoyo: true,
                 repeat: -1,
-                y: "+=1300",
+                y: "+=3000",
             },
         };
-        const fireball4 = new portal(this.scene, fireballConfig4, this.fireballGroup)
-        const portalConfig: portalConfig = {
-            spriteSheet: "portal",
+        const fireball4 = new Floor(this.scene, fireballConfig4, this.fireballGroup)
+        const portalConfig: FloorConfig = {
+            spriteSheet: "portal4",
+            texture: "portal4",
             pos: { x: this.startingPoint.x + 2830, y: this.startingPoint.y - 300 },
             // scale: { width: 0.1, height: 0.1 },
-            width: 1000,
-            height: 1500,
-            collected: this.collected,
-            scene: this.scene,
+            width: 100,
+            height: 200,
+            // collected: this.collected,
+            // scene: this.scene,
             frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
         };
 
-        const port = new portal(this.scene, portalConfig, this.portal)
+        const port = new Floor(this.scene, portalConfig, this.portal)
             .setRotation(Math.PI / 2)
             .setSize(1400, 800);
 

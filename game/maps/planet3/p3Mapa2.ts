@@ -403,39 +403,43 @@ class p3Mapa1 {
 
         /* Portal, Coin, Fireball and Asteroids */
 
-        const fireballConfig: portalConfig = {
+        const fireballConfig: FloorConfig = {
             spriteSheet: "meteorito",
-            pos: { x: this.startingPoint.x + 2110, y: this.startingPoint.y - 120 }, // 500 1580
+            texture: "meteorito",
+            pos: { x: this.startingPoint.x + 3020, y: this.worldSize.height }, // 500 1580
             // scale: { width: 0.2, height: 0.2 },
-            width: 200,
+            width: 100,
             height: 200,
             // fix: 250,
-            scene:this.scene,
-            frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 
+            // scene: this.scene,
+            frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
             tween: {
-                duration: 800,
+                duration: 3800,
                 paused: false,
-                yoyo: true,
+                // yoyo: true,
                 repeat: -1,
-                x: "-=400",
+                y: "-=5000",
+                scaleX: 0.4,
+                scaleY: 0.4
             },
         };
-        const fireball = new portal(this.scene, fireballConfig, this.fireballGroup)
-            // .setAngularVelocity(30)
+        const fireball = new Floor(this.scene, fireballConfig, this.fireballGroup).setRotation(Math.PI).setScale(1.7)
+        // .setAngularVelocity(30)
         // .setOffset(220, 100);
 
-        const portalConfig: portalConfig = {
+        const portalConfig: FloorConfig = {
             spriteSheet: "portal3",
+            texture: "portal3",
             pos: { x: this.startingPoint.x + 4000, y: this.startingPoint.y + 500 },
             // scale: { width: 0.1, height: 0.1 },
-            width: 800,
-            height: 1400,
-            scene: this.scene,
-            collected: this.collected,
+            width: 100,
+            height: 200,
+            // scene: this.scene,
+            // collected: this.collected,
             frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
         };
 
-        const port = new portal(this.scene, portalConfig, this.portal)
+        const port = new Floor(this.scene, portalConfig, this.portal)
             // .setRotation(Math.PI / 2)
             ;
 

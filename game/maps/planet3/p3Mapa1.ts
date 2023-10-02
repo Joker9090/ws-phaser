@@ -383,19 +383,20 @@ class p3Mapa1 {
         const p11 = new LargeFloor(this.scene, p11Config, this.pisos).setDepth(2)
         /* Portal, Coin, Fireball and Asteroids */
 
-        const portalConfig: portalConfig = {
+        const portalConfig: FloorConfig = {
             spriteSheet: "portal3",
+            texture: "portal3",
             pos: { x: 2900, y: 200 },
             // scale: { width: 0.1, height: 0.1 },
             width: 1000,
             height: 1500,
             // rotated: true
-            scene: this.scene,
-            collected: this.collected,
+            // scene: this.scene,
+            // collected: this.collected,
             frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
         };
 
-        const port = new portal(this.scene, portalConfig, this.portal).setDepth(2)
+        const port = new Floor(this.scene, portalConfig, this.portal).setDepth(2)
             // .setRotation(Math.PI / 2)
             .setSize(800, 1400);
 

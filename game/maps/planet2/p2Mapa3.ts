@@ -118,12 +118,10 @@ class p2Mapa3 {
         this.background3.setPosition(x + calcDiffX + 600, y + calcDiffY);
         this.background4.setPosition(x + calcDiffX - 500, y + calcDiffY);
         this.background5.setPosition(x + calcDiffX, y + calcDiffY).setDepth(2);
-        this.background6.setPosition(x + calcDiffX - 800, y + calcDiffY + 200).setScale(0.7).setDepth(3);
+        this.background6.setPosition(x + calcDiffX - 800, y + calcDiffY + 220).setScale(0.7).setDepth(3);
         this.background7.setPosition(x + calcDiffX, y + calcDiffY).setDepth(4);
-        this.background8.setPosition(x + calcDiffX - 900, y + calcDiffY + 670).setDepth(2);
+        this.background8.setPosition(x + calcDiffX - 900, y + calcDiffY + 700).setDepth(2);
     }
-
-
     createMap(data: { level: number; lifes: number }) {
         console.log("cameras", this.scene.cameras.main)
         EventsCenter.emit("gravityArrow", "down");
@@ -139,7 +137,7 @@ class p2Mapa3 {
         this.fireballGroup = this.scene.physics.add.group({ allowGravity: false });
         this.portalInit = this.scene.physics.add.group({ allowGravity: false });
         this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
-        const aura = this.scene.add.sprite(2300, 1100, "auraLvl1").setScale(0.6)
+        const aura = this.scene.add.sprite(2300, 1100, "auraLvl1").setScale(0.6).setDepth(99)
         this.aura.add(aura)
         this.scene.tweens.add({
             targets: aura,
@@ -156,8 +154,8 @@ class p2Mapa3 {
             spriteSheet: "portal2",
             pos: { x: 400, y: 1300 },
             // scale: { width: 0.1, height: 0.1 },
-            width: 800,
-            height: 1400,
+            width: 100,
+            height: 200,
             collected: true,
             scene: this.scene,
             frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
@@ -318,18 +316,19 @@ class p2Mapa3 {
         const p11 = new Floor(this.scene, p11Config, this.pisos);
         /* Portal, Coin, Fireball and Asteroids */
 
-        const portalConfig: portalConfig = {
+        const portalConfig: FloorConfig = {
             spriteSheet: "portal2",
+            texture: "portal2",
             pos: { x: this.startingPoint.x + 3100, y: this.startingPoint.y - 200 },
             // scale: { width: 0.1, height: 0.1 },
-            width: 700,
-            height: 1500,
-            scene: this.scene,
-            collected: this.collected,
+            width: 50,
+            height: 100,
+            // scene: this.scene,
+            // collected: this.collected,
             frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
         };
 
-        const port = new portal(this.scene, portalConfig, this.portal);
+        const port = new Floor(this.scene, portalConfig, this.portal);
         // .setRotation(Math.PI / 2);
 
 

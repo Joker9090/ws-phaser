@@ -191,7 +191,7 @@ export default class LevelMap extends Phaser.Scene {
       .text(
         this.planetLevel2.x,
         this.planetLevel2.y + this.planetLevel2.displayHeight / 1.5,
-        "COMING SOON"
+        "candyLand"
       )
       .setOrigin(0.5)
       .setScale(1.2)
@@ -215,7 +215,7 @@ export default class LevelMap extends Phaser.Scene {
       .text(
         this.sun.x,
         this.sun.y + this.sun.displayHeight / 1.5,
-        "COMING SOON"
+        "CandyLand"
       )
       .setOrigin(0.5)
       .setScale(1.2)
@@ -238,7 +238,7 @@ export default class LevelMap extends Phaser.Scene {
       .text(
         this.planetLevel1.x,
         this.planetLevel1.y + this.planetLevel1.displayHeight / 1.8,
-        "COMING SOON"
+        "The swamps"
       )
       .setOrigin(0.5)
       .setScale(1.2)
@@ -261,7 +261,7 @@ export default class LevelMap extends Phaser.Scene {
       .text(
         this.planetTutorial.x,
         this.planetTutorial.y + this.planetTutorial.displayHeight / 1.8,
-        "Tutorial"
+        "Tutorialand"
       )
       .setOrigin(0.5)
       .setScale(1.2);

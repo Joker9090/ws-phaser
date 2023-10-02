@@ -237,36 +237,41 @@ class Tutorial {
     //   scale: { width: 0.8, height: 0.8 },
 
     // };
-    const portalConfig: portalConfig = {
+    const portalConfig: FloorConfig = {
       spriteSheet: "portal1",
-      width: 800,
-      height: 1400,
+      texture: "portal1",
+      width: 100,
+      height: 100,
       pos: { x: 3250, y: 1875 },
-      scene: this.scene,
-      collected: this.collected,
+      // scene: this.scene,
+      // collected: this.collected,
       frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
     }
 
-    const port = new portal(this.scene, portalConfig, this.portal)
+    const port = new Floor(this.scene, portalConfig, this.portal)
 
-    const fireballConfig: portalConfig = {
+    const fireballConfig: FloorConfig = {
+      texture: "meteorito",
       spriteSheet: "meteorito",
-      pos: { x: 2850, y: 1875 }, // 500 1580
-      // scale: { width: 0.2, height: 0.2 },
-      width: 400,
-      height: 400,
-      // fix: 250,
-      scene: this.scene,
-      frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 
+      pos: { x: 2850, y: 1222 }, // 500 1580
+      scale: { width: 0.8, height: 0.8 },
+      width: 100,
+      height: 0,
+      fix: 250,
+
+      // scene: this.scene,
+      frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
       tween: {
-        duration: 800,
+        duration: 1400,
         paused: false,
-        yoyo: true,
+        // yoyo: true,
         repeat: -1,
-        y: "-=200",
+        y: "+=2500",
+        scaleX: 0,
+        scaleY: 0
       },
     };
-    const fireball = new portal(this.scene, fireballConfig, this.fireballGroup).setScale(0.7)
+    const fireball = new Floor(this.scene, fireballConfig, this.fireballGroup)
     // .setAngularVelocity(30)
     // .setOffset(220, 100);
 
@@ -311,7 +316,7 @@ class Tutorial {
           () => true,
           this.scene
         );
-      if (this.portal) this.portal.setTint(0xff0000);
+
       if (this.fireballAct && this.scene.fireballActFun)
         this.scene.physics.add.overlap(
           this.scene.monchi,
@@ -352,6 +357,7 @@ class Tutorial {
           () => true,
           this.scene
         );
+      if (this.portal) this.portal.setTint(0xff0000)
       if (this.portal && this.scene.winTutorial)
         this.scene.physics.add.overlap(
           this.scene.monchi,

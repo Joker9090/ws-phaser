@@ -319,7 +319,7 @@ class Mapa1 {
       // height: 100,
       large: 1,
       gap: 0,
-      planeta:1
+      planeta: 1
     };
     const p6 = new LargeFloor(this.scene, p6Config, this.pisos);
 
@@ -351,7 +351,7 @@ class Mapa1 {
       rotated: false,
       gap: 0,
       fix: 0,
-      planeta:1
+      planeta: 1
     };
     const p8 = new LargeFloor(this.scene, p8Config, this.pisos);
 
@@ -375,7 +375,7 @@ class Mapa1 {
       fix: -20,
       pos: { x: 1500, y: 100 },
       scale: { width: 0.7, height: 0.7 },
-      planeta:1
+      planeta: 1
 
     };
 
@@ -455,7 +455,7 @@ class Mapa1 {
       pos: { x: 4800, y: 1700 },
       // pos: { x: 500, y: 600 },
       scale: { width: 0.7, height: 0.7 },
-      planeta:1
+      planeta: 1
 
     };
     const p14 = new LargeFloor(this.scene, p14Config, this.pisos);
@@ -551,17 +551,18 @@ class Mapa1 {
     );
 
     //Portal, Coin and Asteroids
-    const portalConfig: portalConfig = {
+    const portalConfig: FloorConfig = {
       spriteSheet: "portal1",
+      texture: "portal1",
       pos: { x: 5400, y: 1590 },
       // scale: { width: 0.1, height: 0.1 },
-      width: 1000,
-      height: 1500,
-      scene: this.scene,
-      collected: this.collected,
+      width: 100,
+      height: 100,
+      // scene: this.scene,
+      // collected: this.co0llected,
       frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
     };
-    const port = new portal(this.scene, portalConfig, this.portal);
+    const port = new Floor(this.scene, portalConfig, this.portal).setDepth(99);
 
     const coinConfig: FloorConfig = {
       texture: "coin",

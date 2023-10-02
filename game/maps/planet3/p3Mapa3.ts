@@ -354,18 +354,19 @@ class p3Mapa3 {
         //     .setAngularVelocity(30)
         // // .setOffset(220, 100);
 
-        const portalConfig: portalConfig = {
+        const portalConfig: FloorConfig = {
             spriteSheet: "portal3",
+            texture:"portal3",
             pos: { x: this.startingPoint.x + 1990, y: this.startingPoint.y + 100 },
             // scale: { width: 0.1, height: 0.1 },
             width: 1000,
             height: 1500,
-            scene: this.scene,
-            collected: this.collected,
+            // scene: this.scene,
+            // collected: this.collected,
             frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
         };
 
-        const port = new portal(this.scene, portalConfig, this.portal)
+        const port = new Floor(this.scene, portalConfig, this.portal)
             // .setRotation(Math.PI / 2)
             .setSize(800, 1400).setDepth(3);
 

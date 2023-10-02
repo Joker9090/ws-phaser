@@ -22,10 +22,8 @@ class PictureCredits extends Phaser.GameObjects.Container {
     this.scaleBox = scaleBox;
     this.randomNumber = this.randomProp();
     this.pictureBox = this.scene.add
-      .sprite(0, 0, textureBox)
-      .setOrigin(0.5)
-      .setScale(scaleBox)
-      .setRotation(this.randomNumber);
+      .sprite(0, 0, "personRing")
+      .setOrigin(0.5);
     if (fix) {
       this.picture = this.scene.add.sprite(fix.x, fix.y, texture).setOrigin(0.5);
     } else {
@@ -34,15 +32,26 @@ class PictureCredits extends Phaser.GameObjects.Container {
     this.add([this.picture, this.pictureBox]);
     scene.add.existing(this);
     this.setPosition(x, y);
-  }
 
-  update() {
-    if (this.pictureBox) {
-      if (this.randomNumber) {
-        this.progress += (Math.PI / 1000) * this.randomNumber;
-        this.pictureBox.setRotation(this.progress);
-      }
+    const portFrames = this.scene.anims.generateFrameNumbers("personRing", {
+      frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+    })
+    const portAnimConfig = {
+      key: "personRing",
+      frames: portFrames,
+      frameRate: 24,
+      repeat: -1
     }
+    this.pictureBox.anims.create(portAnimConfig);
+    this.pictureBox.anims.play("personRing", true)
+  }
+  update() {
+    // if (this.pictureBox) {
+    //   if (this.randomNumber) {
+    //     this.progress += (Math.PI / 1000) * this.randomNumber;
+    //     this.pictureBox.setRotation(this.progress);
+    //   }
+    // }
   }
 
   randomProp() {

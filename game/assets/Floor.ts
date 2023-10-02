@@ -21,7 +21,9 @@ export type FloorConfig = {
   tween?: Partial<FloorTween>;
   friction?: number;
   rotated?: boolean;
-  inverted?: boolean
+  inverted?: boolean;
+  spriteSheet?: string;
+  frames?: number[]
 };
 
 // Scene in class
@@ -56,7 +58,7 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
     scene.add.existing(this);
 
     this.setDepth(10);
-    this.setSize(width, height).setOffset(fix, 0);
+    this.body?.setSize(width, height).setOffset(fix, 0);
     this.setBounce(0);
     this.group.add(this);
     this.setImmovable(true);
@@ -69,7 +71,19 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
         targets: this,
       });
     }
-
+    if (config.spriteSheet) {
+      const portFrames = this.scene.anims.generateFrameNumbers(config.spriteSheet, {
+        frames: config.frames
+      })
+      const portAnimConfig = {
+        key: config.spriteSheet,
+        frames: portFrames,
+        frameRate: 24,
+        repeat: -1
+      }
+      this.anims.create(portAnimConfig);
+      this.anims.play(config.spriteSheet, true)
+    }
 
     if (this.body) {
       const body = this.body as Phaser.Physics.Arcade.Body;
@@ -90,7 +104,7 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
 
       if (invrt && body) {
         // body.setSize(height, width);
-        this.setRotation(Math.PI );
+        this.setRotation(Math.PI);
       } else {
         body.setSize(width + fix, height + fix);
       }

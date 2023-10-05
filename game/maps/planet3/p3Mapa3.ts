@@ -30,6 +30,8 @@ class p3Mapa3 {
     pisos4?: Phaser.Physics.Arcade.Group;
     pisos5?: Phaser.Physics.Arcade.Group
     movingFloor?: Phaser.Physics.Arcade.Group;
+    endPortal?: Floor;
+
     movingFloorRot?: Phaser.Physics.Arcade.Group;
     coin?: Phaser.Physics.Arcade.Group;
     portal?: Phaser.Physics.Arcade.Group;
@@ -217,8 +219,8 @@ class p3Mapa3 {
             spriteSheet: "portal3",
             pos: { x: 390, y: 1300 },
             // scale: { width: 0.1, height: 0.1 },
-            width: 1000,
-            height: 1500,
+            width: 100,
+            height: 200,
             scene: this.scene,
             collected: true,
             frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
@@ -356,19 +358,18 @@ class p3Mapa3 {
 
         const portalConfig: FloorConfig = {
             spriteSheet: "portal3",
-            texture:"portal3",
+            texture: "portal3",
             pos: { x: this.startingPoint.x + 1990, y: this.startingPoint.y + 100 },
             // scale: { width: 0.1, height: 0.1 },
-            width: 1000,
-            height: 1500,
+            width: 100,
+            height: 100,
             // scene: this.scene,
             // collected: this.collected,
             frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
         };
 
-        const port = new Floor(this.scene, portalConfig, this.portal)
-            // .setRotation(Math.PI / 2)
-            .setSize(800, 1400).setDepth(3);
+        const port = new Floor(this.scene, portalConfig, this.portal).setDepth(3);
+        this.endPortal = port
 
         // const c1Config: AsteroidGeneratorConfig = {
         //     texture: "asteroid",

@@ -55,6 +55,8 @@ class p3Mapa1 {
     aura?: Phaser.Physics.Arcade.Group;
     UIScene?: UIScene;
     monchi: Player;
+    endPortal?: Floor;
+
     startingPoint = {
         x: 400, //400
         y: 1490, //140
@@ -398,7 +400,8 @@ class p3Mapa1 {
 
         const port = new Floor(this.scene, portalConfig, this.portal).setDepth(2)
             // .setRotation(Math.PI / 2)
-            .setSize(800, 1400);
+            .setSize(100, 200);
+        this.endPortal = port
 
         // const c1Config: AsteroidGeneratorConfig = {
         //     texture: "asteroid",

@@ -19,6 +19,7 @@ class p2Mapa2 {
     };
     pisos?: Phaser.Physics.Arcade.Group;
     pisosBack?: Phaser.Physics.Arcade.Group;
+    endPortal?: Floor;
     pisos2?: Phaser.Physics.Arcade.Group;
     pisos3?: Phaser.Physics.Arcade.Group;
     pisos4?: Phaser.Physics.Arcade.Group;
@@ -197,7 +198,7 @@ class p2Mapa2 {
 
         const portalInicioConfig: portalConfig = {
             spriteSheet: "portal2",
-            pos: { x: this.startingPoint.x - 50, y: this.startingPoint.y +100 },
+            pos: { x: this.startingPoint.x - 50, y: this.startingPoint.y + 100 },
             // scale: { width: 0.1, height: 0.1 },
             width: 800,
             height: 1400,
@@ -304,7 +305,7 @@ class p2Mapa2 {
 
         const p8Config: FloorConfig = {
             texture: "plataformaLvl1",
-            pos: { x: startingPoint.x + 1800, y: startingPoint.y +80},
+            pos: { x: startingPoint.x + 1800, y: startingPoint.y + 80 },
             scale: { width: 0.3, height: 0.3 },
             width: 245,
             height: 425,
@@ -363,6 +364,7 @@ class p2Mapa2 {
 
         const port = new Floor(this.scene, portalConfig, this.portal);
 
+        this.endPortal = port
 
 
     }

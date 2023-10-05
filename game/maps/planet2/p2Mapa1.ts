@@ -48,6 +48,8 @@ class p2Mapa1 {
     aura?: Phaser.Physics.Arcade.Group;
     UIScene?: UIScene;
     monchi: Player;
+    endPortal?: Floor;
+
     startingPoint = {
         x: 400, //400
         y: 1490, //1490
@@ -142,7 +144,7 @@ class p2Mapa1 {
         this.fireballGroup = this.scene.physics.add.group({ allowGravity: false });
         this.portalInit = this.scene.physics.add.group({ allowGravity: false });
         this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
-        const aura = this.scene.add.sprite(2970, 1100, "auraLvl1").setScale(0.6).setDepth(99)
+        const aura = this.scene.add.sprite(2970, 1000, "auraLvl1").setScale(0.6).setDepth(99)
 
         this.aura.add(aura)
         this.scene.tweens.add({
@@ -260,7 +262,7 @@ class p2Mapa1 {
 
         const p6Config: FloorConfig = {
             texture: "plataformaLvl1",
-            pos: { x: 2500, y: 900 }, //3550 700
+            pos: { x: 2470, y: 900 }, //3550 700
             scale: { width: 0.3, height: 0.3 },
             width: 425,
             height: 205,
@@ -336,6 +338,7 @@ class p2Mapa1 {
                 // yoyo: true,
                 repeat: -1,
                 x: "-=4800",
+                scaleX: 0, scaleY: 0
             },
         };
         const fireball = new Floor(this.scene, fireballConfig, this.fireballGroup).setRotation(Math.PI / 2).setScale(0.5)
@@ -355,12 +358,13 @@ class p2Mapa1 {
             frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
         };
 
-        const port = new Floor(this.scene, portalConfig, this.portal);
+        const port = new Floor(this.scene, portalConfig, this.portal).setDepth(99);
+        this.endPortal = port
 
         const coinConfig: FloorConfig = {
             texture: "cristalLvl1",
             // pos: { x: 2300, y: 1100 },
-            pos: { x: 2970, y: 1100 },
+            pos: { x: 2970, y: 1000 },
             scale: { width: 0.15, height: 0.15 },
             width: 10,
             height: 18,

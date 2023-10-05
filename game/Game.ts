@@ -17,6 +17,7 @@ import p3Mapa3 from "./maps/planet3/p3Mapa3";
 import sMapa1 from "./maps/sun/sMapa1";
 import sMapa2 from "./maps/sun/sMapa2";
 import sMapa3 from "./maps/sun/sMapa3";
+import Floor from "./assets/Floor";
 
 // Scene in class
 class Game extends Phaser.Scene {
@@ -291,19 +292,28 @@ class Game extends Phaser.Scene {
       };
     };
 
-    if (this.map?.coin) {
+    if (this.map?.coin && this.map.endPortal) {
+
       EventsCenter.emit("coinCollected", true);
       (
-        this.map.portal?.getChildren()[0] as Phaser.GameObjects.Image
+        this.map.portal?.getChildren()[0] as Phaser.GameObjects.Image,
+        this.map.endPortal.clearTint()
       );
       this.canNextLevel = true;
       this.canWin = true;
       this.map.coin.setVisible(false);
       this.map.aura?.setVisible(false)
       this.map.coin.clear(true);
+
     }
   }
-
+  collectCoin(collected: boolean, portal: Floor | undefined) {
+    this.coinCollected
+    collected = false
+    if (portal) {
+      portal.clearTint()
+    }
+  }
   goNextLevel() {
     if (this.canNextLevel && this.monchi) {
       this.timeLevel = 0;

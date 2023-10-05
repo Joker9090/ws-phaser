@@ -1,5 +1,4 @@
 TO DO
-1.agregar out of world deaths (revisar)
-2.agregar plataformas largas
+1.clear tint los portales
 
 pedirle las correcciones a flor

@@ -28,6 +28,7 @@ class p3Mapa1 {
     pisos3?: Phaser.Physics.Arcade.Group;
     //  no float
     pisos4?: Phaser.Physics.Arcade.Group;
+    endPortal?: Floor;
     pisos5?: Phaser.Physics.Arcade.Group
     movingFloor?: Phaser.Physics.Arcade.Group;
     movingFloorRot?: Phaser.Physics.Arcade.Group;
@@ -439,9 +440,8 @@ class p3Mapa1 {
             frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
         };
 
-        const port = new Floor(this.scene, portalConfig, this.portal)
-            // .setRotation(Math.PI / 2)
-            ;
+        const port = new Floor(this.scene, portalConfig, this.portal);
+        this.endPortal = port
 
         // const c1Config: AsteroidGeneratorConfig = {
         //     texture: "asteroid",

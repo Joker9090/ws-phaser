@@ -206,8 +206,10 @@ export default class UIScene extends Phaser.Scene {
 
 
     /* TIMER */
+    this.minutes = 0,
+      this.timeLevel = 0
     this.timerText = this.add
-      .text(300, 50, `${this.minutes}:${this.timeLevel}`, { fontSize: "32px" })
+      .text(300, 50, `0${this.minutes}:0${this.timeLevel}`, { fontSize: "32px" })
       .setOrigin(0.5, 0.5)
       .setScrollFactor(0, 0)
       .setDepth(100)

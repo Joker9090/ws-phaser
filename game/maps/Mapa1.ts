@@ -56,6 +56,8 @@ class Mapa1 {
   background6: Phaser.GameObjects.Image;
   cristal?: Floor;
   collected: Boolean = false;
+  endPortal?: Floor;
+
   constructor(scene: Game, monchi: Player) {
     this.scene = scene;
     this.monchi = monchi;
@@ -185,7 +187,6 @@ class Mapa1 {
           this.scene.monchi,
           this.coin,
           this.scene.coinCollected,
-
           () => true,
           this.scene
         );
@@ -563,7 +564,7 @@ class Mapa1 {
       frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
     };
     const port = new Floor(this.scene, portalConfig, this.portal).setDepth(99);
-
+this.endPortal = port
     const coinConfig: FloorConfig = {
       texture: "coin",
       pos: { x: 500, y: 1580 },

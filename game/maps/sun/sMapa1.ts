@@ -31,6 +31,8 @@ class sMapa1 {
     pisos5?: Phaser.Physics.Arcade.Group
     movingFloor?: Phaser.Physics.Arcade.Group;
     movingFloorRot?: Phaser.Physics.Arcade.Group;
+    endPortal?: Floor;
+
     coin?: Phaser.Physics.Arcade.Group;
     portal?: Phaser.Physics.Arcade.Group;
     lifesGroup?: Phaser.GameObjects.Group;
@@ -333,6 +335,8 @@ class sMapa1 {
                 // yoyo: true,
                 repeat: -1,
                 y: "+=9000",
+                scaleX: 0,
+                scaleY: 0
             },
         };
         const fireball = new Floor(this.scene, fireballConfig, this.fireballGroup)
@@ -367,8 +371,8 @@ class sMapa1 {
             texture: "portal4",
             pos: { x: this.startingPoint.x + 1000, y: this.startingPoint.y + 1000 },
             // scale: { width: 0.1, height: 0.1 },
-            width: 1000,
-            height: 1500,
+            width: 100,
+            height: 100,
             // scene: this.scene,
             // collected: this.collected,
             frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
@@ -376,7 +380,8 @@ class sMapa1 {
 
         const port = new Floor(this.scene, portalConfig, this.portal)
             .setRotation(Math.PI / 2)
-            .setSize(1400, 800);
+            ;
+        this.endPortal = port
 
         const c1Config: AsteroidGeneratorConfig = {
             texture: "asteroid",

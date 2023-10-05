@@ -33,6 +33,7 @@ class Mapa2 {
   aura?: Phaser.Physics.Arcade.Group;
 
   UIScene?: UIScene;
+  endPortal?: Floor;
 
   startingPoint = {
     x: 400, //400
@@ -321,15 +322,16 @@ class Mapa2 {
     const portalConfig: FloorConfig = {
       spriteSheet: "portal1",
       texture: "portal1",
-      width: 1400,
-      height: 800,
+      width: 200,
+      height: 100,
       pos: { x: 2220, y: 150 + 2150 },
       // scene: this.scene,
       // collected: this.collected,
       frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
     }
-    const port = new Floor(this.scene, portalConfig, this.portal)
-      .setRotation(Math.PI / 2)
+    const port = new Floor(this.scene, portalConfig, this.portal).setRotation(Math.PI / 2);
+    this.endPortal = port
+
 
     const portalInicioConfig: portalConfig = {
       spriteSheet: "portal1",
@@ -359,6 +361,8 @@ class Mapa2 {
         // yoyo: true,
         repeat: -1,
         x: "-=4000",
+        scaleX: 0,
+        scaleY: 0
       },
       // scene: this.scene,
       frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],

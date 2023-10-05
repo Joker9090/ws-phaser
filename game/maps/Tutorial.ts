@@ -53,6 +53,7 @@ class Tutorial {
   pisoCoin?: Floor;
   pisoNoFloat?: Floor;
   collected: boolean = false;
+  endPortal?: Floor;
 
   constructor(scene: Game) {
     this.scene = scene;
@@ -249,20 +250,20 @@ class Tutorial {
     }
 
     const port = new Floor(this.scene, portalConfig, this.portal)
-
+    this.endPortal = port
     const fireballConfig: FloorConfig = {
       texture: "meteorito",
       spriteSheet: "meteorito",
       pos: { x: 2850, y: 1222 }, // 500 1580
       scale: { width: 0.8, height: 0.8 },
-      width: 100,
+      width: 50,
       height: 0,
       fix: 250,
 
       // scene: this.scene,
       frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
       tween: {
-        duration: 1400,
+        duration: 2700,
         paused: false,
         // yoyo: true,
         repeat: -1,
@@ -271,7 +272,7 @@ class Tutorial {
         scaleY: 0
       },
     };
-    const fireball = new Floor(this.scene, fireballConfig, this.fireballGroup)
+    const fireball = new Floor(this.scene, fireballConfig, this.fireballGroup).setSize(100, 200)
     // .setAngularVelocity(30)
     // .setOffset(220, 100);
 
@@ -302,10 +303,8 @@ class Tutorial {
   }
 
   fireballActFunction() { }
-  collectCoin() {
-    this.scene.coinCollected
-    this.collected = true
-  }
+
+
   addColliders() {
     if (this.scene.monchi) {
       if (this.fireballGroup && this.scene.loseLevelTutorial)

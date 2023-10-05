@@ -46,6 +46,7 @@ class p2Mapa3 {
     background8: any;
     aura?: Phaser.Physics.Arcade.Group;
     UIScene?: UIScene;
+    endPortal?: Floor;
     monchi: Player;
     startingPoint = {
         x: 400, //400
@@ -330,6 +331,7 @@ class p2Mapa3 {
 
         const port = new Floor(this.scene, portalConfig, this.portal);
         // .setRotation(Math.PI / 2);
+        this.endPortal = port
 
 
         const coinConfig: FloorConfig = {

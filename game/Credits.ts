@@ -158,21 +158,21 @@ export default class Credits extends Phaser.Scene {
       Phaser.Input.Keyboard.KeyCodes.ESC
     );
     const { width, height } = this.cameras.main;
-    this.picture1 = this.add.sprite(width / 3.7, (height * 1.5) / 5.2, "personRing").setScale(1.5)
-    this.picture2 = this.add.sprite(width / 3.1, (height * 1.5) / 2.1, "personRing").setScale(1.5)
-    this.picture3 = this.add.sprite(width / 1.3 - 80, (height * 1.5) / 5.2, "personRing").setFlipX(true).setScale(1.5)
-    this.picture4 = this.add.sprite(width / 1.5, (height * 1.5) / 2.1, "personRing").setFlipX(true).setScale(1.5)
+    this.picture1 = this.add.sprite(width / 3.7, (height * 1.5) / 5.2, "personRing").setScale(1.5).setDepth(99)
+    this.picture2 = this.add.sprite(width / 3.1, (height * 1.5) / 2.1, "personRing").setScale(1.5).setDepth(99)
+    this.picture3 = this.add.sprite(width / 1.3 - 80, (height * 1.5) / 5.2, "personRing").setFlipX(true).setScale(1.5).setDepth(99)
+    this.picture4 = this.add.sprite(width / 1.5, (height * 1.5) / 2.1, "personRing").setFlipX(true).setScale(1.5).setDepth(99)
 
-    this.person1 = this.add.sprite(width / 4.8, (height * 1.5) / 5.2, "ari").setScale(0.8)
-    this.person2 = this.add.sprite(width / 3.9, (height * 1.5) / 2.1, "flor").setScale(0.8)
-    this.person3 = this.add.sprite(width / 1.28, (height * 1.5) / 5.2, "barto").setScale(0.8)
-    this.person4 = this.add.sprite(width / 1.38, (height * 1.5) / 2.1, "j").setScale(0.8)
+    this.person1 = this.add.sprite(width / 4.8, (height * 1.5) / 5.2, "ari").setScale(0.8).setDepth(99)
+    this.person2 = this.add.sprite(width / 3.9, (height * 1.5) / 2.1, "flor").setScale(0.8).setDepth(99)
+    this.person3 = this.add.sprite(width / 1.28, (height * 1.5) / 5.2, "barto").setScale(0.8).setDepth(99)
+    this.person4 = this.add.sprite(width / 1.38, (height * 1.5) / 2.1, "j").setScale(0.8).setDepth(99)
 
     this.text1 = this.add.text(width / 3.3, (height * 1.5) / 3.9 - 13, "Nano", {
       fontFamily: "Arcade",
       fontSize: "25px",
       // wordWrap: { width: widthText, useAdvancedWrap: true },
-    })
+    }).setDepth(99)
 
     // this.text1 = this.add.text(width / 3.3, (height * 1.5) / 3.9 - 13, "Nano", {
     //   fontFamily: "Arcade",
@@ -184,54 +184,75 @@ export default class Credits extends Phaser.Scene {
       fontSize: "17px",
       lineSpacing: 5
       // wordWrap: { width: widthText, useAdvancedWrap: true },
-    })
+    }).setDepth(99)
 
     this.text3 = this.add.text(width / 2.8, (height * 1.5) / 1.9 + 8, "Flor", {
       fontFamily: "Arcade",
       fontSize: "25px",
       // wordWrap: { width: widthText, useAdvancedWrap: true },
-    })
+    }).setDepth(99)
 
     this.text4 = this.add.text(width / 2.9, (height * 1.5) / 1.8 - 6, "Graphic Designer", {
       fontFamily: "Arcade",
       fontSize: "15px",
       // wordWrap: { width: widthText, useAdvancedWrap: true },
-    })
+    }).setDepth(99)
     this.text5 = this.add.text(width / 1.5, (height * 1.5) / 3.9 - 9, "???", {
       fontFamily: "Arcade",
       fontSize: "25px",
       // wordWrap: { width: widthText, useAdvancedWrap: true },
-    })
+    }).setDepth(99)
     this.text6 = this.add.text(width / 1.5 - 10, (height * 1.5) / 3.7 - 4, "Developer", {
       fontFamily: "Arcade",
       fontSize: "15px",
       // wordWrap: { width: widthText, useAdvancedWrap: true },
-    })
+    }).setDepth(99)
 
-    this.text7 = this.add.text(width / 1.6 -8, (height * 1.5) / 1.9 + 8, "J", {
+    this.text7 = this.add.text(width / 1.6 - 8, (height * 1.5) / 1.9 + 8, "J", {
       fontFamily: "Arcade",
       fontSize: "25px",
       // wordWrap: { width: widthText, useAdvancedWrap: true },
-    })
+    }).setDepth(99)
     this.text8 = this.add.text(width / 1.6 - 48, (height * 1.5) / 1.8 - 7, "Developer", {
       fontFamily: "Arcade",
       fontSize: "15px",
       // wordWrap: { width: widthText, useAdvancedWrap: true },
-    })
+    }).setDepth(99)
     const ringFrames = this.anims.generateFrameNumbers("personRing", {
-      frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+      frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39]
     })
     const ringConfig = {
       key: "ring",
+      frames: ringFrames,
+      frameRate: 25,
+      repeat: -1,
+    };
+    const ringConfig2 = {
+      key: "ring2",
+      frames: ringFrames,
+      frameRate: 23,
+      repeat: -1,
+    };
+    const ringConfig3 = {
+      key: "ring3",
+      frames: ringFrames,
+      frameRate: 20,
+      repeat: -1,
+    };
+    const ringConfig4 = {
+      key: "ring4",
       frames: ringFrames,
       frameRate: 24,
       repeat: -1,
     }
     this.anims.create(ringConfig),
+      this.anims.create(ringConfig2),
+      this.anims.create(ringConfig3),
+      this.anims.create(ringConfig4),
       this.picture1.anims.play("ring")
-    this.picture2.anims.play("ring")
-    this.picture3.anims.play("ring")
-    this.picture4.anims.play("ring")
+    this.picture2.anims.play("ring2")
+    this.picture3.anims.play("ring3")
+    this.picture4.anims.play("ring4")
 
     // this.picture1 = new PictureCredits(
     //   this,

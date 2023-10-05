@@ -31,7 +31,7 @@ class sMapa2 {
     pisos5?: Phaser.Physics.Arcade.Group
     movingFloor?: Phaser.Physics.Arcade.Group;
     movingFloorRot?: Phaser.Physics.Arcade.Group;
-  endPortal?: Floor;
+    endPortal?: Floor;
 
     coin?: Phaser.Physics.Arcade.Group;
     portal?: Phaser.Physics.Arcade.Group;
@@ -377,7 +377,7 @@ class sMapa2 {
 
         const port = new Floor(this.scene, portalConfig, this.portal)
             .setRotation(Math.PI / 2)
-this.endPortal = port
+        this.endPortal = port
 
         const c1Config: AsteroidGeneratorConfig = {
             texture: "asteroid",
@@ -405,7 +405,7 @@ this.endPortal = port
         const c2 = new AsteroidGenerator(this.scene, c2Config);
         c2.start();
         const coinConfig: FloorConfig = {
-            texture: "coin",
+            texture: "cristalLvl3",
             pos: { x: this.startingPoint.x + 3500, y: this.startingPoint.y - 760 },
             scale: { width: 0.15, height: 0.15 },
             width: 10,

@@ -469,7 +469,7 @@ class p3Mapa1 {
         // const c2 = new AsteroidGenerator(this.scene, c2Config);
         // c2.start();
         const coinConfig: FloorConfig = {
-            texture: "coin",
+            texture: "cristalLvl2",
             pos: { x: 2380, y: 1300 },
             scale: { width: 0.15, height: 0.15 },
             width: 10,

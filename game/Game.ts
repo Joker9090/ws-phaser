@@ -336,17 +336,17 @@ class Game extends Phaser.Scene {
       this.canWin = false;
       this.canNextLevel = false;
       if (nextLevel === 3) {
-        this.stagePoint = 1;
-        this.makeTransition("LevelMap", { stagePoint: this.stagePoint });
+
+        this.makeTransition("LevelMap", { stagePoint: 1 });
       } else if (nextLevel === 6) {
-        this.stagePoint = 2;
-        this.makeTransition("LevelMap", { stagePoint: this.stagePoint });
+
+        this.makeTransition("LevelMap", { stagePoint: 2 });
       } else if (nextLevel === 9) {
-        this.stagePoint = 3;
-        this.makeTransition("LevelMap", { stagePoint: this.stagePoint });
+
+        this.makeTransition("LevelMap", { stagePoint: 3 });
       }
       else if (nextLevel === 12) {
-        this.makeTransition("Won", { stagePoint: this.stagePoint });
+        this.makeTransition("Won", { stagePoint: 3 });
       }
       else {
         this.makeTransition("Game", { level: nextLevel, lifes: this.lifes });

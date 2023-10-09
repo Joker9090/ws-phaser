@@ -45,6 +45,7 @@ export default class LevelMap extends Phaser.Scene {
     this.cursors = this.input.keyboard?.createCursorKeys();
     // console.log(stagePoint, "aca");
     this.planetsShown = stagePoint;
+    console.log(this.planetsShown, "planetsShown")
   }
 
   preload() { }
@@ -313,24 +314,29 @@ export default class LevelMap extends Phaser.Scene {
     this.upDownAnim(this.background, 500, 10, 6000);
 
     this.planetTutorial.on("selected", () => {
+
       this.makeTransition("Game", { level: 0, lifes: 3 });
       //this.scene.start("Game", { level: 0, lifes: 3 });
       this.selectedPlanetIndex = 0;
     });
 
     this.planetLevel1.on("selected", () => {
+
       this.makeTransition("Game", { level: 3, lifes: 3 });
       //this.scene.start("Game", { level: 1, lifes: 3 });
       this.selectedPlanetIndex = 0;
     });
 
     this.planetLevel2.on("selected", () => {
+
       this.makeTransition("Game", { level: 6, lifes: 3 });
+
       //this.scene.start("Game", { level: 2, lifes: 3 });
       this.selectedPlanetIndex = 0;
     });
 
     this.sun.on("selected", () => {
+
       this.makeTransition("Game", { level: 9, lifes: 3 });
       //this.scene.start("Game", { level: 3, lifes: 3 });
       this.selectedPlanetIndex = 0;
@@ -443,7 +449,7 @@ export default class LevelMap extends Phaser.Scene {
     if (this.EscKeyboard)
       this.EscKeyboard.on("down", () => {
         EventsCenter.emit("gameOver", true);
-        this.makeTransition("Menu", {});
+        this.makeTransition("Menu", { stagePoint: this.planetsShown });
         //this.scene.start("Menu");
       });
 

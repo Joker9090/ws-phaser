@@ -26,6 +26,7 @@ export default class MainMenuScene extends Phaser.Scene {
   background2?: Phaser.GameObjects.Image
   background3?: Phaser.GameObjects.Image
   background4?: Phaser.GameObjects.Image
+  stagePoint?: number = 0
   startingPoint = {
     x: 600, //600
     y: 1800, //1800
@@ -34,9 +35,12 @@ export default class MainMenuScene extends Phaser.Scene {
     super({ key: "Menu" });
   }
 
-  init() {
+  init({ stagePoint }: any) {
     this.cursors = this.input.keyboard?.createCursorKeys();
     this.dataManager = this.game.scene.getScene("DataManager") as DataManager;
+    if (this.stagePoint != undefined && stagePoint != undefined) {
+      this.stagePoint = stagePoint
+    }
   }
 
   /* Debug 
@@ -362,7 +366,7 @@ export default class MainMenuScene extends Phaser.Scene {
     ]);
 
     this.play.on("selected", () => {
-      this.makeTransition("LevelMap", { data: 1 });
+      this.makeTransition("LevelMap", { stagePoint: this.stagePoint })
       this.selectedButtonIndex = 0;
     });
     this.credits.on("selected", () => {

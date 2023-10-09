@@ -1,7 +1,8 @@
 TO DO
-1.levelmap deja elegir mapas no desbloqueados
+1.levelmap deja elegir mapas no desbloqueados [fixed]
+4.segunda plataforma mundo p3 no aplica los efectos si perdes una vida[fixed]
+
 2.background tiembla una banda aveces
 3.meteorito aveces no registra impacto
-4.segunda plataforma mundo p2 no aplica los efectos si perdes una vida
 5.ultimo mundo empieza con una sola vida
 

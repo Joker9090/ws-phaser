@@ -1,8 +1,9 @@
 TO DO
 1.levelmap deja elegir mapas no desbloqueados [fixed]
 4.segunda plataforma mundo p3 no aplica los efectos si perdes una vida[fixed]
+5.ultimo mundo empieza con una sola vida     
 
-2.background tiembla una banda aveces
-3.meteorito aveces no registra impacto
-5.ultimo mundo empieza con una sola vida
+2.background tiembla una banda aveces (de este no tengo ni idea)
+3.meteorito aveces no registra impacto (pasa solo cuando te estas moviendo)
+6.monchi en levelMap no se resetea (las cordenadas si se resetean pero no aparece monchi de nuevo)
 

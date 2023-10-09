@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import EventsCenter from "./EventsCenter";
 import BetweenScenes, { BetweenScenesStatus } from "./BetweenScenes";
+import { World } from "matter";
 
 export default class LevelMap extends Phaser.Scene {
   /* map */
@@ -274,7 +275,7 @@ export default class LevelMap extends Phaser.Scene {
       this.planetLevel2,
     ]);
     this.monchi = this.add
-      .sprite(width + 100, 150, "character", 20)
+      .sprite(width - 100, 150, "character", 20)
       .setScale(0.5)
       .setDepth(99);
     if (this.planetsShown == 0) {
@@ -433,15 +434,27 @@ export default class LevelMap extends Phaser.Scene {
       };
     };
 
+
+    // console.log(this.monchi?.x)
+
     if (this.monchi) {
       this.progress = this.progress + 0.0031415;
-      this.monchi.x = this.monchi.x - 0.8;
+      this.monchi.x = this.monchi.x - 8;
       this.monchi.y = this.monchi.y + 0.3;
       this.monchi.setRotation(this.progress);
-      if (this.monchi.x == -150) {
-        this.monchi.x = this.cameras.main.width + 100;
-        this.monchi.y = 150;
+      if (this.monchi.x == 10) {
+        console.log("TERMINO")
+        // this.monchi.x = this.cameras.main.width ;
+        // this.monchi.y = -this.cameras.main.height - 100;
+        // this.monchi.setDepth(99)
+
+        this.monchi.x = 100
+        console.log(this.monchi.x, "X de monchi")
       }
+
+      // if (this.monchi.x = -150) {
+      //   console.log("TERMINO")
+      // }
     }
 
     this.showPlanets(this.planetsShown);

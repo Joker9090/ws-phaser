@@ -343,8 +343,8 @@ class Game extends Phaser.Scene {
         this.makeTransition("Won", { stagePoint: 3 });
       }
       else {
-        this.makeTransition("Game", { level: nextLevel, lifes: this.lifes });
-        this.UIScene?.scene.restart({ level: nextLevel, lifes: this.lifes, game: this });
+        this.makeTransition("Game", { level: nextLevel, lifes: 3 });
+        this.UIScene?.scene.restart({ level: nextLevel, lifes: 3, game: this });
       }
     }
   }

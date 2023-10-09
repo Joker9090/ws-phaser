@@ -263,7 +263,7 @@ class Tutorial {
       // scene: this.scene,
       frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
       tween: {
-        duration: 2700,
+        duration: 1700,
         paused: false,
         // yoyo: true,
         repeat: -1,

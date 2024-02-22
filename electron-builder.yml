@@ -1,0 +1,8 @@
+appId: com.noswar.cosmic
+productName: Cosmic
+mac:
+  category: games
+win:
+  target: nsis
+linux:
+  target: AppImage

@@ -102,6 +102,13 @@ a {
   }
 }
 
+
 body {
   overflow: hidden;
+}
+
+@font-face {
+  font-family: 'Arcade';
+  src: url('/fonts/arcadeFont.otf') format("opentype");
+  /* Add more font properties if needed */
 }

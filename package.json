@@ -2,22 +2,42 @@
   "name": "ws-phaser",
   "version": "0.1.0",
   "private": true,
+  "main": "main.js",
+  "description": "Cosmic Wonderer for Linux",
+  "author": "Noswar",
+  "license": "(ISC OR GPL-3.0)",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "start:next": "next start",
+    "start": "electron-forge start",
+    "lint": "next lint",
+    "pretty": "prettier --write \"./**/*.{js,jsx,ts,tsx,json}\"",
+    "electron": "electron main.js",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "dependencies": {
-    "@types/node": "18.16.1",
     "@types/react": "18.2.0",
     "@types/react-dom": "18.2.1",
+    "electron-squirrel-startup": "^1.0.0",
     "eslint": "8.39.0",
     "eslint-config-next": "13.3.1",
-    "next": "13.3.1",
+    "next": "^13.3.1",
     "phaser": "^3.60.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "typescript": "5.0.4"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^7.2.0",
+    "@electron-forge/maker-deb": "^7.2.0",
+    "@electron-forge/maker-rpm": "^7.2.0",
+    "@electron-forge/maker-squirrel": "^7.2.0",
+    "@electron-forge/maker-zip": "^7.2.0",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.2.0",
+    "@types/node": "20.3.1",
+    "electron": "^28.1.2",
+    "rpmbuild": "^0.0.23"
   }
 }

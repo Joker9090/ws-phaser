@@ -1,3 +1,17 @@
+
+
+COSAS PARA ARREGLAR:
+
+- TUTORIAL: contar UI (vidas, moneda, gravedad y tiempo), contar plataformas naranjas y contar fireball. Finalmente mostrar portal.
+
+- fix side colissions
+- problemas cuando pantalla es tamaño celular (responsive)
+- problemas con la musica, Win y Lose no dejan de sonar cuando salgo de la escena.
+- velocidad inicial de nivel 2 funciona si empiezo en nivel 2 pero no funciona si paso de nivel 1 a nivel 2
+- arreglar gravityArrow en nivel 2 (se queda apuntando a la derecha si voy para atrás al principio)
+
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started

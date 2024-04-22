@@ -1,4 +1,5 @@
 import React from 'react';
+
 export default function Home() {
   const [phaser, setPhaser] = React.useState<typeof Phaser | undefined>()
   const [game, setGame] = React.useState<Phaser.Game | undefined>()
@@ -15,14 +16,25 @@ export default function Home() {
     //Load phaser async when windows is ready
     import("phaser").then(setPhaser)
     //Load scenes async when windows is ready
-    
     Promise.all([
       import("@/game/SceneLoader"),
-      import("@/game/Scene4")]).then((scenes) => {
+      import("@/game/DataManager"),
+      import("@/game/Menu"),
+      import("@/game/Game"),
+      import("@/game/Won"),
+      import("@/game/GameOver"),
+      import("@/game/UIScene"),
+      import("@/game/TutorialText"),
+      import("@/game/Intro"),
+      import("@/game/BetweenScenes"),
+      import("@/game/MusicManager"),
+      import("@/game/LevelMap"),
+      import("@/game/Credits"),
+      import("@/game/Sandbox"),
+      //import("@/game/Sandbox"),
+    ]).then((scenes) => {
       setScenes(scenes.map(s => s.default))
     })
-    
-    // import("@/game/SceneLoader").then((scene1) => setScenes([scene1.default]))
   }, [])
 
   React.useEffect(() => {
@@ -34,20 +46,43 @@ export default function Home() {
         height: "100%",
         parent: "game-container",
         scale: {
-          mode: window.Phaser.Scale.FIT
+          mode: window.Phaser.Scale.NONE
         },
         scene: scenes,
         physics: {
           default: "arcade",
           arcade: {
-            overlapBias: 100,
+            overlapBias: 10,
             gravity: { y: 1000 },
-            // debug: true
+            debug: false
           }
         }
       }
       const game = new phaser.Game(config)
       setGame(game);
+     
+      /* ola */
+
+        
+        // Escala la interfaz de usuario proporcionalmente al tamaño de la pantalla
+        
+        
+        
+      /* CONTROLS THE RESIZE AND RESTART OF SCENE */
+      
+      window.addEventListener("resize", () => {
+        setTimeout(() => {
+          var gameWidth = window.innerWidth
+          var gameHeight = window.innerHeight
+          var ratio = gameWidth/gameHeight
+          var scaleX = window.innerWidth / gameWidth;
+          var scaleY = window.innerHeight / gameHeight;
+          game.scene.getScenes(true).map((s) => {
+            s.scale.resize(gameWidth,gameHeight);
+            s.renderer.onResize
+          })
+        }, 100);
+      })
     }
   }, [phaser, scenes])
 

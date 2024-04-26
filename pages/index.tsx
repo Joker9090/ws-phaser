@@ -35,6 +35,15 @@ export default function Home() {
     ]).then((scenes) => {
       setScenes(scenes.map(s => s.default))
     })
+
+    // get query parameter level
+    const urlParams = new URLSearchParams(window.location.search);
+    const level = urlParams.get('level');
+    if (level) {
+      localStorage.setItem("level", level);
+    } else {
+      localStorage.setItem("level", "0");
+    }
   }, [])
 
   React.useEffect(() => {

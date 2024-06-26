@@ -17,21 +17,23 @@ export default function Home() {
     import("phaser").then(setPhaser)
     //Load scenes async when windows is ready
     Promise.all([
-      import("@/game/SceneLoader"),
-      import("@/game/Cinematography"),
-      import("@/game/Menu"),
-      import("@/game/DataManager"),
-      import("@/game/Game"),
-      import("@/game/Won"),
-      import("@/game/GameOver"),
-      import("@/game/UIScene"),
-      import("@/game/TutorialText"),
-      import("@/game/Intro"),
-      import("@/game/BetweenScenes"),
-      import("@/game/MusicManager"),
-      import("@/game/LevelMap"),
-      import("@/game/Credits"),
-      import("@/game/Sandbox"),
+      import("@/game/movies/IntroMovie"),
+      import("@/game/movies/DialogueManager"),
+      // import("@/game/SceneLoader"),
+      // import("@/game/Cinematography"),
+      // import("@/game/Menu"),
+      // import("@/game/DataManager"),
+      // import("@/game/Game"),
+      // import("@/game/Won"),
+      // import("@/game/GameOver"),
+      // import("@/game/UIScene"),
+      // import("@/game/TutorialText"),
+      // import("@/game/Intro"),
+      // import("@/game/BetweenScenes"),
+      // import("@/game/MusicManager"),
+      // import("@/game/LevelMap"),
+      // import("@/game/Credits"),
+      // import("@/game/Sandbox"),
       //import("@/game/Sandbox"),
     ]).then((scenes) => {
       setScenes(scenes.map(s => s.default))
@@ -70,25 +72,25 @@ export default function Home() {
       }
       const game = new phaser.Game(config)
       setGame(game);
-     
+
       /* ola */
 
-        
-        // Escala la interfaz de usuario proporcionalmente al tamaño de la pantalla
-        
-        
-        
+
+      // Escala la interfaz de usuario proporcionalmente al tamaño de la pantalla
+
+
+
       /* CONTROLS THE RESIZE AND RESTART OF SCENE */
-      
+
       window.addEventListener("resize", () => {
         setTimeout(() => {
           var gameWidth = window.innerWidth
           var gameHeight = window.innerHeight
-          var ratio = gameWidth/gameHeight
+          var ratio = gameWidth / gameHeight
           var scaleX = window.innerWidth / gameWidth;
           var scaleY = window.innerHeight / gameHeight;
           game.scene.getScenes(true).map((s) => {
-            s.scale.resize(gameWidth,gameHeight);
+            s.scale.resize(gameWidth, gameHeight);
             s.renderer.onResize
           })
         }, 100);

@@ -18,8 +18,9 @@ export default function Home() {
     //Load scenes async when windows is ready
     Promise.all([
       import("@/game/SceneLoader"),
-      import("@/game/DataManager"),
+      import("@/game/Cinematography"),
       import("@/game/Menu"),
+      import("@/game/DataManager"),
       import("@/game/Game"),
       import("@/game/Won"),
       import("@/game/GameOver"),

@@ -8,7 +8,8 @@ export type SceneKeys =
   | "Intro"
   | "LevelMap"
   | "Sandbox"
-  | "BetweenScenes";
+  | "BetweenScenes"
+  | "Cinematography";
 
 export type LoadTypes = "image" | "spritesheet" | "audio";
 
@@ -239,6 +240,12 @@ const loadAssets = {
       ["audio", "songMenu", "/sounds/menu.mp3"],
     ],
   },
+  Cinematography: {
+    assets: [
+      ["image", "cine_background", "/game/cine_bkg.png"],
+      ["image", "cine_capsula", "/game/cine_2.png"],
+    ],
+  },
 };
 
 // Scene in class
@@ -319,6 +326,7 @@ class SceneLoader extends Phaser.Scene {
       "LevelMap",
       "BetweenScenes",
       "Sandbox",
+      "Cinematography",
     ];
     for (let i = 0; i < scenesTitles.length; i++) {
       loadAssets[scenesTitles[i]].assets.map((sceneAssetConfig) => {
@@ -342,14 +350,13 @@ class SceneLoader extends Phaser.Scene {
     // this.scene.start("LevelMap", { data: 1 });
     const _level = localStorage.getItem("level");
     if (_level) {
-      if (_level === "0") this.scene.start("LevelMap", { stagePoint: 0 });
+      if (_level === "0") this.scene.start("Cinematography", { level: 0, lifes: 3 });
       else if (_level === "1") this.scene.start("LevelMap", { stagePoint: 1 });
       else if (_level === "2") this.scene.start("LevelMap", { stagePoint: 2 });
       else if (_level === "3") this.scene.start("LevelMap", { stagePoint: 3 });
-
-
     } else {
-      this.scene.start("Intro", { level: 0, lifes: 3 });
+      // this.scene.start("Intro", { level: 0, lifes: 3 });
+      this.scene.start("Cinematography", { level: 0, lifes: 3 });
     }
   }
 

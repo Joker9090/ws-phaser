@@ -83,8 +83,7 @@ class IntroMovie extends Phaser.Scene {
 
 
     const DialogueScene = this.game.scene.getScene("DialogueManager");
-    if (!DialogueScene.scene.isActive())
-      this.scene.launch(DialogueScene).bringToTop();
+    this.scene.launch(DialogueScene)
 
     // // ADD JOBS
     // this.ticker.addJob(new TickerJob(1, 100, (job) => {

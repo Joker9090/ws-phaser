@@ -22,16 +22,16 @@ class DialogueManager extends Phaser.Scene {
             first: ["Emergency ", "log ", "entry ", "number ", "325… ", "(sigh)"],
             second: ["It’s ", "been ", "over ", "45 ", "days ", "since ", "the ", "incident. ", "I ", "still ", "haven’t ", "heard ", "from ", "Dan ", "or ", "the ", "rest ", "of ", "the ", "crew…"],
             third: ["I ", "hope ", "they ", "were ", "able ", "to ", "escape ", "in ", "time. ", "(pause) ", "It ", "seems ", "like ", "I’m ", "alone ", "in ", "this ", "forgotten ", "corner ", "of ", "the ", "galaxy…"],
-        } 
-        this.container = this.add.container().setSize(this.screenWidth*0.8, this.screenHeigth*0.15)
-        this.container.setPosition(this.screenWidth*0.2/2, this.screenHeigth*0.8)
+        }
+        this.container = this.add.container().setSize(this.screenWidth * 0.8, this.screenHeigth * 0.15)
+        this.container.setPosition(this.screenWidth * 0.2 / 2, this.screenHeigth * 0.8)
         this.holder = this.add.graphics()
         this.holder.fillStyle(0xffffff, 1);
-        this.holder.fillRoundedRect(0,0, this.screenWidth * 0.8, this.screenHeigth / 9, this.borderRounder)
-        this.textDisplayed = this.add.text(40,40, "", {
+        this.holder.fillRoundedRect(0, 0, this.screenWidth * 0.8, this.screenHeigth / 9, this.borderRounder)
+        this.textDisplayed = this.add.text(40, 40, "", {
             color: "black"
         })
-        this.continueText = this.add.text(this.container.width/2, 80, "Press SPACE to continue", {
+        this.continueText = this.add.text(this.container.width / 2, 80, "Press SPACE to continue", {
             color: "black"
         }).setVisible(false).setOrigin(0.5).setAlpha(0)
         this.tweenContinue = this.tweens.add({
@@ -40,29 +40,31 @@ class DialogueManager extends Phaser.Scene {
             loop: -1,
             duration: 5000,
             ease: 'Linear',
-            isPaused: true
+            pause: true
         });
-        this.textBuilder(jsonMock.first, 100)
         this.container.add([
             this.holder,
             this.textDisplayed,
             this.continueText
         ])
+        this.textBuilder(jsonMock.first, 100)
     }
 
+    nextText() {
+        this.continueText?.setVisible(true)
+        this.tweenContinue?.play()
+    }
+    
     textBuilder(text: string[], deltaTime: number = 100) {
-
         const letters = text.map((e: string) => e.split("")).flat(1)
         if (this.textDisplayed) {
-            console.log("entro acá?")
-            this.showText(this.textDisplayed, letters, 0, deltaTime, this.showText)
-        } else {
-            this.continueText?.setVisible(true)
-            this.tweenContinue?.play()
+            console.log(this.nextText)
+            this.showText(this.textDisplayed, letters, 0, deltaTime, this.showText, this.nextText)
         }
     }
 
-    showText(target: Phaser.GameObjects.Text, message: string[], index: number = 0, interval: number, callBack: Function) {
+    showText(target: Phaser.GameObjects.Text, message: string[], index: number = 0, interval: number, callBack: Function, onFinish: Function) {
+        console.log(onFinish)
         if (index < message.length) {
             index
             target.setText(target.text + message[index])
@@ -71,6 +73,9 @@ class DialogueManager extends Phaser.Scene {
                 index++
                 callBack(target, message, index, interval, callBack)
             }, interval);
+        } else {
+            console.log(onFinish)
+            onFinish()
         }
     }
 }

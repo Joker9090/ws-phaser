@@ -161,8 +161,8 @@ class IntroMovie5 extends Phaser.Scene {
       this.nextText?.setVisible(true)
       if (this.cursors) {
         if (this.cursors.space.isDown) {
-          const IntroScene5 = this.game.scene.getScene("IntroScene5");
-          this.scene.launch(IntroScene5).bringToTop("IntroScene5")
+          const IntroScene6 = this.game.scene.getScene("IntroScene6");
+          this.scene.launch(IntroScene6).bringToTop("IntroScene6")
           this.scene.stop()
         }
       }

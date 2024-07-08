@@ -30,15 +30,15 @@ class IntroMovie7 extends Phaser.Scene {
   }
 
   preload(this: Phaser.Scene) {
-    this.load.image("fondo1", "/movies/intro/scene6/FondoCapa1.png")
-    this.load.image("fondo2", "/movies/intro/scene6/FondoCapa2.png")
-    this.load.image("fondo3", "/movies/intro/scene6/FondoCapa3.png")
-    this.load.image("Piso", "/movies/intro/scene6/Piso.png")
-    this.load.image("AstroFrenteCorte", "/movies/intro/scene6/AStroFrenteCorte.png")
-    this.load.image("AstroFrenteEntero", "/movies/intro/scene6/AstroFrenteEntero.png")
-    this.load.image("AstroPerfilCorte", "/movies/intro/scene6/AstroPerfilCorte.png")
-    this.load.image("AstroPerfilEntero", "/movies/intro/scene6/AstroPerfilEntero.png")
-    this.load.image("VidrioVisor", "/movies/intro/scene6/VidrioVisor.png")
+    this.load.image("fondo1", "/movies/intro/scene7/FondoCapa1.png")
+    this.load.image("fondo2", "/movies/intro/scene7/FondoCapa2.png")
+    this.load.image("fondo3", "/movies/intro/scene7/FondoCapa3.png")
+    this.load.image("Piso", "/movies/intro/scene7/Piso.png")
+    this.load.image("AstroFrenteCorte", "/movies/intro/scene7/AStroFrenteCorte.png")
+    this.load.image("AstroFrenteEntero", "/movies/intro/scene7/AstroFrenteEntero.png")
+    this.load.image("AstroPerfilCorte", "/movies/intro/scene7/AstroPerfilCorte.png")
+    this.load.image("AstroPerfilEntero", "/movies/intro/scene7/AstroPerfilEntero.png")
+    this.load.image("VidrioVisor", "/movies/intro/scene7/VidrioVisor.png")
   }
 
   scaleImage(image: Phaser.GameObjects.Image) {

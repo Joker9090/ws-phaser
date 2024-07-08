@@ -20,6 +20,7 @@ class IntroMovie4 extends Phaser.Scene {
 
   create(this: IntroMovie4, { level }: any) {
     console.log("SCENE 4")
+    this.cursors = this.input.keyboard?.createCursorKeys();
 
     const middlePoint = {
       x: this.cameras.main.displayWidth / 2,

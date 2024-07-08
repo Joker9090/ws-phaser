@@ -2,7 +2,7 @@ import Phaser from "phaser";
 import Ticker, { TickerJob } from '../Ticker'
 import DialogueManager from '../DialogueManager'
 
-class IntroMovie2 extends Phaser.Scene {
+class IntroMovie3 extends Phaser.Scene {
   ticker: Ticker;
 
   //assets
@@ -32,7 +32,7 @@ class IntroMovie2 extends Phaser.Scene {
   nextText?: Phaser.GameObjects.Text;
 
   constructor() {
-    super({ key: "IntroScene2" });
+    super({ key: "IntroScene3" });
 
     const tickerMS = 100;
     this.ticker = new Ticker(tickerMS);
@@ -64,8 +64,8 @@ class IntroMovie2 extends Phaser.Scene {
     image.x = this.cameras.main.displayWidth / 2
   }
 
-  create(this: IntroMovie2, { level }: any) {
-    console.log("SCENE 2")
+  create(this: IntroMovie3, { level }: any) {
+    console.log("SCENE 3")
 
     // START ticker
     this.time.addEvent({
@@ -212,8 +212,7 @@ class IntroMovie2 extends Phaser.Scene {
           yoyo: true
         });
       }, false));
-   
-    this.cameras.main.setZoom(1.5)
+  
 
     this.nextText = this.add.text(middlePoint.x*2, middlePoint.y*2, "SPACE TO CONTINUE", {
       fontSize: 50,
@@ -223,13 +222,13 @@ class IntroMovie2 extends Phaser.Scene {
   }
 
 
-  update(this: IntroMovie2, time: number, delta: number) {
+  update(this: IntroMovie3, time: number, delta: number) {
     if (time > 10000) {
       this.nextText?.setVisible(true)
       if (this.cursors) {
         if (this.cursors.space.isDown) {
-          const IntroScene3 = this.game.scene.getScene("IntroScene3");
-          this.scene.launch(IntroScene3).bringToTop("IntroScene3")
+          const IntroScene4 = this.game.scene.getScene("IntroScene4");
+          this.scene.launch(IntroScene4).bringToTop("IntroScene4")
           this.scene.stop()
         }
       }
@@ -237,7 +236,8 @@ class IntroMovie2 extends Phaser.Scene {
   }
 }
 
-export default IntroMovie2;
+export default IntroMovie3;
+
 
 
 

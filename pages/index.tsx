@@ -17,8 +17,14 @@ export default function Home() {
     import("phaser").then(setPhaser)
     //Load scenes async when windows is ready
     Promise.all([
-      import("@/game/movies/Intro/Scene1"),
-      import("@/game/movies/Intro/Scene2"),
+      // import("@/game/movies/Intro/Scene1"),
+      // import("@/game/movies/Intro/Scene2"),
+      // import("@/game/movies/Intro/Scene3"),
+      // import("@/game/movies/Intro/Scene4"),
+      // import("@/game/movies/Intro/Scene5"),
+      // import("@/game/movies/Intro/Scene6"),
+      import("@/game/movies/Intro/Scene7"),
+      // import("@/game/movies/Intro/Scene8"),
       import("@/game/movies/DialogueManager"),
       // import("@/game/SceneLoader"),
       // import("@/game/Cinematography"),

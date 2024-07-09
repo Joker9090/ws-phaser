@@ -62,8 +62,8 @@ export default function Home() {
     if (phaser && scenes.length && !game) {
       const config: Phaser.Types.Core.GameConfig = {
         type: Phaser.AUTO,
-        width: "100%",
-        height: "100%",
+        width:   "100%" ,
+        height:   "100%",
         parent: "game-container",
         scale: {
           mode: window.Phaser.Scale.NONE

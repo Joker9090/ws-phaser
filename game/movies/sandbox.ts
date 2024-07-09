@@ -56,11 +56,13 @@ class SandBox extends Phaser.Scene {
         this.load.image("LuzPanelVerde", "/movies/intro/scene2/LuzPanelVerde.png")
     }
 
-    scaleImage(image: Phaser.GameObjects.Image) {
-        image.displayHeight = this.cameras.main.displayHeight
-        image.displayWidth = this.cameras.main.displayWidth
-        image.y = this.cameras.main.displayHeight / 2
-        image.x = this.cameras.main.displayWidth / 2
+    scaleImage(images: Phaser.GameObjects.Image[]) {
+        images.forEach((image: Phaser.GameObjects.Image) => {
+            image.displayHeight = this.cameras.main.displayHeight
+            image.displayWidth = this.cameras.main.displayWidth
+            image.y = this.cameras.main.displayHeight / 2
+            image.x = this.cameras.main.displayWidth / 2
+        })
     }
 
     create(this: SandBox, { level }: any) {
@@ -79,164 +81,35 @@ class SandBox extends Phaser.Scene {
             y: this.cameras.main.displayHeight / 2,
         };
 
+        console.log(window.innerWidth, window.innerHeight, "ARIEl")
+        const gameObjectScaler = {
+            x: window.innerWidth / 1920,
+            y: window.innerHeight / 927,
+        }
+
         const lights = {
             right: {
-                x: middlePoint.x + 503,
-                y: middlePoint.y / 2 + 47,
+                x: middlePoint.x + 503 *gameObjectScaler.x,
+                y: middlePoint.y / 2 + 47*gameObjectScaler.y ,
             },
             left: {
-                x: middlePoint.x - 503,
-                y: middlePoint.y / 2 + 52
+                x: middlePoint.x - 503 *gameObjectScaler.x,
+                y: middlePoint.y / 2 + 52 *gameObjectScaler.y
             }
         };
+        console.log(lights)
+        console.log(503 *gameObjectScaler.x)
 
-        this.background3 = this.add.image(middlePoint.x, middlePoint.y, "fondo3").setOrigin(0.5)
-        this.background2 = this.add.image(middlePoint.x, middlePoint.y, "fondo2").setOrigin(0.5)
-        this.background1 = this.add.image(middlePoint.x, middlePoint.y, "fondo1").setOrigin(0.5)
-        this.planet = this.add.image(middlePoint.x, middlePoint.y, "planet").setOrigin(1, 0.8)
         this.naveCapaTrasera = this.add.image(middlePoint.x, middlePoint.y, "naveCapaTrasera").setOrigin(0.5)
-        this.marcoVentana = this.add.image(middlePoint.x, middlePoint.y, "marcoVentana").setOrigin(0.5, 0.75)
-        this.vidrioVentana = this.add.image(middlePoint.x, middlePoint.y, "vidrioVentana").setOrigin(0.5, 0.75)
-        this.naveCapaDelantera = this.add.image(middlePoint.x, middlePoint.y * 2, "naveCapaDelantera").setOrigin(0.5, 1)
-        this.luzAlarmaRoja = this.add.image(lights.right.x, lights.right.y, "luzAlarmaRoja").setOrigin(0.5)
-        this.alarmaRojaOff = this.add.image(lights.right.x, lights.right.y, "alarmaRojaOff").setOrigin(0.5)
+
+        
         this.alarmaRojaOn = this.add.image(lights.right.x, lights.right.y, "alarmaRojaOn").setOrigin(0.5)
-        this.luzAlarmaVerde = this.add.image(lights.left.x, lights.left.y, "luzAlarmaVerde").setOrigin(0.5)
-        this.alarmaVerdeOff = this.add.image(lights.left.x, lights.left.y, "alarmaVerdeOff").setOrigin(0.5)
-        this.alarmaVerdeOn = this.add.image(lights.left.x, lights.left.y, "alarmaVerdeOn").setOrigin(0.5)
-        this.LuzPanelRojo = this.add.image(middlePoint.x + 620, middlePoint.y + 188, "LuzPanelRojo").setOrigin(0.5).setScale(1, 0.95)
-        this.LuzPanelVerde = this.add.image(middlePoint.x - 620, middlePoint.y + 188, "LuzPanelVerde").setOrigin(0.5).setScale(1, 0.95)
-        this.LuzPanelRojo2 = this.add.image(middlePoint.x + 620, middlePoint.y + 188, "LuzPanelRojo").setOrigin(0.5).setScale(.7, 0.95)
-        this.LuzPanelVerde2 = this.add.image(middlePoint.x - 620, middlePoint.y + 188, "LuzPanelVerde").setOrigin(0.5).setScale(.7, 0.95)
-
-        const container = this.add.container().setSize(window.innerWidth, window.innerHeight)
-        container.add([
-            this.background3,
-            this.background2,
-            this.background1,
-            this.planet,
-            this.naveCapaTrasera,
-            this.marcoVentana,
-            this.vidrioVentana,
-            this.naveCapaDelantera,
-            this.luzAlarmaRoja,
-            this.alarmaRojaOff,
-            this.alarmaRojaOn,
-            this.luzAlarmaVerde,
-            this.alarmaVerdeOff,
-            this.alarmaVerdeOn,
-            this.LuzPanelRojo,
-            this.LuzPanelVerde,
-            this.LuzPanelRojo2,
-            this.LuzPanelVerde2,
-        ])
-
-        // const DialogueScene = this.game.scene.getScene("DialogueManager");
-        // this.scene.launch(DialogueScene)
-
-        // ADD JOBS
-        this.ticker.addJob(new TickerJob(1, 100, (job) => {
-            this.tweens.add({
-                targets: this.luzAlarmaRoja,
-                rotation: 2 * Math.PI,
-                duration: 1500,
-                ease: 'linear',
-                loop: -1,
-            });
-            this.tweens.add({
-                targets: this.luzAlarmaRoja,
-                scale: 0,
-                duration: 500,
-                ease: 'linear',
-                loop: -1,
-                yoyo: true
-            });
-            this.tweens.add({
-                targets: this.alarmaRojaOn,
-                alpha: 0.3,
-                duration: 500,
-                ease: 'linear',
-                loop: -1,
-                yoyo: true
-            });
-            this.tweens.add({
-                targets: this.planet,
-                scale: 1.3,
-                duration: 30000,
-                ease: 'linear',
-            });
-            this.tweens.add({
-                targets: [this.background1, this.background2, this.background3],
-                scale: 1.3,
-                duration: 30000,
-                ease: 'linear',
-            });
-            this.tweens.add({
-                targets: this.LuzPanelRojo,
-                alpha: 0.2,
-                duration: 700,
-                ease: 'expo.out',
-                loop: -1,
-                yoyo: true
-            });
-            this.tweens.add({
-                targets: this.LuzPanelRojo2,
-                alpha: 0.4,
-                duration: 1300,
-                ease: 'expo.in',
-                loop: -1,
-
-            });
-            this.tweens.add({
-                targets: this.LuzPanelVerde,
-                alpha: 0.25,
-                duration: 800,
-                ease: 'expo.out',
-                loop: -1,
-                yoyo: true
-            });
-            this.tweens.add({
-                targets: this.LuzPanelVerde2,
-                alpha: 0.5,
-                duration: 600,
-                ease: 'expo.in',
-                loop: -1,
-            });
-        }, false));
-
-        this.ticker.addJob(new TickerJob(2, 100, (job) => {
-            this.tweens.add({
-                targets: this.luzAlarmaVerde,
-                rotation: 2 * Math.PI,
-                duration: 1700,
-                ease: 'linear',
-                loop: -1,
-
-            });
-            this.tweens.add({
-                targets: this.luzAlarmaVerde,
-                scale: 0,
-                duration: 600,
-                ease: 'linear',
-                loop: -1,
-                yoyo: true
-            });
-            this.tweens.add({
-                targets: this.alarmaVerdeOn,
-                alpha: 0.3,
-                duration: 600,
-                ease: 'linear',
-                loop: -1,
-                yoyo: true
-            });
-        }, false));
-
-
-        this.nextText = this.add.text(middlePoint.x * 2, middlePoint.y * 2, "SPACE TO CONTINUE", {
-            fontSize: 50,
-            backgroundColor: "red"
-        })
-        this.nextText.setVisible(false).setOrigin(1).setScrollFactor(0)
+        
+        this.alarmaVerdeOn = this.add.image(lights.left.x,lights.left.y,"alarmaVerdeOn").setOrigin(0.5)
+        
+        this.naveCapaTrasera.setScale(gameObjectScaler.x, gameObjectScaler.y)
+        this.alarmaRojaOn.setScale(gameObjectScaler.x, gameObjectScaler.y)
+        this.alarmaVerdeOn.setScale(gameObjectScaler.x, gameObjectScaler.y)
     }
 
 

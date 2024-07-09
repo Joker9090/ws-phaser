@@ -34,6 +34,8 @@ class IntroMovie1 extends Phaser.Scene {
     this.load.image("darkness", "/movies/intro/scene1/viñeta.png")
     this.load.image("shipOn", "/movies/intro/scene1/naveOn.png")
     this.load.image("shipOff", "/movies/intro/scene1/naveOff.png")
+    this.load.svg("navePrueba", "/movies/intro/scene1/navePrueba.svg")
+
   }
 
   scaleImage(image: Phaser.GameObjects.Image) {

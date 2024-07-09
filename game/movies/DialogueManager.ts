@@ -14,7 +14,9 @@ class DialogueManager extends Phaser.Scene {
 
     constructor() {
         super({ key: "DialogueManager" });
+
     }
+
 
     create() {
         // funcionalidades que faltan: capacidad de pausa, apretar space para next text, 
@@ -58,23 +60,20 @@ class DialogueManager extends Phaser.Scene {
     textBuilder(text: string[], deltaTime: number = 100) {
         const letters = text.map((e: string) => e.split("")).flat(1)
         if (this.textDisplayed) {
-            console.log(this.nextText)
             this.showText(this.textDisplayed, letters, 0, deltaTime, this.showText, this.nextText)
         }
     }
 
     showText(target: Phaser.GameObjects.Text, message: string[], index: number = 0, interval: number, callBack: Function, onFinish: Function) {
-        console.log(onFinish)
         if (index < message.length) {
-            index
+            const self = this
             target.setText(target.text + message[index])
             console.log(target.text)
             setTimeout(() => {
                 index++
-                callBack(target, message, index, interval, callBack)
+                callBack.bind(self)(target, message, index, interval, callBack, onFinish)
             }, interval);
         } else {
-            console.log(onFinish)
             onFinish()
         }
     }

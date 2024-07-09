@@ -81,35 +81,26 @@ class SandBox extends Phaser.Scene {
             y: this.cameras.main.displayHeight / 2,
         };
 
-        console.log(window.innerWidth, window.innerHeight, "ARIEl")
         const gameObjectScaler = {
             x: window.innerWidth / 1920,
             y: window.innerHeight / 927,
         }
 
-        const lights = {
-            right: {
-                x: middlePoint.x + 503 *gameObjectScaler.x,
-                y: middlePoint.y / 2 + 47*gameObjectScaler.y ,
-            },
-            left: {
-                x: middlePoint.x - 503 *gameObjectScaler.x,
-                y: middlePoint.y / 2 + 52 *gameObjectScaler.y
-            }
-        };
-        console.log(lights)
-        console.log(503 *gameObjectScaler.x)
 
-        this.naveCapaTrasera = this.add.image(middlePoint.x, middlePoint.y, "naveCapaTrasera").setOrigin(0.5)
 
-        
-        this.alarmaRojaOn = this.add.image(lights.right.x, lights.right.y, "alarmaRojaOn").setOrigin(0.5)
-        
-        this.alarmaVerdeOn = this.add.image(lights.left.x,lights.left.y,"alarmaVerdeOn").setOrigin(0.5)
-        
-        this.naveCapaTrasera.setScale(gameObjectScaler.x, gameObjectScaler.y)
-        this.alarmaRojaOn.setScale(gameObjectScaler.x, gameObjectScaler.y)
-        this.alarmaVerdeOn.setScale(gameObjectScaler.x, gameObjectScaler.y)
+        this.naveCapaTrasera = this.add.image(0, 0, "naveCapaTrasera").setOrigin(0.5)
+
+
+        this.alarmaRojaOn = this.add.image(0, 0, "alarmaRojaOn").setOrigin(0.5).setPosition(503, -185)
+
+        this.alarmaVerdeOn = this.add.image(0, 0, "alarmaVerdeOn").setOrigin(0.5).setPosition(-503, -180)
+
+        const container = this.add.container(middlePoint.x, middlePoint.y).setSize(1920, 927)
+        container.add([this.naveCapaTrasera, this.alarmaRojaOn, this.alarmaVerdeOn])
+        container.setScale(gameObjectScaler.x < gameObjectScaler.y ? gameObjectScaler.y : gameObjectScaler.x)
+       
+        const DialogueScene = this.game.scene.getScene("DialogueManager");
+        this.scene.launch(DialogueScene)
     }
 
 

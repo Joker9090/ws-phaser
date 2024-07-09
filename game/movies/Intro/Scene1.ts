@@ -62,19 +62,35 @@ class IntroMovie1 extends Phaser.Scene {
     this.background2 = this.add.image(middlePoint.x, middlePoint.y, 'backgronudClouds').setOrigin(0.5, 0.5);
     this.background1 = this.add.image(middlePoint.x, middlePoint.y, 'backgroundStars').setOrigin(0.5, 0.5);
     this.darkness = this.add.image(middlePoint.x, middlePoint.y, 'darkness').setOrigin(0.5, 0.5);
-
-    this.ship = this.add.image(middlePoint.x + 200, middlePoint.y, 'shipOff')
+    this.planet = this.add.image(middlePoint.x - 200, 0, 'planet').setOrigin(0.8, 0.5)
+    this.ship = this.add.image(middlePoint.x , middlePoint.y, 'shipOff')
       .setOrigin(0.5, 0.5);
-    this.shipOverImage = this.add.image(middlePoint.x + 200, middlePoint.y, 'shipOn')
+    this.shipOverImage = this.add.image(middlePoint.x , middlePoint.y, 'shipOn')
       .setOrigin(0.5, 0.5);
-    this.planet = this.add.image(200, 400, 'planet').setOrigin(0.5, 0.5)
 
-
+    const camera = this.cameras.main.setAlpha(0)
+    camera.startFollow(this.ship)
 
     // const DialogueScene = this.game.scene.getScene("DialogueManager");
     // this.scene.launch(DialogueScene)
 
     // // ADD JOBS
+    this.ticker.addJob(new TickerJob(0, 100, (job) => {
+      this.tweens.add({
+        targets: [camera],
+        alpha: 1,
+        duration: 1000,
+        ease: 'linear',
+      });
+      this.tweens.add({
+        targets: [this.background1,this.background2,this.background3],
+        scale: 1.2,
+        duration: 30000,
+        ease: 'linear',
+        loop: 0
+      });
+    }, false));
+
     this.ticker.addJob(new TickerJob(1, 100, (job) => {
       this.tweens.add({
         targets: this.shipOverImage,
@@ -82,28 +98,70 @@ class IntroMovie1 extends Phaser.Scene {
         duration: 2500,
         ease: 'expo.out',
         loop: -1
-
       });
     }, false));
 
     this.ticker.addJob(new TickerJob(2, 500, (job) => {
       this.tweens.add({
         targets: [this.ship, this.shipOverImage],
-        // y: -1,
-        angle: 5,
-        duration: 25000,
+        angle: "+=5",
+        x: "+=10",
+        y: "-=15",
+        duration: 3000,
         ease: 'Linear',
+        yoyo: true,
+        loop: 0
       });
     }, false));
 
-    const camera = this.cameras.main
-    this.ticker.addJob(new TickerJob(3, 100, (job) => {
+    this.ticker.addJob(new TickerJob(3, 500, (job) => {
       this.tweens.add({
         targets: camera,
-        zoom: 1.2,
-        duration: 20000,
+        zoom: 1.7,
+        duration: 6000,
         ease: 'Linear'
       });
+    }, false));
+    this.ticker.addJob(new TickerJob(4, 6500, (job) => {
+      camera.stopFollow()
+    }, false));
+    this.ticker.addJob(new TickerJob(5, 6500, (job) => {
+        camera.setZoom(1.5)
+        this.planet?.setVisible(false)
+        this.tweens.add({
+          targets: [this.ship, this.shipOverImage],
+          y: "-=5",
+          duration: 3429,
+          ease: 'ease',
+          loop: -1,
+          yoyo:true
+        });
+        this.tweens.add({
+          targets: [this.ship, this.shipOverImage],
+          x: "+=5",
+          duration: 1420,
+          ease: 'ease',
+          loop: -1,
+          yoyo:true
+        });
+        this.tweens.add({
+          targets: [this.background1,this.background2,this.background3],
+          x: "-=15",
+          y: "+=20",
+          duration: 4000,
+          ease: 'cubic',
+          loop: -1,
+          yoyo:true
+        });
+        this.tweens.add({
+          targets: camera,
+          scrollY: "+=10",
+          duration: 4000,
+          delay: 500,
+          ease: 'linear',
+          loop: -1,
+          yoyo:true
+        });
     }, false));
 
     this.nextText = this.add.text(middlePoint.x*2 - 300, middlePoint.y*2 - 300, "SPACE TO CONTINUE", {

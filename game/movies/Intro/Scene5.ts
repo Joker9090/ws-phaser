@@ -98,8 +98,7 @@ class IntroMovie5 extends Phaser.Scene {
     this.NubePolvo5 = this.add.image(middlePoint.x - 160, middlePoint.y + 300, "NubePolvo5").setOrigin(0.5)
     this.PiedrasDelanteras = this.add.image(middlePoint.x , middlePoint.y *2, "PiedrasDelanteras").setOrigin(0.5, 1)
   
-  
-
+    
 
     // const DialogueScene = this.game.scene.getScene("DialogueManager");
     // this.scene.launch(DialogueScene)

@@ -133,7 +133,7 @@ class IntroMovie2 extends Phaser.Scene {
       this.LuzPanelVerde2,
     ]
 
-    this.scaleImages(Images)
+    // this.scaleImages(Images)
     // const DialogueScene = this.game.scene.getScene("DialogueManager");
     // this.scene.launch(DialogueScene)
 

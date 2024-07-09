@@ -31,6 +31,7 @@ class IntroMovie4 extends Phaser.Scene {
       fontSize: 50,
       backgroundColor: "red"
     })
+    
     this.nextText.setVisible(false).setOrigin(1).setScrollFactor(0)
   }
 

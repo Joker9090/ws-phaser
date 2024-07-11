@@ -2,7 +2,7 @@ import Phaser from "phaser";
 import Ticker, { TickerJob } from '../Ticker'
 import DialogueManager from '../DialogueManager'
 
-class IntroMovie7 extends Phaser.Scene {
+class IntroMovie8 extends Phaser.Scene {
   ticker: Ticker;
 
   //assets
@@ -10,12 +10,10 @@ class IntroMovie7 extends Phaser.Scene {
   background2?: Phaser.GameObjects.Image;
   background1?: Phaser.GameObjects.Image;
   Piso?: Phaser.GameObjects.Image;
-  AstroFrenteCorte?: Phaser.GameObjects.Image;
-  AstroFrenteEntero?: Phaser.GameObjects.Image;
-  AstroPerfilCorte?: Phaser.GameObjects.Image;
-  AstroPerfilEntero?: Phaser.GameObjects.Image;
-  VidrioVisor?: Phaser.GameObjects.Image;
-  VidrioVisorView?: Phaser.GameObjects.Image;
+  mountains?: Phaser.GameObjects.Image;
+  Nube1?: Phaser.GameObjects.Image;
+  Nube2?: Phaser.GameObjects.Image;
+  Nube3?: Phaser.GameObjects.Image;
 
 
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -24,21 +22,21 @@ class IntroMovie7 extends Phaser.Scene {
   nextText?: Phaser.GameObjects.Text;
 
   constructor() {
-    super({ key: "IntroScene7" });
+    super({ key: "IntroScene8" });
 
     const tickerMS = 100;
     this.ticker = new Ticker(tickerMS);
   }
 
   preload(this: Phaser.Scene) {
-    this.load.image("fondo1", "/movies/intro/scene7/FondoCapa1.png")
-    this.load.image("fondo2", "/movies/intro/scene7/FondoCapa2.png")
-    this.load.image("fondo3", "/movies/intro/scene7/FondoCapa3.png")
-    this.load.image("Piso", "/movies/intro/scene7/Piso.png")
-    this.load.image("AstroFrenteCorte", "/movies/intro/scene7/AStroFrenteCorte.png")
-    this.load.image("AstroPerfilCorte", "/movies/intro/scene7/AstroPerfilCorte.png")
-    this.load.image("VidrioVisor", "/movies/intro/scene7/VidrioVisor.png")
-    this.load.image("VidrioVisorView", "/movies/intro/scene7/VidrioVisorView.png")
+    this.load.image("fondo1", "/movies/intro/scene8/FondoCapa1.png")
+    this.load.image("fondo2", "/movies/intro/scene8/FondoCapa2.png")
+    this.load.image("fondo3", "/movies/intro/scene8/FondoCapa3.png")
+    this.load.image("mountains", "/movies/intro/scene8/Montañas.png")
+    this.load.image("Nube1", "/movies/intro/scene8/Nube1.png")
+    this.load.image("Nube2", "/movies/intro/scene8/Nube2.png")
+    this.load.image("Nube3", "/movies/intro/scene8/Nube3.png")
+    this.load.image("Piso", "/movies/intro/scene8/Piso.png")
   }
 
   scaleImage(image: Phaser.GameObjects.Image) {
@@ -48,8 +46,8 @@ class IntroMovie7 extends Phaser.Scene {
     image.x = this.cameras.main.displayWidth / 2
   }
 
-  create(this: IntroMovie7, { level }: any) {
-    console.log("SCENE 7")
+  create(this: IntroMovie8, { level }: any) {
+    console.log("SCENE 8")
 
     // START ticker
     this.time.addEvent({
@@ -72,11 +70,11 @@ class IntroMovie7 extends Phaser.Scene {
     this.background3 = this.add.image(0, 0, "fondo3").setOrigin(0.5)
     this.background2 = this.add.image(0, 0, "fondo2").setOrigin(0.5)
     this.background1 = this.add.image(0, 0, "fondo1").setOrigin(0.5)
-    this.Piso = this.add.image(0, 0, "Piso").setOrigin(0.5, 0.5)
-    this.AstroFrenteCorte = this.add.image(0, 0, "AstroFrenteCorte").setOrigin(0.5)
-    this.VidrioVisor = this.add.image(-30, 0, "VidrioVisor").setOrigin(0.5)
-    this.VidrioVisorView = this.add.image(-30, 0, "VidrioVisorView").setOrigin(0.5)
-    this.AstroPerfilCorte = this.add.image(-30, 0, "AstroPerfilCorte").setOrigin(0.5).setVisible(false)
+    this.mountains = this.add.image(0, 240, "mountains").setOrigin(0.5,1)
+    this.Nube1 = this.add.image(0, 350, "Nube1").setOrigin(0.5, 1)
+    this.Nube2 = this.add.image(0, 350, "Nube2").setOrigin(0.5, 1)
+    this.Nube3 = this.add.image(0, 350, "Nube3").setOrigin(0.5, 1)
+    this.Piso = this.add.image(0, 200, "Piso").setOrigin(0.5, 0)
 
 
     // const DialogueScene = this.game.scene.getScene("DialogueManager");
@@ -86,11 +84,11 @@ class IntroMovie7 extends Phaser.Scene {
       this.background3,
       this.background2,
       this.background1,
+      this.Nube3,
+      this.Nube2,
+      this.Nube1,
+      this.mountains,
       this.Piso,
-      this.AstroFrenteCorte,
-      this.AstroPerfilCorte,
-      this.VidrioVisorView,
-      this.VidrioVisor,
     ])
     container.setScale(gameObjectScaler.x < gameObjectScaler.y ? gameObjectScaler.y : gameObjectScaler.x)
 
@@ -99,7 +97,7 @@ class IntroMovie7 extends Phaser.Scene {
       this.tweens.add({
         targets: this.cameras.main,
         zoom: 1.5,
-        duration: 30000,
+        duration: 40000,
         ease: 'lienar',
         loop: -1,
         yoyo: true,
@@ -107,7 +105,23 @@ class IntroMovie7 extends Phaser.Scene {
       this.tweens.add({
         targets: [this.background1, this.background2, this.background3],
         scale: 1.5,
-        duration: 30000,
+        duration: 40000,
+        ease: 'lienar',
+        loop: -1,
+        yoyo: true,
+      });
+      this.tweens.add({
+        targets: [this.Nube1, this.Nube3],
+        x: "+=200",
+        duration: 40000,
+        ease: 'lienar',
+        loop: -1,
+        yoyo: true,
+      });
+      this.tweens.add({
+        targets: [this.Nube2],
+        x:"-=200",
+        duration: 40000,
         ease: 'lienar',
         loop: -1,
         yoyo: true,
@@ -115,22 +129,7 @@ class IntroMovie7 extends Phaser.Scene {
     }, false));
 
     this.ticker.addJob(new TickerJob(2, 2500, (job) => {
-      this.cameras.main.flash(3000, 255, 255, 255, false, (camera: any, progress: number) => {
-        if (progress < 0.5) {
-          this.VidrioVisor?.setPosition(90, 0)
-          this.VidrioVisorView?.setPosition(90, 0)
-          this.AstroFrenteCorte?.setVisible(false)
-          this.AstroPerfilCorte?.setVisible(true)
-        }
-      })
-        // this.tweens.add({
-        //   targets: [this.Cuerpo, this.BrazoDelantero, this.PiernaDelantera, this.PiernaTrasera],
-        //   y: "+=50",
-        //   duration: 1500,
-        //   ease: 'ease',
-        //   loop: -1,
-        //   yoyo: true,
-        // });
+
       }, false));
 
     this.nextText = this.add.text(middlePoint.x * 2, middlePoint.y * 2, "SPACE TO CONTINUE", {
@@ -141,13 +140,17 @@ class IntroMovie7 extends Phaser.Scene {
   }
 
 
-  update(this: IntroMovie7, time: number, delta: number) {
+  update(this: IntroMovie8, time: number, delta: number) {
     if (time > 10000) {
       this.nextText?.setVisible(true)
       if (this.cursors) {
         if (this.cursors.space.isDown) {
-          const IntroScene8 = this.game.scene.getScene("IntroScene8");
-          this.scene.launch(IntroScene8).bringToTop("IntroScene8")
+          const scenes = this.game.scene.getScenes();
+          scenes.forEach((scene: Phaser.Scene)=>{
+            scene.scene.restart()
+          })
+          const IntroScene1 = this.game.scene.getScene("IntroScene1");
+          this.scene.restart(IntroScene1).bringToTop("IntroScene1");
           this.scene.stop()
         }
       }
@@ -155,7 +158,7 @@ class IntroMovie7 extends Phaser.Scene {
   }
 }
 
-export default IntroMovie7;
+export default IntroMovie8;
 
 
 

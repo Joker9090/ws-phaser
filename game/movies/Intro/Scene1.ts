@@ -12,6 +12,8 @@ class IntroMovie1 extends Phaser.Scene {
   darkness?: Phaser.GameObjects.Image;
   ship?: Phaser.GameObjects.Image;
   shipOverImage?: Phaser.GameObjects.Image;
+  shipZoom?: Phaser.GameObjects.Image;
+  shipZoomOn?: Phaser.GameObjects.Image;
   planet?: Phaser.GameObjects.Image;
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
 
@@ -34,7 +36,8 @@ class IntroMovie1 extends Phaser.Scene {
     this.load.image("darkness", "/movies/intro/scene1/viñeta.png")
     this.load.image("shipOn", "/movies/intro/scene1/naveOn.png")
     this.load.image("shipOff", "/movies/intro/scene1/naveOff.png")
-    this.load.svg("navePrueba", "/movies/intro/scene1/navePrueba.svg")
+    this.load.image("naveZoom", "/movies/intro/scene1/NaveAstro.png")
+    this.load.image("naveZoomOn", "/movies/intro/scene1/NaveAstroLuces.png")
 
   }
 
@@ -60,24 +63,44 @@ class IntroMovie1 extends Phaser.Scene {
       y: this.cameras.main.displayHeight / 2,
     };
 
-    this.background3 = this.add.image(middlePoint.x, middlePoint.y, 'backgroundGlow').setOrigin(0.5, 0.5);
-    this.background2 = this.add.image(middlePoint.x, middlePoint.y, 'backgronudClouds').setOrigin(0.5, 0.5);
-    this.background1 = this.add.image(middlePoint.x, middlePoint.y, 'backgroundStars').setOrigin(0.5, 0.5);
-    this.darkness = this.add.image(middlePoint.x, middlePoint.y, 'darkness').setOrigin(0.5, 0.5);
-    this.planet = this.add.image(middlePoint.x - 200, 0, 'planet').setOrigin(0.8, 0.5)
-    this.ship = this.add.image(middlePoint.x , middlePoint.y, 'shipOff')
-      .setOrigin(0.5, 0.5);
-    this.shipOverImage = this.add.image(middlePoint.x , middlePoint.y, 'shipOn')
-      .setOrigin(0.5, 0.5);
+    const gameObjectScaler = {
+      x: window.innerWidth / 1920,
+      y: window.innerHeight / 927,
+    }
 
-    const camera = this.cameras.main.setAlpha(0)
-    camera.startFollow(this.ship)
 
+    this.background3 = this.add.image(0, 0, 'backgroundGlow').setOrigin(0.5, 0.5);
+    this.background2 = this.add.image(0, 0, 'backgronudClouds').setOrigin(0.5, 0.5);
+    this.background1 = this.add.image(0, 0, 'backgroundStars').setOrigin(0.5, 0.5);
+    this.darkness = this.add.image(0, 0, 'darkness').setOrigin(0.5, 0.5);
+    this.planet = this.add.image(0, 0, 'planet').setOrigin(0.5, 0.5).setPosition(-800, -400);
+    this.ship = this.add.image(0, 0, 'shipOff')
+      .setOrigin(0.5, 0.5);
+    this.shipOverImage = this.add.image(0, 0, 'shipOn')
+      .setOrigin(0.5, 0.5);
+    this.shipZoom = this.add.image(0, 300, 'naveZoom')
+      .setOrigin(0.5, 0.5).setVisible(false).setScale(0.7);
+    this.shipZoomOn = this.add.image(0, 300, 'naveZoomOn')
+      .setOrigin(0.5, 0.5).setVisible(false).setScale(0.7);
+
+    const container = this.add.container(middlePoint.x, middlePoint.y).setSize(1920, 927)
+    container.add([
+      this.background3,
+      this.background2,
+      this.background1,
+      this.darkness,
+      this.planet,
+      this.ship,
+      this.shipOverImage,
+      this.shipZoom,
+      this.shipZoomOn,
+    ])
+    container.setScale(gameObjectScaler.x < gameObjectScaler.y ? gameObjectScaler.y : gameObjectScaler.x)
     // const DialogueScene = this.game.scene.getScene("DialogueManager");
     // this.scene.launch(DialogueScene)
-
+    const camera = this.cameras.main
     // // ADD JOBS
-    this.ticker.addJob(new TickerJob(0, 100, (job) => {
+    this.ticker.addJob(new TickerJob(0, 10, (job) => {
       this.tweens.add({
         targets: [camera],
         alpha: 1,
@@ -85,7 +108,7 @@ class IntroMovie1 extends Phaser.Scene {
         ease: 'linear',
       });
       this.tweens.add({
-        targets: [this.background1,this.background2,this.background3],
+        targets: [this.background1, this.background2, this.background3],
         scale: 1.2,
         duration: 30000,
         ease: 'linear',
@@ -95,7 +118,7 @@ class IntroMovie1 extends Phaser.Scene {
 
     this.ticker.addJob(new TickerJob(1, 100, (job) => {
       this.tweens.add({
-        targets: this.shipOverImage,
+        targets: [this.shipOverImage, this.shipZoomOn],
         alpha: 0,
         duration: 2500,
         ease: 'expo.out',
@@ -111,7 +134,7 @@ class IntroMovie1 extends Phaser.Scene {
         y: "-=15",
         duration: 3000,
         ease: 'Linear',
-        yoyo: true,
+        yoyo: false,
         loop: 0
       });
     }, false));
@@ -128,45 +151,50 @@ class IntroMovie1 extends Phaser.Scene {
       camera.stopFollow()
     }, false));
     this.ticker.addJob(new TickerJob(5, 6500, (job) => {
-        camera.setZoom(1.5)
-        this.planet?.setVisible(false)
-        this.tweens.add({
-          targets: [this.ship, this.shipOverImage],
-          y: "-=5",
-          duration: 3429,
-          ease: 'ease',
-          loop: -1,
-          yoyo:true
-        });
-        this.tweens.add({
-          targets: [this.ship, this.shipOverImage],
-          x: "+=5",
-          duration: 1420,
-          ease: 'ease',
-          loop: -1,
-          yoyo:true
-        });
-        this.tweens.add({
-          targets: [this.background1,this.background2,this.background3],
-          x: "-=15",
-          y: "+=20",
-          duration: 4000,
-          ease: 'cubic',
-          loop: -1,
-          yoyo:true
-        });
-        this.tweens.add({
-          targets: camera,
-          scrollY: "+=10",
-          duration: 4000,
-          delay: 500,
-          ease: 'linear',
-          loop: -1,
-          yoyo:true
-        });
+      camera.setZoom(1)
+
+      this.planet?.setVisible(false)
+      this.shipOverImage?.setVisible(false)
+      this.ship?.setVisible(false)
+      this.shipZoom?.setVisible(true)
+      this.shipZoomOn?.setVisible(true)
+      // this.tweens.add({
+      //   targets: [this.shipZoom, this.shipZoomOn],
+      //   y: "-=5",
+      //   duration: 3429,
+      //   ease: 'ease',
+      //   loop: -1,
+      //   yoyo: true
+      // });
+      // this.tweens.add({
+      //   targets: [this.shipZoom, this.shipZoomOn],
+      //   x: "+=5",
+      //   duration: 1420,
+      //   ease: 'ease',
+      //   loop: -1,
+      //   yoyo: true
+      // });
+      this.tweens.add({
+        targets: [this.background1, this.background2, this.background3],
+        x: "-=15",
+        y: "+=20",
+        duration: 4000,
+        ease: 'cubic',
+        loop: -1,
+        yoyo: true
+      });
+      this.tweens.add({
+        targets: camera,
+        scrollY: "+=10",
+        duration: 4000,
+        delay: 500,
+        ease: 'linear',
+        loop: -1,
+        yoyo: true
+      });
     }, false));
 
-    this.nextText = this.add.text(middlePoint.x*2 - 300, middlePoint.y*2 - 300, "SPACE TO CONTINUE", {
+    this.nextText = this.add.text(middlePoint.x * 2 - 300, middlePoint.y * 2 - 300, "SPACE TO CONTINUE", {
       fontSize: 50,
       backgroundColor: "red"
     })

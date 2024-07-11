@@ -47,7 +47,7 @@ class IntroMovie6 extends Phaser.Scene {
   }
 
   create(this: IntroMovie6, { level }: any) {
-    console.log("SCENE 3")
+    console.log("SCENE 6")
 
     // START ticker
     this.time.addEvent({
@@ -62,17 +62,34 @@ class IntroMovie6 extends Phaser.Scene {
       y: this.cameras.main.displayHeight / 2,
     };
 
+    const gameObjectScaler = {
+      x: window.innerWidth / 1920,
+      y: window.innerHeight / 927,
+    }
 
 
-    this.background3 = this.add.image(middlePoint.x, middlePoint.y, "fondo3").setOrigin(0.5)
-    this.background2 = this.add.image(middlePoint.x, middlePoint.y, "fondo2").setOrigin(0.5)
-    this.background1 = this.add.image(middlePoint.x, middlePoint.y, "fondo1").setOrigin(0.5)
-    this.Piso = this.add.image(middlePoint.x, middlePoint.y * 2, "Piso").setOrigin(0.5)
-    this.PiernaTrasera = this.add.image(100, middlePoint.y - 120, "PiernaTrasera").setOrigin(0.5, 0).setRotation(Math.PI / 6)
-    this.Cuerpo = this.add.image(100, middlePoint.y, "Cuerpo").setOrigin(0.5, 1)
-    this.PiernaDelantera = this.add.image(100, middlePoint.y - 120, "PiernaDelantera").setOrigin(0.5, 0).setRotation(-Math.PI / 6)
-    this.BrazoDelantero = this.add.image(100, middlePoint.y - 549, "BrazoDelantero").setOrigin(0.5, 0).setRotation(-Math.PI / 6)
+    this.background3 = this.add.image(0, 0, "fondo3").setOrigin(0.5)
+    this.background2 = this.add.image(0, 0, "fondo2").setOrigin(0.5)
+    this.background1 = this.add.image(0, 0, "fondo1").setOrigin(0.5)
+    this.Piso = this.add.image(0, -200, "Piso").setOrigin(0.5, 0)
+    this.PiernaTrasera = this.add.image(-600, -220, "PiernaTrasera").setOrigin(0.5, 0).setRotation(Math.PI / 6)
+    this.Cuerpo = this.add.image(-600, -50, "Cuerpo").setOrigin(0.5, 1)
+    this.PiernaDelantera = this.add.image(-600, -220, "PiernaDelantera").setOrigin(0.5, 0).setRotation(-Math.PI / 6)
+    this.BrazoDelantero = this.add.image(-600, - 649, "BrazoDelantero").setOrigin(0.5, 0).setRotation(-Math.PI / 6)
 
+
+    const container = this.add.container(middlePoint.x, middlePoint.y).setSize(1920, 927)
+    container.add([
+      this.background3,
+      this.background2,
+      this.background1,
+      this.Piso,
+      this.PiernaTrasera,
+      this.Cuerpo,
+      this.PiernaDelantera,
+      this.BrazoDelantero,
+    ])
+    container.setScale(gameObjectScaler.x < gameObjectScaler.y ? gameObjectScaler.y : gameObjectScaler.x)
 
     // const DialogueScene = this.game.scene.getScene("DialogueManager");
     // this.scene.launch(DialogueScene)

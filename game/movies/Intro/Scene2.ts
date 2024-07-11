@@ -82,37 +82,47 @@ class IntroMovie2 extends Phaser.Scene {
       y: this.cameras.main.displayHeight / 2,
     };
 
+    const gameObjectScaler = {
+      x: window.innerWidth / 1920,
+      y: window.innerHeight / 927,
+  }
+
     const lights = {
       right: {
-        x: middlePoint.x + 503,
-        y: middlePoint.y / 2 + 47,
+        x: 503,
+        y:  -185,
       },
       left: {
-        x: middlePoint.x - 503,
-        y: middlePoint.y / 2 + 52
+        x: -503,
+        y: -180
       }
     };
 
-    this.background3 = this.add.image(middlePoint.x, middlePoint.y, "fondo3").setOrigin(0.5)
-    this.background2 = this.add.image(middlePoint.x, middlePoint.y, "fondo2").setOrigin(0.5)
-    this.background1 = this.add.image(middlePoint.x, middlePoint.y, "fondo1").setOrigin(0.5)
-    this.planet = this.add.image(middlePoint.x, middlePoint.y, "planet").setOrigin(1, 0.8)
-    this.naveCapaTrasera = this.add.image(middlePoint.x, middlePoint.y, "naveCapaTrasera").setOrigin(0.5)
-    this.marcoVentana = this.add.image(middlePoint.x, middlePoint.y, "marcoVentana").setOrigin(0.5, 0.75)
-    this.vidrioVentana = this.add.image(middlePoint.x, middlePoint.y, "vidrioVentana").setOrigin(0.5, 0.75)
-    this.naveCapaDelantera = this.add.image(middlePoint.x, middlePoint.y * 2, "naveCapaDelantera").setOrigin(0.5, 1)
+    this.background3 = this.add.image(0, 0, "fondo3").setOrigin(0.5)
+    this.background2 = this.add.image(0, 0, "fondo2").setOrigin(0.5)
+    this.background1 = this.add.image(0, 0, "fondo1").setOrigin(0.5)
+    this.planet = this.add.image(0, 0, "planet").setOrigin(1, 0.8)
+    this.naveCapaTrasera = this.add.image(0, 0, "naveCapaTrasera").setOrigin(0.5)
+    this.marcoVentana = this.add.image(0, 0, "marcoVentana").setOrigin(0.5, 0.75)
+    this.vidrioVentana = this.add.image(0, 0, "vidrioVentana").setOrigin(0.5, 0.75)
+    this.naveCapaDelantera = this.add.image(0, 100, "naveCapaDelantera").setOrigin(0.5, 0)
     this.luzAlarmaRoja = this.add.image(lights.right.x, lights.right.y, "luzAlarmaRoja").setOrigin(0.5)
     this.alarmaRojaOff = this.add.image(lights.right.x, lights.right.y, "alarmaRojaOff").setOrigin(0.5)
     this.alarmaRojaOn = this.add.image(lights.right.x, lights.right.y, "alarmaRojaOn").setOrigin(0.5)
     this.luzAlarmaVerde = this.add.image(lights.left.x, lights.left.y, "luzAlarmaVerde").setOrigin(0.5)
     this.alarmaVerdeOff = this.add.image(lights.left.x, lights.left.y, "alarmaVerdeOff").setOrigin(0.5)
     this.alarmaVerdeOn = this.add.image(lights.left.x, lights.left.y, "alarmaVerdeOn").setOrigin(0.5)
-    this.LuzPanelRojo = this.add.image(middlePoint.x + 620, middlePoint.y + 188, "LuzPanelRojo").setOrigin(0.5).setScale(1, 0.95)
-    this.LuzPanelVerde = this.add.image(middlePoint.x - 620, middlePoint.y + 188, "LuzPanelVerde").setOrigin(0.5).setScale(1, 0.95)
-    this.LuzPanelRojo2 = this.add.image(middlePoint.x + 620, middlePoint.y + 188, "LuzPanelRojo").setOrigin(0.5).setScale(.7, 0.95)
-    this.LuzPanelVerde2 = this.add.image(middlePoint.x - 620, middlePoint.y + 188, "LuzPanelVerde").setOrigin(0.5).setScale(.7, 0.95)
+    this.LuzPanelRojo = this.add.image(620, 252, "LuzPanelRojo").setOrigin(0.5).setScale(1, 0.95)
+    this.LuzPanelVerde = this.add.image( - 620, 252, "LuzPanelVerde").setOrigin(0.5).setScale(1, 0.95)
+    const textConsole = this.add.text(-25,400,"WARNING: SYSTEM FAILURE DETECTED. LIFE SUPPORT CRITICAL. OXYGEN LEVELS DECREASING. IMMEDIATE ACTION REQUIRED. ALERT: MAIN SYSTEM MALFUNCTION. TEMPERATURE CONTROL UNSTABLE. LIFE SUPPORT AT RISK. INITIATE EMERGENCY PROTOCOLS.", {
+      color: 'green',
+      fontSize: 26,
+      wordWrap: {
+        width: 750
+      } 
+    }).setSize(700, 500).setOrigin(0.5)
 
-    const Images = [
+    const AssetsArray = [
       this.background3,
       this.background2,
       this.background1,
@@ -129,20 +139,29 @@ class IntroMovie2 extends Phaser.Scene {
       this.alarmaVerdeOn,
       this.LuzPanelRojo,
       this.LuzPanelVerde,
-      this.LuzPanelRojo2,
-      this.LuzPanelVerde2,
+      textConsole
     ]
 
+    const container = this.add.container(middlePoint.x, middlePoint.y).setSize(1920, 927)
+        container.add(AssetsArray)
+        container.setScale(gameObjectScaler.x < gameObjectScaler.y ? gameObjectScaler.y : gameObjectScaler.x)
     // this.scaleImages(Images)
     // const DialogueScene = this.game.scene.getScene("DialogueManager");
     // this.scene.launch(DialogueScene)
-
+    this.cameras.main.setZoom(2).scrollY = 200
     // ADD JOBS
     this.ticker.addJob(new TickerJob(1, 100, (job) => {
       this.tweens.add({
         targets: this.luzAlarmaRoja,
         rotation: 2 * Math.PI,
         duration: 1500,
+        ease: 'linear',
+        loop: -1,
+      });
+      this.tweens.add({
+        targets: textConsole,
+        alpha: 0.5,
+        duration: 350,
         ease: 'linear',
         loop: -1,
       });
@@ -156,54 +175,40 @@ class IntroMovie2 extends Phaser.Scene {
       });
       this.tweens.add({
         targets: this.alarmaRojaOn,
-        alpha: 0.3,
+        alpha: 0.8,
         duration: 500,
         ease: 'linear',
         loop: -1,
         yoyo: true
       });
       this.tweens.add({
-        targets: this.planet,
+        targets: [this.background1, this.background2, this.background3, this.planet],
         scale: 1.3,
         duration: 30000,
         ease: 'linear',
       });
       this.tweens.add({
-        targets: [this.background1, this.background2, this.background3],
-        scale: 1.3,
+        targets: [this.background1, this.background2, this.background3, this.planet],
+        x: "-=200",
         duration: 30000,
         ease: 'linear',
       });
       this.tweens.add({
         targets: this.LuzPanelRojo,
-        alpha: 0.2,
+        alpha: 0.6,
         duration: 700,
         ease: 'expo.out',
         loop: -1,
         yoyo: true
       });
-      this.tweens.add({
-        targets: this.LuzPanelRojo2,
-        alpha: 0.4,
-        duration: 1300,
-        ease: 'expo.in',
-        loop: -1,
 
-      });
       this.tweens.add({
         targets: this.LuzPanelVerde,
-        alpha: 0.25,
+        alpha: 0.6,
         duration: 800,
         ease: 'expo.out',
         loop: -1,
         yoyo: true
-      });
-      this.tweens.add({
-        targets: this.LuzPanelVerde2,
-        alpha: 0.5,
-        duration: 600,
-        ease: 'expo.in',
-        loop: -1,
       });
     }, false));
 
@@ -226,7 +231,7 @@ class IntroMovie2 extends Phaser.Scene {
       });
       this.tweens.add({
         targets: this.alarmaVerdeOn,
-        alpha: 0.3,
+        alpha: 0.8,
         duration: 600,
         ease: 'linear',
         loop: -1,
@@ -234,7 +239,16 @@ class IntroMovie2 extends Phaser.Scene {
       });
     }, false));
 
-    this.cameras.main.setZoom(1.5)
+    this.ticker.addJob(new TickerJob(3, 2000, (job) => {
+      this.cameras.main.setZoom(1.5).scrollY = 100
+  
+    }, false));
+
+    this.ticker.addJob(new TickerJob(4, 4000, (job) => {
+      this.cameras.main.setZoom(1).scrollY = 0
+  
+    }, false));
+    // this.cameras.main.setZoom(1.5)
 
     this.nextText = this.add.text(middlePoint.x * 2, middlePoint.y * 2, "SPACE TO CONTINUE", {
       fontSize: 50,
@@ -249,8 +263,8 @@ class IntroMovie2 extends Phaser.Scene {
       this.nextText?.setVisible(true)
       if (this.cursors) {
         if (this.cursors.space.isDown) {
-          const IntroScene3 = this.game.scene.getScene("IntroScene3");
-          this.scene.launch(IntroScene3).bringToTop("IntroScene3")
+          const IntroScene4 = this.game.scene.getScene("IntroScene4");
+          this.scene.launch(IntroScene4).bringToTop("IntroScene4")
           this.scene.stop()
         }
       }

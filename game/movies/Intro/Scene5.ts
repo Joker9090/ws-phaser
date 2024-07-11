@@ -40,7 +40,7 @@ class IntroMovie5 extends Phaser.Scene {
     this.load.image("fondo1", "/movies/intro/scene5/FondoCapa1.png")
     this.load.image("fondo2", "/movies/intro/scene5/FondoCapa2.png")
     this.load.image("fondo3", "/movies/intro/scene5/FondoCapa3.png")
-    this.load.image("planet", "/movies/intro/scene5/PlantaDeco.png")
+    this.load.image("planet", "/movies/intro/scene5/PlanetaDeco.png")
     this.load.image("NubePolvo1", "/movies/intro/scene5/NubePolvo1.png")
     this.load.image("NubePolvo2", "/movies/intro/scene5/NubePolvo2.png")
     this.load.image("NubePolvo3", "/movies/intro/scene5/NubePolvo3.png")
@@ -64,7 +64,7 @@ class IntroMovie5 extends Phaser.Scene {
   }
 
   create(this: IntroMovie5, { level }: any) {
-    console.log("SCENE 3")
+    console.log("SCENE 5")
 
     // START ticker
     this.time.addEvent({
@@ -79,75 +79,102 @@ class IntroMovie5 extends Phaser.Scene {
       y: this.cameras.main.displayHeight / 2,
     };
 
+    const gameObjectScaler = {
+      x: window.innerWidth / 1920,
+      y: window.innerHeight / 927,
+    }
 
-    this.background3 = this.add.image(middlePoint.x, middlePoint.y, "fondo3").setOrigin(0.5)
-    this.background2 = this.add.image(middlePoint.x, middlePoint.y, "fondo2").setOrigin(0.5)
-    this.background1 = this.add.image(middlePoint.x, middlePoint.y, "fondo1").setOrigin(0.5)
-    this.planet = this.add.image(middlePoint.x*2*3/4, middlePoint.y - 250, "planet").setOrigin(1, 0.8)
-    this.SuperficiePlaneta = this.add.image(middlePoint.x, middlePoint.y, "SuperficiePlaneta").setOrigin(0.5)
-    this.OpacidadDetrasDeNave = this.add.image(middlePoint.x, middlePoint.y, "OpacidadDetrasDeNave").setOrigin(0.5)
-    this.NubePolvo1 = this.add.image(middlePoint.x + 200, middlePoint.y - 300, "NubePolvo1").setOrigin(0.5)
-    this.NubePolvo2 = this.add.image(middlePoint.x - 150, middlePoint.y - 250, "NubePolvo2").setOrigin(0.5)
-    this.NubePolvo3 = this.add.image(middlePoint.x + 50, middlePoint.y + 100, "NubePolvo3").setOrigin(0.5)
-    this.NaveCerrada = this.add.image(middlePoint.x, middlePoint.y, "NaveCerrada").setOrigin(0.5)
-    this.NaveCerradaLuces = this.add.image(middlePoint.x, middlePoint.y, "NaveCerradaLuces").setOrigin(0.5)
-    this.NaveAbierta = this.add.image(middlePoint.x - 50, middlePoint.y, "NaveAbierta").setOrigin(0.5).setVisible(false)
-    this.NaveAbiertaLuces = this.add.image(middlePoint.x - 50, middlePoint.y, "NaveAbiertaLuces").setOrigin(0.5).setVisible(false)
-    this.PiedrasNave = this.add.image(middlePoint.x , middlePoint.y + 320, "PiedrasNave").setOrigin(0.5)
-    this.NubePolvo4 = this.add.image(middlePoint.x + 140, middlePoint.y +300, "NubePolvo4").setOrigin(0.5)
-    this.NubePolvo5 = this.add.image(middlePoint.x - 160, middlePoint.y + 300, "NubePolvo5").setOrigin(0.5)
-    this.PiedrasDelanteras = this.add.image(middlePoint.x , middlePoint.y *2, "PiedrasDelanteras").setOrigin(0.5, 1)
-  
-    
+    this.background3 = this.add.image(0, 0, "fondo3").setOrigin(0.5)
+    this.background2 = this.add.image(0, 0, "fondo2").setOrigin(0.5)
+    this.background1 = this.add.image(0, 0, "fondo1").setOrigin(0.5)
+    this.planet = this.add.image(0, 0, "planet").setOrigin(0.5)
+    this.SuperficiePlaneta = this.add.image(0, 0, "SuperficiePlaneta").setOrigin(0.5)
+    this.OpacidadDetrasDeNave = this.add.image(0, 0, "OpacidadDetrasDeNave").setOrigin(0.5)
+    this.NubePolvo1 = this.add.image( 300,  -400, "NubePolvo1").setOrigin(0.5)
+    this.NubePolvo2 = this.add.image( -150,  -250, "NubePolvo2").setOrigin(0.5)
+    this.NubePolvo3 = this.add.image( 250,  -150, "NubePolvo3").setOrigin(0.5)
+    this.NaveCerrada = this.add.image(0, 0, "NaveCerrada").setOrigin(0.5)
+    this.NaveCerradaLuces = this.add.image(0, 0, "NaveCerradaLuces").setOrigin(0.5)
+    this.NaveAbierta = this.add.image( 50, 0, "NaveAbierta").setOrigin(0.5).setVisible(false)
+    this.NaveAbiertaLuces = this.add.image( 50, 0, "NaveAbiertaLuces").setOrigin(0.5).setVisible(false)
+    this.NubePolvo4 = this.add.image( 280,  300, "NubePolvo4").setOrigin(0.5)
+    this.NubePolvo5 = this.add.image( -290,  300, "NubePolvo5").setOrigin(0.5)
+    this.PiedrasDelanteras = this.add.image(0, 100, "PiedrasDelanteras").setOrigin(0.5, 0)
+
+    const container = this.add.container(middlePoint.x, middlePoint.y).setSize(1920, 927)
+    container.add([
+      this.background3, 
+      this.background2, 
+      this.background1,
+      this.planet,
+      this.SuperficiePlaneta,
+      this.OpacidadDetrasDeNave,
+      this.NubePolvo3,
+      this.NubePolvo2,
+      this.NaveCerrada,
+      this.NaveCerradaLuces,
+      this.NaveAbierta,
+      this.NaveAbiertaLuces,
+      this.NubePolvo1,
+      this.NubePolvo4,
+      this.NubePolvo5,
+      this.PiedrasDelanteras,
+    ])
+    container.setScale(gameObjectScaler.x < gameObjectScaler.y ? gameObjectScaler.y : gameObjectScaler.x)
 
     // const DialogueScene = this.game.scene.getScene("DialogueManager");
     // this.scene.launch(DialogueScene)
 
     // ADD JOBS
-      this.ticker.addJob(new TickerJob(1, 100, (job) => {
-        this.tweens.add({
-          targets: [this.NaveCerradaLuces, this.NaveAbiertaLuces],
-          alpha:  0.2,
-          duration: 500,
-          ease: 'expo.in',
-          loop: -1,
-        });
-        this.tweens.add({
-          targets: [this.NubePolvo1, this.NubePolvo4],
-          x:  "+=1500",
-          y:  "-=200",
-          duration: 80000,
-          ease: 'linear',
-        });
-        this.tweens.add({
-          targets: [this.NubePolvo2, this.NubePolvo5],
-          x:  "-=1500",
-          duration: 80000,
-          ease: 'linear',
-        });
-        this.tweens.add({
-          targets: [this.NubePolvo3],
-          y:  "+=200",
-          x:  "+=1500",
-          duration: 80000,
-          ease: 'linear',
-        });
-      }, false));
+    this.ticker.addJob(new TickerJob(1, 100, (job) => {
+      this.tweens.add({
+        targets: [this.NaveCerradaLuces, this.NaveAbiertaLuces],
+        alpha: 0.2,
+        duration: 500,
+        ease: 'expo.in',
+        loop: -1,
+      });
+      this.tweens.add({
+        targets: this.cameras.main,
+        zoom: 1.3,
+        duration: 40000,
+        ease: 'linear',
+      });
+      this.tweens.add({
+        targets: [this.NubePolvo1, this.NubePolvo4],
+        x: "+=1500",
+        y: "-=200",
+        duration: 80000,
+        ease: 'linear',
+      });
+      this.tweens.add({
+        targets: [this.NubePolvo2, this.NubePolvo5],
+        x: "-=1500",
+        duration: 80000,
+        ease: 'linear',
+      });
+      this.tweens.add({
+        targets: [this.NubePolvo3],
+        y: "+=200",
+        x: "+=1500",
+        duration: 80000,
+        ease: 'linear',
+      });
+    }, false));
 
-      this.ticker.addJob(new TickerJob(2, 2000, (job) => {
-        this.cameras.main.flash(2000, 0, 0, 0, false, (camera : any, progress: number) => {
-          if (progress < 0.5) {
-            console.log("entro aca")
-            this.NaveCerrada?.setVisible(false)
-            this.NaveCerradaLuces?.setVisible(false)
-            this.NaveAbierta?.setVisible(true)
-            this.NaveAbiertaLuces?.setVisible(true)
-          }
-        })
+    this.ticker.addJob(new TickerJob(2, 2000, (job) => {
+      this.cameras.main.flash(3000, 255, 255, 255, false, (camera: any, progress: number) => {
+        if (progress < 0.5) {
+          this.NaveCerrada?.setVisible(false)
+          this.NaveCerradaLuces?.setVisible(false)
+          this.NaveAbierta?.setVisible(true)
+          this.NaveAbiertaLuces?.setVisible(true)
+        }
+      })
 
-      }, false));
+    }, false));
 
-    this.nextText = this.add.text(middlePoint.x*2, middlePoint.y*2, "SPACE TO CONTINUE", {
+    this.nextText = this.add.text(middlePoint.x * 2, middlePoint.y * 2, "SPACE TO CONTINUE", {
       fontSize: 50,
       backgroundColor: "red"
     })

@@ -346,18 +346,21 @@ class SceneLoader extends Phaser.Scene {
   }
 
   create(this: SceneLoader, { level }: any) {
+    // this.scene.start("Menu", { stagePoint: 3 });
+
+    
     // this.scene.start("Sandbox", { data: 1 });
     // this.scene.start("LevelMap", { data: 1 });
-    const _level = localStorage.getItem("level");
-    if (_level) {
-      if (_level === "0") this.scene.start("Cinematography", { level: 0, lifes: 3 });
-      else if (_level === "1") this.scene.start("LevelMap", { stagePoint: 1 });
-      else if (_level === "2") this.scene.start("LevelMap", { stagePoint: 2 });
-      else if (_level === "3") this.scene.start("LevelMap", { stagePoint: 3 });
-    } else {
-      // this.scene.start("Intro", { level: 0, lifes: 3 });
-      this.scene.start("Cinematography", { level: 0, lifes: 3 });
-    }
+    // const _level = localStorage.getItem("level");
+    // if (_level) {
+    //   if (_level === "0") this.scene.start("Cinematography", { level: 0, lifes: 3 });
+    //   else if (_level === "1") this.scene.start("LevelMap", { stagePoint: 1 });
+    //   else if (_level === "2") this.scene.start("LevelMap", { stagePoint: 2 });
+    //   else if (_level === "3") this.scene.start("LevelMap", { stagePoint: 3 });
+    // } else {
+    //   // this.scene.start("Intro", { level: 0, lifes: 3 });
+    //   this.scene.start("Cinematography", { level: 0, lifes: 3 });
+    // }
   }
 
   update(this: SceneLoader) {

@@ -31,10 +31,10 @@ class IntroMovie7 extends Phaser.Scene {
   }
 
   preload(this: Phaser.Scene) {
+    this.load.image("Piso", "/movies/intro/scene7/Piso.png")
     this.load.image("fondo1", "/movies/intro/scene7/FondoCapa1.png")
     this.load.image("fondo2", "/movies/intro/scene7/FondoCapa2.png")
     this.load.image("fondo3", "/movies/intro/scene7/FondoCapa3.png")
-    this.load.image("Piso", "/movies/intro/scene7/Piso.png")
     this.load.image("AstroFrenteCorte", "/movies/intro/scene7/AStroFrenteCorte.png")
     this.load.image("AstroPerfilCorte", "/movies/intro/scene7/AstroPerfilCorte.png")
     this.load.image("VidrioVisor", "/movies/intro/scene7/VidrioVisor.png")
@@ -72,11 +72,11 @@ class IntroMovie7 extends Phaser.Scene {
     this.background3 = this.add.image(0, 0, "fondo3").setOrigin(0.5)
     this.background2 = this.add.image(0, 0, "fondo2").setOrigin(0.5)
     this.background1 = this.add.image(0, 0, "fondo1").setOrigin(0.5)
-    this.Piso = this.add.image(0, 0, "Piso").setOrigin(0.5, 0.5)
     this.AstroFrenteCorte = this.add.image(0, 0, "AstroFrenteCorte").setOrigin(0.5)
     this.VidrioVisor = this.add.image(-30, 0, "VidrioVisor").setOrigin(0.5)
     this.VidrioVisorView = this.add.image(-30, 0, "VidrioVisorView").setOrigin(0.5)
     this.AstroPerfilCorte = this.add.image(-30, 0, "AstroPerfilCorte").setOrigin(0.5).setVisible(false)
+    this.Piso = this.add.image(0, 0, "Piso").setOrigin(0.5, 0.5)
 
 
     // const DialogueScene = this.game.scene.getScene("DialogueManager");

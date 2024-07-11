@@ -36,7 +36,7 @@ class IntroMovie8 extends Phaser.Scene {
     this.load.image("Nube1", "/movies/intro/scene8/Nube1.png")
     this.load.image("Nube2", "/movies/intro/scene8/Nube2.png")
     this.load.image("Nube3", "/movies/intro/scene8/Nube3.png")
-    this.load.image("Piso", "/movies/intro/scene8/Piso.png")
+    this.load.image("PisoNivel8", "/movies/intro/scene8/Piso.png")
   }
 
   scaleImage(image: Phaser.GameObjects.Image) {
@@ -74,7 +74,7 @@ class IntroMovie8 extends Phaser.Scene {
     this.Nube1 = this.add.image(0, 350, "Nube1").setOrigin(0.5, 1)
     this.Nube2 = this.add.image(0, 350, "Nube2").setOrigin(0.5, 1)
     this.Nube3 = this.add.image(0, 350, "Nube3").setOrigin(0.5, 1)
-    this.Piso = this.add.image(0, 200, "Piso").setOrigin(0.5, 0)
+    this.Piso = this.add.image(0, 200, "PisoNivel8").setOrigin(0.5, 0)
 
 
     // const DialogueScene = this.game.scene.getScene("DialogueManager");
@@ -90,6 +90,7 @@ class IntroMovie8 extends Phaser.Scene {
       this.mountains,
       this.Piso,
     ])
+
     container.setScale(gameObjectScaler.x < gameObjectScaler.y ? gameObjectScaler.y : gameObjectScaler.x)
 
     // ADD JOBS
@@ -141,20 +142,20 @@ class IntroMovie8 extends Phaser.Scene {
 
 
   update(this: IntroMovie8, time: number, delta: number) {
-    if (time > 10000) {
-      this.nextText?.setVisible(true)
-      if (this.cursors) {
-        if (this.cursors.space.isDown) {
-          const scenes = this.game.scene.getScenes();
-          scenes.forEach((scene: Phaser.Scene)=>{
-            scene.scene.restart()
-          })
-          const IntroScene1 = this.game.scene.getScene("IntroScene1");
-          this.scene.restart(IntroScene1).bringToTop("IntroScene1");
-          this.scene.stop()
-        }
-      }
-    }
+  //   if (time > 10000) {
+  //     this.nextText?.setVisible(true)
+  //     if (this.cursors) {
+  //       if (this.cursors.space.isDown) {
+  //         const scenes = this.game.scene.getScenes();
+  //         scenes.forEach((scene: Phaser.Scene)=>{
+  //           scene.scene.restart()
+  //         })
+  //         const IntroScene1 = this.game.scene.getScene("IntroScene1");
+  //         this.scene.restart(IntroScene1).bringToTop("IntroScene1");
+  //         this.scene.stop()
+  //       }
+  //     }
+  //   }
   }
 }
 

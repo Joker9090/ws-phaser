@@ -240,13 +240,29 @@ class IntroMovie2 extends Phaser.Scene {
     }, false));
 
     this.ticker.addJob(new TickerJob(3, 2000, (job) => {
-      this.cameras.main.setZoom(1.5).scrollY = 100
-  
+      // this.cameras.main.setZoom(1.5).scrollY = 100
+      this.tweens.add({
+        targets: this.cameras.main,
+        zoom: 1.5,
+        scrollY: 100,
+        duration: 800,
+        ease: 'ease',
+        loop: 0,
+        yoyo: false
+      });
     }, false));
 
     this.ticker.addJob(new TickerJob(4, 4000, (job) => {
-      this.cameras.main.setZoom(1).scrollY = 0
-  
+      // this.cameras.main.setZoom(1).scrollY = 0
+      this.tweens.add({
+        targets: this.cameras.main,
+        zoom: 1,
+        scrollY: 0,
+        duration: 800,
+        ease: 'ease',
+        loop: 0,
+        yoyo: false
+      });
     }, false));
     // this.cameras.main.setZoom(1.5)
 

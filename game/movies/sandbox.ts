@@ -1,9 +1,11 @@
 import Phaser from "phaser";
 import Ticker, { TickerJob } from './Ticker'
+import { DiagnosticCategory } from "typescript";
+import DialogueManager from "./DialogueManager";
 
 class SandBox extends Phaser.Scene {
     ticker: Ticker;
-
+    dialogueManager?: DialogueManager;
     //assets
     background3?: Phaser.GameObjects.Image;
     background2?: Phaser.GameObjects.Image;
@@ -101,14 +103,14 @@ class SandBox extends Phaser.Scene {
         
         this.cameras.main.postFX.addVignette(0.5, 0.5, 0.8);
 
-        const DialogueScene = this.game.scene.getScene("DialogueManager");
-        this.scene.launch(DialogueScene)
+        this.dialogueManager = new DialogueManager(this, [""])
+  
     }
 
 
 
     update(this: SandBox, time: number, delta: number) {
-
+        if (this.dialogueManager) this.dialogueManager.update()
     }
 }
 export default SandBox;

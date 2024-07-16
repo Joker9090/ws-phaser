@@ -16,6 +16,8 @@ class IntroMovie7 extends Phaser.Scene {
   AstroPerfilEntero?: Phaser.GameObjects.Image;
   VidrioVisor?: Phaser.GameObjects.Image;
   VidrioVisorView?: Phaser.GameObjects.Image;
+  VidrioVisor2?: Phaser.GameObjects.Image;
+  VidrioVisorView2?: Phaser.GameObjects.Image;
 
 
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -75,7 +77,9 @@ class IntroMovie7 extends Phaser.Scene {
     this.AstroFrenteCorte = this.add.image(0, 0, "AstroFrenteCorte").setOrigin(0.5)
     this.VidrioVisor = this.add.image(-30, 0, "VidrioVisor").setOrigin(0.5)
     this.VidrioVisorView = this.add.image(-30, 0, "VidrioVisorView").setOrigin(0.5)
-    this.AstroPerfilCorte = this.add.image(-30, 0, "AstroPerfilCorte").setOrigin(0.5).setVisible(false)
+    this.VidrioVisor2 = this.add.image(92, 0, "VidrioVisor").setOrigin(0.5).setAlpha(0)
+    this.VidrioVisorView2 = this.add.image(92, 0, "VidrioVisorView").setOrigin(0.5).setAlpha(0)
+    this.AstroPerfilCorte = this.add.image(-30, 0, "AstroPerfilCorte").setOrigin(0.5).setAlpha(0)
     this.Piso = this.add.image(0, 0, "Piso").setOrigin(0.5, 0.5)
 
 
@@ -91,9 +95,12 @@ class IntroMovie7 extends Phaser.Scene {
       this.AstroPerfilCorte,
       this.VidrioVisorView,
       this.VidrioVisor,
+      this.VidrioVisorView2,
+      this.VidrioVisor2,
     ])
     container.setScale(gameObjectScaler.x < gameObjectScaler.y ? gameObjectScaler.y : gameObjectScaler.x)
-
+    const camera = this.cameras.main
+    camera.postFX.addVignette(0.5, 0.5, 0.8);
     // ADD JOBS
     this.ticker.addJob(new TickerJob(1, 100, (job) => {
       this.tweens.add({
@@ -115,22 +122,19 @@ class IntroMovie7 extends Phaser.Scene {
     }, false));
 
     this.ticker.addJob(new TickerJob(2, 2500, (job) => {
-      this.cameras.main.flash(3000, 255, 255, 255, false, (camera: any, progress: number) => {
-        if (progress < 0.5) {
-          this.VidrioVisor?.setPosition(90, 0)
-          this.VidrioVisorView?.setPosition(90, 0)
-          this.AstroFrenteCorte?.setVisible(false)
-          this.AstroPerfilCorte?.setVisible(true)
-        }
-      })
-        // this.tweens.add({
-        //   targets: [this.Cuerpo, this.BrazoDelantero, this.PiernaDelantera, this.PiernaTrasera],
-        //   y: "+=50",
-        //   duration: 1500,
-        //   ease: 'ease',
-        //   loop: -1,
-        //   yoyo: true,
-        // });
+      
+        this.tweens.add({
+          targets: [this.AstroFrenteCorte, this.VidrioVisorView, this.VidrioVisor],
+          alpha: 0,
+          duration: 1500,
+          ease: 'linear',
+        });
+        this.tweens.add({
+          targets: [this.AstroPerfilCorte, this.VidrioVisorView2, this.VidrioVisor2],
+          alpha: 1,
+          duration: 1500,
+          ease: 'linear',
+        });
       }, false));
 
     this.nextText = this.add.text(middlePoint.x * 2, middlePoint.y * 2, "SPACE TO CONTINUE", {

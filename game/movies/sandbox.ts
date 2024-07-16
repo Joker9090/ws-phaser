@@ -98,7 +98,9 @@ class SandBox extends Phaser.Scene {
         const container = this.add.container(middlePoint.x, middlePoint.y).setSize(1920, 927)
         container.add([this.naveCapaTrasera, this.alarmaRojaOn, this.alarmaVerdeOn])
         container.setScale(gameObjectScaler.x < gameObjectScaler.y ? gameObjectScaler.y : gameObjectScaler.x)
-       
+        
+        this.cameras.main.postFX.addVignette(0.5, 0.5, 0.8);
+
         const DialogueScene = this.game.scene.getScene("DialogueManager");
         this.scene.launch(DialogueScene)
     }

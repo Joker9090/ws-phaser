@@ -15,6 +15,7 @@ class IntroMovie1 extends Phaser.Scene {
   shipZoom?: Phaser.GameObjects.Image;
   shipZoomOn?: Phaser.GameObjects.Image;
   planet?: Phaser.GameObjects.Image;
+  
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
 
 
@@ -82,6 +83,8 @@ class IntroMovie1 extends Phaser.Scene {
       .setOrigin(0.5, 0.5).setVisible(false).setScale(0.7);
     this.shipZoomOn = this.add.image(0, 300, 'naveZoomOn')
       .setOrigin(0.5, 0.5).setVisible(false).setScale(0.7);
+     
+    
 
     const container = this.add.container(middlePoint.x, middlePoint.y).setSize(1920, 927)
     container.add([
@@ -98,7 +101,10 @@ class IntroMovie1 extends Phaser.Scene {
     container.setScale(gameObjectScaler.x < gameObjectScaler.y ? gameObjectScaler.y : gameObjectScaler.x)
     // const DialogueScene = this.game.scene.getScene("DialogueManager");
     // this.scene.launch(DialogueScene)
+
     const camera = this.cameras.main
+    camera.postFX.addVignette(0.5, 0.5, 0.8);
+
     // // ADD JOBS
     this.ticker.addJob(new TickerJob(0, 10, (job) => {
       this.tweens.add({

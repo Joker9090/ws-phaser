@@ -93,7 +93,8 @@ class IntroMovie6 extends Phaser.Scene {
 
     // const DialogueScene = this.game.scene.getScene("DialogueManager");
     // this.scene.launch(DialogueScene)
-
+    const camera = this.cameras.main
+    camera.postFX.addVignette(0.5, 0.5, 0.8);
     // ADD JOBS
     this.ticker.addJob(new TickerJob(1, 100, (job) => {
       this.tweens.add({

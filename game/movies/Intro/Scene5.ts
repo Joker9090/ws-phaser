@@ -87,7 +87,6 @@ class IntroMovie5 extends Phaser.Scene {
     this.background3 = this.add.image(0, 0, "fondo3").setOrigin(0.5)
     this.background2 = this.add.image(0, 0, "fondo2").setOrigin(0.5)
     this.background1 = this.add.image(0, 0, "fondo1").setOrigin(0.5)
-    this.planet = this.add.image(0, 0, "planet").setOrigin(0.5)
     this.SuperficiePlaneta = this.add.image(0, 0, "SuperficiePlaneta").setOrigin(0.5)
     this.OpacidadDetrasDeNave = this.add.image(0, 0, "OpacidadDetrasDeNave").setOrigin(0.5)
     this.NubePolvo1 = this.add.image( 300,  -400, "NubePolvo1").setOrigin(0.5)
@@ -106,7 +105,6 @@ class IntroMovie5 extends Phaser.Scene {
       this.background3, 
       this.background2, 
       this.background1,
-      this.planet,
       this.SuperficiePlaneta,
       this.OpacidadDetrasDeNave,
       this.NubePolvo3,
@@ -124,7 +122,8 @@ class IntroMovie5 extends Phaser.Scene {
 
     // const DialogueScene = this.game.scene.getScene("DialogueManager");
     // this.scene.launch(DialogueScene)
-
+    const camera = this.cameras.main
+    camera.postFX.addVignette(0.5, 0.5, 0.8);
     // ADD JOBS
     this.ticker.addJob(new TickerJob(1, 100, (job) => {
       this.tweens.add({

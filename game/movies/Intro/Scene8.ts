@@ -92,7 +92,8 @@ class IntroMovie8 extends Phaser.Scene {
     ])
 
     container.setScale(gameObjectScaler.x < gameObjectScaler.y ? gameObjectScaler.y : gameObjectScaler.x)
-
+    const camera = this.cameras.main
+    camera.postFX.addVignette(0.5, 0.5, 0.8);
     // ADD JOBS
     this.ticker.addJob(new TickerJob(1, 100, (job) => {
       this.tweens.add({

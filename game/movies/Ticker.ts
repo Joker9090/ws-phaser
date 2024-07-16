@@ -9,6 +9,7 @@ class Ticker {
 
     _runTicker() {
         this.time += this.ms;
+        console.log("ARIEL ENTRO ACÄ ")
         this.runJobs();
     }
 
@@ -22,6 +23,10 @@ class Ticker {
 
     deleteJob(jobId: number) {
         this.jobs = this.jobs.filter((job) => job.id != jobId);
+    }
+
+    deleteAllJobs(){
+        this.jobs = []
     }
 
     getDiffTime(job: TickerJob) {

@@ -9,7 +9,6 @@ class Ticker {
 
     _runTicker() {
         this.time += this.ms;
-        console.log("ARIEL ENTRO ACÄ ")
         this.runJobs();
     }
 

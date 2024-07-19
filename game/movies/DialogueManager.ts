@@ -64,15 +64,12 @@ class DialogueManager {
     
     continueWithNextText () {
         if (this.textCounterMax){
-            console.log("ARIEL COUNTERS", this.textCounter, this.textCounterMax)
             if (this.textCounter < this.textCounterMax){
-                console.log("next")
                 this.canChangeText = false
                 this.textDisplayed?.setText("")
                 this.continueText?.setVisible(false)
                 this.textBuilder(this.texts[this.textCounter], 100)
             } else {
-                console.log("destroy")
                 this.container?.destroy()
             }
         } 

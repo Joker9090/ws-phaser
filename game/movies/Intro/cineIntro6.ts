@@ -87,7 +87,7 @@ class cineIntro6 {
       this.cine.tweens.add({
         targets: camera,
         zoom: 1.5,
-        duration: 30000,
+        duration: 120000,
         ease: 'lienar',
         loop: -1,
         yoyo: true,
@@ -95,30 +95,31 @@ class cineIntro6 {
       this.cine.tweens.add({
         targets: [this.background1, this.background2, this.background3],
         scale: 1.5,
-        duration: 30000,
+        duration: 120000,
         ease: 'lienar',
         loop: -1,
         yoyo: true,
       });
     }, false));
 
-    this.ticker.addJob(new TickerJob(2, 2500, (job) => {
+    this.ticker.addJob(new TickerJob(2, 10000, (job) => {
       
         this.cine.tweens.add({
           targets: [this.AstroFrenteCorte, this.VidrioVisorView, this.VidrioVisor],
           alpha: 0,
-          duration: 1500,
+          duration: 9000,
           ease: 'linear',
         });
         this.cine.tweens.add({
           targets: [this.AstroPerfilCorte, this.VidrioVisorView2, this.VidrioVisor2],
           alpha: 1,
-          duration: 1500,
+          duration: 9000,
           ease: 'linear',
         });
       }, false));
 
-      this.ticker.addJob(new TickerJob(6, 6000, (job) => {
+      this.ticker.addJob(new TickerJob(6, 24000, (job) => {
+        container.destroy(true)
         this.nextCine = true
       }, false));
 

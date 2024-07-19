@@ -81,7 +81,7 @@ class cineIntro5 {
       this.cine.tweens.add({
         targets: [this.Cuerpo, this.BrazoDelantero, this.PiernaDelantera, this.PiernaTrasera],
         y: "+=50",
-        duration: 1500,
+        duration: 9000,
         ease: 'ease',
         loop: -1,
         yoyo: true,
@@ -89,7 +89,7 @@ class cineIntro5 {
       this.cine.tweens.add({
         targets: [this.BrazoDelantero, this.PiernaDelantera],
         rotation: Math.PI / 6,
-        duration: 3000,
+        duration: 18000,
         ease: 'ease',
         loop: -1,
         yoyo: true,
@@ -97,7 +97,7 @@ class cineIntro5 {
       this.cine.tweens.add({
         targets: [this.PiernaTrasera],
         rotation: -Math.PI / 6,
-        duration: 3000,
+        duration: 18000,
         ease: 'ease',
         loop: -1,
         yoyo: true,
@@ -105,12 +105,13 @@ class cineIntro5 {
       this.cine.tweens.add({
         targets: [this.Cuerpo, this.BrazoDelantero, this.PiernaDelantera, this.PiernaTrasera],
         x: "+=2500",
-        duration: 20000,
+        duration: 40000,
         ease: 'ease',
       });
     }, false));
 
-    this.ticker.addJob(new TickerJob(6, 10500, (job) => {
+    this.ticker.addJob(new TickerJob(6, 40000, (job) => {
+      container.destroy(true)
       this.nextCine = true
     }, false));
 

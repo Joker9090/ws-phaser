@@ -83,7 +83,7 @@ class cineIntro7 {
       this.cine.tweens.add({
         targets: camera,
         zoom: 1.5,
-        duration: 40000,
+        duration: 160000,
         ease: 'lienar',
         loop: -1,
         yoyo: true,
@@ -91,7 +91,7 @@ class cineIntro7 {
       this.cine.tweens.add({
         targets: [this.background1, this.background2, this.background3],
         scale: 1.5,
-        duration: 40000,
+        duration: 160000,
         ease: 'lienar',
         loop: -1,
         yoyo: true,
@@ -99,7 +99,7 @@ class cineIntro7 {
       this.cine.tweens.add({
         targets: [this.Nube1, this.Nube3],
         x: "+=200",
-        duration: 40000,
+        duration: 80000,
         ease: 'lienar',
         loop: -1,
         yoyo: true,
@@ -107,14 +107,15 @@ class cineIntro7 {
       this.cine.tweens.add({
         targets: [this.Nube2],
         x:"-=200",
-        duration: 40000,
+        duration: 80000,
         ease: 'lienar',
         loop: -1,
         yoyo: true,
       });
     }, false));
 
-    this.ticker.addJob(new TickerJob(6, 6000, (job) => {
+    this.ticker.addJob(new TickerJob(6, 50000, (job) => {
+      container.destroy(true)
       this.nextCine = true
     }, false));
 

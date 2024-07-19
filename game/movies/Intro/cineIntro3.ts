@@ -34,12 +34,12 @@ class cineIntro3 {
       y: this.cine.cameras.main.displayHeight / 2,
     };
 
-    this.nextText = this.cine.add.text(middlePoint.x*2, middlePoint.y*2, "SPACE TO CONTINUE", {
+    this.nextText = this.cine.add.text(middlePoint.x*2, middlePoint.y*2, "aca va a ir el ruido de nave chocando o algo asi", {
       fontSize: 50,
       backgroundColor: "red"
     })
 
-    this.ticker.addJob(new TickerJob(1, 4000, (job) => {
+    this.ticker.addJob(new TickerJob(1, 10000, (job) => {
       this.nextCine = true
     }, false));
     

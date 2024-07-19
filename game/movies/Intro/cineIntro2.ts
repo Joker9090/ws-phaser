@@ -119,13 +119,13 @@ class cineIntro2 {
       this.cine.tweens.add({
         targets: [this.background1, this.background2, this.background3, this.planetScene2],
         scale: 1.3,
-        duration: 30000,
+        duration: 60000,
         ease: 'linear',
       });
       this.cine.tweens.add({
         targets: [this.background1, this.background2, this.background3, this.planetScene2],
         x: "-=200",
-        duration: 30000,
+        duration: 60000,
         ease: 'linear',
       });
     }, false));
@@ -136,14 +136,14 @@ class cineIntro2 {
       this.cine.tweens.add({
         targets: this.luzAlarmaRoja,
         rotation: 2 * Math.PI,
-        duration: 1500,
+        duration: 3000,
         ease: 'linear',
         loop: -1,
       });
       this.cine.tweens.add({
         targets: this.luzAlarmaRoja,
         scale: 0,
-        duration: 500,
+        duration: 1000,
         ease: 'linear',
         loop: -1,
         yoyo: true
@@ -151,7 +151,7 @@ class cineIntro2 {
       this.cine.tweens.add({
         targets: this.alarmaRojaOn,
         alpha: 0.8,
-        duration: 500,
+        duration: 1000,
         ease: 'linear',
         loop: -1,
         yoyo: true
@@ -160,7 +160,7 @@ class cineIntro2 {
       this.cine.tweens.add({
         targets: this.LuzPanelRojo,
         alpha: 0.6,
-        duration: 700,
+        duration: 1400,
         ease: 'expo.out',
         loop: -1,
         yoyo: true
@@ -169,7 +169,7 @@ class cineIntro2 {
       this.cine.tweens.add({
         targets: this.LuzPanelVerde,
         alpha: 0.6,
-        duration: 800,
+        duration: 1600,
         ease: 'expo.out',
         loop: -1,
         yoyo: true
@@ -177,7 +177,7 @@ class cineIntro2 {
       this.cine.tweens.add({
         targets: this.luzAlarmaVerde,
         rotation: 2 * Math.PI,
-        duration: 1700,
+        duration: 3400,
         ease: 'linear',
         loop: -1,
 
@@ -185,7 +185,7 @@ class cineIntro2 {
       this.cine.tweens.add({
         targets: this.luzAlarmaVerde,
         scale: 0,
-        duration: 600,
+        duration: 1200,
         ease: 'linear',
         loop: -1,
         yoyo: true
@@ -193,40 +193,41 @@ class cineIntro2 {
       this.cine.tweens.add({
         targets: this.alarmaVerdeOn,
         alpha: 0.8,
-        duration: 600,
+        duration: 1200,
         ease: 'linear',
         loop: -1,
         yoyo: true
       });
-    }, false, 4800));
+    }, false));
 
-    this.ticker.addJob(new TickerJob(3, 2000, (job) => {
+    this.ticker.addJob(new TickerJob(3, 8000, (job) => {
       // this.cameras.main.setZoom(1.5).scrollY = 100
       this.cine.tweens.add({
         targets: camera,
         zoom: 1.5,
         scrollY: 100,
-        duration: 800,
+        duration: 8000,
         ease: 'ease',
         loop: 0,
         yoyo: false
       });
-    }, false, 4800));
+    }, false));
 
-    this.ticker.addJob(new TickerJob(4, 4000, (job) => {
+    this.ticker.addJob(new TickerJob(4, 16000, (job) => {
       // this.cameras.main.setZoom(1).scrollY = 0
       this.cine.tweens.add({
         targets: camera,
         zoom: 1,
         scrollY: 0,
-        duration: 800,
+        duration: 8000,
         ease: 'ease',
         loop: 0,
         yoyo: false
       });
-    }, false, 4800));
+    }, false));
 
-    this.ticker.addJob(new TickerJob(6, 5000, (job) => {
+    this.ticker.addJob(new TickerJob(6, 24000, (job) => {
+      this.container?.destroy(true)
       this.nextCine = true
     }, false));
 

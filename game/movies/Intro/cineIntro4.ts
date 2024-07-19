@@ -106,40 +106,40 @@ class cineIntro4 {
       this.cine.tweens.add({
         targets: [this.NaveCerradaLuces, this.NaveAbiertaLuces],
         alpha: 0.2,
-        duration: 500,
+        duration: 2000,
         ease: 'expo.in',
         loop: -1,
       });
       this.cine.tweens.add({
         targets: camera,
         zoom: 1.3,
-        duration: 40000,
+        duration: 160000,
         ease: 'linear',
       });
       this.cine.tweens.add({
         targets: [this.NubePolvo1, this.NubePolvo4],
         x: "+=1500",
         y: "-=200",
-        duration: 80000,
+        duration: 160000,
         ease: 'linear',
       });
       this.cine.tweens.add({
         targets: [this.NubePolvo2, this.NubePolvo5],
         x: "-=1500",
-        duration: 80000,
+        duration: 160000,
         ease: 'linear',
       });
       this.cine.tweens.add({
         targets: [this.NubePolvo3],
         y: "+=200",
         x: "+=1500",
-        duration: 80000,
+        duration: 160000,
         ease: 'linear',
       });
     }, false));
 
-    this.ticker.addJob(new TickerJob(2, 2000, (job) => {
-      camera.flash(3000, 255, 255, 255, false, (camera: any, progress: number) => {
+    this.ticker.addJob(new TickerJob(2, 12000, (job) => {
+      camera.flash(10000, 255, 255, 255, false, (camera: any, progress: number) => {
         if (progress < 0.5) {
           this.NaveCerrada?.setVisible(false)
           this.NaveCerradaLuces?.setVisible(false)
@@ -150,7 +150,8 @@ class cineIntro4 {
 
     }, false));
 
-    this.ticker.addJob(new TickerJob(6, 6000, (job) => {
+    this.ticker.addJob(new TickerJob(6, 24000, (job) => {
+      container.destroy(true)
       this.nextCine = true
     }, false));
 

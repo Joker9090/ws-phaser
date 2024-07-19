@@ -90,13 +90,13 @@ class cineIntro1 {
       this.cine.tweens.add({
         targets: [camera],
         alpha: 1,
-        duration: 1000,
+        duration: 4000,
         ease: 'linear',
       });
       this.cine.tweens.add({
         targets: [this.background1, this.background2, this.background3],
         scale: 1.2,
-        duration: 30000,
+        duration: 60000,
         ease: 'linear',
         loop: 0
       });
@@ -106,37 +106,37 @@ class cineIntro1 {
       this.cine.tweens.add({
         targets: [this.shipOverImage, this.shipZoomOn],
         alpha: 0,
-        duration: 2500,
+        duration: 5000,
         ease: 'expo.out',
         loop: -1
       });
     }, false));
 
-    this.ticker.addJob(new TickerJob(2, 500, (job) => {
+    this.ticker.addJob(new TickerJob(2, 1000, (job) => {
       this.cine.tweens.add({
         targets: [this.ship, this.shipOverImage],
         angle: "+=5",
         x: "+=10",
         y: "-=15",
-        duration: 3000,
+        duration: 24000,
         ease: 'Linear',
         yoyo: false,
         loop: 0
       });
     }, false));
 
-    this.ticker.addJob(new TickerJob(3, 500, (job) => {
+    this.ticker.addJob(new TickerJob(3, 1000, (job) => {
       this.cine.tweens.add({
         targets: camera,
         zoom: 1.7,
-        duration: 6000,
+        duration: 24000,
         ease: 'Linear'
       });
     }, false));
-    this.ticker.addJob(new TickerJob(4, 6500, (job) => {
+    this.ticker.addJob(new TickerJob(4, 25000, (job) => {
       camera.stopFollow()
     }, false));
-    this.ticker.addJob(new TickerJob(5, 6500, (job) => {
+    this.ticker.addJob(new TickerJob(5, 26000, (job) => {
       camera.setZoom(1)
       this.planet?.setVisible(false)
       this.shipOverImage?.setVisible(false)
@@ -162,7 +162,8 @@ class cineIntro1 {
         yoyo: true
       });
     }, false));
-    this.ticker.addJob(new TickerJob(6, 10500, (job) => {
+    this.ticker.addJob(new TickerJob(6, 30000, (job) => {
+      container.destroy(true)
       this.nextCine = true
     }, false));
     this.nextText = this.cine.add.text(middlePoint.x * 2 - 300, middlePoint.y * 2 - 300, "SPACE TO CONTINUE", {

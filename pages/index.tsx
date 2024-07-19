@@ -17,10 +17,10 @@ export default function Home() {
     import("phaser").then(setPhaser)
     //Load scenes async when windows is ready
     Promise.all([
+      import("@/game/startMovie"),
       import("@/game/Cinematography-modular"),
       // import("@/game/movies/DialogueManager"),
       // import("@/game/SceneLoader"),
-      // import("@/game/Cinematography"),
       // import("@/game/Menu"),
       // import("@/game/DataManager"),
       // import("@/game/Game"),
@@ -30,7 +30,7 @@ export default function Home() {
       // import("@/game/TutorialText"),
       // import("@/game/Intro"),
       // import("@/game/BetweenScenes"),
-      // import("@/game/MusicManager"),
+      import("@/game/MusicManager"),
       // import("@/game/LevelMap"),
       // import("@/game/Credits"),
       // import("@/game/Sandbox"),

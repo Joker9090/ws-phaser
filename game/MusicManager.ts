@@ -21,7 +21,7 @@ export default class MusicManager extends Phaser.Scene {
     if (this.music) {
       this.music.stop();
     }
-    this.music = this.sound.add(name).setVolume(1);
+    this.music = this.sound.add(name).setVolume(0.5);
     this.music.play();
   }
 

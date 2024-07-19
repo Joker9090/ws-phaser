@@ -1,7 +1,8 @@
 import Phaser from "phaser";
 import Ticker, { TickerJob } from '../Ticker'
 import DialogueManager from '../DialogueManager'
-import CinematographyModular from "@/game/Cinematography-modular";
+import CinematographyModular from "@/game/movies/Cinematography-modular";
+
 
 class cineIntro3 {
   ticker: Ticker;

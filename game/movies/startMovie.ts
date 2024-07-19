@@ -15,6 +15,9 @@ class startMovie extends Phaser.Scene {
     this.load.audio("deepSpace2", "/sounds/deepSpace2.mp3")
     this.load.audio("deepSpace3", "/sounds/deepSpace3.mp3")
     //intro scene 1
+    this.load.audio("primero", "/movies/intro/audios/primero.mp3")
+    this.load.audio("segundo", "/movies/intro/audios/segundo.mp3")
+    this.load.audio("tercero", "/movies/intro/audios/tercero.mp3")
     this.load.image("backgroundStars", "/movies/intro/scene1/fondo1.png")
     this.load.image("backgronudClouds", "/movies/intro/scene1/fondo2.png")
     this.load.image("backgroundGlow", "/movies/intro/scene1/fondo3.png")

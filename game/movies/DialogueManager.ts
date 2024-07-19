@@ -5,6 +5,12 @@ import { text } from "stream/consumers";
 class DialogueManager {
     scene: Phaser.Scene
     texts: string[]
+    audios: string[];
+
+    activeAudio?:
+        | Phaser.Sound.NoAudioSound
+        | Phaser.Sound.HTML5AudioSound
+        | Phaser.Sound.WebAudioSound;
 
     holder?: Phaser.GameObjects.Graphics;
     screenHeigth: number = window.innerHeight;
@@ -20,10 +26,15 @@ class DialogueManager {
 
 
     cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
-    constructor(scene: Phaser.Scene, texts: string[]) {
+    constructor(scene: Phaser.Scene, texts: string[], audios: string[]) {
         this.scene = scene
         this.textCounter = 0;
         this.cursors = this.scene.input.keyboard?.createCursorKeys();
+        this.audios = [
+            "primero",
+            "segundo",
+            "tercero"
+        ]
         this.texts = [
             "Emergency log entry number 325… (sigh)",
             "It’s been over 45 days since the incident. I still haven’t heard from Dan or the rest of the crew…",
@@ -31,8 +42,7 @@ class DialogueManager {
         ]
 
         this.textCounterMax = this.texts.length
-        
-        
+
         this.container = this.scene.add.container().setSize(this.screenWidth * 0.8, this.screenHeigth * 0.15)
         this.container.setPosition(this.screenWidth * 0.2 / 2, this.screenHeigth * 0.8)
         this.holder = this.scene.add.graphics()
@@ -58,13 +68,14 @@ class DialogueManager {
             this.holder,
             this.textDisplayed,
             this.continueText
-        ])
+        ]).setScrollFactor(0,0)
+        this.scene.cameras.main.ignore(this.container)
         this.textBuilder(this.texts[this.textCounter], 100)
-}
-    
-    continueWithNextText () {
-        if (this.textCounterMax){
-            if (this.textCounter < this.textCounterMax){
+    }
+
+    continueWithNextText() {
+        if (this.textCounterMax) {
+            if (this.textCounter < this.textCounterMax) {
                 this.canChangeText = false
                 this.textDisplayed?.setText("")
                 this.continueText?.setVisible(false)
@@ -72,16 +83,16 @@ class DialogueManager {
             } else {
                 this.container?.destroy()
             }
-        } 
+        }
     }
 
-    update(){
-        if (this.canChangeText){
+    update() {
+        if (this.canChangeText) {
             if (this.cursors) {
                 if (this.cursors.space.isDown) {
-                  this.continueWithNextText()
+                    this.continueWithNextText()
                 }
-              }
+            }
         }
     }
 
@@ -91,7 +102,7 @@ class DialogueManager {
         this.canChangeText = true
 
     }
-    
+
     textBuilder(text: string, deltaTime: number = 100) {
         const letters = text.split("")
         if (this.textDisplayed) {
@@ -100,6 +111,7 @@ class DialogueManager {
     }
 
     showText(target: Phaser.GameObjects.Text, message: string[], index: number = 0, interval: number, callBack: Function, onFinish: Function) {
+        if (index === 0) this.playAudio(this.audios[this.textCounter])
         if (index < message.length) {
             const self = this
             target.setText(target.text + message[index])
@@ -110,6 +122,21 @@ class DialogueManager {
         } else {
             onFinish()
         }
+    }
+
+    stopAudio() {
+        if (this.activeAudio) {
+            this.activeAudio.stop();
+            this.activeAudio.destroy;
+        }
+    }
+
+    playAudio(name: string) {
+        if (this.activeAudio) {
+            this.activeAudio.stop();
+        }
+        this.activeAudio = this.scene.sound.add(name).setVolume(1);
+        this.activeAudio.play();
     }
 }
 

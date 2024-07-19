@@ -1,17 +1,19 @@
 import Phaser from "phaser";
-import Ticker, { TickerJob } from './movies/Ticker'
-import cineIntro1 from "./movies/Intro/cineInto1";
-import cineIntro2 from "./movies/Intro/cineIntro2";
-import cineIntro3 from "./movies/Intro/cineIntro3";
-import cineIntro4 from "./movies/Intro/cineIntro4";
-import cineIntro5 from "./movies/Intro/cineIntro5";
-import cineIntro6 from "./movies/Intro/cineIntro6";
-import cineIntro7 from "./movies/Intro/cineIntro7";
-import MusicManager from "./MusicManager";
+import Ticker, { TickerJob } from './Ticker'
+import cineIntro1 from "./Intro/cineInto1";
+import cineIntro2 from "./Intro/cineIntro2";
+import cineIntro3 from "./Intro/cineIntro3";
+import cineIntro4 from "./Intro/cineIntro4";
+import cineIntro5 from "./Intro/cineIntro5";
+import cineIntro6 from "./Intro/cineIntro6";
+import cineIntro7 from "./Intro/cineIntro7";
+import MusicManager from "../MusicManager";
 
 class CinematographyModular extends Phaser.Scene {
   ticker: Ticker;
   playingCine: cineIntro1 | any;
+  cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
+
   constructor() {
     super({ key: "CinematographyMod" });
 
@@ -89,6 +91,7 @@ class CinematographyModular extends Phaser.Scene {
 
   create(this: CinematographyModular, { keyname }: any) {
     console.log("ENTRO AL CREATE DE CINE")
+    this.cursors = this.input.keyboard?.createCursorKeys();
     /* Audio */
     const getMusicManagerScene = this.game.scene.getScene(
       "MusicManager"

@@ -1,12 +1,13 @@
 import Phaser from "phaser";
 import Ticker, { TickerJob } from '../Ticker'
 import DialogueManager from '../DialogueManager'
-import CinematographyModular from "@/game/Cinematography-modular";
+import CinematographyModular from "@/game/movies/Cinematography-modular";
 
 class cineIntro1 {
   ticker: Ticker;
   cine: CinematographyModular;
   nextCine: boolean = false;
+  dialogue?: DialogueManager
   //assets
   background3?: Phaser.GameObjects.Image;
   background2?: Phaser.GameObjects.Image;
@@ -37,7 +38,7 @@ class cineIntro1 {
       loop: true,
     });
 
-    // this.cine.cursors = this.input.keyboard?.createCursorKeys();
+    this.cursors= this.cine.input.keyboard?.createCursorKeys();
 
     const middlePoint = {
       x: this.cine.cameras.main.displayWidth / 2,
@@ -81,12 +82,18 @@ class cineIntro1 {
     container.setScale(gameObjectScaler.x < gameObjectScaler.y ? gameObjectScaler.y : gameObjectScaler.x)
     // const DialogueScene = this.game.scene.getScene("DialogueManager");
     // this.scene.launch(DialogueScene)
+    const cameraDialogue = this.cine.cameras.add(0, 0, window.innerWidth, window.innerHeight)
+    cameraDialogue.ignore(container)
 
+    this.dialogue = new DialogueManager(this.cine, [""], [""])
     const camera = this.cine.cameras.main
     camera.postFX.addVignette(0.5, 0.5, 0.8);
 
     // // ADD JOBS
     this.ticker.addJob(new TickerJob(0, 10, (job) => {
+
+
+
       this.cine.tweens.add({
         targets: [camera],
         alpha: 1,
@@ -147,7 +154,7 @@ class cineIntro1 {
         targets: [this.background1, this.background2, this.background3],
         x: "-=15",
         y: "+=20",
-        duration: 4000,
+        duration: 14000,
         ease: 'cubic',
         loop: -1,
         yoyo: true
@@ -155,14 +162,14 @@ class cineIntro1 {
       this.cine.tweens.add({
         targets: camera,
         scrollY: "+=10",
-        duration: 4000,
+        duration: 14000,
         delay: 500,
         ease: 'linear',
         loop: -1,
         yoyo: true
       });
     }, false));
-    this.ticker.addJob(new TickerJob(6, 30000, (job) => {
+    this.ticker.addJob(new TickerJob(6, 40000, (job) => {
       container.destroy(true)
       this.nextCine = true
     }, false));
@@ -170,12 +177,14 @@ class cineIntro1 {
       fontSize: 50,
       backgroundColor: "red"
     })
-    this.nextText.setVisible(false).setOrigin(1).setScrollFactor(0)
+
+    this.nextText?.setVisible(false).setOrigin(1).setScrollFactor(0)
 
   }
 
 
   update(this: cineIntro1, time: number, delta: number) {
+    if (this.dialogue) this.dialogue.update()
     if (this.nextCine) this.cine.scene.restart({ keyname: "cine_intro_2" })
   }
 }

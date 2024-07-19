@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import Ticker, {TickerJob} from './movies/Ticker'
+import Ticker, {TickerJob} from './Ticker'
 class Cinematography extends Phaser.Scene {
   ticker: Ticker;
   constructor() {

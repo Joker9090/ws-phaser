@@ -103,7 +103,7 @@ class SandBox extends Phaser.Scene {
         
         this.cameras.main.postFX.addVignette(0.5, 0.5, 0.8);
 
-        this.dialogueManager = new DialogueManager(this, [""])
+        // this.dialogueManager = new DialogueManager(this, [""])
   
     }
 

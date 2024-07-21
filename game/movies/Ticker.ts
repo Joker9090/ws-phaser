@@ -20,7 +20,18 @@ class Ticker {
         this.jobs.push(job);
     }
 
+    addNextJob(job: TickerJob) {
+        job.time += this.time + this.ms;
+        this.jobs.push(job);
+    }
+
+
     deleteJob(jobId: number) {
+        console.log("00 ACA?", jobId)
+        const find = this.jobs.find((job) => job.id == jobId);
+        if (find && find.onDeleted) {
+            find.onDeleted(find, this);
+        }
         this.jobs = this.jobs.filter((job) => job.id != jobId);
     }
 
@@ -36,7 +47,7 @@ class Ticker {
         this.jobs.forEach((job) => {
             if (job.status == "done") {
                 // DELETE JOBS
-                this.deleteJob(job.id);
+                if(!job.keepAlive) this.deleteJob(job.id);
             } else if (this.time % job.time == 0 && (job.status == "pending" || job.repeat)) {
                 // RUN JOB
                 job.status = "running";
@@ -67,13 +78,17 @@ export class TickerJob {
     callback: (job: TickerJob, ticker: Ticker) => void;
     repeat: boolean = false;
     killAfter: number = 0;
+    keepAlive: boolean = false;
+    onDeleted?: (job: TickerJob, ticker: Ticker) => void;
 
-    constructor(id: number, time: number, callback: (job: TickerJob, ticker: Ticker) => void, repeat: boolean = false, killAfter: number = 0) {
+    constructor(id: number, time: number, callback: (job: TickerJob, ticker: Ticker) => void,repeat: boolean = false, killAfter: number = 0, keepAlive: boolean, onDeleted?: (job: TickerJob, ticker: Ticker) => void) {
         this.status = "pending";
         this.killAfter = killAfter;
         this.id = id;
         this.repeat = repeat;
         this.time = time;
+        this.keepAlive = keepAlive;
         this.callback = callback;
+        this.onDeleted = onDeleted;
     }
 }

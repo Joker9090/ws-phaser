@@ -103,6 +103,7 @@ class CinematographyModular extends Phaser.Scene {
     else {
     }
 
+    console.log("00 => ENTRO AL SWITCH DE CINE", keyname);
     switch (keyname) {
       case 'cine_intro_1':
         this.playingCine = new cineIntro1(this);

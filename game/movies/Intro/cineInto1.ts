@@ -8,6 +8,7 @@ class cineIntro1 {
   cine: CinematographyModular;
   nextCine: boolean = false;
   dialogue?: DialogueManager;
+
   //assets
   background3?: Phaser.GameObjects.Image;
   background2?: Phaser.GameObjects.Image;
@@ -20,7 +21,7 @@ class cineIntro1 {
   planet?: Phaser.GameObjects.Image;
   // controllers
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
-  nextText?: Phaser.GameObjects.Text;
+
 
   constructor(cine: CinematographyModular) {
     this.cine = cine;
@@ -110,31 +111,14 @@ class cineIntro1 {
     const camera = this.cine.cameras.main;
     camera.postFX.addVignette(0.5, 0.5, 0.8);
 
-    // // ADD JOBS
-    // this.ticker.addJob(new TickerJob(0, 10, (job) => {
-    //   this.cine.tweens.add({
-    //     targets: [camera],
-    //     alpha: 1,
-    //     duration: 4000,
-    //     ease: 'linear',
-    //   });
-    //   this.cine.tweens.add({
-    //     targets: [this.background1, this.background2, this.background3],
-    //     scale: 1.2,
-    //     duration: 60000,
-    //     ease: 'linear',
-    //     loop: 0
-    //   });
-    // }, false));
-
     const part1 = (job: TickerJob) => {
       this.dialogue = new DialogueManager(
         this.cine,
         [
-          "Emergency log entry number 325… (sigh)",
-          "It’s been over 45 days since the incident. I still haven’t heard from Dan or the rest of the crew…",
+          "Emergency log number 325...",
+          "it's been more than 45 days since de incident. I still haven't got any news from Dan or the rest of the crew... ",
         ],
-        ["primero", "segundo"]
+        ["cineIntro1_1", "cineIntro1_2"]
       );
       
       this.dialogue?.play();
@@ -167,42 +151,23 @@ class cineIntro1 {
 
       const dialogueListener = (newState: string, nextText?: string) => {
         if (newState === "CONTINUE") {
-          console.log("00 nextText", nextText);
-          //stop tweens
-          tween1.stop();
-          tween2.stop();
-          tween3.stop();
         } else if (newState === "FINISHED") {
-          console.log("00 FINISHED",job.id);
           this.ticker.deleteJob(job.id);
         }
       };
       this.dialogue?.killState(dialogueListener);
       this.dialogue?.getState(dialogueListener);
-
-
-      // this.ticker.addJob(
-      //   new TickerJob(
-      //     6,
-      //     0,
-      //     (job) => {
-      //       container.destroy(true);
-      //       this.nextCine = true;
-      //     },
-      //     false
-      //   )
-      // );
-      //ticket
     };
 
     const part2 = (job: TickerJob) => {
       this.dialogue = new DialogueManager(
         this.cine,
         [
-          "I hope they were able to escape in time. (pause) It seems like I’m alone in this forgotten corner of the galaxy…",
+          "I hope they've manage to escape in time. It seems like I'm alone in this forgotten corner of the galaxy...",
         ],
-        ["tercero"]
+        ["cineIntro1_3"]
       );
+
       this.dialogue.play();
       camera.setZoom(1);
       this.planet?.setVisible(false);
@@ -210,6 +175,7 @@ class cineIntro1 {
       this.ship?.setVisible(false);
       this.shipZoom?.setVisible(true);
       this.shipZoomOn?.setVisible(true);
+
       this.cine.tweens.add({
         targets: [
           this.background1,
@@ -223,6 +189,7 @@ class cineIntro1 {
         loop: -1,
         yoyo: true,
       });
+
       this.cine.tweens.add({
         targets: camera,
         scrollY: "+=10",
@@ -268,25 +235,6 @@ class cineIntro1 {
         }
       )
     );
-
-    // this.ticker.addJob(new TickerJob(3, 10, (job) => {
-    //   this.cine.tweens.add({
-    //     targets: camera,
-    //     zoom: 1.7,
-    //     duration: 120000,
-    //     ease: 'Linear'
-    //   });
-    // }, false));
-    // this.ticker.addJob(new TickerJob(4, 25000, (job) => {
-    //   camera.stopFollow()
-    // }, false));
-
-    // this.nextText = this.cine.add.text(middlePoint.x * 2 - 300, middlePoint.y * 2 - 300, "SPACE TO CONTINUE", {
-    //   fontSize: 50,
-    //   backgroundColor: "red"
-    // })
-
-    // this.nextText?.setVisible(false).setOrigin(1).setScrollFactor(0)
   }
 
   update(this: cineIntro1, time: number, delta: number) {

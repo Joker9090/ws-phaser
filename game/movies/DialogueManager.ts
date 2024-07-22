@@ -70,7 +70,7 @@ class DialogueManager {
     });
     this.container
       .add([this.holder, this.textDisplayed, this.continueText])
-      .setScrollFactor(0, 0);
+      .setVisible(false);
     this.scene.cameras.main.ignore(this.container);
   }
 
@@ -89,7 +89,8 @@ class DialogueManager {
   
   play() {
     this.state = "PLAY";
-    this.textBuilder(this.texts[this.textCounter], 100);
+    this.container?.setVisible(true)
+    this.textBuilder(this.texts[this.textCounter], 80);
   }
 
   stop() {
@@ -103,7 +104,7 @@ class DialogueManager {
         this.canChangeText = false;
         this.textDisplayed?.setText("");
         this.continueText?.setVisible(false);
-        this.textBuilder(this.texts[this.textCounter], 100);
+        this.textBuilder(this.texts[this.textCounter], 80);
       } else {
         this.stateFunctions.forEach((fn) => {
           fn("FINISHED");

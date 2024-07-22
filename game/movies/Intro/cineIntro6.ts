@@ -7,7 +7,9 @@ import CinematographyModular from "@/game/movies/Cinematography-modular";
 class cineIntro6 {
   ticker: Ticker;
   nextCine: boolean = false;
-  cine: CinematographyModular
+  cine: CinematographyModular;
+  dialogue?: DialogueManager;
+
   //assets
   background3?: Phaser.GameObjects.Image;
   background2?: Phaser.GameObjects.Image;
@@ -25,7 +27,7 @@ class cineIntro6 {
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   nextText?: Phaser.GameObjects.Text;
 
-  constructor(cine : CinematographyModular) {
+  constructor(cine: CinematographyModular) {
     this.cine = cine
     const tickerMS = 100;
     this.ticker = new Ticker(tickerMS);
@@ -83,8 +85,23 @@ class cineIntro6 {
     container.setScale(gameObjectScaler.x < gameObjectScaler.y ? gameObjectScaler.y : gameObjectScaler.x)
     const camera = this.cine.cameras.main
     camera.postFX.addVignette(0.5, 0.5, 0.8);
-    // ADD JOBS
-    this.ticker.addJob(new TickerJob(1, 100, (job) => {
+
+    const cameraDialogue = this.cine.cameras.add(
+      0,
+      0,
+      window.innerWidth,
+      window.innerHeight
+    );
+    cameraDialogue.ignore(container);
+
+    const part1 = (job: TickerJob) => {
+      this.dialogue = new DialogueManager(
+        this.cine,
+        [
+          "This planet is pretty strange... I've never seen something like this place...",
+        ],
+        ["cineIntro6_1"]
+      );
       this.cine.tweens.add({
         targets: camera,
         zoom: 1.5,
@@ -101,40 +118,54 @@ class cineIntro6 {
         loop: -1,
         yoyo: true,
       });
-    }, false));
+      this.cine.tweens.add({
+        targets: [this.AstroFrenteCorte, this.VidrioVisorView, this.VidrioVisor],
+        alpha: 0,
+        duration: 3500,
+        delay: 10000,
+        ease: 'linear',
+        onStart: ()=>{
+          this.dialogue?.play()
+        }
+      });
+      this.cine.tweens.add({
+        targets: [this.AstroPerfilCorte, this.VidrioVisorView2, this.VidrioVisor2],
+        alpha: 1,
+        delay: 10000,
+        duration: 3500,
+        ease: 'linear',
+      });
 
-    this.ticker.addJob(new TickerJob(2, 10000, (job) => {
-      
-        this.cine.tweens.add({
-          targets: [this.AstroFrenteCorte, this.VidrioVisorView, this.VidrioVisor],
-          alpha: 0,
-          duration: 9000,
-          ease: 'linear',
-        });
-        this.cine.tweens.add({
-          targets: [this.AstroPerfilCorte, this.VidrioVisorView2, this.VidrioVisor2],
-          alpha: 1,
-          duration: 9000,
-          ease: 'linear',
-        });
-      }, false));
+      const dialogueListener = (newState: string, nextText?: string) => {
+        if (newState === "CONTINUE") {
+        } else if (newState === "FINISHED") {
+          this.ticker.deleteJob(job.id);
+        }
+      };
+      this.dialogue?.killState(dialogueListener);
+      this.dialogue?.getState(dialogueListener);
+    }
 
-      this.ticker.addJob(new TickerJob(6, 24000, (job) => {
-        container.destroy(true)
-        this.nextCine = true
-      }, false));
-
-    this.nextText = this.cine.add.text(middlePoint.x * 2, middlePoint.y * 2, "SPACE TO CONTINUE", {
-      fontSize: 50,
-      backgroundColor: "red"
-    })
-    this.nextText.setVisible(false).setOrigin(1).setScrollFactor(0)
+    this.ticker.addJob(
+      new TickerJob(
+        1,
+        10,
+        part1,
+        false,
+        undefined,
+        true,
+        (job: TickerJob) => {
+          this.nextCine = true;
+        }
+      )
+    );
   }
 
 
-  update(this : cineIntro6, time: number, delta: number) {
+  update(this: cineIntro6, time: number, delta: number) {
+    if (this.dialogue) this.dialogue.update();
     if (this.nextCine) this.cine.scene.restart({ keyname: "cine_intro_7" })
-    
+
   }
 }
 

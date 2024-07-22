@@ -9,7 +9,8 @@ class cineIntro2 {
   ticker: Ticker;
   container?: Phaser.GameObjects.Container;
   nextCine: boolean = false;
-  cine: CinematographyModular
+  cine: CinematographyModular;
+  dialogue?: DialogueManager;
 
   background3?: Phaser.GameObjects.Image;
   background2?: Phaser.GameObjects.Image;
@@ -105,18 +106,32 @@ class cineIntro2 {
     this.container = this.cine.add.container(middlePoint.x, middlePoint.y).setSize(1920, 927)
     this.container.add(assetsScenes)
     this.container.setScale(gameObjectScaler.x < gameObjectScaler.y ? gameObjectScaler.y : gameObjectScaler.x)
-
+    const cameraDialogue = this.cine.cameras.add(
+      0,
+      0,
+      window.innerWidth,
+      window.innerHeight
+    );
+    cameraDialogue.ignore(this.container);
 
     const camera = this.cine.cameras.main
     camera.postFX.addVignette(0.5, 0.5, 0.8);
+    camera.setZoom(2).scrollY = 200
+
+    const spaceshipAmbientSoundEffect = this.cine.sound.add("spaceshipAmbient")
+    spaceshipAmbientSoundEffect.setVolume(1.5)
+    spaceshipAmbientSoundEffect.play()
 
 
-
-    // let timerController = 0
-
-    // ADD ALL SCENES
-    this.ticker.addJob(new TickerJob(100, 10, (job) => {
-      // timerController = this.ticker.time
+    const part1 = (job: TickerJob) => {
+      this.dialogue = new DialogueManager(
+        this.cine,
+        [
+          "I've decided to shut down all systems except life support and navigation to buy myself some time.", 
+        ],
+        ["cineIntro2_1"]
+      );
+      
       this.cine.tweens.add({
         targets: [this.background1, this.background2, this.background3, this.planetScene2],
         scale: 1.3,
@@ -129,11 +144,6 @@ class cineIntro2 {
         duration: 60000,
         ease: 'linear',
       });
-    }, false));
-
-    // ADD JOBS SCENE 2
-    this.ticker.addJob(new TickerJob(1, 100, (job) => {
-      camera.setZoom(2).scrollY = 200
       this.cine.tweens.add({
         targets: this.luzAlarmaRoja,
         rotation: 2 * Math.PI,
@@ -199,23 +209,40 @@ class cineIntro2 {
         loop: -1,
         yoyo: true
       });
-    }, false));
-
-    this.ticker.addJob(new TickerJob(3, 8000, (job) => {
-      // this.cameras.main.setZoom(1.5).scrollY = 100
       this.cine.tweens.add({
         targets: camera,
         zoom: 1.5,
         scrollY: 100,
         duration: 8000,
         ease: 'ease',
+        delay: 5000,
         loop: 0,
-        yoyo: false
+        yoyo: false,
+        onStart: ()=>{
+           this.dialogue?.play();
+        },
       });
-    }, false));
+      const dialogueListener = (newState: string, nextText?: string) => {
+        if (newState === "CONTINUE") {
+        } else if (newState === "FINISHED") {
+          this.ticker.deleteJob(job.id);
+        }
+      };
+      this.dialogue?.killState(dialogueListener);
+      this.dialogue?.getState(dialogueListener);
+    }
 
-    this.ticker.addJob(new TickerJob(4, 16000, (job) => {
-      // this.cameras.main.setZoom(1).scrollY = 0
+    const part2 = (job: TickerJob) => {
+      this.dialogue = new DialogueManager(
+        this.cine,
+        [
+          "Although it seems like I'm in uncharted waters, who knows where I've ended up."
+        ],
+        ["cineIntro2_2"]
+      );
+      
+      this.dialogue?.play();
+   
       this.cine.tweens.add({
         targets: camera,
         zoom: 1,
@@ -225,23 +252,47 @@ class cineIntro2 {
         loop: 0,
         yoyo: false
       });
-    }, false));
+      const dialogueListener = (newState: string, nextText?: string) => {
+        if (newState === "CONTINUE") {
+        } else if (newState === "FINISHED") {
+          this.ticker.deleteJob(job.id);
+        }
+      };
+      this.dialogue?.killState(dialogueListener);
+      this.dialogue?.getState(dialogueListener);
+    }
 
-    this.ticker.addJob(new TickerJob(6, 24000, (job) => {
-      this.container?.destroy(true)
-      this.nextCine = true
-    }, false));
-
-    this.nextText = this.cine.add.text(middlePoint.x * 2, middlePoint.y * 2, "SPACE TO CONTINUE", {
-      fontSize: 50,
-      backgroundColor: "red"
-    })
-    this.nextText.setVisible(false).setOrigin(1).setScrollFactor(0)
+    this.ticker.addJob(
+      new TickerJob(
+        1,
+        10,
+        part1,
+        false,
+        undefined,
+        true,
+        (job: TickerJob) => {
+          this.ticker.addNextJob(
+            new TickerJob(
+              2,
+              0,
+              part2,
+              false,
+              undefined,
+              true,
+              (job: TickerJob) => {
+                spaceshipAmbientSoundEffect.stop()
+                this.nextCine = true;
+              }
+            )
+          );
+        }
+      )
+    );
   }
 
 
-
   update(this : cineIntro2, time: number, delta: number) {
+    if (this.dialogue) this.dialogue.update();
     if (this.nextCine) this.cine.scene.restart({ keyname: "cine_intro_3" })
     
   }

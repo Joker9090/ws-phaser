@@ -7,7 +7,8 @@ import CinematographyModular from "@/game/movies/Cinematography-modular";
 class cineIntro7 {
   ticker: Ticker;
   nextCine: boolean = false;
-  cine: CinematographyModular
+  cine: CinematographyModular;
+  dialogue?: DialogueManager;
 
   //assets
   background3?: Phaser.GameObjects.Image;
@@ -19,11 +20,8 @@ class cineIntro7 {
   Nube2?: Phaser.GameObjects.Image;
   Nube3?: Phaser.GameObjects.Image;
 
-
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
 
-  // controllers
-  nextText?: Phaser.GameObjects.Text;
 
   constructor(cine : CinematographyModular) {
     this.cine = cine
@@ -79,8 +77,30 @@ class cineIntro7 {
     container.setScale(gameObjectScaler.x < gameObjectScaler.y ? gameObjectScaler.y : gameObjectScaler.x)
     const camera = this.cine.cameras.main
     camera.postFX.addVignette(0.5, 0.5, 0.8);
-    // ADD JOBS
-    this.ticker.addJob(new TickerJob(1, 100, (job) => {
+    const cameraDialogue = this.cine.cameras.add(
+      0,
+      0,
+      window.innerWidth,
+      window.innerHeight
+    );
+    cameraDialogue.ignore(container);
+
+    const part1 = (job: TickerJob) => {
+      this.dialogue = new DialogueManager(
+        this.cine,
+        [
+          "You would definitely love this Dan... I'm sure of that...",
+        ],
+        ["cineIntro7_1"]
+      );
+      this.cine.tweens.add({
+        targets: camera,
+        scrollX: "+=1",
+        delay: 6000,
+        onStart: ()=>{
+          this.dialogue?.play()
+        }
+      });
       this.cine.tweens.add({
         targets: camera,
         zoom: 1.5,
@@ -113,24 +133,36 @@ class cineIntro7 {
         loop: -1,
         yoyo: true,
       });
-    }, false));
 
-    this.ticker.addJob(new TickerJob(6, 50000, (job) => {
-      container.destroy(true)
-      this.nextCine = true
-    }, false));
+      const dialogueListener = (newState: string, nextText?: string) => {
+        if (newState === "CONTINUE") {
+        } else if (newState === "FINISHED") {
+          // this.ticker.deleteJob(job.id);
+        }
+      };
+      this.dialogue?.killState(dialogueListener);
+      this.dialogue?.getState(dialogueListener);
+    }
 
-    this.nextText = this.cine.add.text(middlePoint.x * 2, middlePoint.y * 2, "SPACE TO CONTINUE", {
-      fontSize: 50,
-      backgroundColor: "red"
-    })
-    this.nextText.setVisible(false).setOrigin(1).setScrollFactor(0)
+    this.ticker.addJob(
+      new TickerJob(
+        1,
+        10,
+        part1,
+        false,
+        20000,
+        true,
+        (job: TickerJob) => {
+          this.nextCine = true;
+        }
+      )
+    );
   }
 
 
   update(this: cineIntro7, time: number, delta: number) {
-    if (this.nextCine) this.cine.scene.restart({ keyname: "cine_intro_8" })
-
+    if (this.dialogue) this.dialogue.update();
+    if (this.nextCine) this.cine.scene.restart({ keyname: "cine_intro_1" })
   }
 }
 

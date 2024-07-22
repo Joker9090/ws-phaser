@@ -15,9 +15,9 @@ class startMovie extends Phaser.Scene {
     this.load.audio("deepSpace2", "/sounds/deepSpace2.mp3")
     this.load.audio("deepSpace3", "/sounds/deepSpace3.mp3")
     //intro scene 1
-    this.load.audio("primero", "/movies/intro/audios/primero.mp3")
-    this.load.audio("segundo", "/movies/intro/audios/segundo.mp3")
-    this.load.audio("tercero", "/movies/intro/audios/tercero.mp3")
+    this.load.audio("cineIntro1_1", "/movies/intro/audios/cineIntro1/cineIntro1_1.mp3")
+    this.load.audio("cineIntro1_2", "/movies/intro/audios/cineIntro1/cineIntro1_2.mp3")
+    this.load.audio("cineIntro1_3", "/movies/intro/audios/cineIntro1/cineIntro1_3.mp3")
     this.load.image("backgroundStars", "/movies/intro/scene1/fondo1.png")
     this.load.image("backgronudClouds", "/movies/intro/scene1/fondo2.png")
     this.load.image("backgroundGlow", "/movies/intro/scene1/fondo3.png")
@@ -28,6 +28,9 @@ class startMovie extends Phaser.Scene {
     this.load.image("naveZoom", "/movies/intro/scene1/NaveAstro.png")
     this.load.image("naveZoomOn", "/movies/intro/scene1/NaveAstroLuces.png")
     //intro scene 2
+    this.load.audio("spaceshipAmbient", "/movies/intro/soundEffects/cineIntro2/spaceshipAmbient.mp3")
+    this.load.audio("cineIntro2_1", "/movies/intro/audios/cineIntro2/cineIntro2_1.mp3")
+    this.load.audio("cineIntro2_2", "/movies/intro/audios/cineIntro2/cineIntro2_2.mp3")
     this.load.image("fondo1", "/movies/intro/scene2/FondoCapa1.png")
     this.load.image("fondo2", "/movies/intro/scene2/FondoCapa2.png")
     this.load.image("fondo3", "/movies/intro/scene2/FondoCapa3.png")
@@ -45,8 +48,9 @@ class startMovie extends Phaser.Scene {
     this.load.image("LuzPanelRojo", "/movies/intro/scene2/LuzPanelRojo.png")
     this.load.image("LuzPanelVerde", "/movies/intro/scene2/LuzPanelVerde.png")
     //intro scene 3 por ahora no tiene assets
-
+    this.load.audio("spaceshipCrash", "/movies/intro/soundEffects/cineIntro3/spaceshipCrash.mp3")
     //intro scene 4
+    this.load.audio("doorOpening", "/movies/intro/soundEffects/cineIntro4/doorOpening.mp3")
     this.load.image("NubePolvo1", "/movies/intro/scene5/NubePolvo1.png")
     this.load.image("NubePolvo2", "/movies/intro/scene5/NubePolvo2.png")
     this.load.image("NubePolvo3", "/movies/intro/scene5/NubePolvo3.png")
@@ -67,12 +71,14 @@ class startMovie extends Phaser.Scene {
     this.load.image("PiernaTrasera", "/movies/intro/scene6/PiernaTrasera.png")
     this.load.image("Piso", "/movies/intro/scene6/Piso.png")
     //intro scene 6
+    this.load.audio("cineIntro6_1", "/movies/intro/audios/cineIntro6/cineIntro6_1.mp3")
     this.load.image("PisoScene6", "/movies/intro/scene7/Piso.png")
     this.load.image("AstroFrenteCorte", "/movies/intro/scene7/AStroFrenteCorte.png")
     this.load.image("AstroPerfilCorte", "/movies/intro/scene7/AstroPerfilCorte.png")
     this.load.image("VidrioVisor", "/movies/intro/scene7/VidrioVisor.png")
     this.load.image("VidrioVisorView", "/movies/intro/scene7/VidrioVisorView.png")
     //intro scene 7
+    this.load.audio("cineIntro7_1", "/movies/intro/audios/cineIntro7/cineIntro7_1.mp3")
     this.load.image("mountains", "/movies/intro/scene8/Montañas.png")
     this.load.image("Nube1", "/movies/intro/scene8/Nube1.png")
     this.load.image("Nube2", "/movies/intro/scene8/Nube2.png")

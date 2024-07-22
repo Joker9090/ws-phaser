@@ -45,37 +45,6 @@ class Cinematography extends Phaser.Scene {
     this.scaleImage(image1);
     image1.scale += 2.5;
 
-
-    // ADD JOBS
-    this.ticker.addJob(new TickerJob(1, 100, (job) => {
-      this.tweens.add({
-        targets: image1,
-        x: middlePoint.x + 100,
-        y: middlePoint.x + 200,
-        duration: 25000,
-        ease: 'Linear'
-      });
-    }, false));
-
-    this.ticker.addJob(new TickerJob(2, 500, (job) => {
-      this.tweens.add({
-        targets: image2,
-        y: -200,
-        angle: 300,
-        duration: 25000,
-        ease: 'Linear'
-      });
-    }, false));
-
-    this.ticker.addJob(new TickerJob(3, 9000, (job) => {
-      this.tweens.add({
-        targets: [image1, image2],
-        alpha: 0,
-        duration: 1000,
-        ease: 'Linear'
-      });
-    }, false));
-
   }
 
 

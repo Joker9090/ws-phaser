@@ -103,7 +103,8 @@ class cineIntro4 {
     const camera = this.cine.cameras.main
     camera.postFX.addVignette(0.5, 0.5, 0.8);
     // ADD JOBS
-    this.ticker.addJob(new TickerJob(1, 100, (job) => {
+
+    const part1 = (job: TickerJob) => {
       this.cine.tweens.add({
         targets: [this.NaveCerradaLuces, this.NaveAbiertaLuces],
         alpha: 0.2,
@@ -116,6 +117,9 @@ class cineIntro4 {
         zoom: 1.3,
         duration: 160000,
         ease: 'linear',
+        onStart: (a) => {
+          console.log("ENTRO ARIEL 0", a)
+        }
       });
       this.cine.tweens.add({
         targets: [this.NubePolvo1, this.NubePolvo4],
@@ -137,30 +141,42 @@ class cineIntro4 {
         duration: 160000,
         ease: 'linear',
       });
-    }, false));
+      this.cine.tweens.add({
+        targets: camera,
+        scrollX: "+=1",
+        duration: 1000,
+        delay: 6000,
+        onStart: ()=>{
+          const doorOpeningSoundEffect = this.cine.sound.add("doorOpening")
+          doorOpeningSoundEffect.play()
+          console.log("ENTRO ARIEL 1")
+          camera.flash(10000, 255, 255, 255, false, (camera: any, progress: number) => {
+            if (progress <= 0.5 && progress >= 0.45) 
+              doorOpeningSoundEffect.stop()
+            if (progress < 0.5) {
 
-    this.ticker.addJob(new TickerJob(2, 12000, (job) => {
-      camera.flash(10000, 255, 255, 255, false, (camera: any, progress: number) => {
-        if (progress < 0.5) {
-          this.NaveCerrada?.setVisible(false)
-          this.NaveCerradaLuces?.setVisible(false)
-          this.NaveAbierta?.setVisible(true)
-          this.NaveAbiertaLuces?.setVisible(true)
+              this.NaveCerrada?.setVisible(false)
+              this.NaveCerradaLuces?.setVisible(false)
+              this.NaveAbierta?.setVisible(true)
+              this.NaveAbiertaLuces?.setVisible(true)
+            }
+          })
         }
-      })
-
-    }, false));
-
-    this.ticker.addJob(new TickerJob(6, 24000, (job) => {
-      container.destroy(true)
-      this.nextCine = true
-    }, false));
-
-    this.nextText = this.cine.add.text(middlePoint.x * 2, middlePoint.y * 2, "SPACE TO CONTINUE", {
-      fontSize: 50,
-      backgroundColor: "red"
-    })
-    this.nextText.setVisible(false).setOrigin(1).setScrollFactor(0)
+      });
+    }
+    this.ticker.addJob(
+      new TickerJob(
+        1,
+        10,
+        part1,
+        false,
+        25000,
+        true,
+        (job: TickerJob) => {
+          this.nextCine = true;
+        }
+      )
+    );
   }
 
 

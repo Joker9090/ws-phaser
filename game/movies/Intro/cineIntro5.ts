@@ -78,11 +78,11 @@ class cineIntro5 {
     const camera = this.cine.cameras.main
     camera.postFX.addVignette(0.5, 0.5, 0.8);
     // ADD JOBS
-    this.ticker.addJob(new TickerJob(1, 100, (job) => {
+    const part1 = (job: TickerJob) => {
       this.cine.tweens.add({
         targets: [this.Cuerpo, this.BrazoDelantero, this.PiernaDelantera, this.PiernaTrasera],
         y: "+=50",
-        duration: 9000,
+        duration: 3000,
         ease: 'ease',
         loop: -1,
         yoyo: true,
@@ -90,7 +90,7 @@ class cineIntro5 {
       this.cine.tweens.add({
         targets: [this.BrazoDelantero, this.PiernaDelantera],
         rotation: Math.PI / 6,
-        duration: 18000,
+        duration: 6000,
         ease: 'ease',
         loop: -1,
         yoyo: true,
@@ -98,7 +98,7 @@ class cineIntro5 {
       this.cine.tweens.add({
         targets: [this.PiernaTrasera],
         rotation: -Math.PI / 6,
-        duration: 18000,
+        duration: 6000,
         ease: 'ease',
         loop: -1,
         yoyo: true,
@@ -106,21 +106,24 @@ class cineIntro5 {
       this.cine.tweens.add({
         targets: [this.Cuerpo, this.BrazoDelantero, this.PiernaDelantera, this.PiernaTrasera],
         x: "+=2500",
-        duration: 40000,
+        duration: 35000,
         ease: 'ease',
       });
-    }, false));
+    }
 
-    this.ticker.addJob(new TickerJob(6, 40000, (job) => {
-      container.destroy(true)
-      this.nextCine = true
-    }, false));
-
-    this.nextText = this.cine.add.text(middlePoint.x * 2, middlePoint.y * 2, "SPACE TO CONTINUE", {
-      fontSize: 50,
-      backgroundColor: "red"
-    })
-    this.nextText.setVisible(false).setOrigin(1).setScrollFactor(0)
+    this.ticker.addJob(
+      new TickerJob(
+        1,
+        10,
+        part1,
+        false,
+        20000,
+        true,
+        (job: TickerJob) => {
+          this.nextCine = true;
+        }
+      )
+    );
   }
 
 

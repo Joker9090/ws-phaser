@@ -17,24 +17,23 @@ export default function Home() {
     import("phaser").then(setPhaser)
     //Load scenes async when windows is ready
     Promise.all([
-      import("@/game/movies/startMovie"),
-      import("@/game/movies/Cinematography-modular"),
+      import("@/game/SceneLoader"),
+      // import("@/game/movies/startMovie"),
+      // import("@/game/movies/Cinematography-modular"),
       // import("@/game/movies/DialogueManager"),
-      // import("@/game/SceneLoader"),
-      // import("@/game/Menu"),
-      // import("@/game/DataManager"),
-      // import("@/game/Game"),
-      // import("@/game/Won"),
-      // import("@/game/GameOver"),
-      // import("@/game/UIScene"),
-      // import("@/game/TutorialText"),
-      // import("@/game/Intro"),
-      // import("@/game/BetweenScenes"),
+      import("@/game/Menu"),
+      import("@/game/DataManager"),
+      import("@/game/Game"),
+      import("@/game/Won"),
+      import("@/game/GameOver"),
+      import("@/game/UIScene"),
+      import("@/game/TutorialText"),
+      import("@/game/Intro"),
+      import("@/game/BetweenScenes"),
       import("@/game/MusicManager"),
-      // import("@/game/LevelMap"),
-      // import("@/game/Credits"),
-      // import("@/game/Sandbox"),
-      //import("@/game/Sandbox"),
+      import("@/game/LevelMap"),
+      import("@/game/Credits"),
+      import("@/game/Sandbox"),
     ]).then((scenes) => {
       setScenes(scenes.map(s => s.default))
     })
@@ -54,8 +53,8 @@ export default function Home() {
     if (phaser && scenes.length && !game) {
       const config: Phaser.Types.Core.GameConfig = {
         type: Phaser.AUTO,
-        width:   "100%" ,
-        height:   "100%",
+        width: "100%",
+        height: "100%",
         parent: "game-container",
         scale: {
           mode: window.Phaser.Scale.NONE

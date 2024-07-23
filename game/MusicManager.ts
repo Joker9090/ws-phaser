@@ -26,6 +26,6 @@ export default class MusicManager extends Phaser.Scene {
   }
 
   create(/* {song} */) {
-    this.playMusic("deepSpace1");
+    // this.playMusic("deepSpace1");
   }
 }

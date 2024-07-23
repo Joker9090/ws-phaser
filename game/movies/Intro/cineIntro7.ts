@@ -70,8 +70,8 @@ class cineIntro7 {
       this.Nube3,
       this.Nube2,
       this.Nube1,
-      this.mountains,
       this.Piso,
+      this.mountains,
     ])
 
     container.setScale(gameObjectScaler.x < gameObjectScaler.y ? gameObjectScaler.y : gameObjectScaler.x)

@@ -149,7 +149,6 @@ class cineIntro4 {
         onStart: ()=>{
           const doorOpeningSoundEffect = this.cine.sound.add("doorOpening")
           doorOpeningSoundEffect.play()
-          console.log("ENTRO ARIEL 1")
           camera.flash(10000, 255, 255, 255, false, (camera: any, progress: number) => {
             if (progress <= 0.5 && progress >= 0.45) 
               doorOpeningSoundEffect.stop()
@@ -170,7 +169,7 @@ class cineIntro4 {
         10,
         part1,
         false,
-        25000,
+        20e000,
         true,
         (job: TickerJob) => {
           this.nextCine = true;
@@ -182,7 +181,7 @@ class cineIntro4 {
 
 
   update(this : cineIntro4, time: number, delta: number) {
-    if (this.nextCine) this.cine.scene.restart({ keyname: "cine_intro_5" })
+    if (this.nextCine) this.cine.scene.restart({ keyname: "cine_intro_6" })
     
   }
 }

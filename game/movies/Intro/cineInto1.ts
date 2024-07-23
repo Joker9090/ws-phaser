@@ -22,7 +22,6 @@ class cineIntro1 {
   // controllers
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
 
-
   constructor(cine: CinematographyModular) {
     this.cine = cine;
     const tickerMS = 100;
@@ -79,6 +78,35 @@ class cineIntro1 {
       .setVisible(false)
       .setScale(0.7);
 
+    /* put all
+    background3
+    background2
+    background1
+    planet
+    ship
+    shipOverImage
+    shipZoom
+    shipZoomOn
+    in an array and iterate each one to set the brightness to 0.5
+    */
+
+    const brightness = 0.5;
+    const gameObjects = [
+      this.background3,
+      this.background2,
+      this.background1,
+      this.planet,
+      this.ship,
+      // this.shipOverImage,
+      this.shipZoom,
+      this.shipZoomOn,
+    ];
+
+    gameObjects.forEach((gameObject) => {
+      gameObject.setAlpha(brightness);
+    });
+    
+
     const container = this.cine.add
       .container(middlePoint.x, middlePoint.y)
       .setSize(1920, 927);
@@ -118,9 +146,19 @@ class cineIntro1 {
           "Emergency log number 325...",
           "it's been more than 45 days since de incident. I still haven't got any news from Dan or the rest of the crew... ",
         ],
-        ["cineIntro1_1", "cineIntro1_2"]
+        ["cineIntro1_1", "cineIntro1_2"],
+        [
+          {
+            delay: 6000,
+            keepAlive: 2000,
+          },
+          {
+            delay: 5000,
+            keepAlive: 1700,
+          },
+        ]
       );
-      
+
       this.dialogue?.play();
 
       const tween1 = this.cine.tweens.add({
@@ -177,11 +215,7 @@ class cineIntro1 {
       this.shipZoomOn?.setVisible(true);
 
       this.cine.tweens.add({
-        targets: [
-          this.background1,
-          this.background2,
-          this.background3,
-        ],
+        targets: [this.background1, this.background2, this.background3],
         x: "-=15",
         y: "+=20",
         duration: 14000,
@@ -202,38 +236,30 @@ class cineIntro1 {
 
       const dialogueListener = (newState: string, nextText?: string) => {
         if (newState === "FINISHED") {
-          console.log("00 FINISHED",job.id);
+          console.log("00 FINISHED", job.id);
           this.ticker.deleteJob(job.id);
         }
       };
       this.dialogue?.killState(dialogueListener);
       this.dialogue?.getState(dialogueListener);
-    }
+    };
 
     this.ticker.addJob(
-      new TickerJob(
-        1,
-        10,
-        part1,
-        false,
-        undefined,
-        true,
-        (job: TickerJob) => {
-          this.ticker.addNextJob(
-            new TickerJob(
-              2,
-              0,
-              part2,
-              false,
-              undefined,
-              true,
-              (job: TickerJob) => {
-                this.nextCine = true;
-              }
-            )
-          );
-        }
-      )
+      new TickerJob(1, 10, part1, false, undefined, true, (job: TickerJob) => {
+        this.ticker.addNextJob(
+          new TickerJob(
+            2,
+            0,
+            part2,
+            false,
+            undefined,
+            true,
+            (job: TickerJob) => {
+              this.nextCine = true;
+            }
+          )
+        );
+      })
     );
   }
 

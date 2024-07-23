@@ -1,6 +1,10 @@
 import Phaser from "phaser";
 
 // Scene in class
+export type DialogConfig = {
+  keepAlive: number;
+  delay: number;
+};
 class DialogueManager {
   scene: Phaser.Scene;
   texts: string[];
@@ -23,14 +27,21 @@ class DialogueManager {
   textCounterMax?: number;
   canChangeText: boolean = false;
   state: string = "STOP"; // PLAY ;
+  config: DialogConfig[] = [];
 
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
-  constructor(scene: Phaser.Scene, texts: string[], audios: string[]) {
+  constructor(
+    scene: Phaser.Scene,
+    texts: string[],
+    audios: string[],
+    config?: DialogConfig[]
+  ) {
     this.scene = scene;
     this.textCounter = 0;
     this.cursors = this.scene.input.keyboard?.createCursorKeys();
     this.audios = audios;
     this.texts = texts;
+    this.config = config || [];
     this.textCounterMax = this.texts.length;
 
     this.container = this.scene.add
@@ -61,6 +72,7 @@ class DialogueManager {
       })
       .setVisible(false)
       .setOrigin(0.5);
+
     this.tweenContinue = this.scene.tweens.add({
       targets: this.continueText,
       alpha: 1,
@@ -86,11 +98,20 @@ class DialogueManager {
       this.stateFunctions.splice(index, 1);
     }
   }
-  
+
   play() {
-    this.state = "PLAY";
-    this.container?.setVisible(true)
-    this.textBuilder(this.texts[this.textCounter], 80);
+    // if dely exist, call delayed
+    if (this.config[this.textCounter] && this.config[this.textCounter].delay) {
+      setTimeout(() => {
+        this.state = "PLAY";
+        this.container?.setVisible(true);
+        this.textBuilder(this.texts[this.textCounter], 80);
+      }, this.config[this.textCounter].delay);
+    } else {
+      this.state = "PLAY";
+      this.container?.setVisible(true);
+      this.textBuilder(this.texts[this.textCounter], 80);
+    }
   }
 
   stop() {
@@ -99,17 +120,43 @@ class DialogueManager {
   }
 
   continueWithNextText() {
+    this.canChangeText = false;
     if (this.textCounterMax) {
       if (this.textCounter < this.textCounterMax) {
-        this.canChangeText = false;
-        this.textDisplayed?.setText("");
-        this.continueText?.setVisible(false);
-        this.textBuilder(this.texts[this.textCounter], 80);
+        if (
+          this.config[this.textCounter] &&
+          this.config[this.textCounter].delay
+        ) {
+          this.continueText?.setVisible(false);
+          // hide text container
+          this.container?.setVisible(false);
+          setTimeout(() => {
+            this.container?.setVisible(true);
+            this.textDisplayed?.setText("");
+            this.textBuilder(this.texts[this.textCounter], 80);
+          }, this.config[this.textCounter].delay);
+        } else {
+          this.textDisplayed?.setText("");
+          this.continueText?.setVisible(false);
+          this.textBuilder(this.texts[this.textCounter], 80);
+        }
       } else {
-        this.stateFunctions.forEach((fn) => {
-          fn("FINISHED");
-        });
-        this.container?.destroy();
+        if (
+          this.config[this.textCounter] &&
+          this.config[this.textCounter].delay
+        ) {
+          setTimeout(() => {
+            this.stateFunctions.forEach((fn) => {
+              fn("FINISHED");
+            });
+            this.container?.destroy();
+          }, this.config[this.textCounter].delay);
+        } else {
+          this.stateFunctions.forEach((fn) => {
+            fn("FINISHED");
+          });
+          this.container?.destroy();
+        }
       }
     }
   }
@@ -128,6 +175,23 @@ class DialogueManager {
   }
 
   nextText() {
+    // if keep alive config, not show continue text
+    if (
+      this.config[this.textCounter] &&
+      this.config[this.textCounter].keepAlive
+    ) {
+      // change text afget keepalive config time
+      setTimeout(() => {
+        this.textCounter += 1;
+        this.textDisplayed?.setText("");
+        this.stateFunctions.forEach((fn) => {
+          fn("CONTINUE", this.texts[this.textCounter]);
+        });
+        this.continueWithNextText();
+      }, this.config[this.textCounter].keepAlive);
+      return;
+    }
+
     this.continueText?.setVisible(true);
     this.textCounter += 1;
     this.canChangeText = true;

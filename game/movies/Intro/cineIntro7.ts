@@ -91,16 +91,15 @@ class cineIntro7 {
         [
           "You would definitely love this Dan... I'm sure of that...",
         ],
-        ["cineIntro7_1"]
+        ["cineIntro7_1"],
+        [
+          {
+            delay: 5000,
+            keepAlive: 1500,
+          },
+        ]
       );
-      this.cine.tweens.add({
-        targets: camera,
-        scrollX: "+=1",
-        delay: 6000,
-        onStart: ()=>{
-          this.dialogue?.play()
-        }
-      });
+      this.dialogue.play()
       this.cine.tweens.add({
         targets: camera,
         zoom: 1.5,

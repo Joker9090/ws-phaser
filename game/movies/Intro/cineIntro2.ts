@@ -81,7 +81,7 @@ class cineIntro2 {
     this.alarmaVerdeOn = this.cine.add.image(-503, -180, "alarmaVerdeOn").setOrigin(0.5)
     this.LuzPanelRojo = this.cine.add.image(620, 252, "LuzPanelRojo").setOrigin(0.5).setScale(1, 0.95)
     this.LuzPanelVerde = this.cine.add.image(- 620, 252, "LuzPanelVerde").setOrigin(0.5).setScale(1, 0.95)
-
+    const darkMask = this.cine.add.rectangle(0,0,window.innerWidth,window.innerHeight,0,0.3)
 
     const assetsScenes = 
       [
@@ -101,6 +101,7 @@ class cineIntro2 {
         this.alarmaVerdeOn,
         this.LuzPanelRojo,
         this.LuzPanelVerde,
+        darkMask,
       ]
 
     this.container = this.cine.add.container(middlePoint.x, middlePoint.y).setSize(1920, 927)
@@ -128,10 +129,35 @@ class cineIntro2 {
         this.cine,
         [
           "I've decided to shut down all systems except life support and navigation to buy myself some time.", 
+          "Although it seems like I'm in uncharted waters, who knows where I've ended up."
         ],
-        ["cineIntro2_1"]
+        ["cineIntro2_1", "cineIntro2_2"],
+        [
+          {
+            delay: 1000,
+            keepAlive: 2000,
+          },
+          {
+            delay: 500,
+            keepAlive: 2000,
+          },
+        ]
       );
-      
+      this.dialogue?.play();
+      this.cine.tweens.add({
+        targets: [darkMask],
+        alpha: 0.35,
+        duration: 1500,
+        ease: 'ease',
+        loop: -1,
+        yoyo: true,
+      });
+      this.cine.tweens.add({
+        targets: [camera],
+        opacity: 1.3,
+        duration: 60000,
+        ease: 'linear',
+      });
       this.cine.tweens.add({
         targets: [this.background1, this.background2, this.background3, this.planetScene2],
         scale: 1.3,
@@ -218,9 +244,6 @@ class cineIntro2 {
         delay: 5000,
         loop: 0,
         yoyo: false,
-        onStart: ()=>{
-           this.dialogue?.play();
-        },
       });
       const dialogueListener = (newState: string, nextText?: string) => {
         if (newState === "CONTINUE") {
@@ -236,9 +259,16 @@ class cineIntro2 {
       this.dialogue = new DialogueManager(
         this.cine,
         [
-          "Although it seems like I'm in uncharted waters, who knows where I've ended up."
+          "Supplies are running out... Maybe I'll have enough for 3 more days if I'm lucky. Fuel levels aren't very encouraging either, if I don't do something soon I could be adrift and things could get a bit complicated.	",
+          "The radar has detected a planet in the vicinity that seems to have a possible energy source, I will go investigate it. Wish me luck Dan."
         ],
-        ["cineIntro2_2"]
+        ["cineIntro2_3", "cineIntro2_4"],
+        [
+          {
+            delay: 500,
+            keepAlive: 3000,
+          },
+        ]
       );
       
       this.dialogue?.play();

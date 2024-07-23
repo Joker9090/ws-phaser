@@ -28,13 +28,14 @@ class DialogueManager {
   canChangeText: boolean = false;
   state: string = "STOP"; // PLAY ;
   config: DialogConfig[] = [];
-
+  timeBetweenLetters: number = 70;
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   constructor(
     scene: Phaser.Scene,
     texts: string[],
     audios: string[],
-    config?: DialogConfig[]
+    config?: DialogConfig[],
+    timeBetweenLetters?: number,
   ) {
     this.scene = scene;
     this.textCounter = 0;
@@ -43,7 +44,7 @@ class DialogueManager {
     this.texts = texts;
     this.config = config || [];
     this.textCounterMax = this.texts.length;
-
+    this.timeBetweenLetters = timeBetweenLetters || 70;
     this.container = this.scene.add
       .container()
       .setSize(this.screenWidth * 0.8, this.screenHeigth * 0.15);
@@ -63,7 +64,7 @@ class DialogueManager {
     this.textDisplayed = this.scene.add.text(40, 40, "", {
       color: "black",
       wordWrap: {
-        width: this.screenWidth * 0.8 - 40,
+        width: this.screenWidth * 0.8 - 80,
       },
     });
     this.continueText = this.scene.add
@@ -105,12 +106,12 @@ class DialogueManager {
       setTimeout(() => {
         this.state = "PLAY";
         this.container?.setVisible(true);
-        this.textBuilder(this.texts[this.textCounter], 80);
+        this.textBuilder(this.texts[this.textCounter], this.timeBetweenLetters);
       }, this.config[this.textCounter].delay);
     } else {
       this.state = "PLAY";
       this.container?.setVisible(true);
-      this.textBuilder(this.texts[this.textCounter], 80);
+      this.textBuilder(this.texts[this.textCounter], this.timeBetweenLetters);
     }
   }
 
@@ -133,12 +134,12 @@ class DialogueManager {
           setTimeout(() => {
             this.container?.setVisible(true);
             this.textDisplayed?.setText("");
-            this.textBuilder(this.texts[this.textCounter], 80);
+            this.textBuilder(this.texts[this.textCounter], this.timeBetweenLetters);
           }, this.config[this.textCounter].delay);
         } else {
           this.textDisplayed?.setText("");
           this.continueText?.setVisible(false);
-          this.textBuilder(this.texts[this.textCounter], 80);
+          this.textBuilder(this.texts[this.textCounter], this.timeBetweenLetters);
         }
       } else {
         if (

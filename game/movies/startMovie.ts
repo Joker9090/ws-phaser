@@ -31,6 +31,8 @@ class startMovie extends Phaser.Scene {
     this.load.audio("spaceshipAmbient", "/movies/intro/soundEffects/cineIntro2/spaceshipAmbient.mp3")
     this.load.audio("cineIntro2_1", "/movies/intro/audios/cineIntro2/cineIntro2_1.mp3")
     this.load.audio("cineIntro2_2", "/movies/intro/audios/cineIntro2/cineIntro2_2.mp3")
+    this.load.audio("cineIntro2_3", "/movies/intro/audios/cineIntro2/cineIntro2_3.mp3")
+    this.load.audio("cineIntro2_4", "/movies/intro/audios/cineIntro2/cineIntro2_4.mp3")
     this.load.image("fondo1", "/movies/intro/scene2/FondoCapa1.png")
     this.load.image("fondo2", "/movies/intro/scene2/FondoCapa2.png")
     this.load.image("fondo3", "/movies/intro/scene2/FondoCapa3.png")
@@ -95,7 +97,7 @@ class startMovie extends Phaser.Scene {
           ) as CinematographyModular;
 
         startButton.on("pointerdown", ()=>{
-            getCinematographyMod.scene.start("CinematographyMod", {keyname: "cine_intro_4"}).bringToTop("CinematographyMod")
+            getCinematographyMod.scene.start("CinematographyMod", {keyname: "cine_intro_1"}).bringToTop("CinematographyMod")
         })
         startButton.on("pointerup", ()=>{
             this.scene.stop()

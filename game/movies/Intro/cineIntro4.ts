@@ -169,7 +169,7 @@ class cineIntro4 {
         10,
         part1,
         false,
-        20e000,
+        20000,
         true,
         (job: TickerJob) => {
           this.nextCine = true;

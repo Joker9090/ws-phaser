@@ -100,8 +100,16 @@ class cineIntro6 {
         [
           "This planet is pretty strange... I've never seen something like this place...",
         ],
-        ["cineIntro6_1"]
+        ["cineIntro6_1"],
+        [
+          {
+            delay: 5000,
+            keepAlive: 1500,
+          },
+        ]
       );
+      this.dialogue?.play()
+
       this.cine.tweens.add({
         targets: camera,
         zoom: 1.5,
@@ -124,9 +132,14 @@ class cineIntro6 {
         duration: 3500,
         delay: 10000,
         ease: 'linear',
-        onStart: ()=>{
-          this.dialogue?.play()
-        }
+      });
+      this.cine.tweens.add({
+        targets: [this.background2],
+        x: '+=200',
+        duration: 20000,
+        delay: 0,
+        loop: -1,
+        ease: 'linear',
       });
       this.cine.tweens.add({
         targets: [this.AstroPerfilCorte, this.VidrioVisorView2, this.VidrioVisor2],
@@ -139,7 +152,7 @@ class cineIntro6 {
       const dialogueListener = (newState: string, nextText?: string) => {
         if (newState === "CONTINUE") {
         } else if (newState === "FINISHED") {
-          this.ticker.deleteJob(job.id);
+          // this.ticker.deleteJob(job.id);
         }
       };
       this.dialogue?.killState(dialogueListener);
@@ -152,7 +165,7 @@ class cineIntro6 {
         10,
         part1,
         false,
-        undefined,
+        20000,
         true,
         (job: TickerJob) => {
           this.nextCine = true;

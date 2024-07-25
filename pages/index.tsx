@@ -24,18 +24,11 @@ export default function Home() {
       
       import("@/game/MusicManager"),
 
-      import("@/game/Menu"),
       import("@/game/DataManager"),
       import("@/game/Game"),
-      import("@/game/Won"),
-      import("@/game/GameOver"),
+      import("@/game/MultiScene"),
       import("@/game/UIScene"),
-      import("@/game/TutorialText"),
-      import("@/game/Intro"),
       import("@/game/BetweenScenes"),
-      import("@/game/LevelMap"),
-      import("@/game/Credits"),
-      import("@/game/Sandbox"),
     ]).then((scenes) => {
       setScenes(scenes.map(s => s.default))
     })
@@ -67,7 +60,7 @@ export default function Home() {
           arcade: {
             overlapBias: 10,
             gravity: { y: 1000 },
-            debug: false
+            debug: true
           }
         }
       }

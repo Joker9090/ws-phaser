@@ -89,19 +89,7 @@ export default class UIScene extends Phaser.Scene {
         ;
       this.containerLeft?.add(this.coinUI);
 
-      // const arrowConfig: UIConfig = {
-      //   texture: "fallingGuy",
-      //   pos: { x: lifes * 50 + 275, y: 60 },
-      //   scale: 1,
-      // };
-      // this.ArrowOriginalPos = quantityLifes * 50 + 250;
-      // this.gravityArrow = new UI(this, arrowConfig)
-      //   .setRotation(0)
-      //   .setScrollFactor(0, 0)
-      //   .setDepth(100)
-      //   .setScale(0.1)
-      //   .setTint(150, 150, 150);
-      // this.containerRight?.add(this.gravityArrow);
+  
     }
   }
 
@@ -205,6 +193,16 @@ export default class UIScene extends Phaser.Scene {
 
 
 
+    this.timeLevel = 0;
+    var timerEvent = this.time.addEvent({
+      delay: 200,
+      callback: () => {
+        this.timeLevel++;
+        this.timeLevel = this.timeLevel;
+      },
+      callbackScope: this,
+      loop: true,
+    });
     /* TIMER */
     this.minutes = 0,
       this.timeLevel = 0

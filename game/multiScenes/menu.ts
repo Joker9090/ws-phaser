@@ -38,6 +38,8 @@ export default class MenuClass {
 
     }
 
+    
+
     init({ stagePoint }: any) {
         this.dataManager = this.scene.game.scene.getScene("DataManager") as DataManager;
         if (this.stagePoint != undefined && stagePoint != undefined) {

@@ -1,7 +1,7 @@
 import Phaser from "phaser";
-import BetweenScenes, { BetweenScenesStatus } from "./BetweenScenes";
-import MusicManager from "./MusicManager";
-import DataManager from "./DataManager";
+import BetweenScenes, { BetweenScenesStatus } from "../BetweenScenes";
+import MusicManager from "../MusicManager";
+import DataManager from "../DataManager";
 
 export default class MainMenuScene extends Phaser.Scene {
   dataManager?: DataManager;

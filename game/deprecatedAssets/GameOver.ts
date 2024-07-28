@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 
-import MusicManager from "./MusicManager";
-import BetweenScenes, { BetweenScenesStatus } from "./BetweenScenes";
+import MusicManager from "../MusicManager";
+import BetweenScenes, { BetweenScenesStatus } from "../BetweenScenes";
 
 export default class GameOver extends Phaser.Scene {
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;

@@ -1,6 +1,6 @@
 import Phaser from "phaser";
-import EventsCenter from "./EventsCenter";
-import BetweenScenes, { BetweenScenesStatus } from "./BetweenScenes";
+import EventsCenter from "../EventsCenter";
+import BetweenScenes, { BetweenScenesStatus } from "../BetweenScenes";
 import { World } from "matter";
 
 export default class LevelMap extends Phaser.Scene {

@@ -1,6 +1,6 @@
 import Phaser from "phaser";
-import BetweenScenes, { BetweenScenesStatus } from "./BetweenScenes";
-import MusicManager from "./MusicManager";
+import BetweenScenes, { BetweenScenesStatus } from "../BetweenScenes";
+import MusicManager from "../MusicManager";
 
 export default class Intro extends Phaser.Scene {
   noswarText?: Phaser.GameObjects.Text;

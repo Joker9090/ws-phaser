@@ -18,6 +18,7 @@ import sMapa1 from "./maps/sun/sMapa1";
 import sMapa2 from "./maps/sun/sMapa2";
 import sMapa3 from "./maps/sun/sMapa3";
 import Floor from "./assets/Floor";
+import UIClass from "./UIClass";
 
 // Scene in class
 class Game extends Phaser.Scene {
@@ -51,6 +52,8 @@ class Game extends Phaser.Scene {
   TutorialMap?: Tutorial;
   TutorialTextScene?: Phaser.Scene;
   UIScene?: UIScene;
+
+  UIClass?: UIClass;
   
   constructor() {
     super({ key: "Game" });
@@ -295,10 +298,11 @@ class Game extends Phaser.Scene {
 
 
     /* UI SCENE  */
-    const UIScene = this.game.scene.getScene("UIScene");
-    if (!UIScene.scene.isActive())
-      this.scene.launch(UIScene, { ...data, game: this });
+    // const UIScene = this.game.scene.getScene("UIScene");
+    // if (!UIScene.scene.isActive())
+    //   this.scene.launch(UIScene, { ...data, game: this });
 
+    this.UIClass = new UIClass(this, this.levelIs, this.lifes, this.timeLevel)
     /* CREATE MAP */
     this.map.createMap(data);
 

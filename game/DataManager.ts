@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 import EventsCenter from "./EventsCenter";
 import BetweenScenes from "./BetweenScenes";
-import LevelMap from "./LevelMap";
+import LevelMap from "./deprecatedAssets/LevelMap";
 
 export default class DataManager extends Phaser.Scene {
   menuAnim?: boolean;

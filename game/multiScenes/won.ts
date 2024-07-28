@@ -18,6 +18,8 @@ export default class WonClass {
         this.createContainer()
     }
 
+    
+
     createContainer() {
         this.container = this.scene.add.container(window.innerWidth / 2, window.innerHeight / 2)
         this.background = this.scene.add

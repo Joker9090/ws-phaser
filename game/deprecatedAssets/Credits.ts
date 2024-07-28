@@ -1,8 +1,8 @@
 import Phaser from "phaser";
-import PictureCredits from "./assets/PictureCredits";
-import EventsCenter from "./EventsCenter";
-import TextBox from "./assets/TextBox";
-import BetweenScenes, { BetweenScenesStatus } from "./BetweenScenes";
+import PictureCredits from "../assets/PictureCredits";
+import EventsCenter from "../EventsCenter";
+import TextBox from "../assets/TextBox";
+import BetweenScenes, { BetweenScenesStatus } from "../BetweenScenes";
 
 export default class Credits extends Phaser.Scene {
   /* map */

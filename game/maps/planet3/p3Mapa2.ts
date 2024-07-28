@@ -54,7 +54,7 @@ class p3Mapa1 {
     background14: Phaser.GameObjects.Image
     background15: Phaser.GameObjects.Image
     aura?: Phaser.Physics.Arcade.Group;
-    UIScene?: UIScene;
+  
     monchi: Player;
     startingPoint = {
         x: 400, //400

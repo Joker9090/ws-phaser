@@ -5,7 +5,7 @@ import AsteroidGenerator, {
 import Floor, { FloorConfig } from "../assets/Floor";
 import LargeFloor, { LargeFloorConfig } from "../assets/LargeFloor";
 import Game from "../Game";
-import UIScene from "../UIScene";
+
 import EventsCenter from "../EventsCenter";
 import portal, { portalConfig } from "../assets/portal";
 // Scene in class
@@ -32,7 +32,7 @@ class Mapa2 {
   background6: Phaser.GameObjects.Image
   aura?: Phaser.Physics.Arcade.Group;
 
-  UIScene?: UIScene;
+
   endPortal?: Floor;
 
   startingPoint = {

@@ -6,7 +6,7 @@ import Floor, { FloorConfig } from "../assets/Floor";
 
 import LargeFloor, { LargeFloorConfig } from "../assets/LargeFloor";
 import Game from "../Game";
-import UIScene from "../UIScene";
+
 import Player from "../assets/Player";
 import portal, { portalConfig } from "../assets/portal";
 import { Children } from "react";
@@ -35,7 +35,7 @@ class Mapa1 {
   movingFloor?: Phaser.Physics.Arcade.Group;
   movingFloorRot?: Phaser.Physics.Arcade.Group;
   p13!: Phaser.GameObjects.Sprite;
-  UIScene?: UIScene;
+
   amountLifes: number = 0;
   sideGrav: boolean = false;
   goingBack: boolean = false;
@@ -65,7 +65,6 @@ class Mapa1 {
     this.scene = scene;
     this.monchi = monchi;
 
-    this.UIScene = this.scene.game.scene.getScene("UIScene") as UIScene;
     /* World size*/
     this.scene.physics.world.setBounds(
       0,

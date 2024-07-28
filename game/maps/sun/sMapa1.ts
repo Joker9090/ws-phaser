@@ -50,7 +50,7 @@ class sMapa1 {
     background9: Phaser.GameObjects.Image
     background10: Phaser.GameObjects.Image
     aura?: Phaser.Physics.Arcade.Group;
-    UIScene?: UIScene;
+  
     monchi: Player;
     startingPoint = {
         x: 400, //400

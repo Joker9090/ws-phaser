@@ -46,7 +46,7 @@ class p2Mapa1 {
     background7: Phaser.GameObjects.Image
     background8: any;
     aura?: Phaser.Physics.Arcade.Group;
-    UIScene?: UIScene;
+  
     monchi: Player;
     endPortal?: Floor;
 

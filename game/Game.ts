@@ -2,12 +2,11 @@ import Phaser from "phaser";
 import Player from "./assets/Player";
 import Mapa1 from "./maps/Mapa1";
 import Mapa2 from "./maps/Mapa2";
-import Tutorial from "./maps/Tutorial";
+
 import p2Mapa1 from "./maps/planet2/p2Mapa1";
 
 import MusicManager from "./MusicManager";
 import EventsCenter from "./EventsCenter";
-import UIScene from "./UIScene";
 import BetweenScenes, { BetweenScenesStatus } from "./BetweenScenes";
 import p2Mapa2 from "./maps/planet2/p2Mapa2";
 import p2Mapa3 from "./maps/planet2/p2Mapa3";
@@ -28,7 +27,7 @@ class Game extends Phaser.Scene {
   monchi?: Player;
   graphics?: Phaser.GameObjects.Graphics;
   map?:
-    Mapa1 | Mapa2 | Tutorial |
+    Mapa1 | Mapa2 |
     p2Mapa1 | p2Mapa2 | p2Mapa3 |
     p3Mapa1 | p3Mapa2 | p3Mapa3 |
     sMapa1 | sMapa2 | sMapa3 | MapaTest;
@@ -50,9 +49,7 @@ class Game extends Phaser.Scene {
   cameraHeight: number = 0;
 
   mapShown: boolean = false;
-  TutorialMap?: Tutorial;
   TutorialTextScene?: Phaser.Scene;
-  UIScene?: UIScene;
 
   UIClass?: UIClass;
   UICamera?: Phaser.Cameras.Scene2D.Camera;
@@ -166,7 +163,6 @@ class Game extends Phaser.Scene {
       }
       else {
         this.makeTransition("Game", { level: nextLevel, lifes: 3 });
-        this.UIScene?.scene.restart({ level: nextLevel, lifes: 3, game: this });
       }
     }
   }
@@ -247,9 +243,6 @@ class Game extends Phaser.Scene {
     this.checkPoint = 0;
     /* CHOSE LEVEL, LIFES AND AUDIO */
     switch (data.level) {
-      case 0:
-        this.map = new Tutorial(this);
-        break;
       case 1:
         this.map = new Mapa1(this, this.monchi!);
         break;
@@ -307,15 +300,10 @@ class Game extends Phaser.Scene {
 
 
     /* UI SCENE  */
-    // const UIScene = this.game.scene.getScene("UIScene");
-    // if (!UIScene.scene.isActive())
-    //   this.scene.launch(UIScene, { ...data, game: this });
+
     this.UICamera = this.cameras.add(0,0,window.innerWidth, window.innerHeight)
-    // this.UICamera.ignore(this.monchi as Phaser.GameObjects.GameObject)
-    
     this.UIClass = new UIClass(this, this.levelIs, this.lifes, this.timeLevel)
     
-    console.log(UIClass, "ui class ariel")
     /* CREATE MAP */
     this.map.createMap(data);
 

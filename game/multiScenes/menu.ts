@@ -5,7 +5,6 @@ import MultiScene from "../MultiScene";
 
 export default class MenuClass {
     dataManager?: DataManager;
-    cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
     buttons: Phaser.GameObjects.Image[] = [];
     selectedButtonIndex: number = 0;
     buttonSelector!: Phaser.GameObjects.Image;
@@ -224,17 +223,17 @@ export default class MenuClass {
 
 
         /* Audio */
-        const getMusicManagerScene = this.scene.game.scene.getScene(
-            "MusicManager"
-        ) as MusicManager;
-        if (!getMusicManagerScene.scene.isActive())
-            this.scene.scene.launch("MusicManager").sendToBack();
-        else {
-            if (getMusicManagerScene.music?.key !== "songMenu") {
-                getMusicManagerScene.stopMusic()
-                getMusicManagerScene.playMusic("songMenu")
-            }
-        }
+        // const getMusicManagerScene = this.scene.game.scene.getScene(
+        //     "MusicManager"
+        // ) as MusicManager;
+        // if (!getMusicManagerScene.scene.isActive())
+        //     this.scene.scene.launch("MusicManager").sendToBack();
+        // else {
+        //     if (getMusicManagerScene.music?.key !== "songMenu") {
+        //         getMusicManagerScene.stopMusic()
+        //         getMusicManagerScene.playMusic("songMenu")
+        //     }
+        // }
 
         this.scene.scene.bringToTop().resume();
         //window.scene = this
@@ -344,15 +343,17 @@ export default class MenuClass {
         ]);
 
         this.play.on("selected", () => {
-            this.scene.makeTransition("LevelMap", { stagePoint: this.stagePoint })
+            // this.scene.makeTransition("MultiScene", { text: "levels" });
+            this.scene.scene.restart({text:"levels"})
             this.selectedButtonIndex = 0;
         });
         this.credits.on("selected", () => {
-            this.scene.makeTransition("Credits", { data: 1 });
+            this.scene.makeTransition("MultiScene", { text: "credits" });
             this.selectedButtonIndex = 0;
         });
         this.exit.on("selected", () => {
-            this.scene.makeTransition("Intro", { data: 1 });
+            // this.scene.makeTransition("Intro", { data: 1 });
+            window.alert("CLOSING GAME, ahre xD")
             this.selectedButtonIndex = 0;
         });
         this.scene.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
@@ -422,11 +423,11 @@ export default class MenuClass {
             this.monchi.y = this.monchi.y - 0.25;
             this.monchi.setRotation(this.progress);
         }
-        if (this.cursors) {
-            const upJustPressed = Phaser.Input.Keyboard.JustDown(this.cursors.up);
-            const downJustPressed = Phaser.Input.Keyboard.JustDown(this.cursors.down);
+        if (this.scene.cursors) {
+            const upJustPressed = Phaser.Input.Keyboard.JustDown(this.scene.cursors.up);
+            const downJustPressed = Phaser.Input.Keyboard.JustDown(this.scene.cursors.down);
             const spaceJustPressed = Phaser.Input.Keyboard.JustDown(
-                this.cursors.space
+                this.scene.cursors.space
             );
 
             if (upJustPressed) {

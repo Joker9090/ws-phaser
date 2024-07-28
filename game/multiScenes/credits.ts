@@ -29,7 +29,6 @@ export default class CreditsClass {
   spaceship?: Phaser.GameObjects.Image;
   /* controls */
   EscKeyboard?: Phaser.Input.Keyboard.Key;
-  cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   personTextBox1?: TextBox;
   personTextBox2?: TextBox;
   personTextBox3?: TextBox;
@@ -309,14 +308,12 @@ export default class CreditsClass {
     }
     if (this.EscKeyboard)
       this.EscKeyboard.on("down", () => {
-        EventsCenter.emit("gameOver", true);
-        this.scene.makeTransition("Menu", {});
+        this.scene.makeTransition("MultiScene", { text: "menu" });
         // this.scene.start("Menu");
       });
-    if (this.cursors)
-      this.cursors.space.on("down", () => {
-        EventsCenter.emit("gameOver", true);
-        this.scene.makeTransition("Menu", {});
+    if (this.scene.cursors)
+      this.scene.cursors.space.on("down", () => {
+        this.scene.makeTransition("MultiScene", { text: "menu" });
         //this.scene.start("Menu");
       });
   }

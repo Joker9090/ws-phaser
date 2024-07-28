@@ -1,7 +1,6 @@
 import Phaser from "phaser";
 import Game from "../Game";
 import EventsCenter from "../EventsCenter";
-import Sandbox from "../Sandbox";
 
 // Scene in class
 class Player extends Phaser.Physics.Arcade.Sprite {

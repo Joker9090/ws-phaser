@@ -17,17 +17,15 @@ export default function Home() {
     import("phaser").then(setPhaser)
     //Load scenes async when windows is ready
     Promise.all([
-      import("@/game/SceneLoader"),
 
       // import("@/game/movies/startMovie"),
       // import("@/game/movies/Cinematography-modular"),
+      import("@/game/MultiScene"),
       
       import("@/game/MusicManager"),
-
       import("@/game/DataManager"),
+
       import("@/game/Game"),
-      import("@/game/MultiScene"),
-      import("@/game/UIScene"),
       import("@/game/BetweenScenes"),
     ]).then((scenes) => {
       setScenes(scenes.map(s => s.default))
@@ -66,7 +64,6 @@ export default function Home() {
       }
       const game = new phaser.Game(config)
       setGame(game);
-
       /* ola */
 
 

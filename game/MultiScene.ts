@@ -6,6 +6,7 @@ import LoseClass from "./multiScenes/lose";
 import MenuClass from "./multiScenes/menu";
 import LevelClass from "./multiScenes/levels";
 import CreditsClass from "./multiScenes/credits";
+import AssetsLoader from "./multiScenes/assetsLoader";
 
 
 export default class MultiScene extends Phaser.Scene {
@@ -13,14 +14,26 @@ export default class MultiScene extends Phaser.Scene {
   scenekey?: string;
   getMusicManagerScene?: MusicManager;
   activeScene?: WonClass | LoseClass | MenuClass | LevelClass | CreditsClass;
-
+  assetLoaderClass?: AssetsLoader;
+  sceneData?: { text?: string};
 
   constructor() {
     super({ key: "MultiScene" });
   }
 
-  init() {
+  init(data: { text: string }) {
     this.cursors = this.input.keyboard?.createCursorKeys();
+    console.log("DATA AL INIT", data)
+    if (data.text) {
+      this.sceneData = data
+    } else this.sceneData = undefined
+  }
+
+  preload(){
+        if (this.sceneData === undefined){
+          this.assetLoaderClass = new AssetsLoader(this)
+          this.assetLoaderClass.runPreload()
+        }
   }
 
   makeTransition(sceneName: string, data: any) {
@@ -73,6 +86,7 @@ export default class MultiScene extends Phaser.Scene {
       case "credits":
         this.activeScene = new CreditsClass(this)
         break;
+      
     }
   }
 

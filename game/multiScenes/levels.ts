@@ -10,7 +10,6 @@ export default class LevelClass {
   container?: Phaser.GameObjects.Container;
   /* controls */
   EscKeyboard?: Phaser.Input.Keyboard.Key;
-  cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   /* planets */
   sun?: Phaser.GameObjects.Sprite;
   planetTutorial?: Phaser.GameObjects.Sprite;
@@ -28,7 +27,7 @@ export default class LevelClass {
   planets: Phaser.GameObjects.Sprite[] = [];
   planetSelector!: Phaser.GameObjects.Image;
   selectedPlanetIndex: number = 0;
-  planetsShown: number = 2;
+  planetsShown: number = 3;
   graphic1?: Phaser.GameObjects.Graphics;
   graphic2?: Phaser.GameObjects.Graphics;
   graphic3?: Phaser.GameObjects.Graphics;
@@ -46,7 +45,6 @@ export default class LevelClass {
   }
 
   init(this: LevelClass, { stagePoint }: any) {
-    this.cursors = this.scene.input.keyboard?.createCursorKeys();
     // console.log(stagePoint, "aca");
     this.planetsShown = stagePoint;
     console.log(this.planetsShown, "planetsShown")
@@ -201,18 +199,19 @@ export default class LevelClass {
       .setVisible(true);
 
     this.sun = this.scene.add
-      .sprite(width - width / 12, height - height / 9.7, "sun")
+      .sprite(width - width / 12, height - height / 9.7, "sun", 1)
       .setScale(2.5)
       .setTint(Phaser.Display.Color.GetColor(5, 5, 5));
-    const sunFrames = this.scene.anims.generateFrameNumbers("sun", { frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39] });
+    const sunFrames = this.scene.anims.generateFrameNumbers("sun", { 
+      frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39] });
     const sunConfig = {
-      key: "sun",
+      key: "sunAnim",
       frames: sunFrames,
       frameRate: 12,
       repeat: -1,
     };
     this.scene.anims.create(sunConfig);
-    this.sun.anims.play("sun");
+    this.sun.anims.play("sunAnim");
 
     this.sunText = this.scene.add
       .text(
@@ -444,18 +443,18 @@ export default class LevelClass {
 
     if (this.EscKeyboard)
       this.EscKeyboard.on("down", () => {
-        EventsCenter.emit("gameOver", true);
-        this.scene.makeTransition("Menu", { stagePoint: this.planetsShown });
-        //this.scene.start("Menu");
+        // this.scene.makeTransition("MultiScene", { text: "menu" });
+
+        this.scene.scene.restart({text: "menu"})
       });
 
-    if (this.cursors) {
-      const upJustPressed = Phaser.Input.Keyboard.JustDown(this.cursors.left);
+    if (this.scene.cursors) {
+      const upJustPressed = Phaser.Input.Keyboard.JustDown(this.scene.cursors.left);
       const downJustPressed = Phaser.Input.Keyboard.JustDown(
-        this.cursors.right
+        this.scene.cursors.right
       );
       const spaceJustPressed = Phaser.Input.Keyboard.JustDown(
-        this.cursors.space
+        this.scene.cursors.space
       );
 
       if (upJustPressed) {

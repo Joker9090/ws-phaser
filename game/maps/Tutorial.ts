@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 import Floor, { FloorConfig } from "../assets/Floor";
 import LargeFloor, { LargeFloorConfig } from "../assets/LargeFloor";
-import UIScene from "../UIScene";
+
 import Game from "../Game";
 import portal, { portalConfig } from "../assets/portal";
 

@@ -9,10 +9,11 @@ import Game from "../Game";
 import UIScene from "../UIScene";
 import Player from "../assets/Player";
 import portal, { portalConfig } from "../assets/portal";
+import { Children } from "react";
 
 class Mapa1 {
   isJumping = false;
-  debugGraphics: Phaser.GameObjects.Graphics;
+  // debugGraphics: Phaser.GameObjects.Graphics;
   scene: Game;
   worldSize = {
     width: 10000,
@@ -58,6 +59,8 @@ class Mapa1 {
   collected: Boolean = false;
   endPortal?: Floor;
 
+  mapContainer: Phaser.GameObjects.Container;
+
   constructor(scene: Game, monchi: Player) {
     this.scene = scene;
     this.monchi = monchi;
@@ -72,14 +75,16 @@ class Mapa1 {
     );
 
     /* Debug */
-    this.debugGraphics = this.scene.add.graphics();
-    this.debugGraphics.fillStyle(0x00ff00, 0.5);
-    this.debugGraphics.fillRect(
-      0,
-      0,
-      this.worldSize.width,
-      this.worldSize.height
-    );
+    // this.debugGraphics = this.scene.add.graphics();
+    // this.debugGraphics.fillStyle(0x00ff00, 0.5);
+    // this.debugGraphics.fillRect(
+    //   0,
+    //   0,
+    //   this.worldSize.width,
+    //   this.worldSize.height
+    // );
+
+    this.mapContainer = this.scene.add.container()
     /* Debug */
 
     // this.background = this.scene.add
@@ -119,7 +124,14 @@ class Mapa1 {
     this.background6 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg6")
       .setOrigin(0.5, 0.5).setScale(1.8);
-
+    this.mapContainer.add([
+      this.background,
+      this.background2,
+      this.background3,
+      this.background4,
+      this.background5,
+      this.background6,
+    ])
   }
   // scaleBg() {
   //   if (this.scene.cameras.main.displayWidth > 2000) {
@@ -149,6 +161,7 @@ class Mapa1 {
     this.background4.setPosition(x + calcDiffX, y + calcDiffY);
     this.background5.setPosition(x + calcDiffX, y + calcDiffY);
     this.background6.setPosition(x + calcDiffX, y + calcDiffY);
+
     // this.background7.setPosition(x + calcDiffX, y + calcDiffY);
     // this.background8.setPosition(x + calcDiffX, y + calcDiffY);
   }
@@ -249,6 +262,7 @@ class Mapa1 {
     this.portal = this.scene.physics.add.group({ allowGravity: false });
     const aura = this.scene.add.sprite(500, 1580, "auraTuto").setScale(0.6)
     this.aura.add(aura)
+
 
     this.scene.tweens.add({
       targets: aura,
@@ -564,7 +578,7 @@ class Mapa1 {
       frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
     };
     const port = new Floor(this.scene, portalConfig, this.portal).setDepth(99);
-this.endPortal = port
+    this.endPortal = port
     const coinConfig: FloorConfig = {
       texture: "coin",
       pos: { x: 500, y: 1580 },
@@ -603,7 +617,21 @@ this.endPortal = port
     c2.start();
 
 
-
+    const mapObjects =
+      this.movingFloor.getChildren().concat(
+        this.movingFloorRot.getChildren(),
+        this.pisos.getChildren(),
+        this.pisosBack.getChildren(),
+        this.pisos2.getChildren(),
+        this.pisos3.getChildren(),
+        this.pisos4.getChildren(),
+        this.coin.getChildren(),
+        this.aura.getChildren(),
+        this.portal.getChildren(),
+        this.aura.getChildren(),
+      )
+    this.mapContainer.add(mapObjects)
+    this.scene.UICamera?.ignore(this.mapContainer)
 
   }
   update() {

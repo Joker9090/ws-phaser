@@ -24,7 +24,7 @@ export default class UIClass {
   // timeLevel: number = 0;
   timerText?: Phaser.GameObjects.Text;
   // minutes: number = 0
-  container?: Phaser.GameObjects.Container;
+  container: Phaser.GameObjects.Container;
   // containerText?: Phaser.GameObjects.Container;
   // containerLeft?: Phaser.GameObjects.Container;
   // containerRight?: Phaser.GameObjects.Container;
@@ -33,10 +33,12 @@ export default class UIClass {
 
   constructor(scene: Game, level: number, lifes: number, time: number) {
     this.scene = scene
-
+    console.log(level, lifes, time, "DATA QUE LLEGA al constructor")
+    this.container = this.scene.add.container(window.innerWidth/2, window.innerHeight/2);
     this.createUIContainer({ level, lifes, time })
   }
   createUI(lifes: number) {
+    console.log(lifes, "ARIEL LIFES")
     let quantityLifes = 0;
     let xpos = 0;
     if (lifes) {
@@ -48,11 +50,12 @@ export default class UIClass {
           pos: { x: xpos, y: 90 },
           scale: 0.9,
         };
-        const coras = new UI(this.scene, lifeConfig, this.lifesGroup).setScrollFactor(
-          0,
-          0
-        );
-        this.container?.add(coras);
+        const coras = new UI(this.scene, lifeConfig, this.lifesGroup)
+        // setScrollFactor(
+        //   0,
+        //   0
+        // );
+        this.container.add(coras);
         this.lifesGroup?.setDepth(100);
       }
 
@@ -74,8 +77,8 @@ export default class UIClass {
 
         // .setRotation(0.7)
         ;
-      this.container?.add(this.uiContainer);
-      this.container?.add(this.uiIndicator);
+      this.container.add(this.uiContainer);
+      this.container.add(this.uiIndicator);
 
 
       const coinConf: UIConfig = {
@@ -91,8 +94,8 @@ export default class UIClass {
         // .setScale(0.9)
         // .setRotation(0.7)
         ;
-      this.container?.add(this.coinUI);
-
+      this.container.add(this.coinUI);
+      console.log("container en create UI", this.container)
 
     }
   }
@@ -188,10 +191,9 @@ export default class UIClass {
   }
 
   createUIContainer(this: UIClass, data: { level: number; lifes: number, time: number }) {
-    this.container = this.scene.add.container(0, 0);
+
     this.lifesGroup = this.scene.add.group();
     this.createUI(data.lifes);
-
 
 
     // this.timeLevel = 0;
@@ -260,7 +262,8 @@ export default class UIClass {
     this.timerText = this.scene.add
       .text(300, 50, `${data.time}`, { fontSize: "32px" })
     this.container.add([this.timerText]);
-
+    this.scene.cameras.main.ignore(this.container)
+    console.log(this.container.getAll() , "ARIEL CONTANER")
     // this.scene.tweens.addCounter({
     //   from: 0,
     //   to: 30,
@@ -307,6 +310,7 @@ export default class UIClass {
     // EventsCenter.on("coin", this.showCoin, this);
     // EventsCenter.on("noFloat", this.showArrow, this);
     // EventsCenter.on("closeSign", this.closeSign, this);
+
   }
 
   update() {

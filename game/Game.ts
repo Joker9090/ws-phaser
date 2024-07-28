@@ -19,6 +19,7 @@ import sMapa2 from "./maps/sun/sMapa2";
 import sMapa3 from "./maps/sun/sMapa3";
 import Floor from "./assets/Floor";
 import UIClass from "./UIClass";
+import MapaTest from "./maps/mapTest";
 
 // Scene in class
 class Game extends Phaser.Scene {
@@ -30,7 +31,7 @@ class Game extends Phaser.Scene {
     Mapa1 | Mapa2 | Tutorial |
     p2Mapa1 | p2Mapa2 | p2Mapa3 |
     p3Mapa1 | p3Mapa2 | p3Mapa3 |
-    sMapa1 | sMapa2 | sMapa3;
+    sMapa1 | sMapa2 | sMapa3 | MapaTest;
   lifes?: number;
   levelIs?: number;
   timeLevel: number = 0;
@@ -54,6 +55,7 @@ class Game extends Phaser.Scene {
   UIScene?: UIScene;
 
   UIClass?: UIClass;
+  UICamera?: Phaser.Cameras.Scene2D.Camera;
   
   constructor() {
     super({ key: "Game" });
@@ -61,6 +63,13 @@ class Game extends Phaser.Scene {
 
   init(this: Game, { stagePoint }: any) {
     if (stagePoint != undefined) this.stagePoint = stagePoint
+  }
+
+  touch() {
+    if (this.monchi) {
+      this.monchi.idle();
+      this.monchi.setVelocityX(0);
+    }
   }
 
   moveCameraOffset(position: "up" | "down") {
@@ -275,7 +284,7 @@ class Game extends Phaser.Scene {
         this.map = new sMapa3(this, this.monchi!);
         break;
       default:
-        this.map = new Tutorial(this);
+        this.map = new MapaTest(this, this.monchi!);
         break;
     }
     this.levelIs = data.level;
@@ -301,8 +310,12 @@ class Game extends Phaser.Scene {
     // const UIScene = this.game.scene.getScene("UIScene");
     // if (!UIScene.scene.isActive())
     //   this.scene.launch(UIScene, { ...data, game: this });
-
+    this.UICamera = this.cameras.add(0,0,window.innerWidth, window.innerHeight)
+    // this.UICamera.ignore(this.monchi as Phaser.GameObjects.GameObject)
+    
     this.UIClass = new UIClass(this, this.levelIs, this.lifes, this.timeLevel)
+    
+    console.log(UIClass, "ui class ariel")
     /* CREATE MAP */
     this.map.createMap(data);
 

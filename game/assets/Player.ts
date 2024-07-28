@@ -6,9 +6,9 @@ import Sandbox from "../Sandbox";
 // Scene in class
 class Player extends Phaser.Physics.Arcade.Sprite {
   isJumping = false;
-  scene: Game | Sandbox;
+  scene: Game ;
   constructor(
-    scene: Game | Sandbox,
+    scene: Game ,
     x: number,
     y: number,
     texture: string | Phaser.Textures.Texture,
@@ -64,7 +64,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.setDepth(10);
     /* Monchi add to scene */
     scene.add.existing(this);
-
+    this.scene.UICamera?.ignore(this)
     /* Monchi Collission with end of map */
     this.setCollideWorldBounds(true);
     if (this.body) {

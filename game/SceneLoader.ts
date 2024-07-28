@@ -16,25 +16,25 @@ export type LoadTypes = "image" | "spritesheet" | "audio";
 const loadAssets = {
   Menu: {
     assets: [
-      // ["image", "glass", "/game/glass.png"],
-      // ["image", "hover", "/game/hover.png"],
-      // ["image", "click", "/game/click.png"],
-      // ["image", "background", "/game/menuBg1.png"],
-      // ["image", "background2", "/game/menuBg2.png"],
-      // ["image", "background3", "/game/menuBg3.png"],
-      // ["image", "background5", "/game/menuBg4.png"],
-      // ["image", "astronauta", "/game/astronauta.png"],
-      // ["image", "nube4", "/game/nube4.png"],
-      // ["image", "nube5", "/game/nube5.png"],
-      // ["image", "nube2", "/game/nube2.png"],
-      // ["image", "nube1", "/game/nube1.png"],
-      // ["image", "menuAsteroids", "/game/meteoritos2.png"],
-      // ["image", "menuAsteroidsSmall", "/game/meteoritos1.png"],
+      ["image", "glass", "/game/glass.png"],
+      ["image", "hover", "/game/hover.png"],
+      ["image", "click", "/game/click.png"],
+      ["image", "background", "/game/menuBg1.png"],
+      ["image", "background2", "/game/menuBg2.png"],
+      ["image", "background3", "/game/menuBg3.png"],
+      ["image", "background5", "/game/menuBg4.png"],
+      ["image", "astronauta", "/game/astronauta.png"],
+      ["image", "nube4", "/game/nube4.png"],
+      ["image", "nube5", "/game/nube5.png"],
+      ["image", "nube2", "/game/nube2.png"],
+      ["image", "nube1", "/game/nube1.png"],
+      ["image", "menuAsteroids", "/game/meteoritos2.png"],
+      ["image", "menuAsteroidsSmall", "/game/meteoritos1.png"],
 
-      // ["image", "planeta1", "/game/planeta1.png"],
-      // ["image", "planeta2", "/game/planeta2.png"],
-      // ["image", "menuLogo", "/game/menuLogo.png"],
-      // ["image", "cursor", "/game/cursor.png"],
+      ["image", "planeta1", "/game/planeta1.png"],
+      ["image", "planeta2", "/game/planeta2.png"],
+      ["image", "menuLogo", "/game/menuLogo.png"],
+      ["image", "cursor", "/game/cursor.png"],
       [
         "spritesheet",
         "character",
@@ -45,21 +45,21 @@ const loadAssets = {
   },
   Intro: {
     assets: [
-      // ["image", "logoNoswar", "/game/logo.png"]
+      ["image", "logoNoswar", "/game/logo.png"]
     ],
   },
   Sandbox: {
     assets: [
-      // ["image", "logoNoswar", "/game/logo.png"]
+      ["image", "logoNoswar", "/game/logo.png"]
     ],
   },
   LevelMap: {
     assets: [
       ["image", "backgroundLevelMap", "/game/backgroundLevelMap.png"],
-      // ["image", "sun", "/game/sun.png"],
-      // ["image", "planetTutorial", "/game/planetTutorialSprite.png"],
-      // ["image", "planetLevel1", "/game/planetlvl1.png"],
-      // ["image", "planetLevel2", "/game/planetlvl2.png"],
+      ["image", "sun", "/game/sun.png"],
+      ["image", "planetTutorial", "/game/planetTutorialSprite.png"],
+      ["image", "planetLevel1", "/game/planetlvl1.png"],
+      ["image", "planetLevel2", "/game/planetlvl2.png"],
       [
         "spritesheet",
         "tutorial",
@@ -174,52 +174,49 @@ const loadAssets = {
       ["image", "piedra2", "/game/lvl1/plataformas/plataformaMedio.png"],
       ["image", "piedra3", "/game/lvl1/plataformas/plataformaMedio.png"],
 
-      // // planeta2
-      // ["image", "bg", "/game/lvl2/background/bg.png"],
-      // ["image", "nube1", "/game/lvl2/background/nube1.png"],
-      // ["image", "nube2", "/game/lvl2/background/nube2.png"],
-      // ["image", "nube3", "/game/lvl2/background/nube3.png"],
-      // ["image", "nube4", "/game/lvl2/background/nube4.png"],
-      // ["image", "nube5", "/game/lvl2/background/nube5.png"],
-      // ["image", "nube6", "/game/lvl2/background/nube6.png"],
-      // ["image", "arbol", "/game/lvl2/background/arbol.png"],
-      // ["image", "arbol2", "/game/lvl2/background/arbol2.png"],
-      // ["image", "pisoLvl2", "/game/lvl2/background/piso_2.png"],
-      // ["image", "plataformaLvl2", "/game/lvl2/plataforma/plataforma.png"],
-      // ["image", "auraLvl2", "/game/lvl2/auraCristalLvl2.png"],
-      // ["image", "cristalLvl2", "/game/lvl2/cristalLvl2.png"],
+      // planeta2
+      ["image", "bg", "/game/lvl2/background/bg.png"],
+      ["image", "nube1", "/game/lvl2/background/nube1.png"],
+      ["image", "nube2", "/game/lvl2/background/nube2.png"],
+      ["image", "nube3", "/game/lvl2/background/nube3.png"],
+      ["image", "nube4", "/game/lvl2/background/nube4.png"],
+      ["image", "nube5", "/game/lvl2/background/nube5.png"],
+      ["image", "nube6", "/game/lvl2/background/nube6.png"],
+      ["image", "arbol", "/game/lvl2/background/arbol.png"],
+      ["image", "arbol2", "/game/lvl2/background/arbol2.png"],
+      ["image", "pisoLvl2", "/game/lvl2/background/piso_2.png"],
+      ["image", "plataformaLvl2", "/game/lvl2/plataforma/plataforma.png"],
+      ["image", "auraLvl2", "/game/lvl2/auraCristalLvl2.png"],
+      ["image", "cristalLvl2", "/game/lvl2/cristalLvl2.png"],
 
-      // ["image", "plataformaInicioLvl2", "/game/lvl2/plataforma/plataformaInicio.png"],
-      // ["image", "plataformaMedioLvl2", "/game/lvl2/plataforma/plataformaMedio.png"],
-      // ["image", "plataformaFinLvl2", "/game/lvl2/plataforma/plataformaFin.png"],
+      ["image", "plataformaInicioLvl2", "/game/lvl2/plataforma/plataformaInicio.png"],
+      ["image", "plataformaMedioLvl2", "/game/lvl2/plataforma/plataformaMedio.png"],
+      ["image", "plataformaFinLvl2", "/game/lvl2/plataforma/plataformaFin.png"],
 
-      // ["image", "starsLvl2", "/game/lvl2/background/stars.png"],
-      // ["image", "stars2Lvl2", "/game/lvl2/background/stars2.png"],
-      // ["image", "stars3Lvl2", "/game/lvl2/background/stars3.png"],
-      // ["image", "stars4Lvl2", "/game/lvl2/background/stars4.png"],
+      ["image", "starsLvl2", "/game/lvl2/background/stars.png"],
+      ["image", "stars2Lvl2", "/game/lvl2/background/stars2.png"],
+      ["image", "stars3Lvl2", "/game/lvl2/background/stars3.png"],
+      ["image", "stars4Lvl2", "/game/lvl2/background/stars4.png"],
 
-      // // sun
+      // sun
 
-      // ["image", "bgSun1", "/game/lvl3/background/bg1.png"],
-      // ["image", "bgSun2", "/game/lvl3/background/bg2.png"],
-      // ["image", "bgSun3", "/game/lvl3/background/bg3.png"],
-      // ["image", "bgSun4", "/game/lvl3/background/bg4.png"],
-      // ["image", "bgSun5", "/game/lvl3/background/bg5.png"],
+      ["image", "bgSun1", "/game/lvl3/background/bg1.png"],
+      ["image", "bgSun2", "/game/lvl3/background/bg2.png"],
+      ["image", "bgSun3", "/game/lvl3/background/bg3.png"],
+      ["image", "bgSun4", "/game/lvl3/background/bg4.png"],
+      ["image", "bgSun5", "/game/lvl3/background/bg5.png"],
 
-      // ["image", "planetaSun1", "/game/lvl3/background/planet1.png"],
-      // ["image", "planetaSun2", "/game/lvl3/background/planet2.png"],
-      // ["image", "planetaSun3", "/game/lvl3/background/planet3.png"],
-      // ["image", "planetaSun4", "/game/lvl3/background/planet4.png"],
+      ["image", "planetaSun1", "/game/lvl3/background/planet1.png"],
+      ["image", "planetaSun2", "/game/lvl3/background/planet2.png"],
+      ["image", "planetaSun3", "/game/lvl3/background/planet3.png"],
+      ["image", "planetaSun4", "/game/lvl3/background/planet4.png"],
 
-      // ["image", "sol", "/game/lvl3/background/sol.png"],
-      // ["image", "brilloSol", "/game/lvl3/background/solBrillo.png"],
-      // ["image", "plataformaSun", "/game/lvl3/plataforma.png"],
-      // ["image", "plataformaInicioSun", "/game/lvl3/plataformaInicioSun.png"],
-      // ["image", "plataformaMedioSun", "/game/lvl3/plataformaMedioSun.png"],
-      // ["image", "plataformaFinSun", "/game/lvl3/plataformaFinSun.png"],
-
-
-
+      ["image", "sol", "/game/lvl3/background/sol.png"],
+      ["image", "brilloSol", "/game/lvl3/background/solBrillo.png"],
+      ["image", "plataformaSun", "/game/lvl3/plataforma.png"],
+      ["image", "plataformaInicioSun", "/game/lvl3/plataformaInicioSun.png"],
+      ["image", "plataformaMedioSun", "/game/lvl3/plataformaMedioSun.png"],
+      ["image", "plataformaFinSun", "/game/lvl3/plataformaFinSun.png"],
     ],
 
 
@@ -351,7 +348,7 @@ class SceneLoader extends Phaser.Scene {
 
   create(this: SceneLoader, { level }: any) {
 
-    this.scene.start("Game");
+    this.scene.start("Game", {level: 1, lifes: 3});
     // this.scene.start("MultiScene", { text: "credits" });
     // this.scene.start("Sandbox", { data: 1 });
     // this.scene.start("LevelMap", { data: 1 });

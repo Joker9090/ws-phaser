@@ -347,7 +347,7 @@ class Game extends Phaser.Scene {
       );
 
       setTimeout(()=>{
-        this.UIClass?.rotateArrow("down")
+        this.UIClass?.rotateArrow("left")
         this.UIClass?.loseLife(2)
       }, 5000)
   }

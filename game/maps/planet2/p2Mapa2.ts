@@ -137,7 +137,6 @@ class p2Mapa2 {
                     this.pisos3,
                     () => {
                         this.scene.rotateCam(10);
-                        console.log(this.pisos3);
                     },
                     () => true,
                     this.scene

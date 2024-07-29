@@ -236,7 +236,6 @@ class cineIntro1 {
 
       const dialogueListener = (newState: string, nextText?: string) => {
         if (newState === "FINISHED") {
-          console.log("00 FINISHED", job.id);
           this.ticker.deleteJob(job.id);
         }
       };

@@ -1,12 +1,7 @@
 import Phaser from "phaser";
-import AsteroidGenerator, {
-    AsteroidGeneratorConfig,
-} from "../../assets/AsteroidGenerator";
 import Floor, { FloorConfig } from "../../assets/Floor";
 import LargeFloor, { LargeFloorConfig } from "../../assets/LargeFloor";
 import Game from "../../Game";
-import UIScene from "../../UIScene";
-import EventsCenter from "../../EventsCenter";
 import Player from "@/game/assets/Player";
 import portal, { portalConfig } from "@/game/assets/portal";
 // Scene in class
@@ -65,7 +60,6 @@ class p2Mapa3 {
     constructor(scene: Game, monchi: Player) {
         this.scene = scene;
         this.monchi = monchi;
-        this.UIScene = this.scene.game.scene.getScene("UIScene") as UIScene;
 
         /* World size*/
         this.scene.physics.world.setBounds(
@@ -124,8 +118,6 @@ class p2Mapa3 {
         this.background8.setPosition(x + calcDiffX - 900, y + calcDiffY + 700).setDepth(2);
     }
     createMap(data: { level: number; lifes: number }) {
-        console.log("cameras", this.scene.cameras.main)
-        EventsCenter.emit("gravityArrow", "down");
         this.pisos = this.scene.physics.add.group({ allowGravity: false });
         this.pisosBack = this.scene.physics.add.group({ allowGravity: false });
         this.pisos2 = this.scene.physics.add.group({ allowGravity: false });
@@ -389,7 +381,6 @@ class p2Mapa3 {
                     this.pisos3,
                     () => {
                         this.scene.rotateCam(10);
-                        console.log(this.pisos3);
                     },
                     () => true,
                     this.scene

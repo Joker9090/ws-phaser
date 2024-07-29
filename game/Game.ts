@@ -6,7 +6,6 @@ import Mapa2 from "./maps/Mapa2";
 import p2Mapa1 from "./maps/planet2/p2Mapa1";
 
 import MusicManager from "./MusicManager";
-import EventsCenter from "./EventsCenter";
 import BetweenScenes, { BetweenScenesStatus } from "./BetweenScenes";
 import p2Mapa2 from "./maps/planet2/p2Mapa2";
 import p2Mapa3 from "./maps/planet2/p2Mapa3";
@@ -16,7 +15,6 @@ import p3Mapa3 from "./maps/planet3/p3Mapa3";
 import sMapa1 from "./maps/sun/sMapa1";
 import sMapa2 from "./maps/sun/sMapa2";
 import sMapa3 from "./maps/sun/sMapa3";
-import Floor from "./assets/Floor";
 import UIClass from "./UIClass";
 import MapaTest from "./maps/mapTest";
 
@@ -92,7 +90,6 @@ class Game extends Phaser.Scene {
             this.gravityDown = false;
             this.monchi?.body?.setOffset(0, 70);
             this.monchi?.setBounceY(0);
-            EventsCenter.emit("gravityArrow", "up");
           });
           break;
         case false:
@@ -104,7 +101,6 @@ class Game extends Phaser.Scene {
             this.gravityDown = false;
             this.monchi?.body?.setOffset(0, 70);
             this.monchi?.setBounceY(0);
-            EventsCenter.emit("gravityArrow", "up");
           });
           break;
       }
@@ -115,7 +111,6 @@ class Game extends Phaser.Scene {
     this.cameraNormal = false;
     if (this.canRot) {
       if (!this.gravityDown) {
-        EventsCenter.emit("gravityArrow", "down");
       }
       for (let i = 0; i < 25; i++) {
         this.time.delayedCall(time * i, () =>
@@ -136,7 +131,6 @@ class Game extends Phaser.Scene {
       this.checkPoint = 0;
       this.canWin = false;
       this.canNextLevel = false;
-      EventsCenter.emit("gameOver", true);
       this.makeTransition("LevelMap", {});
     }
     // next level refacotrear
@@ -144,7 +138,6 @@ class Game extends Phaser.Scene {
       this.timeLevel = 0;
       this.cameraNormal = true;
       this.checkPoint = 0;
-      EventsCenter.emit("nextLevel", true);
       this.canWin = false;
       this.canNextLevel = false;
       let nextLevel = 1
@@ -173,7 +166,6 @@ class Game extends Phaser.Scene {
       case "coin":
         if (this.map?.coin && this.map.endPortal) {
 
-          EventsCenter.emit("coinCollected", true);
           (
             this.map.portal?.getChildren()[0] as Phaser.GameObjects.Image,
             this.map.endPortal.clearTint()
@@ -202,10 +194,8 @@ class Game extends Phaser.Scene {
         this.timeLevel = 0;
         this.canWin = false;
         this.canNextLevel = false;
-        EventsCenter.emit("gameOver", true);
         this.makeTransition("GameOver", {});
       } else if (this.lifes > 0 && this.monchi) {
-        EventsCenter.emit("die", true);
         this.monchi?.setFlipY(false);
         this.monchi?.setBounceY(0);
         this.gravityDown = true;
@@ -348,7 +338,6 @@ class Game extends Phaser.Scene {
           this.canWin = false;
           this.canNextLevel = false;
           this.canRot = true;
-          EventsCenter.emit("gameOver", true);
           this.makeTransition("LevelMap", { stagePoint: this.stagePoint });
           if (getMusicManagerScene.music?.key !== "songMenu")
             getMusicManagerScene.stopMusic()
@@ -356,6 +345,11 @@ class Game extends Phaser.Scene {
         },
         this
       );
+
+      setTimeout(()=>{
+        this.UIClass?.rotateArrow("down")
+        this.UIClass?.loseLife(2)
+      }, 5000)
   }
 
   update(this: Game) {

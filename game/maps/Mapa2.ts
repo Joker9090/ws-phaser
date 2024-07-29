@@ -6,7 +6,6 @@ import Floor, { FloorConfig } from "../assets/Floor";
 import LargeFloor, { LargeFloorConfig } from "../assets/LargeFloor";
 import Game from "../Game";
 
-import EventsCenter from "../EventsCenter";
 import portal, { portalConfig } from "../assets/portal";
 // Scene in class
 class Mapa2 {
@@ -124,8 +123,6 @@ class Mapa2 {
   }
 
   createMap(data: { level: number; lifes: number }) {
-    console.log("cameras", this.scene.cameras.main)
-    EventsCenter.emit("gravityArrow", "down");
     this.pisos = this.scene.physics.add.group({ allowGravity: false });
     this.coin = this.scene.physics.add.group({ allowGravity: false });
     this.portal = this.scene.physics.add.group({ allowGravity: false });

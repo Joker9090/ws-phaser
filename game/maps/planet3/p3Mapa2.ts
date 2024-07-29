@@ -1,12 +1,6 @@
 import Phaser from "phaser";
-import AsteroidGenerator, {
-    AsteroidGeneratorConfig,
-} from "../../assets/AsteroidGenerator";
 import Floor, { FloorConfig } from "../../assets/Floor";
-import LargeFloor, { LargeFloorConfig } from "../../assets/LargeFloor";
 import Game from "../../Game";
-import UIScene from "../../UIScene";
-import EventsCenter from "../../EventsCenter";
 import Player from "@/game/assets/Player";
 import portal, { portalConfig } from "@/game/assets/portal";
 // Scene in class
@@ -185,8 +179,6 @@ class p3Mapa1 {
         // this.background8.setPosition(x + calcDiffX, y + calcDiffY);
     }
     createMap(data: { level: number; lifes: number }) {
-        console.log("cameras", this.scene.cameras.main)
-        EventsCenter.emit("gravityArrow", "down");
         this.pisos = this.scene.physics.add.group({ allowGravity: false });
         this.pisosBack = this.scene.physics.add.group({ allowGravity: false });
         this.pisos2 = this.scene.physics.add.group({ allowGravity: false });
@@ -533,7 +525,6 @@ class p3Mapa1 {
                     this.pisos5,
                     (a, b) => {
                         this.scene.floatnRotate(a, b, 10);
-                        console.log(this.pisos3);
                     },
                     () => true,
                     this.scene

@@ -27,7 +27,6 @@ class Ticker {
 
 
     deleteJob(jobId: number) {
-        console.log("00 ACA?", jobId)
         const find = this.jobs.find((job) => job.id == jobId);
         if (find && find.onDeleted) {
             find.onDeleted(find, this);

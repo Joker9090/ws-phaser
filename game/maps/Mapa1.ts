@@ -189,7 +189,6 @@ class Mapa1 {
           this.pisos3,
           () => {
             this.scene.rotateCam(10);
-            console.log(this.pisos3);
           },
           () => true,
           this.scene
@@ -457,7 +456,6 @@ class Mapa1 {
       x: "-=300",
     })
 
-    console.log(this.scene.monchi, "monchi");
     // this.p13.setFrictionX(1);
     // p13 here
 

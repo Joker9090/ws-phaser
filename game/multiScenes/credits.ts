@@ -2,7 +2,6 @@ import Phaser from "phaser";
 
 import MultiScene from "../MultiScene";
 import TextBox from "../assets/TextBox";
-import EventsCenter from "../EventsCenter";
 
 export default class CreditsClass {
   /* map */

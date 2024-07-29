@@ -23,7 +23,6 @@ export default class MultiScene extends Phaser.Scene {
 
   init(data: { text: string }) {
     this.cursors = this.input.keyboard?.createCursorKeys();
-    console.log("DATA AL INIT", data)
     if (data.text) {
       this.sceneData = data
     } else this.sceneData = undefined
@@ -57,7 +56,6 @@ export default class MultiScene extends Phaser.Scene {
 
   create(this: MultiScene, data: { text: string }) {
     this.scenekey = data.text
-    console.log("ARIEL DATA EN CREATE DE MULTISCENE", data)
     /* Audio */
     this.getMusicManagerScene = this.game.scene.getScene(
       "MusicManager"

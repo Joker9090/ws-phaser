@@ -1,9 +1,6 @@
 import Phaser, { GameObjects } from "phaser";
-import Tutorial from "./maps/Tutorial";
 import UI, { UIConfig } from "./assets/UI";
-import TextBox from "./assets/TextBox";
 import Game from "./Game";
-import EventsCenter from "./EventsCenter";
 
 export default class UIClass {
   scene: Game;
@@ -34,7 +31,6 @@ export default class UIClass {
   }
 
   createUI(lifes: number) {
-    console.log(lifes, "ARIEL LIFES")
     let quantityLifes = 0;
     let xpos = 0;
     if (lifes) {
@@ -91,7 +87,6 @@ export default class UIClass {
         // .setRotation(0.7)
         ;
       this.container.add(this.coinUI);
-      console.log("container en create UI", this.container)
 
     }
   }
@@ -138,8 +133,6 @@ export default class UIClass {
             lifeToTheRight = child;
             highestX = child.x;
 
-            console.log(child.x, "child.x")
-            console.log(lifeToTheRight, "lifeToTheRigth")
           }
         }
         // lifeToTheRight?.setTexture('uiLifeSectionEmpty');
@@ -148,7 +141,6 @@ export default class UIClass {
     }
 
     if (this.scene) {
-      console.log("entro acá")
       if (this.scene.levelIs == 1) {
         if (this.scene.checkPoint == 0) {
           this.rotateArrow("down");

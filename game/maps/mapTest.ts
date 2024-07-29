@@ -131,7 +131,6 @@ class Mapa1 {
     ])
     this.mapContainer.add(this.pisos.getChildren())
     this.scene.UICamera?.ignore(this.mapContainer)
-    console.log(this.scene.UICamera, "ARIELIU CAMERA")
   }
   update() {
     // this.p13.setFrictionX(1);

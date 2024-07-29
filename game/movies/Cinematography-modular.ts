@@ -90,7 +90,6 @@ class CinematographyModular extends Phaser.Scene {
   // }
 
   create(this: CinematographyModular, { keyname }: any) {
-    console.log("ENTRO AL CREATE DE CINE")
     this.cursors = this.input.keyboard?.createCursorKeys();
     /* Audio */
     const getMusicManagerScene = this.game.scene.getScene(
@@ -103,7 +102,6 @@ class CinematographyModular extends Phaser.Scene {
     else {
     }
 
-    console.log("00 => ENTRO AL SWITCH DE CINE", keyname);
     switch (keyname) {
       case 'cine_intro_1':
         this.playingCine = new cineIntro1(this);

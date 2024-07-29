@@ -22,7 +22,6 @@ class Cinematography extends Phaser.Scene {
 
   
   create(this: Cinematography, { level }: any) {
-    console.log("BARTO, Cinematography");
     
     // START ticker
     this.time.addEvent({

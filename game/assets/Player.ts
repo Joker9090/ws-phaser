@@ -1,6 +1,5 @@
 import Phaser from "phaser";
 import Game from "../Game";
-import EventsCenter from "../EventsCenter";
 
 // Scene in class
 class Player extends Phaser.Physics.Arcade.Sprite {
@@ -142,7 +141,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
       if (up.isDown && this.body && this.body.touching.down) {
         this.jump();
-        EventsCenter.emit('planetShown')
 
         if (this.flipY) {
           this.setVelocityY(-300)
@@ -165,7 +163,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.setVelocityX(160);
         this.setFlipX(false);
         this.setOffset(5, 40);
-        console.log("izquierda")
         if (!this.isJumping) this.anims.play("monchiMove", true);
       } else if (right.isDown) {
 
@@ -173,7 +170,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.setVelocityX(-160);
         this.body?.setOffset(100, 40);
         this.setFlipX(true);
-        console.log("derecha")
         if (!this.isJumping) this.anims.play("monchiMove", true);
       } else {
 
@@ -204,8 +200,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
 
     if (cursors) {
-      console.log(this.body?.gravity, "cursors")
-      console.log(this.body?.velocity, "cursors velocity")
       const { up, down, left, right } = cursors;
       const velocity = 300;
       this.body?.setSize(300, 250)
@@ -228,19 +222,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
       if (left.isDown) {
         this.setGravityX(-1300);
-        console.log(this.body?.gravity, "left")
-        console.log(this.body?.velocity, "left velocity")
-
         this.setFlipY(true);
-        EventsCenter.emit("gravityArrow", "left");
-        // this.setOffset(80, 90)
-        // this.setOffset(300, 200);
       } else if (right.isDown) {
         this.setGravityX(1300);
         this.setFlipY(false);
-        EventsCenter.emit("gravityArrow", "right");
-        // this.setOffset(80, -20)
-        // this.setOffset(80, 40);
       }
     }
   }

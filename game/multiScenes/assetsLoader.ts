@@ -260,7 +260,6 @@ class AssetsLoader {
   }
 
   runPreload(this: AssetsLoader) {
-    console.log("ARIEL FINISHED", this.finished)
     if (!this.finished){
 
     this.scene.cameras.main.setBackgroundColor(

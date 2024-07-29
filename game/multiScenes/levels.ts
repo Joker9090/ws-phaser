@@ -2,7 +2,6 @@ import Phaser from "phaser";
 
 import { World } from "matter";
 import MultiScene from "../MultiScene";
-import EventsCenter from "../EventsCenter";
 
 export default class LevelClass {
   /* map */
@@ -45,9 +44,7 @@ export default class LevelClass {
   }
 
   init(this: LevelClass, { stagePoint }: any) {
-    // console.log(stagePoint, "aca");
     this.planetsShown = stagePoint;
-    console.log(this.planetsShown, "planetsShown")
   }
 
 
@@ -111,11 +108,9 @@ export default class LevelClass {
 
   setPlanetsShown() {
 
-    console.log(this.planetsShown, "planetas")
   }
 
   createContainer() {
-    EventsCenter.on("planetShown", this.setPlanetsShown, this)
     /* Controls */
     this.EscKeyboard = this.scene.input.keyboard?.addKey(
       Phaser.Input.Keyboard.KeyCodes.ESC
@@ -417,7 +412,6 @@ export default class LevelClass {
     };
 
 
-    // console.log(this.monchi?.x)
 
     if (this.monchi) {
       this.progress = this.progress + 0.0031415;
@@ -425,18 +419,8 @@ export default class LevelClass {
       this.monchi.y = this.monchi.y + 0.3;
       this.monchi.setRotation(this.progress);
       if (this.monchi.x == 10) {
-        console.log("TERMINO")
-        // this.monchi.x = this.scene.cameras.main.width ;
-        // this.monchi.y = -this.scene.cameras.main.height - 100;
-        // this.monchi.setDepth(99)
-
         this.monchi.x = 100
-        console.log(this.monchi.x, "X de monchi")
       }
-
-      // if (this.monchi.x = -150) {
-      //   console.log("TERMINO")
-      // }
     }
 
     this.showPlanets(this.planetsShown);

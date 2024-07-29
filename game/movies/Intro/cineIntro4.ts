@@ -118,7 +118,6 @@ class cineIntro4 {
         duration: 160000,
         ease: 'linear',
         onStart: (a) => {
-          console.log("ENTRO ARIEL 0", a)
         }
       });
       this.cine.tweens.add({

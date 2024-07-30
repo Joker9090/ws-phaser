@@ -311,7 +311,7 @@ export default class LevelClass {
 
     this.planetTutorial.on("selected", () => {
 
-      this.scene.makeTransition("Game", { level: 0, lifes: 3 });
+      this.scene.makeTransition("Game", { level: 1, lifes: 3 });
       //this.scene.start("Game", { level: 0, lifes: 3 });
       this.selectedPlanetIndex = 0;
     });

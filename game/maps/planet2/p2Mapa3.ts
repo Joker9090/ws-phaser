@@ -340,77 +340,77 @@ class p2Mapa3 {
         // this.scene.cameras.main.shake(2000, 0.01);
     }
 
-    addColliders() {
-        if (this.scene.monchi) {
-            if (this.fireballGroup)
-                this.scene.physics.add.collider(
-                    this.scene.monchi,
-                    this.fireballGroup,
-                    () => this.scene.lose(),
-                    () => true,
-                    this.scene
-                );
-            if (this.portal) this.portal.setTint(0xff0000);
-            if (this.pisos)
-                this.scene.physics.add.collider(
-                    this.scene.monchi,
-                    this.pisos,
-                    this.scene.touch,
-                    () => true,
-                    this.scene
-                );
-            if (this.pisos2)
-                this.scene.physics.add.collider(
-                    this.scene.monchi,
-                    this.pisos2,
-                    (a, b) => this.scene.float(a, b, 200),
-                    () => true,
-                    this.scene
-                );
-            if (this.pisos4)
-                this.scene.physics.add.collider(
-                    this.scene.monchi,
-                    this.pisos4,
-                    this.scene.noFloat,
-                    () => true,
-                    this.scene
-                );
-            if (this.pisos3)
-                this.scene.physics.add.collider(
-                    this.scene.monchi,
-                    this.pisos3,
-                    () => {
-                        this.scene.rotateCam(10);
-                    },
-                    () => true,
-                    this.scene
-                );
-            if (this.movingFloor)
-                this.scene.physics.add.collider(
-                    this.scene.monchi,
-                    this.movingFloor,
-                    this.scene.movingFloorsGrav,
-                    () => true,
-                    this.scene
-                );
-            if (this.coin)
-                this.scene.physics.add.overlap(
-                    this.scene.monchi,
-                    this.coin,
-                    this.scene.coinCollected,
-                    () => true,
-                    this.scene
-                );
-            if (this.portal)
-                this.scene.physics.add.overlap(
-                    this.scene.monchi,
-                    this.portal,
-                    () => this.scene.winLevel(6),
-                    () => true,
-                    this.scene
-                );
-        }
-    }
+    // addColliders() {
+    //     if (this.scene.monchi) {
+    //         if (this.fireballGroup)
+    //             this.scene.physics.add.collider(
+    //                 this.scene.monchi,
+    //                 this.fireballGroup,
+    //                 () => this.scene.lose(),
+    //                 () => true,
+    //                 this.scene
+    //             );
+    //         if (this.portal) this.portal.setTint(0xff0000);
+    //         if (this.pisos)
+    //             this.scene.physics.add.collider(
+    //                 this.scene.monchi,
+    //                 this.pisos,
+    //                 this.scene.touch,
+    //                 () => true,
+    //                 this.scene
+    //             );
+    //         if (this.pisos2)
+    //             this.scene.physics.add.collider(
+    //                 this.scene.monchi,
+    //                 this.pisos2,
+    //                 (a, b) => this.scene.float(a, b, 200),
+    //                 () => true,
+    //                 this.scene
+    //             );
+    //         if (this.pisos4)
+    //             this.scene.physics.add.collider(
+    //                 this.scene.monchi,
+    //                 this.pisos4,
+    //                 this.scene.noFloat,
+    //                 () => true,
+    //                 this.scene
+    //             );
+    //         if (this.pisos3)
+    //             this.scene.physics.add.collider(
+    //                 this.scene.monchi,
+    //                 this.pisos3,
+    //                 () => {
+    //                     this.scene.rotateCam(10);
+    //                 },
+    //                 () => true,
+    //                 this.scene
+    //             );
+    //         if (this.movingFloor)
+    //             this.scene.physics.add.collider(
+    //                 this.scene.monchi,
+    //                 this.movingFloor,
+    //                 this.scene.movingFloorsGrav,
+    //                 () => true,
+    //                 this.scene
+    //             );
+    //         if (this.coin)
+    //             this.scene.physics.add.overlap(
+    //                 this.scene.monchi,
+    //                 this.coin,
+    //                 this.scene.coinCollected,
+    //                 () => true,
+    //                 this.scene
+    //             );
+    //         if (this.portal)
+    //             this.scene.physics.add.overlap(
+    //                 this.scene.monchi,
+    //                 this.portal,
+    //                 () => this.scene.winLevel(6),
+    //                 () => true,
+    //                 this.scene
+    //             );
+    //     }
+    // }
 
     update() {
         let firstChange = false;

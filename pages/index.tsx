@@ -17,13 +17,12 @@ export default function Home() {
     import("phaser").then(setPhaser)
     //Load scenes async when windows is ready
     Promise.all([
-
       // import("@/game/movies/startMovie"),
       // import("@/game/movies/Cinematography-modular"),
+
       import("@/game/MultiScene"),
       
-      import("@/game/MusicManager"),
-      import("@/game/DataManager"),
+      import("@/game/MasterManager"),
 
       import("@/game/Game"),
       import("@/game/BetweenScenes"),
@@ -58,7 +57,7 @@ export default function Home() {
           arcade: {
             overlapBias: 10,
             gravity: { y: 1000 },
-            debug: true
+            // debug: true
           }
         }
       }

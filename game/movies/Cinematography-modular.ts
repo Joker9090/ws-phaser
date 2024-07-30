@@ -7,7 +7,7 @@ import cineIntro4 from "./Intro/cineIntro4";
 import cineIntro5 from "./Intro/cineIntro5";
 import cineIntro6 from "./Intro/cineIntro6";
 import cineIntro7 from "./Intro/cineIntro7";
-import MusicManager from "../MusicManager";
+import MasterManager from "../MasterManager";
 
 class CinematographyModular extends Phaser.Scene {
   ticker: Ticker;
@@ -92,12 +92,12 @@ class CinematographyModular extends Phaser.Scene {
   create(this: CinematographyModular, { keyname }: any) {
     this.cursors = this.input.keyboard?.createCursorKeys();
     /* Audio */
-    const getMusicManagerScene = this.game.scene.getScene(
-      "MusicManager"
-    ) as MusicManager;
-    if (!getMusicManagerScene.scene.isActive()) {
-      this.scene.launch("MusicManager").sendToBack();
-      // getMusicManagerScene.playMusic("deepSpace1");
+    const getMasterManagerScene = this.game.scene.getScene(
+      "MasterManager"
+    ) as MasterManager;
+    if (!getMasterManagerScene.scene.isActive()) {
+      this.scene.launch("MasterManager").sendToBack();
+      // getMasterManagerScene.playMusic("deepSpace1");
     }
     else {
     }

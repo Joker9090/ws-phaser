@@ -1,16 +1,12 @@
 import Phaser, { GameObjects } from "phaser";
-import UI, { UIConfig } from "./assets/UI";
-import Game from "./Game";
+import UI, { UIConfig } from "./UI";
+import Game from "../Game";
 
 export default class UIClass {
   scene: Game;
-
   lifesGroup?: Phaser.GameObjects.Group;
-
   gravityArrow?: Phaser.GameObjects.Image;
-
   coinUI?: Phaser.GameObjects.Image;
-
   uiContainer?: Phaser.GameObjects.Image;
   uiIndicator?: Phaser.GameObjects.Image;
   UIboundsCoin: number = 0;
@@ -43,12 +39,8 @@ export default class UIClass {
           scale: 0.9,
         };
         const coras = new UI(this.scene, lifeConfig, this.lifesGroup)
-        // setScrollFactor(
-        //   0,
-        //   0
-        // );
+       
         this.container.add(coras);
-        this.lifesGroup?.setDepth(100);
       }
 
       const uiContainer: UIConfig = {
@@ -61,14 +53,9 @@ export default class UIClass {
         pos: { x: 100, y: 70 },
         scale: 0.9,
       };
-      this.uiIndicator = new UI(this.scene, uiIndicator).setScrollFactor(0, 0);
-      this.uiContainer = new UI(this.scene, uiContainer)
-        // .setTint(Phaser.Display.Color.GetColor(0, 0, 0))
-        .setScrollFactor(0, 0)
-        .setDepth(100)
 
-        // .setRotation(0.7)
-        ;
+      this.uiIndicator = new UI(this.scene, uiIndicator);
+      this.uiContainer = new UI(this.scene, uiContainer);
       this.container.add(this.uiContainer);
       this.container.add(this.uiIndicator);
 
@@ -78,16 +65,10 @@ export default class UIClass {
         texture: "coin",
         scale: 0.15,
       };
-      // this.CoinOriginalPos = quantityLifes * 50 + 150;
       this.coinUI = new UI(this.scene, coinConf)
-        .setTint(Phaser.Display.Color.GetColor(0, 0, 0))
-        .setScrollFactor(0, 0)
-        .setDepth(100)
-        // .setScale(0.9)
-        // .setRotation(0.7)
-        ;
-      this.container.add(this.coinUI);
+        .setTint(Phaser.Display.Color.GetColor(0, 0, 0));
 
+      this.container.add(this.coinUI);
     }
   }
 
@@ -115,16 +96,11 @@ export default class UIClass {
     this.coinUI?.clearTint();
   }
 
-  nextLevel() {
-    // this.timeLevel = 0;
-    this.coinUI?.setTint(Phaser.Display.Color.GetColor(0, 0, 0));
-  }
-
   loseLife(lifes: number) {
     // Remove the object with the highest x position
     this.scene.cameras.main.flash(700, 255, 19, 30, true);
     if (this.lifesGroup) {
-      if (lifes != 0) {
+      if (lifes !== 0) {
         let lifeToTheRight = null;
         let highestX = Number.NEGATIVE_INFINITY;
         for (let i = 0; i < this.lifesGroup.getLength(); i++) {
@@ -132,27 +108,11 @@ export default class UIClass {
           if (child.x > highestX) {
             lifeToTheRight = child;
             highestX = child.x;
-
           }
         }
-        // lifeToTheRight?.setTexture('uiLifeSectionEmpty');
         lifeToTheRight?.destroy()
       }
     }
-
-    if (this.scene) {
-      if (this.scene.levelIs == 1) {
-        if (this.scene.checkPoint == 0) {
-          this.rotateArrow("down");
-        } else if (this.scene.checkPoint == 1 && this.scene.cameraNormal) {
-          this.rotateArrow("up");
-        } else if (this.scene.checkPoint == 1 && !this.scene.cameraNormal) {
-          this.rotateArrow("down");
-        }
-      } else if (this.scene.levelIs == 2) {
-        this.rotateArrow("down");
-      };
-    };
   };
 
 
@@ -160,8 +120,6 @@ export default class UIClass {
 
     this.lifesGroup = this.scene.add.group();
     this.createUI(data.lifes);
-
-
     this.timeLevel = 0;
 
     /* TIMER */

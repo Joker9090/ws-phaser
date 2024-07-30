@@ -59,7 +59,6 @@ class Mapa1 {
     this.scene = scene;
     this.monchi = monchi;
 
-    this.UIScene = this.scene.game.scene.getScene("UIScene") as UIScene;
     /* World size*/
     this.scene.physics.world.setBounds(
       0,
@@ -97,19 +96,19 @@ class Mapa1 {
     this.background?.setPosition(x + calcDiffX, y + calcDiffY);
   }
 
-  addColliders() {
-    if (this.scene.monchi) {
-      if (this.portal) this.portal.setTint(0xff0000);
-      if (this.pisos)
-        this.scene.physics.add.collider(
-          this.scene.monchi,
-          this.pisos,
-          this.scene.touch,
-          () => true,
-          this.scene
-        );
-    }
-  }
+  // addColliders() {
+  //   if (this.scene.monchi) {
+  //     if (this.portal) this.portal.setTint(0xff0000);
+  //     if (this.pisos)
+  //       this.scene.physics.add.collider(
+  //         this.scene.monchi,
+  //         this.pisos,
+  //         this.scene.touch,
+  //         () => true,
+  //         this.scene
+  //       );
+  //   }
+  // }
 
   createMap(data: { level: number; lifes: number }) {
    

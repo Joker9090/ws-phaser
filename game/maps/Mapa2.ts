@@ -48,7 +48,6 @@ class Mapa2 {
 
   constructor(scene: Game) {
     this.scene = scene;
-    this.UIScene = this.scene.game.scene.getScene("UIScene") as UIScene;
 
     /* World size*/
     this.scene.physics.world.setBounds(
@@ -405,44 +404,44 @@ class Mapa2 {
     // this.scene.cameras.main.shake(2000, 0.01);
   }
 
-  addColliders() {
-    if (this.scene.monchi) {
-      if (this.fireballGroup)
-        this.scene.physics.add.collider(
-          this.scene.monchi,
-          this.fireballGroup,
-          this.scene.loseLevel2,
-          () => true,
-          this.scene
-        );
-      if (this.portal) this.portal.setTint(0xff0000);
-      if (this.pisos)
-        this.scene.physics.add.collider(
-          this.scene.monchi,
-          this.pisos,
-          this.scene.touch,
-          () => true,
-          this.scene
-        );
-      if (this.coin)
-        this.scene.physics.add.overlap(
-          this.scene.monchi,
-          this.coin,
-          this.scene.coinCollected,
-          () => true,
-          this.scene
-        );
-      if (this.portal)
-        this.scene.physics.add.overlap(
-          this.scene.monchi,
-          this.portal,
-          // () => this.scene.win("Congrats! You've finished the tutorial"),
-          () => this.scene.winLevel(3),
-          () => true,
-          this.scene
-        );
-    }
-  }
+  // addColliders() {
+  //   if (this.scene.monchi) {
+  //     if (this.fireballGroup)
+  //       this.scene.physics.add.collider(
+  //         this.scene.monchi,
+  //         this.fireballGroup,
+  //         this.scene.loseLevel2,
+  //         () => true,
+  //         this.scene
+  //       );
+  //     if (this.portal) this.portal.setTint(0xff0000);
+  //     if (this.pisos)
+  //       this.scene.physics.add.collider(
+  //         this.scene.monchi,
+  //         this.pisos,
+  //         this.scene.touch,
+  //         () => true,
+  //         this.scene
+  //       );
+  //     if (this.coin)
+  //       this.scene.physics.add.overlap(
+  //         this.scene.monchi,
+  //         this.coin,
+  //         this.scene.coinCollected,
+  //         () => true,
+  //         this.scene
+  //       );
+  //     if (this.portal)
+  //       this.scene.physics.add.overlap(
+  //         this.scene.monchi,
+  //         this.portal,
+  //         // () => this.scene.win("Congrats! You've finished the tutorial"),
+  //         () => this.scene.winLevel(3),
+  //         () => true,
+  //         this.scene
+  //       );
+  //   }
+  // }
 
   update() {
     let firstChange = false;

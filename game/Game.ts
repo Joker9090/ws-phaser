@@ -5,7 +5,7 @@ import Mapa2 from "./maps/Mapa2";
 
 import p2Mapa1 from "./maps/planet2/p2Mapa1";
 
-import MusicManager from "./MusicManager";
+import MasterManager from "./MasterManager";
 import BetweenScenes, { BetweenScenesStatus } from "./BetweenScenes";
 import p2Mapa2 from "./maps/planet2/p2Mapa2";
 import p2Mapa3 from "./maps/planet2/p2Mapa3";
@@ -15,8 +15,17 @@ import p3Mapa3 from "./maps/planet3/p3Mapa3";
 import sMapa1 from "./maps/sun/sMapa1";
 import sMapa2 from "./maps/sun/sMapa2";
 import sMapa3 from "./maps/sun/sMapa3";
-import UIClass from "./UIClass";
+import UIClass from "./assets/UIClass";
 import MapaTest from "./maps/mapTest";
+
+export type loseConfig = {
+  position: {
+    x: number,
+    y: number,
+  }
+  camera: string
+  gravity: string
+};
 
 // Scene in class
 class Game extends Phaser.Scene {
@@ -41,17 +50,16 @@ class Game extends Phaser.Scene {
   cameraNormal: boolean = true;
   gravityDown: boolean = true;
 
-  checkPoint: number = 1;
+  checkPoint: number = 0;
   stagePoint: any = 0;
   cameraWidth: number = 0;
   cameraHeight: number = 0;
 
   mapShown: boolean = false;
-  TutorialTextScene?: Phaser.Scene;
 
   UIClass?: UIClass;
   UICamera?: Phaser.Cameras.Scene2D.Camera;
-  
+
   constructor() {
     super({ key: "Game" });
   }
@@ -72,7 +80,7 @@ class Game extends Phaser.Scene {
     if (position === "up") newPosition = -newPosition
     this.tweens.add({
       targets: this.cameras.main.followOffset,
-      y: -(this.cameraHeight / 2 - 100),
+      y: newPosition,
       duration: 1000,
       ease: "ease"
     })
@@ -82,40 +90,46 @@ class Game extends Phaser.Scene {
     if (this.monchi) {
       switch (float) {
         case true:
-          this.monchi.setGravityY(-2000);
-          // monchi anim de darse vuelta, change de offset
+          this.physics.world.gravity.y = -1000;
+          this.moveCameraOffset("up")
           // change de gravity arrow
           this.time.delayedCall(time, () => {
             this.monchi?.setFlipY(true);
             this.gravityDown = false;
             this.monchi?.body?.setOffset(0, 70);
-            this.monchi?.setBounceY(0);
           });
           break;
         case false:
-          this.monchi.setGravityY(1000);
-          // monchi anim de darse vuelta, change de offset
+          this.physics.world.gravity.y = 1000;
+          this.moveCameraOffset("down")
           // change de gravity arrow
           this.time.delayedCall(time, () => {
-            this.monchi?.setFlipY(true);
-            this.gravityDown = false;
-            this.monchi?.body?.setOffset(0, 70);
-            this.monchi?.setBounceY(0);
+            this.monchi?.setFlipY(false);
+            this.gravityDown = true;
+            this.monchi?.body?.setOffset(0, 100);
           });
           break;
       }
     }
   }
 
-  rotateCam(time: number) {
-    this.cameraNormal = false;
+  rotateCam(isNormal: boolean, time: number) {
+    if (isNormal) {
+      this.cameraNormal = false;
+    } else {
+      this.cameraNormal = true;
+    }
     if (this.canRot) {
       if (!this.gravityDown) {
       }
       for (let i = 0; i < 25; i++) {
         this.time.delayedCall(time * i, () =>
           ((rotate) => {
-            this.cameras.main.setRotation(rotate);
+            if (isNormal){
+              this.cameras.main.setRotation(rotate);
+            } else {
+              this.cameras.main.setRotation(Math.PI - rotate);
+            }
           })((Math.PI * i) / 24),
         );
         if (i == 24) {
@@ -127,37 +141,9 @@ class Game extends Phaser.Scene {
 
   win() {
     if (this.canWin && this.monchi) {
-      this.cameraNormal = true;
-      this.checkPoint = 0;
-      this.canWin = false;
-      this.canNextLevel = false;
-      this.makeTransition("LevelMap", {});
+      this.makeTransition("MultiScene", { text: "levels" });
     }
-    // next level refacotrear
-    if (this.canNextLevel && this.monchi) {
-      this.timeLevel = 0;
-      this.cameraNormal = true;
-      this.checkPoint = 0;
-      this.canWin = false;
-      this.canNextLevel = false;
-      let nextLevel = 1
-      if (nextLevel === 3) {
-
-        this.makeTransition("LevelMap", { stagePoint: 1 });
-      } else if (nextLevel === 6) {
-
-        this.makeTransition("LevelMap", { stagePoint: 2 });
-      } else if (nextLevel === 9) {
-
-        this.makeTransition("LevelMap", { stagePoint: 3 });
-      }
-      else if (nextLevel === 12) {
-        this.makeTransition("Won", { stagePoint: 3 });
-      }
-      else {
-        this.makeTransition("Game", { level: nextLevel, lifes: 3 });
-      }
-    }
+    // lógica para pasar a movie dependiendo el nivel
   }
 
 
@@ -175,6 +161,7 @@ class Game extends Phaser.Scene {
           this.map.coin.setVisible(false);
           this.map.aura?.setVisible(false)
           this.map.coin.clear(true);
+          this.UIClass?.coinCollected()
           // this.portal.clearTint()
         }
         break;
@@ -184,28 +171,22 @@ class Game extends Phaser.Scene {
     }
   }
 
-  lose(config: any) {
+  lose(config: loseConfig) {
     if (this.lifes) {
       this.lifes -= 1;
-      if (this.lifes == 0) {
-        this.lifes = 3;
-        this.cameraNormal = true;
-        this.checkPoint = 0;
-        this.timeLevel = 0;
-        this.canWin = false;
-        this.canNextLevel = false;
-        this.makeTransition("GameOver", {});
+      if (this.lifes === 0) {
+        this.makeTransition("MultiScene", { text: 'lose' });
       } else if (this.lifes > 0 && this.monchi) {
-        this.monchi?.setFlipY(false);
-        this.monchi?.setBounceY(0);
-        this.gravityDown = true;
-        this.monchi?.body?.setOffset(0, 100);
-        this.cameras.main.setRotation(0);
-        this.monchi?.setGravity(0);
-        this.cameraNormal = true;
-        this.canRot = true;
-        if (this.map) this.monchi.x = this.map.startingPoint.x;
-        if (this.map) this.monchi.y = this.map.startingPoint.y;
+        this.UIClass?.loseLife(this.lifes)
+        this.monchi?.setFlipY(config.gravity === "down" ? false : true);
+        this.gravityDown = config.gravity === "down" ? true : false;
+        this.monchi?.body?.setOffset(0, config.gravity === "down" ? 100 : 70);
+        config.camera === "normal" ? this.cameras.main.setRotation(0) : this.cameras.main.setRotation(Math.PI)
+        this.physics.world.gravity.y = config.gravity === "down" ? 1000 : -1000;
+        this.cameraNormal = config.camera === "normal" ? true : false;
+        this.canRot = config.camera === "normal" ? true : false;
+        this.monchi.x = config.position.x;
+        this.monchi.y = config.position.y;
       }
     }
   }
@@ -274,26 +255,26 @@ class Game extends Phaser.Scene {
     this.lifes = data.lifes;
 
     /* Audio */
-    const getMusicManagerScene = this.game.scene.getScene(
-      "MusicManager"
-    ) as MusicManager;
-    if (!getMusicManagerScene.scene.isActive())
-      this.scene.launch("MusicManager").sendToBack();
+    const getMasterManagerScene = this.game.scene.getScene(
+      "MasterManager"
+    ) as MasterManager;
+    if (!getMasterManagerScene.scene.isActive())
+      this.scene.launch("MasterManager").sendToBack();
     else if (this.levelIs == 0) {
-      getMusicManagerScene.playMusic("songTutorial");
+      getMasterManagerScene.playMusic("songTutorial");
     } else if (this.levelIs == 1) {
-      getMusicManagerScene.playMusic("songLevel1");
+      getMasterManagerScene.playMusic("songLevel1");
     } else if (this.levelIs == 2) {
-      getMusicManagerScene.playMusic("songLevel2");
+      getMasterManagerScene.playMusic("songLevel2");
     }
 
 
 
     /* UI SCENE  */
 
-    this.UICamera = this.cameras.add(0,0,window.innerWidth, window.innerHeight)
+    this.UICamera = this.cameras.add(0, 0, window.innerWidth, window.innerHeight)
     this.UIClass = new UIClass(this, this.levelIs, this.lifes, this.timeLevel)
-    
+
     /* CREATE MAP */
     this.map.createMap(data);
 
@@ -314,6 +295,7 @@ class Game extends Phaser.Scene {
     this.cameras.main.startFollow(this.monchi, true, 0.5, 0.5, 0, this.cameraHeight / 2 - 100);
 
     /* COLLIDERS */
+    //@ts-ignore
     this.map.addColliders();
     this.physics.world.on(
       "worldbounds",
@@ -324,7 +306,10 @@ class Game extends Phaser.Scene {
         left: boolean,
         right: boolean
       ) => {
-        this.lose("config")
+        //@ts-ignore
+        console.log("lose config ARIEL", this.map.loseConfig)
+        //@ts-ignore
+        this.lose(this.checkPoint ? this.map?.loseConfig.checkpoint : this.map?.loseConfig.start)
       },
       this
     );
@@ -339,17 +324,12 @@ class Game extends Phaser.Scene {
           this.canNextLevel = false;
           this.canRot = true;
           this.makeTransition("LevelMap", { stagePoint: this.stagePoint });
-          if (getMusicManagerScene.music?.key !== "songMenu")
-            getMusicManagerScene.stopMusic()
-          getMusicManagerScene.playMusic("songMenu")
+          if (getMasterManagerScene.music?.key !== "songMenu")
+            getMasterManagerScene.stopMusic()
+          getMasterManagerScene.playMusic("songMenu")
         },
         this
       );
-
-      setTimeout(()=>{
-        this.UIClass?.rotateArrow("left")
-        this.UIClass?.loseLife(2)
-      }, 5000)
   }
 
   update(this: Game) {

@@ -1,13 +1,21 @@
 import Phaser from "phaser";
+import MultiScene from "./MultiScene";
 
-export default class MusicManager extends Phaser.Scene {
+export default class MasterManager extends Phaser.Scene {
   music?:
     | Phaser.Sound.NoAudioSound
     | Phaser.Sound.HTML5AudioSound
     | Phaser.Sound.WebAudioSound;
+    menuAnim?: boolean;
+    planetShow: number = 0;
+    multiScene?: MultiScene;
 
   constructor() {
-    super({ key: "MusicManager" });
+    super({ key: "MasterManager" });
+  }
+
+  preload(){
+
   }
 
   stopMusic() {
@@ -26,6 +34,13 @@ export default class MusicManager extends Phaser.Scene {
   }
 
   create(/* {song} */) {
-    // this.playMusic("deepSpace1");
+    this.menuAnim = false;
+    this.multiScene = this.game.scene.getScene("MultiScene") as MultiScene
+  }
+
+  update() {
+    if (this.multiScene?.scenekey === "menu") {
+      this.menuAnim = true;
+    }
   }
 }

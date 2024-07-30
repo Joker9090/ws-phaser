@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import MultiScene from "../MultiScene";
+import BetweenScenes, { BetweenScenesStatus } from "../BetweenScenes";
 
 export type SceneKeys =
   | "Menu"
@@ -325,7 +326,8 @@ class AssetsLoader {
       percentText.destroy();
       assetText.destroy();
       this.finished = true
-      this.scene.scene.restart({text:"levels"})
+      this.scene.scene.restart({text:"menu"})
+      // this.scene.makeTransition("Game", { level: 1, lifes: 3 });
     });
     const scenesTitles: Array<SceneKeys> = [
       "Menu",
@@ -356,7 +358,25 @@ class AssetsLoader {
   }
 }
 
-
+// función para developer
+makeTransition(sceneName: string, data: any) {
+  const getBetweenScenesScene = this.scene.game.scene.getScene(
+    "BetweenScenes"
+  ) as BetweenScenes;
+  if (getBetweenScenesScene) {
+    if (getBetweenScenesScene.status != BetweenScenesStatus.IDLE)
+      return false;
+    getBetweenScenesScene.changeSceneTo(sceneName, data);
+    this.scene.time.delayedCall(1000, () => {
+      this.scene.scene.stop();
+    });
+  } else {
+    this.scene.scene.start(sceneName, data);
+    this.scene.time.delayedCall(1000, () => {
+      this.scene.scene.stop();
+    });
+  }
+}
 
   update() {
   }

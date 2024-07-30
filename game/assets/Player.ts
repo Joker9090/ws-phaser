@@ -221,10 +221,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       }
 
       if (left.isDown) {
-        this.setGravityX(-1300);
+        this.scene.physics.world.gravity.x = -1000;
         this.setFlipY(true);
       } else if (right.isDown) {
-        this.setGravityX(1300);
+        this.scene.physics.world.gravity.x = 1000;
         this.setFlipY(false);
       }
     }

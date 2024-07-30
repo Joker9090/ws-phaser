@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import MusicManager from "./MusicManager";
+import MasterManager from "./MasterManager";
 import BetweenScenes, { BetweenScenesStatus } from "./BetweenScenes";
 import WonClass from "./multiScenes/won";
 import LoseClass from "./multiScenes/lose";
@@ -12,7 +12,7 @@ import AssetsLoader from "./multiScenes/assetsLoader";
 export default class MultiScene extends Phaser.Scene {
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   scenekey?: string;
-  getMusicManagerScene?: MusicManager;
+  getMasterManagerScene?: MasterManager;
   activeScene?: WonClass | LoseClass | MenuClass | LevelClass | CreditsClass;
   assetLoaderClass?: AssetsLoader;
   sceneData?: { text?: string};
@@ -57,11 +57,11 @@ export default class MultiScene extends Phaser.Scene {
   create(this: MultiScene, data: { text: string }) {
     this.scenekey = data.text
     /* Audio */
-    this.getMusicManagerScene = this.game.scene.getScene(
-      "MusicManager"
-    ) as MusicManager;
-    if (!this.getMusicManagerScene.scene.isActive())
-      this.scene.launch("MusicManager").sendToBack();
+    this.getMasterManagerScene = this.game.scene.getScene(
+      "MasterManager"
+    ) as MasterManager;
+    if (!this.getMasterManagerScene.scene.isActive())
+      this.scene.launch("MasterManager").sendToBack();
 
 
     switch (this.scenekey) {

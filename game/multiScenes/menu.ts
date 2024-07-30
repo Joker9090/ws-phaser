@@ -1,10 +1,9 @@
 import Phaser from "phaser";
-import MusicManager from "../MusicManager";
-import DataManager from "../DataManager";
+import MasterManager from "../MasterManager";
 import MultiScene from "../MultiScene";
 
 export default class MenuClass {
-    dataManager?: DataManager;
+    MasterManager?: MasterManager;
     buttons: Phaser.GameObjects.Image[] = [];
     selectedButtonIndex: number = 0;
     buttonSelector!: Phaser.GameObjects.Image;
@@ -39,15 +38,16 @@ export default class MenuClass {
 
     
 
-    init({ stagePoint }: any) {
-        this.dataManager = this.scene.game.scene.getScene("DataManager") as DataManager;
-        if (this.stagePoint != undefined && stagePoint != undefined) {
-            this.stagePoint = stagePoint
-        }
-    }
+    // init({ stagePoint }: any) {
+    //     this.MasterManager = this.scene.game.scene.getScene("MasterManager") as MasterManager;
+    //     if (this.stagePoint != undefined && stagePoint != undefined) {
+    //         this.stagePoint = stagePoint
+    //     }
+    // }
 
     button1() {
-        if (!this.dataManager?.menuAnim) {
+        if (!this.MasterManager?.menuAnim) {
+
             this.scene.tweens.addCounter({
                 from: 2000,
                 to: 0,
@@ -94,6 +94,7 @@ export default class MenuClass {
                 },
             });
         } else {
+            this.canChangeScene = true;
             this.play?.setPosition(0, 100);
             this.textTut?.setPosition(0, 100);
             if (this.play)
@@ -142,7 +143,7 @@ export default class MenuClass {
     }
 
     titleAnim() {
-        if (!this.dataManager?.menuAnim) {
+        if (!this.MasterManager?.menuAnim) {
             this.scene.tweens.addCounter({
                 from: -1500,
                 to: -100,
@@ -174,6 +175,7 @@ export default class MenuClass {
     }
 
     createContainer() {
+        this.MasterManager = this.scene.game.scene.getScene("MasterManager") as MasterManager;
         this.background1 = this.scene.add.image(900, 500, "background")
         this.background2 = this.scene.add.image(900, 500, "background2").setScale(1.3)
         this.background3 = this.scene.add.image(900, 500, "background3").setScale(1.3);
@@ -220,20 +222,6 @@ export default class MenuClass {
             loop: -1,
             duration: 4000,
         })
-
-
-        /* Audio */
-        // const getMusicManagerScene = this.scene.game.scene.getScene(
-        //     "MusicManager"
-        // ) as MusicManager;
-        // if (!getMusicManagerScene.scene.isActive())
-        //     this.scene.scene.launch("MusicManager").sendToBack();
-        // else {
-        //     if (getMusicManagerScene.music?.key !== "songMenu") {
-        //         getMusicManagerScene.stopMusic()
-        //         getMusicManagerScene.playMusic("songMenu")
-        //     }
-        // }
 
         this.scene.scene.bringToTop().resume();
         //window.scene = this

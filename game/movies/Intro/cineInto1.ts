@@ -199,8 +199,8 @@ class cineIntro1 {
         ["cineIntro1_2"],
         [
           {
-            delay: 5000,
-            keepAlive: 1700,
+            delay: 3500,
+            keepAlive: 2000,
           },
         ]
       );
@@ -222,12 +222,49 @@ class cineIntro1 {
 
 
     const part3 = (job: TickerJob) => {
+
+      camera.setZoom(1);
+      this.shipOverImage?.setVisible(false);
+      this.ship?.setVisible(false);
+      this.planet?.setScale(2.5).setPosition(0,0);
+      this.shipZoom?.setVisible(true).setScale(0.5);
+      this.shipZoomOn?.setVisible(true).setScale(0.5);
+
+      this.cine.tweens.add({
+        targets: [this.background1, this.background2, this.background3],
+        x: "-=15",
+        y: "+=20",
+        duration: 14000,
+        ease: "cubic",
+        loop: -1,
+        yoyo: true,
+      });
+
+      this.cine.tweens.add({
+        targets: camera,
+        scrollY: "+=10",
+        duration: 14000,
+        delay: 500,
+        ease: "linear",
+        loop: -1,
+        yoyo: true,
+      });
+
+    };
+
+    const part4 = (job: TickerJob) => {
       this.dialogue = new DialogueManager(
         this.cine,
         [
-          "I hope they've manage to escape in time. It seems like I'm alone in this forgotten corner of the galaxy...",
+          "it's been more than 45 days since de incident...",
         ],
-        ["cineIntro1_3"]
+        ["cineIntro1_3"],
+        [
+          {
+            delay: 1500,
+            keepAlive: 2000,
+          },
+        ]
       );
 
       this.dialogue.play();
@@ -235,9 +272,9 @@ class cineIntro1 {
       this.planet?.setVisible(false);
       this.shipOverImage?.setVisible(false);
       this.ship?.setVisible(false);
-      this.shipZoom?.setVisible(true);
-      this.shipZoomOn?.setVisible(true);
-
+      this.shipZoom?.setVisible(true).setScale(1.3).setPosition(0,700);
+      this.shipZoomOn?.setVisible(true).setScale(1.3).setPosition(0,700);
+      
       this.cine.tweens.add({
         targets: [this.background1, this.background2, this.background3],
         x: "-=15",
@@ -284,10 +321,22 @@ class cineIntro1 {
                   0,
                   part3,
                   false,
-                  undefined,
+                  7000,
                   true,
                   (job: TickerJob) => {
-                    this.nextCine = true;
+                    this.ticker.addNextJob(
+                      new TickerJob(
+                        4,
+                        0,
+                        part4,
+                        false,
+                        undefined,
+                        true,
+                        (job: TickerJob) => {
+                          this.nextCine = true;
+                        }
+                      )
+                    );
                   }
                 )
               );

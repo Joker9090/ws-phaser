@@ -58,14 +58,13 @@ class startMovie extends Phaser.Scene {
     this.load.image("NubePolvo3", "/movies/intro/scene5/NubePolvo3.png")
     this.load.image("NubePolvo4", "/movies/intro/scene5/NubePolvo4.png")
     this.load.image("NubePolvo5", "/movies/intro/scene5/NubePolvo5.png")
-    this.load.image("NaveAbierta", "/movies/intro/scene5/NaveAbierta.png")
-    this.load.image("NaveAbiertaLuces", "/movies/intro/scene5/NaveAbiertaLuces.png")
-    this.load.image("NaveCerrada", "/movies/intro/scene5/NaveCerrada.png")
-    this.load.image("NaveCerradaLuces", "/movies/intro/scene5/NaveCerradaLuces.png")
+    this.load.image("NaveAbierta", "/movies/intro/scene5/NaveaterrizaOFF.png")
+    this.load.image("NaveAbiertaLuces", "/movies/intro/scene5/NaveaterrizaON.png")
     this.load.image("OpacidadDetrasDeNave", "/movies/intro/scene5/OpacidadDetrasDeNave.png")
     this.load.image("PiedrasDelanteras", "/movies/intro/scene5/PiedrasDelanteras.png")
     this.load.image("PiedrasNave", "/movies/intro/scene5/PiedrasNave.png")
     this.load.image("SuperficiePlaneta", "/movies/intro/scene5/SuperficiePlaneta.png")
+    this.load.image("NubePrimerPlano", "/movies/intro/scene5/NubePrimerPlano.png")
     //intro scene 5
     this.load.image("BrazoDelantero", "/movies/intro/scene6/BrazoDelatero.png")
     this.load.image("Cuerpo", "/movies/intro/scene6/Cuerpo.png")
@@ -97,7 +96,7 @@ class startMovie extends Phaser.Scene {
           ) as CinematographyModular;
 
         startButton.on("pointerdown", ()=>{
-            getCinematographyMod.scene.start("CinematographyMod", {keyname: "cine_intro_1"}).bringToTop("CinematographyMod")
+            getCinematographyMod.scene.start("CinematographyMod", {keyname: "cine_intro_4"}).bringToTop("CinematographyMod")
         })
         startButton.on("pointerup", ()=>{
             this.scene.stop()

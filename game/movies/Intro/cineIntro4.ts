@@ -21,12 +21,14 @@ class cineIntro4 {
   NubePolvo5?: Phaser.GameObjects.Image;
   NaveAbierta?: Phaser.GameObjects.Image;
   NaveAbiertaLuces?: Phaser.GameObjects.Image;
-  NaveCerrada?: Phaser.GameObjects.Image;
-  NaveCerradaLuces?: Phaser.GameObjects.Image;
   OpacidadDetrasDeNave?: Phaser.GameObjects.Image;
   PiedrasDelanteras?: Phaser.GameObjects.Image;
   PiedrasNave?: Phaser.GameObjects.Image;
   SuperficiePlaneta?: Phaser.GameObjects.Image;
+  NubePrimerPlano1? : Phaser.GameObjects.Image;
+  NubePrimerPlano2? : Phaser.GameObjects.Image;
+  NubePrimerPlano3? : Phaser.GameObjects.Image;
+  NubePrimerPlano4? : Phaser.GameObjects.Image;
 
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
 
@@ -70,13 +72,16 @@ class cineIntro4 {
     this.NubePolvo1 = this.cine.add.image( 300,  -400, "NubePolvo1").setOrigin(0.5)
     this.NubePolvo2 = this.cine.add.image( -150,  -250, "NubePolvo2").setOrigin(0.5)
     this.NubePolvo3 = this.cine.add.image( 250,  -150, "NubePolvo3").setOrigin(0.5)
-    this.NaveCerrada = this.cine.add.image(0, 0, "NaveCerrada").setOrigin(0.5)
-    this.NaveCerradaLuces = this.cine.add.image(0, 0, "NaveCerradaLuces").setOrigin(0.5)
-    this.NaveAbierta = this.cine.add.image( 50, 0, "NaveAbierta").setOrigin(0.5).setVisible(false)
-    this.NaveAbiertaLuces = this.cine.add.image( 50, 0, "NaveAbiertaLuces").setOrigin(0.5).setVisible(false)
+    this.NaveAbierta = this.cine.add.image( 50, 0, "NaveAbierta").setOrigin(0.5)
+    this.NaveAbiertaLuces = this.cine.add.image( 50, 0, "NaveAbiertaLuces").setOrigin(0.5)
     this.NubePolvo4 = this.cine.add.image( 280,  300, "NubePolvo4").setOrigin(0.5)
     this.NubePolvo5 = this.cine.add.image( -290,  300, "NubePolvo5").setOrigin(0.5)
     this.PiedrasDelanteras = this.cine.add.image(0, 100, "PiedrasDelanteras").setOrigin(0.5, 0)
+    this.NubePrimerPlano1 = this.cine.add.image(-450, -150, "NubePrimerPlano").setOrigin(0.5).setScale(2).setRotation(0).setAlpha(0.9)
+    this.NubePrimerPlano2 = this.cine.add.image(400, -150, "NubePrimerPlano").setOrigin(0.5).setScale(2).setRotation(Math.PI/6).setAlpha(0.9)
+    this.NubePrimerPlano3 = this.cine.add.image(-400, 150, "NubePrimerPlano").setOrigin(0.5).setScale(2).setRotation(Math.PI*5/9).setAlpha(0.9)
+    this.NubePrimerPlano4 = this.cine.add.image(400, 150, "NubePrimerPlano").setOrigin(0.5).setScale(2).setRotation(Math.PI/7).setAlpha(0.9)
+
 
     const container = this.cine.add.container(middlePoint.x, middlePoint.y).setSize(1920, 927)
     container.add([
@@ -87,14 +92,16 @@ class cineIntro4 {
       this.OpacidadDetrasDeNave,
       this.NubePolvo3,
       this.NubePolvo2,
-      this.NaveCerrada,
-      this.NaveCerradaLuces,
       this.NaveAbierta,
       this.NaveAbiertaLuces,
       this.NubePolvo1,
       this.NubePolvo4,
       this.NubePolvo5,
       this.PiedrasDelanteras,
+      this.NubePrimerPlano1,
+      this.NubePrimerPlano2,
+      this.NubePrimerPlano3,
+      this.NubePrimerPlano4
     ])
     container.setScale(gameObjectScaler.x < gameObjectScaler.y ? gameObjectScaler.y : gameObjectScaler.x)
 
@@ -106,11 +113,27 @@ class cineIntro4 {
 
     const part1 = (job: TickerJob) => {
       this.cine.tweens.add({
-        targets: [this.NaveCerradaLuces, this.NaveAbiertaLuces],
+        targets: [this.NaveAbiertaLuces],
         alpha: 0.2,
         duration: 2000,
         ease: 'expo.in',
         loop: -1,
+      });  
+      this.cine.tweens.add({
+        targets: [this.NubePrimerPlano1, this.NubePrimerPlano3],
+        alpha: 0,
+        x: -1000,
+        duration: 6000,
+        ease: 'linear',
+        loop: 0,
+      });
+      this.cine.tweens.add({
+        targets: [this.NubePrimerPlano2, this.NubePrimerPlano4],
+        alpha: 0,
+        x: 1000,
+        duration: 6000,
+        ease: 'linear',
+        loop: 0,
       });
       this.cine.tweens.add({
         targets: camera,
@@ -145,21 +168,6 @@ class cineIntro4 {
         scrollX: "+=1",
         duration: 1000,
         delay: 6000,
-        onStart: ()=>{
-          const doorOpeningSoundEffect = this.cine.sound.add("doorOpening")
-          doorOpeningSoundEffect.play()
-          camera.flash(10000, 255, 255, 255, false, (camera: any, progress: number) => {
-            if (progress <= 0.5 && progress >= 0.45) 
-              doorOpeningSoundEffect.stop()
-            if (progress < 0.5) {
-
-              this.NaveCerrada?.setVisible(false)
-              this.NaveCerradaLuces?.setVisible(false)
-              this.NaveAbierta?.setVisible(true)
-              this.NaveAbiertaLuces?.setVisible(true)
-            }
-          })
-        }
       });
     }
     this.ticker.addJob(

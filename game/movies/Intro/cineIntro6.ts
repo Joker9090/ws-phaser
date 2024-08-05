@@ -17,7 +17,7 @@ class cineIntro6 {
   Piso?: Phaser.GameObjects.Image;
   AstroFrenteCorte?: Phaser.GameObjects.Image;
   AstroFrenteEntero?: Phaser.GameObjects.Image;
-  AstroPerfilCorte?: Phaser.GameObjects.Image;
+  // AstroPerfilCorte?: Phaser.GameObjects.Image;
   AstroPerfilEntero?: Phaser.GameObjects.Image;
   VidrioVisor?: Phaser.GameObjects.Image;
   VidrioVisorView?: Phaser.GameObjects.Image;
@@ -61,9 +61,9 @@ class cineIntro6 {
     this.AstroFrenteCorte = this.cine.add.image(0, 0, "AstroFrenteCorte").setOrigin(0.5)
     this.VidrioVisor = this.cine.add.image(-30, 0, "VidrioVisor").setOrigin(0.5)
     this.VidrioVisorView = this.cine.add.image(-30, 0, "VidrioVisorView").setOrigin(0.5)
-    this.VidrioVisor2 = this.cine.add.image(92, 0, "VidrioVisor").setOrigin(0.5).setAlpha(0)
-    this.VidrioVisorView2 = this.cine.add.image(92, 0, "VidrioVisorView").setOrigin(0.5).setAlpha(0)
-    this.AstroPerfilCorte = this.cine.add.image(-30, 0, "AstroPerfilCorte").setOrigin(0.5).setAlpha(0)
+    // this.VidrioVisor2 = this.cine.add.image(92, 0, "VidrioVisor").setOrigin(0.5).setAlpha(0)
+    // this.VidrioVisorView2 = this.cine.add.image(92, 0, "VidrioVisorView").setOrigin(0.5).setAlpha(0)
+    // this.AstroPerfilCorte = this.cine.add.image(-30, 0, "AstroPerfilCorte").setOrigin(0.5).setAlpha(0)
     this.Piso = this.cine.add.image(0, 0, "PisoScene6").setOrigin(0.5, 0.5)
 
 
@@ -76,11 +76,11 @@ class cineIntro6 {
       this.background1,
       this.Piso,
       this.AstroFrenteCorte,
-      this.AstroPerfilCorte,
+      // this.AstroPerfilCorte,
       this.VidrioVisorView,
       this.VidrioVisor,
-      this.VidrioVisorView2,
-      this.VidrioVisor2,
+      // this.VidrioVisorView2,
+      // this.VidrioVisor2,
     ])
     container.setScale(gameObjectScaler.x < gameObjectScaler.y ? gameObjectScaler.y : gameObjectScaler.x)
     const camera = this.cine.cameras.main
@@ -127,13 +127,6 @@ class cineIntro6 {
         yoyo: true,
       });
       this.cine.tweens.add({
-        targets: [this.AstroFrenteCorte, this.VidrioVisorView, this.VidrioVisor],
-        alpha: 0,
-        duration: 3500,
-        delay: 10000,
-        ease: 'linear',
-      });
-      this.cine.tweens.add({
         targets: [this.background2],
         x: '+=200',
         duration: 20000,
@@ -141,13 +134,7 @@ class cineIntro6 {
         loop: -1,
         ease: 'linear',
       });
-      this.cine.tweens.add({
-        targets: [this.AstroPerfilCorte, this.VidrioVisorView2, this.VidrioVisor2],
-        alpha: 1,
-        delay: 10000,
-        duration: 3500,
-        ease: 'linear',
-      });
+
 
       const dialogueListener = (newState: string, nextText?: string) => {
         if (newState === "CONTINUE") {
@@ -165,7 +152,7 @@ class cineIntro6 {
         10,
         part1,
         false,
-        20000,
+        15000,
         true,
         (job: TickerJob) => {
           this.nextCine = true;

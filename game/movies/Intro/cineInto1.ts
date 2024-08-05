@@ -62,11 +62,13 @@ class cineIntro1 {
     this.planet = this.cine.add
       .image(0, 0, "planet")
       .setOrigin(0.5, 0.5)
-      .setPosition(-800, -400);
-    this.ship = this.cine.add.image(0, 0, "shipOff").setOrigin(0.5, 0.5);
+      .setPosition(-600, -0)
+      .setScale(1.4);
+    this.ship = this.cine.add.image(200, .100, "shipOff").setOrigin(0.5, 0.5).setScale(0.3);
     this.shipOverImage = this.cine.add
-      .image(0, 0, "shipOn")
-      .setOrigin(0.5, 0.5);
+      .image(200, .100, "shipOn")
+      .setOrigin(0.5, 0.5)
+      .setScale(0.3);
     this.shipZoom = this.cine.add
       .image(0, 300, "naveZoom")
       .setOrigin(0.5, 0.5)
@@ -87,7 +89,7 @@ class cineIntro1 {
     shipOverImage
     shipZoom
     shipZoomOn
-    in an array and iterate each one to set the brightness to 0.5
+    in an array and iterate each one to set the brightness to 0.5 (malardo)
     */
 
     const brightness = 0.5;
@@ -105,11 +107,11 @@ class cineIntro1 {
     gameObjects.forEach((gameObject) => {
       gameObject.setAlpha(brightness);
     });
-    
 
     const container = this.cine.add
       .container(middlePoint.x, middlePoint.y)
       .setSize(1920, 927);
+
     container.add([
       this.background3,
       this.background2,
@@ -121,6 +123,7 @@ class cineIntro1 {
       this.shipZoom,
       this.shipZoomOn,
     ]);
+
     container.setScale(
       gameObjectScaler.x < gameObjectScaler.y
         ? gameObjectScaler.y
@@ -140,27 +143,6 @@ class cineIntro1 {
     camera.postFX.addVignette(0.5, 0.5, 0.8);
 
     const part1 = (job: TickerJob) => {
-      this.dialogue = new DialogueManager(
-        this.cine,
-        [
-          "Emergency log number 325...",
-          "it's been more than 45 days since de incident. I still haven't got any news from Dan or the rest of the crew... ",
-        ],
-        ["cineIntro1_1", "cineIntro1_2"],
-        [
-          {
-            delay: 6000,
-            keepAlive: 2000,
-          },
-          {
-            delay: 5000,
-            keepAlive: 1700,
-          },
-        ]
-      );
-
-      this.dialogue?.play();
-
       const tween1 = this.cine.tweens.add({
         targets: [this.shipOverImage, this.shipZoomOn],
         alpha: 0,
@@ -171,7 +153,7 @@ class cineIntro1 {
 
       const tween2 = this.cine.tweens.add({
         targets: camera,
-        zoom: 1.7,
+        zoom: 1.3,
         duration: 120000,
         ease: "Linear",
       });
@@ -181,11 +163,52 @@ class cineIntro1 {
         angle: "+=5",
         x: "+=10",
         y: "-=15",
-        duration: 24000,
+        duration: 7000,
         ease: "Linear",
         yoyo: false,
         loop: 0,
       });
+
+      const dialogueListener = (newState: string, nextText?: string) => {
+        if (newState === "CONTINUE") {
+
+        } else if (newState === "FINISHED") {
+          this.ticker.deleteJob(job.id);
+        }
+      };
+      this.dialogue?.killState(dialogueListener);
+      this.dialogue?.getState(dialogueListener);
+    };
+
+
+    const part2 = (job: TickerJob) => {
+      const tween3 = this.cine.tweens.add({
+        targets: [this.ship, this.shipOverImage],
+        x: "+=10",
+        y: "-=15",
+        duration: 6600,
+        ease: "Linear",
+        yoyo: false,
+        loop: 0,
+      });
+      this.dialogue = new DialogueManager(
+        this.cine,
+        [
+          "Emergency log number 325...",
+        ],
+        ["cineIntro1_2"],
+        [
+          {
+            delay: 5000,
+            keepAlive: 1700,
+          },
+        ]
+      );
+      this.dialogue?.play();
+
+      this.shipOverImage?.setScale(0.5).setPosition(-350,50);
+      this.ship?.setScale(0.5).setPosition(-350,50);
+      this.planet?.setPosition(100, -300).setScale(1.7).setRotation(Math.PI)
 
       const dialogueListener = (newState: string, nextText?: string) => {
         if (newState === "CONTINUE") {
@@ -197,7 +220,8 @@ class cineIntro1 {
       this.dialogue?.getState(dialogueListener);
     };
 
-    const part2 = (job: TickerJob) => {
+
+    const part3 = (job: TickerJob) => {
       this.dialogue = new DialogueManager(
         this.cine,
         [
@@ -244,7 +268,7 @@ class cineIntro1 {
     };
 
     this.ticker.addJob(
-      new TickerJob(1, 10, part1, false, undefined, true, (job: TickerJob) => {
+      new TickerJob(1, 10, part1, false, 7100, true, (job: TickerJob) => {
         this.ticker.addNextJob(
           new TickerJob(
             2,
@@ -254,7 +278,19 @@ class cineIntro1 {
             undefined,
             true,
             (job: TickerJob) => {
-              this.nextCine = true;
+              this.ticker.addNextJob(
+                new TickerJob(
+                  3,
+                  0,
+                  part3,
+                  false,
+                  undefined,
+                  true,
+                  (job: TickerJob) => {
+                    this.nextCine = true;
+                  }
+                )
+              );
             }
           )
         );

@@ -17,15 +17,15 @@ export default function Home() {
     import("phaser").then(setPhaser)
     //Load scenes async when windows is ready
     Promise.all([
-      // import("@/game/movies/startMovie"),
-      // import("@/game/movies/Cinematography-modular"),
+      import("@/game/movies/startMovie"),
+      import("@/game/movies/Cinematography-modular"),
 
-      import("@/game/MultiScene"),
-      
       import("@/game/MasterManager"),
+      
+      // import("@/game/MultiScene"),
 
-      import("@/game/Game"),
-      import("@/game/BetweenScenes"),
+      // import("@/game/Game"),
+      // import("@/game/BetweenScenes"),
     ]).then((scenes) => {
       setScenes(scenes.map(s => s.default))
     })

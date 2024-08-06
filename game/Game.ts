@@ -307,7 +307,6 @@ class Game extends Phaser.Scene {
         right: boolean
       ) => {
         //@ts-ignore
-        console.log("lose config ARIEL", this.map.loseConfig)
         //@ts-ignore
         this.lose(this.checkPoint ? this.map?.loseConfig.checkpoint : this.map?.loseConfig.start)
       },

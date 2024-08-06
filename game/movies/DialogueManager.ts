@@ -7,8 +7,8 @@ export type DialogConfig = {
   position?: {
     x: number,
     y: number,
+    width: number
   }
-  width?: number
 };
 class DialogueManager {
   scene: Phaser.Scene;
@@ -23,7 +23,7 @@ class DialogueManager {
   holder?: Phaser.GameObjects.Graphics;
   screenHeigth: number = window.innerHeight;
   screenWidth: number = window.innerWidth;
-  borderRounder: number = 50;
+  borderRounder: number = 20;
   textDisplayed?: Phaser.GameObjects.Text;
   continueText?: Phaser.GameObjects.Text;
   container?: Phaser.GameObjects.Container;
@@ -35,6 +35,11 @@ class DialogueManager {
   config: DialogConfig[] = [];
   timeBetweenLetters: number = 70;
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
+  gameObjectsScaler?: {
+    x: number,
+    y: number
+  }
+
   constructor(
     scene: Phaser.Scene,
     texts: string[],
@@ -44,7 +49,7 @@ class DialogueManager {
   ) {
     this.scene = scene;
     this.cursors = this.scene.input.keyboard?.createCursorKeys();
-    
+
     this.texts = texts;
     this.textCounter = 0;
     this.textCounterMax = this.texts.length;
@@ -52,53 +57,95 @@ class DialogueManager {
     this.audios = audios;
 
     this.config = config || [];
-
     this.timeBetweenLetters = timeBetweenLetters || 70;
 
-    // createContainer(x, y, width)
+    this.gameObjectsScaler = {
+      x: window.innerWidth / 1920,
+      y: window.innerHeight / 927,
+    };
+
+
+  }
+
+  calculateHeigth(text: string, width: number | undefined) {
+    const temporalText = this.scene.add.text(0, 0, text, {
+      fixedWidth: width ? width : this.screenWidth * 0.8,
+      fontSize: 20,
+      lineSpacing: 24,
+      padding: {
+        x: 20,
+        y: 20
+      },
+      color: "black",
+      stroke: 'black',
+      wordWrap: {
+        width: width ? width * 0.8 : this.screenWidth * 0.8 - 80,
+      },
+    }).setVisible(false)
+    const textHeight = temporalText.height
+    return textHeight
+  }
+
+
+  createContainer(text: string, config?: DialogConfig) {
     this.container = this.scene.add
       .container()
-      .setSize(this.screenWidth * 0.8, this.screenHeigth * 0.15);
+
     this.container.setPosition(
-      (this.screenWidth * 0.2) / 2,
-      this.screenHeigth * 0.8
+      config?.position?.x ? config?.position?.x : (this.screenWidth * 0.2) / 2,
+      config?.position?.y ? config?.position?.y : this.screenHeigth * 0.75
     );
-    this.holder = this.scene.add.graphics();
-    this.holder.fillStyle(0xffffff, 1);
-    this.holder.fillRoundedRect(
-      0,
-      0,
-      this.screenWidth * 0.8,
-      this.screenHeigth / 9,
-      this.borderRounder
-    );
+
     this.textDisplayed = this.scene.add.text(40, 40, "", {
+      fontSize: 20,
+      lineSpacing: 15,
+      padding: {
+        x: 20,
+        y: 10
+      },
       color: "black",
+      stroke: 'black',
+      align: "center",
+      fixedWidth: config?.position?.width ? config?.position?.width : this.screenWidth * 0.8,
+      fixedHeight: this.calculateHeigth(text, config?.position?.width),
       wordWrap: {
-        width: this.screenWidth * 0.8 - 80,
+        width: config?.position?.width ? config?.position?.width * 0.8 : this.screenWidth * 0.8 - 80,
       },
     });
+
+    const graphics = this.scene.add.graphics();
+    graphics.fillStyle(0xe0e1dd, 0.8);
+    graphics.lineStyle(5, 0x1b263b, 0.8)
+    graphics.strokeRoundedRect(
+      this.textDisplayed.x,
+      this.textDisplayed.y - 10,
+      this.textDisplayed.width,
+      this.textDisplayed.height,
+      this.borderRounder
+    )
+    graphics.fillRoundedRect(
+      this.textDisplayed.x,
+      this.textDisplayed.y - 10,
+      this.textDisplayed.width,
+      this.textDisplayed.height,
+      this.borderRounder
+    );
+
+    // Use the rounded rectangle as a mask for the text
+
     this.container
-      .add([this.holder, this.textDisplayed])
+      .add([graphics, this.textDisplayed])
       .setVisible(false);
+
+    if (this.gameObjectsScaler) {
+      this.container.setScale(
+        this.gameObjectsScaler.x < this.gameObjectsScaler.y
+          ? this.gameObjectsScaler.y
+          : this.gameObjectsScaler.x
+      );
+    }
+
     this.scene.cameras.main.ignore(this.container);
-
-    // capaz no se necesita mas
-    // this.continueText = this.scene.add
-    //   .text(this.container.width / 2, 80, "Press SPACE to continue", {
-    //     color: "black",
-    //   })
-    //   .setVisible(false)
-    //   .setOrigin(0.5);
-
-    // this.tweenContinue = this.scene.tweens.add({
-    //   targets: this.continueText,
-    //   alpha: 1,
-    //   loop: -1,
-    //   duration: 5000,
-    //   ease: "Linear",
-    // });
-
   }
 
   getState(fn: Function) {
@@ -116,6 +163,7 @@ class DialogueManager {
 
   play() {
     // if dely exist, call delayed
+    this.createContainer(this.texts[this.textCounter], this.config[this.textCounter])
     if (this.config[this.textCounter] && this.config[this.textCounter].delay) {
       setTimeout(() => {
         this.state = "PLAY";
@@ -134,6 +182,11 @@ class DialogueManager {
     this.stopAudio();
   }
 
+  destroyContainer() {
+    // this.container?.getAll().forEach((el)=>el.destroy())
+    this.container?.destroy()
+  }
+
   continueWithNextText() {
     this.canChangeText = false;
     if (this.textCounterMax) {
@@ -142,6 +195,8 @@ class DialogueManager {
           this.config[this.textCounter] &&
           this.config[this.textCounter].delay
         ) {
+          this.destroyContainer()
+          this.createContainer(this.texts[this.textCounter], this.config[this.textCounter])
           // this.continueText?.setVisible(false);
           // hide text container
           this.container?.setVisible(false);
@@ -151,6 +206,8 @@ class DialogueManager {
             this.textBuilder(this.texts[this.textCounter], this.timeBetweenLetters);
           }, this.config[this.textCounter].delay);
         } else {
+          this.destroyContainer()
+          this.createContainer(this.texts[this.textCounter], this.config[this.textCounter])
           this.textDisplayed?.setText("");
           // this.continueText?.setVisible(false);
           this.textBuilder(this.texts[this.textCounter], this.timeBetweenLetters);

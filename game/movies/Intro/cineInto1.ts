@@ -200,7 +200,7 @@ class cineIntro1 {
         [
           {
             delay: 3500,
-            keepAlive: 2000,
+            keepAlive: 5000,
           },
         ]
       );
@@ -262,7 +262,7 @@ class cineIntro1 {
         [
           {
             delay: 1500,
-            keepAlive: 2000,
+            keepAlive: 10000,
           },
         ]
       );

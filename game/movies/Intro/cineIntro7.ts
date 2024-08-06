@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import Ticker, { TickerJob } from '../Ticker'
 import DialogueManager from '../DialogueManager'
 import CinematographyModular from "@/game/movies/Cinematography-modular";
+import SmallObjects from "../smallObjectsFalling";
 
 
 class cineIntro7 {
@@ -19,11 +20,11 @@ class cineIntro7 {
   Nube1?: Phaser.GameObjects.Image;
   Nube2?: Phaser.GameObjects.Image;
   Nube3?: Phaser.GameObjects.Image;
-
+  smallObject?: SmallObjects;
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
 
 
-  constructor(cine : CinematographyModular) {
+  constructor(cine: CinematographyModular) {
     this.cine = cine
     const tickerMS = 100;
     this.ticker = new Ticker(tickerMS);
@@ -53,12 +54,32 @@ class cineIntro7 {
     this.background3 = this.cine.add.image(0, 0, "fondo3").setOrigin(0.5)
     this.background2 = this.cine.add.image(0, 0, "fondo2").setOrigin(0.5)
     this.background1 = this.cine.add.image(0, 0, "fondo1").setOrigin(0.5)
-    this.mountains = this.cine.add.image(0, 240, "mountains").setOrigin(0.5,1)
+    this.mountains = this.cine.add.image(0, 240, "mountains").setOrigin(0.5, 1)
     this.Nube1 = this.cine.add.image(0, 350, "Nube1").setOrigin(0.5, 1)
     this.Nube2 = this.cine.add.image(0, 350, "Nube2").setOrigin(0.5, 1)
     this.Nube3 = this.cine.add.image(0, 350, "Nube3").setOrigin(0.5, 1)
     this.Piso = this.cine.add.image(0, 200, "PisoNivel8").setOrigin(0.5, 0)
 
+    const piedra1 = this.cine.add.image(-middlePoint.x + 0, -middlePoint.y - 90, "Piedra1").setScale(0.5)
+    const piedra2 = this.cine.add.image(-middlePoint.x + 200, -middlePoint.y - 50, "Piedra2").setScale(0.5)
+    const piedra3 = this.cine.add.image(-middlePoint.x + 400, -middlePoint.y - 250, "Piedra3").setScale(0.5)
+    const piedra4 = this.cine.add.image(-middlePoint.x + 600, -middlePoint.y - 50, "Piedra4").setScale(0.5)
+    const piedra5 = this.cine.add.image(-middlePoint.x + 800, -middlePoint.y - 250, "Piedra5").setScale(0.5)
+    const piedra11 = this.cine.add.image(-middlePoint.x + 1000, -middlePoint.y - 50, "Piedra1").setScale(0.5)
+    const piedra22 = this.cine.add.image(-middlePoint.x + 1200, -middlePoint.y - 250, "Piedra2").setScale(0.5)
+    const piedra33 = this.cine.add.image(-middlePoint.x + 1400, -middlePoint.y - 350, "Piedra3").setScale(0.5)
+    const piedra44 = this.cine.add.image(-middlePoint.x + 1600, -middlePoint.y - 150, "Piedra4").setScale(0.5)
+    const piedra55 = this.cine.add.image(-middlePoint.x + 1800, -middlePoint.y - 70, "Piedra5").setScale(0.5)
+
+
+
+    // const SmallObjectsConfig = {
+    //   texture: ["Nube1", "Nube2"],
+    //   scale: 0.2,
+    //   velocity: 200,
+    //   alpha: 0.7,
+    // }
+    // this.smallObject = new SmallObjects(this.cine, SmallObjectsConfig)
 
     // const DialogueScene = this.game.scene.getScene("DialogueManager");
     // this.scene.launch(DialogueScene)
@@ -72,7 +93,22 @@ class cineIntro7 {
       this.Nube1,
       this.Piso,
       this.mountains,
+      piedra1,
+      piedra2,
+      piedra3,
+      piedra4,
+      piedra5,
+      piedra11,
+      piedra22,
+      piedra33,
+      piedra44,
+      piedra55,
     ])
+
+    // const smallObj = new SmallObjects(this.cine)
+    // const smallObjChildren = smallObj.smallObjectsGroup.getChildren()
+    // container.add(smallObjChildren)
+    // smallObj.start()
 
     container.setScale(gameObjectScaler.x < gameObjectScaler.y ? gameObjectScaler.y : gameObjectScaler.x)
     const camera = this.cine.cameras.main
@@ -84,6 +120,7 @@ class cineIntro7 {
       window.innerHeight
     );
     cameraDialogue.ignore(container);
+
 
     const part1 = (job: TickerJob) => {
       this.dialogue = new DialogueManager(
@@ -109,6 +146,29 @@ class cineIntro7 {
         yoyo: true,
       });
       this.cine.tweens.add({
+        targets: [piedra1, piedra11, piedra55, piedra4],
+        rotation: '+=100',
+        y: 1200,
+        duration: 30000,
+        ease: 'ease',
+      });
+      this.cine.tweens.add({
+        targets: [piedra2, piedra22, piedra5],
+        rotation: '+=160',
+        y: 1000,
+        duration: 40000,
+        ease: 'ease',
+        delay: 2000
+      });
+      this.cine.tweens.add({
+        targets: [piedra3, piedra33, piedra44],
+        rotation: '+=80',
+        y: 1100,
+        duration: 45000,
+        ease: 'ease',
+        delay: 6000
+      });
+      this.cine.tweens.add({
         targets: [this.background1, this.background2, this.background3],
         scale: 1.5,
         duration: 160000,
@@ -126,7 +186,7 @@ class cineIntro7 {
       });
       this.cine.tweens.add({
         targets: [this.Nube2],
-        x:"-=200",
+        x: "-=200",
         duration: 80000,
         ease: 'lienar',
         loop: -1,

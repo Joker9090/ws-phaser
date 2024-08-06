@@ -78,6 +78,7 @@ class startMovie extends Phaser.Scene {
     this.load.image("AstroPerfilCorte", "/movies/intro/scene7/AstroPerfilCorte.png")
     this.load.image("VidrioVisor", "/movies/intro/scene7/VidrioVisor.png")
     this.load.image("VidrioVisorView", "/movies/intro/scene7/VidrioVisorView.png")
+    this.load.image("meteoritoTest", "/movies/intro/scene7/meteoritoTest.png")
     //intro scene 7
     this.load.audio("cineIntro7_1", "/movies/intro/audios/cineIntro7/cineIntro7_1.mp3")
     this.load.image("mountains", "/movies/intro/scene8/Montañas.png")
@@ -101,7 +102,7 @@ class startMovie extends Phaser.Scene {
           ) as CinematographyModular;
 
         startButton.on("pointerdown", ()=>{
-            getCinematographyMod.scene.start("CinematographyMod", {keyname: "cine_intro_7"}).bringToTop("CinematographyMod")
+            getCinematographyMod.scene.start("CinematographyMod", {keyname: "cine_intro_6"}).bringToTop("CinematographyMod")
         })
         startButton.on("pointerup", ()=>{
             this.scene.stop()

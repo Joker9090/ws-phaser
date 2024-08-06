@@ -71,7 +71,10 @@ class cineIntro7 {
     const piedra44 = this.cine.add.image(-middlePoint.x + 1600, -middlePoint.y - 150, "Piedra4").setScale(0.5)
     const piedra55 = this.cine.add.image(-middlePoint.x + 1800, -middlePoint.y - 70, "Piedra5").setScale(0.5)
 
-
+    const Meteorito1 = this.cine.add.image(-700, -middlePoint.y - 90, "meteoritoTest").setOrigin(0.5, 0.5).setScale(0.1).setRotation(0).setFlipX(true)
+    const Meteorito2 = this.cine.add.image(-600, -middlePoint.y - 90, "meteoritoTest").setOrigin(0.5, 0.5).setScale(0.1).setRotation(0).setFlipX(true)
+    const Meteorito3 = this.cine.add.image(-200, -middlePoint.y - 90, "meteoritoTest").setOrigin(0.5, 0.5).setScale(0.1).setRotation(0).setFlipX(true)
+    const Meteorito4 = this.cine.add.image(-900, -middlePoint.y - 90, "meteoritoTest").setOrigin(0.5, 0.5).setScale(0.1).setRotation(0).setFlipX(true)
 
     // const SmallObjectsConfig = {
     //   texture: ["Nube1", "Nube2"],
@@ -88,6 +91,10 @@ class cineIntro7 {
       this.background3,
       this.background2,
       this.background1,
+      Meteorito1,
+      Meteorito2,
+      Meteorito3,
+      Meteorito4,
       this.Nube3,
       this.Nube2,
       this.Nube1,
@@ -137,6 +144,45 @@ class cineIntro7 {
         ]
       );
       this.dialogue.play()
+      this.cine.tweens.add({
+        targets: Meteorito1,
+        x: 2000,
+        scaleY: 0.3,
+        y: 0,
+        duration: 4500,
+        ease: 'lienar',
+        loop: -1,
+      }); 
+      this.cine.tweens.add({
+        targets: Meteorito2,
+        x: 2000,
+        scaleY: 0.3,
+        y: 0,
+        delay: 2000,
+        duration: 4500,
+        ease: 'lienar',
+        loop: -1,
+      });
+      this.cine.tweens.add({
+        targets: Meteorito3,
+        x: 2000,
+        scaleY: 0.3,
+        y: 0,
+        delay: 1000,
+        duration: 4500,
+        ease: 'lienar',
+        loop: -1,
+      });
+      this.cine.tweens.add({
+        targets: Meteorito3,
+        x: 2000,
+        scaleY: 0.3,
+        y: 0,
+        delay: 1700,
+        duration: 4500,
+        ease: 'lienar',
+        loop: -1,
+      });
       this.cine.tweens.add({
         targets: camera,
         zoom: 1.5,

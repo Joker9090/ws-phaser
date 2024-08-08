@@ -60,6 +60,8 @@ class startMovie extends Phaser.Scene {
     this.load.image("NubePolvo5", "/movies/intro/scene5/NubePolvo5.png")
     this.load.image("NaveAbierta", "/movies/intro/scene5/NaveaterrizaOFF.png")
     this.load.image("NaveAbiertaLuces", "/movies/intro/scene5/NaveaterrizaON.png")
+    this.load.image("NaveAbiertaB", "/movies/intro/scene5/NaveAterrizaOFFB.png")
+    this.load.image("NaveAbiertaLucesB", "/movies/intro/scene5/NaveAterrizaONB.png")
     this.load.image("OpacidadDetrasDeNave", "/movies/intro/scene5/OpacidadDetrasDeNave.png")
     this.load.image("PiedrasDelanteras", "/movies/intro/scene5/PiedrasDelanteras.png")
     this.load.image("PiedrasNave", "/movies/intro/scene5/PiedrasNave.png")
@@ -102,7 +104,7 @@ class startMovie extends Phaser.Scene {
           ) as CinematographyModular;
 
         startButton.on("pointerdown", ()=>{
-            getCinematographyMod.scene.start("CinematographyMod", {keyname: "cine_intro_6"}).bringToTop("CinematographyMod")
+            getCinematographyMod.scene.start("CinematographyMod", {keyname: "cine_intro_1"}).bringToTop("CinematographyMod")
         })
         startButton.on("pointerup", ()=>{
             this.scene.stop()

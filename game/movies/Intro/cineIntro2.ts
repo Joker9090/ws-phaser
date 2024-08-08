@@ -131,7 +131,7 @@ class cineIntro2 {
           "I've decided to shut down all systems except life support and navigation to buy myself some time.", 
           "Although it seems like I'm in uncharted waters, who knows where I've ended up."
         ],
-        ["cineIntro2_1", "cineIntro2_2"],
+        [""],
         [
           {
             delay: 1000,
@@ -262,7 +262,7 @@ class cineIntro2 {
           "Supplies are running out... Maybe I'll have enough for 3 more days if I'm lucky. Fuel levels aren't very encouraging either, if I don't do something soon I could be adrift and things could get a bit complicated.	",
           "The radar has detected a planet in the vicinity that seems to have a possible energy source, I will go investigate it. Wish me luck Dan."
         ],
-        ["cineIntro2_3", "cineIntro2_4"],
+        [""],
         [
           {
             delay: 500,

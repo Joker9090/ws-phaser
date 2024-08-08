@@ -55,26 +55,36 @@ class cineIntro7 {
     this.background2 = this.cine.add.image(0, 0, "fondo2").setOrigin(0.5)
     this.background1 = this.cine.add.image(0, 0, "fondo1").setOrigin(0.5)
     this.mountains = this.cine.add.image(0, 240, "mountains").setOrigin(0.5, 1)
-    this.Nube1 = this.cine.add.image(0, 350, "Nube1").setOrigin(0.5, 1)
-    this.Nube2 = this.cine.add.image(0, 350, "Nube2").setOrigin(0.5, 1)
-    this.Nube3 = this.cine.add.image(0, 350, "Nube3").setOrigin(0.5, 1)
+    this.Nube1 = this.cine.add.image(0, 500, "Nube1").setOrigin(0.5, 1)
+    this.Nube2 = this.cine.add.image(0, 500, "Nube2").setOrigin(0.5, 1)
+    this.Nube3 = this.cine.add.image(0, 500, "Nube3").setOrigin(0.5, 1)
     this.Piso = this.cine.add.image(0, 200, "PisoNivel8").setOrigin(0.5, 0)
 
-    const piedra1 = this.cine.add.image(-middlePoint.x + 0, -middlePoint.y - 90, "Piedra1").setScale(0.5)
-    const piedra2 = this.cine.add.image(-middlePoint.x + 200, -middlePoint.y - 50, "Piedra2").setScale(0.5)
-    const piedra3 = this.cine.add.image(-middlePoint.x + 400, -middlePoint.y - 250, "Piedra3").setScale(0.5)
-    const piedra4 = this.cine.add.image(-middlePoint.x + 600, -middlePoint.y - 50, "Piedra4").setScale(0.5)
-    const piedra5 = this.cine.add.image(-middlePoint.x + 800, -middlePoint.y - 250, "Piedra5").setScale(0.5)
-    const piedra11 = this.cine.add.image(-middlePoint.x + 1000, -middlePoint.y - 50, "Piedra1").setScale(0.5)
-    const piedra22 = this.cine.add.image(-middlePoint.x + 1200, -middlePoint.y - 250, "Piedra2").setScale(0.5)
-    const piedra33 = this.cine.add.image(-middlePoint.x + 1400, -middlePoint.y - 350, "Piedra3").setScale(0.5)
-    const piedra44 = this.cine.add.image(-middlePoint.x + 1600, -middlePoint.y - 150, "Piedra4").setScale(0.5)
-    const piedra55 = this.cine.add.image(-middlePoint.x + 1800, -middlePoint.y - 70, "Piedra5").setScale(0.5)
+    const piedra1 = this.cine.add.image(-middlePoint.x -150, - 90 + 150, "Piedra3").setScale(0.45, 0.35).setRotation(102)
+    const piedra2 = this.cine.add.image(-middlePoint.x -200, - 50 + 150, "Piedra3").setScale(0.45, 0.35).setRotation(140)
+    const piedra3 = this.cine.add.image(-middlePoint.x -180, - 20 + 150, "Piedra3").setScale(0.45, 0.35)
+    const piedra4 = this.cine.add.image(-middlePoint.x -200, - 50 + 150, "Piedra3").setScale(0.45, 0.35).setRotation(150)
+    const piedra5 = this.cine.add.image(-middlePoint.x -180, - 50 + 150, "Piedra3").setScale(0.45, 0.35)
+    const piedra11 = this.cine.add.image(-middlePoint.x -180, - 50 + 150, "Piedra3").setScale(0.45, 0.35)
+    const piedra22 = this.cine.add.image(-middlePoint.x -150, - 40 + 150, "Piedra3").setScale(0.45, 0.35).setRotation(20)
+    const piedra33 = this.cine.add.image(-middlePoint.x -200, - 30 + 150, "Piedra3").setScale(0.45, 0.35)
+    const piedra44 = this.cine.add.image(-middlePoint.x -176, - 150 + 150, "Piedra3").setScale(0.45, 0.35).setRotation(60)
+    const piedra55 = this.cine.add.image(-middlePoint.x -145, - 70 + 150, "Piedra3").setScale(0.45, 0.35).setRotation(240)
+    const Piedra1 = this.cine.add.image(-middlePoint.x -34, - 30 + 150, "Piedra3").setScale(0.45, 0.35).setRotation(102)
+    const Piedra2 = this.cine.add.image(-middlePoint.x -251, - 50 + 150, "Piedra3").setScale(0.45, 0.35).setRotation(140)
+    const Piedra3 = this.cine.add.image(-middlePoint.x -23, - 20 + 150, "Piedra3").setScale(0.45, 0.35)
+    const Piedra4 = this.cine.add.image(-middlePoint.x -140, - 50 + 150, "Piedra3").setScale(0.45, 0.35).setRotation(150)
+    const Piedra5 = this.cine.add.image(-middlePoint.x -89, - 70 + 150, "Piedra3").setScale(0.45, 0.35)
+    const Piedra11 = this.cine.add.image(-middlePoint.x -143, - 30 + 150, "Piedra3").setScale(0.45, 0.35)
+    const Piedra22 = this.cine.add.image(-middlePoint.x -325, - 90 + 150, "Piedra3").setScale(0.45, 0.35).setRotation(20)
+    const Piedra33 = this.cine.add.image(-middlePoint.x -119, - 30 + 150, "Piedra3").setScale(0.45, 0.35)
+    const Piedra44 = this.cine.add.image(-middlePoint.x -334, - 150 + 150, "Piedra3").setScale(0.45, 0.35).setRotation(60)
+    const Piedra55 = this.cine.add.image(-middlePoint.x -345, - 70 + 150, "Piedra3").setScale(0.45, 0.35).setRotation(240)
 
-    const Meteorito1 = this.cine.add.image(-700, -middlePoint.y - 90, "meteoritoTest").setOrigin(0.5, 0.5).setScale(0.1).setRotation(0).setFlipX(true)
-    const Meteorito2 = this.cine.add.image(-600, -middlePoint.y - 90, "meteoritoTest").setOrigin(0.5, 0.5).setScale(0.1).setRotation(0).setFlipX(true)
-    const Meteorito3 = this.cine.add.image(-200, -middlePoint.y - 90, "meteoritoTest").setOrigin(0.5, 0.5).setScale(0.1).setRotation(0).setFlipX(true)
-    const Meteorito4 = this.cine.add.image(-900, -middlePoint.y - 90, "meteoritoTest").setOrigin(0.5, 0.5).setScale(0.1).setRotation(0).setFlipX(true)
+    const Meteorito1 = this.cine.add.image(-middlePoint.x - 500, -middlePoint.y + 90, "meteoritoTest").setOrigin(0.5, 0.5)
+    const Meteorito2 = this.cine.add.image(-middlePoint.x - 500, -middlePoint.y + 190, "meteoritoTest").setOrigin(0.5, 0.5)
+    // const Meteorito3 = this.cine.add.image(-200, -middlePoint.y - 90, "meteoritoTest").setOrigin(0.5, 0.5).setScale(0.1).setFlipX(true)
+    // const Meteorito4 = this.cine.add.image(-900, -middlePoint.y - 90, "meteoritoTest").setOrigin(0.5, 0.5).setScale(0.1).setFlipX(true)
 
     // const SmallObjectsConfig = {
     //   texture: ["Nube1", "Nube2"],
@@ -93,8 +103,8 @@ class cineIntro7 {
       this.background1,
       Meteorito1,
       Meteorito2,
-      Meteorito3,
-      Meteorito4,
+      // Meteorito3,
+      // Meteorito4,
       this.Nube3,
       this.Nube2,
       this.Nube1,
@@ -110,6 +120,16 @@ class cineIntro7 {
       piedra33,
       piedra44,
       piedra55,
+      Piedra1,
+      Piedra2,
+      Piedra3,
+      Piedra4,
+      Piedra5,
+      Piedra11,
+      Piedra22,
+      Piedra33,
+      Piedra44,
+      Piedra55,
     ])
 
     // const smallObj = new SmallObjects(this.cine)
@@ -135,7 +155,7 @@ class cineIntro7 {
         [
           "You would definitely love this Dan... I'm sure of that...",
         ],
-        ["cineIntro7_1"],
+        [""],
         [
           {
             delay: 5000,
@@ -147,41 +167,23 @@ class cineIntro7 {
       this.cine.tweens.add({
         targets: Meteorito1,
         x: 2000,
-        scaleY: 0.3,
-        y: 0,
+        scaleY: 0.5,
+        scaleX: 0.7,
+        y: '+=5',
         duration: 4500,
-        ease: 'lienar',
-        loop: -1,
+        ease: 'ease',
+        loop: 0,
       }); 
       this.cine.tweens.add({
         targets: Meteorito2,
         x: 2000,
         scaleY: 0.3,
-        y: 0,
-        delay: 2000,
-        duration: 4500,
-        ease: 'lienar',
-        loop: -1,
-      });
-      this.cine.tweens.add({
-        targets: Meteorito3,
-        x: 2000,
-        scaleY: 0.3,
-        y: 0,
-        delay: 1000,
-        duration: 4500,
-        ease: 'lienar',
-        loop: -1,
-      });
-      this.cine.tweens.add({
-        targets: Meteorito3,
-        x: 2000,
-        scaleY: 0.3,
-        y: 0,
-        delay: 1700,
-        duration: 4500,
-        ease: 'lienar',
-        loop: -1,
+        scaleX: 0.5,
+        y: '+=10',
+        delay: 5000,
+        duration: 6000,
+        ease: 'ease',
+        loop: 0,
       });
       this.cine.tweens.add({
         targets: camera,
@@ -192,27 +194,27 @@ class cineIntro7 {
         yoyo: true,
       });
       this.cine.tweens.add({
-        targets: [piedra1, piedra11, piedra55, piedra4],
-        rotation: '+=100',
-        y: 1200,
-        duration: 30000,
+        targets: [piedra1, piedra11, piedra55, piedra4, Piedra2, Piedra22, Piedra5],
+        rotation: '+=2',
+        x: 2000,
+        duration: 42000,
         ease: 'ease',
       });
       this.cine.tweens.add({
-        targets: [piedra2, piedra22, piedra5],
-        rotation: '+=160',
-        y: 1000,
+        targets: [piedra2, piedra22, piedra5, Piedra1, Piedra11, Piedra55, Piedra4],
+        rotation: '+=3',
+        x: 2300,
         duration: 40000,
         ease: 'ease',
-        delay: 2000
+        delay: 1000
       });
       this.cine.tweens.add({
-        targets: [piedra3, piedra33, piedra44],
-        rotation: '+=80',
-        y: 1100,
+        targets: [piedra3, piedra33, piedra44, Piedra3, Piedra33, Piedra44],
+        rotation: '+=5',
+        x: 2100,
         duration: 45000,
         ease: 'ease',
-        delay: 6000
+        delay: 600
       });
       this.cine.tweens.add({
         targets: [this.background1, this.background2, this.background3],

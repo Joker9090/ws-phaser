@@ -298,7 +298,7 @@ class DialogueManager {
     onFinish: Function
   ) {
     if (this.state === "STOP") return;
-    if (index === 0) this.playAudio(this.audios[this.textCounter]);
+    // if (index === 0) this.playAudio(this.audios[this.textCounter]);
     if (index < message.length) {
       const self = this;
       target.setText(target.text + message[index]);

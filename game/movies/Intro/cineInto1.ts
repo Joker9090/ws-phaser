@@ -79,18 +79,14 @@ class cineIntro1 {
       .setOrigin(0.5, 0.5)
       .setVisible(false)
       .setScale(0.7);
+    const shipBlackMask = this.cine.add.image(200, .100, "shipOff").setOrigin(0.5, 0.5).setScale(0.3).setTint(0,0,0,0)
+    const shipZoomBlackMask = this.cine.add
+    .image(0, 300, "naveZoom")
+    .setOrigin(0.5, 0.5)
+    .setVisible(false)
+    .setScale(0.7)
+    .setTint(0,0,0,0);
 
-    /* put all
-    background3
-    background2
-    background1
-    planet
-    ship
-    shipOverImage
-    shipZoom
-    shipZoomOn
-    in an array and iterate each one to set the brightness to 0.5 (malardo)
-    */
 
     const brightness = 0.5;
     const gameObjects = [
@@ -99,7 +95,7 @@ class cineIntro1 {
       this.background1,
       this.planet,
       this.ship,
-      // this.shipOverImage,
+      this.shipOverImage,
       this.shipZoom,
       this.shipZoomOn,
     ];
@@ -118,8 +114,10 @@ class cineIntro1 {
       this.background1,
       this.darkness,
       this.planet,
+      shipBlackMask,
       this.ship,
       this.shipOverImage,
+      shipZoomBlackMask,
       this.shipZoom,
       this.shipZoomOn,
     ]);
@@ -159,7 +157,7 @@ class cineIntro1 {
       });
 
       const tween3 = this.cine.tweens.add({
-        targets: [this.ship, this.shipOverImage],
+        targets: [this.ship, this.shipOverImage, shipBlackMask],
         angle: "+=5",
         x: "+=10",
         y: "-=15",
@@ -183,7 +181,7 @@ class cineIntro1 {
 
     const part2 = (job: TickerJob) => {
       const tween3 = this.cine.tweens.add({
-        targets: [this.ship, this.shipOverImage],
+        targets: [this.ship, this.shipOverImage, shipBlackMask],
         x: "+=10",
         y: "-=15",
         duration: 6600,
@@ -208,6 +206,7 @@ class cineIntro1 {
 
       this.shipOverImage?.setScale(0.5).setPosition(-350,50);
       this.ship?.setScale(0.5).setPosition(-350,50);
+      shipBlackMask.setScale(0.5).setPosition(-350,50);
       this.planet?.setPosition(100, -300).setScale(1.7).setRotation(Math.PI)
 
       const dialogueListener = (newState: string, nextText?: string) => {
@@ -226,6 +225,8 @@ class cineIntro1 {
       camera.setZoom(1);
       this.shipOverImage?.setVisible(false);
       this.ship?.setVisible(false);
+      shipBlackMask.setVisible(false)
+      shipZoomBlackMask.setVisible(true).setScale(0.5);
       this.planet?.setScale(2.5).setPosition(0,0);
       this.shipZoom?.setVisible(true).setScale(0.5);
       this.shipZoomOn?.setVisible(true).setScale(0.5);
@@ -272,6 +273,7 @@ class cineIntro1 {
       this.planet?.setVisible(false);
       this.shipOverImage?.setVisible(false);
       this.ship?.setVisible(false);
+      shipZoomBlackMask.setVisible(true).setScale(1.3).setPosition(0,700);
       this.shipZoom?.setVisible(true).setScale(1.3).setPosition(0,700);
       this.shipZoomOn?.setVisible(true).setScale(1.3).setPosition(0,700);
       

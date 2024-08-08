@@ -99,8 +99,8 @@ class cineIntro4 {
       this.NubePolvo5,
       this.PiedrasDelanteras,
       this.NubePrimerPlano1,
-      this.NubePrimerPlano2,
-      this.NubePrimerPlano3,
+      // this.NubePrimerPlano2,
+      // this.NubePrimerPlano3,
       this.NubePrimerPlano4
     ])
     container.setScale(gameObjectScaler.x < gameObjectScaler.y ? gameObjectScaler.y : gameObjectScaler.x)
@@ -124,7 +124,7 @@ class cineIntro4 {
         alpha: 0,
         x: -1000,
         duration: 6000,
-        ease: 'linear',
+        ease: 'ease',
         loop: 0,
       });
       this.cine.tweens.add({
@@ -132,7 +132,7 @@ class cineIntro4 {
         alpha: 0,
         x: 1000,
         duration: 6000,
-        ease: 'linear',
+        ease: 'ease',
         loop: 0,
       });
       this.cine.tweens.add({

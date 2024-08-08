@@ -63,12 +63,12 @@ class cineIntro6 {
     this.background1 = this.cine.add.image(0, 0, "fondo1").setOrigin(0.5)
     this.AstroFrenteCorte = this.cine.add.image(0, 0, "AstroFrenteCorte").setOrigin(0.5)
     this.VidrioVisor = this.cine.add.image(-30, 0, "VidrioVisor").setOrigin(0.5)
-    this.VidrioVisorView = this.cine.add.image(-30, 0, "VidrioVisorView").setOrigin(0.5)
+    this.VidrioVisorView = this.cine.add.image(-30, 0, "VidrioVisorView").setOrigin(0.5).setScale(1.5)
     // this.VidrioVisor2 = this.cine.add.image(92, 0, "VidrioVisor").setOrigin(0.5).setAlpha(0)
     // this.VidrioVisorView2 = this.cine.add.image(92, 0, "VidrioVisorView").setOrigin(0.5).setAlpha(0)
     // this.AstroPerfilCorte = this.cine.add.image(-30, 0, "AstroPerfilCorte").setOrigin(0.5).setAlpha(0)
-    this.Piso = this.cine.add.image(0, 0, "PisoScene6").setOrigin(0.5, 0.5)
-    this.Meteorito1 = this.cine.add.image(600, -150, "meteoritoTest").setOrigin(0.5, 0.5).setScale(0.1).setRotation(0)
+    this.Piso = this.cine.add.image(0, 0, "PisoScene6").setOrigin(0.5, 0.5).setScale(1.3,1)
+    this.Meteorito1 = this.cine.add.image(600, -150, "meteoritoTest").setOrigin(0.5, 0.5).setFlipX(true)
     this.Meteorito2 = this.cine.add.image(600, -200, "meteoritoTest").setOrigin(0.5, 0.5).setScale(0.1).setRotation(0)
     this.Meteorito3 = this.cine.add.image(600, -300, "meteoritoTest").setOrigin(0.5, 0.5).setScale(0.1).setRotation(0)
     
@@ -83,6 +83,7 @@ class cineIntro6 {
     this.Meteorito1.setMask(mask);
     this.Meteorito2.setMask(mask);
     this.Meteorito3.setMask(mask);
+    this.VidrioVisorView.setMask(mask)
 
     // const DialogueScene = this.game.scene.getScene("DialogueManager");
     // this.scene.launch(DialogueScene)
@@ -96,8 +97,8 @@ class cineIntro6 {
       // this.AstroPerfilCorte,
       this.VidrioVisorView,
       this.Meteorito1,
-      this.Meteorito2,
-      this.Meteorito3,
+      // this.Meteorito2,
+      // this.Meteorito3,
       this.VidrioVisor,
       // this.VidrioVisorView2,
       // this.VidrioVisor2,
@@ -139,31 +140,38 @@ class cineIntro6 {
         yoyo: true,
       });
       this.cine.tweens.add({
+        targets: this.VidrioVisorView,
+        x: '-=100',
+        duration: 16000,
+        ease: 'ease',
+        loop: 0,
+      });
+      this.cine.tweens.add({
         targets: this.Meteorito1,
         x: -600,
         scaleY: 0,
         duration: 2300,
         ease: 'lienar',
-        loop: -1,
+        loop: 0,
       }); 
-      this.cine.tweens.add({
-        targets: this.Meteorito2,
-        x: -600,
-        scaleY: 0,
-        delay: 2000,
-        duration: 1500,
-        ease: 'lienar',
-        loop: -1,
-      });
-      this.cine.tweens.add({
-        targets: this.Meteorito3,
-        x: -600,
-        scaleY: 0,
-        delay: 1000,
-        duration: 1100,
-        ease: 'lienar',
-        loop: -1,
-      });
+      // this.cine.tweens.add({
+      //   targets: this.Meteorito2,
+      //   x: -600,
+      //   scaleY: 0,
+      //   delay: 2000,
+      //   duration: 1500,
+      //   ease: 'lienar',
+      //   loop: -1,
+      // });
+      // this.cine.tweens.add({
+      //   targets: this.Meteorito3,
+      //   x: -600,
+      //   scaleY: 0,
+      //   delay: 1000,
+      //   duration: 1100,
+      //   ease: 'lienar',
+      //   loop: -1,
+      // });
       this.cine.tweens.add({
         targets: [this.background1, this.background2, this.background3],
         scale: 1.5,
@@ -173,12 +181,12 @@ class cineIntro6 {
         yoyo: true,
       });
       this.cine.tweens.add({
-        targets: [this.background2],
+        targets: [this.background2, this.Piso],
         x: '+=200',
-        duration: 20000,
+        duration: 17000,
         delay: 0,
-        loop: -1,
-        ease: 'linear',
+        loop: 0,
+        ease: 'ease',
       });
 
 

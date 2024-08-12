@@ -37,18 +37,8 @@ class startMovie extends Phaser.Scene {
     this.load.image("fondo2", "/movies/intro/scene2/FondoCapa2.png")
     this.load.image("fondo3", "/movies/intro/scene2/FondoCapa3.png")
     this.load.image("planetScene2", "/movies/intro/scene2/planeta.png")
-    this.load.image("alarmaRojaOn", "/movies/intro/scene2/AlarmaRoja.png")
-    this.load.image("alarmaRojaOff", "/movies/intro/scene2/AlarmaRojaApagada.png")
-    this.load.image("alarmaVerdeOn", "/movies/intro/scene2/AlarmaVerde.png")
-    this.load.image("alarmaVerdeOff", "/movies/intro/scene2/AlarmaVerdeApagada.png")
-    this.load.image("luzAlarmaRoja", "/movies/intro/scene2/LuzAlarmaRoja.png")
-    this.load.image("luzAlarmaVerde", "/movies/intro/scene2/LuzAlarmaVerde.png")
-    this.load.image("naveCapaTrasera", "/movies/intro/scene2/NaveCapaTrasera.png")
-    this.load.image("naveCapaDelantera", "/movies/intro/scene2/PanelCapaDelantera.png")
-    this.load.image("marcoVentana", "/movies/intro/scene2/MarcoVentana.png")
-    this.load.image("vidrioVentana", "/movies/intro/scene2/VidrioVentana.png")
-    this.load.image("LuzPanelRojo", "/movies/intro/scene2/LuzPanelRojo.png")
-    this.load.image("LuzPanelVerde", "/movies/intro/scene2/LuzPanelVerde.png")
+    this.load.image("part1SetUp", "/movies/intro/scene2/part1SetUp.png")
+    this.load.image("part2SetUp", "/movies/intro/scene2/part2SetUp.png")
     //intro scene 3 por ahora no tiene assets
     this.load.audio("spaceshipCrash", "/movies/intro/soundEffects/cineIntro3/spaceshipCrash.mp3")
     //intro scene 4
@@ -104,7 +94,7 @@ class startMovie extends Phaser.Scene {
           ) as CinematographyModular;
 
         startButton.on("pointerdown", ()=>{
-            getCinematographyMod.scene.start("CinematographyMod", {keyname: "cine_intro_1"}).bringToTop("CinematographyMod")
+            getCinematographyMod.scene.start("CinematographyMod", {keyname: "cine_intro_2"}).bringToTop("CinematographyMod")
         })
         startButton.on("pointerup", ()=>{
             this.scene.stop()

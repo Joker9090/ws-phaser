@@ -16,20 +16,11 @@ class cineIntro2 {
   background2?: Phaser.GameObjects.Image;
   background1?: Phaser.GameObjects.Image;
   planetScene2?: Phaser.GameObjects.Image;
-  alarmaRojaOn?: Phaser.GameObjects.Image;
-  alarmaRojaOff?: Phaser.GameObjects.Image;
-  alarmaVerdeOn?: Phaser.GameObjects.Image;
-  alarmaVerdeOff?: Phaser.GameObjects.Image;
-  luzAlarmaRoja?: Phaser.GameObjects.Image;
-  luzAlarmaVerde?: Phaser.GameObjects.Image;
-  naveCapaTrasera?: Phaser.GameObjects.Image;
-  naveCapaDelantera?: Phaser.GameObjects.Image;
-  marcoVentana?: Phaser.GameObjects.Image;
-  vidrioVentana?: Phaser.GameObjects.Image;
-  LuzPanelRojo?: Phaser.GameObjects.Image;
-  LuzPanelVerde?: Phaser.GameObjects.Image;
-  LuzPanelRojo2?: Phaser.GameObjects.Image;
-  LuzPanelVerde2?: Phaser.GameObjects.Image;
+  // part 1
+  part1SetUp?: Phaser.GameObjects.Image;
+  // part 2
+  part2SetUp?: Phaser.GameObjects.Image;
+  // part 3
 
   nextText?: Phaser.GameObjects.Text;
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -68,19 +59,10 @@ class cineIntro2 {
     this.background3 = this.cine.add.image(0, 0, "fondo3").setOrigin(0.5)
     this.background2 = this.cine.add.image(0, 0, "fondo2").setOrigin(0.5)
     this.background1 = this.cine.add.image(0, 0, "fondo1").setOrigin(0.5)
-    this.planetScene2 = this.cine.add.image(0, 0, "planetScene2").setOrigin(1, 0.8)
-    this.naveCapaTrasera = this.cine.add.image(0, 0, "naveCapaTrasera").setOrigin(0.5)
-    this.marcoVentana = this.cine.add.image(0, 0, "marcoVentana").setOrigin(0.5, 0.75)
-    this.vidrioVentana = this.cine.add.image(0, 0, "vidrioVentana").setOrigin(0.5, 0.75)
-    this.naveCapaDelantera = this.cine.add.image(0, 100, "naveCapaDelantera").setOrigin(0.5, 0)
-    this.luzAlarmaRoja = this.cine.add.image(503, -185, "luzAlarmaRoja").setOrigin(0.5)
-    this.alarmaRojaOff = this.cine.add.image(503, -185, "alarmaRojaOff").setOrigin(0.5)
-    this.alarmaRojaOn = this.cine.add.image(503, -185, "alarmaRojaOn").setOrigin(0.5)
-    this.luzAlarmaVerde = this.cine.add.image(-503, -180, "luzAlarmaVerde").setOrigin(0.5)
-    this.alarmaVerdeOff = this.cine.add.image(-503, -180, "alarmaVerdeOff").setOrigin(0.5)
-    this.alarmaVerdeOn = this.cine.add.image(-503, -180, "alarmaVerdeOn").setOrigin(0.5)
-    this.LuzPanelRojo = this.cine.add.image(620, 252, "LuzPanelRojo").setOrigin(0.5).setScale(1, 0.95)
-    this.LuzPanelVerde = this.cine.add.image(- 620, 252, "LuzPanelVerde").setOrigin(0.5).setScale(1, 0.95)
+    this.planetScene2 = this.cine.add.image(800, 300, "planetScene2").setOrigin(1, 0.8).setScale(1.4)
+    this.part1SetUp = this.cine.add.image(0, 0, "part1SetUp").setOrigin(0.5).setSize(window.innerWidth, window.innerHeight)
+    this.part2SetUp = this.cine.add.image(0, 0, "part2SetUp").setOrigin(0.5).setVisible(false)
+    
     const darkMask = this.cine.add.rectangle(0,0,window.innerWidth,window.innerHeight,0,0.3)
 
     const assetsScenes = 
@@ -89,18 +71,9 @@ class cineIntro2 {
         this.background2,
         this.background1,
         this.planetScene2,
-        this.naveCapaTrasera,
-        this.marcoVentana,
-        this.vidrioVentana,
-        this.naveCapaDelantera,
-        this.luzAlarmaRoja,
-        this.alarmaRojaOff,
-        this.alarmaRojaOn,
-        this.luzAlarmaVerde,
-        this.alarmaVerdeOff,
-        this.alarmaVerdeOn,
-        this.LuzPanelRojo,
-        this.LuzPanelVerde,
+        this.part1SetUp,
+        this.part2SetUp,
+  
         darkMask,
       ]
 
@@ -117,7 +90,6 @@ class cineIntro2 {
 
     const camera = this.cine.cameras.main
     camera.postFX.addVignette(0.5, 0.5, 0.8);
-    camera.setZoom(2).scrollY = 200
 
     const spaceshipAmbientSoundEffect = this.cine.sound.add("spaceshipAmbient")
     spaceshipAmbientSoundEffect.setVolume(1.5)
@@ -153,100 +125,30 @@ class cineIntro2 {
         yoyo: true,
       });
       this.cine.tweens.add({
-        targets: [camera],
-        opacity: 1.3,
-        duration: 60000,
-        ease: 'linear',
-      });
-      this.cine.tweens.add({
         targets: [this.background1, this.background2, this.background3, this.planetScene2],
         scale: 1.3,
-        duration: 60000,
+        duration: 45000,
         ease: 'linear',
       });
-      this.cine.tweens.add({
-        targets: [this.background1, this.background2, this.background3, this.planetScene2],
+      const tween1 = this.cine.tweens.add({
+        targets: [this.background1, this.background2, this.background3, this.planetScene2, this.planetScene2],
         x: "-=200",
+        duration: 45000,
+        ease: 'linear',
+      });
+      const tween2 = this.cine.tweens.add({
+        targets: [camera],
+        zoom: 1.3,
         duration: 60000,
         ease: 'linear',
       });
-      this.cine.tweens.add({
-        targets: this.luzAlarmaRoja,
-        rotation: 2 * Math.PI,
-        duration: 3000,
-        ease: 'linear',
-        loop: -1,
-      });
-      this.cine.tweens.add({
-        targets: this.luzAlarmaRoja,
-        scale: 0,
-        duration: 1000,
-        ease: 'linear',
-        loop: -1,
-        yoyo: true
-      });
-      this.cine.tweens.add({
-        targets: this.alarmaRojaOn,
-        alpha: 0.8,
-        duration: 1000,
-        ease: 'linear',
-        loop: -1,
-        yoyo: true
-      });
+     
 
-      this.cine.tweens.add({
-        targets: this.LuzPanelRojo,
-        alpha: 0.6,
-        duration: 1400,
-        ease: 'expo.out',
-        loop: -1,
-        yoyo: true
-      });
 
-      this.cine.tweens.add({
-        targets: this.LuzPanelVerde,
-        alpha: 0.6,
-        duration: 1600,
-        ease: 'expo.out',
-        loop: -1,
-        yoyo: true
-      });
-      this.cine.tweens.add({
-        targets: this.luzAlarmaVerde,
-        rotation: 2 * Math.PI,
-        duration: 3400,
-        ease: 'linear',
-        loop: -1,
-
-      });
-      this.cine.tweens.add({
-        targets: this.luzAlarmaVerde,
-        scale: 0,
-        duration: 1200,
-        ease: 'linear',
-        loop: -1,
-        yoyo: true
-      });
-      this.cine.tweens.add({
-        targets: this.alarmaVerdeOn,
-        alpha: 0.8,
-        duration: 1200,
-        ease: 'linear',
-        loop: -1,
-        yoyo: true
-      });
-      this.cine.tweens.add({
-        targets: camera,
-        zoom: 1.5,
-        scrollY: 100,
-        duration: 8000,
-        ease: 'ease',
-        delay: 5000,
-        loop: 0,
-        yoyo: false,
-      });
       const dialogueListener = (newState: string, nextText?: string) => {
         if (newState === "CONTINUE") {
+          tween1.destroy()
+          tween2.destroy()
         } else if (newState === "FINISHED") {
           this.ticker.deleteJob(job.id);
         }
@@ -272,15 +174,24 @@ class cineIntro2 {
       );
       
       this.dialogue?.play();
-   
+      this.part1SetUp?.setVisible(false)
+      this.part2SetUp?.setVisible(true)
+      this.planetScene2?.setPosition(-400, 300)
+      camera.setZoom(1)
       this.cine.tweens.add({
         targets: camera,
-        zoom: 1,
+        zoom: 1.3,
         scrollY: 0,
-        duration: 8000,
+        duration: 60000,
         ease: 'ease',
         loop: 0,
         yoyo: false
+      });
+      const tween1 = this.cine.tweens.add({
+        targets: [this.background1, this.background2, this.background3, this.planetScene2, this.planetScene2],
+        x: "-=200",
+        duration: 45000,
+        ease: 'linear',
       });
       const dialogueListener = (newState: string, nextText?: string) => {
         if (newState === "CONTINUE") {

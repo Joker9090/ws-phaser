@@ -39,6 +39,40 @@ class startMovie extends Phaser.Scene {
     this.load.image("planetScene2", "/movies/intro/scene2/planeta.png")
     this.load.image("part1SetUp", "/movies/intro/scene2/part1SetUp.png")
     this.load.image("part2SetUp", "/movies/intro/scene2/part2SetUp.png")
+
+    this.load.image("backgroundPanel", "/movies/intro/scene2/background.png")
+    this.load.image("radarCross", "/movies/intro/scene2/radar/Cruz.png")
+    this.load.image("radarInnerCircle1", "/movies/intro/scene2/radar/inner.png")
+    this.load.image("radarInnerCircle2", "/movies/intro/scene2/radar/middle.png")
+    this.load.image("radarInnerCircle2B", "/movies/intro/scene2/radar/middlePointed.png")
+    this.load.image("radarInnerCircle3", "/movies/intro/scene2/radar/outer.png")
+    this.load.image("radarSearcher", "/movies/intro/scene2/radar/searcher.png")
+    this.load.image("planetOnRadar", "/movies/intro/scene2/radar/Planetita.png")
+
+    this.load.image("titleTopLeft", "/movies/intro/scene2/text/titleTopLeft.png")
+    this.load.image("titleTopRight", "/movies/intro/scene2/text/titleTopRight.png")
+    this.load.image("titleBottomLeft", "/movies/intro/scene2/text/titleBottomLeft.png")
+    this.load.image("titleBottomRight", "/movies/intro/scene2/text/titleBottomRight.png")
+
+    this.load.image("textSelectorLeft1", "/movies/intro/scene2/textSelectorLeft1.png")
+    this.load.image("textSelectorLeft2", "/movies/intro/scene2/textSelectorLeft2.png")
+    this.load.image("textSelectorRight1", "/movies/intro/scene2/textSelectorRight1.png")
+    this.load.image("textSelectorRight2", "/movies/intro/scene2/textSelectorRight2.png")
+    this.load.image("subTextTopLeft", "/movies/intro/scene2/text/subTextTopLeft.png")
+    this.load.image("subTextTopLeft2", "/movies/intro/scene2/text/subTextTopLeft2.png")
+    this.load.image("subTextTopRight", "/movies/intro/scene2/subTextTopRight.png")
+    this.load.image("subTextBottomRight", "/movies/intro/scene2/text/subTextBottomRight.png")
+    this.load.image("subTextBottomLeft", "/movies/intro/scene2/text/subTextBottomLeft.png")
+
+    this.load.image("cirlce1", "/movies/intro/scene2/elementsScreen/cirlce1.png")
+    this.load.image("cirlce2", "/movies/intro/scene2/elementsScreen/cirlce2.png")
+    this.load.image("cirlce3", "/movies/intro/scene2/elementsScreen/cirlce3.png")
+
+    this.load.image("danger1", "/movies/intro/scene2/danger1.png")
+    this.load.image("danger2", "/movies/intro/scene2/danger2.png")
+
+
+
     //intro scene 3 por ahora no tiene assets
     this.load.audio("spaceshipCrash", "/movies/intro/soundEffects/cineIntro3/spaceshipCrash.mp3")
     //intro scene 4

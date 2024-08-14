@@ -21,6 +21,34 @@ class cineIntro2 {
   // part 2
   part2SetUp?: Phaser.GameObjects.Image;
   // part 3
+  backgroundPanel?: Phaser.GameObjects.Image;
+  radarInnerCircle1?: Phaser.GameObjects.Image;
+  radarInnerCircle2?: Phaser.GameObjects.Image;
+  radarInnerCircle2B?: Phaser.GameObjects.Image;
+  radarInnerCircle3?: Phaser.GameObjects.Image;
+  radarSearcher?: Phaser.GameObjects.Image;
+  radarCross?: Phaser.GameObjects.Image;
+  planetOnRadar?: Phaser.GameObjects.Image;
+  titleTopLeft?: Phaser.GameObjects.Image;
+  titleTopRight?: Phaser.GameObjects.Image;
+  titleBottomLeft?: Phaser.GameObjects.Image;
+  titleBottomRight?: Phaser.GameObjects.Image;
+  textSelectorLeft1?: Phaser.GameObjects.Image;
+  textSelectorLeft2?: Phaser.GameObjects.Image;
+  textSelectorRight1?: Phaser.GameObjects.Image;
+  textSelectorRight2?: Phaser.GameObjects.Image;
+  subTextTopLeft?: Phaser.GameObjects.Image;
+  subTextTopRight?: Phaser.GameObjects.Image;
+  subTextBottomRight?: Phaser.GameObjects.Image;
+  subTextBottomLeft?: Phaser.GameObjects.Image;
+  cirlce1?: Phaser.GameObjects.Image;
+  barraCircle1?: Phaser.GameObjects.Image;
+  cirlce2?: Phaser.GameObjects.Image;
+  barraCircle2?: Phaser.GameObjects.Image;
+  cirlce3?: Phaser.GameObjects.Image;
+  barraCircle3?: Phaser.GameObjects.Image;
+  // meter componenete gráfico de barras (12 barras, 12 inputs? varian por separado o hago 12 compoenntes?)
+  // meter componente arrow left y right (1 componente con invert y la anim adnetor)
 
   nextText?: Phaser.GameObjects.Text;
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -62,7 +90,8 @@ class cineIntro2 {
     this.planetScene2 = this.cine.add.image(800, 300, "planetScene2").setOrigin(1, 0.8).setScale(1.4)
     this.part1SetUp = this.cine.add.image(0, 0, "part1SetUp").setOrigin(0.5).setSize(window.innerWidth, window.innerHeight)
     this.part2SetUp = this.cine.add.image(0, 0, "part2SetUp").setOrigin(0.5).setVisible(false)
-    
+    // panelControl
+
     const darkMask = this.cine.add.rectangle(0,0,window.innerWidth,window.innerHeight,0,0.3)
 
     const assetsScenes = 
@@ -178,6 +207,93 @@ class cineIntro2 {
       this.part2SetUp?.setVisible(true)
       this.planetScene2?.setPosition(-400, 300)
       camera.setZoom(1)
+      const tween2 = this.cine.tweens.add({
+        targets: camera,
+        zoom: 1.3,
+        scrollY: 0,
+        duration: 60000,
+        ease: 'ease',
+        loop: 0,
+        yoyo: false
+      });
+      const tween1 = this.cine.tweens.add({
+        targets: [this.background1, this.background2, this.background3, this.planetScene2, this.planetScene2],
+        x: "-=200",
+        duration: 45000,
+        ease: 'linear',
+      });
+      const dialogueListener = (newState: string, nextText?: string) => {
+        if (newState === "CONTINUE") {
+          tween2.destroy()
+        } else if (newState === "FINISHED") {
+          this.ticker.deleteJob(job.id);
+        }
+      };
+      this.dialogue?.killState(dialogueListener);
+      this.dialogue?.getState(dialogueListener);
+    }
+
+    const part3 = (job: TickerJob) => {
+      this.dialogue = new DialogueManager(
+        this.cine,
+        [
+          "text danger"
+        ],
+        [""],
+        [
+          {
+            delay: 500,
+            keepAlive: 3000,
+          },
+        ]
+      );
+      
+      this.dialogue?.play();
+      this.part2SetUp?.setVisible(false)
+      camera.setZoom(1)
+      this.cine.tweens.add({
+        targets: camera,
+        zoom: 1.3,
+        scrollY: 0,
+        duration: 60000,
+        ease: 'ease',
+        loop: 0,
+        yoyo: false
+      });
+      const tween1 = this.cine.tweens.add({
+        targets: [this.background1, this.background2, this.background3, this.planetScene2, this.planetScene2],
+        x: "-=200",
+        duration: 45000,
+        ease: 'linear',
+      });
+      const dialogueListener = (newState: string, nextText?: string) => {
+        if (newState === "CONTINUE") {
+        } else if (newState === "FINISHED") {
+          this.ticker.deleteJob(job.id);
+        }
+      };
+      this.dialogue?.killState(dialogueListener);
+      this.dialogue?.getState(dialogueListener);
+    }
+
+    const part4 = (job: TickerJob) => {
+      this.dialogue = new DialogueManager(
+        this.cine,
+        [
+          "text danger"
+        ],
+        [""],
+        [
+          {
+            delay: 500,
+            keepAlive: 3000,
+          },
+        ]
+      );
+      
+      this.dialogue?.play();
+      this.part2SetUp?.setVisible(false)
+      camera.setZoom(1)
       this.cine.tweens.add({
         targets: camera,
         zoom: 1.3,
@@ -221,8 +337,32 @@ class cineIntro2 {
               undefined,
               true,
               (job: TickerJob) => {
-                spaceshipAmbientSoundEffect.stop()
-                this.nextCine = true;
+                this.ticker.addNextJob(
+                  new TickerJob(
+                    3,
+                    0,
+                    part3,
+                    false,
+                    undefined,
+                    true,
+                    (job: TickerJob) => {
+                      this.ticker.addNextJob(
+                        new TickerJob(
+                          4,
+                          0,
+                          part4,
+                          false,
+                          undefined,
+                          true,
+                          (job: TickerJob) => {
+                            spaceshipAmbientSoundEffect.stop()
+                            this.nextCine = true;
+                          }
+                        )
+                      );
+                    }
+                  )
+                );
               }
             )
           );

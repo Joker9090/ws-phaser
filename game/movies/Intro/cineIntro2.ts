@@ -13,7 +13,7 @@ class cineIntro2 {
   background3?: Phaser.GameObjects.Image;
   background2?: Phaser.GameObjects.Image;
   background1?: Phaser.GameObjects.Image;
-  planetScene2?: Phaser.GameObjects.Image;
+  // planetScene2?: Phaser.GameObjects.Image;
   // part 1
   part1SetUp?: Phaser.GameObjects.Image;
   // part 2
@@ -55,10 +55,10 @@ class cineIntro2 {
     this.background3 = this.cine.add.image(0, 0, "backgroundGlow").setOrigin(0.5);
     this.background2 = this.cine.add.image(0, 0, "backgronudClouds").setOrigin(0.5);
     this.background1 = this.cine.add.image(0, 0, "backgroundStars").setOrigin(0.5);
-    this.planetScene2 = this.cine.add
-      .image(800, 300, "planetScene2")
-      .setOrigin(1, 0.8)
-      .setScale(1.4);
+    // this.planetScene2 = this.cine.add
+    //   .image(800, 300, "planetScene2")
+    //   .setOrigin(1, 0.8)
+    //   .setScale(1.4);
     this.part1SetUp = this.cine.add
       .image(0, 0, "part1SetUp")
       .setOrigin(0.5)
@@ -84,7 +84,7 @@ class cineIntro2 {
       this.background3,
       this.background2,
       this.background1,
-      this.planetScene2,
+      // this.planetScene2,
       this.part1SetUp,
       this.part2SetUp,
       darkMask,
@@ -146,7 +146,7 @@ class cineIntro2 {
           this.background1,
           this.background2,
           this.background3,
-          this.planetScene2,
+          // this.planetScene2,
         ],
         scale: 1.3,
         duration: 45000,
@@ -157,8 +157,8 @@ class cineIntro2 {
           this.background1,
           this.background2,
           this.background3,
-          this.planetScene2,
-          this.planetScene2,
+          // this.planetScene2,
+          // this.planetScene2,
         ],
         x: "-=200",
         duration: 45000,
@@ -205,7 +205,7 @@ class cineIntro2 {
       this.dialogue?.play();
       this.part1SetUp?.setVisible(false);
       this.part2SetUp?.setVisible(true);
-      this.planetScene2?.setPosition(-400, 300);
+      // this.planetScene2?.setPosition(-400, 300);
       camera.setZoom(1);
       const tween2 = this.cine.tweens.add({
         targets: camera,
@@ -221,8 +221,8 @@ class cineIntro2 {
           this.background1,
           this.background2,
           this.background3,
-          this.planetScene2,
-          this.planetScene2,
+          // this.planetScene2,
+          // this.planetScene2,
         ],
         x: "-=200",
         duration: 45000,

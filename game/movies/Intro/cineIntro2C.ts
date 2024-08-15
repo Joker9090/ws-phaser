@@ -128,7 +128,45 @@ class cineIntro2C {
         ]
       );
 
-
+      this.dialogue.play()
+      this.cine.tweens.add({
+        targets: [
+          this.background1,
+          this.background2,
+          this.background3,
+          // this.planetScene2,
+        ],
+        scale: 1.3,
+        duration: 45000,
+        ease: "linear",
+      });
+      const tween1 = this.cine.tweens.add({
+        targets: [
+          this.background1,
+          this.background2,
+          this.background3,
+          // this.planetScene2,
+          // this.planetScene2,
+        ],
+        x: "-=200",
+        duration: 45000,
+        ease: "linear",
+      });
+      this.cine.tweens.add({
+        targets: [
+          this.planetScene2
+        ],
+        scale: 1.2,
+        x: "+=400",
+        duration: 45000,
+        ease: "linear",
+      });
+      const tween2 = this.cine.tweens.add({
+        targets: [camera],
+        zoom: 1.3,
+        duration: 60000,
+        ease: "linear",
+      });
       const dialogueListener = (newState: string, nextText?: string) => {
         if (newState === "CONTINUE") {
         } else if (newState === "FINISHED") {

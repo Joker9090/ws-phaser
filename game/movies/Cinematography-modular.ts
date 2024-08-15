@@ -8,6 +8,7 @@ import cineIntro5 from "./Intro/cineIntro5";
 import cineIntro6 from "./Intro/cineIntro6";
 import cineIntro7 from "./Intro/cineIntro7";
 import MasterManager from "../MasterManager";
+import cineIntro2B from "./Intro/cineIntro2B";
 
 class CinematographyModular extends Phaser.Scene {
   ticker: Ticker;
@@ -109,6 +110,9 @@ class CinematographyModular extends Phaser.Scene {
       case 'cine_intro_2':
         this.playingCine = new cineIntro2(this);
         break;
+        case 'cine_intro_2B':
+          this.playingCine = new cineIntro2B(this);
+          break;
       case 'cine_intro_3':
         this.playingCine = new cineIntro3(this);
         break;

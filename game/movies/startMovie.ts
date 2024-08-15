@@ -71,6 +71,34 @@ class startMovie extends Phaser.Scene {
     this.load.image("danger1", "/movies/intro/scene2/danger1.png")
     this.load.image("danger2", "/movies/intro/scene2/danger2.png")
 
+    this.load.image("radarCross-red", "/movies/intro/scene2/radar/Cruz-red.png")
+    this.load.image("radarInnerCircle1-red", "/movies/intro/scene2/radar/inner-red.png")
+    this.load.image("radarInnerCircle2-red", "/movies/intro/scene2/radar/middle-red.png")
+    this.load.image("radarInnerCircle2B-red", "/movies/intro/scene2/radar/middlePointed-red.png")
+    this.load.image("radarInnerCircle3-red", "/movies/intro/scene2/radar/outer-red.png")
+    this.load.image("radarSearcher-red", "/movies/intro/scene2/radar/searcher-red.png")
+    this.load.image("planetOnRadar-red", "/movies/intro/scene2/radar/Planetita-red.png")
+
+    this.load.image("titleTopLeft-red", "/movies/intro/scene2/text/titleTopLeft-red.png")
+    this.load.image("titleTopRight-red", "/movies/intro/scene2/text/titleTopRight-red.png")
+    this.load.image("titleBottomLeft-red", "/movies/intro/scene2/text/titleBottomLeft-red.png")
+    this.load.image("titleBottomRight-red", "/movies/intro/scene2/text/titleBottomRight-red.png")
+
+    this.load.image("textSelectorFull-red", "/movies/intro/scene2/elementsScreen/labelFull-red.png")
+    this.load.image("textSelectorEmpty-red", "/movies/intro/scene2/elementsScreen/labelEmpty-red.png")
+    this.load.image("subTextTopLeft-red", "/movies/intro/scene2/text/subTextTopLeft-red.png")
+    this.load.image("subTextTopLeft2-red", "/movies/intro/scene2/text/subTextTopLeft2-red.png")
+    this.load.image("subTextBottomRight-red", "/movies/intro/scene2/text/subTextBottomRight-red.png")
+    this.load.image("subTextBottomLeft-red", "/movies/intro/scene2/text/subTextBottomLeft-red.png")
+    this.load.image("barFull-red", "/movies/intro/scene2/elementsScreen/fullBar-red.png")
+    this.load.image("barEmpty-red", "/movies/intro/scene2/elementsScreen/emptyBar-red.png")
+
+    this.load.image("circle1-red", "/movies/intro/scene2/elementsScreen/circle1-red.png")
+    this.load.image("circle2-red", "/movies/intro/scene2/elementsScreen/circle2-red.png")
+    this.load.image("circle3-red", "/movies/intro/scene2/elementsScreen/circle3-red.png")
+
+    this.load.image("danger1-red", "/movies/intro/scene2/danger1-red.png")
+    this.load.image("danger2-red", "/movies/intro/scene2/danger2-red.png")
 
 
     //intro scene 3 por ahora no tiene assets
@@ -128,7 +156,7 @@ class startMovie extends Phaser.Scene {
           ) as CinematographyModular;
 
         startButton.on("pointerdown", ()=>{
-            getCinematographyMod.scene.start("CinematographyMod", {keyname: "cine_intro_2"}).bringToTop("CinematographyMod")
+            getCinematographyMod.scene.start("CinematographyMod", {keyname: "cine_intro_1"}).bringToTop("CinematographyMod")
         })
         startButton.on("pointerup", ()=>{
             this.scene.stop()

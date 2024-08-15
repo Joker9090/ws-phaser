@@ -153,7 +153,7 @@ class cineIntro7 {
       this.dialogue = new DialogueManager(
         this.cine,
         [
-          "You would definitely love this Dan... I'm sure of that...",
+          "Oh Dann, you’d definitely love this...",
         ],
         [""],
         [

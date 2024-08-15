@@ -305,9 +305,20 @@ class cineIntro2B {
       this.part = 1;
       this.dialogue = new DialogueManager(
         this.cine,
-        ["primer texto para la emergencia"],
+        ["Supplies are running out…",
+          "Fuel levels aren't very encouraging either...",
+          "I've decided to shut down all systems except life support and navigation to buy myself some time",
+        ],
         [""],
         [
+          {
+            delay: 1000,
+            keepAlive: 3000,
+          },
+          {
+            delay: 500,
+            keepAlive: 2000,
+          },
           {
             delay: 1000,
             keepAlive: 3000,
@@ -547,13 +558,22 @@ class cineIntro2B {
         });
       }
       const dialogueListener = (newState: string, nextText?: string) => {
+        let counter = 0
         if (newState === "CONTINUE") {
+          // counter++;
+          // if (counter === 2){
+          //   setTimeout(() => {
+          //     t1.stop();
+          //     t2.stop();
+          //     this.planetOnRadar?.setVisible(true);
+          //   }, 6000);
+          // }
+        } else if (newState === "FINISHED") {
           setTimeout(() => {
             t1.stop();
             t2.stop();
             this.planetOnRadar?.setVisible(true);
           }, 6000);
-        } else if (newState === "FINISHED") {
           this.ticker.deleteJob(job.id);
         }
       };
@@ -565,7 +585,7 @@ class cineIntro2B {
       this.part = 2;
       this.dialogue = new DialogueManager(
         this.cine,
-        ["Parece q encontramo el planet"],
+        ["The radar has detected a planet in the vicinity that seems to have a possible energy source"],
         [""],
         [
           {
@@ -614,7 +634,7 @@ class cineIntro2B {
 
   update(this: cineIntro2B, time: number, delta: number) {
     if (this.dialogue) this.dialogue.update();
-    if (this.nextCine) this.cine.scene.restart({ keyname: "cine_intro_3" });
+    if (this.nextCine) this.cine.scene.restart({ keyname: "cine_intro_2C" });
   }
 }
 

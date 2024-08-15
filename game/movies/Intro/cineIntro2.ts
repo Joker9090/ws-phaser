@@ -52,9 +52,9 @@ class cineIntro2 {
       y: window.innerHeight / 927,
     };
 
-    this.background3 = this.cine.add.image(0, 0, "fondo3").setOrigin(0.5);
-    this.background2 = this.cine.add.image(0, 0, "fondo2").setOrigin(0.5);
-    this.background1 = this.cine.add.image(0, 0, "fondo1").setOrigin(0.5);
+    this.background3 = this.cine.add.image(0, 0, "backgroundGlow").setOrigin(0.5);
+    this.background2 = this.cine.add.image(0, 0, "backgronudClouds").setOrigin(0.5);
+    this.background1 = this.cine.add.image(0, 0, "backgroundStars").setOrigin(0.5);
     this.planetScene2 = this.cine.add
       .image(800, 300, "planetScene2")
       .setOrigin(1, 0.8)
@@ -118,8 +118,7 @@ class cineIntro2 {
       this.dialogue = new DialogueManager(
         this.cine,
         [
-          "I've decided to shut down all systems except life support and navigation to buy myself some time.",
-          "Although it seems like I'm in uncharted waters, who knows where I've ended up.",
+          "I still haven't heard from Dann or the rest of the crew...",
         ],
         [""],
         [
@@ -188,8 +187,7 @@ class cineIntro2 {
       this.dialogue = new DialogueManager(
         this.cine,
         [
-          "Supplies are running out... Maybe I'll have enough for 3 more days if I'm lucky. Fuel levels aren't very encouraging either, if I don't do something soon I could be adrift and things could get a bit complicated.	",
-          "The radar has detected a planet in the vicinity that seems to have a possible energy source, I will go investigate it. Wish me luck Dan.",
+          "I hope they've manage to escape in time. ",
         ],
         [""],
         [

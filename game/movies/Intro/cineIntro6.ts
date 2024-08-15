@@ -119,7 +119,7 @@ class cineIntro6 {
       this.dialogue = new DialogueManager(
         this.cine,
         [
-          "This planet is pretty strange... I've never seen something like this place...",
+          "Wow, this planet is very strange...",
         ],
         ["cineIntro6_1"],
         [

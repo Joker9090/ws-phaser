@@ -79,6 +79,7 @@ class cineIntro5 {
     camera.postFX.addVignette(0.5, 0.5, 0.8);
     // ADD JOBS
     const part1 = (job: TickerJob) => {
+      
       this.cine.tweens.add({
         targets: [this.Cuerpo, this.BrazoDelantero, this.PiernaDelantera, this.PiernaTrasera],
         y: "+=50",

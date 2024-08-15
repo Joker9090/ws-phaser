@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import Ticker, { TickerJob } from './Ticker'
+import Ticker, { TickerJob } from "./Ticker";
 import cineIntro1 from "./Intro/cineInto1";
 import cineIntro2 from "./Intro/cineIntro2";
 import cineIntro3 from "./Intro/cineIntro3";
@@ -9,6 +9,7 @@ import cineIntro6 from "./Intro/cineIntro6";
 import cineIntro7 from "./Intro/cineIntro7";
 import MasterManager from "../MasterManager";
 import cineIntro2B from "./Intro/cineIntro2B";
+import cineIntro2C from "./Intro/cineIntro2C";
 
 class CinematographyModular extends Phaser.Scene {
   ticker: Ticker;
@@ -99,33 +100,35 @@ class CinematographyModular extends Phaser.Scene {
     if (!getMasterManagerScene.scene.isActive()) {
       this.scene.launch("MasterManager").sendToBack();
       // getMasterManagerScene.playMusic("deepSpace1");
-    }
-    else {
+    } else {
     }
 
     switch (keyname) {
-      case 'cine_intro_1':
+      case "cine_intro_1":
         this.playingCine = new cineIntro1(this);
         break;
-      case 'cine_intro_2':
+      case "cine_intro_2":
         this.playingCine = new cineIntro2(this);
         break;
-        case 'cine_intro_2B':
-          this.playingCine = new cineIntro2B(this);
-          break;
-      case 'cine_intro_3':
+      case "cine_intro_2B":
+        this.playingCine = new cineIntro2B(this);
+        break;
+      case "cine_intro_2C":
+        this.playingCine = new cineIntro2C(this);
+        break;
+      case "cine_intro_3":
         this.playingCine = new cineIntro3(this);
         break;
-      case 'cine_intro_4':
+      case "cine_intro_4":
         this.playingCine = new cineIntro4(this);
         break;
-      case 'cine_intro_5':
+      case "cine_intro_5":
         this.playingCine = new cineIntro5(this);
         break;
-      case 'cine_intro_6':
+      case "cine_intro_6":
         this.playingCine = new cineIntro6(this);
         break;
-      case 'cine_intro_7':
+      case "cine_intro_7":
         this.playingCine = new cineIntro7(this);
         break;
       default:
@@ -139,7 +142,3 @@ class CinematographyModular extends Phaser.Scene {
 }
 
 export default CinematographyModular;
-
-
-
-

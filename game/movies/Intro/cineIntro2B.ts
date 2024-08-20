@@ -91,12 +91,12 @@ class cineIntro2B {
     };
     console.log(window.innerHeight, window.innerWidth, "dimension");
     this.radarInnerCircle1 = this.cine.add
-      .image(0, 0, "radarInnerCircle1-red")
+      .image(0, 0, "radarInnerCircle1")
       .setOrigin(0.5)
       .setScale(0.8)
       .setPosition(0, -90);
     this.radarInnerCircle2 = this.cine.add
-      .image(0, 0, "radarInnerCircle2-red")
+      .image(0, 0, "radarInnerCircle2")
       .setOrigin(0.5)
       .setScale(0.8)
       .setPosition(0, -90);
@@ -108,7 +108,7 @@ class cineIntro2B {
       .setPosition(0, -90)
 
     this.radarInnerCircle3 = this.cine.add
-      .image(0, 0, "radarInnerCircle3-red")
+      .image(0, 0, "radarInnerCircle3")
       .setOrigin(1, 0.5)
       .setScale(0.8)
       .setPosition(0, -90);
@@ -128,7 +128,7 @@ class cineIntro2B {
       .setOrigin(0.5)
       .setVisible(false);
     this.titleTopLeft = this.cine.add
-      .image(-390, -350, "titleTopLeft-red")
+      .image(-390, -350, "titleTopLeft")
       .setOrigin(0.5)
       .setScale(0.7);
 
@@ -168,7 +168,7 @@ class cineIntro2B {
       .setScale(0.7);
 
     this.subTextTopLeft = this.cine.add
-      .image(-465, -260, "subTextTopLeft-red")
+      .image(-465, -260, "subTextTopLeft")
       .setOrigin(0, 0.5)
       .setFlipX(true)
       .setScale(0.7);

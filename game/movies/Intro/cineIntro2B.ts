@@ -61,11 +61,11 @@ class cineIntro2B {
   changeTextureGroup(items: Phaser.GameObjects.Image[]) {
     for (let i = 0; i < items.length; i++) {
       if (i + 1 <= items.length) {
-        if (items[i].texture.key.includes('red')){
+        if (items[i].texture.key.includes("red")) {
           const newText = items[i].texture.key.split("-")[0];
           items[i].setTexture(newText);
         } else {
-          const newText = items[i].texture.key+ '-red'
+          const newText = items[i].texture.key + "-red";
           items[i].setTexture(newText);
         }
       }
@@ -105,7 +105,7 @@ class cineIntro2B {
       .image(0, 0, "danger2-red")
       .setOrigin(0.5)
       .setScale(0.8)
-      .setPosition(0, -90)
+      .setPosition(0, -90);
 
     this.radarInnerCircle3 = this.cine.add
       .image(0, 0, "radarInnerCircle3")
@@ -119,7 +119,7 @@ class cineIntro2B {
       .setScale(0.7);
 
     this.radarCross = this.cine.add
-      .image(0, 0, "radarCross-red")
+      .image(0, 0, "radarCross")
       .setScale(0.7)
       .setPosition(0, -90);
 
@@ -148,22 +148,22 @@ class cineIntro2B {
       .setScale(0.7);
 
     this.textSelectorLeft1 = this.cine.add
-      .image(-350, -180, "textSelectorFull")
+      .image(-350, -180, "textSelectorFull-red")
       .setOrigin(0.5)
       .setScale(0.7);
 
     this.textSelectorLeft2 = this.cine.add
-      .image(-430, -180, "textSelectorEmpty")
+      .image(-430, -180, "textSelectorEmpty-red")
       .setOrigin(0.5)
       .setScale(0.7);
 
     this.textSelectorRight1 = this.cine.add
-      .image(450, -180, "textSelectorFull")
+      .image(450, -180, "textSelectorFull-red")
       .setOrigin(0.5)
       .setScale(0.7);
 
     this.textSelectorRight2 = this.cine.add
-      .image(370, -180, "textSelectorEmpty")
+      .image(370, -180, "textSelectorEmpty-red")
       .setOrigin(0.5)
       .setScale(0.7);
 
@@ -190,80 +190,87 @@ class cineIntro2B {
       .setScale(0.7);
 
     this.circle1 = this.cine.add
-      .image(-430, 130, "circle1")
+      .image(-430, 130, "circle1-red")
       .setOrigin(0.5)
       .setScale(0.7);
 
     this.circle2 = this.cine.add
-      .image(-350, 130, "circle2-red")
+      .image(-350, 130, "circle2")
       .setOrigin(1, 0.5)
       .setScale(0.7);
 
     this.circle3 = this.cine.add
-      .image(-270, 130, "circle3")
+      .image(-270, 130, "circle3-red")
       .setOrigin(0.5)
       .setScale(0.7);
 
     this.barraCircle1 = this.cine.add
-      .image(-430, 180, "textSelectorEmpty")
+      .image(-430, 180, "textSelectorEmpty-red")
       .setOrigin(0.5)
       .setScale(0.7);
 
     const fillBarraCircle1 = this.cine.add
-      .image(-430, 180, "textSelectorFull")
+      .image(-430, 180, "textSelectorFull-red")
       .setOrigin(0.5)
       .setScale(0);
 
     this.barraCircle2 = this.cine.add
-      .image(-350, 180, "textSelectorEmpty-red")
+      .image(-350, 180, "textSelectorEmpty")
       .setOrigin(0.5)
       .setScale(0.7);
 
     const fillBarraCircle2 = this.cine.add
-      .image(-350, 180, "textSelectorFull-red")
+      .image(-350, 180, "textSelectorFull")
       .setOrigin(0.5)
       .setScale(0);
 
     this.barraCircle3 = this.cine.add
-      .image(-270, 180, "textSelectorEmpty")
+      .image(-270, 180, "textSelectorEmpty-red")
       .setOrigin(0.5)
       .setScale(0.7);
 
     const fillBarraCircle3 = this.cine.add
-      .image(-270, 180, "textSelectorFull")
+      .image(-270, 180, "textSelectorFull-red")
       .setOrigin(0.5)
       .setScale(0);
 
     const arrow1Left = this.cine.add
-      .image(-350, -90, "arrowEmpty-red")
+      .image(-340, -90, "arrowEmpty-red")
       .setOrigin(0.5);
     const arrow1LeftFull = this.cine.add
-      .image(-350, -90, "arrowFull-red")
+      .image(-340, -90, "arrowFull-red")
       .setOrigin(0.5)
       .setFlipX(true);
     const arrow2Left = this.cine.add
-      .image(-390, -90, "arrowEmpty-red")
+      .image(-380, -90, "arrowEmpty-red")
       .setOrigin(0.5);
     const arrow3Left = this.cine.add
-      .image(-430, -90, "arrowEmpty-red")
+      .image(-420, -90, "arrowEmpty-red")
+      .setOrigin(0.5);
+    const arrow4eft = this.cine.add
+      .image(-460, -90, "arrowEmpty-red")
       .setOrigin(0.5);
     const arrow1Right = this.cine.add
-      .image(350, -90, "arrowEmpty-red")
+      .image(340, -90, "arrowEmpty-red")
       .setOrigin(0.5)
       .setFlipX(true);
     const arrow1RightFull = this.cine.add
-      .image(350, -90, "arrowFull-red")
+      .image(340, -90, "arrowFull-red")
       .setOrigin(0.5)
       .setFlipX(false);
     const arrow2Right = this.cine.add
-      .image(390, -90, "arrowEmpty-red")
+      .image(380, -90, "arrowEmpty-red")
       .setOrigin(0.5)
       .setFlipX(true);
     const arrow3Right = this.cine.add
-      .image(430, -90, "arrowEmpty-red")
+      .image(420, -90, "arrowEmpty-red")
       .setOrigin(0.5)
       .setFlipX(true);
-      const leftScreen = this.cine.add
+    const arrow4Right = this.cine.add
+      .image(460, -90, "arrowEmpty-red")
+      .setOrigin(0.5)
+      .setFlipX(true);
+    const leftScreen = this.cine.add
       .image(775, -100, "leftScreen")
       .setOrigin(0.5)
       .setFlipX(true);
@@ -274,22 +281,26 @@ class cineIntro2B {
     this.backgroundPanel = this.cine.add
       .image(0, 70, "backgroundPanel")
       .setOrigin(0.5);
-    let marker = 0
-    setInterval(()=>{
-      if (marker === 0){
-        marker = 1
-        arrow1LeftFull.setPosition(-430, -90)
-        arrow1RightFull.setPosition(430, -90)
+    let marker = 0;
+    setInterval(() => {
+      if (marker === 0) {
+        marker = 1;
+        arrow1LeftFull.setPosition(-460, -90);
+        arrow1RightFull.setPosition(460, -90);
       } else if (marker === 1) {
-        marker = 2
-        arrow1LeftFull.setPosition(-390, -90)
-        arrow1RightFull.setPosition(390, -90)
+        marker = 2;
+        arrow1LeftFull.setPosition(-420, -90);
+        arrow1RightFull.setPosition(420, -90);
       } else if (marker === 2) {
-        marker = 0
-        arrow1LeftFull.setPosition(-350, -90)
-        arrow1RightFull.setPosition(350, -90)
+        marker = 3;
+        arrow1LeftFull.setPosition(-380, -90);
+        arrow1RightFull.setPosition(380, -90);
+      } else if (marker === 3) {
+        marker = 0;
+        arrow1LeftFull.setPosition(-340, -90);
+        arrow1RightFull.setPosition(340, -90);
       }
-    }, 500)
+    }, 500);
     const barrasObject = {
       firstPos: 290,
       amount: 12,
@@ -328,13 +339,8 @@ class cineIntro2B {
     );
 
     const images = [
-      this.radarInnerCircle1,
-      this.radarInnerCircle2,
-      this.radarInnerCircle3,
       this.radarSearcher,
-      this.radarCross,
       this.planetOnRadar,
-      this.titleTopLeft,
       this.titleTopRight,
       this.titleBottomLeft,
       this.titleBottomRight,
@@ -342,7 +348,6 @@ class cineIntro2B {
       this.textSelectorLeft2,
       this.textSelectorRight1,
       this.textSelectorRight2,
-      this.subTextTopLeft,
       this.subTextTopRight,
       this.subTextBottomRight,
       this.subTextBottomLeft,
@@ -364,6 +369,8 @@ class cineIntro2B {
       arrow3Right,
       arrow1LeftFull,
       arrow1RightFull,
+      arrow4eft,
+      arrow4Right,
     ];
 
     const assetsScenes = [
@@ -407,11 +414,14 @@ class cineIntro2B {
       leftScreen,
       rightScreen,
       darkMask,
+      arrow4eft,
+      arrow4Right,
     ];
 
     // this.tintGroup(images)
 
-    this.container = this.cine.add.container(middlePoint.x, middlePoint.y)
+    this.container = this.cine.add
+      .container(middlePoint.x, middlePoint.y)
       .setSize(1920, 927);
     this.container.add(assetsScenes.concat(barrasArr, barrasContArr));
     this.container.setScale(
@@ -622,23 +632,23 @@ class cineIntro2B {
             this.textSelectorLeft1?.texture.key === "textSelectorFull"
           ) {
             this.textSelectorLeft1.setTexture(
-              this.part === 2 ? "textSelectorEmpty-red" : "textSelectorEmpty"
+              this.part === 1 ? "textSelectorEmpty-red" : "textSelectorEmpty"
             );
           } else {
             this.textSelectorLeft1?.setTexture(
-              this.part === 2 ? "textSelectorFull-red" : "textSelectorFull"
+              this.part === 1 ? "textSelectorFull-red" : "textSelectorFull"
             );
           }
           if (
-            this.textSelectorLeft2?.texture.key === "textSelectorFull-red" ||
+            this.textSelectorLeft1?.texture.key === "textSelectorFull-red" ||
             this.textSelectorLeft2?.texture.key === "textSelectorFull"
           ) {
-            this.textSelectorLeft2.setTexture(
-              this.part === 2 ? "textSelectorEmpty-red" : "textSelectorEmpty"
+            this.textSelectorLeft2?.setTexture(
+              this.part === 1 ? "textSelectorEmpty-red" : "textSelectorEmpty"
             );
           } else {
             this.textSelectorLeft2?.setTexture(
-              this.part === 2 ? "textSelectorFull-red" : "textSelectorFull"
+              this.part === 1 ? "textSelectorFull-red" : "textSelectorFull"
             );
           }
         },
@@ -658,11 +668,11 @@ class cineIntro2B {
             this.textSelectorRight1?.texture.key === "textSelectorFull"
           ) {
             this.textSelectorRight1.setTexture(
-              this.part === 2 ? "textSelectorEmpty-red" : "textSelectorEmpty"
+              this.part === 2 ? "textSelectorEmpty" : "textSelectorEmpty-red"
             );
           } else {
             this.textSelectorRight2?.setTexture(
-              this.part === 2 ? "textSelectorFull-red" : "textSelectorFull"
+              this.part === 2 ? "textSelectorFull" : "textSelectorFull-red"
             );
           }
           if (
@@ -670,11 +680,11 @@ class cineIntro2B {
             this.textSelectorRight2?.texture.key === "textSelectorFull"
           ) {
             this.textSelectorRight2.setTexture(
-              this.part === 2 ? "textSelectorEmpty-red" : "textSelectorEmpty"
+              this.part === 2 ? "textSelectorEmpty" : "textSelectorEmpty-red"
             );
           } else {
             this.textSelectorRight2?.setTexture(
-              this.part === 2 ? "textSelectorFull-red" : "textSelectorFull"
+              this.part === 2 ? "textSelectorFull" : "textSelectorFull-red"
             );
           }
         },

@@ -49,12 +49,10 @@ class cineIntro1 {
       y: window.innerHeight / 927,
     };
 
-    this.background3 = this.cine.add
-      .image(0, 0, "backgroundGlow")
-      .setOrigin(0.5, 0.5);
     this.background2 = this.cine.add
       .image(0, 0, "backgronudClouds")
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5, 0.5)
+      .setScale(1.4);
     this.background1 = this.cine.add
       .image(0, 0, "backgroundStars")
       .setOrigin(0.5, 0.5);
@@ -103,13 +101,21 @@ class cineIntro1 {
     // gameObjects.forEach((gameObject) => {
     //   gameObject.setAlpha(brightness);
     // });
+    const darkMask = this.cine.add.rectangle(
+      0,
+      0,
+      window.innerWidth,
+      window.innerHeight,
+      0,
+      1
+    );
 
     const container = this.cine.add
       .container(middlePoint.x, middlePoint.y)
       .setSize(1920, 927);
 
     container.add([
-      this.background3,
+      darkMask,
       this.background2,
       this.background1,
       this.darkness,
@@ -158,13 +164,45 @@ class cineIntro1 {
 
       const tween3 = this.cine.tweens.add({
         targets: [this.ship, this.shipOverImage, shipBlackMask],
-        angle: "+=5",
+        y: "+=5",
+        duration: 9851,
+        ease: "ease",
+        yoyo: true,
+        loop: -1,
+      });
+
+      const tween5 = this.cine.tweens.add({
+        targets: [this.ship, this.shipOverImage, shipBlackMask],
         x: "+=10",
+        duration: 5324,
+        ease: "ease",
+        yoyo: true,
+        loop: -1,
+      });
+
+      const tween4 = this.cine.tweens.add({
+        targets: [this.ship, this.shipOverImage, shipBlackMask],
         y: "-=15",
-        duration: 7000,
-        ease: "Linear",
-        yoyo: false,
-        loop: 0,
+        duration: 3456,
+        ease: "ease",
+        yoyo: true,
+        loop: -1,
+      });
+
+      
+      this.cine.tweens.add({
+        targets: [this.background2],
+        x: "-=200",
+        scale: 1.3,
+        duration: 16000,
+        ease: "ease",
+      });
+
+      this.cine.tweens.add({
+        targets: [this.background1],
+        scale: 1.3,
+        duration: 16000,
+        ease: "ease",
       });
 
       const dialogueListener = (newState: string, nextText?: string) => {
@@ -180,14 +218,7 @@ class cineIntro1 {
 
 
     const part2 = (job: TickerJob) => {
-      const tween3 = this.cine.tweens.add({
-        targets: [this.ship, this.shipOverImage, shipBlackMask],
-        x: "+=10",
-        y: "-=15",
-        angle: "-=5",
-        duration: 11600,
-        ease: "Linear",
-      });
+      
       this.dialogue = new DialogueManager(
         this.cine,
         [
@@ -203,9 +234,9 @@ class cineIntro1 {
       );
       this.dialogue?.play();
 
-      this.shipOverImage?.setScale(0.6).setPosition(0,0);
-      this.ship?.setScale(0.6).setPosition(0,0);
-      shipBlackMask.setScale(0.6).setPosition(0,0);
+      this.shipOverImage?.setScale(0.8).setPosition(0,0);
+      this.ship?.setScale(0.8).setPosition(0,0);
+      shipBlackMask.setScale(0.8).setPosition(0,0);
       this.planet?.setPosition(100, -300).setScale(1.7).setRotation(Math.PI)
 
       const dialogueListener = (newState: string, nextText?: string) => {
@@ -231,7 +262,7 @@ class cineIntro1 {
       this.shipZoomOn?.setVisible(true).setScale(0.5);
 
       this.cine.tweens.add({
-        targets: [this.background1, this.background2, this.background3],
+        targets: [this.background1, this.background2],
         x: "-=15",
         y: "+=20",
         duration: 14000,
@@ -240,15 +271,34 @@ class cineIntro1 {
         yoyo: true,
       });
 
-      this.cine.tweens.add({
-        targets: camera,
-        scrollY: "+=10",
-        duration: 14000,
-        delay: 500,
-        ease: "linear",
-        loop: -1,
+      const tween3 = this.cine.tweens.add({
+        targets: [shipZoomBlackMask, this.shipZoom,this.shipZoomOn],
+        x: "+=10",
+        duration: 5324,
+        ease: "ease",
         yoyo: true,
+        loop: -1,
       });
+
+      const tween5 = this.cine.tweens.add({
+        targets: [shipZoomBlackMask, this.shipZoom,this.shipZoomOn],
+        y: "+=10",
+        duration: 5324,
+        ease: "ease",
+        yoyo: true,
+        loop: -1,
+      });
+
+
+      // this.cine.tweens.add({
+      //   targets: camera,
+      //   scrollY: "+=10",
+      //   duration: 14000,
+      //   delay: 500,
+      //   ease: "linear",
+      //   loop: -1,
+      //   yoyo: true,
+      // });
 
     };
 
@@ -256,7 +306,7 @@ class cineIntro1 {
       this.dialogue = new DialogueManager(
         this.cine,
         [
-          "it's been more than 45 days since de incident...",
+          "it's been more than 45 days since the incident...",
         ],
         ["cineIntro1_3"],
         [
@@ -269,6 +319,7 @@ class cineIntro1 {
 
       this.dialogue.play();
       camera.setZoom(1);
+      camera.setScroll(0, -300)
       this.planet?.setVisible(false);
       this.shipOverImage?.setVisible(false);
       this.ship?.setVisible(false);
@@ -286,15 +337,15 @@ class cineIntro1 {
         yoyo: true,
       });
 
-      this.cine.tweens.add({
-        targets: camera,
-        scrollY: "+=10",
-        duration: 14000,
-        delay: 500,
-        ease: "linear",
-        loop: -1,
-        yoyo: true,
-      });
+      // this.cine.tweens.add({
+      //   targets: camera,
+      //   scrollY: "+=10",
+      //   duration: 14000,
+      //   delay: 500,
+      //   ease: "linear",
+      //   loop: -1,
+      //   yoyo: true,
+      // });
 
       const dialogueListener = (newState: string, nextText?: string) => {
         if (newState === "FINISHED") {
@@ -350,7 +401,7 @@ class cineIntro1 {
 
   update(this: cineIntro1, time: number, delta: number) {
     if (this.dialogue) this.dialogue.update();
-    if (this.nextCine) this.cine.scene.restart({ keyname: "cine_intro_2B" });
+    if (this.nextCine) this.cine.scene.restart({ keyname: "cine_intro_2" });
   }
 }
 

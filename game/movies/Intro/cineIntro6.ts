@@ -69,26 +69,26 @@ class cineIntro6 {
     const stars = this.cine.add
       .image(-30, 0, "estrellas")
       .setOrigin(0.5)
-      .setScale(1.5);
+      .setScale(1);
     const paisaje = this.cine.add
       .image(-30, 0, "superficie")
       .setOrigin(0.5)
-      .setScale(1.5);
+      .setScale(1);
     const nubes = this.cine.add
       .image(-30, 0, "nubes")
       .setOrigin(0.5)
-      .setScale(1.5);
+      .setScale(1);
     const fondo = this.cine.add
       .image(-30, 0, "fondoRed")
       .setOrigin(0.5)
-      .setScale(1.5);
+      .setScale(1);
     // this.VidrioVisor2 = this.cine.add.image(92, 0, "VidrioVisor").setOrigin(0.5).setAlpha(0)
     // this.VidrioVisorView2 = this.cine.add.image(92, 0, "VidrioVisorView").setOrigin(0.5).setAlpha(0)
     // this.AstroPerfilCorte = this.cine.add.image(-30, 0, "AstroPerfilCorte").setOrigin(0.5).setAlpha(0)
     this.Piso = this.cine.add
-      .image(0, 0, "PisoScene6")
-      .setOrigin(0.5, 0.5)
-      .setScale(1.3, 1);
+      .image(-100, middlePoint.y, "PisoScene6")
+      .setOrigin(0.5, 1)
+      .setScale(1.15, 1);
     // this.Meteorito1 = this.cine.add.image(600, -150, "meteoritoTest").setOrigin(0.5, 0.5).setFlipX(true)
     // this.Meteorito2 = this.cine.add.image(600, -200, "meteoritoTest").setOrigin(0.5, 0.5).setScale(0.1).setRotation(0)
     // this.Meteorito3 = this.cine.add.image(600, -300, "meteoritoTest").setOrigin(0.5, 0.5).setScale(0.1).setRotation(0)
@@ -187,24 +187,6 @@ class cineIntro6 {
         ease: 'lienar',
         loop: 0,
       });
-      // this.cine.tweens.add({
-      //   targets: this.Meteorito2,
-      //   x: -600,
-      //   scaleY: 0,
-      //   delay: 2000,
-      //   duration: 1500,
-      //   ease: 'lienar',
-      //   loop: -1,
-      // });
-      // this.cine.tweens.add({
-      //   targets: this.Meteorito3,
-      //   x: -600,
-      //   scaleY: 0,
-      //   delay: 1000,
-      //   duration: 1100,
-      //   ease: 'lienar',
-      //   loop: -1,
-      // });
       this.cine.tweens.add({
         targets: [this.background1, this.background2, this.background3],
         scale: 1.5,

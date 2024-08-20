@@ -77,9 +77,9 @@ class cineIntro4 {
     this.NubePolvo3 = this.cine.add
       .image(250, -150, "NubePolvo3")
       .setOrigin(0.5);
-    this.NaveAbierta = this.cine.add.image(50, 0, "NaveAbierta").setOrigin(0.5);
+    this.NaveAbierta = this.cine.add.image(50, 0, "NaveAbiertaB").setOrigin(0.5);
     this.NaveAbiertaLuces = this.cine.add
-      .image(50, 0, "NaveAbiertaLuces")
+      .image(50, 0, "NaveAbiertaLucesB")
       .setOrigin(0.5);
     this.NubePolvo4 = this.cine.add
       .image(280, 300, "NubePolvo4")
@@ -161,11 +161,7 @@ class cineIntro4 {
         targets: [this.NubePrimerPlano1, this.NubePrimerPlano3],
         alpha: 0,
         x: -1000,
-        duration: 6000,
-        onComplete: () => {
-          this.NaveAbierta?.setTexture("NaveAbiertaB");
-          this.NaveAbiertaLuces?.setTexture("NaveAbiertaLucesB");
-        },
+        duration: 10000,
         ease: "ease",
         loop: 0,
       });
@@ -173,7 +169,7 @@ class cineIntro4 {
         targets: [this.NubePrimerPlano2, this.NubePrimerPlano4],
         alpha: 0,
         x: 1000,
-        duration: 6000,
+        duration: 10000,
         ease: "ease",
         loop: 0,
       });

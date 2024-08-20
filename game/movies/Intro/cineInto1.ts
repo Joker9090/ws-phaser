@@ -184,10 +184,9 @@ class cineIntro1 {
         targets: [this.ship, this.shipOverImage, shipBlackMask],
         x: "+=10",
         y: "-=15",
-        duration: 6600,
+        angle: "-=5",
+        duration: 11600,
         ease: "Linear",
-        yoyo: false,
-        loop: 0,
       });
       this.dialogue = new DialogueManager(
         this.cine,
@@ -204,9 +203,9 @@ class cineIntro1 {
       );
       this.dialogue?.play();
 
-      this.shipOverImage?.setScale(0.5).setPosition(0,0);
-      this.ship?.setScale(0.5).setPosition(0,0);
-      shipBlackMask.setScale(0.5).setPosition(0,0);
+      this.shipOverImage?.setScale(0.6).setPosition(0,0);
+      this.ship?.setScale(0.6).setPosition(0,0);
+      shipBlackMask.setScale(0.6).setPosition(0,0);
       this.planet?.setPosition(100, -300).setScale(1.7).setRotation(Math.PI)
 
       const dialogueListener = (newState: string, nextText?: string) => {

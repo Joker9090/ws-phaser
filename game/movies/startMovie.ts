@@ -43,6 +43,8 @@ class startMovie extends Phaser.Scene {
 
     this.load.image("backgroundPanel", "/movies/intro/scene2/background.png")
     this.load.image("radarCross", "/movies/intro/scene2/radar/Cruz.png")
+    this.load.image("leftScreen", "/movies/intro/scene2/leftScreen.png")
+    this.load.image("rightScreen", "/movies/intro/scene2/rightScreen.png")
     this.load.image("arrowEmpty-red", "/movies/intro/scene2/radar/arrowEmpty-red.png")
     this.load.image("arrowFull-red", "/movies/intro/scene2/radar/arrowFull-red.png")
     this.load.image("arrowEmpty", "/movies/intro/scene2/radar/arrowEmpty.png")
@@ -118,8 +120,8 @@ class startMovie extends Phaser.Scene {
     this.load.image("NubePolvo5", "/movies/intro/scene5/NubePolvo5.png")
     this.load.image("NaveAbierta", "/movies/intro/scene5/NaveaterrizaOFF.png")
     this.load.image("NaveAbiertaLuces", "/movies/intro/scene5/NaveaterrizaON.png")
-    this.load.image("NaveAbiertaB", "/movies/intro/scene5/NaveAterrizaOFFB.png")
-    this.load.image("NaveAbiertaLucesB", "/movies/intro/scene5/NaveAterrizaONB.png")
+    this.load.image("NaveAbiertaB", "/movies/intro/scene5/NaveAterrizaONB.png")
+    this.load.image("NaveAbiertaLucesB", "/movies/intro/scene5/NaveAterrizaOFFB.png")
     this.load.image("OpacidadDetrasDeNave", "/movies/intro/scene5/OpacidadDetrasDeNave.png")
     this.load.image("PiedrasDelanteras", "/movies/intro/scene5/PiedrasDelanteras.png")
     this.load.image("PiedrasNave", "/movies/intro/scene5/PiedrasNave.png")
@@ -139,6 +141,10 @@ class startMovie extends Phaser.Scene {
     this.load.image("VidrioVisor", "/movies/intro/scene7/VidrioVisor.png")
     this.load.image("VidrioVisorView", "/movies/intro/scene7/VidrioVisorView.png")
     this.load.image("meteoritoTest", "/movies/intro/scene7/meteoritoTest.png")
+    this.load.image("estrellas", "/movies/intro/scene5/estrellas.png")
+    this.load.image("fondoRed", "/movies/intro/scene5/fondoRed.png")
+    this.load.image("nubes", "/movies/intro/scene5/nubes.png")
+    this.load.image("superficie", "/movies/intro/scene5/superficie.png")
     //intro scene 7
     this.load.audio("cineIntro7_1", "/movies/intro/audios/cineIntro7/cineIntro7_1.mp3")
     this.load.image("mountains", "/movies/intro/scene8/Montañas.png")
@@ -147,6 +153,7 @@ class startMovie extends Phaser.Scene {
     this.load.image("Nube3", "/movies/intro/scene8/Nube3.png")
     this.load.image("PisoNivel8", "/movies/intro/scene8/Piso.png")
     this.load.image("Piedra1", "/movies/intro/scene8/Piedra1.png")
+    this.load.image("piedrita", "/movies/intro/scene8/piedra.png")
     this.load.image("Piedra2", "/movies/intro/scene8/Piedra2.png")
     this.load.image("Piedra3", "/movies/intro/scene8/Piedra3.png")
     this.load.image("Piedra4", "/movies/intro/scene8/Piedra4.png")
@@ -162,7 +169,7 @@ class startMovie extends Phaser.Scene {
           ) as CinematographyModular;
 
         startButton.on("pointerdown", ()=>{
-            getCinematographyMod.scene.start("CinematographyMod", {keyname: "cine_intro_2B"}).bringToTop("CinematographyMod")
+            getCinematographyMod.scene.start("CinematographyMod", {keyname: "cine_intro_2C"}).bringToTop("CinematographyMod")
         })
         startButton.on("pointerup", ()=>{
             this.scene.stop()

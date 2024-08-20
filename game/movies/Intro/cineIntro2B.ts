@@ -263,6 +263,14 @@ class cineIntro2B {
       .image(430, -90, "arrowEmpty-red")
       .setOrigin(0.5)
       .setFlipX(true);
+      const leftScreen = this.cine.add
+      .image(775, -100, "leftScreen")
+      .setOrigin(0.5)
+      .setFlipX(true);
+    const rightScreen = this.cine.add
+      .image(-765, -100, "rightScreen")
+      .setOrigin(0.5)
+      .setFlipX(true);
     this.backgroundPanel = this.cine.add
       .image(0, 70, "backgroundPanel")
       .setOrigin(0.5);
@@ -396,7 +404,8 @@ class cineIntro2B {
       arrow3Right,
       arrow1LeftFull,
       arrow1RightFull,
-
+      leftScreen,
+      rightScreen,
       darkMask,
     ];
 
@@ -465,7 +474,7 @@ class cineIntro2B {
         targets: [camera],
         zoom: 1.4,
         scrollY: -95,
-        duration: 6000,
+        duration: 9000,
         ease: "ease",
       });
       this.cine.tweens.add({

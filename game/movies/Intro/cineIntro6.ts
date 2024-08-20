@@ -1,8 +1,7 @@
 import Phaser from "phaser";
-import Ticker, { TickerJob } from '../Ticker'
-import DialogueManager from '../DialogueManager'
+import Ticker, { TickerJob } from "../Ticker";
+import DialogueManager from "../DialogueManager";
 import CinematographyModular from "@/game/movies/Cinematography-modular";
-
 
 class cineIntro6 {
   ticker: Ticker;
@@ -31,10 +30,10 @@ class cineIntro6 {
   nextText?: Phaser.GameObjects.Text;
 
   constructor(cine: CinematographyModular) {
-    this.cine = cine
+    this.cine = cine;
     const tickerMS = 100;
     this.ticker = new Ticker(tickerMS);
-    this.playCine()
+    this.playCine();
   }
 
   playCine(this: cineIntro6) {
@@ -55,24 +54,46 @@ class cineIntro6 {
     const gameObjectScaler = {
       x: window.innerWidth / 1920,
       y: window.innerHeight / 927,
-    }
+    };
 
-
-    this.background3 = this.cine.add.image(0, 0, "fondo3").setOrigin(0.5)
-    this.background2 = this.cine.add.image(0, 0, "fondo2").setOrigin(0.5)
-    this.background1 = this.cine.add.image(0, 0, "fondo1").setOrigin(0.5)
-    this.AstroFrenteCorte = this.cine.add.image(0, 0, "AstroFrenteCorte").setOrigin(0.5)
-    this.VidrioVisor = this.cine.add.image(-30, 0, "VidrioVisor").setOrigin(0.5)
-    this.VidrioVisorView = this.cine.add.image(-30, 0, "VidrioVisorView").setOrigin(0.5).setScale(1.5)
+    this.background3 = this.cine.add.image(0, 0, "fondo3").setOrigin(0.5);
+    this.background2 = this.cine.add.image(0, 0, "fondo2").setOrigin(0.5);
+    this.background1 = this.cine.add.image(0, 0, "fondo1").setOrigin(0.5);
+    this.AstroFrenteCorte = this.cine.add
+      .image(0, 0, "AstroFrenteCorte")
+      .setOrigin(0.5);
+    this.VidrioVisor = this.cine.add
+      .image(-30, 0, "VidrioVisor")
+      .setOrigin(0.5);
+    // this.VidrioVisorView = this.cine.add.image(-30, 0, "VidrioVisorView").setOrigin(0.5).setScale(1.5)
+    const stars = this.cine.add
+      .image(-30, 0, "estrellas")
+      .setOrigin(0.5)
+      .setScale(1.5);
+    const paisaje = this.cine.add
+      .image(-30, 0, "superficie")
+      .setOrigin(0.5)
+      .setScale(1.5);
+    const nubes = this.cine.add
+      .image(-30, 0, "nubes")
+      .setOrigin(0.5)
+      .setScale(1.5);
+    const fondo = this.cine.add
+      .image(-30, 0, "fondoRed")
+      .setOrigin(0.5)
+      .setScale(1.5);
     // this.VidrioVisor2 = this.cine.add.image(92, 0, "VidrioVisor").setOrigin(0.5).setAlpha(0)
     // this.VidrioVisorView2 = this.cine.add.image(92, 0, "VidrioVisorView").setOrigin(0.5).setAlpha(0)
     // this.AstroPerfilCorte = this.cine.add.image(-30, 0, "AstroPerfilCorte").setOrigin(0.5).setAlpha(0)
-    this.Piso = this.cine.add.image(0, 0, "PisoScene6").setOrigin(0.5, 0.5).setScale(1.3,1)
-    this.Meteorito1 = this.cine.add.image(600, -150, "meteoritoTest").setOrigin(0.5, 0.5).setFlipX(true)
-    this.Meteorito2 = this.cine.add.image(600, -200, "meteoritoTest").setOrigin(0.5, 0.5).setScale(0.1).setRotation(0)
-    this.Meteorito3 = this.cine.add.image(600, -300, "meteoritoTest").setOrigin(0.5, 0.5).setScale(0.1).setRotation(0)
-    
-    const graphics = this.cine.make.graphics({ x: 0, y: 0 }, false );
+    this.Piso = this.cine.add
+      .image(0, 0, "PisoScene6")
+      .setOrigin(0.5, 0.5)
+      .setScale(1.3, 1);
+    // this.Meteorito1 = this.cine.add.image(600, -150, "meteoritoTest").setOrigin(0.5, 0.5).setFlipX(true)
+    // this.Meteorito2 = this.cine.add.image(600, -200, "meteoritoTest").setOrigin(0.5, 0.5).setScale(0.1).setRotation(0)
+    // this.Meteorito3 = this.cine.add.image(600, -300, "meteoritoTest").setOrigin(0.5, 0.5).setScale(0.1).setRotation(0)
+
+    const graphics = this.cine.make.graphics({ x: 0, y: 0 }, false);
     graphics.fillStyle(0xffffff);
     graphics.fillCircle(middlePoint.x - 30, middlePoint.y, 400);
 
@@ -80,14 +101,19 @@ class cineIntro6 {
     const mask = graphics.createGeometryMask();
 
     // Create an image (or any other game object) and apply the mask
-    this.Meteorito1.setMask(mask);
-    this.Meteorito2.setMask(mask);
-    this.Meteorito3.setMask(mask);
-    this.VidrioVisorView.setMask(mask)
+    // this.Meteorito1.setMask(mask);
+    // this.Meteorito2.setMask(mask);
+    // this.Meteorito3.setMask(mask);
+    stars.setMask(mask);
+    paisaje.setMask(mask);
+    nubes.setMask(mask);
+    fondo.setMask(mask);
 
     // const DialogueScene = this.game.scene.getScene("DialogueManager");
     // this.scene.launch(DialogueScene)
-    const container = this.cine.add.container(middlePoint.x, middlePoint.y).setSize(1920, 927)
+    const container = this.cine.add
+      .container(middlePoint.x, middlePoint.y)
+      .setSize(1920, 927);
     container.add([
       this.background3,
       this.background2,
@@ -95,16 +121,23 @@ class cineIntro6 {
       this.Piso,
       this.AstroFrenteCorte,
       // this.AstroPerfilCorte,
-      this.VidrioVisorView,
-      this.Meteorito1,
+      // this.Meteorito1,
       // this.Meteorito2,
       // this.Meteorito3,
+      fondo,
+      nubes,
+      stars,
+      paisaje,
       this.VidrioVisor,
       // this.VidrioVisorView2,
       // this.VidrioVisor2,
-    ])
-    container.setScale(gameObjectScaler.x < gameObjectScaler.y ? gameObjectScaler.y : gameObjectScaler.x)
-    const camera = this.cine.cameras.main
+    ]);
+    container.setScale(
+      gameObjectScaler.x < gameObjectScaler.y
+        ? gameObjectScaler.y
+        : gameObjectScaler.x
+    );
+    const camera = this.cine.cameras.main;
     camera.postFX.addVignette(0.5, 0.5, 0.8);
 
     const cameraDialogue = this.cine.cameras.add(
@@ -118,9 +151,7 @@ class cineIntro6 {
     const part1 = (job: TickerJob) => {
       this.dialogue = new DialogueManager(
         this.cine,
-        [
-          "Wow, this planet is very strange...",
-        ],
+        ["Wow, this planet is very strange..."],
         ["cineIntro6_1"],
         [
           {
@@ -129,31 +160,33 @@ class cineIntro6 {
           },
         ]
       );
-      this.dialogue?.play()
+      this.dialogue?.play();
 
       this.cine.tweens.add({
         targets: camera,
         zoom: 1.5,
         duration: 120000,
-        ease: 'lienar',
+        ease: "lienar",
         loop: -1,
         yoyo: true,
       });
       this.cine.tweens.add({
-        targets: this.VidrioVisorView,
-        x: '-=100',
+        targets: [fondo,
+          nubes,
+          stars,
+          paisaje],
+        x: "-=100",
         duration: 16000,
-        ease: 'ease',
+        ease: "ease",
         loop: 0,
       });
       this.cine.tweens.add({
-        targets: this.Meteorito1,
-        x: -600,
-        scaleY: 0,
-        duration: 2300,
+        targets: stars,
+        scale: 1.7,
+        duration: 10000,
         ease: 'lienar',
         loop: 0,
-      }); 
+      });
       // this.cine.tweens.add({
       //   targets: this.Meteorito2,
       //   x: -600,
@@ -176,19 +209,18 @@ class cineIntro6 {
         targets: [this.background1, this.background2, this.background3],
         scale: 1.5,
         duration: 120000,
-        ease: 'lienar',
+        ease: "lienar",
         loop: -1,
         yoyo: true,
       });
       this.cine.tweens.add({
         targets: [this.background2, this.Piso],
-        x: '+=200',
+        x: "+=200",
         duration: 17000,
         delay: 0,
         loop: 0,
-        ease: 'ease',
+        ease: "ease",
       });
-
 
       const dialogueListener = (newState: string, nextText?: string) => {
         if (newState === "CONTINUE") {
@@ -198,33 +230,19 @@ class cineIntro6 {
       };
       this.dialogue?.killState(dialogueListener);
       this.dialogue?.getState(dialogueListener);
-    }
+    };
 
     this.ticker.addJob(
-      new TickerJob(
-        1,
-        10,
-        part1,
-        false,
-        15000,
-        true,
-        (job: TickerJob) => {
-          this.nextCine = true;
-        }
-      )
+      new TickerJob(1, 10, part1, false, 15000, true, (job: TickerJob) => {
+        this.nextCine = true;
+      })
     );
   }
 
-
   update(this: cineIntro6, time: number, delta: number) {
     if (this.dialogue) this.dialogue.update();
-    if (this.nextCine) this.cine.scene.restart({ keyname: "cine_intro_7" })
-
+    if (this.nextCine) this.cine.scene.restart({ keyname: "cine_intro_7" });
   }
 }
 
 export default cineIntro6;
-
-
-
-

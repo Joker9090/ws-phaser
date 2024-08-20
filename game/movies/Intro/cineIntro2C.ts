@@ -111,7 +111,7 @@ class cineIntro2C {
     const spaceshipAmbientSoundEffect = this.cine.sound.add("spaceshipAmbient");
     spaceshipAmbientSoundEffect.setVolume(1.5);
     spaceshipAmbientSoundEffect.play();
-
+    
 
     const part1 = (job: TickerJob) => {
       this.dialogue = new DialogueManager(

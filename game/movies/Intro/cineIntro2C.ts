@@ -161,11 +161,12 @@ class cineIntro2C {
         duration: 45000,
         ease: "linear",
       });
+
       const tween2 = this.cine.tweens.add({
         targets: [camera],
-        zoom: 1.3,
-        duration: 60000,
-        ease: "linear",
+        zoom: 1.6,
+        duration: 40000,
+        ease: "ease",
       });
       const dialogueListener = (newState: string, nextText?: string) => {
         if (newState === "CONTINUE") {

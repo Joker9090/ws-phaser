@@ -151,7 +151,7 @@ class cineIntro1 {
 
       const tween2 = this.cine.tweens.add({
         targets: camera,
-        zoom: 1.3,
+        zoom: 1.5,
         duration: 120000,
         ease: "Linear",
       });

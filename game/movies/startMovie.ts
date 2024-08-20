@@ -39,7 +39,7 @@ class startMovie extends Phaser.Scene {
     this.load.image("planetScene2", "/movies/intro/scene2/planeta.png")
     this.load.image("part1SetUp", "/movies/intro/scene2/part1SetUp.png")
     this.load.image("part2SetUp", "/movies/intro/scene2/part2SetUp.png")
-    this.load.image("nave2C", "/movies/intro/scene2/naveLast.png")
+    this.load.image("nave2C", "/movies/intro/scene2/nave2C.png")
 
     this.load.image("backgroundPanel", "/movies/intro/scene2/background.png")
     this.load.image("radarCross", "/movies/intro/scene2/radar/Cruz.png")
@@ -169,7 +169,7 @@ class startMovie extends Phaser.Scene {
           ) as CinematographyModular;
 
         startButton.on("pointerdown", ()=>{
-            getCinematographyMod.scene.start("CinematographyMod", {keyname: "cine_intro_2C"}).bringToTop("CinematographyMod")
+            getCinematographyMod.scene.start("CinematographyMod", {keyname: "cine_intro_1"}).bringToTop("CinematographyMod")
         })
         startButton.on("pointerup", ()=>{
             this.scene.stop()

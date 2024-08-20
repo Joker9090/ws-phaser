@@ -43,6 +43,8 @@ class startMovie extends Phaser.Scene {
 
     this.load.image("backgroundPanel", "/movies/intro/scene2/background.png")
     this.load.image("radarCross", "/movies/intro/scene2/radar/Cruz.png")
+    this.load.image("arrowEmpty-red", "/movies/intro/scene2/radar/arrowEmpty-red.png")
+    this.load.image("arrowFull-red", "/movies/intro/scene2/radar/arrowFull-red.png")
     this.load.image("radarInnerCircle1", "/movies/intro/scene2/radar/inner.png")
     this.load.image("radarInnerCircle2", "/movies/intro/scene2/radar/middle.png")
     this.load.image("radarInnerCircle2B", "/movies/intro/scene2/radar/middlePointed.png")
@@ -157,7 +159,7 @@ class startMovie extends Phaser.Scene {
           ) as CinematographyModular;
 
         startButton.on("pointerdown", ()=>{
-            getCinematographyMod.scene.start("CinematographyMod", {keyname: "cine_intro_1"}).bringToTop("CinematographyMod")
+            getCinematographyMod.scene.start("CinematographyMod", {keyname: "cine_intro_2B"}).bringToTop("CinematographyMod")
         })
         startButton.on("pointerup", ()=>{
             this.scene.stop()

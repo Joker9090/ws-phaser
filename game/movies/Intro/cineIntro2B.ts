@@ -67,10 +67,15 @@ class cineIntro2B {
     }
   }
 
-  fixPosAndScale(items: Phaser.GameObjects.Image[], x: number, y: number, scale: number){
+  fixPosAndScale(
+    items: Phaser.GameObjects.Image[],
+    x: number,
+    y: number,
+    scale: number
+  ) {
     for (let i = 0; i < items.length; i++) {
       if (i + 1 <= items.length) {
-        items[i].setPosition(items[i].x + x, items[i].y + y).setScale(scale)
+        items[i].setPosition(items[i].x + x, items[i].y + y).setScale(scale);
       }
     }
   }
@@ -97,94 +102,183 @@ class cineIntro2B {
       .image(0, 0, "radarInnerCircle1-red")
       .setOrigin(0.5)
       .setScale(0.8)
-      .setPosition(0, -200);
+      .setPosition(0, -90);
     this.radarInnerCircle2 = this.cine.add
       .image(0, 0, "radarInnerCircle2-red")
-      .setOrigin(0.5);
-    this.dangerSign = this.cine.add.image(0, 0, "danger2-red").setOrigin(0.5);
+      .setOrigin(0.5)
+      .setScale(0.8)
+      .setPosition(0, -90);
+
+    this.dangerSign = this.cine.add
+      .image(0, 0, "danger2-red")
+      .setOrigin(0.5)
+      .setScale(0.8)
+      .setPosition(0, -90)
+      .setVisible(false);
+
     this.radarInnerCircle3 = this.cine.add
       .image(0, 0, "radarInnerCircle3-red")
-      .setOrigin(1, 0.5);
+      .setOrigin(1, 0.5)
+      .setScale(0.8)
+      .setPosition(0, -90);
+
     this.radarSearcher = this.cine.add
       .image(-100, -100, "radarSearcher-red")
-      .setOrigin(0.5);
+      .setOrigin(0.5)
+      .setScale(0.7);
+
     this.radarCross = this.cine.add
       .image(0, 0, "radarCross-red")
-      .setOrigin(0.5);
+      .setScale(0.7)
+      .setPosition(0, -90);
+
     this.planetOnRadar = this.cine.add
       .image(-100, -100, "planetOnRadar")
       .setOrigin(0.5)
       .setVisible(false);
     this.titleTopLeft = this.cine.add
-      .image(-540, -350, "titleTopLeft-red")
-      .setOrigin(0.5);
+      .image(-390, -350, "titleTopLeft-red")
+      .setOrigin(0.5)
+      .setScale(0.7);
+
     this.titleTopRight = this.cine.add
-      .image(650, -350, "titleTopRight-red")
-      .setOrigin(1, 0.5);
+      .image(480, -350, "titleTopRight-red")
+      .setOrigin(1, 0.5)
+      .setScale(0.7);
+
     this.titleBottomLeft = this.cine.add
-      .image(-540, 150, "titleBottomLeft-red")
-      .setOrigin(0.5);
+      .image(-390, 0, "titleBottomLeft-red")
+      .setOrigin(0.5)
+      .setScale(0.7);
+
     this.titleBottomRight = this.cine.add
-      .image(650, 150, "titleBottomRight-red")
-      .setOrigin(1, 0.5);
+      .image(480, 0, "titleBottomRight-red")
+      .setOrigin(1, 0.5)
+      .setScale(0.7);
+
     this.textSelectorLeft1 = this.cine.add
-      .image(-480, -100, "textSelectorFull-red")
-      .setOrigin(0.5);
+      .image(-350, -180, "textSelectorFull-red")
+      .setOrigin(0.5)
+      .setScale(0.7);
+
     this.textSelectorLeft2 = this.cine.add
-      .image(-600, -100, "textSelectorEmpty-red")
-      .setOrigin(0.5);
+      .image(-430, -180, "textSelectorEmpty-red")
+      .setOrigin(0.5)
+      .setScale(0.7);
+
     this.textSelectorRight1 = this.cine.add
-      .image(480, -100, "textSelectorFull-red")
-      .setOrigin(0.5);
+      .image(450, -180, "textSelectorFull-red")
+      .setOrigin(0.5)
+      .setScale(0.7);
+
     this.textSelectorRight2 = this.cine.add
-      .image(600, -100, "textSelectorEmpty-red")
-      .setOrigin(0.5);
+      .image(370, -180, "textSelectorEmpty-red")
+      .setOrigin(0.5)
+      .setScale(0.7);
+
     this.subTextTopLeft = this.cine.add
-      .image(-520, -220, "subTextTopLeft-red")
-      .setOrigin(0.5)
-      .setFlipX(true);
+      .image(-465, -260, "subTextTopLeft-red")
+      .setOrigin(0, 0.5)
+      .setFlipX(true)
+      .setScale(0.7);
+
     this.subTextTopRight = this.cine.add
-      .image(650, -220, "subTextTopLeft2-red")
+      .image(485, -270, "subTextTopLeft2-red")
       .setOrigin(1, 0.5)
-      .setFlipX(true);
+      .setFlipX(true)
+      .setScale(0.7);
+
     this.subTextBottomRight = this.cine.add
-      .image(650, 375, "subTextBottomRight-red")
+      .image(490, 190, "subTextBottomRight-red")
       .setOrigin(1, 0.5)
-      .setScale(0.9, 1);
+      .setScale(0.9, 1)
+      .setScale(0.7);
     this.subTextBottomLeft = this.cine.add
-      .image(-540, 200, "subTextBottomLeft-red")
-      .setOrigin(0.5);
-    this.circle1 = this.cine.add.image(-600, 300, "circle1-red").setOrigin(0.5);
-    this.barraCircle1 = this.cine.add
-      .image(-600, 380, "textSelectorEmpty-red")
-      .setOrigin(0.5);
-    const fillBarraCircle1 = this.cine.add
-      .image(-600, 380, "textSelectorFull-red")
+      .image(-390, 30, "subTextBottomLeft-red")
       .setOrigin(0.5)
-      .setScale(0);
+      .setScale(0.7);
+
+    this.circle1 = this.cine.add
+      .image(-430, 130, "circle1-red")
+      .setOrigin(0.5)
+      .setScale(0.7);
+
     this.circle2 = this.cine.add
-      .image(-475, 300, "circle2-red")
-      .setOrigin(1, 0.5);
+      .image(-350, 130, "circle2-red")
+      .setOrigin(1, 0.5)
+      .setScale(0.7);
+
+    this.circle3 = this.cine.add
+      .image(-270, 130, "circle3-red")
+      .setOrigin(0.5)
+      .setScale(0.7);
+
+    this.barraCircle1 = this.cine.add
+      .image(-430, 180, "textSelectorEmpty-red")
+      .setOrigin(0.5)
+      .setScale(0.7);
+
+    const fillBarraCircle1 = this.cine.add
+      .image(-430, 180, "textSelectorFull-red")
+      .setOrigin(0.5)
+      .setScale(0);
+
     this.barraCircle2 = this.cine.add
-      .image(-475, 380, "textSelectorEmpty-red")
-      .setOrigin(0.5);
+      .image(-350, 180, "textSelectorEmpty-red")
+      .setOrigin(0.5)
+      .setScale(0.7);
+
     const fillBarraCircle2 = this.cine.add
-      .image(-475, 380, "textSelectorFull-red")
+      .image(-350, 180, "textSelectorFull-red")
       .setOrigin(0.5)
       .setScale(0);
-    this.circle3 = this.cine.add.image(-350, 300, "circle3-red").setOrigin(0.5);
+
     this.barraCircle3 = this.cine.add
-      .image(-350, 380, "textSelectorEmpty-red")
-      .setOrigin(0.5);
+      .image(-270, 180, "textSelectorEmpty-red")
+      .setOrigin(0.5)
+      .setScale(0.7);
+
     const fillBarraCircle3 = this.cine.add
-      .image(-350, 380, "textSelectorFull-red")
+      .image(-270, 180, "textSelectorFull-red")
       .setOrigin(0.5)
       .setScale(0);
+
+    const arrow1Left = this.cine.add
+      .image(-350, -90, "arrowEmpty-red")
+      .setOrigin(0.5);
+    const arrow1LeftFull = this.cine.add
+      .image(-350, -90, "arrowFull-red")
+      .setOrigin(0.5)
+      .setFlipX(true);
+
+    const arrow2Left = this.cine.add
+      .image(-390, -90, "arrowEmpty-red")
+      .setOrigin(0.5);
+    const arrow3Left = this.cine.add
+      .image(-430, -90, "arrowEmpty-red")
+      .setOrigin(0.5);
+    const arrow1Right = this.cine.add
+      .image(350, -90, "arrowEmpty-red")
+      .setOrigin(0.5)
+      .setFlipX(true);
+    const arrow1RightFull = this.cine.add
+      .image(350, -90, "arrowFull-red")
+      .setOrigin(0.5)
+      .setFlipX(false);
+    const arrow2Right = this.cine.add
+      .image(390, -90, "arrowEmpty-red")
+      .setOrigin(0.5)
+      .setFlipX(true);
+    const arrow3Right = this.cine.add
+      .image(430, -90, "arrowEmpty-red")
+      .setOrigin(0.5)
+      .setFlipX(true);
     this.backgroundPanel = this.cine.add
       .image(0, 70, "backgroundPanel")
       .setOrigin(0.5);
+
     const barrasObject = {
-      firstPos: 400,
+      firstPos: 290,
       amount: 12,
       offset: 22,
     };
@@ -193,20 +287,20 @@ class cineIntro2B {
     for (let i = 0; i < barrasObject.amount; i++) {
       const barra = this.cine.add
         .image(
-          barrasObject.firstPos + i * 20 + barrasObject.offset,
-          350,
+          barrasObject.firstPos + i * 15 + barrasObject.offset,
+          170,
           "barFull-red"
         )
-        .setScale(0.8, 0.5)
+        .setScale(0.65, 0.5)
         .setOrigin(0.5, 1);
       barrasArr.push(barra);
       const barraContainer = this.cine.add
         .image(
-          barrasObject.firstPos + i * 20 + barrasObject.offset,
-          350,
+          barrasObject.firstPos + i * 15 + barrasObject.offset,
+          170,
           "barEmpty-red"
         )
-        .setScale(0.8, 1)
+        .setScale(0.65, 0.8)
         .setOrigin(0.5, 1);
       barrasContArr.push(barraContainer);
     }
@@ -251,7 +345,6 @@ class cineIntro2B {
       this.dangerSign,
     ];
 
-
     const assetsScenes = [
       this.backgroundPanel,
       this.radarInnerCircle1,
@@ -282,6 +375,14 @@ class cineIntro2B {
       fillBarraCircle2,
       fillBarraCircle3,
       this.dangerSign,
+      arrow1Left,
+      arrow2Left,
+      arrow3Left,
+      arrow1Right,
+      arrow2Right,
+      arrow3Right,
+      arrow1LeftFull,
+      arrow1RightFull,
 
       darkMask,
     ];
@@ -314,9 +415,11 @@ class cineIntro2B {
 
     const part1 = (job: TickerJob) => {
       this.part = 1;
+      // camera.setZoom(1.4).setScroll(0, -95)
       this.dialogue = new DialogueManager(
         this.cine,
-        ["Supplies are running out…",
+        [
+          "Supplies are running out…",
           "Fuel levels aren't very encouraging either...",
           "I've decided to shut down all systems except life support and navigation to buy myself some time",
         ],
@@ -346,14 +449,13 @@ class cineIntro2B {
         loop: -1,
         yoyo: true,
       });
-      // this.cine.tweens.add({
-      //   targets: [this.dangerSign],
-      //   slpha: 0,
-      //   duration: 200,
-      //   ease: "ease",
-      //   loop: -1,
-      // yoyo: true,
-      // });
+      this.cine.tweens.add({
+        targets: [camera],
+        zoom: 1.4,
+        scrollY: -95,
+        duration: 6000,
+        ease: "ease",
+      });
       this.cine.tweens.add({
         targets: this.dangerSign,
         alpha: 0.99,
@@ -409,7 +511,7 @@ class cineIntro2B {
       });
       this.cine.tweens.add({
         targets: [this.titleTopRight, this.titleBottomLeft],
-        alpha: 0.55,
+        alpha: 0.7,
         ease: "Power1",
         yoyo: true,
         duration: 1700,
@@ -417,14 +519,14 @@ class cineIntro2B {
       });
       this.cine.tweens.add({
         targets: fillBarraCircle1,
-        scale: 1,
+        scale: 0.7,
         ease: "Power1",
         duration: 1700,
         repeat: -1,
       });
       this.cine.tweens.add({
         targets: fillBarraCircle2,
-        scale: 1,
+        scale: 0.7,
         ease: "Power1",
         duration: 2700,
         delay: 500,
@@ -481,7 +583,7 @@ class cineIntro2B {
       });
       this.cine.tweens.add({
         targets: fillBarraCircle3,
-        scale: 1,
+        scale: 0.7,
         ease: "Power1",
         delay: 1500,
         duration: 700,
@@ -558,18 +660,19 @@ class cineIntro2B {
         repeat: -1,
       });
       for (let i = 0; i < barrasArr.length; i++) {
-        const randomNumber = Math.random();
+        const randomNumberInRange = (min: number, max: number) =>
+          Math.random() * (max - min) + min;
         this.cine.tweens.add({
           targets: barrasArr[i],
-          scaleY: randomNumber,
-          duration: randomNumber * 5000 + 5000,
+          scaleY: randomNumberInRange(0, 0.7),
+          duration: randomNumberInRange(0, 0.7) * 5000 + 5000,
           ease: "ease",
           loop: -1,
           yoyo: true,
         });
       }
       const dialogueListener = (newState: string, nextText?: string) => {
-        let counter = 0
+        let counter = 0;
         if (newState === "CONTINUE") {
           // counter++;
           // if (counter === 2){
@@ -596,7 +699,9 @@ class cineIntro2B {
       this.part = 2;
       this.dialogue = new DialogueManager(
         this.cine,
-        ["The radar has detected a planet in the vicinity that seems to have a possible energy source"],
+        [
+          "The radar has detected a planet in the vicinity that seems to have a possible energy source",
+        ],
         [""],
         [
           {

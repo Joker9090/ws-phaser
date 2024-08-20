@@ -99,7 +99,7 @@ class CinematographyModular extends Phaser.Scene {
     ) as MasterManager;
     if (!getMasterManagerScene.scene.isActive()) {
       this.scene.launch("MasterManager").sendToBack();
-      // getMasterManagerScene.playMusic("deepSpace1");
+      getMasterManagerScene.playMusic("deepSpace1");
     } else {
     }
 

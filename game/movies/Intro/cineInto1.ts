@@ -58,17 +58,18 @@ class cineIntro1 {
     this.background1 = this.cine.add
       .image(0, 0, "backgroundStars")
       .setOrigin(0.5, 0.5);
-    this.darkness = this.cine.add.image(0, 0, "darkness").setOrigin(0.5, 0.5);
+    this.darkness = this.cine.add.image(0, 0, "darkness").setOrigin(0.5, 0.5).setVisible(true);
     this.planet = this.cine.add
       .image(0, 0, "planet")
       .setOrigin(0.5, 0.5)
       .setPosition(-600, -0)
-      .setScale(1.4);
-    this.ship = this.cine.add.image(200, .100, "shipOff").setOrigin(0.5, 0.5).setScale(0.3);
+      .setScale(1.4).setVisible(false);
+    this.ship = this.cine.add.image(0, 0, "shipOff").setOrigin(0.5, 0.5).setScale(0.3);
     this.shipOverImage = this.cine.add
-      .image(200, .100, "shipOn")
+      .image(0, 0, "shipOn")
       .setOrigin(0.5, 0.5)
       .setScale(0.3);
+      const shipBlackMask = this.cine.add.image(0, 0, "shipOff").setOrigin(0.5, 0.5).setScale(0.3).setTint(0,0,0,0)
     this.shipZoom = this.cine.add
       .image(0, 300, "naveZoom")
       .setOrigin(0.5, 0.5)
@@ -79,10 +80,9 @@ class cineIntro1 {
       .setOrigin(0.5, 0.5)
       .setVisible(false)
       .setScale(0.7);
-    const shipBlackMask = this.cine.add.image(200, .100, "shipOff").setOrigin(0.5, 0.5).setScale(0.3).setTint(0,0,0,0)
-    const shipZoomBlackMask = this.cine.add
-    .image(0, 300, "naveZoom")
-    .setOrigin(0.5, 0.5)
+      const shipZoomBlackMask = this.cine.add
+      .image(0, 300, "naveZoom")
+      .setOrigin(0.5, 0.5)
     .setVisible(false)
     .setScale(0.7)
     .setTint(0,0,0,0);
@@ -204,9 +204,9 @@ class cineIntro1 {
       );
       this.dialogue?.play();
 
-      this.shipOverImage?.setScale(0.5).setPosition(-350,50);
-      this.ship?.setScale(0.5).setPosition(-350,50);
-      shipBlackMask.setScale(0.5).setPosition(-350,50);
+      this.shipOverImage?.setScale(0.5).setPosition(0,0);
+      this.ship?.setScale(0.5).setPosition(0,0);
+      shipBlackMask.setScale(0.5).setPosition(0,0);
       this.planet?.setPosition(100, -300).setScale(1.7).setRotation(Math.PI)
 
       const dialogueListener = (newState: string, nextText?: string) => {

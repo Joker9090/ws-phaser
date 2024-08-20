@@ -61,21 +61,13 @@ class cineIntro2B {
   changeTextureGroup(items: Phaser.GameObjects.Image[]) {
     for (let i = 0; i < items.length; i++) {
       if (i + 1 <= items.length) {
-        const newText = items[i].texture.key.split("-")[0];
-        items[i].setTexture(newText);
-      }
-    }
-  }
-
-  fixPosAndScale(
-    items: Phaser.GameObjects.Image[],
-    x: number,
-    y: number,
-    scale: number
-  ) {
-    for (let i = 0; i < items.length; i++) {
-      if (i + 1 <= items.length) {
-        items[i].setPosition(items[i].x + x, items[i].y + y).setScale(scale);
+        if (items[i].texture.key.includes('red')){
+          const newText = items[i].texture.key.split("-")[0];
+          items[i].setTexture(newText);
+        } else {
+          const newText = items[i].texture.key+ '-red'
+          items[i].setTexture(newText);
+        }
       }
     }
   }
@@ -114,7 +106,6 @@ class cineIntro2B {
       .setOrigin(0.5)
       .setScale(0.8)
       .setPosition(0, -90)
-      .setVisible(false);
 
     this.radarInnerCircle3 = this.cine.add
       .image(0, 0, "radarInnerCircle3-red")
@@ -157,22 +148,22 @@ class cineIntro2B {
       .setScale(0.7);
 
     this.textSelectorLeft1 = this.cine.add
-      .image(-350, -180, "textSelectorFull-red")
+      .image(-350, -180, "textSelectorFull")
       .setOrigin(0.5)
       .setScale(0.7);
 
     this.textSelectorLeft2 = this.cine.add
-      .image(-430, -180, "textSelectorEmpty-red")
+      .image(-430, -180, "textSelectorEmpty")
       .setOrigin(0.5)
       .setScale(0.7);
 
     this.textSelectorRight1 = this.cine.add
-      .image(450, -180, "textSelectorFull-red")
+      .image(450, -180, "textSelectorFull")
       .setOrigin(0.5)
       .setScale(0.7);
 
     this.textSelectorRight2 = this.cine.add
-      .image(370, -180, "textSelectorEmpty-red")
+      .image(370, -180, "textSelectorEmpty")
       .setOrigin(0.5)
       .setScale(0.7);
 
@@ -199,7 +190,7 @@ class cineIntro2B {
       .setScale(0.7);
 
     this.circle1 = this.cine.add
-      .image(-430, 130, "circle1-red")
+      .image(-430, 130, "circle1")
       .setOrigin(0.5)
       .setScale(0.7);
 
@@ -209,17 +200,17 @@ class cineIntro2B {
       .setScale(0.7);
 
     this.circle3 = this.cine.add
-      .image(-270, 130, "circle3-red")
+      .image(-270, 130, "circle3")
       .setOrigin(0.5)
       .setScale(0.7);
 
     this.barraCircle1 = this.cine.add
-      .image(-430, 180, "textSelectorEmpty-red")
+      .image(-430, 180, "textSelectorEmpty")
       .setOrigin(0.5)
       .setScale(0.7);
 
     const fillBarraCircle1 = this.cine.add
-      .image(-430, 180, "textSelectorFull-red")
+      .image(-430, 180, "textSelectorFull")
       .setOrigin(0.5)
       .setScale(0);
 
@@ -234,12 +225,12 @@ class cineIntro2B {
       .setScale(0);
 
     this.barraCircle3 = this.cine.add
-      .image(-270, 180, "textSelectorEmpty-red")
+      .image(-270, 180, "textSelectorEmpty")
       .setOrigin(0.5)
       .setScale(0.7);
 
     const fillBarraCircle3 = this.cine.add
-      .image(-270, 180, "textSelectorFull-red")
+      .image(-270, 180, "textSelectorFull")
       .setOrigin(0.5)
       .setScale(0);
 
@@ -250,7 +241,6 @@ class cineIntro2B {
       .image(-350, -90, "arrowFull-red")
       .setOrigin(0.5)
       .setFlipX(true);
-
     const arrow2Left = this.cine.add
       .image(-390, -90, "arrowEmpty-red")
       .setOrigin(0.5);
@@ -276,7 +266,22 @@ class cineIntro2B {
     this.backgroundPanel = this.cine.add
       .image(0, 70, "backgroundPanel")
       .setOrigin(0.5);
-
+    let marker = 0
+    setInterval(()=>{
+      if (marker === 0){
+        marker = 1
+        arrow1LeftFull.setPosition(-430, -90)
+        arrow1RightFull.setPosition(430, -90)
+      } else if (marker === 1) {
+        marker = 2
+        arrow1LeftFull.setPosition(-390, -90)
+        arrow1RightFull.setPosition(390, -90)
+      } else if (marker === 2) {
+        marker = 0
+        arrow1LeftFull.setPosition(-350, -90)
+        arrow1RightFull.setPosition(350, -90)
+      }
+    }, 500)
     const barrasObject = {
       firstPos: 290,
       amount: 12,
@@ -343,6 +348,14 @@ class cineIntro2B {
       fillBarraCircle2,
       fillBarraCircle3,
       this.dangerSign,
+      arrow1Left,
+      arrow2Left,
+      arrow3Left,
+      arrow1Right,
+      arrow2Right,
+      arrow3Right,
+      arrow1LeftFull,
+      arrow1RightFull,
     ];
 
     const assetsScenes = [
@@ -389,8 +402,7 @@ class cineIntro2B {
 
     // this.tintGroup(images)
 
-    this.container = this.cine.add
-      .container(middlePoint.x, middlePoint.y)
+    this.container = this.cine.add.container(middlePoint.x, middlePoint.y)
       .setSize(1920, 927);
     this.container.add(assetsScenes.concat(barrasArr, barrasContArr));
     this.container.setScale(
@@ -427,7 +439,7 @@ class cineIntro2B {
         [
           {
             delay: 1000,
-            keepAlive: 300000,
+            keepAlive: 3000,
           },
           {
             delay: 500,
@@ -601,11 +613,11 @@ class cineIntro2B {
             this.textSelectorLeft1?.texture.key === "textSelectorFull"
           ) {
             this.textSelectorLeft1.setTexture(
-              this.part === 2 ? "textSelectorEmpty" : "textSelectorEmpty-red"
+              this.part === 2 ? "textSelectorEmpty-red" : "textSelectorEmpty"
             );
           } else {
             this.textSelectorLeft1?.setTexture(
-              this.part === 2 ? "textSelectorFull" : "textSelectorFull-red"
+              this.part === 2 ? "textSelectorFull-red" : "textSelectorFull"
             );
           }
           if (
@@ -613,11 +625,11 @@ class cineIntro2B {
             this.textSelectorLeft2?.texture.key === "textSelectorFull"
           ) {
             this.textSelectorLeft2.setTexture(
-              this.part === 2 ? "textSelectorEmpty" : "textSelectorEmpty-red"
+              this.part === 2 ? "textSelectorEmpty-red" : "textSelectorEmpty"
             );
           } else {
             this.textSelectorLeft2?.setTexture(
-              this.part === 2 ? "textSelectorFull" : "textSelectorFull-red"
+              this.part === 2 ? "textSelectorFull-red" : "textSelectorFull"
             );
           }
         },
@@ -637,11 +649,11 @@ class cineIntro2B {
             this.textSelectorRight1?.texture.key === "textSelectorFull"
           ) {
             this.textSelectorRight1.setTexture(
-              this.part === 2 ? "textSelectorEmpty" : "textSelectorEmpty-red"
+              this.part === 2 ? "textSelectorEmpty-red" : "textSelectorEmpty"
             );
           } else {
             this.textSelectorRight2?.setTexture(
-              this.part === 2 ? "textSelectorFull" : "textSelectorFull-red"
+              this.part === 2 ? "textSelectorFull-red" : "textSelectorFull"
             );
           }
           if (
@@ -649,11 +661,11 @@ class cineIntro2B {
             this.textSelectorRight2?.texture.key === "textSelectorFull"
           ) {
             this.textSelectorRight2.setTexture(
-              this.part === 2 ? "textSelectorEmpty" : "textSelectorEmpty-red"
+              this.part === 2 ? "textSelectorEmpty-red" : "textSelectorEmpty"
             );
           } else {
             this.textSelectorRight2?.setTexture(
-              this.part === 2 ? "textSelectorFull" : "textSelectorFull-red"
+              this.part === 2 ? "textSelectorFull-red" : "textSelectorFull"
             );
           }
         },
@@ -716,7 +728,7 @@ class cineIntro2B {
       this.changeTextureGroup(barrasArr);
       this.changeTextureGroup(barrasContArr);
       this.dangerSign?.setVisible(false);
-      camera.setZoom(1);
+      // camera.setZoom(1);
 
       const dialogueListener = (newState: string, nextText?: string) => {
         if (newState === "CONTINUE") {

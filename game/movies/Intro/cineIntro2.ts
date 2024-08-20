@@ -62,11 +62,12 @@ class cineIntro2 {
     this.part1SetUp = this.cine.add
       .image(0, 0, "part1SetUp")
       .setOrigin(0.5)
-      .setSize(window.innerWidth, window.innerHeight);
+      .setSize(window.innerWidth, window.innerHeight)
+      .setVisible(false);
     this.part2SetUp = this.cine.add
       .image(0, 0, "part2SetUp")
       .setOrigin(0.5)
-      .setVisible(false);
+      
     // panelControl
 
    
@@ -115,6 +116,8 @@ class cineIntro2 {
     spaceshipAmbientSoundEffect.play();
 
     const part1 = (job: TickerJob) => {
+      this.part1SetUp?.setVisible(true);
+      this.part2SetUp?.setVisible(false);
       this.dialogue = new DialogueManager(
         this.cine,
         [
@@ -240,12 +243,12 @@ class cineIntro2 {
     };
 
     this.ticker.addJob(
-      new TickerJob(1, 10, part1, false, undefined, true, (job: TickerJob) => {
+      new TickerJob(1, 10, part2, false, undefined, true, (job: TickerJob) => {
         this.ticker.addNextJob(
           new TickerJob(
             2,
             0,
-            part2,
+            part1,
             false,
             undefined,
             true,

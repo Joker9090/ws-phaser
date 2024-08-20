@@ -67,6 +67,14 @@ class cineIntro2B {
     }
   }
 
+  fixPosAndScale(items: Phaser.GameObjects.Image[], x: number, y: number, scale: number){
+    for (let i = 0; i < items.length; i++) {
+      if (i + 1 <= items.length) {
+        items[i].setPosition(items[i].x + x, items[i].y + y).setScale(scale)
+      }
+    }
+  }
+
   playCine(this: cineIntro2B) {
     // START ticker
     this.cine.time.addEvent({
@@ -87,7 +95,9 @@ class cineIntro2B {
     console.log(window.innerHeight, window.innerWidth, "dimension");
     this.radarInnerCircle1 = this.cine.add
       .image(0, 0, "radarInnerCircle1-red")
-      .setOrigin(0.5);
+      .setOrigin(0.5)
+      .setScale(0.8)
+      .setPosition(0, -200);
     this.radarInnerCircle2 = this.cine.add
       .image(0, 0, "radarInnerCircle2-red")
       .setOrigin(0.5);
@@ -241,6 +251,7 @@ class cineIntro2B {
       this.dangerSign,
     ];
 
+
     const assetsScenes = [
       this.backgroundPanel,
       this.radarInnerCircle1,
@@ -313,7 +324,7 @@ class cineIntro2B {
         [
           {
             delay: 1000,
-            keepAlive: 3000,
+            keepAlive: 300000,
           },
           {
             delay: 500,

@@ -100,9 +100,9 @@ class cineIntro1 {
       this.shipZoomOn,
     ];
 
-    gameObjects.forEach((gameObject) => {
-      gameObject.setAlpha(brightness);
-    });
+    // gameObjects.forEach((gameObject) => {
+    //   gameObject.setAlpha(brightness);
+    // });
 
     const container = this.cine.add
       .container(middlePoint.x, middlePoint.y)
@@ -351,7 +351,7 @@ class cineIntro1 {
 
   update(this: cineIntro1, time: number, delta: number) {
     if (this.dialogue) this.dialogue.update();
-    if (this.nextCine) this.cine.scene.restart({ keyname: "cine_intro_2" });
+    if (this.nextCine) this.cine.scene.restart({ keyname: "cine_intro_2B" });
   }
 }
 

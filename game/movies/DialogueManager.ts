@@ -113,7 +113,7 @@ class DialogueManager {
       },
     });
 
-    const graphics = this.scene.add.graphics();
+    const graphics = this.scene.add.graphics()
     graphics.fillStyle(0xe0e1dd, 0.8);
     graphics.lineStyle(5, 0x1b263b, 0.8)
     graphics.strokeRoundedRect(
@@ -146,6 +146,8 @@ class DialogueManager {
     }
 
     this.scene.cameras.main.ignore(this.container);
+    
+
   }
 
   getState(fn: Function) {
@@ -234,6 +236,7 @@ class DialogueManager {
   }
 
   update() {
+    this.container?.setVisible(false);
     if (this.canChangeText) {
       if (this.cursors) {
         if (this.cursors.space.isDown) {

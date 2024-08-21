@@ -148,9 +148,10 @@ class cineIntro2C {
           // this.planetScene2,
           // this.planetScene2,
         ],
-        x: "-=200",
+        x: "-=600",
+        scale: 1.3,
         duration: 45000,
-        ease: "linear",
+        ease: "ease",
       });
       this.cine.tweens.add({
         targets: [

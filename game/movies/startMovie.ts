@@ -169,7 +169,7 @@ class startMovie extends Phaser.Scene {
           ) as CinematographyModular;
 
         startButton.on("pointerdown", ()=>{
-            getCinematographyMod.scene.start("CinematographyMod", {keyname: "cine_intro_1"}).bringToTop("CinematographyMod")
+            getCinematographyMod.scene.start("CinematographyMod", {keyname: "cine_intro_4"}).bringToTop("CinematographyMod")
         })
         startButton.on("pointerup", ()=>{
             this.scene.stop()

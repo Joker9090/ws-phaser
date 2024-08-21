@@ -319,7 +319,7 @@ class cineIntro1 {
 
       this.dialogue.play();
       camera.setZoom(1);
-      camera.setScroll(0, -300)
+      camera.setScroll(0, -400)
       this.planet?.setVisible(false);
       this.shipOverImage?.setVisible(false);
       this.ship?.setVisible(false);

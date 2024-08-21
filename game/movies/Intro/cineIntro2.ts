@@ -121,7 +121,7 @@ class cineIntro2 {
       this.dialogue = new DialogueManager(
         this.cine,
         [
-          "I still haven't heard from Dann or the rest of the crew...",
+          "I hope they've manage to escape in time.",
         ],
         [""],
         [
@@ -190,7 +190,7 @@ class cineIntro2 {
       this.dialogue = new DialogueManager(
         this.cine,
         [
-          "I hope they've manage to escape in time. ",
+          "I still haven't heard from Dann or the rest of the crew...",
         ],
         [""],
         [

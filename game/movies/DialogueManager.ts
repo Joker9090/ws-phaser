@@ -236,7 +236,6 @@ class DialogueManager {
   }
 
   update() {
-    this.container?.setVisible(false);
     if (this.canChangeText) {
       if (this.cursors) {
         if (this.cursors.space.isDown) {

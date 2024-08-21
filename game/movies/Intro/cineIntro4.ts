@@ -71,7 +71,7 @@ class cineIntro4 {
     this.NubePolvo1 = this.cine.add
       .image(300, -400, "NubePolvo1")
       .setOrigin(0.5)
-      .setAlpha(0.9);
+      .setAlpha(0.9).setVisible(false);
     this.NubePolvo2 = this.cine.add
       .image(-150, -250, "NubePolvo2")
       .setOrigin(0.5)
@@ -81,7 +81,9 @@ class cineIntro4 {
     this.NubePolvo3 = this.cine.add
       .image(250, -150, "NubePolvo3")
       .setOrigin(0.5)
-      .setScale(0.3);
+      .setScale(0.3)
+      .setAlpha(0.9);
+
     this.NaveAbierta = this.cine.add.image(50, 0, "NaveAbiertaB").setOrigin(0.5);
     this.NaveAbiertaLuces = this.cine.add
       .image(50, 0, "NaveAbiertaLucesB")

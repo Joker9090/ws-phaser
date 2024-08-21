@@ -162,7 +162,7 @@ class startMovie extends Phaser.Scene {
 
     create(this: startMovie) {
 
-        const startButton = this.add.image(window.innerWidth / 2, window.innerHeight / 2, "startButton").setInteractive()
+        const startButton = this.add.image(window.innerWidth / 2, window.innerHeight / 2, "startButton").setInteractive();
 
         const getCinematographyMod = this.game.scene.getScene(
             "CinematographyMod"

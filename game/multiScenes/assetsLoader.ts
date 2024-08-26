@@ -326,8 +326,8 @@ class AssetsLoader {
       percentText.destroy();
       assetText.destroy();
       this.finished = true
-      this.scene.scene.restart({text:"menu"})
-      // this.scene.makeTransition("Game", { level: 1, lifes: 3 });
+      // this.scene.scene.restart({text:"menu"})
+      this.scene.makeTransition("Game", { level: 2, lifes: 3 });
     });
     const scenesTitles: Array<SceneKeys> = [
       "Menu",

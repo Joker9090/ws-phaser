@@ -1,22 +1,27 @@
 import Phaser from "phaser";
-import Player from "./assets/Player";
-import Mapa1 from "./maps/Mapa1";
-import Mapa2 from "./maps/Mapa2";
-
+// MAPAS PLANETA 1
+import p1Mapa0 from "./maps/planet1/Mapa0";
+import p1Mapa1 from "./maps/planet1/Mapa1";
+import p1Mapa2 from "./maps/planet1/Mapa2";
+import p1Mapa3 from "./maps/planet1/Mapa3";
+import p1Mapa4 from "./maps/planet1/Mapa4";
+// MAPAS PLANETA 2
 import p2Mapa1 from "./maps/planet2/p2Mapa1";
-
-import MasterManager from "./MasterManager";
-import BetweenScenes, { BetweenScenesStatus } from "./BetweenScenes";
 import p2Mapa2 from "./maps/planet2/p2Mapa2";
 import p2Mapa3 from "./maps/planet2/p2Mapa3";
+// MAPAS PLANETA 3
 import p3Mapa1 from "./maps/planet3/p3Mapa1";
 import p3Mapa2 from "./maps/planet3/p3Mapa2";
 import p3Mapa3 from "./maps/planet3/p3Mapa3";
+// MAPAS PLANETA 4
 import sMapa1 from "./maps/sun/sMapa1";
 import sMapa2 from "./maps/sun/sMapa2";
 import sMapa3 from "./maps/sun/sMapa3";
+// OTRAS COSAS
+import Player from "./assets/Player";
 import UIClass from "./assets/UIClass";
-import MapaTest from "./maps/mapTest";
+import MasterManager from "./MasterManager";
+import BetweenScenes, { BetweenScenesStatus } from "./BetweenScenes";
 
 export type loseConfig = {
   position: {
@@ -34,12 +39,12 @@ class Game extends Phaser.Scene {
   monchi?: Player;
   graphics?: Phaser.GameObjects.Graphics;
   map?:
-    Mapa1 | Mapa2 |
+    p1Mapa0 | p1Mapa1 | p1Mapa2 | p1Mapa3 | p1Mapa4 |
     p2Mapa1 | p2Mapa2 | p2Mapa3 |
     p3Mapa1 | p3Mapa2 | p3Mapa3 |
-    sMapa1 | sMapa2 | sMapa3 | MapaTest;
+    sMapa1 | sMapa2 | sMapa3;
   lifes?: number;
-  levelIs?: number;
+  levelIs: number = 0;
   timeLevel: number = 0;
   goingBack: boolean = false;
 
@@ -125,7 +130,7 @@ class Game extends Phaser.Scene {
       for (let i = 0; i < 25; i++) {
         this.time.delayedCall(time * i, () =>
           ((rotate) => {
-            if (isNormal){
+            if (isNormal) {
               this.cameras.main.setRotation(rotate);
             } else {
               this.cameras.main.setRotation(Math.PI - rotate);
@@ -141,7 +146,7 @@ class Game extends Phaser.Scene {
 
   win() {
     if (this.canWin && this.monchi) {
-      this.makeTransition("MultiScene", { text: "levels" });
+      this.makeTransition("Game", { level: this.levelIs + 1, lifes: this.lifes });
     }
     // lógica para pasar a movie dependiendo el nivel
   }
@@ -166,7 +171,7 @@ class Game extends Phaser.Scene {
         }
         break;
       case "fireball":
-
+        console.log("TOCO EL FIREBALL")
         break;
     }
   }
@@ -191,6 +196,11 @@ class Game extends Phaser.Scene {
     }
   }
 
+  loseLife() {
+    //@ts-ignore
+    this.lose(this.checkPoint ? this.map?.loseConfig.checkpoint : this.map?.loseConfig.start)
+  }
+
   makeTransition(sceneName: string, data: any) {
     const getBetweenScenesScene = this.game.scene.getScene(
       "BetweenScenes"
@@ -212,47 +222,57 @@ class Game extends Phaser.Scene {
 
   create(this: Game, data: { level: number; lifes: number, stagePoint: number }) {
     this.checkPoint = 0;
+    this.levelIs = data.level;
+    this.lifes = data.lifes;
     /* CHOSE LEVEL, LIFES AND AUDIO */
     switch (data.level) {
+      case 0:
+        this.map = new p1Mapa0(this, this.monchi!);
+        break;
       case 1:
-        this.map = new Mapa1(this, this.monchi!);
+        this.map = new p1Mapa1(this, this.monchi!);
         break;
       case 2:
-        this.map = new Mapa2(this);
+        this.map = new p1Mapa2(this, this.monchi!);
         break;
       case 3:
-        this.map = new p2Mapa1(this, this.monchi!);
+        this.map = new p1Mapa3(this, this.monchi!);
         break;
       case 4:
-        this.map = new p2Mapa2(this, this.monchi!);
+        this.map = new p1Mapa4(this);
         break;
       case 5:
-        this.map = new p2Mapa3(this, this.monchi!);
+        this.map = new p2Mapa1(this, this.monchi!);
         break;
       case 6:
-        this.map = new p3Mapa1(this, this.monchi!);
+        this.map = new p2Mapa2(this, this.monchi!);
         break;
       case 7:
-        this.map = new p3Mapa2(this, this.monchi!);
+        this.map = new p2Mapa3(this, this.monchi!);
         break;
       case 8:
-        this.map = new p3Mapa3(this, this.monchi!);
+        this.map = new p3Mapa1(this, this.monchi!);
         break;
       case 9:
-        this.map = new sMapa1(this, this.monchi!);
+        this.map = new p3Mapa2(this, this.monchi!);
         break;
       case 10:
-        this.map = new sMapa2(this, this.monchi!);
+        this.map = new p3Mapa3(this, this.monchi!);
         break;
       case 11:
+        this.map = new sMapa1(this, this.monchi!);
+        break;
+      case 12:
+        this.map = new sMapa2(this, this.monchi!);
+        break;
+      case 13:
         this.map = new sMapa3(this, this.monchi!);
         break;
       default:
-        this.map = new MapaTest(this, this.monchi!);
+        this.map = new p1Mapa0(this, this.monchi!);
         break;
     }
-    this.levelIs = data.level;
-    this.lifes = data.lifes;
+
 
     /* Audio */
     const getMasterManagerScene = this.game.scene.getScene(
@@ -267,8 +287,6 @@ class Game extends Phaser.Scene {
     } else if (this.levelIs == 2) {
       getMasterManagerScene.playMusic("songLevel2");
     }
-
-
 
     /* UI SCENE  */
 
@@ -306,7 +324,6 @@ class Game extends Phaser.Scene {
         left: boolean,
         right: boolean
       ) => {
-        //@ts-ignore
         //@ts-ignore
         this.lose(this.checkPoint ? this.map?.loseConfig.checkpoint : this.map?.loseConfig.start)
       },

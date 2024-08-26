@@ -1,14 +1,14 @@
 import Phaser from "phaser";
 import AsteroidGenerator, {
   AsteroidGeneratorConfig,
-} from "../assets/AsteroidGenerator";
-import Floor, { FloorConfig } from "../assets/Floor";
-import LargeFloor, { LargeFloorConfig } from "../assets/LargeFloor";
-import Game from "../Game";
+} from "../../assets/AsteroidGenerator";
+import Floor, { FloorConfig } from "../../assets/Floor";
+import LargeFloor, { LargeFloorConfig } from "../../assets/LargeFloor";
+import Game from "../../Game";
 
-import portal, { portalConfig } from "../assets/portal";
+import portal, { portalConfig } from "../../assets/portal";
 // Scene in class
-class Mapa2 {
+class Mapa4 {
   isJumping = false;
   debugGraphics: Phaser.GameObjects.Graphics;
   scene: Game;
@@ -29,6 +29,7 @@ class Mapa2 {
   background4: Phaser.GameObjects.Image
   background5: Phaser.GameObjects.Image
   background6: Phaser.GameObjects.Image
+  
   aura?: Phaser.Physics.Arcade.Group;
 
 
@@ -499,4 +500,4 @@ class Mapa2 {
   // }
 }
 
-export default Mapa2;
+export default Mapa4;

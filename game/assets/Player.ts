@@ -73,8 +73,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
   idle() {
     this.isJumping = false;
-    //this.setVelocityX(0);
-    // this.anims.play("monchiIdle",true)
   }
 
   jump() {
@@ -121,18 +119,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         if (!this.isJumping) this.anims.play("monchiMove", true);
       }
       else {
-
-        /* Nothing */
-        /*
-        else if (this.scene.levelIs == 0 && this.scene.timeLevel < 2) {
-          this.setVelocityX(200);
-        } else if (this.scene.levelIs == 0 && this.scene.timeLevel >= 2) {
-          this.setVelocityX(0);
-        }
-        */
         this.setVelocityX(0);
-
-
         if (!this.isJumping) this.anims.play("monchiIdle", true);
 
       }

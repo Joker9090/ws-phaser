@@ -12,8 +12,6 @@ import portal, { portalConfig } from "../../assets/portal";
 import { Children } from "react";
 
 class Mapa1 {
-  isJumping = false;
-  // debugGraphics: Phaser.GameObjects.Graphics;
   scene: Game;
   worldSize = {
     width: 10000,
@@ -42,7 +40,7 @@ class Mapa1 {
   pisoGoBack?: Phaser.GameObjects.Sprite;
   monchi?: Player;
   startingPoint = {
-    x: 500, //500
+    x: 1700, //500
     y: 800, //800
   };
   checkPointPos = {
@@ -64,6 +62,8 @@ class Mapa1 {
   cristal?: Floor;
   collected: Boolean = false;
   endPortal?: Floor;
+
+  isFloating: boolean = false;
 
   mapContainer: Phaser.GameObjects.Container;
 
@@ -137,7 +137,10 @@ class Mapa1 {
         this.scene.physics.add.collider(
           this.scene.monchi,
           this.pisos2,
-          () => this.scene.changeGravity(true, 1000),
+          () => {
+            this.scene.changeGravity(true, 1000)
+            this.isFloating = true
+          },
           () => true,
           this.scene
         );
@@ -162,7 +165,7 @@ class Mapa1 {
         this.scene.physics.add.collider(
           this.scene.monchi,
           this.movingFloor,
-          () => {},
+          () => { },
           () => true,
           this.scene
         );
@@ -237,7 +240,7 @@ class Mapa1 {
     };
     const p2 = new Floor(this.scene, p2Config, this.movingFloor);
 
-    
+
 
     const p5Config: FloorConfig = {
       texture: "plataformaA",
@@ -297,7 +300,7 @@ class Mapa1 {
 
     const p4 = new LargeFloor(this.scene, p4Config, this.pisos);
 
-  
+
 
     //Portal, Coin and Asteroids
     const portalConfig: FloorConfig = {
@@ -367,22 +370,16 @@ class Mapa1 {
   }
   update() {
     /* Attach controls to player */
-    if (!this.goingBack) {
-      if (this.scene.monchi && this.scene.cameraNormal) {
-        this.scene.monchi.checkMove(this.scene.cursors);
-      } else if (this.scene.monchi && this.scene.cameraNormal == false) {
+    if (this.scene.monchi) {
+      if (this.scene.cameraNormal) {
+        this.scene.monchi.checkMove(this.scene.cursors, this.isFloating);
+      } else {
         this.scene.monchi?.checkMoveRot(this.scene.cursors);
       }
-    } else if (this.goingBack) {
-      if (this.scene.monchi)
-        this.scene.monchi.setY(1700 - this.scene.monchi.displayHeight);
+
+      /* Attach background anim */
+      this.animateBackground(this.scene.monchi);
     }
-
-    /* Attach controls CREATIVE to player */
-    // this.scene.monchi?.checkMoveCreative(this.scene.cursors)
-
-    /* Attach background anim */
-    if (this.scene.monchi) this.animateBackground(this.scene.monchi);
   }
 }
 export default Mapa1;

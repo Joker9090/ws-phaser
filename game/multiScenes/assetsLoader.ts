@@ -43,6 +43,12 @@ const loadAssets = {
         "/game/character.png",
         { frameWidth: 330, frameHeight: 450 },
       ],
+      [
+        "spritesheet",
+        "player",
+        "/game/player/playerSpriteSheet.png",
+        { frameWidth: 200, frameHeight: 200 },
+      ],
     ],
   },
   Intro: {
@@ -327,7 +333,7 @@ class AssetsLoader {
       assetText.destroy();
       this.finished = true
       // this.scene.scene.restart({text:"menu"})
-      this.scene.makeTransition("Game", { level: 0, lifes: 3 });
+      this.scene.makeTransition("Game", { level: 1, lifes: 3 });
     });
     const scenesTitles: Array<SceneKeys> = [
       "Menu",

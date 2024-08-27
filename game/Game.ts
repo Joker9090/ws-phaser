@@ -97,22 +97,12 @@ class Game extends Phaser.Scene {
         case true:
           this.physics.world.gravity.y = -1000;
           this.moveCameraOffset("up")
-          // change de gravity arrow
-          this.time.delayedCall(time, () => {
-            this.monchi?.setFlipY(true);
-            this.gravityDown = false;
-            this.monchi?.body?.setOffset(0, 70);
-          });
+          this.monchi.rotate(float)
           break;
         case false:
           this.physics.world.gravity.y = 1000;
           this.moveCameraOffset("down")
-          // change de gravity arrow
-          this.time.delayedCall(time, () => {
-            this.monchi?.setFlipY(false);
-            this.gravityDown = true;
-            this.monchi?.body?.setOffset(0, 100);
-          });
+          this.monchi.rotate(float)
           break;
       }
     }

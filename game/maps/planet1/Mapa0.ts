@@ -285,7 +285,6 @@ class Mapa0 {
     const c2 = new AsteroidGenerator(this.scene, c2Config);
     c2.start();
 
-
     const mapObjects =
       this.movingFloor.getChildren().concat(
         this.movingFloorRot.getChildren(),

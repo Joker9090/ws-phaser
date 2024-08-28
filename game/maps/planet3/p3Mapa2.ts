@@ -561,7 +561,7 @@ class p3Mapa1 {
             if (this.scene.monchi && this.scene.cameraNormal) {
                 this.scene.monchi.checkMove(this.scene.cursors);
             } else if (this.scene.monchi && this.scene.cameraNormal == false) {
-                this.scene.monchi?.checkMoveRot(this.scene.cursors);
+                // this.scene.monchi?.checkMoveRot(this.scene.cursors);
             }
         } else if (this.goingBack) {
             if (this.scene.monchi)

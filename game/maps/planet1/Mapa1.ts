@@ -5,11 +5,12 @@ import AsteroidGenerator, {
 import Floor, { FloorConfig } from "../../assets/Floor";
 
 import LargeFloor, { LargeFloorConfig } from "../../assets/LargeFloor";
-import Game, { loseConfig } from "../../Game";
+import Game from "../../Game";
 
 import Player from "../../assets/Player";
 import portal, { portalConfig } from "../../assets/portal";
 import { Children } from "react";
+import { loseConfigFromMapType } from "@/game/Types";
 
 class Mapa1 {
   scene: Game;
@@ -43,15 +44,25 @@ class Mapa1 {
     x: 1700, //500
     y: 800, //800
   };
-  checkPointPos = {
-    x: 3000,
-    y: 750,
+  checkPointPos1 = {
+    x: 1800,
+    y: 1000,
   };
 
-  loseConfig?: {
-    start: loseConfig,
-    checkpoint: loseConfig
-  };
+  loseConfig: loseConfigFromMapType = [
+    {
+      positions: this.startingPoint,
+      cameraDirection: "NORMAL",
+      PlayerDirection: "NORMAL",
+      gravityDown: true
+    },
+    {
+      positions: this.checkPointPos1,
+      cameraDirection: "NORMAL",
+      PlayerDirection: "ROTATED",
+      gravityDown: false
+    },
+  ];
 
   background: Phaser.GameObjects.Image;
   background2: Phaser.GameObjects.Image;
@@ -140,6 +151,7 @@ class Mapa1 {
           () => {
             this.scene.changeGravity(true, 1000)
             this.isFloating = true
+            this.scene.checkPoint = 1
           },
           () => true,
           this.scene
@@ -173,24 +185,7 @@ class Mapa1 {
   }
 
   createMap(data: { level: number; lifes: number }) {
-    this.loseConfig = {
-      start: {
-        position: {
-          x: 500,
-          y: 800
-        },
-        camera: "normal",
-        gravity: "down"
-      },
-      checkpoint: {
-        position: {
-          x: 3000,
-          y: 750
-        },
-        camera: "rotated",
-        gravity: "up"
-      },
-    }
+   
     this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
     this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });
     this.pisos = this.scene.physics.add.group({ allowGravity: false });
@@ -371,12 +366,11 @@ class Mapa1 {
   update() {
     /* Attach controls to player */
     if (this.scene.monchi) {
-      if (this.scene.cameraNormal) {
-        this.scene.monchi.checkMove(this.scene.cursors, this.isFloating);
-      } else {
-        this.scene.monchi?.checkMoveRot(this.scene.cursors);
-      }
-
+      // if (this.scene.cameraNormal) {
+      //   this.scene.monchi.checkMove(this.scene.cursors, this.isFloating);
+      // } else {
+      //   this.scene.monchi?.checkMoveRot(this.scene.cursors);
+      // }
       /* Attach background anim */
       this.animateBackground(this.scene.monchi);
     }

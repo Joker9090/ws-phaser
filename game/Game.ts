@@ -22,15 +22,8 @@ import Player from "./assets/Player";
 import UIClass from "./assets/UIClass";
 import MasterManager from "./MasterManager";
 import BetweenScenes, { BetweenScenesStatus } from "./BetweenScenes";
+import { loseConfigFromMapType } from "./Types";
 
-export type loseConfig = {
-  position: {
-    x: number,
-    y: number,
-  }
-  camera: string
-  gravity: string
-};
 
 // Scene in class
 class Game extends Phaser.Scene {
@@ -80,15 +73,19 @@ class Game extends Phaser.Scene {
     }
   }
 
-  moveCameraOffset(position: "up" | "down") {
+  moveCameraOffset(position: "up" | "down", instant: boolean = false) {
     let newPosition = (this.cameraHeight / 2 - 100)
     if (position === "up") newPosition = -newPosition
-    this.tweens.add({
-      targets: this.cameras.main.followOffset,
-      y: newPosition,
-      duration: 1000,
-      ease: "ease"
-    })
+    if (instant) {
+      this.cameras.main.followOffset.y = newPosition
+    } else {
+      this.tweens.add({
+        targets: this.cameras.main.followOffset,
+        y: newPosition,
+        duration: 1000,
+        ease: "ease"
+      })
+    }
   }
 
   changeGravity(float: boolean, time: number) {
@@ -97,18 +94,19 @@ class Game extends Phaser.Scene {
         case true:
           this.physics.world.gravity.y = -1000;
           this.moveCameraOffset("up")
-          this.monchi.rotate(float)
+          this.monchi.rotate()
           break;
         case false:
           this.physics.world.gravity.y = 1000;
           this.moveCameraOffset("down")
-          this.monchi.rotate(float)
+          this.monchi.rotate()
           break;
       }
     }
   }
 
   rotateCam(isNormal: boolean, time: number) {
+    if (this.monchi) this.monchi.setCameraState(!isNormal ? 'NORMAL' : 'ROTATED')
     if (isNormal) {
       this.cameraNormal = false;
     } else {
@@ -166,29 +164,33 @@ class Game extends Phaser.Scene {
     }
   }
 
-  lose(config: loseConfig) {
-    if (this.lifes) {
-      this.lifes -= 1;
-      if (this.lifes === 0) {
-        this.makeTransition("MultiScene", { text: 'lose' });
-      } else if (this.lifes > 0 && this.monchi) {
-        this.UIClass?.loseLife(this.lifes)
-        this.monchi?.setFlipY(config.gravity === "down" ? false : true);
-        this.gravityDown = config.gravity === "down" ? true : false;
-        this.monchi?.body?.setOffset(0, config.gravity === "down" ? 100 : 70);
-        config.camera === "normal" ? this.cameras.main.setRotation(0) : this.cameras.main.setRotation(Math.PI)
-        this.physics.world.gravity.y = config.gravity === "down" ? 1000 : -1000;
-        this.cameraNormal = config.camera === "normal" ? true : false;
-        this.canRot = config.camera === "normal" ? true : false;
-        this.monchi.x = config.position.x;
-        this.monchi.y = config.position.y;
+  lose() {
+    if (this.map) {
+      //@ts-ignore
+      const config = this.map.loseConfig[this.checkPoint]
+      if (this.lifes) {
+        this.lifes -= 1;
+        if (this.lifes === 0) {
+          this.makeTransition("MultiScene", { text: 'lose' });
+        } else if (this.lifes > 0 && this.monchi) {
+          // UI changes
+          this.UIClass?.loseLife(this.lifes)
+          this.UIClass?.rotateArrow(this.gravityDown ? 'down' : 'up')
+          //agregar cambio de arrow UI
+
+          // Player changes
+          this.monchi.setCameraState(config.cameraDirection)
+          this.monchi.setPlayerState(config.PlayerDirection)
+
+          // Game changes
+          this.moveCameraOffset(config.cameraDirection === "NORMAL" ?  "down" : "up", true)
+          this.physics.world.gravity.y = config.gravityDown ? 1000 : -1000;
+          config.cameraDirection === "NORMAL" ? this.cameras.main.setRotation(0) : this.cameras.main.setRotation(Math.PI)
+          this.monchi.x = config.positions.x;
+          this.monchi.y = config.positions.y;
+        }
       }
     }
-  }
-
-  loseLife() {
-    //@ts-ignore
-    this.lose(this.checkPoint ? this.map?.loseConfig.checkpoint : this.map?.loseConfig.start)
   }
 
   makeTransition(sceneName: string, data: any) {
@@ -315,7 +317,7 @@ class Game extends Phaser.Scene {
         right: boolean
       ) => {
         //@ts-ignore
-        this.lose(this.checkPoint ? this.map?.loseConfig.checkpoint : this.map?.loseConfig.start)
+        this.lose()
       },
       this
     );
@@ -345,12 +347,12 @@ class Game extends Phaser.Scene {
     }
 
     if (this.monchi && this.map) {
-      if (this.monchi.x > this.map.checkPointPos.x) {
-        this.checkPoint = 1;
-      }
+      // console.log("monchi position: ",this.monchi.x, this.monchi.y)
+      // console.log("checkpoint : ",this.checkPoint)
+      //@ts-ignore
+      this.map.update();
+      this.monchi.checkMove(this.cursors)
     }
-
-    if (this.map) this.map.update();
   }
 }
 

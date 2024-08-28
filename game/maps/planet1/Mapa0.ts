@@ -5,11 +5,12 @@ import AsteroidGenerator, {
 import Floor, { FloorConfig } from "../../assets/Floor";
 
 import LargeFloor, { LargeFloorConfig } from "../../assets/LargeFloor";
-import Game, { loseConfig } from "../../Game";
+import Game from "../../Game";
 
 import Player from "../../assets/Player";
 import portal, { portalConfig } from "../../assets/portal";
 import { Children } from "react";
+import { loseConfigFromMapType } from "@/game/Types";
 
 class Mapa0 {
   isJumping = false;
@@ -45,15 +46,15 @@ class Mapa0 {
     x: 500, //500
     y: 800, //800
   };
-  checkPointPos = {
-    x: 3000,
-    y: 750,
-  };
 
-  loseConfig?: {
-    start: loseConfig,
-    checkpoint: loseConfig
-  };
+  loseConfig: loseConfigFromMapType = [
+    {
+      positions: { x: 500, y: 800 },
+      cameraDirection: "NORMAL",
+      PlayerDirection: "NORMAL",
+      gravityDown: true
+    },
+  ];
 
   background: Phaser.GameObjects.Image;
   background2: Phaser.GameObjects.Image;
@@ -153,24 +154,6 @@ class Mapa0 {
   }
 
   createMap(data: { level: number; lifes: number }) {
-    this.loseConfig = {
-      start: {
-        position: {
-          x: 500,
-          y: 800
-        },
-        camera: "normal",
-        gravity: "down"
-      },
-      checkpoint: {
-        position: {
-          x: 3000,
-          y: 750
-        },
-        camera: "rotated",
-        gravity: "up"
-      },
-    }
     this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
     this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });
     this.pisos = this.scene.physics.add.group({ allowGravity: false });
@@ -236,7 +219,7 @@ class Mapa0 {
     };
     const p4 = new Floor(this.scene, p4Config, this.pisos);
 
-    
+
     //Portal, Coin and Asteroids
     const portalConfig: FloorConfig = {
       spriteSheet: "portal1",
@@ -303,21 +286,6 @@ class Mapa0 {
 
   }
   update() {
-    /* Attach controls to player */
-    if (!this.goingBack) {
-      if (this.scene.monchi && this.scene.cameraNormal) {
-        this.scene.monchi.checkMove(this.scene.cursors);
-      } else if (this.scene.monchi && this.scene.cameraNormal == false) {
-        this.scene.monchi?.checkMoveRot(this.scene.cursors);
-      }
-    } else if (this.goingBack) {
-      if (this.scene.monchi)
-        this.scene.monchi.setY(1700 - this.scene.monchi.displayHeight);
-    }
-
-    /* Attach controls CREATIVE to player */
-    // this.scene.monchi?.checkMoveCreative(this.scene.cursors)
-
     /* Attach background anim */
     if (this.scene.monchi) this.animateBackground(this.scene.monchi);
   }

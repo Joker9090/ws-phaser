@@ -3,8 +3,10 @@ import Game from "../Game";
 
 // Scene in class
 class Player extends Phaser.Physics.Arcade.Sprite {
-  isJumping = false;
-  isRotating = false;
+  isJumping: boolean = false;
+  isRotating: boolean = false;
+  playerState: "NORMAL" | "ROTATED" = "NORMAL";
+  cameraState: "NORMAL" | "ROTATED" = "NORMAL";
   scene: Game;
 
   constructor(
@@ -16,6 +18,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   ) {
     super(scene, x, y, texture);
     this.scene = scene;
+    // setInterval(() => {
+    //   console.log("PLAYER STATE", this.playerState)
+    //   console.log("CAMERA STATE", this.cameraState)
+    // }, 1000)
     /* Monchi animations */
     const monchiJumpFrames = scene.anims.generateFrameNumbers("player", {
       frames: Array.from({ length: 12 }, (_, i) => i + 36),
@@ -47,30 +53,21 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     const monchiRotateFrames = scene.anims.generateFrameNumbers("player", {
       frames: Array.from({ length: 24 }, (_, i) => i),
     });
-    const monchiRotateBackFrames = scene.anims.generateFrameNumbers("player", {
-      frames: Array.from({ length: 24 }, (_, i) => i).reverse(),
-    });
+
     const monchiRotateConfig = {
       key: "monchiRotate",
       frames: monchiRotateFrames,
       frameRate: 24,
       repeat: 0,
-    }
-    const monchiRotateBackConfig = {
-      key: "monchiRotateBack",
-      frames: monchiRotateBackFrames,
-      frameRate: 24,
-      repeat: 0,
+      delay: 500,
     }
 
-    console.log("frames", monchiRotateFrames, monchiRotateBackFrames)
 
     /* Monchi animations */
     scene.anims.create(monchiJumpConfig);
     scene.anims.create(monchiMoveConfig);
     scene.anims.create(monchiIdleConfig);
     scene.anims.create(monchiRotateConfig);
-    scene.anims.create(monchiRotateBackConfig);
 
 
     /* Monchi add to physic world */
@@ -96,6 +93,14 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
+  setCameraState(state: "NORMAL" | "ROTATED") {
+    this.cameraState = state
+  }
+
+  setPlayerState(state: "NORMAL" | "ROTATED") {
+    this.playerState = state
+  }
+
   idle() {
     this.isJumping = false;
     this.isRotating = false
@@ -104,49 +109,44 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   jump() {
     if (!this.isJumping) {
       this.isJumping = true;
-      this.play("monchiJump");
-      this.setVelocityY(-630);
+      this.anims.play("monchiJump");
+      this.setVelocityY(this.playerState === 'NORMAL' ? -630 : 630);
       this.scene.time.delayedCall(1200, this.idle, [], this);
     }
   }
 
-  jumpBack() {
-    if (!this.isJumping) {
-      this.isJumping = true;
-      this.play("monchiJump");
-      this.setVelocityY(630);
-      this.scene.time.delayedCall(1200, this.idle, [], this);
+  rotate() {
+    if (!this.isRotating) {
+      this.isRotating = true
+      this.anims.play("monchiRotate").once('animationcomplete', () => {
+        console.log("ENTRO ACA ARI")
+        this.setPlayerState(this.playerState === 'NORMAL' ? 'ROTATED' : 'NORMAL')
+        this.idle
+      }, this)
+      this.scene.time.delayedCall(1200, () => {
+      }, [], this);
+
     }
   }
 
-  rotate(float?: boolean) {
-      if (!this.isRotating){
-        this.isRotating = true
-        if (!float) {
-          this.play("monchiRotate");
-          this.scene.time.delayedCall(2400, this.idle, [], this);
-        } else {
-          this.play("monchiRotateBack");
-          this.scene.time.delayedCall(2400, this.idle, [], this);
-        }
-      }
-  }
 
-  checkMove(cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined, float: boolean = false) {
-    if (float) this.setFlipY(true)
-    else this.setFlipY(false)
+
+
+  checkMove(cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined) {
+    if (this.playerState === "ROTATED") this.setFlipY(true)
+    else if (this.playerState === "NORMAL") this.setFlipY(false)
     /* Keywords press */
     if (cursors) {
       const { left, right, up, space } = cursors;
       /* Left*/
       if (left.isDown) {
-        this.setVelocityX(-160);
-        this.setFlipX(true);
+        this.setVelocityX(this.cameraState === 'NORMAL' ? -160 : 160);
+        this.setFlipX(this.cameraState === 'NORMAL' ? true : false);
         if (!this.isJumping && !this.isRotating) this.anims.play("monchiMove", true);
       } else if (right.isDown) {
         /* Right*/
-        this.setVelocityX(160);
-        this.setFlipX(false);
+        this.setVelocityX(this.cameraState === 'NORMAL' ? 160 : -160);
+        this.setFlipX(this.cameraState === 'NORMAL' ? false : true);
         if (!this.isJumping && !this.isRotating) this.anims.play("monchiMove", true);
       }
       else {
@@ -155,43 +155,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       }
       /* Up / Jump */
       if (up.isDown || space.isDown) {
-        if (this.body && this.body.touching.down) {
-          this.jump();
-        }
-        if (this.body && this.body.touching.up) {
-          this.jumpBack();
-        }
-      }
-    }
-  }
-
-  checkMoveRot(cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined) {
-    /* Keywords press */
-    if (cursors) {
-      const { left, right, up, space } = cursors;
-      /* Left*/
-      if (left.isDown) {
-        this.setVelocityX(160);
-        this.setFlipX(false);
-        if (!this.isJumping && !this.isRotating) this.anims.play("monchiMove", true);
-      } else if (right.isDown) {
-        /* Right*/
-        this.setVelocityX(-160);
-        this.setFlipX(true);
-        if (!this.isJumping && !this.isRotating) this.anims.play("monchiMove", true);
-      } else {
-        /* Nothing */
-        this.setVelocityX(0);
-        if (!this.isJumping && !this.isRotating) this.anims.play("monchiIdle", true);
-      }
-      /* Up / Jump */
-      if (up.isDown || space.isDown) {
-        if (this.body && this.body.touching.down) {
-          this.jump();
-        }
-        if (this.body && this.body.touching.up) {
-          this.jumpBack();
-        }
+        this.jump()
       }
     }
   }
@@ -199,6 +163,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   checkSideGravity(
     cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined
   ) {
+
     /* Keywords press */
     if (cursors) {
       const { up, down, left, right } = cursors;

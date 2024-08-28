@@ -5,11 +5,12 @@ import AsteroidGenerator, {
 import Floor, { FloorConfig } from "../../assets/Floor";
 
 import LargeFloor, { LargeFloorConfig } from "../../assets/LargeFloor";
-import Game, { loseConfig } from "../../Game";
+import Game from "../../Game";
 
 import Player from "../../assets/Player";
 import portal, { portalConfig } from "../../assets/portal";
 import { Children } from "react";
+import { loseConfigFromMapType } from "@/game/Types";
 
 class Mapa3 {
     isJumping = false;
@@ -45,15 +46,35 @@ class Mapa3 {
         x: 500, //500
         y: 800, //800
     };
-    checkPointPos = {
+    checkPointPos1 = {
+        x: 1800,
+        y: 300,
+    };
+    checkPointPos2 = {
         x: 3000,
-        y: 750,
+        y: 900,
     };
 
-    loseConfig?: {
-        start: loseConfig,
-        checkpoint: loseConfig
-    };
+    loseConfig: loseConfigFromMapType = [
+        {
+            positions: this.startingPoint,
+            cameraDirection: "NORMAL",
+            PlayerDirection: "NORMAL",
+            gravityDown: true
+        },
+        {
+            positions: this.checkPointPos1,
+            cameraDirection: "NORMAL",
+            PlayerDirection: "ROTATED",
+            gravityDown: false
+        },
+        {
+            positions: this.checkPointPos2,
+            cameraDirection: "ROTATED",
+            PlayerDirection: "ROTATED",
+            gravityDown: false
+        },
+    ];
 
     background: Phaser.GameObjects.Image;
     background2: Phaser.GameObjects.Image;
@@ -137,7 +158,10 @@ class Mapa3 {
                 this.scene.physics.add.collider(
                     this.scene.monchi,
                     this.pisos2,
-                    () => this.scene.changeGravity(true, 1000),
+                    () => {
+                        this.scene.changeGravity(true, 1000)
+                        this.scene.checkPoint = 1
+                    },
                     () => true,
                     this.scene
                 );
@@ -146,7 +170,11 @@ class Mapa3 {
                     this.scene.monchi,
                     this.pisos3,
                     () => {
-                        this.scene.rotateCam(true, 10);
+                        if(this.scene.checkPoint === 1){
+                            this.scene.rotateCam(true, 10);
+                            this.scene.checkPoint = 2
+                        }
+
                     },
                     () => true,
                     this.scene
@@ -183,6 +211,7 @@ class Mapa3 {
                         this.scene.canRot = true // medio hack, revisar lógica
                         this.scene.changeGravity(false, 1000)
                         this.scene.rotateCam(false, 10)
+                        this.scene.checkPoint = 0
                     },
                     () => true,
                     this.scene
@@ -211,24 +240,7 @@ class Mapa3 {
     }
 
     createMap(data: { level: number; lifes: number }) {
-        this.loseConfig = {
-            start: {
-                position: {
-                    x: 500,
-                    y: 800
-                },
-                camera: "normal",
-                gravity: "down"
-            },
-            checkpoint: {
-                position: {
-                    x: 3000,
-                    y: 750
-                },
-                camera: "rotated",
-                gravity: "up"
-            },
-        }
+
         this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
         this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });
         this.pisos = this.scene.physics.add.group({ allowGravity: false });
@@ -421,26 +433,6 @@ class Mapa3 {
         };
         const p14 = new LargeFloor(this.scene, p14Config, this.pisos);
 
-        const pBackConfig: FloorConfig = {
-            texture: "plataformaA",
-            pos: { x: 4500, y: 1700 },
-            fix: 20,
-            width: 150,
-            height: 50,
-            scale: { width: 1, height: 1 },
-            tween: {
-                duration: 10000,
-                paused: true,
-                yoyo: true,
-                repeat: -1,
-                x: "-=4000",
-            },
-        };
-        const pBack = new Floor(this.scene, pBackConfig, this.pisosBack).setTint(
-            Phaser.Display.Color.GetColor(255, 101, 0)
-        );
-        pBack.setFrictionX(1)
-
         const p15Config: FloorConfig = {
             texture: "plataformaB",
             pos: { x: 3800, y: 500 },
@@ -567,21 +559,6 @@ class Mapa3 {
 
     }
     update() {
-        /* Attach controls to player */
-        if (!this.goingBack) {
-            if (this.scene.monchi && this.scene.cameraNormal) {
-                this.scene.monchi.checkMove(this.scene.cursors);
-            } else if (this.scene.monchi && this.scene.cameraNormal == false) {
-                this.scene.monchi?.checkMoveRot(this.scene.cursors);
-            }
-        } else if (this.goingBack) {
-            if (this.scene.monchi)
-                this.scene.monchi.setY(1700 - this.scene.monchi.displayHeight);
-        }
-
-        /* Attach controls CREATIVE to player */
-        // this.scene.monchi?.checkMoveCreative(this.scene.cursors)
-
         /* Attach background anim */
         if (this.scene.monchi) this.animateBackground(this.scene.monchi);
     }

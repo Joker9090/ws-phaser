@@ -5,11 +5,12 @@ import AsteroidGenerator, {
 import Floor, { FloorConfig } from "../../assets/Floor";
 
 import LargeFloor, { LargeFloorConfig } from "../../assets/LargeFloor";
-import Game, { loseConfig } from "../../Game";
+import Game from "../../Game";
 
 import Player from "../../assets/Player";
 import portal, { portalConfig } from "../../assets/portal";
 import { Children } from "react";
+import { loseConfigFromMapType } from "@/game/Types";
 
 class Mapa2 {
   isJumping = false;
@@ -46,15 +47,25 @@ class Mapa2 {
     x: 500, //500
     y: 800, //800
   };
-  checkPointPos = {
-    x: 3000,
-    y: 750,
+  checkPointPos1 = {
+    x: 1300,
+    y: 600,
   };
 
-  loseConfig?: {
-    start: loseConfig,
-    checkpoint: loseConfig
-  };
+  loseConfig: loseConfigFromMapType = [
+    {
+      positions: this.startingPoint,
+      cameraDirection: "NORMAL",
+      PlayerDirection: "NORMAL",
+      gravityDown: true
+    },
+    {
+      positions: this.checkPointPos1,
+      cameraDirection: "ROTATED",
+      PlayerDirection: "NORMAL",
+      gravityDown: true
+    },
+  ];
 
   background: Phaser.GameObjects.Image;
   background2: Phaser.GameObjects.Image;
@@ -148,6 +159,7 @@ class Mapa2 {
           this.pisos3,
           () => {
             this.scene.rotateCam(true, 10);
+            this.scene.checkPoint = 1
           },
           () => true,
           this.scene
@@ -185,7 +197,7 @@ class Mapa2 {
         this.scene.physics.add.collider(
           this.scene.monchi,
           this.fireballGroup,
-          this.scene.loseLife,
+          this.scene.lose,
           () => true,
           this.scene
         );
@@ -193,24 +205,7 @@ class Mapa2 {
   }
 
   createMap(data: { level: number; lifes: number }) {
-    this.loseConfig = {
-      start: {
-        position: {
-          x: 500,
-          y: 800
-        },
-        camera: "normal",
-        gravity: "down"
-      },
-      checkpoint: {
-        position: {
-          x: 3000,
-          y: 750
-        },
-        camera: "rotated",
-        gravity: "up"
-      },
-    }
+    
     this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
     this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });
     this.pisos = this.scene.physics.add.group({ allowGravity: false });
@@ -407,21 +402,6 @@ class Mapa2 {
 
   }
   update() {
-    /* Attach controls to player */
-    if (!this.goingBack) {
-      if (this.scene.monchi && this.scene.cameraNormal) {
-        this.scene.monchi.checkMove(this.scene.cursors);
-      } else if (this.scene.monchi && this.scene.cameraNormal == false) {
-        this.scene.monchi?.checkMoveRot(this.scene.cursors);
-      }
-    } else if (this.goingBack) {
-      if (this.scene.monchi)
-        this.scene.monchi.setY(1700 - this.scene.monchi.displayHeight);
-    }
-
-    /* Attach controls CREATIVE to player */
-    // this.scene.monchi?.checkMoveCreative(this.scene.cursors)
-
     /* Attach background anim */
     if (this.scene.monchi) this.animateBackground(this.scene.monchi);
   }

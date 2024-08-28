@@ -66,6 +66,7 @@ class Mapa2 {
       gravityDown: true
     },
   ];
+  nextScene: string | undefined = undefined;
 
   background: Phaser.GameObjects.Image;
   background2: Phaser.GameObjects.Image;

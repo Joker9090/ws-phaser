@@ -36,6 +36,7 @@ class p2Mapa2 {
     background6: Phaser.GameObjects.Image
     background7: Phaser.GameObjects.Image
     background8: any;
+    nextScene: string | undefined = undefined;
 
     aura?: Phaser.Physics.Arcade.Group;
   

@@ -11,7 +11,7 @@ export type SceneKeys =
   | "LevelMap"
   | "Sandbox"
   | "BetweenScenes"
-  | "Cinematography";
+  | "Postales";
 
 export type LoadTypes = "image" | "spritesheet" | "audio";
 
@@ -249,9 +249,10 @@ const loadAssets = {
       ["audio", "songMenu", "/sounds/menu.mp3"],
     ],
   },
-  Cinematography: {
+  Postales: {
     assets: [
-      // ["image", "cine_background", "/game/cine_bkg.png"],
+      ["image", "postal1Planeta1", "/postals/planet1/postal1Planet1.png"],
+      ["image", "postal2Planeta1", "/postals/planet1/postal2Planet1.png"],
       // ["image", "cine_capsula", "/game/cine_2.png"],
     ],
   },
@@ -344,7 +345,7 @@ class AssetsLoader {
       "LevelMap",
       "BetweenScenes",
       "Sandbox",
-      "Cinematography",
+      "Postales",
     ];
     for (let i = 0; i < scenesTitles.length; i++) {
       loadAssets[scenesTitles[i]].assets.map((sceneAssetConfig) => {

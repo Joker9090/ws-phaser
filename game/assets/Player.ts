@@ -107,7 +107,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   jump() {
-    if (!this.isJumping) {
+    const condition = this.playerState === 'NORMAL' ? this.body?.touching.down : this.body?.touching.up
+    
+    if (!this.isJumping && condition) {
       this.isJumping = true;
       this.anims.play("monchiJump");
       this.setVelocityY(this.playerState === 'NORMAL' ? -630 : 630);

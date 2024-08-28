@@ -51,6 +51,7 @@ class p3Mapa1 {
     background14: Phaser.GameObjects.Image
     background15: Phaser.GameObjects.Image
     aura?: Phaser.Physics.Arcade.Group;
+    nextScene: string | undefined = undefined;
   
     monchi: Player;
     endPortal?: Floor;

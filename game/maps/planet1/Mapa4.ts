@@ -29,6 +29,7 @@ class Mapa4 {
   background4: Phaser.GameObjects.Image
   background5: Phaser.GameObjects.Image
   background6: Phaser.GameObjects.Image
+  nextScene: string | undefined = undefined;
   
   aura?: Phaser.Physics.Arcade.Group;
 

@@ -40,6 +40,7 @@ class p2Mapa3 {
     background7: Phaser.GameObjects.Image
     background8: any;
     aura?: Phaser.Physics.Arcade.Group;
+    nextScene: string | undefined = undefined;
   
     endPortal?: Floor;
     monchi: Player;

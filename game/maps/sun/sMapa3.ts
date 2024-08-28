@@ -30,6 +30,7 @@ class sMapa3 {
     movingFloor?: Phaser.Physics.Arcade.Group;
     movingFloorRot?: Phaser.Physics.Arcade.Group;
     endPortal?: Floor;
+    nextScene: string | undefined = undefined;
 
     coin?: Phaser.Physics.Arcade.Group;
     portal?: Phaser.Physics.Arcade.Group;

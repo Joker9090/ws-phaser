@@ -10,6 +10,7 @@ import cineIntro7 from "./Intro/cineIntro7";
 import MasterManager from "../MasterManager";
 import cineIntro2B from "./Intro/cineIntro2B";
 import cineIntro2C from "./Intro/cineIntro2C";
+import postalManager from "./postalManager";
 
 class CinematographyModular extends Phaser.Scene {
   ticker: Ticker;
@@ -130,6 +131,12 @@ class CinematographyModular extends Phaser.Scene {
         break;
       case "cine_intro_7":
         this.playingCine = new cineIntro7(this);
+        break;
+      case "postal1_planeta1":
+        this.playingCine = new postalManager(this, "postal1Planeta1", 2);
+        break;
+      case "postal2_planeta1":
+        this.playingCine = new postalManager(this, "postal2Planeta1", 4);
         break;
       default:
         this.playingCine = new cineIntro1(this);

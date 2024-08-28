@@ -34,6 +34,7 @@ class Mapa1 {
   movingFloor?: Phaser.Physics.Arcade.Group;
   movingFloorRot?: Phaser.Physics.Arcade.Group;
   p13!: Phaser.GameObjects.Sprite;
+  nextScene: string | undefined = undefined;
 
   amountLifes: number = 0;
   sideGrav: boolean = false;

@@ -134,7 +134,12 @@ class Game extends Phaser.Scene {
 
   win() {
     if (this.canWin && this.monchi) {
-      this.makeTransition("Game", { level: this.levelIs + 1, lifes: this.lifes });
+      if (this.map?.nextScene) {
+        console.log("ARI NEXT SCENE", this.map?.nextScene)
+        this.makeTransition("CinematographyMod", {keyname: this.map.nextScene});
+      } else {
+        this.makeTransition("Game", { level: this.levelIs + 1, lifes: this.lifes });
+      }
     }
     // lógica para pasar a movie dependiendo el nivel
   }
@@ -183,7 +188,7 @@ class Game extends Phaser.Scene {
           this.monchi.setPlayerState(config.PlayerDirection)
 
           // Game changes
-          this.moveCameraOffset(config.cameraDirection === "NORMAL" ?  "down" : "up", true)
+          this.moveCameraOffset(config.cameraDirection === "NORMAL" ? "down" : "up", true)
           this.physics.world.gravity.y = config.gravityDown ? 1000 : -1000;
           config.cameraDirection === "NORMAL" ? this.cameras.main.setRotation(0) : this.cameras.main.setRotation(Math.PI)
           this.monchi.x = config.positions.x;

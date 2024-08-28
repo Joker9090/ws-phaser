@@ -25,6 +25,7 @@ class p3Mapa3 {
     pisos5?: Phaser.Physics.Arcade.Group
     movingFloor?: Phaser.Physics.Arcade.Group;
     endPortal?: Floor;
+    nextScene: string | undefined = undefined;
 
     movingFloorRot?: Phaser.Physics.Arcade.Group;
     coin?: Phaser.Physics.Arcade.Group;

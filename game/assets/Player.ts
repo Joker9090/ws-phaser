@@ -118,14 +118,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   rotate() {
     if (!this.isRotating) {
       this.isRotating = true
-      this.anims.play("monchiRotate").once('animationcomplete', () => {
-        console.log("ENTRO ACA ARI")
+      this.anims.play("monchiRotate")
+      this.scene.time.delayedCall(2400, () => {
+        this.idle()
         this.setPlayerState(this.playerState === 'NORMAL' ? 'ROTATED' : 'NORMAL')
-        this.idle
-      }, this)
-      this.scene.time.delayedCall(1200, () => {
       }, [], this);
-
     }
   }
 

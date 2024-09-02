@@ -18,7 +18,7 @@ class Mapa0 {
   scene: Game;
   worldSize = {
     width: 10000,
-    height: 2500,
+    height: 1300,
   };
   // normales
   pisos?: Phaser.Physics.Arcade.Group;
@@ -63,6 +63,12 @@ class Mapa0 {
   background4: Phaser.GameObjects.Image;
   background5: Phaser.GameObjects.Image;
   background6: Phaser.GameObjects.Image;
+  mountain1: Phaser.GameObjects.Image;
+  mountain2: Phaser.GameObjects.Image;
+  mountain3: Phaser.GameObjects.Image;
+  mountain4: Phaser.GameObjects.Image;
+  mountain5: Phaser.GameObjects.Image;
+
   cristal?: Floor;
   collected: Boolean = false;
   endPortal?: Floor;
@@ -84,44 +90,67 @@ class Mapa0 {
     this.mapContainer = this.scene.add.container()
 
     this.background = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "newBg1")
+      .image(this.startingPoint.x, this.startingPoint.y, "background0P1")
       .setOrigin(0.5, 0.5).setScale(1.8);
     this.background2 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "newBg2")
+      .image(this.startingPoint.x, this.startingPoint.y, "background1P1")
       .setOrigin(0.5, 0.5).setScale(1.8);
     this.background3 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "newBg3")
+      .image(this.startingPoint.x, this.startingPoint.y, "backgroundStars")
       .setOrigin(0.5, 0.5).setScale(1.8);
     this.background4 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "newBg4")
-      .setOrigin(0.5, 0.5).setScale(1.8);
+      .image(this.startingPoint.x, this.startingPoint.y + 470, "frontGround1")
+      .setOrigin(1, 1).setScale(1);
     this.background5 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "newBg5")
-      .setOrigin(0.5, 0.5).setScale(1.8);
+      .image(this.startingPoint.x, this.startingPoint.y + 470, "frontGround2")
+      .setOrigin(0, 1).setScale(1);
     this.background6 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "newBg6")
-      .setOrigin(0.5, 0.5).setScale(1.8);
+      .image(this.startingPoint.x + this.background5.width - 15, this.startingPoint.y + 470, "frontGround1")
+      .setOrigin(0, 1).setScale(1);
+
+    this.mountain1 = this.scene.add.image(this.startingPoint.x + this.background5.width - 15, this.startingPoint.y + 370, "montaña3")
+    this.mountain2 = this.scene.add.image(this.startingPoint.x - 70, this.startingPoint.y + 350, "montaña5")
+    this.mountain3 = this.scene.add.image(1200, this.startingPoint.y + 470, "montaña3").setVisible(false)
+    this.mountain4 = this.scene.add.image(-400, this.startingPoint.y, "montaña3");
+    this.mountain5 = this.scene.add.image(1100, this.startingPoint.y, "montaña5");
+
     this.mapContainer.add([
       this.background,
       this.background2,
       this.background3,
+      this.mountain4,
+      this.mountain5,
       this.background4,
       this.background5,
       this.background6,
+      this.mountain1,
+      this.mountain2,
+      this.mountain3,
     ])
   }
 
   animateBackground(player: Phaser.GameObjects.Sprite) {
     const { x, y } = this.startingPoint;
     const { x: x2, y: y2 } = player;
-    const calcDiffX = (x2 - x) / 1
-    const calcDiffY = (y2 - y - this.scene.cameras.main.displayHeight / 6) / 1.3;
-    this.background.setPosition(x + calcDiffX, y + calcDiffY);
-    this.background2.setPosition(x + calcDiffX, y + calcDiffY);
-    this.background3.setPosition(x + calcDiffX, y + calcDiffY);
-    this.background4.setPosition(x + calcDiffX, y + calcDiffY);
-    this.background5.setPosition(x + calcDiffX, y + calcDiffY);
-    this.background6.setPosition(x + calcDiffX, y + calcDiffY);
+    // animation backgrounds statics
+    const { ajusteBX, ajusteBY } = { ajusteBX: 1.1, ajusteBY: 1.1 }
+    const calcDiffBX = (x2 - x) / ajusteBX
+    const calcDiffBY = (y2 - y) / ajusteBY;
+    this.background.setPosition(x + calcDiffBX, y + calcDiffBY);
+    this.background2.setPosition(x + calcDiffBX, y + calcDiffBY);
+    this.background3.setPosition(x + calcDiffBX, y + calcDiffBY);
+    // // animation frontgrounds
+    const { ajusteFX, ajusteFY } = { ajusteFX: 4, ajusteFY: 2 }
+    const calcDiffFX = (x2 - x) / ajusteFX
+    const calcDiffFY = (y2 - y) / ajusteFY;
+    this.background4.setPosition(x + calcDiffFX, y + 470 + calcDiffFY);
+    this.background5.setPosition(x + calcDiffFX, y + 470 + calcDiffFY);
+    this.background6.setPosition(x + this.background5.width - 15 + calcDiffFX, y + 470 + calcDiffFY);
+    this.mountain4.setPosition(-400 + calcDiffFX, this.startingPoint.y + calcDiffFY)
+    this.mountain5.setPosition(1100 + calcDiffFX, this.startingPoint.y + calcDiffFY)
+    this.mountain1.setPosition(this.startingPoint.x + this.background5.width - 85 + calcDiffFX, this.startingPoint.y + 320 + calcDiffFY)
+    this.mountain2.setPosition(this.startingPoint.x -70 + calcDiffFX, this.startingPoint.y + 350 + calcDiffFY)
+    this.mountain3.setPosition(1200 + calcDiffFX, this.startingPoint.y + 470 + calcDiffFY)
   }
 
   addColliders() {
@@ -180,18 +209,18 @@ class Mapa0 {
 
 
     const p1Config: LargeFloorConfig = {
-      textureA: "plataformaLarga2",
-      textureB: "plataformaLarga2",
+      textureA: "plataformaNuevaA",
+      textureB: "plataformaNuevaA",
       pos: { x: 300, y: 1200 },
       scale: { width: 0.6, height: 0.6 },
-      large: 10,
+      large: 25,
       gap: 0,
       planeta: 1
     };
     const p1 = new LargeFloor(this.scene, p1Config, this.pisos);
 
     const p2Config: FloorConfig = {
-      texture: "plataformaA",
+      texture: "plataformaNuevaA",
       pos: { x: 900, y: 1050 },
       scale: { width: 0.6, height: 0.6 },
       fix: 25,
@@ -201,7 +230,7 @@ class Mapa0 {
     const p2 = new Floor(this.scene, p2Config, this.pisos);
 
     const p3Config: FloorConfig = {
-      texture: "plataformaA",
+      texture: "plataformaNuevaA",
       pos: { x: 1100, y: 900 },
       scale: { width: 0.6, height: 0.6 },
       fix: 25,
@@ -211,7 +240,7 @@ class Mapa0 {
     const p3 = new Floor(this.scene, p3Config, this.pisos);
 
     const p4Config: FloorConfig = {
-      texture: "plataformaA",
+      texture: "plataformaNuevaA",
       pos: { x: 1300, y: 750 },
       scale: { width: 0.6, height: 0.6 },
       fix: 25,
@@ -283,6 +312,11 @@ class Mapa0 {
         this.aura.getChildren(),
       )
     this.mapContainer.add(mapObjects)
+    this.mapContainer.add([
+      this.mountain1,
+      this.mountain2,
+      this.mountain3
+    ])
     this.scene.UICamera?.ignore(this.mapContainer)
 
   }

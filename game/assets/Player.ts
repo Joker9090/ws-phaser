@@ -53,13 +53,22 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     const monchiRotateFrames = scene.anims.generateFrameNumbers("player", {
       frames: Array.from({ length: 24 }, (_, i) => i),
     });
+    const monchiRotateReverseFrames = scene.anims.generateFrameNumbers("player", {
+      frames: (Array.from({ length: 24 }, (_, i) => i)).reverse(),
+    });
 
     const monchiRotateConfig = {
       key: "monchiRotate",
       frames: monchiRotateFrames,
       frameRate: 24,
       repeat: 0,
-      delay: 500,
+    }
+
+    const monchiRotateReverseConfig = {
+      key: "monchiRotateReverse",
+      frames: monchiRotateReverseFrames,
+      frameRate: 24,
+      repeat: 0,
     }
 
 
@@ -68,6 +77,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     scene.anims.create(monchiMoveConfig);
     scene.anims.create(monchiIdleConfig);
     scene.anims.create(monchiRotateConfig);
+    scene.anims.create(monchiRotateReverseConfig);
 
 
     /* Monchi add to physic world */
@@ -114,17 +124,17 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       this.anims.play("monchiJump");
       this.setVelocityY(this.playerState === 'NORMAL' ? -630 : 630);
       this.scene.time.delayedCall(1200, this.idle, [], this);
+      // cambiar esto apra que isJumping cambie cuando toca el piso
     }
   }
+
+
 
   rotate() {
     if (!this.isRotating) {
       this.isRotating = true
-      this.anims.play("monchiRotate")
-      this.scene.time.delayedCall(2400, () => {
-        this.idle()
-        this.setPlayerState(this.playerState === 'NORMAL' ? 'ROTATED' : 'NORMAL')
-      }, [], this);
+      this.setPlayerState(this.playerState === 'NORMAL' ? 'ROTATED' : 'NORMAL')
+      this.anims.play(this.playerState === 'NORMAL' ? 'monchiRotate' : 'monchiRotateReverse').once('animationcomplete', this.idle)
     }
   }
 

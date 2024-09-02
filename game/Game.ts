@@ -74,7 +74,7 @@ class Game extends Phaser.Scene {
   }
 
   moveCameraOffset(position: "up" | "down", instant: boolean = false) {
-    let newPosition = (this.cameraHeight / 2 - 100)
+    let newPosition = (this.cameraHeight / 2 - 200)
     if (position === "up") newPosition = -newPosition
     if (instant) {
       this.cameras.main.followOffset.y = newPosition
@@ -164,7 +164,7 @@ class Game extends Phaser.Scene {
         }
         break;
       case "fireball":
-        console.log("TOCO EL FIREBALL")
+        this.lose()
         break;
     }
   }
@@ -307,7 +307,7 @@ class Game extends Phaser.Scene {
     this.cameras.main.zoom = 0.9;
     this.cameraWidth = this.cameras.main.width;
     this.cameraHeight = this.cameras.main.height;
-    this.cameras.main.startFollow(this.monchi, true, 0.5, 0.5, 0, this.cameraHeight / 2 - 100);
+    this.cameras.main.startFollow(this.monchi, true, 0.5, 0.5, 0, this.cameraHeight / 2 - 200);
 
     /* COLLIDERS */
     //@ts-ignore

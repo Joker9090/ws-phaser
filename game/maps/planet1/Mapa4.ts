@@ -7,15 +7,40 @@ import LargeFloor, { LargeFloorConfig } from "../../assets/LargeFloor";
 import Game from "../../Game";
 
 import portal, { portalConfig } from "../../assets/portal";
+import { loseConfigFromMapType } from "@/game/Types";
 // Scene in class
 class Mapa4 {
   isJumping = false;
-  debugGraphics: Phaser.GameObjects.Graphics;
   scene: Game;
   worldSize = {
     width: 3500,
     height: 3000,
   };
+  nextScene: string | undefined = undefined;
+
+  startingPoint = {
+    x: 400, //400
+    y: 290, //140
+  };
+  checkPointPos1 = {
+    x: 600,
+    y: 140,
+  };
+  loseConfig: loseConfigFromMapType = [
+    {
+      positions: this.startingPoint,
+      cameraDirection: "NORMAL",
+      PlayerDirection: "NORMAL",
+      gravityDown: true
+    },
+    {
+      positions: this.checkPointPos1,
+      cameraDirection: "NORMAL",
+      PlayerDirection: "ROTATED",
+      gravityDown: false
+    },
+  ];
+
   pisos?: Phaser.Physics.Arcade.Group;
   coin?: Phaser.Physics.Arcade.Group;
   portal?: Phaser.Physics.Arcade.Group;
@@ -29,24 +54,12 @@ class Mapa4 {
   background4: Phaser.GameObjects.Image
   background5: Phaser.GameObjects.Image
   background6: Phaser.GameObjects.Image
-  nextScene: string | undefined = undefined;
-  
   aura?: Phaser.Physics.Arcade.Group;
-
-
   endPortal?: Floor;
-
-  startingPoint = {
-    x: 400, //400
-    y: 290, //140
-  };
-  checkPointPos = {
-    x: 600,
-    y: 140,
-  };
-
   sideGrav: boolean = false;
   collected: any;
+
+  mapContainer: Phaser.GameObjects.Container;
 
   constructor(scene: Game) {
     this.scene = scene;
@@ -58,17 +71,7 @@ class Mapa4 {
       this.worldSize.width,
       this.worldSize.height
     );
-
-    /* Debug */
-    this.debugGraphics = this.scene.add.graphics();
-    this.debugGraphics.fillStyle(0x00ff00, 0.5);
-    this.debugGraphics.fillRect(
-      0,
-      0,
-      this.worldSize.width,
-      this.worldSize.height
-    );
-    /* Debug */
+    this.mapContainer = this.scene.add.container()
 
 
     this.background = this.scene.add
@@ -89,25 +92,16 @@ class Mapa4 {
     this.background6 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "newBg6")
       .setOrigin(0.5, 0.5).setScale(1.8);
+    this.mapContainer.add([
+      this.background,
+      this.background2,
+      this.background3,
+      this.background4,
+      this.background5,
+      this.background6,
+    ])
   }
-  // scaleBg() {
-  //   if (this.scene.cameras.main.displayWidth >= 2000) {
-  //     this.background.displayHeight = this.scene.cameras.main.displayHeight * 1.6
-  //     this.background.displayWidth = this.scene.cameras.main.displayWidth * 1.6
-  //     this.background2.displayHeight = this.scene.cameras.main.displayHeight * 1.6
-  //     this.background2.displayWidth = this.scene.cameras.main.displayWidth * 1.6
-  //     this.background3.displayHeight = this.scene.cameras.main.displayHeight * 1.6
-  //     this.background3.displayWidth = this.scene.cameras.main.displayWidth * 1.6
-  //     this.background4.displayHeight = this.scene.cameras.main.displayHeight * 1.6
-  //     this.background4.displayWidth = this.scene.cameras.main.displayWidth * 1.6
-  //     this.background5.displayHeight = this.scene.cameras.main.displayHeight * 1.6
-  //     this.background5.displayWidth = this.scene.cameras.main.displayWidth * 1.6
-  //     this.background6.displayHeight = this.scene.cameras.main.displayHeight * 1.6
-  //     this.background6.displayWidth = this.scene.cameras.main.displayWidth * 1.6
-  //   } else {
-  //     return null
-  //   }
-  // }
+
   animateBackground(player: Phaser.GameObjects.Sprite) {
     const { x, y } = this.startingPoint;
     const { x: x2, y: y2 } = player;
@@ -119,8 +113,103 @@ class Mapa4 {
     this.background4.setPosition(x + calcDiffX, y + calcDiffY);
     this.background5.setPosition(x + calcDiffX, y + calcDiffY);
     this.background6.setPosition(x + calcDiffX, y + calcDiffY);
-    // this.background7.setPosition(x + calcDiffX, y + calcDiffY);
-    // this.background8.setPosition(x + calcDiffX, y + calcDiffY);
+
+  }
+
+  addColliders() {
+    if (this.scene.monchi) {
+      if (this.portal) this.portal.setTint(0xff0000);
+      if (this.pisos)
+        this.scene.physics.add.collider(
+          this.scene.monchi,
+          this.pisos,
+          this.scene.touch,
+          () => true,
+          this.scene
+        );
+      // if (this.pisos2)
+      //   this.scene.physics.add.collider(
+      //     this.scene.monchi,
+      //     this.pisos2,
+      //     () => {
+      //       this.scene.changeGravity(true, 1000)
+      //       this.scene.checkPoint = 1
+      //     },
+      //     () => true,
+      //     this.scene
+      //   );
+      // if (this.pisos3)
+      //   this.scene.physics.add.collider(
+      //     this.scene.monchi,
+      //     this.pisos3,
+      //     () => {
+      //       if (this.scene.checkPoint === 1) {
+      //         this.scene.rotateCam(true, 10);
+      //         this.scene.checkPoint = 2
+      //       }
+
+      //     },
+      //     () => true,
+      //     this.scene
+      //   );
+      if (this.coin)
+        this.scene.physics.add.overlap(
+          this.scene.monchi,
+          this.coin,
+          () => this.scene.touchItem("coin"),
+          () => true,
+          this.scene
+        );
+      if (this.fireballGroup)
+        this.scene.physics.add.overlap(
+          this.scene.monchi,
+          this.fireballGroup,
+          () => this.scene.touchItem("fireball"),
+          () => true,
+          this.scene
+        );
+      if (this.portal)
+        this.scene.physics.add.overlap(
+          this.scene.monchi,
+          this.portal,
+          () => this.scene.win(),
+          () => true,
+          this.scene
+        );
+      // if (this.pisos4)
+      //   this.scene.physics.add.collider(
+      //     this.scene.monchi,
+      //     this.pisos4,
+      //     () => {
+      //       this.scene.canRot = true // medio hack, revisar lógica
+      //       this.scene.changeGravity(false, 1000)
+      //       this.scene.rotateCam(false, 10)
+      //       this.scene.checkPoint = 0
+      //     },
+      //     () => true,
+      //     this.scene
+      //   );
+      // if (this.movingFloor)
+      //   this.scene.physics.add.collider(
+      //     this.scene.monchi,
+      //     this.movingFloor,
+      //     () => {
+      //       this.scene.touch()
+      //     },
+      //     () => true,
+      //     this.scene
+      //   );
+      // if (this.movingFloorRot)
+      //   this.scene.physics.add.collider(
+      //     this.scene.monchi,
+      //     this.movingFloorRot,
+      //     () => {
+      //       this.scene.touch()
+      //     },
+      //     () => true,
+      //     this.scene
+      //   );
+    }
   }
 
   createMap(data: { level: number; lifes: number }) {
@@ -139,15 +228,14 @@ class Mapa4 {
       yoyo: true,
       repeat: -1
     })
-    // this.scene.cameras.main.setZoom(0.2)
-    this.scene.cameras.main.shake(2000, 0.05);
+    
     /* Platforms */
 
     const p1Config: LargeFloorConfig = {
       textureA: "plataformaLarga",
       gap: 0,
       textureB: "plataformaLarga",
-      large: 4,
+      large: 10,
       pos: { x: 370, y: 150 + 300 },
       scale: { width: 0.5, height: 0.7 },
       rotated: false,
@@ -331,19 +419,6 @@ class Mapa4 {
     this.endPortal = port
 
 
-    const portalInicioConfig: portalConfig = {
-      spriteSheet: "portal1",
-      pos: { x: 400, y: 150 + 150 },
-      // scale: { width: 0.1, height: 0.1 },
-      width: 1000,
-      height: 1500,
-      collected: true,
-      scene: this.scene,
-      frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
-    };
-
-    const portInicio = new portal(this.scene, portalInicioConfig, this.portal).setDepth(1);
-
     const fireballConfig: FloorConfig = {
       spriteSheet: "meteorito",
       texture: "meteorito",
@@ -403,46 +478,15 @@ class Mapa4 {
     const c2 = new AsteroidGenerator(this.scene, c2Config);
     c2.start();
 
-    // this.scene.cameras.main.shake(2000, 0.01);
-  }
-
-  addColliders() {
-    if (this.scene.monchi) {
-      // if (this.fireballGroup)
-      //   this.scene.physics.add.collider(
-      //     this.scene.monchi,
-      //     this.fireballGroup,
-      //     this.scene.lose,
-      //     () => true,
-      //     this.scene
-      //   );
-      // if (this.portal) this.portal.setTint(0xff0000);
-      // if (this.pisos)
-      //   this.scene.physics.add.collider(
-      //     this.scene.monchi,
-      //     this.pisos,
-      //     this.scene.touch,
-      //     () => true,
-      //     this.scene
-      //   );
-      // if (this.coin)
-      //   this.scene.physics.add.overlap(
-      //     this.scene.monchi,
-      //     this.coin,
-      //     this.scene.coinCollected,
-      //     () => true,
-      //     this.scene
-      //   );
-      // if (this.portal)
-      //   this.scene.physics.add.overlap(
-      //     this.scene.monchi,
-      //     this.portal,
-      //     // () => this.scene.win("Congrats! You've finished the tutorial"),
-      //     () => this.scene.winLevel(3),
-      //     () => true,
-      //     this.scene
-        // );
-    }
+    const mapObjects =
+    this.pisos.getChildren().concat(
+        this.coin.getChildren(),
+        this.aura.getChildren(),
+        this.portal.getChildren(),
+        this.aura.getChildren(),
+    )
+this.mapContainer.add(mapObjects)
+this.scene.UICamera?.ignore(this.mapContainer)
   }
 
   update() {
@@ -491,14 +535,7 @@ class Mapa4 {
       }
     }
   }
-  // sideGravFunction(cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
 
-  //   if (cursors) {
-  //     const { up, down, left, right } = cursors
-  //     const velocity = 300
-  //     if (up.isDown){}
-  //   }
-  // }
 }
 
 export default Mapa4;

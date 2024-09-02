@@ -46,7 +46,7 @@ class LargeFloor extends Phaser.GameObjects.Container {
     const rota = config.rotated ?? false;
     this.scene = scene;
     this.group = group;
-    const width = config.width ?? 403;
+    const width = config.width ?? 160;
     const height = config.height ?? 93;
     const fix = config.fix ?? 13;
     this.gap = config.gap
@@ -108,11 +108,10 @@ class LargeFloor extends Phaser.GameObjects.Container {
       }
 
     } else {
-      for (let index = 0; index < config.large; index++) {
+      for (let index = 0; index < config.large ; index++) {
         const t = index % 2 == 0 ? config.textureA : config.textureB;
         const s = scene.add.sprite(index * width + this.gap, 0, t);
         this.add(s)
-        this.sendToBack(s)
       }
     }
 
@@ -149,9 +148,9 @@ class LargeFloor extends Phaser.GameObjects.Container {
           this.setRotation(Math.PI);
         }
         else if (config.planeta != 1) {
-          body.setSize(width * config.large + fix, height + fix).setOffset(-160, -130);
+          body.setSize(width * config.large + fix, height + fix).setOffset(0, -130);
         } else {
-          body.setSize(width * config.large + fix, height + fix)
+          body.setSize(width * config.large  + fix, height + fix)
         }
       }
 

@@ -206,7 +206,7 @@ class Mapa2 {
   }
 
   createMap(data: { level: number; lifes: number }) {
-    
+
     this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
     this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });
     this.pisos = this.scene.physics.add.group({ allowGravity: false });
@@ -360,28 +360,20 @@ class Mapa2 {
     const c2 = new AsteroidGenerator(this.scene, c2Config);
     c2.start();
 
-    // const fireballConfig: FloorConfig = {
-    //   spriteSheet: "meteorito",
-    //   texture: "meteorito",
-    //   pos: { x: 1900, y: -100 }, // 500 1580
-    //   // scale: { width: 0.2, height: 0.2 },
-    //   width: 200,
-    //   height: 100,
-    //   // fix: 250,
-
-    //   tween: {
-    //     duration: 1900,
-    //     paused: false,
-    //     // yoyo: true,
-    //     repeat: -1,
-    //     x: "+=2000",
-    //     scaleX: 0,
-    //     scaleY: 0
-    //   },
-    //   // scene: this.scene,
-    //   frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-    // };
-    // const fireball = new Floor(this.scene, fireballConfig, this.fireballGroup).setRotation(Math.PI / 2)
+    const fireballConfig: FloorConfig = {
+      spriteSheet: "meteorito",
+      texture: "meteorito",
+      pos: { x: 1900, y: -400 }, // 500 1580
+      width: 100,
+      height: 100,
+      tween: {
+        duration: 5000,
+        repeat: -1,
+        y: "+=2500",
+    },
+      frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+    };
+    const fireball = new Floor(this.scene, fireballConfig, this.fireballGroup).setScale(0.5)
 
 
     const mapObjects =

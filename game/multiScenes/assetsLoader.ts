@@ -115,7 +115,7 @@ const loadAssets = {
       ], [
         "spritesheet",
         "meteorito",
-        "/game/meteorito.png",
+        "/game/planeta1/meteoritoSpriteVerde.png",
         { frameWidth: 140, frameHeight: 300 },
       ], [
         "spritesheet",
@@ -127,6 +127,26 @@ const loadAssets = {
   },
   Scenes: {
     assets: [
+      //planeta 1
+      ["image", "plataformaNuevaA", "/game/planeta1/platforms/plataformaNuevaA.png"],
+      ["image", "plataformaFinalP1", "/game/planeta1/platforms/plataformaFinal.png"],
+      
+      ["image", "background0P1", "/game/planeta1/backgrounds/background0P1.png"],
+      ["image", "background1P1", "/game/planeta1/backgrounds/background1P1.png"],
+      ["image", "backgroundStars", "/game/planeta1/backgrounds/backgroundStars.png"],
+      ["image", "frontGround1", "/game/planeta1/backgrounds/frontGround1.png"],
+      ["image", "frontGround2", "/game/planeta1/backgrounds/frontGround2.png"],
+      ["image", "montaña1", "/game/planeta1/backgrounds/montaña1.png"],
+      ["image", "montaña2", "/game/planeta1/backgrounds/montaña2.png"],
+      ["image", "montaña3", "/game/planeta1/backgrounds/montaña3.png"],
+      ["image", "montaña4", "/game/planeta1/backgrounds/montaña4.png"],
+      ["image", "montaña5", "/game/planeta1/backgrounds/montaña5.png"],
+      ["image", "nube1", "/game/planeta1/backgrounds/nube1.png"],
+      ["image", "nube2", "/game/planeta1/backgrounds/nube2.png"],
+      ["image", "nube3", "/game/planeta1/backgrounds/nube3.png"],
+      ["image", "nube4", "/game/planeta1/backgrounds/nube4.png"],
+      ["image", "nube5", "/game/planeta1/backgrounds/nube5.png"],
+
 
       ["image", "plataformaA", "/game/plataforma.png"],
       ["image", "plataformaB", "/game/plataforma2.png"],

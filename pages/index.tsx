@@ -57,18 +57,13 @@ export default function Home() {
           arcade: {
             overlapBias: 10,
             gravity: { y: 1000 },
-            debug: true
+            // debug: true
           }
         }
       }
       const game = new phaser.Game(config)
       setGame(game);
       /* ola */
-
-
-      // Escala la interfaz de usuario proporcionalmente al tamaño de la pantalla
-
-
 
       /* CONTROLS THE RESIZE AND RESTART OF SCENE */
 

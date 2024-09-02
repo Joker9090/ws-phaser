@@ -41,7 +41,7 @@ class Mapa1 {
   pisoGoBack?: Phaser.GameObjects.Sprite;
   monchi?: Player;
   startingPoint = {
-    x: 500, //500
+    x: 1700, //500
     y: 800, //800
   };
   checkPointPos1 = {

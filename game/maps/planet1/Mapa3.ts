@@ -171,7 +171,7 @@ class Mapa3 {
                     this.scene.monchi,
                     this.pisos3,
                     () => {
-                        if(this.scene.checkPoint === 1){
+                        if (this.scene.checkPoint === 1) {
                             this.scene.rotateCam(true, 10);
                             this.scene.checkPoint = 2
                         }
@@ -248,6 +248,7 @@ class Mapa3 {
         this.pisosBack = this.scene.physics.add.group({ allowGravity: false });
         this.pisos2 = this.scene.physics.add.group({ allowGravity: false });
         this.pisos3 = this.scene.physics.add.group({ allowGravity: false });
+        this.fireballGroup = this.scene.physics.add.group({ allowGravity: false });
         this.pisos4 = this.scene.physics.add.group({ allowGravity: false });
         this.amountLifes = data.lifes;
         this.coin = this.scene.physics.add.group({ allowGravity: false });
@@ -541,6 +542,7 @@ class Mapa3 {
         const c2 = new AsteroidGenerator(this.scene, c2Config);
         c2.start();
 
+      
 
         const mapObjects =
             this.movingFloor.getChildren().concat(

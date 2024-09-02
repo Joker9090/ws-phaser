@@ -211,7 +211,6 @@ class Mapa0 {
       textureA: "plataformaNuevaA",
       textureB: "plataformaNuevaA",
       pos: { x: 300, y: 1200 },
-      scale: { width: 0.6, height: 0.6 },
       large: 27,
       gap: 0,
       planeta: 1
@@ -220,8 +219,7 @@ class Mapa0 {
 
     const p2Config: FloorConfig = {
       texture: "plataformaNuevaA",
-      pos: { x: 900, y: 1025 },
-      scale: { width: 0.6, height: 0.6 },
+      pos: { x: 900, y: 960 },
       fix: 25,
       width: 140,
       height: 50,
@@ -230,8 +228,7 @@ class Mapa0 {
 
     const p3Config: FloorConfig = {
       texture: "plataformaNuevaA",
-      pos: { x: 1100, y: 900 },
-      scale: { width: 0.6, height: 0.6 },
+      pos: { x: 1100, y: 720 },
       fix: 25,
       width: 140,
       height: 50,
@@ -240,8 +237,7 @@ class Mapa0 {
 
     const p4Config: FloorConfig = {
       texture: "plataformaNuevaA",
-      pos: { x: 1300, y: 750 },
-      scale: { width: 0.6, height: 0.6 },
+      pos: { x: 1300, y: 480 },
       fix: 25,
       width: 140,
       height: 50,
@@ -251,12 +247,10 @@ class Mapa0 {
 
     //Portal, Coin and Asteroids
     const portalConfig: FloorConfig = {
-      // spriteSheet: "portal1",
       texture: "plataformaFinalP1",
-      pos: { x: 2400, y: 1135 }, // x: 2400
+      pos: { x: 2400, y: 1132 }, // x: 2400
       width: 100,
       height: 100,
-      // frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
     };
     const port = new Floor(this.scene, portalConfig, this.portal).setDepth(99);
     this.endPortal = port
@@ -264,7 +258,6 @@ class Mapa0 {
     const coinConfig: FloorConfig = {
       texture: "coin",
       pos: { x: 1500, y: 600 },
-      scale: { width: 0.15, height: 0.15 },
       width: 40,
       height: 18,
       fix: 10,

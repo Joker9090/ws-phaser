@@ -86,7 +86,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     /* Monchi change size and bounce */
     this.body?.setSize(100, 150);
     this.body?.setOffset(50, 30);
-    this.setScale(0.7)
+    this.setScale(1)
     this.setBounce(0);
     this.setDepth(999);
 
@@ -109,7 +109,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
   setPlayerState(state: "NORMAL" | "ROTATED") {
     this.playerState = state
-  }
+  } 
 
   idle() {
     this.isJumping = false;
@@ -122,7 +122,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     if (!this.isJumping && condition) {
       this.isJumping = true;
       this.anims.play("monchiJump");
-      this.setVelocityY(this.playerState === 'NORMAL' ? -630 : 630);
+      this.setVelocityY(this.playerState === 'NORMAL' ? -800 : 800);
       this.scene.time.delayedCall(1200, this.idle, [], this);
       // cambiar esto apra que isJumping cambie cuando toca el piso
     }

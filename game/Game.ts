@@ -283,7 +283,6 @@ class Game extends Phaser.Scene {
 
     this.UICamera = this.cameras.add(0, 0, window.innerWidth, window.innerHeight)
     this.UIClass = new UIClass(this, this.levelIs, this.lifes, this.timeLevel)
-
     /* CREATE MAP */
     this.map.createMap(data);
 
@@ -298,7 +297,7 @@ class Game extends Phaser.Scene {
     this.canRot = true;
 
     /* CAMERAS */
-    this.cameras.main.zoom = 0.9;
+    this.cameras.main.zoom = 1;
     this.cameraWidth = this.cameras.main.width;
     this.cameraHeight = this.cameras.main.height;
     this.cameras.main.startFollow(this.monchi, true, 0.5, 0.5, 0, this.cameraHeight / 2 - 200);

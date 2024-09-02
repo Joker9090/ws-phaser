@@ -149,18 +149,12 @@ class Game extends Phaser.Scene {
     switch (item) {
       case "coin":
         if (this.map?.coin && this.map.endPortal) {
-
-          (
-            this.map.portal?.getChildren()[0] as Phaser.GameObjects.Image,
-            this.map.endPortal.clearTint()
-          );
           this.canNextLevel = true;
           this.canWin = true;
           this.map.coin.setVisible(false);
           this.map.aura?.setVisible(false)
           this.map.coin.clear(true);
           this.UIClass?.coinCollected()
-          // this.portal.clearTint()
         }
         break;
       case "fireball":

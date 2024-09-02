@@ -155,7 +155,6 @@ class Mapa0 {
 
   addColliders() {
     if (this.scene.monchi) {
-      if (this.portal) this.portal.setTint(0xff0000);
       if (this.pisos)
         this.scene.physics.add.collider(
           this.scene.monchi,
@@ -213,7 +212,7 @@ class Mapa0 {
       textureB: "plataformaNuevaA",
       pos: { x: 300, y: 1200 },
       scale: { width: 0.6, height: 0.6 },
-      large: 25,
+      large: 27,
       gap: 0,
       planeta: 1
     };
@@ -221,7 +220,7 @@ class Mapa0 {
 
     const p2Config: FloorConfig = {
       texture: "plataformaNuevaA",
-      pos: { x: 900, y: 1050 },
+      pos: { x: 900, y: 1025 },
       scale: { width: 0.6, height: 0.6 },
       fix: 25,
       width: 140,
@@ -252,12 +251,12 @@ class Mapa0 {
 
     //Portal, Coin and Asteroids
     const portalConfig: FloorConfig = {
-      spriteSheet: "portal1",
-      texture: "portal1",
-      pos: { x: 2400, y: 1100 }, // x: 2400
+      // spriteSheet: "portal1",
+      texture: "plataformaFinalP1",
+      pos: { x: 2400, y: 1135 }, // x: 2400
       width: 100,
       height: 100,
-      frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
+      // frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
     };
     const port = new Floor(this.scene, portalConfig, this.portal).setDepth(99);
     this.endPortal = port
@@ -266,37 +265,50 @@ class Mapa0 {
       texture: "coin",
       pos: { x: 1500, y: 600 },
       scale: { width: 0.15, height: 0.15 },
-      width: 10,
+      width: 40,
       height: 18,
       fix: 10,
     };
     this.cristal = new Floor(this.scene, coinConfig, this.coin).setBodySize(140, 180);
 
     const c1Config: AsteroidGeneratorConfig = {
-      texture: "asteroid",
-      x: -100,
-      y: 1700,
+      texture: "nube1",
+      x: 0,
+      y: 500,
       delayed: 100,
       direction: 0,
-      velocity: 100,
-      scale: 0.7,
-      depth: 1,
+      velocity: 20,
+      scale: 1,
+      depth: 99,
     };
     const c1 = new AsteroidGenerator(this.scene, c1Config);
     c1.start();
 
     const c2Config: AsteroidGeneratorConfig = {
-      texture: "asteroid2",
+      texture: "nube3",
       x: 3000,
-      y: 800,
+      y: 600,
       delayed: 100,
       direction: 1,
-      velocity: 100,
-      scale: 0.5,
-      depth: 1,
+      velocity: 30,
+      scale: 1,
+      depth: 99,
     };
     const c2 = new AsteroidGenerator(this.scene, c2Config);
     c2.start();
+
+    const c3Config: AsteroidGeneratorConfig = {
+      texture: "nube5",
+      x: -1000,
+      y: 300,
+      delayed: 1600,
+      direction: 0,
+      velocity: 10,
+      scale: 1.2,
+      depth: 99,
+    };
+    const c3 = new AsteroidGenerator(this.scene, c3Config);
+    c3.start();
 
     const mapObjects =
       this.movingFloor.getChildren().concat(
@@ -315,7 +327,7 @@ class Mapa0 {
     this.mapContainer.add([
       this.mountain1,
       this.mountain2,
-      this.mountain3
+      this.mountain3,
     ])
     this.scene.UICamera?.ignore(this.mapContainer)
 

@@ -57,10 +57,24 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       frames: (Array.from({ length: 24 }, (_, i) => i)).reverse(),
     });
 
-    const monchiRotateConfig = {
-      key: "monchiRotate",
-      frames: monchiRotateFrames,
+    const monchiRotate1Config = {
+      key: "monchiRotate1",
+      frames: monchiRotateReverseFrames,
+      frameRate: 12,
+      repeat: 0,
+    }
+
+    const monchiRotate2Config = {
+      key: "monchiRotate2",
+      frames: monchiRotateReverseFrames,
       frameRate: 24,
+      repeat: 0,
+    }
+
+    const monchiRotate3Config = {
+      key: "monchiRotate3",
+      frames: monchiRotateReverseFrames,
+      frameRate: 36,
       repeat: 0,
     }
 
@@ -71,14 +85,14 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       repeat: 0,
     }
 
-
     /* Monchi animations */
     scene.anims.create(monchiJumpConfig);
     scene.anims.create(monchiMoveConfig);
     scene.anims.create(monchiIdleConfig);
-    scene.anims.create(monchiRotateConfig);
+    scene.anims.create(monchiRotate1Config);
+    scene.anims.create(monchiRotate2Config);
+    scene.anims.create(monchiRotate3Config);
     scene.anims.create(monchiRotateReverseConfig);
-
 
     /* Monchi add to physic world */
     scene.physics.add.existing(this);
@@ -86,7 +100,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     /* Monchi change size and bounce */
     this.body?.setSize(100, 150);
     this.body?.setOffset(50, 30);
-    this.setScale(1)
+    this.setScale(.7)
     this.setBounce(0);
     this.setDepth(999);
 
@@ -122,24 +136,19 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     if (!this.isJumping && condition) {
       this.isJumping = true;
       this.anims.play("monchiJump");
-      this.setVelocityY(this.playerState === 'NORMAL' ? -800 : 800);
+      this.setVelocityY(this.playerState === 'NORMAL' ? -630 : 630);
       this.scene.time.delayedCall(1200, this.idle, [], this);
       // cambiar esto apra que isJumping cambie cuando toca el piso
     }
   }
 
-
-
-  rotate() {
+  rotate(speed: 1 | 2 | 3 = 2) {
     if (!this.isRotating) {
       this.isRotating = true
       this.setPlayerState(this.playerState === 'NORMAL' ? 'ROTATED' : 'NORMAL')
-      this.anims.play(this.playerState === 'NORMAL' ? 'monchiRotate' : 'monchiRotateReverse').once('animationcomplete', this.idle)
+      this.anims.play(speed === 1 ? 'monchiRotate1' : speed === 2 ? 'monchiRotate2' : 'monchiRotate3').once('animationcomplete', this.idle)
     }
   }
-
-
-
 
   checkMove(cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined) {
     if (this.playerState === "ROTATED") this.setFlipY(true)

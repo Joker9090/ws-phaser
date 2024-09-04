@@ -129,6 +129,9 @@ const loadAssets = {
     assets: [
       //planeta 1
       ["image", "plataformaNuevaA", "/game/planeta1/platforms/plataformaNuevaA.png"],
+      ["image", "plataformaNuevaLargaA", "/game/planeta1/platforms/newPlatA.png"],
+      ["image", "plataformaNuevaLargaB", "/game/planeta1/platforms/newPlatB.png"],
+      ["image", "plataformaNuevaLargaC", "/game/planeta1/platforms/newPlatC.png"],
       ["image", "plataformaFinalP1", "/game/planeta1/platforms/plataformaFinal.png"],
       
       ["image", "background0P1", "/game/planeta1/backgrounds/background0P1.png"],

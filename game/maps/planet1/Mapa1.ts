@@ -63,7 +63,7 @@ class Mapa1 {
       gravityDown: false
     },
   ];
-  nextScene: string | undefined = 'postal1_planeta1';
+  nextScene: string | undefined = undefined;
   background: Phaser.GameObjects.Image;
   background2: Phaser.GameObjects.Image;
   background3: Phaser.GameObjects.Image;

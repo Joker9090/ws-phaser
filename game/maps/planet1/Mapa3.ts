@@ -43,7 +43,7 @@ class Mapa3 {
     pisoGoBack?: Phaser.GameObjects.Sprite;
     monchi?: Player;
     startingPoint = {
-        x: 500, //500
+        x: 1700, //500
         y: 800, //800
     };
     checkPointPos1 = {
@@ -75,7 +75,7 @@ class Mapa3 {
             gravityDown: false
         },
     ];
-    nextScene: string | undefined = 'postal2_planeta1';
+    nextScene: string | undefined = undefined;
 
     background: Phaser.GameObjects.Image;
     background2: Phaser.GameObjects.Image;
@@ -160,7 +160,7 @@ class Mapa3 {
                     this.scene.monchi,
                     this.pisos2,
                     () => {
-                        this.scene.changeGravity(true, 1000)
+                        this.scene.changeGravity(true, 1000, 1)
                         this.scene.checkPoint = 1
                     },
                     () => true,
@@ -210,7 +210,7 @@ class Mapa3 {
                     this.pisos4,
                     () => {
                         this.scene.canRot = true // medio hack, revisar lógica
-                        this.scene.changeGravity(false, 1000)
+                        this.scene.changeGravity(false, 1000, 2)
                         this.scene.rotateCam(false, 10)
                         this.scene.checkPoint = 0
                     },
@@ -366,9 +366,7 @@ class Mapa3 {
             pos: { x: 1500, y: 100 },
             scale: { width: 0.7, height: 0.7 },
             planeta: 1
-
         };
-
         const p4 = new LargeFloor(this.scene, p4Config, this.pisos);
 
         const p10Config: FloorConfig = {
@@ -379,7 +377,6 @@ class Mapa3 {
             width: 140,
             height: 50,
         };
-
         const p10 = new Floor(this.scene, p10Config, this.pisos);
 
         const p11Config: FloorConfig = {
@@ -542,7 +539,7 @@ class Mapa3 {
         const c2 = new AsteroidGenerator(this.scene, c2Config);
         c2.start();
 
-      
+
 
         const mapObjects =
             this.movingFloor.getChildren().concat(

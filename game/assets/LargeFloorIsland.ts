@@ -5,7 +5,11 @@ export type LargeFloorIslandConfig = {
   textureA: string,
   textureB: string,
   textureC: string,
-  width?: number,
+  width: {
+    textureA: number,
+    textureB: number,
+    textureC: number,
+  }, // width of middle asset
   height?: number,
   fix?: number,
   pos: {
@@ -17,7 +21,7 @@ export type LargeFloorIslandConfig = {
     height: number,
   },
   large: number,
-  rotated:boolean,
+  rotated: boolean,
 }
 // Scene in class
 class LargeFloorIsland extends Phaser.GameObjects.Container {
@@ -30,18 +34,20 @@ class LargeFloorIsland extends Phaser.GameObjects.Container {
     this.parts = [];
     this.scene = scene;
     this.group = group;
-    const width = config.width ?? 40
     const height = config.height ?? 20;
-    const fix = config.fix ?? 25
+    const fix = config.fix ?? 0
 
 
     for (let index = 0; index < config.large; index++) {
-      const t = (index % 2 == 0) ? config.textureA : config.textureB
-      const s = scene.add.sprite(index * width, 0, t)
-      const detail = scene.add.sprite(index * width, 10, config.textureC)
-      /**Darknes implementation */
-      //s.setPipeline('Light2D');
-      //detail.setPipeline('Light2D');
+
+      const t = index === 0 ? config.textureA : index === config.large - 1 ? config.textureC : config.textureB
+
+      const lastTilePos = (config.large - 1) * config.width.textureB
+
+      const s = scene.add.sprite(
+        index === 0 ? 0 : index === config.large - 1 ? lastTilePos : (index - 1)*config.width.textureB + config.width.textureA,
+        0,
+        t)
       this.add(s)
 
     }
@@ -49,13 +55,13 @@ class LargeFloorIsland extends Phaser.GameObjects.Container {
       this.setScale(config.scale.width, config.scale.height)
     }
 
-    this.setSize((width * config.large), height)
+    this.setSize((config.width.textureB * config.large), height)
     scene.add.existing(this);
     this.group.add(this)
     if (this.body) {
       const body = (this.body as Phaser.Physics.Arcade.Body)
       body.setImmovable(true)
-      body.setOffset(((config.large - 1) / 2) * width, height * -1 + (fix / 2))
+      // body.setOffset(((config.large - 1) / 2) * config.width.textureB, height * -1 + (fix / 2))
     }
 
 

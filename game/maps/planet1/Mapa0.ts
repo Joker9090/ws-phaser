@@ -11,6 +11,7 @@ import Player from "../../assets/Player";
 import portal, { portalConfig } from "../../assets/portal";
 import { Children } from "react";
 import { loseConfigFromMapType } from "@/game/Types";
+import LargeFloorIsland, { LargeFloorIslandConfig } from "@/game/assets/LargeFloorIsland";
 
 class Mapa0 {
   isJumping = false;
@@ -55,7 +56,7 @@ class Mapa0 {
       gravityDown: true
     },
   ];
-  nextScene: string | undefined = undefined;
+  nextScene: string | undefined = 'postal1_planeta1';
 
   background: Phaser.GameObjects.Image;
   background2: Phaser.GameObjects.Image;
@@ -74,7 +75,7 @@ class Mapa0 {
   endPortal?: Floor;
 
   mapContainer: Phaser.GameObjects.Container;
-
+  frontContainer: Phaser.GameObjects.Container;
   constructor(scene: Game, monchi: Player) {
     this.scene = scene;
     this.monchi = monchi;
@@ -88,6 +89,7 @@ class Mapa0 {
     );
 
     this.mapContainer = this.scene.add.container()
+    this.frontContainer = this.scene.add.container().setDepth(999999999999)
 
     this.background = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "background0P1")
@@ -123,6 +125,10 @@ class Mapa0 {
       this.background4,
       this.background5,
       this.background6,
+
+    ])
+
+    this.frontContainer.add([
       this.mountain1,
       this.mountain2,
       this.mountain3,
@@ -148,9 +154,13 @@ class Mapa0 {
     this.background6.setPosition(x + this.background5.width - 15 + calcDiffFX, y + 470 + calcDiffFY);
     this.mountain4.setPosition(-400 + calcDiffFX, this.startingPoint.y + calcDiffFY)
     this.mountain5.setPosition(1100 + calcDiffFX, this.startingPoint.y + calcDiffFY)
-    this.mountain1.setPosition(this.startingPoint.x + this.background5.width - 85 + calcDiffFX, this.startingPoint.y + 320 + calcDiffFY)
-    this.mountain2.setPosition(this.startingPoint.x -70 + calcDiffFX, this.startingPoint.y + 350 + calcDiffFY)
-    this.mountain3.setPosition(1200 + calcDiffFX, this.startingPoint.y + 470 + calcDiffFY)
+    // // animation front mountains
+    const { ajusteFMX, ajusteFMY } = { ajusteFMX: 20, ajusteFMY: 30 }
+    const calcDiffFMX = (x2 - x) / ajusteFMX
+    const calcDiffFMY = (y2 - y) / ajusteFMY;
+    this.mountain1.setPosition(this.startingPoint.x + this.background5.width - 85 + calcDiffFMX, this.startingPoint.y + 320 + calcDiffFMY)
+    this.mountain2.setPosition(this.startingPoint.x - 270 + calcDiffFMX, this.startingPoint.y + 350 + calcDiffFMY)
+    this.mountain3.setPosition(1100 + calcDiffFMX, this.startingPoint.y + 470 + calcDiffFMY)
   }
 
   addColliders() {
@@ -207,20 +217,27 @@ class Mapa0 {
     })
 
 
-    const p1Config: LargeFloorConfig = {
-      textureA: "plataformaNuevaA",
-      textureB: "plataformaNuevaA",
+    const p1Config: LargeFloorIslandConfig = {
+      textureA: "plataformaNuevaLargaA",
+      textureB: "plataformaNuevaLargaB",
+      textureC: "plataformaNuevaLargaC",
       pos: { x: 300, y: 1200 },
-      large: 27,
-      gap: 0,
-      planeta: 1
+      width: {
+        textureA: 90,
+        textureB: 67,
+        textureC: 115,
+      },
+      height: 127,
+      large: 15,
+      rotated: false
     };
-    const p1 = new LargeFloor(this.scene, p1Config, this.pisos);
+    const p1 = new LargeFloorIsland(this.scene, p1Config, this.pisos);
 
     const p2Config: FloorConfig = {
       texture: "plataformaNuevaA",
-      pos: { x: 900, y: 960 },
+      pos: { x: 900, y: 1020 },
       fix: 25,
+      scale: {width: 0.7, height: 0.7},
       width: 140,
       height: 50,
     };
@@ -228,8 +245,9 @@ class Mapa0 {
 
     const p3Config: FloorConfig = {
       texture: "plataformaNuevaA",
-      pos: { x: 1100, y: 720 },
+      pos: { x: 1100, y: 920 },
       fix: 25,
+      scale: {width: 0.7, height: 0.7},
       width: 140,
       height: 50,
     };
@@ -237,8 +255,9 @@ class Mapa0 {
 
     const p4Config: FloorConfig = {
       texture: "plataformaNuevaA",
-      pos: { x: 1300, y: 480 },
+      pos: { x: 1300, y: 820 },
       fix: 25,
+      scale: {width: 0.7, height: 0.7},
       width: 140,
       height: 50,
     };
@@ -259,6 +278,7 @@ class Mapa0 {
       texture: "coin",
       pos: { x: 1500, y: 600 },
       width: 40,
+      scale: {width: 0.15, height: 0.15},
       height: 18,
       fix: 10,
     };
@@ -317,13 +337,9 @@ class Mapa0 {
         this.aura.getChildren(),
       )
     this.mapContainer.add(mapObjects)
-    this.mapContainer.add([
-      this.mountain1,
-      this.mountain2,
-      this.mountain3,
-    ])
-    this.scene.UICamera?.ignore(this.mapContainer)
 
+    this.scene.UICamera?.ignore(this.mapContainer)
+    this.scene.UICamera?.ignore(this.frontContainer)
   }
   update() {
     /* Attach background anim */

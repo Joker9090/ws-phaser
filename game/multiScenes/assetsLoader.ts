@@ -152,6 +152,12 @@ const loadAssets = {
         "/game/planeta1/backgrounds/backgroundStars.svg",
         { scale: 1.8 }
       ],
+      [
+        "svg",
+        "montañaEnd",
+        "/game/planeta1/backgrounds/montañaEnd.svg",
+        { scale: 3 }
+      ],
       ["image", "frontGround1", "/game/planeta1/backgrounds/frontGround1.png"],
       ["image", "frontGround2", "/game/planeta1/backgrounds/frontGround2.png"],
       ["image", "cristal1", "/game/planeta1/cristal1.png"],
@@ -375,7 +381,7 @@ class AssetsLoader {
         assetText.destroy();
         this.finished = true
         // this.scene.scene.restart({text:"menu"})
-        this.scene.makeTransition("Game", { level: 0, lifes: 3 });
+        this.scene.makeTransition("Game", { level: 1, lifes: 3 });
       });
       const scenesTitles: Array<SceneKeys> = [
         "Menu",

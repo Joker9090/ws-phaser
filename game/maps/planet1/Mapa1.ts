@@ -11,6 +11,7 @@ import Player from "../../assets/Player";
 import portal, { portalConfig } from "../../assets/portal";
 import { Children } from "react";
 import { loseConfigFromMapType } from "@/game/Types";
+import LargeFloorIsland, { LargeFloorIslandConfig } from "@/game/assets/LargeFloorIsland";
 
 class Mapa1 {
   scene: Game;
@@ -41,7 +42,7 @@ class Mapa1 {
   pisoGoBack?: Phaser.GameObjects.Sprite;
   monchi?: Player;
   startingPoint = {
-    x: 1700, //500
+    x: 500, //500
     y: 800, //800
   };
   checkPointPos1 = {
@@ -70,6 +71,12 @@ class Mapa1 {
   background4: Phaser.GameObjects.Image;
   background5: Phaser.GameObjects.Image;
   background6: Phaser.GameObjects.Image;
+  mountain1: Phaser.GameObjects.Image;
+  mountain2: Phaser.GameObjects.Image;
+  mountain3: Phaser.GameObjects.Image;
+  mountain4: Phaser.GameObjects.Image;
+  mountain5: Phaser.GameObjects.Image;
+
   cristal?: Floor;
   collected: Boolean = false;
   endPortal?: Floor;
@@ -77,6 +84,7 @@ class Mapa1 {
   isFloating: boolean = false;
 
   mapContainer: Phaser.GameObjects.Container;
+  frontContainer: Phaser.GameObjects.Container;
 
   constructor(scene: Game, monchi: Player) {
     this.scene = scene;
@@ -91,51 +99,83 @@ class Mapa1 {
     );
 
     this.mapContainer = this.scene.add.container()
+    this.frontContainer = this.scene.add.container().setDepth(999999999999)
 
     this.background = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "newBg1")
-      .setOrigin(0.5, 0.5).setScale(1.8);
+      .image(this.startingPoint.x, this.startingPoint.y, "background0P1")
+      .setOrigin(0.5, 0.5)
     this.background2 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "newBg2")
-      .setOrigin(0.5, 0.5).setScale(1.8);
+      .image(this.startingPoint.x, this.startingPoint.y, "background1P1")
+      .setOrigin(0.5, 0.5)
     this.background3 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "newBg3")
-      .setOrigin(0.5, 0.5).setScale(1.8);
+      .image(this.startingPoint.x, this.startingPoint.y, "backgroundStars")
+      .setOrigin(0.5, 0.5)
     this.background4 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "newBg4")
-      .setOrigin(0.5, 0.5).setScale(1.8);
+      .image(this.startingPoint.x, this.startingPoint.y + 470, "frontGround1")
+      .setOrigin(1, 1).setScale(1);
     this.background5 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "newBg5")
-      .setOrigin(0.5, 0.5).setScale(1.8);
+      .image(this.startingPoint.x, this.startingPoint.y + 470, "frontGround2")
+      .setOrigin(0, 1).setScale(1);
     this.background6 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "newBg6")
-      .setOrigin(0.5, 0.5).setScale(1.8);
+      .image(this.startingPoint.x + this.background5.width - 15, this.startingPoint.y + 470, "frontGround1")
+      .setOrigin(0, 1).setScale(1);
+
+    this.mountain1 = this.scene.add.image(this.startingPoint.x + this.background5.width - 15, this.startingPoint.y - 370, "montaña3")
+    this.mountain2 = this.scene.add.image(this.startingPoint.x - 70, this.startingPoint.y + 350, "montaña5")
+    this.mountain3 = this.scene.add.image(1200, this.startingPoint.y + 470, "montaña3")
+    this.mountain4 = this.scene.add.image(200, this.startingPoint.y, "montaña2")
+    this.mountain5 = this.scene.add.image(1100, this.startingPoint.y, "montaña4")
+
     this.mapContainer.add([
       this.background,
       this.background2,
       this.background3,
+      this.mountain4,
+      this.mountain5,
       this.background4,
       this.background5,
       this.background6,
+
+    ])
+
+    this.frontContainer.add([
+      this.mountain1,
+      this.mountain2,
+      this.mountain3,
     ])
   }
 
   animateBackground(player: Phaser.GameObjects.Sprite) {
+    const offsetLevel = 300
     const { x, y } = this.startingPoint;
     const { x: x2, y: y2 } = player;
-    const calcDiffX = (x2 - x) / 1
-    const calcDiffY = (y2 - y - this.scene.cameras.main.displayHeight / 6) / 1.3;
-    this.background.setPosition(x + calcDiffX, y + calcDiffY);
-    this.background2.setPosition(x + calcDiffX, y + calcDiffY);
-    this.background3.setPosition(x + calcDiffX, y + calcDiffY);
-    this.background4.setPosition(x + calcDiffX, y + calcDiffY);
-    this.background5.setPosition(x + calcDiffX, y + calcDiffY);
-    this.background6.setPosition(x + calcDiffX, y + calcDiffY);
+    // animation backgrounds statics
+    const { ajusteBX, ajusteBY } = { ajusteBX: 1.1, ajusteBY: 1.1 }
+    const calcDiffBX = (x2 - x) / ajusteBX
+    const calcDiffBY = (y2 - y) / ajusteBY;
+    this.background.setPosition(x + calcDiffBX, y  + calcDiffBY);
+    this.background2.setPosition(x + calcDiffBX, y  + calcDiffBY);
+    this.background3.setPosition(x + calcDiffBX, y  + calcDiffBY);
+    // // animation frontgrounds
+    const { ajusteFX, ajusteFY } = { ajusteFX: 4, ajusteFY: 2 }
+    const calcDiffFX = (x2 - x) / ajusteFX
+    const calcDiffFY = (y2 - y ) / ajusteFY;
+    this.background4.setPosition(x + calcDiffFX, y + offsetLevel + 470 + calcDiffFY);
+    this.background5.setPosition(x + calcDiffFX, y + offsetLevel + 470 + calcDiffFY);
+    this.background6.setPosition(x + this.background5.width - 15 + calcDiffFX, y + offsetLevel + 470 + calcDiffFY);
+    this.mountain4.setPosition(-200 + calcDiffFX, y + offsetLevel + calcDiffFY)
+    this.mountain5.setPosition(1100 + calcDiffFX, y + offsetLevel + calcDiffFY)
+    // // animation front mountains
+    const { ajusteFMX, ajusteFMY } = { ajusteFMX: 20, ajusteFMY: 30 }
+    const calcDiffFMX = -(x2 - x) / ajusteFMX
+    const calcDiffFMY = -(y2 - y) / ajusteFMY;
+    this.mountain1.setPosition(this.startingPoint.x + this.background5.width - 85 + calcDiffFMX, y + offsetLevel + 320 + calcDiffFMY)
+    this.mountain2.setPosition(this.startingPoint.x - 270 + calcDiffFMX, y + offsetLevel + 350 + calcDiffFMY)
+    this.mountain3.setPosition(1100 + calcDiffFMX, y + offsetLevel + 470 + calcDiffFMY)
   }
 
   addColliders() {
     if (this.scene.monchi) {
-      if (this.portal) this.portal.setTint(0xff0000);
       if (this.pisos)
         this.scene.physics.add.collider(
           this.scene.monchi,
@@ -210,27 +250,26 @@ class Mapa1 {
     })
 
     const p1Config: FloorConfig = {
-      texture: "plataformaLarga2",
       pos: { x: 500, y: 1400 },
-      scale: { width: 0.4, height: 0.7 },
-      width: 390,
+      texture: "plataformaNuevaA",
+      scale: { width: 0.7, height: 0.7 },
+      width: 140,
       height: 50,
     };
     const p1 = new Floor(this.scene, p1Config, this.pisos);
 
     const p2Config: FloorConfig = {
-      texture: "plataformaLarga2",
-      pos: { x: 800, y: 1800 },
-      scale: { width: 0.5, height: 0.7 },
-      fix: 25,
-      width: 390,
+      texture: "plataformaNuevaA",
+      pos: { x: 800, y: 1400 },
+      scale: { width: 1, height: 0.7 },
+      width: 170,
       height: 50,
       tween: {
         duration: 4500,
         paused: false,
         yoyo: true,
         repeat: -1,
-        y: "-=1000",
+        y: "-=400",
       },
     };
     const p2 = new Floor(this.scene, p2Config, this.movingFloor);
@@ -238,8 +277,8 @@ class Mapa1 {
 
 
     const p5Config: FloorConfig = {
-      texture: "plataformaA",
-      pos: { x: 1100, y: 800 }, // 1100 800
+      pos: { x: 1100, y: 1100 }, // 1100 800
+      texture: "plataformaNuevaA",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
       height: 50,
@@ -247,104 +286,156 @@ class Mapa1 {
     const p5 = new Floor(this.scene, p5Config, this.pisos);
 
     const p7Config: FloorConfig = {
-      texture: "plataformaA",
-      pos: { x: 1600, y: 1500 },
+      pos: { x: 1600, y: 1300 },
+      texture: "plataformaNuevaA",
       scale: { width: 0.7, height: 0.7 },
-      fix: 25,
       width: 140,
       height: 50,
     };
     const p7 = new Floor(this.scene, p7Config, this.pisos);
 
-    const p8Config: LargeFloorConfig = {
-      textureA: "plataformaLarga2",
-      textureB: "plataformaLarga2",
-      large: 1,
+    const p8Config: LargeFloorIslandConfig = {
+      textureA: "plataformaNuevaLargaA",
+      textureB: "plataformaNuevaLargaB",
+      textureC: "plataformaNuevaLargaC",
       pos: { x: 1300, y: 1200 },
-      scale: { width: 0.7, height: 0.7 },
-      rotated: false,
-      gap: 0,
-      fix: 0,
-      planeta: 1
+      width: {
+        textureA: 90,
+        textureB: 67,
+        textureC: 115,
+      },
+      scale: {width: 0.7, height: 0.7},
+      height: 127,
+      large: 4,
+      rotated: false
     };
-    const p8 = new LargeFloor(this.scene, p8Config, this.pisos);
+    const p8 = new LargeFloorIsland(this.scene, p8Config, this.pisos);
+
+    // const p8Config: LargeFloorConfig = {
+    //   textureA: "plataformaLarga2",
+    //   textureB: "plataformaLarga2",
+    //   large: 1,
+    //   pos: { x: 1300, y: 1200 },
+    //   scale: { width: 0.7, height: 0.7 },
+    //   rotated: false,
+    //   gap: 0,
+    //   fix: 0,
+    //   planeta: 1
+    // };
+    // const p8 = new LargeFloor(this.scene, p8Config, this.pisos);
 
     const p9Config: FloorConfig = {
-      texture: "plataformaA",
-      pos: { x: 1800, y: 1800 },
-      scale: { width: 1.2, height: 0.7 },
-      fix: 10,
-      width: 180,
+      pos: { x: 1800, y: 1400 },
+      texture: "plataformaNuevaA",
+      scale: { width: 0.7, height: 0.7 },
+      width: 140,
       height: 50,
+
     };
     const p9 = new Floor(this.scene, p9Config, this.pisos2).setTint(
       Phaser.Display.Color.GetColor(255, 101, 0)
     );
 
-    const p4Config: LargeFloorConfig = {
-      textureA: "plataformaLarga2",
-      textureB: "plataformaLarga2",
-      large: 7,
-      gap: 0,
-      fix: -20,
-      pos: { x: 1500, y: 100 },
-      scale: { width: 0.7, height: 0.7 },
-      planeta: 1
+    // const p4Config: LargeFloorConfig = {
+    //   textureA: "plataformaLarga2",
+    //   textureB: "plataformaLarga2",
+    //   large: 7,
+    //   gap: 0,
+    //   fix: -20,
+    //   pos: { x: 1500, y: 100 },
+    //   scale: { width: 0.7, height: 0.7 },
+    //   planeta: 1
 
+    // };
+
+    // const p4 = new LargeFloor(this.scene, p4Config, this.pisos);
+
+    const p10Config: LargeFloorIslandConfig = {
+      textureA: "plataformaNuevaLargaA",
+      textureB: "plataformaNuevaLargaB",
+      textureC: "plataformaNuevaLargaC",
+      pos: { x: 1600, y: 100 },
+      width: {
+        textureA: 90,
+        textureB: 67,
+        textureC: 115,
+      },
+      scale: {width: 0.7, height: 0.7},
+      height: 127,
+      large: 40,
+      rotated: true
     };
-
-    const p4 = new LargeFloor(this.scene, p4Config, this.pisos);
-
-
+    const p10 = new LargeFloorIsland(this.scene, p10Config, this.pisos)
 
     //Portal, Coin and Asteroids
+    // const portalConfig: FloorConfig = {
+    //   spriteSheet: "portal1",
+    //   texture: "portal1",
+    //   pos: { x: 3200, y: 220 },
+    //   width: 100,
+    //   height: 100,
+    //   frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
+    // };
+    // const port = new Floor(this.scene, portalConfig, this.portal).setDepth(99);
+    // this.endPortal = port
+
     const portalConfig: FloorConfig = {
-      spriteSheet: "portal1",
-      texture: "portal1",
-      pos: { x: 3200, y: 220 },
+      texture: "plataformaFinalP1",
+      pos: { x: 3200, y: 210 },
       width: 100,
       height: 100,
-      frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
     };
-    const port = new Floor(this.scene, portalConfig, this.portal).setDepth(99);
+    const port = new Floor(this.scene, portalConfig, this.portal).setDepth(99).setFlipY(true);
     this.endPortal = port
 
     const coinConfig: FloorConfig = {
-      texture: "coin",
+      texture: "cristal2",
       pos: { x: 2300, y: 350 },
-      scale: { width: 0.15, height: 0.15 },
-      width: 10,
+      scale: { width: 0.7, height: 0.7 },
+      width: 40,
       height: 18,
       fix: 10,
     };
     this.cristal = new Floor(this.scene, coinConfig, this.coin).setBodySize(140, 180);
 
     const c1Config: AsteroidGeneratorConfig = {
-      texture: "asteroid",
-      x: -100,
-      y: 1700,
+      texture: "nube1",
+      x: 0,
+      y: 500,
       delayed: 100,
       direction: 0,
-      velocity: 100,
-      scale: 0.7,
-      depth: 1,
+      velocity: 20,
+      scale: 1,
+      depth: 99,
     };
     const c1 = new AsteroidGenerator(this.scene, c1Config);
     c1.start();
 
     const c2Config: AsteroidGeneratorConfig = {
-      texture: "asteroid2",
+      texture: "nube3",
       x: 3000,
-      y: 800,
+      y: 600,
       delayed: 100,
       direction: 1,
-      velocity: 100,
-      scale: 0.5,
-      depth: 1,
+      velocity: 30,
+      scale: 1,
+      depth: 99,
     };
     const c2 = new AsteroidGenerator(this.scene, c2Config);
     c2.start();
 
+    const c3Config: AsteroidGeneratorConfig = {
+      texture: "nube5",
+      x: -1000,
+      y: 300,
+      delayed: 1600,
+      direction: 0,
+      velocity: 10,
+      scale: 1.2,
+      depth: 99,
+    };
+    const c3 = new AsteroidGenerator(this.scene, c3Config);
+    c3.start();
 
     const mapObjects =
       this.movingFloor.getChildren().concat(

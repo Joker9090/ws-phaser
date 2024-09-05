@@ -47,12 +47,11 @@ class LargeFloorIsland extends Phaser.GameObjects.Container {
         index === 0 ? 0 : index === config.large - 1 ? lastTilePos : (index - 1)*config.width.textureB + config.width.textureA,
         0,
         t).setOrigin(0, 0.5)
+      if (config.rotated) s.setFlipY(true)
       this.add(s)
     }
 
-    if (config.scale) {
-      this.setScale(config.scale.width, config.scale.height)
-    }
+    
 
     const sizeWidth = config.width.textureA + config.width.textureC + config.width.textureB * (config.large - 2)
 
@@ -64,7 +63,9 @@ class LargeFloorIsland extends Phaser.GameObjects.Container {
       body.setImmovable(true)
       body.setOffset(sizeWidth/2 - 30, 10)
     }
-
+    if (config.scale) {
+      this.setScale(config.scale.width, config.scale.height)
+    }
 
   }
 }

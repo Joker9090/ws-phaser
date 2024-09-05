@@ -74,18 +74,20 @@ class Game extends Phaser.Scene {
   }
 
   moveCameraOffset(position: "up" | "down", instant: boolean = false) {
-    let newPosition = (this.cameraHeight / 2 - 200)
-    if (position === "up") newPosition = -newPosition
-    if (instant) {
-      this.cameras.main.followOffset.y = newPosition
-    } else {
-      this.tweens.add({
-        targets: this.cameras.main.followOffset,
-        y: newPosition,
-        duration: 1000,
-        ease: "ease"
-      })
-    }
+    setTimeout(() => {
+      let newPosition = (this.cameraHeight / 2 - 200)
+      if (position === "up") newPosition = -newPosition
+      if (instant) {
+        this.cameras.main.followOffset.y = newPosition
+      } else {
+        this.tweens.add({
+          targets: this.cameras.main.followOffset,
+          y: newPosition,
+          duration: 1000,
+          ease: "ease"
+        })
+      }
+    }, 500)
   }
 
   changeGravity(float: boolean, time: number, speed?: 1 | 2 | 3) {
@@ -136,7 +138,7 @@ class Game extends Phaser.Scene {
     if (this.canWin && this.monchi) {
       if (this.map?.nextScene) {
         console.log("ARI NEXT SCENE", this.map?.nextScene)
-        this.makeTransition("CinematographyMod", {keyname: this.map.nextScene});
+        this.makeTransition("CinematographyMod", { keyname: this.map.nextScene });
       } else {
         this.makeTransition("Game", { level: this.levelIs + 1, lifes: this.lifes });
       }

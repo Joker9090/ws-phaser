@@ -35,33 +35,34 @@ class LargeFloorIsland extends Phaser.GameObjects.Container {
     this.scene = scene;
     this.group = group;
     const height = config.height ?? 20;
-    const fix = config.fix ?? 0
 
 
     for (let index = 0; index < config.large; index++) {
 
       const t = index === 0 ? config.textureA : index === config.large - 1 ? config.textureC : config.textureB
 
-      const lastTilePos = (config.large - 1) * config.width.textureB
-
+      const lastTilePos = (config.large - 2) * config.width.textureB + config.width.textureA
+      console.log("index y width", t, index, index === 0 ? 0 : index === config.large - 1 ? lastTilePos : (index - 1)*config.width.textureB + config.width.textureA)
       const s = scene.add.sprite(
         index === 0 ? 0 : index === config.large - 1 ? lastTilePos : (index - 1)*config.width.textureB + config.width.textureA,
         0,
-        t)
+        t).setOrigin(0, 0.5)
       this.add(s)
-
     }
+
     if (config.scale) {
       this.setScale(config.scale.width, config.scale.height)
     }
 
-    this.setSize((config.width.textureB * config.large), height)
+    const sizeWidth = config.width.textureA + config.width.textureC + config.width.textureB * (config.large - 2)
+
+    this.setSize(sizeWidth - 90, height - 40)
     scene.add.existing(this);
     this.group.add(this)
     if (this.body) {
       const body = (this.body as Phaser.Physics.Arcade.Body)
       body.setImmovable(true)
-      // body.setOffset(((config.large - 1) / 2) * config.width.textureB, height * -1 + (fix / 2))
+      body.setOffset(sizeWidth/2 - 30, 10)
     }
 
 

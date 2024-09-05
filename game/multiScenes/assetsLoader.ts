@@ -13,7 +13,7 @@ export type SceneKeys =
   | "BetweenScenes"
   | "Postales";
 
-export type LoadTypes = "image" | "spritesheet" | "audio";
+export type LoadTypes = "image" | "spritesheet" | "audio" | "svg";
 
 const loadAssets = {
   Menu: {
@@ -133,12 +133,30 @@ const loadAssets = {
       ["image", "plataformaNuevaLargaB", "/game/planeta1/platforms/newPlatB.png"],
       ["image", "plataformaNuevaLargaC", "/game/planeta1/platforms/newPlatC.png"],
       ["image", "plataformaFinalP1", "/game/planeta1/platforms/plataformaFinal.png"],
-      
-      ["image", "background0P1", "/game/planeta1/backgrounds/background0P1.png"],
-      ["image", "background1P1", "/game/planeta1/backgrounds/background1P1.png"],
-      ["image", "backgroundStars", "/game/planeta1/backgrounds/backgroundStars.png"],
+
+      [
+        "svg",
+        "background0P1",
+        "/game/planeta1/backgrounds/background0P1.svg",
+        { scale: 1.8 }
+      ],
+      [
+        "svg",
+        "background1P1",
+        "/game/planeta1/backgrounds/background1P1.svg",
+        { scale: 1.8 }
+      ],
+      [
+        "svg",
+        "backgroundStars",
+        "/game/planeta1/backgrounds/backgroundStars.svg",
+        { scale: 1.8 }
+      ],
       ["image", "frontGround1", "/game/planeta1/backgrounds/frontGround1.png"],
       ["image", "frontGround2", "/game/planeta1/backgrounds/frontGround2.png"],
+      ["image", "cristal1", "/game/planeta1/cristal1.png"],
+      ["image", "cristal2", "/game/planeta1/cristal2.png"],
+      ["image", "cristal3", "/game/planeta1/cristal3.png"],
       ["image", "montaña1", "/game/planeta1/backgrounds/montaña1.png"],
       ["image", "montaña2", "/game/planeta1/backgrounds/montaña2.png"],
       ["image", "montaña3", "/game/planeta1/backgrounds/montaña3.png"],
@@ -291,122 +309,122 @@ class AssetsLoader {
   }
 
   runPreload(this: AssetsLoader) {
-    if (!this.finished){
+    if (!this.finished) {
 
-    this.scene.cameras.main.setBackgroundColor(
-      Phaser.Display.Color.GetColor(30, 30, 30)
-    );
-    var width = this.scene.cameras.main.width;
-    var height = this.scene.cameras.main.height;
-    var loadingText = this.scene.make.text({
-      x: width / 2,
-      y: height / 2 - 50,
-      text: "Loading...",
-      style: {
-        font: "20px monospace",
-        color: "#ff0000",
-      },
-    });
-    var progressBar = this.scene.add.graphics();
-    var progressBox = this.scene.add.graphics();
-    progressBox.fillStyle(0x222222, 0.8);
-    progressBox.fillRect(width / 2 - 160, height / 2 + 100, 320, 50);
+      this.scene.cameras.main.setBackgroundColor(
+        Phaser.Display.Color.GetColor(30, 30, 30)
+      );
+      var width = this.scene.cameras.main.width;
+      var height = this.scene.cameras.main.height;
+      var loadingText = this.scene.make.text({
+        x: width / 2,
+        y: height / 2 - 50,
+        text: "Loading...",
+        style: {
+          font: "20px monospace",
+          color: "#ff0000",
+        },
+      });
+      var progressBar = this.scene.add.graphics();
+      var progressBox = this.scene.add.graphics();
+      progressBox.fillStyle(0x222222, 0.8);
+      progressBox.fillRect(width / 2 - 160, height / 2 + 100, 320, 50);
 
-    loadingText.setOrigin(0.5, 0.5);
+      loadingText.setOrigin(0.5, 0.5);
 
-    var percentText = this.scene.make.text({
-      x: width / 2,
-      y: height / 2 - 5,
-      text: "0%",
-      style: {
-        font: "18px monospace",
-        color: "#ff0000",
-      },
-    });
+      var percentText = this.scene.make.text({
+        x: width / 2,
+        y: height / 2 - 5,
+        text: "0%",
+        style: {
+          font: "18px monospace",
+          color: "#ff0000",
+        },
+      });
 
-    percentText.setOrigin(0.5, 0.5);
+      percentText.setOrigin(0.5, 0.5);
 
-    var assetText = this.scene.make.text({
-      x: width / 2,
-      y: height / 2 + 50,
-      text: "",
-      style: {
-        font: "18px monospace",
-        color: "#ff0000",
-      },
-    });
+      var assetText = this.scene.make.text({
+        x: width / 2,
+        y: height / 2 + 50,
+        text: "",
+        style: {
+          font: "18px monospace",
+          color: "#ff0000",
+        },
+      });
 
-    assetText.setOrigin(0.5, 0.5);
+      assetText.setOrigin(0.5, 0.5);
 
-    this.scene.load.on("progress", function (value: number) {
-      percentText.setText(Math.floor(Number(value * 100)) + "%");
-      progressBar.clear();
-      progressBar.fillStyle(0xff0000, 1);
-      progressBar.fillRect(width / 2 - 160, height / 2 + 100, 300 * value, 30);
-    });
+      this.scene.load.on("progress", function (value: number) {
+        percentText.setText(Math.floor(Number(value * 100)) + "%");
+        progressBar.clear();
+        progressBar.fillStyle(0xff0000, 1);
+        progressBar.fillRect(width / 2 - 160, height / 2 + 100, 300 * value, 30);
+      });
 
-    this.scene.load.on("fileprogress", function (file: any) {
-      assetText.setText("Loading asset: " + file.key);
-    });
+      this.scene.load.on("fileprogress", function (file: any) {
+        assetText.setText("Loading asset: " + file.key);
+      });
 
-    this.scene.load.once("complete", function (this: AssetsLoader) {
-      progressBar.destroy();
-      progressBox.destroy();
-      loadingText.destroy();
-      percentText.destroy();
-      assetText.destroy();
-      this.finished = true
-      // this.scene.scene.restart({text:"menu"})
-      this.scene.makeTransition("Game", { level: 0, lifes: 3 });
-    });
-    const scenesTitles: Array<SceneKeys> = [
-      "Menu",
-      "Scenes",
-      "Tutorial",
-      "Music",
-      "Intro",
-      "LevelMap",
-      "BetweenScenes",
-      "Sandbox",
-      "Postales",
-    ];
-    for (let i = 0; i < scenesTitles.length; i++) {
-      loadAssets[scenesTitles[i]].assets.map((sceneAssetConfig) => {
-        const type = sceneAssetConfig[0] as LoadTypes;
-        const name = sceneAssetConfig[1] as string;
-        const src = sceneAssetConfig[2] as string;
-        const config = sceneAssetConfig[3] as any;
-        if (config) {
-          this.scene.load[type](name, src, config);
-        } else {
-          this.scene.load[type](name, src);
-        }
+      this.scene.load.once("complete", function (this: AssetsLoader) {
+        progressBar.destroy();
+        progressBox.destroy();
+        loadingText.destroy();
+        percentText.destroy();
+        assetText.destroy();
+        this.finished = true
+        // this.scene.scene.restart({text:"menu"})
+        this.scene.makeTransition("Game", { level: 0, lifes: 3 });
+      });
+      const scenesTitles: Array<SceneKeys> = [
+        "Menu",
+        "Scenes",
+        "Tutorial",
+        "Music",
+        "Intro",
+        "LevelMap",
+        "BetweenScenes",
+        "Sandbox",
+        "Postales",
+      ];
+      for (let i = 0; i < scenesTitles.length; i++) {
+        loadAssets[scenesTitles[i]].assets.map((sceneAssetConfig) => {
+          const type = sceneAssetConfig[0] as LoadTypes;
+          const name = sceneAssetConfig[1] as string;
+          const src = sceneAssetConfig[2] as string;
+          const config = sceneAssetConfig[3] as any;
+          if (config) {
+            this.scene.load[type](name, src, config);
+          } else {
+            this.scene.load[type](name, src);
+          }
+        });
+      }
+      /*Load Fonts*/
+      const ArcadeFont = this.scene.add.text(0, 0, ":)", { fontFamily: "Arcade" });
+    }
+  }
+
+  // función para developer
+  makeTransition(sceneName: string, data: any) {
+    const getBetweenScenesScene = this.scene.game.scene.getScene(
+      "BetweenScenes"
+    ) as BetweenScenes;
+    if (getBetweenScenesScene) {
+      if (getBetweenScenesScene.status != BetweenScenesStatus.IDLE)
+        return false;
+      getBetweenScenesScene.changeSceneTo(sceneName, data);
+      this.scene.time.delayedCall(1000, () => {
+        this.scene.scene.stop();
+      });
+    } else {
+      this.scene.scene.start(sceneName, data);
+      this.scene.time.delayedCall(1000, () => {
+        this.scene.scene.stop();
       });
     }
-    /*Load Fonts*/
-    const ArcadeFont = this.scene.add.text(0, 0, ":)", { fontFamily: "Arcade" });
   }
-}
-
-// función para developer
-makeTransition(sceneName: string, data: any) {
-  const getBetweenScenesScene = this.scene.game.scene.getScene(
-    "BetweenScenes"
-  ) as BetweenScenes;
-  if (getBetweenScenesScene) {
-    if (getBetweenScenesScene.status != BetweenScenesStatus.IDLE)
-      return false;
-    getBetweenScenesScene.changeSceneTo(sceneName, data);
-    this.scene.time.delayedCall(1000, () => {
-      this.scene.scene.stop();
-    });
-  } else {
-    this.scene.scene.start(sceneName, data);
-    this.scene.time.delayedCall(1000, () => {
-      this.scene.scene.stop();
-    });
-  }
-}
 
   update() {
   }

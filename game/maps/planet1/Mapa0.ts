@@ -93,13 +93,13 @@ class Mapa0 {
 
     this.background = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "background0P1")
-      .setOrigin(0.5, 0.5).setScale(1.8);
+      .setOrigin(0.5, 0.5)
     this.background2 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "background1P1")
-      .setOrigin(0.5, 0.5).setScale(1.8);
+      .setOrigin(0.5, 0.5)
     this.background3 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "backgroundStars")
-      .setOrigin(0.5, 0.5).setScale(1.8);
+      .setOrigin(0.5, 0.5)
     this.background4 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y + 470, "frontGround1")
       .setOrigin(1, 1).setScale(1);
@@ -110,11 +110,11 @@ class Mapa0 {
       .image(this.startingPoint.x + this.background5.width - 15, this.startingPoint.y + 470, "frontGround1")
       .setOrigin(0, 1).setScale(1);
 
-    this.mountain1 = this.scene.add.image(this.startingPoint.x + this.background5.width - 15, this.startingPoint.y + 370, "montaña3")
+    this.mountain1 = this.scene.add.image(this.startingPoint.x + this.background5.width - 15, this.startingPoint.y - 370, "montaña3")
     this.mountain2 = this.scene.add.image(this.startingPoint.x - 70, this.startingPoint.y + 350, "montaña5")
-    this.mountain3 = this.scene.add.image(1200, this.startingPoint.y + 470, "montaña3").setVisible(false)
-    this.mountain4 = this.scene.add.image(-400, this.startingPoint.y, "montaña3");
-    this.mountain5 = this.scene.add.image(1100, this.startingPoint.y, "montaña5");
+    this.mountain3 = this.scene.add.image(1200, this.startingPoint.y + 470, "montaña3")
+    this.mountain4 = this.scene.add.image(200, this.startingPoint.y, "montaña2")
+    this.mountain5 = this.scene.add.image(1100, this.startingPoint.y, "montaña4")
 
     this.mapContainer.add([
       this.background,
@@ -152,12 +152,12 @@ class Mapa0 {
     this.background4.setPosition(x + calcDiffFX, y + 470 + calcDiffFY);
     this.background5.setPosition(x + calcDiffFX, y + 470 + calcDiffFY);
     this.background6.setPosition(x + this.background5.width - 15 + calcDiffFX, y + 470 + calcDiffFY);
-    this.mountain4.setPosition(-400 + calcDiffFX, this.startingPoint.y + calcDiffFY)
+    this.mountain4.setPosition(-200 + calcDiffFX, this.startingPoint.y + calcDiffFY)
     this.mountain5.setPosition(1100 + calcDiffFX, this.startingPoint.y + calcDiffFY)
     // // animation front mountains
     const { ajusteFMX, ajusteFMY } = { ajusteFMX: 20, ajusteFMY: 30 }
-    const calcDiffFMX = (x2 - x) / ajusteFMX
-    const calcDiffFMY = (y2 - y) / ajusteFMY;
+    const calcDiffFMX = -(x2 - x) / ajusteFMX
+    const calcDiffFMY = -(y2 - y) / ajusteFMY;
     this.mountain1.setPosition(this.startingPoint.x + this.background5.width - 85 + calcDiffFMX, this.startingPoint.y + 320 + calcDiffFMY)
     this.mountain2.setPosition(this.startingPoint.x - 270 + calcDiffFMX, this.startingPoint.y + 350 + calcDiffFMY)
     this.mountain3.setPosition(1100 + calcDiffFMX, this.startingPoint.y + 470 + calcDiffFMY)
@@ -228,7 +228,7 @@ class Mapa0 {
         textureC: 115,
       },
       height: 127,
-      large: 15,
+      large: 35,
       rotated: false
     };
     const p1 = new LargeFloorIsland(this.scene, p1Config, this.pisos);
@@ -267,7 +267,7 @@ class Mapa0 {
     //Portal, Coin and Asteroids
     const portalConfig: FloorConfig = {
       texture: "plataformaFinalP1",
-      pos: { x: 2400, y: 1132 }, // x: 2400
+      pos: { x: 2400, y: 1065 }, // x: 2400
       width: 100,
       height: 100,
     };
@@ -275,10 +275,9 @@ class Mapa0 {
     this.endPortal = port
 
     const coinConfig: FloorConfig = {
-      texture: "coin",
+      texture: "cristal3",
       pos: { x: 1500, y: 600 },
       width: 40,
-      scale: {width: 0.15, height: 0.15},
       height: 18,
       fix: 10,
     };

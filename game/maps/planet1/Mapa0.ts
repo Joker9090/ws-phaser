@@ -245,8 +245,8 @@ class Mapa0 {
     const p2 = new Floor(this.scene, p2Config, this.pisos);
 
     const p3Config: FloorConfig = {
-      texture: "plataformaNuevaA",
       pos: { x: 1100, y: 920 },
+      texture: "plataformaNuevaA",
       fix: 25,
       scale: {width: 0.7, height: 0.7},
       width: 140,
@@ -267,8 +267,8 @@ class Mapa0 {
 
     //Portal, Coin and Asteroids
     const portalConfig: FloorConfig = {
-      texture: "plataformaFinalP1",
       pos: { x: 2400, y: 1090 }, // x: 2400
+      texture: "plataformaFinalP1",
       // scale: {width: 0.7, height: 0.7},
       width: 100,
       height: 100,

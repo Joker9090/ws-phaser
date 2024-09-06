@@ -258,23 +258,46 @@ class Mapa1 {
     };
     const p1 = new Floor(this.scene, p1Config, this.pisos);
 
+    // const p2Config: FloorConfig = {
+    //   texture: "plataformaNuevaA",
+    //   pos: { x: 800, y: 1400 },
+    //   scale: { width: 1, height: 0.7 },
+    //   width: 170,
+    //   height: 50,
+    //   tween: {
+    //     duration: 4500,
+    //     paused: false,
+    //     yoyo: true,
+    //     repeat: -1,
+    //     y: "-=400",
+    //   },
+    // };
+    // const p2 = new Floor(this.scene, p2Config, this.movingFloor);
+
     const p2Config: FloorConfig = {
+      pos: { x: 800, y: 1200 },
       texture: "plataformaNuevaA",
-      pos: { x: 800, y: 1400 },
-      scale: { width: 1, height: 0.7 },
-      width: 170,
+      scale: { width: 0.7, height: 0.7 },
+      width: 140,
       height: 50,
-      tween: {
-        duration: 4500,
-        paused: false,
-        yoyo: true,
-        repeat: -1,
-        y: "-=400",
-      },
-    };
-    const p2 = new Floor(this.scene, p2Config, this.movingFloor);
+      // tween: {
+      //     duration: 4500,
+      //     paused: false,
+      //     yoyo: true,
+      //     repeat: -1,
+      //     y: "-=800",
+      // },
+  };
+  const p2 = new Floor(this.scene, p2Config, this.movingFloor).setVelocityY(-300);
 
-
+  this.scene.tweens.add({
+      duration: 3000,
+      paused: false,
+      yoyo: true,
+      repeat: -1,
+      targets: p2.body?.velocity,
+      y: "+=600",
+  })
 
     const p5Config: FloorConfig = {
       pos: { x: 1100, y: 1100 }, // 1100 800
@@ -311,19 +334,6 @@ class Mapa1 {
     };
     const p8 = new LargeFloorIsland(this.scene, p8Config, this.pisos);
 
-    // const p8Config: LargeFloorConfig = {
-    //   textureA: "plataformaLarga2",
-    //   textureB: "plataformaLarga2",
-    //   large: 1,
-    //   pos: { x: 1300, y: 1200 },
-    //   scale: { width: 0.7, height: 0.7 },
-    //   rotated: false,
-    //   gap: 0,
-    //   fix: 0,
-    //   planeta: 1
-    // };
-    // const p8 = new LargeFloor(this.scene, p8Config, this.pisos);
-
     const p9Config: FloorConfig = {
       pos: { x: 1800, y: 1400 },
       texture: "plataformaNuevaA",
@@ -336,19 +346,6 @@ class Mapa1 {
       Phaser.Display.Color.GetColor(255, 101, 0)
     );
 
-    // const p4Config: LargeFloorConfig = {
-    //   textureA: "plataformaLarga2",
-    //   textureB: "plataformaLarga2",
-    //   large: 7,
-    //   gap: 0,
-    //   fix: -20,
-    //   pos: { x: 1500, y: 100 },
-    //   scale: { width: 0.7, height: 0.7 },
-    //   planeta: 1
-
-    // };
-
-    // const p4 = new LargeFloor(this.scene, p4Config, this.pisos);
 
     const p10Config: LargeFloorIslandConfig = {
       textureA: "plataformaNuevaLargaA",
@@ -366,18 +363,6 @@ class Mapa1 {
       rotated: true
     };
     const p10 = new LargeFloorIsland(this.scene, p10Config, this.pisos)
-
-    //Portal, Coin and Asteroids
-    // const portalConfig: FloorConfig = {
-    //   spriteSheet: "portal1",
-    //   texture: "portal1",
-    //   pos: { x: 3200, y: 220 },
-    //   width: 100,
-    //   height: 100,
-    //   frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
-    // };
-    // const port = new Floor(this.scene, portalConfig, this.portal).setDepth(99);
-    // this.endPortal = port
 
     const portalConfig: FloorConfig = {
       texture: "plataformaFinalP1",

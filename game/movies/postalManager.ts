@@ -10,15 +10,17 @@ class postalManager {
     nextCine: boolean = false;
     postal: string;
     nextLevel: number;
+    lifes: number;
     container?: Phaser.GameObjects.Container;
     // controllers
     cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
 
 
-    constructor(cine: CinematographyModular, postal: string, nextLevel: number) {
+    constructor(cine: CinematographyModular, postal: string, nextLevel: number, lifes: number) {
         this.cine = cine
         this.postal = postal
         this.nextLevel = nextLevel
+        this.lifes = lifes
         const tickerMS = 100;
         this.ticker = new Ticker(tickerMS);
         this.playCine()
@@ -120,7 +122,7 @@ class postalManager {
     }
 
     update(this: postalManager, time: number, delta: number) {
-        if (this.nextCine) this.makeTransition("Game", { level: this.nextLevel, lifes: 3 });
+        if (this.nextCine) this.makeTransition("Game", { level: this.nextLevel, lifes: this.lifes });
 
     }
 }

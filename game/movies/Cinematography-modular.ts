@@ -92,7 +92,7 @@ class CinematographyModular extends Phaser.Scene {
   //   this.load.image("PisoNivel8", "/movies/intro/scene8/Piso.png")
   // }
 
-  create(this: CinematographyModular, { keyname }: any) {
+  create(this: CinematographyModular, { keyname, lifes }: {keyname: string, lifes?: any}) {
     this.cursors = this.input.keyboard?.createCursorKeys();
     /* Audio */
     const getMasterManagerScene = this.game.scene.getScene(
@@ -133,10 +133,10 @@ class CinematographyModular extends Phaser.Scene {
         this.playingCine = new cineIntro7(this);
         break;
       case "postal1_planeta1":
-        this.playingCine = new postalManager(this, "postal1Planeta1", 2);
+        this.playingCine = new postalManager(this, "postal1Planeta1", 1, lifes);
         break;
       case "postal2_planeta1":
-        this.playingCine = new postalManager(this, "postal2Planeta1", 4);
+        this.playingCine = new postalManager(this, "postal2Planeta1", 3, lifes);
         break;
       default:
         this.playingCine = new cineIntro1(this);

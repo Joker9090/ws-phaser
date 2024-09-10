@@ -111,11 +111,12 @@ class cineIntro2 {
     const camera = this.cine.cameras.main;
     camera.postFX.addVignette(0.5, 0.5, 0.8);
 
-    const spaceshipAmbientSoundEffect = this.cine.sound.add("spaceshipAmbient");
-    spaceshipAmbientSoundEffect.setVolume(1.5);
-    spaceshipAmbientSoundEffect.play();
+    // const spaceshipAmbientSoundEffect = this.cine.sound.add("spaceshipAmbient");
+    // spaceshipAmbientSoundEffect.setVolume(1.5);
+    // spaceshipAmbientSoundEffect.play();
 
     const part1 = (job: TickerJob) => {
+
       this.part1SetUp?.setVisible(true);
       this.part2SetUp?.setVisible(false);
       this.dialogue = new DialogueManager(
@@ -183,6 +184,8 @@ class cineIntro2 {
     };
 
     const part2 = (job: TickerJob) => {
+      this.cine.sound.add("introSoundEffect4").setVolume(0.45).play()
+      this.cine.sound.add("introSoundEffect5").setVolume(0.45).play()
       this.dialogue = new DialogueManager(
         this.cine,
         [
@@ -245,7 +248,7 @@ class cineIntro2 {
             undefined,
             true,
             (job: TickerJob) => {
-              spaceshipAmbientSoundEffect.stop();
+              // spaceshipAmbientSoundEffect.stop();
               this.nextCine = true;
             }
           )

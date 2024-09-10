@@ -159,6 +159,8 @@ class cineIntro4 {
     // ADD JOBS
 
     const part1 = (job: TickerJob) => {
+      const audio = this.cine.sound.add("introSoundEffect9").setVolume(0.55)
+      audio.play()
       this.cine.tweens.add({
         targets: [this.NaveAbiertaLuces],
         alpha: 0.2,

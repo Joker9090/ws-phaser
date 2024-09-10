@@ -53,7 +53,7 @@ class cineIntro1 {
       .setOrigin(0.5, 0.5)
       .setScale(1.4);
     this.background1 = this.cine.add
-      .image(0, 0, "backgroundStars")
+      .image(0, 0, "backgroundStarsMovie")
       .setOrigin(0.5, 0.5);
     this.darkness = this.cine.add.image(0, 0, "darkness").setOrigin(0.5, 0.5).setVisible(true);
     this.planet = this.cine.add
@@ -144,6 +144,8 @@ class cineIntro1 {
     camera.postFX.addVignette(0.5, 0.5, 0.8);
 
     const part1 = (job: TickerJob) => {
+      this.cine.sound.add("introSoundEffect1").setVolume(0.25).play()
+      this.cine.sound.add("introSoundEffect2").setVolume(0.25).play()
       const tween1 = this.cine.tweens.add({
         targets: [this.shipOverImage, this.shipZoomOn],
         alpha: 0,
@@ -227,7 +229,8 @@ class cineIntro1 {
             delay: 500,
             keepAlive: 1000,
           },
-        ]
+        ], 
+        80
       );
       this.dialogue?.play();
 
@@ -346,6 +349,7 @@ class cineIntro1 {
 
 
     const part5 = (job: TickerJob) => {
+      this.cine.sound.add("introSoundEffect3").setVolume(0.5).play()
 
       shipZoomBlackMask.setVisible(false);
       this.shipZoom?.setVisible(false);
@@ -384,7 +388,7 @@ class cineIntro1 {
                         0,
                         part5,
                         false,
-                        1000,
+                        1500,
                         true,
                         (job: TickerJob) => {
                           // soundChangeScene.stop()

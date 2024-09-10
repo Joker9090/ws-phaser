@@ -56,12 +56,12 @@ export default class MultiScene extends Phaser.Scene {
 
   create(this: MultiScene, data: { text: string }) {
     this.scenekey = data.text
-    /* Audio */
-    this.getMasterManagerScene = this.game.scene.getScene(
-      "MasterManager"
-    ) as MasterManager;
-    if (!this.getMasterManagerScene.scene.isActive())
-      this.scene.launch("MasterManager").sendToBack();
+    // /* Audio */
+    // this.getMasterManagerScene = this.game.scene.getScene(
+    //   "MasterManager"
+    // ) as MasterManager;
+    // if (!this.getMasterManagerScene.scene.isActive())
+    //   this.scene.launch("MasterManager").sendToBack();
 
 
     switch (this.scenekey) {

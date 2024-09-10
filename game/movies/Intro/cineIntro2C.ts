@@ -56,7 +56,7 @@ class cineIntro2C {
   
     this.background3 = this.cine.add.image(0, 0, "backgroundGlow").setOrigin(0.5);
     this.background2 = this.cine.add.image(0, 0, "backgronudClouds").setOrigin(0.5);
-    this.background1 = this.cine.add.image(0, 0, "backgroundStars").setOrigin(0.5);
+    this.background1 = this.cine.add.image(0, 0, "backgroundStarsMovie").setOrigin(0.5);
     this.planetScene2 = this.cine.add
       .image(-100, 400, "planetScene2")
       .setOrigin(1, 0.8)
@@ -108,9 +108,9 @@ class cineIntro2C {
     const camera = this.cine.cameras.main;
     camera.postFX.addVignette(0.5, 0.5, 0.8);
 
-    const spaceshipAmbientSoundEffect = this.cine.sound.add("spaceshipAmbient");
-    spaceshipAmbientSoundEffect.setVolume(1.5);
-    spaceshipAmbientSoundEffect.play();
+    // const spaceshipAmbientSoundEffect = this.cine.sound.add("spaceshipAmbient");
+    // spaceshipAmbientSoundEffect.setVolume(1.5);
+    // spaceshipAmbientSoundEffect.play();
     
 
     const part1 = (job: TickerJob) => {
@@ -179,7 +179,7 @@ class cineIntro2C {
 
     this.ticker.addJob(
       new TickerJob(1, 10, part1, false, 6000, true, (job: TickerJob) => {
-        spaceshipAmbientSoundEffect.stop();
+        // spaceshipAmbientSoundEffect.stop();
         this.nextCine = true;
       })
     );

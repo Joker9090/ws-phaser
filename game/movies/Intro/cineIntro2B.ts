@@ -440,18 +440,20 @@ class cineIntro2B {
     const camera = this.cine.cameras.main;
     camera.postFX.addVignette(0.5, 0.5, 0.8);
 
-    const spaceshipAmbientSoundEffect = this.cine.sound.add("spaceshipAmbient");
-    spaceshipAmbientSoundEffect.setVolume(1.5);
-    spaceshipAmbientSoundEffect.play();
+    // const spaceshipAmbientSoundEffect = this.cine.sound.add("spaceshipAmbient");
+    // spaceshipAmbientSoundEffect.setVolume(1.5);
+    // spaceshipAmbientSoundEffect.play();
 
     const part1 = (job: TickerJob) => {
+      const audio = this.cine.sound.add("introSoundEffect6").setVolume(0.45)
+      audio.play()
       this.part = 1;
       // camera.setZoom(1.4).setScroll(0, -95)
       this.dialogue = new DialogueManager(
         this.cine,
         [
           "Supplies are running out…",
-          "Fuel levels aren't very encouraging either...",
+          "And fuel levels aren't very encouraging either...",
           "I've decided to shut down all systems except life support and navigation to buy myself some time",
         ],
         ["intro2audio3", "intro2audio4", "intro2audio5"],
@@ -714,6 +716,8 @@ class cineIntro2B {
           //   }, 6000);
           // }
         } else if (newState === "FINISHED") {
+          audio.stop()
+
           setTimeout(() => {
             t1.stop();
             t2.stop();
@@ -727,6 +731,9 @@ class cineIntro2B {
     };
 
     const part2 = (job: TickerJob) => {
+      const audio = this.cine.sound.add("introSoundEffect7").setVolume(0.45)
+      audio.play()
+
       this.part = 2;
       this.dialogue = new DialogueManager(
         this.cine,
@@ -751,8 +758,10 @@ class cineIntro2B {
 
       const dialogueListener = (newState: string, nextText?: string) => {
         if (newState === "CONTINUE") {
+          audio.stop()
         } else if (newState === "FINISHED") {
           this.ticker.deleteJob(job.id);
+          audio.stop()
         }
       };
       this.dialogue?.killState(dialogueListener);
@@ -770,7 +779,7 @@ class cineIntro2B {
             undefined,
             true,
             (job: TickerJob) => {
-              spaceshipAmbientSoundEffect.stop();
+              // spaceshipAmbientSoundEffect.stop();
               this.nextCine = true;
             }
           )

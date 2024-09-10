@@ -17,9 +17,9 @@ export default function Home() {
     import("phaser").then(setPhaser)
     //Load scenes async when windows is ready
     Promise.all([
-       // import("@/game/movies/startMovie"),
-       
-       import("@/game/MultiScene"),
+      
+      import("@/game/MultiScene"),
+      import("@/game/movies/startMovie"),
        
        import("@/game/movies/Cinematography-modular"),
       import("@/game/MasterManager"),

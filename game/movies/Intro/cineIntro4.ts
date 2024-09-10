@@ -217,7 +217,7 @@ class cineIntro4 {
       });
     };
     this.ticker.addJob(
-      new TickerJob(1, 10, part1, false, 20000, true, (job: TickerJob) => {
+      new TickerJob(1, 10, part1, false, 7000, true, (job: TickerJob) => {
         this.nextCine = true;
       })
     );

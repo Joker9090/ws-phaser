@@ -8,7 +8,6 @@ class cineIntro1 {
   cine: CinematographyModular;
   nextCine: boolean = false;
   dialogue?: DialogueManager;
-
   //assets
   background3?: Phaser.GameObjects.Image;
   background2?: Phaser.GameObjects.Image;
@@ -30,7 +29,7 @@ class cineIntro1 {
   }
 
   playCine(this: cineIntro1) {
-    // START ticker
+
     this.cine.time.addEvent({
       delay: this.ticker.ms,
       callback: this.ticker.runTicker,
@@ -98,9 +97,6 @@ class cineIntro1 {
       this.shipZoomOn,
     ];
 
-    // gameObjects.forEach((gameObject) => {
-    //   gameObject.setAlpha(brightness);
-    // });
     const darkMask = this.cine.add.rectangle(
       0,
       0,
@@ -133,8 +129,7 @@ class cineIntro1 {
         ? gameObjectScaler.y
         : gameObjectScaler.x
     );
-    // const DialogueScene = this.game.scene.getScene("DialogueManager");
-    // this.scene.launch(DialogueScene)
+
     const cameraDialogue = this.cine.cameras.add(
       0,
       0,
@@ -142,6 +137,8 @@ class cineIntro1 {
       window.innerHeight
     );
     cameraDialogue.ignore(container);
+
+    // const soundChangeScene = this.cine.sound.add("soundChangeScene") // TODO ARIEL
 
     const camera = this.cine.cameras.main;
     camera.postFX.addVignette(0.5, 0.5, 0.8);
@@ -207,7 +204,7 @@ class cineIntro1 {
 
       const dialogueListener = (newState: string, nextText?: string) => {
         if (newState === "CONTINUE") {
-
+          tween2.stop()
         } else if (newState === "FINISHED") {
           this.ticker.deleteJob(job.id);
         }
@@ -224,11 +221,11 @@ class cineIntro1 {
         [
           "Emergency log number 325...",
         ],
-        ["cineIntro1_2"],
+        ["intro1audio1"],
         [
           {
-            delay: 3500,
-            keepAlive: 5000,
+            delay: 500,
+            keepAlive: 1000,
           },
         ]
       );
@@ -250,76 +247,77 @@ class cineIntro1 {
     };
 
 
-    const part3 = (job: TickerJob) => {
+    // const part3 = (job: TickerJob) => {
 
-      camera.setZoom(1);
-      this.shipOverImage?.setVisible(false);
-      this.ship?.setVisible(false);
-      shipBlackMask.setVisible(false)
-      shipZoomBlackMask.setVisible(true).setScale(0.5);
-      this.planet?.setScale(2.5).setPosition(0,0);
-      this.shipZoom?.setVisible(true).setScale(0.5);
-      this.shipZoomOn?.setVisible(true).setScale(0.5);
+    //   camera.setZoom(1);
+    //   this.shipOverImage?.setVisible(false);
+    //   this.ship?.setVisible(false);
+    //   shipBlackMask.setVisible(false)
+    //   shipZoomBlackMask.setVisible(true).setScale(0.5);
+    //   this.planet?.setScale(2.5).setPosition(0,0);
+    //   this.shipZoom?.setVisible(true).setScale(0.5);
+    //   this.shipZoomOn?.setVisible(true).setScale(0.5);
 
-      this.cine.tweens.add({
-        targets: [this.background1, this.background2],
-        x: "-=15",
-        y: "+=20",
-        duration: 14000,
-        ease: "cubic",
-        loop: -1,
-        yoyo: true,
-      });
+    //   this.cine.tweens.add({
+    //     targets: [this.background1, this.background2],
+    //     x: "-=15",
+    //     y: "+=20",
+    //     duration: 14000,
+    //     ease: "cubic",
+    //     loop: -1,
+    //     yoyo: true,
+    //   });
 
-      const tween3 = this.cine.tweens.add({
-        targets: [shipZoomBlackMask, this.shipZoom,this.shipZoomOn],
-        x: "+=10",
-        duration: 5324,
-        ease: "ease",
-        yoyo: true,
-        loop: -1,
-      });
+    //   const tween3 = this.cine.tweens.add({
+    //     targets: [shipZoomBlackMask, this.shipZoom,this.shipZoomOn],
+    //     x: "+=10",
+    //     duration: 5324,
+    //     ease: "ease",
+    //     yoyo: true,
+    //     loop: -1,
+    //   });
 
-      const tween5 = this.cine.tweens.add({
-        targets: [shipZoomBlackMask, this.shipZoom,this.shipZoomOn],
-        y: "+=10",
-        duration: 5324,
-        ease: "ease",
-        yoyo: true,
-        loop: -1,
-      });
+    //   const tween5 = this.cine.tweens.add({
+    //     targets: [shipZoomBlackMask, this.shipZoom,this.shipZoomOn],
+    //     y: "+=10",
+    //     duration: 5324,
+    //     ease: "ease",
+    //     yoyo: true,
+    //     loop: -1,
+    //   });
 
 
-      // this.cine.tweens.add({
-      //   targets: camera,
-      //   scrollY: "+=10",
-      //   duration: 14000,
-      //   delay: 500,
-      //   ease: "linear",
-      //   loop: -1,
-      //   yoyo: true,
-      // });
+    //   // this.cine.tweens.add({
+    //   //   targets: camera,
+    //   //   scrollY: "+=10",
+    //   //   duration: 14000,
+    //   //   delay: 500,
+    //   //   ease: "linear",
+    //   //   loop: -1,
+    //   //   yoyo: true,
+    //   // });
 
-    };
+    // };
 
     const part4 = (job: TickerJob) => {
+
       this.dialogue = new DialogueManager(
         this.cine,
         [
           "it's been more than 45 days since the incident...",
         ],
-        ["cineIntro1_3"],
+        ["intro1audio2"],
         [
           {
-            delay: 1500,
-            keepAlive: 10000,
+            delay: 500,
+            keepAlive: 2000,
           },
         ]
       );
 
       this.dialogue.play();
       camera.setZoom(1);
-      camera.setScroll(0, -400)
+      camera.setScroll(0, 50);
       this.planet?.setVisible(false);
       this.shipOverImage?.setVisible(false);
       this.ship?.setVisible(false);
@@ -337,16 +335,6 @@ class cineIntro1 {
         yoyo: true,
       });
 
-      // this.cine.tweens.add({
-      //   targets: camera,
-      //   scrollY: "+=10",
-      //   duration: 14000,
-      //   delay: 500,
-      //   ease: "linear",
-      //   loop: -1,
-      //   yoyo: true,
-      // });
-
       const dialogueListener = (newState: string, nextText?: string) => {
         if (newState === "FINISHED") {
           this.ticker.deleteJob(job.id);
@@ -356,8 +344,22 @@ class cineIntro1 {
       this.dialogue?.getState(dialogueListener);
     };
 
+
+    const part5 = (job: TickerJob) => {
+
+      shipZoomBlackMask.setVisible(false);
+      this.shipZoom?.setVisible(false);
+      this.shipZoomOn?.setVisible(false);
+      this.background1?.setVisible(false);
+      this.background2?.setVisible(false);
+      this.background3?.setVisible(false);
+      
+      // soundChangeScene.play()
+
+    };
+
     this.ticker.addJob(
-      new TickerJob(1, 10, part1, false, 7100, true, (job: TickerJob) => {
+      new TickerJob(1, 10, part1, false, 6000, true, (job: TickerJob) => {
         this.ticker.addNextJob(
           new TickerJob(
             2,
@@ -369,22 +371,23 @@ class cineIntro1 {
             (job: TickerJob) => {
               this.ticker.addNextJob(
                 new TickerJob(
-                  3,
+                  4,
                   0,
-                  part3,
+                  part4,
                   false,
-                  7000,
+                  undefined,
                   true,
                   (job: TickerJob) => {
                     this.ticker.addNextJob(
                       new TickerJob(
-                        4,
+                        5,
                         0,
-                        part4,
+                        part5,
                         false,
-                        undefined,
+                        1000,
                         true,
                         (job: TickerJob) => {
+                          // soundChangeScene.stop()
                           this.nextCine = true;
                         }
                       )

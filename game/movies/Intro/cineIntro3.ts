@@ -45,7 +45,7 @@ class cineIntro3 {
         10,
         () => { },
         false,
-        13000,
+        6000,
         true,
         (job: TickerJob) => {
           spaceshipCrashSoundEffect.stop()

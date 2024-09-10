@@ -152,11 +152,11 @@ class cineIntro6 {
       this.dialogue = new DialogueManager(
         this.cine,
         ["Wow, this planet is very strange..."],
-        ["cineIntro6_1"],
+        ["intro6audio1"],
         [
           {
-            delay: 5000,
-            keepAlive: 1500,
+            delay: 500,
+            keepAlive: 1000,
           },
         ]
       );
@@ -215,7 +215,7 @@ class cineIntro6 {
     };
 
     this.ticker.addJob(
-      new TickerJob(1, 10, part1, false, 15000, true, (job: TickerJob) => {
+      new TickerJob(1, 10, part1, false, 4000, true, (job: TickerJob) => {
         this.nextCine = true;
       })
     );

@@ -454,19 +454,19 @@ class cineIntro2B {
           "Fuel levels aren't very encouraging either...",
           "I've decided to shut down all systems except life support and navigation to buy myself some time",
         ],
-        [""],
+        ["intro2audio3", "intro2audio4", "intro2audio5"],
         [
           {
             delay: 1000,
-            keepAlive: 3000,
+            keepAlive: 500,
           },
           {
             delay: 500,
-            keepAlive: 2000,
+            keepAlive: 500,
           },
           {
             delay: 1000,
-            keepAlive: 3000,
+            keepAlive: 1000,
           },
         ]
       );
@@ -718,7 +718,7 @@ class cineIntro2B {
             t1.stop();
             t2.stop();
             this.planetOnRadar?.setVisible(true);
-          }, 6000);
+          }, 3600);
           this.ticker.deleteJob(job.id);
         }
       };
@@ -733,11 +733,11 @@ class cineIntro2B {
         [
           "The radar has detected a planet in the vicinity that seems to have a possible energy source",
         ],
-        [""],
+        ["intro2audio6"],
         [
           {
-            delay: 6000,
-            keepAlive: 5000,
+            delay: 4000,
+            keepAlive: 1000,
           },
         ]
       );

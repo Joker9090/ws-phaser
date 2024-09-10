@@ -119,11 +119,11 @@ class cineIntro2C {
         [
           "I will go investigate it",
         ],
-        [""],
+        ["intro2audio7"],
         [
           {
-            delay: 6000,
-            keepAlive: 5000,
+            delay: 500,
+            keepAlive: 1000,
           },
         ]
       );
@@ -171,16 +171,14 @@ class cineIntro2C {
       });
       const dialogueListener = (newState: string, nextText?: string) => {
         if (newState === "CONTINUE") {
-        } else if (newState === "FINISHED") {
-          this.ticker.deleteJob(job.id);
-        }
+        } 
       };
       this.dialogue?.killState(dialogueListener);
       this.dialogue?.getState(dialogueListener);
     };
 
     this.ticker.addJob(
-      new TickerJob(1, 10, part1, false, undefined, true, (job: TickerJob) => {
+      new TickerJob(1, 10, part1, false, 6000, true, (job: TickerJob) => {
         spaceshipAmbientSoundEffect.stop();
         this.nextCine = true;
       })

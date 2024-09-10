@@ -3,6 +3,7 @@ import Ticker, { TickerJob } from "../Ticker";
 import DialogueManager from "../DialogueManager";
 import CinematographyModular from "@/game/movies/Cinematography-modular";
 import SmallObjects from "../smallObjectsFalling";
+import BetweenScenes, { BetweenScenesStatus } from "@/game/BetweenScenes";
 
 class cineIntro7 {
   ticker: Ticker;
@@ -127,6 +128,15 @@ class cineIntro7 {
       .container(middlePoint.x, middlePoint.y)
       .setSize(1920, 927);
 
+      const darkMask = this.cine.add.rectangle(
+        0,
+        0,
+        window.innerWidth,
+        window.innerHeight,
+        0,
+        1
+      ).setAlpha(0);
+
     container.add([
       this.background3,
       this.background2,
@@ -148,6 +158,7 @@ class cineIntro7 {
       Piedra22,
       piedraPrimerPlano1,
       piedraPrimerPlano3,
+      darkMask
     ]);
 
     // const smallObj = new SmallObjects(this.cine)
@@ -175,11 +186,11 @@ class cineIntro7 {
       this.dialogue = new DialogueManager(
         this.cine,
         ["Oh Dann, you’d definitely love this..."],
-        [""],
+        ["intro7audio1"],
         [
           {
-            delay: 5000,
-            keepAlive: 1500,
+            delay: 1000,
+            keepAlive: 1000,
           },
         ]
       );
@@ -310,7 +321,13 @@ class cineIntro7 {
         loop: -1,
         yoyo: true,
       });
-
+      this.cine.tweens.add({
+        targets: [darkMask],
+        alpha: 1,
+        duration: 1500,
+        delay: 7500,
+        ease: "ease",
+      });
       const dialogueListener = (newState: string, nextText?: string) => {
         if (newState === "CONTINUE") {
         } else if (newState === "FINISHED") {
@@ -322,15 +339,34 @@ class cineIntro7 {
     };
 
     this.ticker.addJob(
-      new TickerJob(1, 10, part1, false, 30000, true, (job: TickerJob) => {
+      new TickerJob(1, 10, part1, false, 9000, true, (job: TickerJob) => {
         this.nextCine = true;
       })
     );
   }
 
+  makeTransition(sceneName: string, data: any) {
+    const getBetweenScenesScene = this.cine.game.scene.getScene(
+        "BetweenScenes"
+    ) as BetweenScenes;
+    if (getBetweenScenesScene) {
+        if (getBetweenScenesScene.status != BetweenScenesStatus.IDLE)
+            return false;
+        getBetweenScenesScene.changeSceneTo(sceneName, data);
+        this.cine.time.delayedCall(1000, () => {
+            this.cine.scene.stop();
+        });
+    } else {
+        this.cine.scene.start(sceneName, data);
+        this.cine.time.delayedCall(1000, () => {
+            this.cine.scene.stop();
+        });
+    }
+}
+
   update(this: cineIntro7, time: number, delta: number) {
     if (this.dialogue) this.dialogue.update();
-    if (this.nextCine) this.cine.scene.restart({ keyname: "cine_intro_1" });
+    if (this.nextCine) this.makeTransition("Game", { level: 0, lifes: 3 });
   }
 }
 

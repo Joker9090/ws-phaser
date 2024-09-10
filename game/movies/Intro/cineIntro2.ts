@@ -123,15 +123,11 @@ class cineIntro2 {
         [
           "I hope they've manage to escape in time.",
         ],
-        [""],
+        ["intro2audio2"],
         [
           {
             delay: 1000,
-            keepAlive: 2000,
-          },
-          {
-            delay: 500,
-            keepAlive: 2000,
+            keepAlive: 1000,
           },
         ]
       );
@@ -192,15 +188,11 @@ class cineIntro2 {
         [
           "I still haven't heard from Dann or the rest of the crew...",
         ],
-        [""],
+        ["intro2audio1"],
         [
           {
             delay: 500,
-            keepAlive: 3000,
-          },
-          {
-            delay: 500,
-            keepAlive: 3000,
+            keepAlive: 1000,
           },
         ]
       );

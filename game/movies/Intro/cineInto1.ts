@@ -25,6 +25,8 @@ class cineIntro1 {
     this.cine = cine;
     const tickerMS = 100;
     this.ticker = new Ticker(tickerMS);
+    this.cine.sound.add("introSoundEffect1").setVolume(0.25).play()
+    this.cine.sound.add("introSoundEffect2").setVolume(0.25).play()
     this.playCine();
   }
 
@@ -144,8 +146,7 @@ class cineIntro1 {
     camera.postFX.addVignette(0.5, 0.5, 0.8);
 
     const part1 = (job: TickerJob) => {
-      this.cine.sound.add("introSoundEffect1").setVolume(0.25).play()
-      this.cine.sound.add("introSoundEffect2").setVolume(0.25).play()
+
       const tween1 = this.cine.tweens.add({
         targets: [this.shipOverImage, this.shipZoomOn],
         alpha: 0,
@@ -204,15 +205,15 @@ class cineIntro1 {
         ease: "ease",
       });
 
-      const dialogueListener = (newState: string, nextText?: string) => {
-        if (newState === "CONTINUE") {
-          tween2.stop()
-        } else if (newState === "FINISHED") {
-          this.ticker.deleteJob(job.id);
-        }
-      };
-      this.dialogue?.killState(dialogueListener);
-      this.dialogue?.getState(dialogueListener);
+      // const dialogueListener = (newState: string, nextText?: string) => {
+      //   if (newState === "CONTINUE") {
+      //     tween2.stop()
+      //   } else if (newState === "FINISHED") {
+      //     this.ticker.deleteJob(job.id);
+      //   }
+      // };
+      // this.dialogue?.killState(dialogueListener);
+      // this.dialogue?.getState(dialogueListener);
     };
 
 
@@ -230,7 +231,7 @@ class cineIntro1 {
             keepAlive: 1000,
           },
         ], 
-        80
+        90
       );
       this.dialogue?.play();
 
@@ -315,7 +316,8 @@ class cineIntro1 {
             delay: 500,
             keepAlive: 2000,
           },
-        ]
+        ],
+        60
       );
 
       this.dialogue.play();

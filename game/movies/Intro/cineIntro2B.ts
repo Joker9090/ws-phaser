@@ -443,6 +443,7 @@ class cineIntro2B {
     // const spaceshipAmbientSoundEffect = this.cine.sound.add("spaceshipAmbient");
     // spaceshipAmbientSoundEffect.setVolume(1.5);
     // spaceshipAmbientSoundEffect.play();
+    const audio2 = this.cine.sound.add("introSoundEffect7").setVolume(0.45)
 
     const part1 = (job: TickerJob) => {
       const audio = this.cine.sound.add("introSoundEffect6").setVolume(0.45)
@@ -722,6 +723,7 @@ class cineIntro2B {
             t1.stop();
             t2.stop();
             this.planetOnRadar?.setVisible(true);
+            audio2.play() //bartex acá podes separarlo en 2 setTimeouts si quieren que el sonido arranque un toque antes que el radar encontrando el planeta
           }, 3600);
           this.ticker.deleteJob(job.id);
         }
@@ -731,8 +733,7 @@ class cineIntro2B {
     };
 
     const part2 = (job: TickerJob) => {
-      const audio = this.cine.sound.add("introSoundEffect7").setVolume(0.45)
-      audio.play()
+     
 
       this.part = 2;
       this.dialogue = new DialogueManager(
@@ -758,10 +759,10 @@ class cineIntro2B {
 
       const dialogueListener = (newState: string, nextText?: string) => {
         if (newState === "CONTINUE") {
-          audio.stop()
+          audio2.stop()
         } else if (newState === "FINISHED") {
           this.ticker.deleteJob(job.id);
-          audio.stop()
+          audio2.stop()
         }
       };
       this.dialogue?.killState(dialogueListener);

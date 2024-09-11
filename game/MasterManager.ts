@@ -33,7 +33,7 @@ export default class MasterManager extends Phaser.Scene {
     if (this.music) {
       this.music.stop();
     }
-    this.music = this.sound.add(name).setVolume(0.5);
+    this.music = this.sound.add(name).setVolume(0.3);
     this.music.play();
   }
 

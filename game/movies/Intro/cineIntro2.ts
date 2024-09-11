@@ -130,7 +130,8 @@ class cineIntro2 {
             delay: 1000,
             keepAlive: 1000,
           },
-        ]
+        ],
+        60
       );
       this.dialogue?.play();
       this.cine.tweens.add({
@@ -197,7 +198,8 @@ class cineIntro2 {
             delay: 500,
             keepAlive: 1000,
           },
-        ]
+        ],
+        50
       );
 
       this.dialogue?.play();

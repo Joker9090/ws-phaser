@@ -527,7 +527,9 @@ class AssetsLoader {
         assetText.destroy();
         this.finished = true
         // this.scene.scene.restart({text:"menu"})
-        this.scene.makeTransition("startMovie", { level: 0, lifes: 3 });
+        // this.scene.makeTransition("startMovie", undefined);
+        this.scene.makeTransition("CinematographyMod", { keyname: "cine_intro_1" });
+        // this.scene.makeTransition("Game", { level: 3, lifes: 3 });
       });
       const scenesTitles: Array<SceneKeys> = [
         "Menu",
@@ -556,26 +558,6 @@ class AssetsLoader {
       }
       /*Load Fonts*/
       const ArcadeFont = this.scene.add.text(0, 0, ":)", { fontFamily: "Arcade" });
-    }
-  }
-
-  // función para developer
-  makeTransition(sceneName: string, data: any) {
-    const getBetweenScenesScene = this.scene.game.scene.getScene(
-      "BetweenScenes"
-    ) as BetweenScenes;
-    if (getBetweenScenesScene) {
-      if (getBetweenScenesScene.status != BetweenScenesStatus.IDLE)
-        return false;
-      getBetweenScenesScene.changeSceneTo(sceneName, data);
-      this.scene.time.delayedCall(1000, () => {
-        this.scene.scene.stop();
-      });
-    } else {
-      this.scene.scene.start(sceneName, data);
-      this.scene.time.delayedCall(1000, () => {
-        this.scene.scene.stop();
-      });
     }
   }
 

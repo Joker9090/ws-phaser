@@ -19,7 +19,7 @@ class Mapa3 {
     scene: Game;
     worldSize = {
         width: 10000,
-        height: 1800,
+        height: 1520,
     };
     // normales
     pisos?: Phaser.Physics.Arcade.Group;
@@ -138,12 +138,12 @@ class Mapa3 {
             .image(this.startingPoint.x + this.background5.width + this.background6.width - 15, this.startingPoint.y + 470, "frontGround2")
             .setOrigin(0, 1).setScale(1);
 
-        this.mountain1 = this.scene.add.image(this.startingPoint.x + this.background5.width - 15, this.startingPoint.y - 370, "montaña3")
-        this.mountain2 = this.scene.add.image(this.startingPoint.x - 70, this.startingPoint.y + 350, "montaña5")
-        this.mountain3 = this.scene.add.image(1200, this.startingPoint.y + 470, "montaña3")
+        this.mountain1 = this.scene.add.image(this.startingPoint.x + this.background5.width - 15, this.startingPoint.y - 370 + 300, "montaña3").setScale(1.2)
+        this.mountain2 = this.scene.add.image(this.startingPoint.x - 70, this.startingPoint.y + 350 + 500, "montaña5").setScale(1.4)
+        this.mountain3 = this.scene.add.image(1200, this.startingPoint.y + 770, "montaña3").setScale(1.3)
         this.mountain4 = this.scene.add.image(200, this.startingPoint.y, "montaña2")
         this.mountain5 = this.scene.add.image(1100, this.startingPoint.y, "montaña4")
-        this.mountain6 = this.scene.add.image(this.startingPoint.x + this.background5.width + this.background6.width - 15, this.startingPoint.y + 470, "montaña5").setOrigin(0.5,0)
+        this.mountain6 = this.scene.add.image(this.startingPoint.x + this.background5.width + this.background6.width - 15, this.startingPoint.y + 770, "montaña5").setOrigin(0.5,0).setScale(1.3)
 
         this.mapContainer.add([
             this.background,
@@ -489,7 +489,7 @@ class Mapa3 {
             textureA: "plataformaNuevaLargaA",
             textureB: "plataformaNuevaLargaB",
             textureC: "plataformaNuevaLargaC",
-            pos: { x: 4700, y: 1700 },
+            pos: { x: 4700, y: 1400 },
             width: {
                 textureA: 90,
                 textureB: 67,
@@ -568,7 +568,7 @@ class Mapa3 {
         //Portal, Coin and Asteroids
         const portalConfig: FloorConfig = {
             texture: "plataformaFinalP1",
-            pos: { x: 5400, y: 1590 },
+            pos: { x: 5400, y: 1290 },
             width: 100,
             height: 100,
         };

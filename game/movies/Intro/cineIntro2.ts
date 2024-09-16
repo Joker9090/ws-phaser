@@ -79,7 +79,7 @@ class cineIntro2 {
       window.innerHeight,
       0,
       0.3
-    );
+    ).setVisible(false);
 
     const assetsScenes = [
       this.background3,

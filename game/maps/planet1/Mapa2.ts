@@ -19,7 +19,7 @@ class Mapa2 {
   scene: Game;
   worldSize = {
     width: 10000,
-    height: 1350,
+    height: 1850,
   };
   // normales
   pisos?: Phaser.Physics.Arcade.Group;
@@ -46,11 +46,11 @@ class Mapa2 {
   monchi?: Player;
   startingPoint = {
     x: 500, //500
-    y: 800, //800
+    y: 1300, //800
   };
   checkPointPos1 = {
     x: 1300,
-    y: 600,
+    y: 1100,
   };
 
   loseConfig: loseConfigFromMapType = [
@@ -154,13 +154,13 @@ class Mapa2 {
     const { ajusteBX, ajusteBY } = { ajusteBX: 1.1, ajusteBY: 1.1 }
     const calcDiffBX = (x2 - x) / ajusteBX
     const calcDiffBY = (y2 - y) / ajusteBY;
-    this.background.setPosition(x + calcDiffBX, y  + calcDiffBY);
-    this.background2.setPosition(x + calcDiffBX, y  + calcDiffBY);
-    this.background3.setPosition(x + calcDiffBX, y  + calcDiffBY);
+    this.background.setPosition(x + calcDiffBX, y + calcDiffBY);
+    this.background2.setPosition(x + calcDiffBX, y + calcDiffBY);
+    this.background3.setPosition(x + calcDiffBX, y + calcDiffBY);
     // // animation frontgrounds
     const { ajusteFX, ajusteFY } = { ajusteFX: 4, ajusteFY: 2 }
     const calcDiffFX = (x2 - x) / ajusteFX
-    const calcDiffFY = (y2 - y ) / ajusteFY;
+    const calcDiffFY = (y2 - y) / ajusteFY;
     this.background4.setPosition(x + calcDiffFX, y + offsetLevel + 470 + calcDiffFY);
     this.background5.setPosition(x + calcDiffFX, y + offsetLevel + 470 + calcDiffFY);
     this.background6.setPosition(x + this.background5.width - 15 + calcDiffFX, y + offsetLevel + 470 + calcDiffFY);
@@ -258,7 +258,7 @@ class Mapa2 {
     this.coin = this.scene.physics.add.group({ allowGravity: false });
     this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
     this.portal = this.scene.physics.add.group({ allowGravity: false });
-    const aura = this.scene.add.sprite(1450, 600, "auraTuto").setScale(0.6)
+    const aura = this.scene.add.sprite(1450, 1100, "auraTuto").setScale(0.6)
     this.aura.add(aura)
 
 
@@ -286,44 +286,44 @@ class Mapa2 {
       textureA: "plataformaNuevaLargaA",
       textureB: "plataformaNuevaLargaB",
       textureC: "plataformaNuevaLargaC",
-      pos: { x: 300, y: 1200 },
+      pos: { x: 300, y: 1700 },
       width: {
         textureA: 90,
         textureB: 67,
         textureC: 115,
       },
-      scale: {width: 0.7, height: 0.7},
+      scale: { width: 0.7, height: 0.7 },
       height: 127,
       large: 9,
       rotated: false
     };
     const p1 = new LargeFloorIsland(this.scene, p1Config, this.pisos);
-    
+
     const p2Config: FloorConfig = {
-      pos: { x: 900, y: 1050 },
+      pos: { x: 900, y: 1550 },
       texture: "plataformaNuevaA",
       fix: 25,
-      scale: {width: 0.7, height: 0.7},
+      scale: { width: 0.7, height: 0.7 },
       width: 140,
       height: 50,
     };
     const p2 = new Floor(this.scene, p2Config, this.pisos);
 
     const p3Config: FloorConfig = {
-      pos: { x: 1100, y: 900 },
+      pos: { x: 1100, y: 1400 },
       texture: "plataformaNuevaA",
       fix: 25,
-      scale: {width: 0.7, height: 0.7},
+      scale: { width: 0.7, height: 0.7 },
       width: 140,
       height: 50,
     };
     const p3 = new Floor(this.scene, p3Config, this.pisos);
 
     const p4Config: FloorConfig = {
-      pos: { x: 1300, y: 750 },
+      pos: { x: 1300, y: 1250 },
       texture: "plataformaNuevaA",
       fix: 25,
-      scale: {width: 0.7, height: 0.7},
+      scale: { width: 0.7, height: 0.7 },
       width: 140,
       height: 50,
     };
@@ -333,10 +333,10 @@ class Mapa2 {
     );
 
     const p5Config: FloorConfig = {
-      pos: { x: 1600, y: 750 },
+      pos: { x: 1600, y: 1250 },
       texture: "plataformaNuevaA",
       fix: 25,
-      scale: {width: 0.7, height: 0.7},
+      scale: { width: 0.7, height: 0.7 },
       width: 140,
       height: 50,
     };
@@ -349,31 +349,31 @@ class Mapa2 {
       textureA: "plataformaNuevaLargaA",
       textureB: "plataformaNuevaLargaB",
       textureC: "plataformaNuevaLargaC",
-      pos: { x: 1200, y: 200 },
+      pos: { x: 1200, y: 700 },
       width: {
         textureA: 90,
         textureB: 67,
         textureC: 115,
       },
-      scale: {width: 0.7, height: 0.7},
+      scale: { width: 0.7, height: 0.7 },
       height: 127,
       large: 13,
       rotated: true
     };
     const p6 = new LargeFloorIsland(this.scene, p6Config, this.pisos);
 
-    
+
     const p7Config: LargeFloorIslandConfig = {
       textureA: "plataformaNuevaLargaA",
       textureB: "plataformaNuevaLargaB",
       textureC: "plataformaNuevaLargaC",
-      pos: { x: 2000, y: 200 },
+      pos: { x: 2000, y: 700 },
       width: {
         textureA: 90,
         textureB: 67,
         textureC: 115,
       },
-      scale: {width: 0.7, height: 0.7},
+      scale: { width: 0.7, height: 0.7 },
       height: 127,
       large: 20,
       rotated: true
@@ -381,7 +381,7 @@ class Mapa2 {
     const p7 = new LargeFloorIsland(this.scene, p7Config, this.pisos);
     //Portal, Coin and Asteroids
     const portalConfig: FloorConfig = {
-      pos: { x: 2600, y: 310 }, // x: 2400
+      pos: { x: 2600, y: 810 }, // x: 2400
       texture: "plataformaFinalP1",
       // scale: {width: 0.7, height: 0.7},
       width: 100,
@@ -392,8 +392,8 @@ class Mapa2 {
 
     const coinConfig: FloorConfig = {
       texture: "cristal2",
-      pos: { x: 1450, y: 600 },
-      scale: {width: 0.7, height: 0.7},
+      pos: { x: 1450, y: 1100 },
+      scale: { width: 0.7, height: 0.7 },
       width: 40,
       height: 18,
       fix: 10,
@@ -403,7 +403,7 @@ class Mapa2 {
     const c1Config: AsteroidGeneratorConfig = {
       texture: "nube1",
       x: 0,
-      y: 500,
+      y: 1000,
       delayed: 100,
       direction: 0,
       velocity: 20,
@@ -416,7 +416,7 @@ class Mapa2 {
     const c2Config: AsteroidGeneratorConfig = {
       texture: "nube3",
       x: 3000,
-      y: 600,
+      y: 1100,
       delayed: 100,
       direction: 1,
       velocity: 30,
@@ -429,7 +429,7 @@ class Mapa2 {
     const c3Config: AsteroidGeneratorConfig = {
       texture: "nube5",
       x: -1000,
-      y: 300,
+      y: 800,
       delayed: 1600,
       direction: 0,
       velocity: 10,
@@ -441,18 +441,18 @@ class Mapa2 {
     const fireballConfig: FloorConfig = {
       spriteSheet: "meteorito",
       texture: "meteorito",
-      pos: { x: 1900, y: -600 }, // 500 1580
+      pos: { x: 1900, y: 0 }, // 500 1580
       width: 100,
       height: 100,
       tween: {
         duration: 5000,
         repeat: -1,
         y: "+=2500",
-    },
+      },
       frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
     };
     const fireball = new Floor(this.scene, fireballConfig, this.fireballGroup).setScale(0.5)
-
+    console.log("ARIEL TOY ACA")
 
     const mapObjects =
       this.movingFloor.getChildren().concat(

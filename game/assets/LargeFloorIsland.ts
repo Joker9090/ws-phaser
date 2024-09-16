@@ -42,7 +42,6 @@ class LargeFloorIsland extends Phaser.GameObjects.Container {
       const t = index === 0 ? config.textureA : index === config.large - 1 ? config.textureC : config.textureB
 
       const lastTilePos = (config.large - 2) * config.width.textureB + config.width.textureA
-      console.log("index y width", t, index, index === 0 ? 0 : index === config.large - 1 ? lastTilePos : (index - 1)*config.width.textureB + config.width.textureA)
       const s = scene.add.sprite(
         index === 0 ? 0 : index === config.large - 1 ? lastTilePos : (index - 1)*config.width.textureB + config.width.textureA,
         0,

@@ -32,6 +32,8 @@ class cineIntro1 {
 
   playCine(this: cineIntro1) {
 
+
+
     this.cine.time.addEvent({
       delay: this.ticker.ms,
       callback: this.ticker.runTicker,
@@ -410,6 +412,7 @@ class cineIntro1 {
 
   update(this: cineIntro1, time: number, delta: number) {
     if (this.dialogue) this.dialogue.update();
+    // if (this.nextCine) this.cine.scene.restart({ keyname: "cine_intro_1" });
     if (this.nextCine) this.cine.scene.restart({ keyname: "cine_intro_2" });
   }
 }

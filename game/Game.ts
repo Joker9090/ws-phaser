@@ -171,7 +171,8 @@ class Game extends Phaser.Scene {
       if (this.lifes) {
         this.lifes -= 1;
         if (this.lifes === 0) {
-          this.makeTransition("MultiScene", { text: 'lose' });
+          // this.makeTransition("MultiScene", { text: 'lose' });
+          this.makeTransition("Game", { level: this.levelIs, lifes: 3 });
         } else if (this.lifes > 0 && this.monchi) {
           // UI changes
           this.UIClass?.loseLife(this.lifes)

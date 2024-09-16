@@ -89,7 +89,6 @@ class cineIntro2B {
       x: window.innerWidth / 1920,
       y: window.innerHeight / 927,
     };
-    console.log(window.innerHeight, window.innerWidth, "dimension");
     this.radarInnerCircle1 = this.cine.add
       .image(0, 0, "radarInnerCircle1")
       .setOrigin(0.5)
@@ -574,13 +573,6 @@ class cineIntro2B {
         rotation: 2 * Math.PI,
         ease: "Power1",
         duration: 2700,
-        onYoyo: () => {
-          counter++;
-          console.log(counter, "COUNTER");
-          if (counter === 5) {
-            console.log("LLEGO");
-          }
-        },
         yoyo: true,
         repeat: -1,
       });
@@ -589,13 +581,6 @@ class cineIntro2B {
         alpha: 0.5,
         ease: "Power1",
         duration: 2700,
-        onYoyo: () => {
-          counter++;
-          console.log(counter, "COUNTER");
-          if (counter === 5) {
-            console.log("LLEGO");
-          }
-        },
         yoyo: true,
         repeat: -1,
       });
@@ -664,7 +649,6 @@ class cineIntro2B {
         delay: 3000,
         duration: 3000,
         onYoyo: () => {
-          console.log(this.part, "ARIEL PART");
           this.subTextTopRight?.setFlipY(!this.subTextTopRight?.flipY);
           if (
             this.textSelectorRight1?.texture.key === "textSelectorFull-red" ||

@@ -1,64 +1,69 @@
-import Phaser from "phaser";
+import Phaser, { Game } from "phaser";
 
 // Scene in class
 class TextBox extends Phaser.GameObjects.Container {
-  rectanguleText?: Phaser.GameObjects.Sprite;
-  tutorialText?: Phaser.GameObjects.Text;
-  widthText: number;
-
+  width: number;
+  height: number;
+  x: number;
+  y: number;
+  bordeGlow?: Phaser.GameObjects.Image;
+  fondoDegrade?: Phaser.GameObjects.Image;
+  lineaAbajo?: Phaser.GameObjects.Image;
+  lineaArriba?: Phaser.GameObjects.Image;
+  lineaDer?: Phaser.GameObjects.Image;
+  lineaIzq?: Phaser.GameObjects.Image;
   constructor(
     scene: Phaser.Scene,
     x: number,
     y: number,
-    texture: string | Phaser.Textures.Texture,
-    widthText: number
+    width: number,
+    heigth: number,
   ) {
     super(scene);
     this.scene = scene;
-    this.widthText = widthText;
-    /* TEXT BOX */
-    this.tutorialText = this.scene.add
-      .text(0, 0, "", {
-        fontFamily: "Arcade",
-        fontSize: "30px",
-        wordWrap: { width: widthText, useAdvancedWrap: true },
-      })
-      .setOrigin(0.5)
-      .setScrollFactor(0)
-      .setDepth(200);
+    this.width = width;
+    this.height = heigth;
+    this.x = x;
+    this.y = y;
 
-    /* HEIGHT OF TEXT */
-    const textHeight = this.tutorialText.height;
-    /* DIMENSIONS OF SPRITE BOX */
-    const spriteHeight = 120;
-    const spriteWidth = 570;
 
-    /* SIZE OF BOX WITH TEXT */
-    const boxWidth = widthText / spriteWidth;
-    const boxHeight = textHeight / spriteHeight;
-    this.rectanguleText = this.scene.add
-      .sprite(0, 0, texture)
-      .setScrollFactor(0)
-      .setDepth(190)
-      .setScale(boxWidth, boxHeight);
-    this.add([this.rectanguleText, this.tutorialText]);
-    this.setDepth(210);
-    scene.add.existing(this);
-    this.setPosition(x, y);
-    this.setVisible(false);
-    //window.test = this
-  }
+    this.bordeGlow = this.scene.add.image(0, 0, "bordeGlow").setOrigin(0)
+    this.fondoDegrade = this.scene.add.image(0, 0, "fondoDegrade").setOrigin(0)
+    this.lineaArriba = this.scene.add.image(0, 0, "lineaArriba").setOrigin(0).setVisible(false)
+    this.lineaDer = this.scene.add.image(0, 0, "lineaDer").setOrigin(1,0).setVisible(false)
+    this.lineaIzq = this.scene.add.image(0, 0, "lineaIzq").setOrigin(0).setVisible(false)
+    this.lineaAbajo = this.scene.add.image(0, 0, "lineaAbajo").setOrigin(0,1).setVisible(false)
 
-  setTextBox(textToDisplay: string) {
-    if (this.tutorialText) {
-      this.tutorialText?.setText(textToDisplay);
-      const textHeight = this.tutorialText.height;
-      const spriteHeight = 120;
-      const spriteWidth = 500;
-      const boxWidth = this.widthText / spriteWidth;
-      const boxHeight = textHeight / spriteHeight;
-      this.rectanguleText?.setScale(boxWidth, boxHeight);
+    
+
+  const assets = [
+      this.fondoDegrade,
+      this.bordeGlow,
+      this.lineaAbajo,
+      this.lineaArriba,
+      this.lineaDer,
+      this.lineaIzq,
+    ]
+
+    for(let i = 0; i < assets.length ; i++){
+      if (i < 7){
+        const originalWidth = assets[i].width
+        const originalHeight = assets[i].height
+        const scaleFactorX = this.width/originalWidth
+        const scaleFactorY = this.height/originalHeight
+        assets[i].setScale(scaleFactorX, scaleFactorY)
+      }
     }
+
+
+
+    this.lineaAbajo?.setPosition(0, this.bordeGlow?.height)
+    this.lineaArriba?.setPosition(0,0)
+    this.lineaDer?.setPosition(this.bordeGlow.width, 0)
+    this.lineaIzq?.setPosition(0, 0)
+
+
+    this.add(assets)
   }
 }
 export default TextBox;

@@ -109,6 +109,6 @@ body {
 
 @font-face {
   font-family: 'Arcade';
-  src: url('/fonts/arcadeFont.otf') format("opentype");
+  src: url('/fonts/audiowide.ttf') format("opentype");
   /* Add more font properties if needed */
 }

@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import TextBox from "../assets/TextBox";
 
 // Scene in class
 export type DialogConfig = {
@@ -39,7 +40,7 @@ class DialogueManager {
     x: number,
     y: number
   }
-
+  textBox?: TextBox;
   constructor(
     scene: Phaser.Scene,
     texts: string[],
@@ -103,8 +104,9 @@ class DialogueManager {
         x: 20,
         y: 10
       },
-      color: "black",
-      stroke: 'black',
+      // color: "#4bb7db",
+      color: "white",
+      stroke: 'white',
       align: "center",
       fixedWidth: config?.position?.width ? config?.position?.width : this.screenWidth * 0.8,
       fixedHeight: this.calculateHeigth(text, config?.position?.width),
@@ -113,28 +115,36 @@ class DialogueManager {
       },
     });
 
-    const graphics = this.scene.add.graphics()
-    graphics.fillStyle(0xe0e1dd, 0.8);
-    graphics.lineStyle(5, 0x1b263b, 0.8)
-    graphics.strokeRoundedRect(
+    this.textBox = new TextBox(
+      this.scene,
       this.textDisplayed.x,
       this.textDisplayed.y - 10,
       this.textDisplayed.width,
-      this.textDisplayed.height,
-      this.borderRounder
-    )
-    graphics.fillRoundedRect(
-      this.textDisplayed.x,
-      this.textDisplayed.y - 10,
-      this.textDisplayed.width,
-      this.textDisplayed.height,
-      this.borderRounder
-    );
+      this.textDisplayed.height)
+
+
+    // const graphics = this.scene.add.graphics()
+    // graphics.fillStyle(0xe0e1dd, 0.8);
+    // graphics.lineStyle(5, 0x1b263b, 0.8)
+    // graphics.strokeRoundedRect(
+    //   this.textDisplayed.x,
+    //   this.textDisplayed.y - 10,
+    //   this.textDisplayed.width,
+    //   this.textDisplayed.height,
+    //   this.borderRounder
+    // )
+    // graphics.fillRoundedRect(
+    //   this.textDisplayed.x,
+    //   this.textDisplayed.y - 10,
+    //   this.textDisplayed.width,
+    //   this.textDisplayed.height,
+    //   this.borderRounder
+    // );
 
     // Use the rounded rectangle as a mask for the text
 
     this.container
-      .add([graphics, this.textDisplayed])
+      .add([this.textBox, this.textDisplayed])
       .setVisible(false);
 
     if (this.gameObjectsScaler) {

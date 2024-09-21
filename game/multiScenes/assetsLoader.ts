@@ -282,6 +282,13 @@ const loadAssets = {
     assets: [
       ["image", "fireball", "/game/fireball.png"],
       ["image", "textBox", "/game/textBox.png"],
+      ["svg", "bordeGlow", "/assets/textBox/bordeGlow.svg", {scale: 7}],
+      ["svg", "fondoDegrade", "/assets/textBox/fondoDegrade.svg", {scale: 7}],
+      ["svg", "lineaAbajo", "/assets/textBox/lineaAbajo.svg", {scale: 1}],
+      ["svg", "lineaArriba", "/assets/textBox/lineaArriba.svg", {scale: 1}],
+      ["svg", "lineaDer", "/assets/textBox/lineaDer.svg", {scale: 1}],
+      ["svg", "lineaIzq", "/assets/textBox/lineaIzq.svg", {scale: 1}],
+
     ],
   },
   BetweenScenes: {

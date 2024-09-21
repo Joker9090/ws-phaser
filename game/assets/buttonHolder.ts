@@ -37,6 +37,7 @@ class HoldableButton extends Phaser.GameObjects.Container {
         this.graphics = this.scene.add.graphics();
         this.text = this.scene.add.text(x + radius*2 + 10, y, "Hold SPACE to skip", {
             fontSize: 28,
+            fontFamily: 'Arcade'
         }).setOrigin(0, 0.5)
     }
 

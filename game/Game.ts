@@ -289,6 +289,7 @@ class Game extends Phaser.Scene {
 
     this.UICamera = this.cameras.add(0, 0, window.innerWidth, window.innerHeight)
     this.UIClass = new UIClass(this, this.levelIs, this.lifes, this.timeLevel)
+    
     /* CREATE MAP */
     this.map.createMap(data);
 
@@ -351,8 +352,6 @@ class Game extends Phaser.Scene {
     }
 
     if (this.monchi && this.map) {
-      // console.log("monchi position: ",this.monchi.x, this.monchi.y)
-      // console.log("checkpoint : ",this.checkPoint)
       //@ts-ignore
       this.map.update();
       this.monchi.checkMove(this.cursors)

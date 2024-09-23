@@ -18,10 +18,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   ) {
     super(scene, x, y, texture);
     this.scene = scene;
-    // setInterval(() => {
-    //   console.log("PLAYER STATE", this.playerState)
-    //   console.log("CAMERA STATE", this.cameraState)
-    // }, 1000)
     /* Monchi animations */
     const monchiJumpFrames = scene.anims.generateFrameNumbers("player", {
       frames: Array.from({ length: 12 }, (_, i) => i + 36),

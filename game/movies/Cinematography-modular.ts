@@ -29,9 +29,19 @@ class CinematographyModular extends Phaser.Scene {
   }
 
   create(this: CinematographyModular, { keyname, lifes }: { keyname: string, lifes?: any }) {
+    const isPostal = keyname.includes("postal")
     this.cursors = this.input.keyboard?.createCursorKeys();
-    this.holdableButton = new HoldableButton(this, 50, 50, 20, 0xffffff, () =>{    this.makeTransition("Game", { level: this.nextLevel ? this.nextLevel : 0, lifes: 3 });
-    }).setDepth(999999999)
+    this.holdableButton = new HoldableButton(
+      this,
+      50,
+      50,
+      20,
+      0xffffff,
+      () => {
+        this.makeTransition("Game", { level: this.nextLevel ? this.nextLevel : 0, lifes: 3 });
+      },
+      isPostal
+    ).setDepth(999999999);
     /* Audio */
     const getMasterManagerScene = this.game.scene.getScene(
       "MasterManager"
@@ -80,11 +90,11 @@ class CinematographyModular extends Phaser.Scene {
         break;
       case "postal1_planeta1":
         this.playingCine = new postalManager(this, "postal1Planeta1", 1, lifes);
-        this.nextLevel = 0
+        this.nextLevel = 1
         break;
       case "postal2_planeta1":
         this.playingCine = new postalManager(this, "postal2Planeta1", 3, lifes);
-        this.nextLevel = 0
+        this.nextLevel = 3
         break;
       default:
         this.playingCine = new cineIntro1(this);

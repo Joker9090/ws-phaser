@@ -104,10 +104,10 @@ class DialogueManager {
         x: 20,
         y: 10
       },
-      // color: "#4bb7db",
-      color: "white",
-      stroke: 'white',
+      color: "#34cceb",
+      stroke: "#34cceb",
       align: "center",
+      fontFamily: "Arcade",
       fixedWidth: config?.position?.width ? config?.position?.width : this.screenWidth * 0.8,
       fixedHeight: this.calculateHeigth(text, config?.position?.width),
       wordWrap: {
@@ -115,36 +115,36 @@ class DialogueManager {
       },
     });
 
-    this.textBox = new TextBox(
-      this.scene,
+    // this.textBox = new TextBox(
+    //   this.scene,
+    //   this.textDisplayed.x,
+    //   this.textDisplayed.y - 10,
+    //   this.textDisplayed.width,
+    //   this.textDisplayed.height)
+
+
+    const graphics = this.scene.add.graphics()
+    graphics.fillStyle(0x192224, 0.6);
+    graphics.lineStyle(5, 0x34cceb, 0.6)
+    graphics.strokeRoundedRect(
       this.textDisplayed.x,
       this.textDisplayed.y - 10,
       this.textDisplayed.width,
-      this.textDisplayed.height)
-
-
-    // const graphics = this.scene.add.graphics()
-    // graphics.fillStyle(0xe0e1dd, 0.8);
-    // graphics.lineStyle(5, 0x1b263b, 0.8)
-    // graphics.strokeRoundedRect(
-    //   this.textDisplayed.x,
-    //   this.textDisplayed.y - 10,
-    //   this.textDisplayed.width,
-    //   this.textDisplayed.height,
-    //   this.borderRounder
-    // )
-    // graphics.fillRoundedRect(
-    //   this.textDisplayed.x,
-    //   this.textDisplayed.y - 10,
-    //   this.textDisplayed.width,
-    //   this.textDisplayed.height,
-    //   this.borderRounder
-    // );
+      this.textDisplayed.height,
+      this.borderRounder
+    )
+    graphics.fillRoundedRect(
+      this.textDisplayed.x,
+      this.textDisplayed.y - 10,
+      this.textDisplayed.width,
+      this.textDisplayed.height,
+      this.borderRounder
+    );
 
     // Use the rounded rectangle as a mask for the text
 
     this.container
-      .add([this.textBox, this.textDisplayed])
+      .add([graphics, this.textDisplayed])
       .setVisible(false);
 
     if (this.gameObjectsScaler) {

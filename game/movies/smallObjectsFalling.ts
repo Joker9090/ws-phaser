@@ -63,12 +63,6 @@ class SmallObjects {
             ease: 'Linear',
             repeat: 0,
             yoyo: false,
-            // onUpdate: function (tween, target) {
-            //     console.log(tween, target, "ON UPDATE")
-            //     const t = tween.getValue();
-            //     const point = path.getPoint(t);
-            //     this.targets.position = point
-            // }
         });
     }
 

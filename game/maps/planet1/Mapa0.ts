@@ -12,6 +12,7 @@ import portal, { portalConfig } from "../../assets/portal";
 import { Children } from "react";
 import { loseConfigFromMapType } from "@/game/Types";
 import LargeFloorIsland, { LargeFloorIslandConfig } from "@/game/assets/LargeFloorIsland";
+import TextBox from "@/game/assets/TextBox";
 
 class Mapa0 {
   isJumping = false;
@@ -37,7 +38,6 @@ class Mapa0 {
   movingFloor?: Phaser.Physics.Arcade.Group;
   movingFloorRot?: Phaser.Physics.Arcade.Group;
   p13!: Phaser.GameObjects.Sprite;
-
   amountLifes: number = 0;
   sideGrav: boolean = false;
   goingBack: boolean = false;
@@ -76,6 +76,10 @@ class Mapa0 {
 
   mapContainer: Phaser.GameObjects.Container;
   frontContainer: Phaser.GameObjects.Container;
+
+  sceneStopped?: Boolean;
+  textTutorial1?: TextBox;
+
   constructor(scene: Game, monchi: Player) {
     this.scene = scene;
     this.monchi = monchi;
@@ -177,7 +181,11 @@ class Mapa0 {
         this.scene.physics.add.overlap(
           this.scene.monchi,
           this.coin,
-          () => this.scene.touchItem("coin"),
+          () => {
+            this.sceneStopped = true
+            this.textTutorial1?.setVisible(true)
+            // this.scene.scene.pause()
+          },
           () => true,
           this.scene
         );
@@ -207,6 +215,16 @@ class Mapa0 {
     const aura = this.scene.add.sprite(1500, 600, "auraTuto").setScale(0.6)
     this.aura.add(aura)
 
+    this.textTutorial1 = new TextBox(
+      this.scene, 
+      "Items will appear in game, don't be an idiot and grab them",
+      1700,
+      400,
+      600
+    ).setVisible(false)
+    
+
+    this.scene.UICamera?.ignore(this.textTutorial1)
 
     this.scene.tweens.add({
       targets: aura,
@@ -227,7 +245,7 @@ class Mapa0 {
         textureB: 67,
         textureC: 115,
       },
-      scale: {width: 0.7, height: 0.7},
+      scale: { width: 0.7, height: 0.7 },
       height: 127,
       large: 50,
       rotated: false
@@ -238,7 +256,7 @@ class Mapa0 {
       texture: "plataformaNuevaA",
       pos: { x: 900, y: 1020 },
       fix: 25,
-      scale: {width: 0.7, height: 0.7},
+      scale: { width: 0.7, height: 0.7 },
       width: 140,
       height: 50,
     };
@@ -248,7 +266,7 @@ class Mapa0 {
       pos: { x: 1100, y: 920 },
       texture: "plataformaNuevaA",
       fix: 25,
-      scale: {width: 0.7, height: 0.7},
+      scale: { width: 0.7, height: 0.7 },
       width: 140,
       height: 50,
     };
@@ -258,7 +276,7 @@ class Mapa0 {
       texture: "plataformaNuevaA",
       pos: { x: 1300, y: 820 },
       fix: 25,
-      scale: {width: 0.7, height: 0.7},
+      scale: { width: 0.7, height: 0.7 },
       width: 140,
       height: 50,
     };
@@ -279,7 +297,7 @@ class Mapa0 {
     const coinConfig: FloorConfig = {
       texture: "cristal3",
       pos: { x: 1500, y: 600 },
-      scale: {width: 0.7, height: 0.7},
+      scale: { width: 0.7, height: 0.7 },
       width: 40,
       height: 18,
       fix: 10,
@@ -346,6 +364,7 @@ class Mapa0 {
   update() {
     /* Attach background anim */
     if (this.scene.monchi) this.animateBackground(this.scene.monchi);
+   
   }
 }
 export default Mapa0;

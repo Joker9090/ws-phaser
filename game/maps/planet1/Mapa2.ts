@@ -452,7 +452,6 @@ class Mapa2 {
       frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
     };
     const fireball = new Floor(this.scene, fireballConfig, this.fireballGroup).setScale(0.5)
-    console.log("ARIEL TOY ACA")
 
     const mapObjects =
       this.movingFloor.getChildren().concat(

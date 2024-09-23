@@ -96,7 +96,6 @@ class postalManager {
                 8000,
                 true,
                 (job: TickerJob) => {
-                    this.nextCine = true;
                 }
             )
         );

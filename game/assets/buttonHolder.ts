@@ -24,7 +24,8 @@ class HoldableButton extends Phaser.GameObjects.Container {
         y: number,
         radius: number,
         color: number,
-        callBack: Function
+        callBack: Function,
+        isPostal: boolean,
     ) {
         super(scene);
         this.scene = scene;
@@ -35,7 +36,7 @@ class HoldableButton extends Phaser.GameObjects.Container {
         this.x = x;
         this.y = y;
         this.graphics = this.scene.add.graphics();
-        this.text = this.scene.add.text(x + radius*2 + 10, y, "Hold SPACE to skip", {
+        this.text = this.scene.add.text(x + radius*2 + 10, y, isPostal ? "Hold SPACE to continue" : "Hold SPACE to skip", {
             fontSize: 28,
             fontFamily: 'Arcade'
         }).setOrigin(0, 0.5)

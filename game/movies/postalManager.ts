@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import CinematographyModular from "@/game/movies/Cinematography-modular";
 import Ticker, { TickerJob } from "./Ticker";
 import BetweenScenes, { BetweenScenesStatus } from "@/game/BetweenScenes";
+import TextBox from "../assets/TextBox";
 
 
 class postalManager {
@@ -61,9 +62,12 @@ class postalManager {
             0.3
         );
 
+        const code = new TextBox(this.cine, "Code: ASNDJ", 0, 0, 500)
+
         const assetsScenes = [
             background,
             darkMask,
+            code
         ];
 
         this.container = this.cine.add

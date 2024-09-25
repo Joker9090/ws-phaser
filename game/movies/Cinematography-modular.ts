@@ -13,6 +13,14 @@ import cineIntro2C from "./Intro/cineIntro2C";
 import postalManager from "./postalManager";
 import HoldableButton from "../assets/buttonHolder";
 import BetweenScenes, { BetweenScenesStatus } from "../BetweenScenes";
+import cineMovie1 from "./Cinemato1/cineMovie1";
+import cineMovie2 from "./Cinemato1/cineMovie2";
+import cineMovie3 from "./Cinemato1/cineMovie3";
+import cineMovie4 from "./Cinemato1/cineMovie4";
+import cineMovie5 from "./Cinemato1/cineMovie5";
+import cineMovie6 from "./Cinemato1/cineMovie6";
+import cineMovie7 from "./Cinemato1/cineMovie7";
+import cineMovie8 from "./Cinemato1/cineMovie8";
 
 
 class CinematographyModular extends Phaser.Scene {
@@ -87,6 +95,38 @@ class CinematographyModular extends Phaser.Scene {
       case "cine_intro_7":
         this.playingCine = new cineIntro7(this);
         this.nextLevel = 0
+        break;
+      case "cine_movie_1":
+        this.playingCine = new cineMovie1(this);
+        // this.nextLevel = 0
+        break;
+      case "cine_movie_2":
+        this.playingCine = new cineMovie2(this);
+        // this.nextLevel = 0
+        break;
+      case "cine_movie_3":
+        this.playingCine = new cineMovie3(this);
+        // this.nextLevel = 0
+        break;
+      case "cine_movie_4":
+        this.playingCine = new cineMovie4(this);
+        // this.nextLevel = 0
+        break;
+      case "cine_movie_5":
+        this.playingCine = new cineMovie5(this);
+        // this.nextLevel = 0
+        break;
+      case "cine_movie_6":
+        this.playingCine = new cineMovie6(this);
+        // this.nextLevel = 0
+        break;
+      case "cine_movie_7":
+        this.playingCine = new cineMovie7(this);
+        // this.nextLevel = 0
+        break;
+      case "cine_movie_8":
+        this.playingCine = new cineMovie8(this);
+        // this.nextLevel = 0
         break;
       case "postal1_planeta1":
         this.playingCine = new postalManager(this, "postal1Planeta1", 1, lifes);

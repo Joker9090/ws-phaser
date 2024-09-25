@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import MultiScene from "./MultiScene";
 import Ticker from "./movies/Ticker";
+import Game from "./Game";
 
 export default class MasterManager extends Phaser.Scene {
   music?:
@@ -11,15 +12,26 @@ export default class MasterManager extends Phaser.Scene {
   planetShow: number = 0;
   multiScene?: MultiScene;
   ticker: Ticker;
-
+  cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
+  GameScene?: Game;
   constructor() {
     super({ key: "MasterManager" });
     const tickerMS = 100;
     this.ticker = new Ticker(tickerMS);
+
   }
 
   preload() {
+  }
 
+  manageGameSceneTutorial() {
+    if (this.cursors?.space.isDown && this.GameScene?.scene.isPaused()){
+      this.GameScene.scene.resume()
+      //@ts-ignore
+      if (this.GameScene.map.tutorialStep === 1) this.GameScene.map.tutorialStep = 2
+       //@ts-ignore
+       if (this.GameScene.map.tutorialStep === 3) this.GameScene.map.tutorialStep = 4
+    }
   }
 
   stopMusic() {
@@ -50,6 +62,8 @@ export default class MasterManager extends Phaser.Scene {
   }
 
   create(/* {song} */) {
+    this.cursors = this.input.keyboard?.createCursorKeys();
+    this.GameScene = this.game.scene.getScene("Game") as Game;
     this.menuAnim = false;
     this.multiScene = this.game.scene.getScene("MultiScene") as MultiScene
   }
@@ -58,5 +72,6 @@ export default class MasterManager extends Phaser.Scene {
     if (this.multiScene?.scenekey === "menu") {
       this.menuAnim = true;
     }
+    this.manageGameSceneTutorial()
   }
 }

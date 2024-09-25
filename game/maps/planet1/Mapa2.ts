@@ -12,6 +12,7 @@ import portal, { portalConfig } from "../../assets/portal";
 import { Children } from "react";
 import { loseConfigFromMapType } from "@/game/Types";
 import LargeFloorIsland, { LargeFloorIslandConfig } from "@/game/assets/LargeFloorIsland";
+import TextBox from "@/game/assets/TextBox";
 
 class Mapa2 {
   isJumping = false;
@@ -87,6 +88,9 @@ class Mapa2 {
 
   mapContainer: Phaser.GameObjects.Container;
   frontContainer: Phaser.GameObjects.Container;
+
+  textTutorial1?: TextBox;
+  tutorialStep: number = 0;
   constructor(scene: Game, monchi: Player) {
     this.scene = scene;
     this.monchi = monchi;
@@ -209,9 +213,11 @@ class Mapa2 {
           this.scene.monchi,
           this.pisos4,
           () => {
-            this.scene.canRot = true // medio hack, revisar lógica
-            this.scene.changeGravity(false, 1000)
-            this.scene.rotateCam(false, 10)
+            if (this.tutorialStep === 0){
+            this.tutorialStep = 1
+            this.textTutorial1?.setVisible(true)
+            this.scene.scene.pause()
+            }
           },
           () => true,
           this.scene
@@ -270,7 +276,18 @@ class Mapa2 {
       repeat: -1
     })
 
+    this.textTutorial1 = new TextBox(
+      this.scene, 
+      "That was close... these fireballs are dangerous, I'd better avoid them for now.",
+      1900,
+      900,
+      400
+    ).setVisible(false).setRotation(Math.PI)
 
+
+    this.frontContainer.add([
+      this.textTutorial1,
+    ])
     // const p1Config: LargeFloorConfig = {
     //   textureA: "plataformaLarga2",
     //   textureB: "plataformaLarga2",
@@ -378,7 +395,7 @@ class Mapa2 {
       large: 20,
       rotated: true
     };
-    const p7 = new LargeFloorIsland(this.scene, p7Config, this.pisos);
+    const p7 = new LargeFloorIsland(this.scene, p7Config, this.pisos4);
     //Portal, Coin and Asteroids
     const portalConfig: FloorConfig = {
       pos: { x: 2600, y: 810 }, // x: 2400
@@ -469,9 +486,13 @@ class Mapa2 {
       )
     this.mapContainer.add(mapObjects)
     this.scene.UICamera?.ignore(this.mapContainer)
+    this.scene.UICamera?.ignore(this.frontContainer)
 
   }
   update() {
+    if (this.tutorialStep === 2 || this.tutorialStep === 4) {
+      this.textTutorial1?.setVisible(false)
+    }
     /* Attach background anim */
     if (this.scene.monchi) this.animateBackground(this.scene.monchi);
   }

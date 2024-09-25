@@ -57,7 +57,7 @@ class Game extends Phaser.Scene {
 
   UIClass?: UIClass;
   UICamera?: Phaser.Cameras.Scene2D.Camera;
-
+  masterManagerScene?: MasterManager;
   constructor() {
     super({ key: "Game" });
   }
@@ -272,17 +272,17 @@ class Game extends Phaser.Scene {
 
 
     /* Audio */
-    const getMasterManagerScene = this.game.scene.getScene(
+    this.masterManagerScene = this.game.scene.getScene(
       "MasterManager"
     ) as MasterManager;
-    if (!getMasterManagerScene.scene.isActive())
+    if (!this.masterManagerScene.scene.isActive())
       this.scene.launch("MasterManager").sendToBack();
     else if (this.levelIs == 0) {
-      getMasterManagerScene.playMusic("songTutorial");
+      this.masterManagerScene.playMusic("songTutorial");
     } else if (this.levelIs == 1) {
-      getMasterManagerScene.playMusic("songLevel1");
+      this.masterManagerScene.playMusic("songLevel1");
     } else if (this.levelIs == 2) {
-      getMasterManagerScene.playMusic("songLevel2");
+      this.masterManagerScene.playMusic("songLevel2");
     }
 
     /* UI SCENE  */
@@ -327,6 +327,7 @@ class Game extends Phaser.Scene {
       this
     );
 
+
     if (this.EscKeyboard)
       this.EscKeyboard.once(
         "down",
@@ -337,9 +338,9 @@ class Game extends Phaser.Scene {
           this.canNextLevel = false;
           this.canRot = true;
           this.makeTransition("LevelMap", { stagePoint: this.stagePoint });
-          if (getMasterManagerScene.music?.key !== "songMenu")
-            getMasterManagerScene.stopMusic()
-          getMasterManagerScene.playMusic("songMenu")
+          if (this.masterManagerScene?.music?.key !== "songMenu")
+            this.masterManagerScene?.stopMusic()
+          this.masterManagerScene?.playMusic("songMenu")
         },
         this
       );

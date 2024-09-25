@@ -12,6 +12,7 @@ import portal, { portalConfig } from "../../assets/portal";
 import { Children } from "react";
 import { loseConfigFromMapType } from "@/game/Types";
 import LargeFloorIsland, { LargeFloorIslandConfig } from "@/game/assets/LargeFloorIsland";
+import TextBox from "@/game/assets/TextBox";
 
 class Mapa1 {
   scene: Game;
@@ -86,6 +87,9 @@ class Mapa1 {
   mapContainer: Phaser.GameObjects.Container;
   frontContainer: Phaser.GameObjects.Container;
 
+  textTutorial1?: TextBox;
+  textTutorial2?: TextBox;
+  tutorialStep: number = 0;
   constructor(scene: Game, monchi: Player) {
     this.scene = scene;
     this.monchi = monchi;
@@ -189,6 +193,13 @@ class Mapa1 {
           this.scene.monchi,
           this.pisos2,
           () => {
+            if (this.tutorialStep === 0){
+              setTimeout(()=>{
+                this.tutorialStep = 1
+                this.textTutorial1?.setVisible(true)
+                this.scene.scene.pause()
+              }, 300)
+            }
             this.scene.changeGravity(true, 1000)
             this.isFloating = true
             this.scene.checkPoint = 1
@@ -240,6 +251,28 @@ class Mapa1 {
     const aura = this.scene.add.sprite(2300, 350, "auraTuto").setScale(0.6)
     this.aura.add(aura)
 
+
+    this.textTutorial1 = new TextBox(
+      this.scene, 
+      "What's happening??!!",
+      2000,
+      1200,
+      300
+    ).setVisible(false)
+
+    this.textTutorial2 = new TextBox(
+      this.scene, 
+      "It seems like gravity reverses when I step on that kind of rock, I better record this.",
+      2000,
+      400,
+      400
+    ).setVisible(false)
+
+
+    this.frontContainer.add([
+      this.textTutorial1,
+      this.textTutorial2
+    ])
 
     this.scene.tweens.add({
       targets: aura,
@@ -440,6 +473,15 @@ class Mapa1 {
 
   }
   update() {
+    if (this.tutorialStep === 2 || this.tutorialStep === 4) {
+      this.textTutorial1?.setVisible(false)
+      this.textTutorial2?.setVisible(false)
+    }
+    if(this.scene.monchi?.body?.touching.up && this.tutorialStep === 2){
+      this.tutorialStep = 3
+      this.textTutorial2?.setVisible(true)
+      this.scene.scene.pause()
+    }
     /* Attach controls to player */
     if (this.scene.monchi) {
       // if (this.scene.cameraNormal) {

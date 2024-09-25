@@ -77,8 +77,9 @@ class Mapa0 {
   mapContainer: Phaser.GameObjects.Container;
   frontContainer: Phaser.GameObjects.Container;
 
-  sceneStopped?: Boolean;
   textTutorial1?: TextBox;
+  textTutorial2?: TextBox;
+  tutorialStep: number = 0;
 
   constructor(scene: Game, monchi: Player) {
     this.scene = scene;
@@ -182,9 +183,12 @@ class Mapa0 {
           this.scene.monchi,
           this.coin,
           () => {
-            this.sceneStopped = true
-            this.textTutorial1?.setVisible(true)
-            // this.scene.scene.pause()
+            if (this.tutorialStep === 2) {
+              this.scene.touchItem('coin')
+              this.tutorialStep = 3
+              this.textTutorial2?.setVisible(true)
+              this.scene.scene.pause()
+            }
           },
           () => true,
           this.scene
@@ -215,14 +219,28 @@ class Mapa0 {
     const aura = this.scene.add.sprite(1500, 600, "auraTuto").setScale(0.6)
     this.aura.add(aura)
 
+   
+
     this.textTutorial1 = new TextBox(
       this.scene, 
-      "Items will appear in game, don't be an idiot and grab them",
+      "It doesn't seem like a dangerous planet. I hope to find a source of energy to continue my journey.",
+      700,
+      500,
+      300
+    ).setVisible(true)
+
+    this.textTutorial2 = new TextBox(
+      this.scene, 
+      "A source of energy! Now I can continue my journey across the planet.",
       1700,
       400,
-      600
-    ).setVisible(false)
+      400
+    ).setVisible(true)
     
+    this.frontContainer.add([
+      this.textTutorial1,
+      this.textTutorial2
+    ])
 
     this.scene.UICamera?.ignore(this.textTutorial1)
 
@@ -362,6 +380,16 @@ class Mapa0 {
     this.scene.UICamera?.ignore(this.frontContainer)
   }
   update() {
+    if (this.tutorialStep === 2 || this.tutorialStep === 4) {
+      this.textTutorial1?.setVisible(false)
+      this.textTutorial2?.setVisible(false)
+    }
+    if(this.scene.monchi?.body?.touching.down && this.tutorialStep === 0){
+      this.tutorialStep = 1
+      this.textTutorial1?.setVisible(true)
+      this.scene.scene.pause()
+    }
+
     /* Attach background anim */
     if (this.scene.monchi) this.animateBackground(this.scene.monchi);
    

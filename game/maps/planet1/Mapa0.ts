@@ -224,8 +224,8 @@ class Mapa0 {
     this.textTutorial1 = new TextBox(
       this.scene, 
       "It doesn't seem like a dangerous planet. I hope to find a source of energy to continue my journey.",
+      600,
       700,
-      500,
       300
     ).setVisible(true)
 

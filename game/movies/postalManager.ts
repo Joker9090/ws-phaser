@@ -62,7 +62,8 @@ class postalManager {
             0.3
         );
 
-        const code = new TextBox(this.cine, "Code: ASNDJ", 0, 0, 500)
+        const code = new TextBox(this.cine, "Save this code to keep track of your progress: ASNDJ", 0, 0, 500)
+        code.setPosition(window.innerWidth/2 - code.width - 50, -window.innerHeight/2 + 50)
 
         const assetsScenes = [
             background,

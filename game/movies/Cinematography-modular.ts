@@ -137,7 +137,7 @@ class CinematographyModular extends Phaser.Scene {
         this.nextLevel = 3
         break;
       default:
-        this.playingCine = new cineIntro1(this);
+        
     }
   }
 

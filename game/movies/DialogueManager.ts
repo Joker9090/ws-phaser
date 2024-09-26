@@ -44,7 +44,7 @@ class DialogueManager {
   constructor(
     scene: Phaser.Scene,
     texts: string[],
-    audios: string[],
+    audios?: string[],
     config?: DialogConfig[],
     timeBetweenLetters?: number,
   ) {
@@ -55,7 +55,7 @@ class DialogueManager {
     this.textCounter = 0;
     this.textCounterMax = this.texts.length;
 
-    this.audios = audios;
+    this.audios = audios ? audios : [];
 
     this.config = config || [];
     this.timeBetweenLetters = timeBetweenLetters || 70;
@@ -337,12 +337,14 @@ class DialogueManager {
     }
   }
 
-  playAudio(name: string) {
-    if (this.activeAudio) {
-      this.activeAudio.stop();
+  playAudio(name?: string) {
+    if (name){
+      if (this.activeAudio) {
+        this.activeAudio.stop();
+      }
+      this.activeAudio = this.scene.sound.add(name).setVolume(1);
+      this.activeAudio.play();
     }
-    this.activeAudio = this.scene.sound.add(name).setVolume(1);
-    this.activeAudio.play();
   }
 }
 

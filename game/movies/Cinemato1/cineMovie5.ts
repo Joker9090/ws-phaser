@@ -9,7 +9,12 @@ class cineMovie5 {
     nextCine: boolean = false;
     dialogue?: DialogueManager;
     //assets
-
+    astro?: Phaser.GameObjects.Image;
+    brazoCintDer?: Phaser.GameObjects.Image;
+    brazoCintIzq?: Phaser.GameObjects.Image;
+    cinturonDer?: Phaser.GameObjects.Image;
+    cinturonIzq?: Phaser.GameObjects.Image;
+    sillon?: Phaser.GameObjects.Image;
     // controllers
     cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
 
@@ -18,9 +23,7 @@ class cineMovie5 {
         const tickerMS = 100;
         this.ticker = new Ticker(tickerMS);
         this.playCine();
-        // music
-        this.cine.sound.add("introSoundEffect1").setVolume(0.25).play()
-        this.cine.sound.add("introSoundEffect2").setVolume(0.25).play()
+
     }
 
     playCine(this: cineMovie5) {
@@ -43,15 +46,21 @@ class cineMovie5 {
             y: window.innerHeight / 927,
         };
 
-        // this.background = this.cine.add
-        //   .image(0, 0, "backgronudClouds")
-        //   .setOrigin(0.5, 0.5)
-        //   .setScale(1.4);
+        this.astro = this.cine.add.image(0, 0, "astro").setOrigin(0.5)
+        this.brazoCintDer = this.cine.add.image(600, 50, "brazoCintDer").setOrigin(0,0.5)
+        this.cinturonDer = this.cine.add.image(600 , 50, "cinturonDer").setOrigin(0,0.5)
+        this.cinturonIzq = this.cine.add.image(-600 , 50, "cinturonIzq").setOrigin(1,0.5)
+        this.brazoCintIzq = this.cine.add.image(-600, 50, "brazoCintIzq").setOrigin(1,0.4)
+        this.sillon = this.cine.add.image(0, 0, "sillon").setOrigin(0.5)
 
-
-        // const gameObjects = [
-        //   this.background3,
-        // ];
+        const gameObjects = [
+            this.sillon,
+            this.astro,
+            this.cinturonDer,
+            this.cinturonIzq,
+            this.brazoCintDer,
+            this.brazoCintIzq,
+        ];
 
         const darkMask = this.cine.add.rectangle(
             0,
@@ -59,12 +68,14 @@ class cineMovie5 {
             window.innerWidth,
             window.innerHeight,
             0,
-            1
+            0.3
         );
 
         const container = this.cine.add
             .container(middlePoint.x, middlePoint.y)
             .setSize(1920, 927);
+
+        container.add(gameObjects)
 
         container.add([
             darkMask,
@@ -88,29 +99,21 @@ class cineMovie5 {
         camera.postFX.addVignette(0.5, 0.5, 0.8);
 
         const part1 = (job: TickerJob) => {
-
-            //   const tween1 = this.cine.tweens.add({
-            //     targets: [this.shipOverImage, this.shipZoomOn],
-            //     alpha: 0,
-            //     duration: 5000,
-            //     ease: "expo.out",
-            //     loop: -1,
-            //   });
-
-
-        };
-
-
-        const part2 = (job: TickerJob) => {
-
             this.dialogue = new DialogueManager(
                 this.cine,
-                ["Emergency log number 325..."],
-                ["intro1audio1"],
+                [
+                    "With those levels of oxygen concentration there must be something I can eat.",
+                    "Let’s get to it then."
+                ],
+                [""],
                 [
                     {
+                        delay: 2000,
+                        keepAlive: 500,
+                    },
+                    {
                         delay: 500,
-                        keepAlive: 1000,
+                        keepAlive: 3000,
                     },
                 ],
                 90
@@ -126,32 +129,60 @@ class cineMovie5 {
             };
             this.dialogue?.killState(dialogueListener);
             this.dialogue?.getState(dialogueListener);
+            this.cine.tweens.add({
+                targets: [this.cinturonDer, this.brazoCintDer],
+                x: 50,
+                y:0,
+                duration: 8000,
+                ease: "ease.out",
+            });
+
+             this.cine.tweens.add({
+                targets: [this.cinturonIzq, this.brazoCintIzq],
+                x: 200,
+                y:0,
+                duration: 8000,
+                ease: "ease.out",
+            });
+            this.cine.tweens.add({
+                targets: [camera],
+                zoom: 1.1,
+                duration: 20000,
+                ease: "ease",
+            });
+
+            this.cine.tweens.add({
+                targets: [ this.brazoCintDer],
+                x: 650,
+                delay: 9500,
+                y: 150,
+                duration: 4000,
+                ease: "ease.in",
+            });
+
+             this.cine.tweens.add({
+                targets: [this.brazoCintIzq],
+                y: 200,
+                x: -650,
+                delay: 9500,
+                duration: 4000,
+                ease: "ease.in",
+            });
         };
 
 
+
         this.ticker.addJob(
-            new TickerJob(1, 10, part1, false, 6000, true, (job: TickerJob) => {
-                this.ticker.addNextJob(
-                    new TickerJob(
-                        2,
-                        0,
-                        part2,
-                        false,
-                        undefined,
-                        true,
-                        (job: TickerJob) => {
-                            // soundChangeScene.stop()
-                            this.nextCine = true;
-                        }
-                    )
-                );
+            new TickerJob(1, 10, part1, false, undefined, true, (job: TickerJob) => {
+                // soundChangeScene.stop()
+                this.nextCine = true;
             })
         );
     }
 
     update(this: cineMovie5, time: number, delta: number) {
         if (this.dialogue) this.dialogue.update();
-        if (this.nextCine) this.cine.scene.restart({ keyname: "cine_movie_6" });
+        if (this.nextCine) this.cine.scene.restart({ keyname: "cine_movie_1" });
     }
 }
 

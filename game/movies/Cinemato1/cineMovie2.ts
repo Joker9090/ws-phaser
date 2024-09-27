@@ -9,7 +9,11 @@ class cineMovie2 {
     nextCine: boolean = false;
     dialogue?: DialogueManager;
     //assets
-
+    aroCondensadorBottom?: Phaser.GameObjects.Image;
+    aroCondensadorTop?: Phaser.GameObjects.Image;
+    brilloCondensador?: Phaser.GameObjects.Image;
+    condensador?: Phaser.GameObjects.Image;
+    CristalCondensador?: Phaser.GameObjects.Image;
     // controllers
     cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
 
@@ -18,9 +22,7 @@ class cineMovie2 {
         const tickerMS = 100;
         this.ticker = new Ticker(tickerMS);
         this.playCine();
-        // music
-        this.cine.sound.add("introSoundEffect1").setVolume(0.25).play()
-        this.cine.sound.add("introSoundEffect2").setVolume(0.25).play()
+
     }
 
     playCine(this: cineMovie2) {
@@ -43,15 +45,19 @@ class cineMovie2 {
             y: window.innerHeight / 927,
         };
 
-        // this.background = this.cine.add
-        //   .image(0, 0, "backgronudClouds")
-        //   .setOrigin(0.5, 0.5)
-        //   .setScale(1.4);
+        this.aroCondensadorBottom = this.cine.add.image(-20, -60, "aroCondensadorBottom").setOrigin(0.5)
+        this.aroCondensadorTop = this.cine.add.image(-20, -60, "aroCondensadorTop").setOrigin(0.5)
+        this.brilloCondensador = this.cine.add.image(0, -19, "brilloCondensador").setOrigin(0.5)
+        this.condensador = this.cine.add.image(0, 0, "condensador").setOrigin(0.5)
+        this.CristalCondensador = this.cine.add.image(0, 0, "CristalCondensador").setOrigin(0.5)
 
-
-        // const gameObjects = [
-        //   this.background3,
-        // ];
+        const gameObjects = [
+            this.condensador,
+            this.aroCondensadorTop,
+            this.CristalCondensador,
+            this.aroCondensadorBottom,
+            this.brilloCondensador,
+        ];
 
         const darkMask = this.cine.add.rectangle(
             0,
@@ -59,12 +65,14 @@ class cineMovie2 {
             window.innerWidth,
             window.innerHeight,
             0,
-            1
+            0.3
         );
 
         const container = this.cine.add
             .container(middlePoint.x, middlePoint.y)
             .setSize(1920, 927);
+
+        container.add(gameObjects)
 
         container.add([
             darkMask,
@@ -88,29 +96,14 @@ class cineMovie2 {
         camera.postFX.addVignette(0.5, 0.5, 0.8);
 
         const part1 = (job: TickerJob) => {
-
-            //   const tween1 = this.cine.tweens.add({
-            //     targets: [this.shipOverImage, this.shipZoomOn],
-            //     alpha: 0,
-            //     duration: 5000,
-            //     ease: "expo.out",
-            //     loop: -1,
-            //   });
-
-
-        };
-
-
-        const part2 = (job: TickerJob) => {
-
             this.dialogue = new DialogueManager(
                 this.cine,
-                ["Emergency log number 325..."],
-                ["intro1audio1"],
+                ["It will be enough to get me going for now."],
+                [""],
                 [
                     {
-                        delay: 500,
-                        keepAlive: 1000,
+                        delay: 2000,
+                        keepAlive: 3000,
                     },
                 ],
                 90
@@ -126,25 +119,38 @@ class cineMovie2 {
             };
             this.dialogue?.killState(dialogueListener);
             this.dialogue?.getState(dialogueListener);
+            this.cine.tweens.add({
+                targets: [this.aroCondensadorBottom, this.aroCondensadorTop],
+                y:  60,
+                x: 40,
+                duration: 2000,
+                yoyo: true,
+                ease: "expo.inout",
+                loop: -1,
+            });
+            this.cine.tweens.add({
+                targets: [camera],
+                zoom:  1.3,
+                duration: 20000,
+                ease: "ease",
+            });
+            this.cine.tweens.add({
+                targets: [this.brilloCondensador],
+                alpha:  0.6,
+                duration: 1500,
+                yoyo: false,
+                ease: "expo.inout",
+                loop: -1,
+            });
+
         };
 
 
+
         this.ticker.addJob(
-            new TickerJob(1, 10, part1, false, 6000, true, (job: TickerJob) => {
-                this.ticker.addNextJob(
-                    new TickerJob(
-                        2,
-                        0,
-                        part2,
-                        false,
-                        undefined,
-                        true,
-                        (job: TickerJob) => {
-                            // soundChangeScene.stop()
-                            this.nextCine = true;
-                        }
-                    )
-                );
+            new TickerJob(1, 10, part1, false, undefined, true,  (job: TickerJob) => {
+                // soundChangeScene.stop()
+                this.nextCine = true;
             })
         );
     }

@@ -282,12 +282,12 @@ const loadAssets = {
     assets: [
       ["image", "fireball", "/game/fireball.png"],
       ["image", "textBox", "/game/textBox.png"],
-      ["svg", "bordeGlow", "/assets/textBox/bordeGlow.svg", {scale: 7}],
-      ["svg", "fondoDegrade", "/assets/textBox/fondoDegrade.svg", {scale: 7}],
-      ["svg", "lineaAbajo", "/assets/textBox/lineaAbajo.svg", {scale: 1}],
-      ["svg", "lineaArriba", "/assets/textBox/lineaArriba.svg", {scale: 1}],
-      ["svg", "lineaDer", "/assets/textBox/lineaDer.svg", {scale: 1}],
-      ["svg", "lineaIzq", "/assets/textBox/lineaIzq.svg", {scale: 1}],
+      ["svg", "bordeGlow", "/assets/textBox/bordeGlow.svg", { scale: 7 }],
+      ["svg", "fondoDegrade", "/assets/textBox/fondoDegrade.svg", { scale: 7 }],
+      ["svg", "lineaAbajo", "/assets/textBox/lineaAbajo.svg", { scale: 1 }],
+      ["svg", "lineaArriba", "/assets/textBox/lineaArriba.svg", { scale: 1 }],
+      ["svg", "lineaDer", "/assets/textBox/lineaDer.svg", { scale: 1 }],
+      ["svg", "lineaIzq", "/assets/textBox/lineaIzq.svg", { scale: 1 }],
 
     ],
   },
@@ -448,7 +448,8 @@ const loadAssets = {
       // ["audio", "introSoundEffect7", "/movies/intro/soundEffects/Intro/41.07_49.01.mp3"],
       // ["audio", "introSoundEffect8", "/movies/intro/soundEffects/Intro/55.00_101.02.mp3"],
       // ["audio", "introSoundEffect9", "/movies/intro/soundEffects/Intro/101.02_120.17.mp3"],
-      // CINEMATICA 1
+      // CINEMATICA 1 
+      // SCENE 1
       ["image", "backgroundCine1", "/movies/cinemato1/scene1/back.png"],
       ["image", "starsBackground", "/movies/cinemato1/scene1/estrellas.png"],
       ["image", "nightSkyBg", "/movies/cinemato1/scene1/bgColored.png"],
@@ -458,6 +459,27 @@ const loadAssets = {
       ["image", "nubeBg2", "/movies/cinemato1/scene1/nube2.png"],
       ["image", "nubeBg3", "/movies/cinemato1/scene1/nube3.png"],
       ["image", "nubeCielo", "/movies/cinemato1/scene1/nubeCielo.png"],
+      // SCENE 2
+      ["image", "aroCondensadorBottom", "/movies/cinemato1/scene2/aroCondensadorBottom.png"],
+      ["image", "aroCondensadorTop", "/movies/cinemato1/scene2/aroCondensadorTop.png"],
+      ["image", "brilloCondensador", "/movies/cinemato1/scene2/brilloCondensador.png"],
+      ["image", "condensador", "/movies/cinemato1/scene2/condensador.png"],
+      ["image", "CristalCondensador", "/movies/cinemato1/scene2/CristalCondensador.png"],
+      // SCENE 3
+      ["image", "aspasVent", "/movies/cinemato1/scene3/aspasVent.png"],
+      ["image", "backgroundComerdor", "/movies/cinemato1/scene3/backgroundComerdor.png"],
+      ["image", "brazoDer", "/movies/cinemato1/scene3/brazoDer.png"],
+      ["image", "brazoIzq", "/movies/cinemato1/scene3/brazoIzq.png"],
+      ["image", "noodleCup", "/movies/cinemato1/scene3/noodleCup.png"],
+      ["image", "vent", "/movies/cinemato1/scene3/vent.png"],
+      ["image", "lucesComedor", "/movies/cinemato1/scene3/lucesComedor.png"],
+      // SCENE 5
+      ["image", "astro", "/movies/cinemato1/scene5/astro.png"],
+      ["image", "brazoCintDer", "/movies/cinemato1/scene5/brazoCintDer.png"],
+      ["image", "brazoCintIzq", "/movies/cinemato1/scene5/brazoCintIzq.png"],
+      ["image", "cinturonDer", "/movies/cinemato1/scene5/cinturonDer.png"],
+      ["image", "cinturonIzq", "/movies/cinemato1/scene5/cinturonIzq.png"],
+      ["image", "sillon", "/movies/cinemato1/scene5/sillon.png"],
     ]
   }
 };

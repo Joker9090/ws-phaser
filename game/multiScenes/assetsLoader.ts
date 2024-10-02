@@ -480,6 +480,13 @@ const loadAssets = {
       ["image", "cinturonDer", "/movies/cinemato1/scene5/cinturonDer.png"],
       ["image", "cinturonIzq", "/movies/cinemato1/scene5/cinturonIzq.png"],
       ["image", "sillon", "/movies/cinemato1/scene5/sillon.png"],
+      // SCENE 7
+      ["image", "backgroundAcelerar", "/movies/cinemato1/scene7/backgroundAcelerar.png"],
+      ["image", "barraColorEmpty", "/movies/cinemato1/scene7/barraColorEmpty.png"],
+      ["image", "barraColorFull", "/movies/cinemato1/scene7/barraColorFull.png"],
+      ["image", "brazoAcelerar", "/movies/cinemato1/scene7/brazoAcelerar.png"],
+      ["image", "lucesPrendidasAcelerar", "/movies/cinemato1/scene7/lucesPrendidasAcelerar.png"],
+      ["image", "palanca", "/movies/cinemato1/scene7/palanca.png"],
     ]
   }
 };
@@ -561,7 +568,7 @@ class AssetsLoader {
         this.finished = true
         // this.scene.scene.restart({text:"menu"})
         // this.scene.makeTransition("startMovie", undefined);
-        this.scene.makeTransition("CinematographyMod", { keyname: "cine_movie_1" });
+        this.scene.makeTransition("CinematographyMod", { keyname: "cine_movie_7" });
         // this.scene.makeTransition("Game", { level: 0, lifes: 3 });
       });
       const scenesTitles: Array<SceneKeys> = [

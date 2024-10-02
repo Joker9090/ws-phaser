@@ -9,7 +9,13 @@ class cineMovie7 {
     nextCine: boolean = false;
     dialogue?: DialogueManager;
     //assets
-
+    backgroundAcelerar?: Phaser.GameObjects.Image;
+    barraColorEmpty?: Phaser.GameObjects.Image;
+    barraColorFull?: Phaser.GameObjects.Image;
+    brazoAcelerar?: Phaser.GameObjects.Image;
+    lucesPrendidasAcelerar?: Phaser.GameObjects.Image;
+    palanca?: Phaser.GameObjects.Image;
+    graphics?: Phaser.GameObjects.Graphics;
     // controllers
     cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
 
@@ -18,9 +24,7 @@ class cineMovie7 {
         const tickerMS = 100;
         this.ticker = new Ticker(tickerMS);
         this.playCine();
-        // music
-        this.cine.sound.add("introSoundEffect1").setVolume(0.25).play()
-        this.cine.sound.add("introSoundEffect2").setVolume(0.25).play()
+
     }
 
     playCine(this: cineMovie7) {
@@ -43,15 +47,29 @@ class cineMovie7 {
             y: window.innerHeight / 927,
         };
 
-        // this.background = this.cine.add
-        //   .image(0, 0, "backgronudClouds")
-        //   .setOrigin(0.5, 0.5)
-        //   .setScale(1.4);
+
+        this.backgroundAcelerar = this.cine.add.image(0, 0, "backgroundAcelerar").setOrigin(0.5)
+        this.barraColorEmpty = this.cine.add.image(100, 0, "barraColorEmpty").setOrigin(0.5)
+        this.barraColorFull = this.cine.add.image(100, 0, "barraColorFull").setOrigin(0.5)
+        // // this.brazoAcelerar = this.cine.add.image(0 , 0, "brazoAcelerar").setOrigin(1,0.5)
+        this.lucesPrendidasAcelerar = this.cine.add.image(0, 0, "lucesPrendidasAcelerar").setOrigin(0.5).setVisible(true)
+        this.palanca = this.cine.add.image(-75, 0, "palanca").setOrigin(0.5)
 
 
-        // const gameObjects = [
-        //   this.background3,
-        // ];
+        this.graphics = this.cine.add.graphics();
+        this.graphics.fillStyle(0xffffff, 0);
+        this.graphics.fillRect(100, -this.barraColorFull.height / 2, this.barraColorFull.width, this.barraColorFull.height);
+        const mask = this.graphics.createGeometryMask();
+        this.barraColorFull.setMask(mask)
+
+        const gameObjects = [
+            this.backgroundAcelerar,
+            this.barraColorEmpty,
+            // this.barraColorFull,
+            this.lucesPrendidasAcelerar,
+            this.palanca,
+            // this.brazoAcelerar,
+        ];
 
         const darkMask = this.cine.add.rectangle(
             0,
@@ -59,12 +77,14 @@ class cineMovie7 {
             window.innerWidth,
             window.innerHeight,
             0,
-            1
+            0.3
         );
 
         const container = this.cine.add
             .container(middlePoint.x, middlePoint.y)
             .setSize(1920, 927);
+
+        container.add(gameObjects)
 
         container.add([
             darkMask,
@@ -88,29 +108,18 @@ class cineMovie7 {
         camera.postFX.addVignette(0.5, 0.5, 0.8);
 
         const part1 = (job: TickerJob) => {
-
-            //   const tween1 = this.cine.tweens.add({
-            //     targets: [this.shipOverImage, this.shipZoomOn],
-            //     alpha: 0,
-            //     duration: 5000,
-            //     ease: "expo.out",
-            //     loop: -1,
-            //   });
-
-
-        };
-
-
-        const part2 = (job: TickerJob) => {
-
             this.dialogue = new DialogueManager(
                 this.cine,
-                ["Emergency log number 325..."],
-                ["intro1audio1"],
+                ["Engage!"],
+                [""],
                 [
                     {
+                        delay: 2000,
+                        keepAlive: 500,
+                    },
+                    {
                         delay: 500,
-                        keepAlive: 1000,
+                        keepAlive: 3000,
                     },
                 ],
                 90
@@ -126,32 +135,60 @@ class cineMovie7 {
             };
             this.dialogue?.killState(dialogueListener);
             this.dialogue?.getState(dialogueListener);
+            // this.cine.tweens.add({
+            //     targets: [this.cinturonDer, this.brazoCintDer],
+            //     x: 50,
+            //     y:0,
+            //     duration: 8000,
+            //     ease: "ease.out",
+            // });
+
+            //  this.cine.tweens.add({
+            //     targets: [this.cinturonIzq, this.brazoCintIzq],
+            //     x: 200,
+            //     y:0,
+            //     duration: 8000,
+            //     ease: "ease.out",
+            // });
+            this.cine.tweens.add({
+                targets: [camera],
+                zoom: 1.1,
+                duration: 20000,
+                ease: "ease",
+            });
+
+            // this.cine.tweens.add({
+            //     targets: [ this.brazoCintDer],
+            //     x: 650,
+            //     delay: 9500,
+            //     y: 150,
+            //     duration: 4000,
+            //     ease: "ease.in",
+            // });
+
+            //  this.cine.tweens.add({
+            //     targets: [this.brazoCintIzq],
+            //     y: 200,
+            //     x: -650,
+            //     delay: 9500,
+            //     duration: 4000,
+            //     ease: "ease.in",
+            // });
         };
 
 
+
         this.ticker.addJob(
-            new TickerJob(1, 10, part1, false, 6000, true, (job: TickerJob) => {
-                this.ticker.addNextJob(
-                    new TickerJob(
-                        2,
-                        0,
-                        part2,
-                        false,
-                        undefined,
-                        true,
-                        (job: TickerJob) => {
-                            // soundChangeScene.stop()
-                            this.nextCine = true;
-                        }
-                    )
-                );
+            new TickerJob(1, 10, part1, false, undefined, true, (job: TickerJob) => {
+                // soundChangeScene.stop()
+                this.nextCine = true;
             })
         );
     }
 
     update(this: cineMovie7, time: number, delta: number) {
         if (this.dialogue) this.dialogue.update();
-        if (this.nextCine) this.cine.scene.restart({ keyname: "cine_movie_8" });
+        if (this.nextCine) this.cine.scene.restart({ keyname: "cine_movie_7" });
     }
 }
 

@@ -456,19 +456,49 @@ class cineIntro2B {
           "And fuel levels aren't very encouraging either...",
           "I've decided to shut down all systems except life support and navigation to buy myself some time",
         ],
-        ["intro2audio3", "intro2audio4", "intro2audio5"],
+        [], // ["intro2audio3", "intro2audio4", "intro2audio5"],
         [
           {
             delay: 1000,
+            withTapping: {
+              audios: ["key01", "key02"],
+              count: 8,
+              delay: 180,
+            },
             keepAlive: 500,
+            position: {
+              x: middlePoint.x - 300,
+              y: (middlePoint.y * 2) - 200,
+              width: 650
+            }
           },
           {
             delay: 500,
+            withTapping: {
+              audios: ["key01", "key02"],
+              count: 14,
+              delay: 180,
+            },
             keepAlive: 500,
+            position: {
+              x: middlePoint.x - 500,
+              y: (middlePoint.y * 2) - 200,
+              width: 1000
+            }
           },
           {
             delay: 1000,
+            withTapping: {
+              audios: ["key01", "key02"],
+              count: 37,
+              delay: 180,
+            },
             keepAlive: 1000,
+            position: {
+              x: middlePoint.x - 500,
+              y: (middlePoint.y * 2) - 200,
+              width: 1000
+            }
           },
         ]
       );
@@ -725,11 +755,21 @@ class cineIntro2B {
         [
           "The radar has detected a planet in the vicinity that seems to have a possible energy source",
         ],
-        ["intro2audio6"],
+        [], // ["intro2audio6"],
         [
           {
             delay: 4000,
+             withTapping: {
+              audios: ["key01", "key02"],
+              count: 33,
+              delay: 180,
+            },
             keepAlive: 1000,
+            position: {
+              x: middlePoint.x - 500,
+              y: (middlePoint.y * 2) - 200,
+              width: 1000
+            }
           },
         ]
       );

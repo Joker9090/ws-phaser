@@ -119,11 +119,21 @@ class cineIntro2C {
         [
           "I will go investigate it",
         ],
-        ["intro2audio7"],
+        [], //["intro2audio7"],
         [
           {
             delay: 500,
+            withTapping: {
+              audios: ["key01", "key02"],
+              count: 17,
+              delay: 180,
+            },
             keepAlive: 1000,
+            position: {
+              x: middlePoint.x - 500,
+              y: (middlePoint.y * 2) - 200,
+              width: 1000
+            }
           },
         ]
       );

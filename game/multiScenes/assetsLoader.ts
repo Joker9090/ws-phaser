@@ -12,7 +12,7 @@ export type SceneKeys =
   | "Sandbox"
   | "BetweenScenes"
   | "Postales"
-  | "IntroMovie"
+  | "IntroMovie";
 
 export type LoadTypes = "image" | "spritesheet" | "audio" | "svg";
 
@@ -53,14 +53,10 @@ const loadAssets = {
     ],
   },
   Intro: {
-    assets: [
-      ["image", "logoNoswar", "/game/logo.png"]
-    ],
+    assets: [["image", "logoNoswar", "/game/logo.png"]],
   },
   Sandbox: {
-    assets: [
-      ["image", "logoNoswar", "/game/logo.png"]
-    ],
+    assets: [["image", "logoNoswar", "/game/logo.png"]],
   },
   LevelMap: {
     assets: [
@@ -98,66 +94,91 @@ const loadAssets = {
         "portal1",
         "/game/portal1.png",
         { frameWidth: 100, frameHeight: 150 },
-      ], [
+      ],
+      [
         "spritesheet",
         "portal2",
         "/game/portal2.png",
         { frameWidth: 100, frameHeight: 150 },
-      ], [
+      ],
+      [
         "spritesheet",
         "portal3",
         "/game/portal3.png",
         { frameWidth: 100, frameHeight: 150 },
-      ], [
+      ],
+      [
         "spritesheet",
         "portal4",
         "/game/portal4.png",
         { frameWidth: 100, frameHeight: 150 },
-      ], [
+      ],
+      [
         "spritesheet",
         "meteorito",
         "/game/planeta1/meteoritoSpriteVerde.png",
         { frameWidth: 140, frameHeight: 300 },
-      ], [
+      ],
+      [
         "spritesheet",
         "personRing",
         "/game/personRing.png",
         { frameWidth: 400, frameHeight: 252 },
-      ]
+      ],
     ],
   },
   Scenes: {
     assets: [
       //planeta 1
-      ["image", "plataformaNuevaA", "/game/planeta1/platforms/plataformaNuevaA.png"],
-      ["image", "plataformaNuevaLargaA", "/game/planeta1/platforms/newPlatA.png"],
-      ["image", "plataformaNuevaLargaB", "/game/planeta1/platforms/newPlatB.png"],
-      ["image", "plataformaNuevaLargaC", "/game/planeta1/platforms/newPlatC.png"],
-      ["image", "plataformaFinalP1", "/game/planeta1/platforms/plataformaFinal.png"],
+      [
+        "image",
+        "plataformaNuevaA",
+        "/game/planeta1/platforms/plataformaNuevaA.png",
+      ],
+      [
+        "image",
+        "plataformaNuevaLargaA",
+        "/game/planeta1/platforms/newPlatA.png",
+      ],
+      [
+        "image",
+        "plataformaNuevaLargaB",
+        "/game/planeta1/platforms/newPlatB.png",
+      ],
+      [
+        "image",
+        "plataformaNuevaLargaC",
+        "/game/planeta1/platforms/newPlatC.png",
+      ],
+      [
+        "image",
+        "plataformaFinalP1",
+        "/game/planeta1/platforms/plataformaFinal.png",
+      ],
 
       [
         "svg",
         "background0P1",
         "/game/planeta1/backgrounds/background0P1.svg",
-        { scale: 1.8 }
+        { scale: 1.8 },
       ],
       [
         "svg",
         "background1P1",
         "/game/planeta1/backgrounds/background1P1.svg",
-        { scale: 1.8 }
+        { scale: 1.8 },
       ],
       [
         "svg",
         "backgroundStars",
         "/game/planeta1/backgrounds/backgroundStars.svg",
-        { scale: 1.8 }
+        { scale: 1.8 },
       ],
       [
         "svg",
         "montañaEnd",
         "/game/planeta1/backgrounds/montañaEnd.svg",
-        { scale: 3 }
+        { scale: 3 },
       ],
       ["image", "frontGround1", "/game/planeta1/backgrounds/frontGround1.png"],
       ["image", "frontGround2", "/game/planeta1/backgrounds/frontGround2.png"],
@@ -174,7 +195,6 @@ const loadAssets = {
       ["image", "nube3", "/game/planeta1/backgrounds/nube3.png"],
       ["image", "nube4", "/game/planeta1/backgrounds/nube4.png"],
       ["image", "nube5", "/game/planeta1/backgrounds/nube5.png"],
-
 
       ["image", "plataformaA", "/game/plataforma.png"],
       ["image", "plataformaB", "/game/plataforma2.png"],
@@ -205,7 +225,6 @@ const loadAssets = {
       ["image", "newBg5", "/game/bg5.png"],
       ["image", "newBg6", "/game/bg6.png"],
 
-
       ["image", "bg1Lvl1", "/game/lvl1/background/bg1.png"],
       ["image", "bg2Lvl1", "/game/lvl1/background/bg2.png"],
       ["image", "bg3Lvl1", "/game/lvl1/background/bg3.png"],
@@ -221,10 +240,21 @@ const loadAssets = {
       ["image", "cristalLvl1", "/game/lvl1/cristalLvl1.png"],
 
       ["image", "plataformaLvl1", "/game/lvl1/plataformas/plataforma.png"],
-      ["image", "plataformaInicioLvl1", "/game/lvl1/plataformas/plataformaInicio.png"],
-      ["image", "plataformaMedioLvl1", "/game/lvl1/plataformas/plataformaMedio.png"],
-      ["image", "plataformaFinLvl1", "/game/lvl1/plataformas/plataformaFin.png"],
-
+      [
+        "image",
+        "plataformaInicioLvl1",
+        "/game/lvl1/plataformas/plataformaInicio.png",
+      ],
+      [
+        "image",
+        "plataformaMedioLvl1",
+        "/game/lvl1/plataformas/plataformaMedio.png",
+      ],
+      [
+        "image",
+        "plataformaFinLvl1",
+        "/game/lvl1/plataformas/plataformaFin.png",
+      ],
 
       ["image", "piedra1", "/game/lvl1/plataformas/plataformaMedio.png"],
       ["image", "piedra2", "/game/lvl1/plataformas/plataformaMedio.png"],
@@ -245,8 +275,16 @@ const loadAssets = {
       ["image", "auraLvl2", "/game/lvl2/auraCristalLvl2.png"],
       ["image", "cristalLvl2", "/game/lvl2/cristalLvl2.png"],
 
-      ["image", "plataformaInicioLvl2", "/game/lvl2/plataforma/plataformaInicio.png"],
-      ["image", "plataformaMedioLvl2", "/game/lvl2/plataforma/plataformaMedio.png"],
+      [
+        "image",
+        "plataformaInicioLvl2",
+        "/game/lvl2/plataforma/plataformaInicio.png",
+      ],
+      [
+        "image",
+        "plataformaMedioLvl2",
+        "/game/lvl2/plataforma/plataformaMedio.png",
+      ],
       ["image", "plataformaFinLvl2", "/game/lvl2/plataforma/plataformaFin.png"],
 
       ["image", "starsLvl2", "/game/lvl2/background/stars.png"],
@@ -274,8 +312,6 @@ const loadAssets = {
       ["image", "plataformaMedioSun", "/game/lvl3/plataformaMedioSun.png"],
       ["image", "plataformaFinSun", "/game/lvl3/plataformaFinSun.png"],
     ],
-
-
   },
 
   Tutorial: {
@@ -288,7 +324,6 @@ const loadAssets = {
       ["svg", "lineaArriba", "/assets/textBox/lineaArriba.svg", { scale: 1 }],
       ["svg", "lineaDer", "/assets/textBox/lineaDer.svg", { scale: 1 }],
       ["svg", "lineaIzq", "/assets/textBox/lineaIzq.svg", { scale: 1 }],
-
     ],
   },
   BetweenScenes: {
@@ -315,140 +350,381 @@ const loadAssets = {
   IntroMovie: {
     assets: [
       // INTRO
-      // ["image", "startButton", "/movies/startButton.png"],
-      // ["image", "backgroundStarsMovie", "/movies/intro/scene1/fondo1.png"],
-      // ["image", "backgronudClouds", "/movies/intro/scene1/fondo2.png"],
-      // ["image", "backgroundGlow", "/movies/intro/scene1/fondo3.png"],
-      // ["image", "planet", "/movies/intro/scene1/planeta.png"],
-      // ["image", "darkness", "/movies/intro/scene1/viñeta.png"],
-      // ["image", "shipOn", "/movies/intro/scene1/naveOn.png"],
-      // ["image", "shipOff", "/movies/intro/scene1/naveOff.png"],
-      // ["image", "naveZoom", "/movies/intro/scene1/NaveAstro.png"],
-      // ["image", "naveZoomOn", "/movies/intro/scene1/NaveAstroLuces.png"],
-      // ["image", "fondo1", "/movies/intro/scene2/FondoCapa1.png"],
-      // ["image", "fondo2", "/movies/intro/scene2/FondoCapa2.png"],
-      // ["image", "fondo3", "/movies/intro/scene2/FondoCapa3.png"],
-      // ["image", "planetScene2", "/movies/intro/scene2/planeta.png"],
-      // ["image", "part1SetUp", "/movies/intro/scene2/part1SetUp.png"],
-      // ["image", "part2SetUp", "/movies/intro/scene2/part2SetUp.png"],
-      // ["image", "nave2C", "/movies/intro/scene2/nave2C.png"],
-      // ["image", "backgroundPanel", "/movies/intro/scene2/background.png"],
-      // ["image", "radarCross", "/movies/intro/scene2/radar/Cruz.png"],
-      // ["image", "leftScreen", "/movies/intro/scene2/leftScreen.png"],
-      // ["image", "rightScreen", "/movies/intro/scene2/rightScreen.png"],
-      // ["image", "arrowEmpty-red", "/movies/intro/scene2/radar/arrowEmpty-red.png"],
-      // ["image", "arrowFull-red", "/movies/intro/scene2/radar/arrowFull-red.png"],
-      // ["image", "arrowEmpty", "/movies/intro/scene2/radar/arrowEmpty.png"],
-      // ["image", "arrowFull", "/movies/intro/scene2/radar/arrowFull.png"],
-      // ["image", "radarInnerCircle1", "/movies/intro/scene2/radar/inner.png"],
-      // ["image", "radarInnerCircle2", "/movies/intro/scene2/radar/middle.png"],
-      // ["image", "radarInnerCircle2B", "/movies/intro/scene2/radar/middlePointed.png"],
-      // ["image", "radarInnerCircle3", "/movies/intro/scene2/radar/outer.png"],
-      // ["image", "radarSearcher", "/movies/intro/scene2/radar/searcher.png"],
-      // ["image", "planetOnRadar", "/movies/intro/scene2/radar/Planetita.png"],
-      // ["image", "planetOnRadar-red", "/movies/intro/scene2/radar/Planetita-red.png"],
-      // ["image", "titleTopLeft", "/movies/intro/scene2/text/titleTopLeft.png"],
-      // ["image", "titleTopRight", "/movies/intro/scene2/text/titleTopRight.png"],
-      // ["image", "titleBottomLeft", "/movies/intro/scene2/text/titleBottomLeft.png"],
-      // ["image", "titleBottomRight", "/movies/intro/scene2/text/titleBottomRight.png"],
-      // ["image", "textSelectorFull", "/movies/intro/scene2/elementsScreen/labelFull.png"],
-      // ["image", "textSelectorEmpty", "/movies/intro/scene2/elementsScreen/labelEmpty.png"],
-      // ["image", "subTextTopLeft", "/movies/intro/scene2/text/subTextTopLeft.png"],
-      // ["image", "subTextTopLeft2", "/movies/intro/scene2/text/subTextTopLeft2.png"],
-      // ["image", "subTextTopRight", "/movies/intro/scene2/text/subTextTopLeft.png"],
-      // ["image", "subTextBottomRight", "/movies/intro/scene2/text/subTextBottomRight.png"],
-      // ["image", "subTextBottomLeft", "/movies/intro/scene2/text/subTextBottomLeft.png"],
-      // ["image", "barFull", "/movies/intro/scene2/elementsScreen/fullBar.png"],
-      // ["image", "barEmpty", "/movies/intro/scene2/elementsScreen/emptyBar.png"],
-      // ["image", "circle1", "/movies/intro/scene2/elementsScreen/circle1.png"],
-      // ["image", "circle2", "/movies/intro/scene2/elementsScreen/circle2.png"],
-      // ["image", "circle3", "/movies/intro/scene2/elementsScreen/circle3.png"],
-      // ["image", "danger1", "/movies/intro/scene2/danger1.png"],
-      // ["image", "danger2", "/movies/intro/scene2/danger2.png"],
-      // ["image", "radarCross-red", "/movies/intro/scene2/radar/Cruz-red.png"],
-      // ["image", "radarInnerCircle1-red", "/movies/intro/scene2/radar/inner-red.png"],
-      // ["image", "radarInnerCircle2-red", "/movies/intro/scene2/radar/middle-red.png"],
-      // ["image", "radarInnerCircle3-red", "/movies/intro/scene2/radar/outer-red.png"],
-      // ["image", "radarSearcher-red", "/movies/intro/scene2/radar/searcher-red.png"],
-      // ["image", "planetOnRadar-red", "/movies/intro/scene2/radar/Planetita-red.png"],
-      // ["image", "titleTopLeft-red", "/movies/intro/scene2/text/titleTopLeft-red.png"],
-      // ["image", "titleTopRight-red", "/movies/intro/scene2/text/titleTopRight-red.png"],
-      // ["image", "titleBottomLeft-red", "/movies/intro/scene2/text/titleBottomLeft-red.png"],
-      // ["image", "titleBottomRight-red", "/movies/intro/scene2/text/titleBottomRight-red.png"],
-      // ["image", "textSelectorFull-red", "/movies/intro/scene2/elementsScreen/labelFull-red.png"],
-      // ["image", "textSelectorEmpty-red", "/movies/intro/scene2/elementsScreen/labelEmpty-red.png"],
-      // ["image", "subTextTopLeft-red", "/movies/intro/scene2/text/subTextTopLeft-red.png"],
-      // ["image", "subTextTopLeft2-red", "/movies/intro/scene2/text/subTextTopLeft2-red.png"],
-      // ["image", "subTextBottomRight-red", "/movies/intro/scene2/text/subTextBottomRight-red.png"],
-      // ["image", "subTextBottomLeft-red", "/movies/intro/scene2/text/subTextBottomLeft-red.png"],
-      // ["image", "barFull-red", "/movies/intro/scene2/elementsScreen/fullBar-red.png"],
-      // ["image", "barEmpty-red", "/movies/intro/scene2/elementsScreen/emptyBar-red.png"],
-      // ["image", "circle1-red", "/movies/intro/scene2/elementsScreen/circle1-red.png"],
-      // ["image", "circle2-red", "/movies/intro/scene2/elementsScreen/circle2-red.png"],
-      // ["image", "circle3-red", "/movies/intro/scene2/elementsScreen/circle3-red.png"],
-      // ["image", "danger1-red", "/movies/intro/scene2/danger1-red.png"],
-      // ["image", "danger2-red", "/movies/intro/scene2/danger2-red.png"],
-      // ["image", "NubePolvo1", "/movies/intro/scene5/NubePolvo1.png"],
-      // ["image", "NubePolvo2", "/movies/intro/scene5/NubePolvo2.png"],
-      // ["image", "NubePolvo3", "/movies/intro/scene5/NubePolvo3.png"],
-      // ["image", "NubePolvo4", "/movies/intro/scene5/NubePolvo4.png"],
-      // ["image", "NubePolvo5", "/movies/intro/scene5/NubePolvo5.png"],
-      // ["image", "NaveAbierta", "/movies/intro/scene5/NaveaterrizaOFF.png"],
-      // ["image", "NaveAbiertaLuces", "/movies/intro/scene5/NaveaterrizaON.png"],
-      // ["image", "NaveAbiertaB", "/movies/intro/scene5/NaveAterrizaONB.png"],
-      // ["image", "NaveAbiertaLucesB", "/movies/intro/scene5/NaveAterrizaOFFB.png"],
-      // ["image", "OpacidadDetrasDeNave", "/movies/intro/scene5/OpacidadDetrasDeNave.png"],
-      // ["image", "PiedrasDelanteras", "/movies/intro/scene5/PiedrasDelanteras.png"],
-      // ["image", "PiedrasNave", "/movies/intro/scene5/PiedrasNave.png"],
-      // ["image", "SuperficiePlaneta", "/movies/intro/scene5/SuperficiePlaneta.png"],
-      // ["image", "NubePrimerPlano", "/movies/intro/scene5/NubePrimerPlano.png"],
-      // ["image", "BrazoDelantero", "/movies/intro/scene6/BrazoDelatero.png"],
-      // ["image", "Cuerpo", "/movies/intro/scene6/Cuerpo.png"],
-      // ["image", "PiernaDelantera", "/movies/intro/scene6/PiernaDelantera.png"],
-      // ["image", "PiernaTrasera", "/movies/intro/scene6/PiernaTrasera.png"],
-      // ["image", "Piso", "/movies/intro/scene6/Piso.png"],
-      // ["image", "PisoScene6", "/movies/intro/scene7/Piso.png"],
-      // ["image", "AstroFrenteCorte", "/movies/intro/scene7/AStroFrenteCorte.png"],
-      // ["image", "AstroPerfilCorte", "/movies/intro/scene7/AstroPerfilCorte.png"],
-      // ["image", "VidrioVisor", "/movies/intro/scene7/VidrioVisor.png"],
-      // ["image", "VidrioVisorView", "/movies/intro/scene7/VidrioVisorView.png"],
-      // ["image", "meteoritoTest", "/movies/intro/scene7/meteoritoTest.png"],
-      // ["image", "estrellas", "/movies/intro/scene5/estrellas.png"],
-      // ["image", "fondoRed", "/movies/intro/scene5/fondoRed.png"],
-      // ["image", "nubes", "/movies/intro/scene5/nubes.png"],
-      // ["image", "superficie", "/movies/intro/scene5/superficie.png"],
-      // ["image", "mountains", "/movies/intro/scene8/Montañas.png"],
-      // ["image", "Nube1", "/movies/intro/scene8/Nube1.png"],
-      // ["image", "Nube2", "/movies/intro/scene8/Nube2.png"],
-      // ["image", "Nube3", "/movies/intro/scene8/Nube3.png"],
-      // ["image", "PisoNivel8", "/movies/intro/scene8/Piso.png"],
-      // ["image", "Piedra1", "/movies/intro/scene8/Piedra1.png"],
-      // ["image", "piedrita", "/movies/intro/scene8/piedra.png"],
-      // ["image", "Piedra2", "/movies/intro/scene8/Piedra2.png"],
-      // ["image", "Piedra3", "/movies/intro/scene8/Piedra3.png"],
-      // ["image", "Piedra4", "/movies/intro/scene8/Piedra4.png"],
-      // ["image", "Piedra5", "/movies/intro/scene8/Piedra5.png"],
-      // ["audio", "intro1audio1", "/movies/intro/audios/cineIntro1/intro1audio1.mp3"],
-      // ["audio", "intro1audio2", "/movies/intro/audios/cineIntro1/intro1audio2.mp3"],
-      // ["audio", "intro2audio1", "/movies/intro/audios/cineIntro2/intro2audio1.mp3"],
-      // ["audio", "intro2audio2", "/movies/intro/audios/cineIntro2/intro2audio2.mp3"],
-      // ["audio", "intro2audio3", "/movies/intro/audios/cineIntro2/intro2audio3.mp3"],
-      // ["audio", "intro2audio4", "/movies/intro/audios/cineIntro2/intro2audio4.mp3"],
-      // ["audio", "intro2audio5", "/movies/intro/audios/cineIntro2/intro2audio5.mp3"],
-      // ["audio", "intro2audio6", "/movies/intro/audios/cineIntro2/intro2audio6.mp3"],
-      // ["audio", "intro2audio7", "/movies/intro/audios/cineIntro2/intro2audio7.mp3"],
-      // ["audio", "intro6audio1", "/movies/intro/audios/cineIntro6/intro6audio1.mp3"],
-      // ["audio", "intro7audio1", "/movies/intro/audios/cineIntro7/intro7audio1.mp3"],
-      // ["audio", "introSoundEffect1", "/movies/intro/soundEffects/Intro/00_14.19.mp3"],
-      // ["audio", "introSoundEffect2", "/movies/intro/soundEffects/Intro/00_15.18.mp3"],
-      // ["audio", "introSoundEffect3", "/movies/intro/soundEffects/Intro/14.17_17.25.mp3"],
-      // ["audio", "introSoundEffect4", "/movies/intro/soundEffects/Intro/15.15_55.mp3"],
-      // ["audio", "introSoundEffect5", "/movies/intro/soundEffects/Intro/15.18_102.10.mp3"],
-      // ["audio", "introSoundEffect6", "/movies/intro/soundEffects/Intro/23.29_41.05.mp3"],
-      // ["audio", "introSoundEffect7", "/movies/intro/soundEffects/Intro/41.07_49.01.mp3"],
-      // ["audio", "introSoundEffect8", "/movies/intro/soundEffects/Intro/55.00_101.02.mp3"],
-      // ["audio", "introSoundEffect9", "/movies/intro/soundEffects/Intro/101.02_120.17.mp3"],
-      // CINEMATICA 1 
+      ["image", "startButton", "/movies/startButton.png"],
+      ["image", "backgroundStarsMovie", "/movies/intro/scene1/fondo1.png"],
+      ["image", "backgronudClouds", "/movies/intro/scene1/fondo2.png"],
+      ["image", "backgroundGlow", "/movies/intro/scene1/fondo3.png"],
+      ["image", "planet", "/movies/intro/scene1/planeta.png"],
+      ["image", "darkness", "/movies/intro/scene1/viñeta.png"],
+      ["image", "shipOn", "/movies/intro/scene1/naveOn.png"],
+      ["image", "shipOff", "/movies/intro/scene1/naveOff.png"],
+      ["image", "naveZoom", "/movies/intro/scene1/NaveAstro.png"],
+      ["image", "naveZoomOn", "/movies/intro/scene1/NaveAstroLuces.png"],
+      ["image", "fondo1", "/movies/intro/scene2/FondoCapa1.png"],
+      ["image", "fondo2", "/movies/intro/scene2/FondoCapa2.png"],
+      ["image", "fondo3", "/movies/intro/scene2/FondoCapa3.png"],
+      ["image", "planetScene2", "/movies/intro/scene2/planeta.png"],
+      ["image", "part1SetUp", "/movies/intro/scene2/part1SetUp.png"],
+      ["image", "part2SetUp", "/movies/intro/scene2/part2SetUp.png"],
+      ["image", "nave2C", "/movies/intro/scene2/nave2C.png"],
+      ["image", "backgroundPanel", "/movies/intro/scene2/background.png"],
+      ["image", "radarCross", "/movies/intro/scene2/radar/Cruz.png"],
+      ["image", "leftScreen", "/movies/intro/scene2/leftScreen.png"],
+      ["image", "rightScreen", "/movies/intro/scene2/rightScreen.png"],
+      [
+        "image",
+        "arrowEmpty-red",
+        "/movies/intro/scene2/radar/arrowEmpty-red.png",
+      ],
+      [
+        "image",
+        "arrowFull-red",
+        "/movies/intro/scene2/radar/arrowFull-red.png",
+      ],
+      ["image", "arrowEmpty", "/movies/intro/scene2/radar/arrowEmpty.png"],
+      ["image", "arrowFull", "/movies/intro/scene2/radar/arrowFull.png"],
+      ["image", "radarInnerCircle1", "/movies/intro/scene2/radar/inner.png"],
+      ["image", "radarInnerCircle2", "/movies/intro/scene2/radar/middle.png"],
+      [
+        "image",
+        "radarInnerCircle2B",
+        "/movies/intro/scene2/radar/middlePointed.png",
+      ],
+      ["image", "radarInnerCircle3", "/movies/intro/scene2/radar/outer.png"],
+      ["image", "radarSearcher", "/movies/intro/scene2/radar/searcher.png"],
+      ["image", "planetOnRadar", "/movies/intro/scene2/radar/Planetita.png"],
+      [
+        "image",
+        "planetOnRadar-red",
+        "/movies/intro/scene2/radar/Planetita-red.png",
+      ],
+      ["image", "titleTopLeft", "/movies/intro/scene2/text/titleTopLeft.png"],
+      ["image", "titleTopRight", "/movies/intro/scene2/text/titleTopRight.png"],
+      [
+        "image",
+        "titleBottomLeft",
+        "/movies/intro/scene2/text/titleBottomLeft.png",
+      ],
+      [
+        "image",
+        "titleBottomRight",
+        "/movies/intro/scene2/text/titleBottomRight.png",
+      ],
+      [
+        "image",
+        "textSelectorFull",
+        "/movies/intro/scene2/elementsScreen/labelFull.png",
+      ],
+      [
+        "image",
+        "textSelectorEmpty",
+        "/movies/intro/scene2/elementsScreen/labelEmpty.png",
+      ],
+      [
+        "image",
+        "subTextTopLeft",
+        "/movies/intro/scene2/text/subTextTopLeft.png",
+      ],
+      [
+        "image",
+        "subTextTopLeft2",
+        "/movies/intro/scene2/text/subTextTopLeft2.png",
+      ],
+      [
+        "image",
+        "subTextTopRight",
+        "/movies/intro/scene2/text/subTextTopLeft.png",
+      ],
+      [
+        "image",
+        "subTextBottomRight",
+        "/movies/intro/scene2/text/subTextBottomRight.png",
+      ],
+      [
+        "image",
+        "subTextBottomLeft",
+        "/movies/intro/scene2/text/subTextBottomLeft.png",
+      ],
+      ["image", "barFull", "/movies/intro/scene2/elementsScreen/fullBar.png"],
+      ["image", "barEmpty", "/movies/intro/scene2/elementsScreen/emptyBar.png"],
+      ["image", "circle1", "/movies/intro/scene2/elementsScreen/circle1.png"],
+      ["image", "circle2", "/movies/intro/scene2/elementsScreen/circle2.png"],
+      ["image", "circle3", "/movies/intro/scene2/elementsScreen/circle3.png"],
+      ["image", "danger1", "/movies/intro/scene2/danger1.png"],
+      ["image", "danger2", "/movies/intro/scene2/danger2.png"],
+      ["image", "radarCross-red", "/movies/intro/scene2/radar/Cruz-red.png"],
+      [
+        "image",
+        "radarInnerCircle1-red",
+        "/movies/intro/scene2/radar/inner-red.png",
+      ],
+      [
+        "image",
+        "radarInnerCircle2-red",
+        "/movies/intro/scene2/radar/middle-red.png",
+      ],
+      [
+        "image",
+        "radarInnerCircle3-red",
+        "/movies/intro/scene2/radar/outer-red.png",
+      ],
+      [
+        "image",
+        "radarSearcher-red",
+        "/movies/intro/scene2/radar/searcher-red.png",
+      ],
+      [
+        "image",
+        "planetOnRadar-red",
+        "/movies/intro/scene2/radar/Planetita-red.png",
+      ],
+      [
+        "image",
+        "titleTopLeft-red",
+        "/movies/intro/scene2/text/titleTopLeft-red.png",
+      ],
+      [
+        "image",
+        "titleTopRight-red",
+        "/movies/intro/scene2/text/titleTopRight-red.png",
+      ],
+      [
+        "image",
+        "titleBottomLeft-red",
+        "/movies/intro/scene2/text/titleBottomLeft-red.png",
+      ],
+      [
+        "image",
+        "titleBottomRight-red",
+        "/movies/intro/scene2/text/titleBottomRight-red.png",
+      ],
+      [
+        "image",
+        "textSelectorFull-red",
+        "/movies/intro/scene2/elementsScreen/labelFull-red.png",
+      ],
+      [
+        "image",
+        "textSelectorEmpty-red",
+        "/movies/intro/scene2/elementsScreen/labelEmpty-red.png",
+      ],
+      [
+        "image",
+        "subTextTopLeft-red",
+        "/movies/intro/scene2/text/subTextTopLeft-red.png",
+      ],
+      [
+        "image",
+        "subTextTopLeft2-red",
+        "/movies/intro/scene2/text/subTextTopLeft2-red.png",
+      ],
+      [
+        "image",
+        "subTextBottomRight-red",
+        "/movies/intro/scene2/text/subTextBottomRight-red.png",
+      ],
+      [
+        "image",
+        "subTextBottomLeft-red",
+        "/movies/intro/scene2/text/subTextBottomLeft-red.png",
+      ],
+      [
+        "image",
+        "barFull-red",
+        "/movies/intro/scene2/elementsScreen/fullBar-red.png",
+      ],
+      [
+        "image",
+        "barEmpty-red",
+        "/movies/intro/scene2/elementsScreen/emptyBar-red.png",
+      ],
+      [
+        "image",
+        "circle1-red",
+        "/movies/intro/scene2/elementsScreen/circle1-red.png",
+      ],
+      [
+        "image",
+        "circle2-red",
+        "/movies/intro/scene2/elementsScreen/circle2-red.png",
+      ],
+      [
+        "image",
+        "circle3-red",
+        "/movies/intro/scene2/elementsScreen/circle3-red.png",
+      ],
+      ["image", "danger1-red", "/movies/intro/scene2/danger1-red.png"],
+      ["image", "danger2-red", "/movies/intro/scene2/danger2-red.png"],
+      ["image", "NubePolvo1", "/movies/intro/scene5/NubePolvo1.png"],
+      ["image", "NubePolvo2", "/movies/intro/scene5/NubePolvo2.png"],
+      ["image", "NubePolvo3", "/movies/intro/scene5/NubePolvo3.png"],
+      ["image", "NubePolvo4", "/movies/intro/scene5/NubePolvo4.png"],
+      ["image", "NubePolvo5", "/movies/intro/scene5/NubePolvo5.png"],
+      ["image", "NaveAbierta", "/movies/intro/scene5/NaveaterrizaOFF.png"],
+      ["image", "NaveAbiertaLuces", "/movies/intro/scene5/NaveaterrizaON.png"],
+      ["image", "NaveAbiertaB", "/movies/intro/scene5/NaveAterrizaONB.png"],
+      [
+        "image",
+        "NaveAbiertaLucesB",
+        "/movies/intro/scene5/NaveAterrizaOFFB.png",
+      ],
+      [
+        "image",
+        "OpacidadDetrasDeNave",
+        "/movies/intro/scene5/OpacidadDetrasDeNave.png",
+      ],
+      [
+        "image",
+        "PiedrasDelanteras",
+        "/movies/intro/scene5/PiedrasDelanteras.png",
+      ],
+      ["image", "PiedrasNave", "/movies/intro/scene5/PiedrasNave.png"],
+      [
+        "image",
+        "SuperficiePlaneta",
+        "/movies/intro/scene5/SuperficiePlaneta.png",
+      ],
+      ["image", "NubePrimerPlano", "/movies/intro/scene5/NubePrimerPlano.png"],
+      ["image", "BrazoDelantero", "/movies/intro/scene6/BrazoDelatero.png"],
+      ["image", "Cuerpo", "/movies/intro/scene6/Cuerpo.png"],
+      ["image", "PiernaDelantera", "/movies/intro/scene6/PiernaDelantera.png"],
+      ["image", "PiernaTrasera", "/movies/intro/scene6/PiernaTrasera.png"],
+      ["image", "Piso", "/movies/intro/scene6/Piso.png"],
+      ["image", "PisoScene6", "/movies/intro/scene7/Piso.png"],
+      [
+        "image",
+        "AstroFrenteCorte",
+        "/movies/intro/scene7/AStroFrenteCorte.png",
+      ],
+      [
+        "image",
+        "AstroPerfilCorte",
+        "/movies/intro/scene7/AstroPerfilCorte.png",
+      ],
+      ["image", "VidrioVisor", "/movies/intro/scene7/VidrioVisor.png"],
+      ["image", "VidrioVisorView", "/movies/intro/scene7/VidrioVisorView.png"],
+      ["image", "meteoritoTest", "/movies/intro/scene7/meteoritoTest.png"],
+      ["image", "estrellas", "/movies/intro/scene5/estrellas.png"],
+      ["image", "fondoRed", "/movies/intro/scene5/fondoRed.png"],
+      ["image", "nubes", "/movies/intro/scene5/nubes.png"],
+      ["image", "superficie", "/movies/intro/scene5/superficie.png"],
+      ["image", "mountains", "/movies/intro/scene8/Montañas.png"],
+      ["image", "Nube1", "/movies/intro/scene8/Nube1.png"],
+      ["image", "Nube2", "/movies/intro/scene8/Nube2.png"],
+      ["image", "Nube3", "/movies/intro/scene8/Nube3.png"],
+      ["image", "PisoNivel8", "/movies/intro/scene8/Piso.png"],
+      ["image", "Piedra1", "/movies/intro/scene8/Piedra1.png"],
+      ["image", "piedrita", "/movies/intro/scene8/piedra.png"],
+      ["image", "Piedra2", "/movies/intro/scene8/Piedra2.png"],
+      ["image", "Piedra3", "/movies/intro/scene8/Piedra3.png"],
+      ["image", "Piedra4", "/movies/intro/scene8/Piedra4.png"],
+      ["image", "Piedra5", "/movies/intro/scene8/Piedra5.png"],
+      [
+        "audio",
+        "key01",
+        "/sounds/bs15.mp3",
+      ],
+      [
+        "audio",
+        "key02",
+        "/sounds/bs13.mp3",
+      ],
+      [
+        "audio",
+        "intro1audio2",
+        "/movies/intro/audios/cineIntro1/intro1audio2.mp3",
+      ],
+      [
+        "audio",
+        "intro2audio1",
+        "/movies/intro/audios/cineIntro2/intro2audio1.mp3",
+      ],
+      [
+        "audio",
+        "intro2audio2",
+        "/movies/intro/audios/cineIntro2/intro2audio2.mp3",
+      ],
+      [
+        "audio",
+        "intro2audio3",
+        "/movies/intro/audios/cineIntro2/intro2audio3.mp3",
+      ],
+      [
+        "audio",
+        "intro2audio4",
+        "/movies/intro/audios/cineIntro2/intro2audio4.mp3",
+      ],
+      [
+        "audio",
+        "intro2audio5",
+        "/movies/intro/audios/cineIntro2/intro2audio5.mp3",
+      ],
+      [
+        "audio",
+        "intro2audio6",
+        "/movies/intro/audios/cineIntro2/intro2audio6.mp3",
+      ],
+      [
+        "audio",
+        "intro2audio7",
+        "/movies/intro/audios/cineIntro2/intro2audio7.mp3",
+      ],
+      [
+        "audio",
+        "intro6audio1",
+        "/movies/intro/audios/cineIntro6/intro6audio1.mp3",
+      ],
+      [
+        "audio",
+        "intro7audio1",
+        "/movies/intro/audios/cineIntro7/intro7audio1.mp3",
+      ],
+      [
+        "audio",
+        "introSoundEffect1",
+        "/movies/intro/soundEffects/Intro/00_14.19.mp3",
+      ],
+      [
+        "audio",
+        "introSoundEffect2",
+        "/movies/intro/soundEffects/Intro/00_15.18.mp3",
+      ],
+      [
+        "audio",
+        "introSoundEffect3",
+        "/movies/intro/soundEffects/Intro/14.17_17.25.mp3",
+      ],
+      [
+        "audio",
+        "introSoundEffect4",
+        "/movies/intro/soundEffects/Intro/15.15_55.mp3",
+      ],
+      [
+        "audio",
+        "introSoundEffect5",
+        "/movies/intro/soundEffects/Intro/15.18_102.10.mp3",
+      ],
+      [
+        "audio",
+        "introSoundEffect6",
+        "/movies/intro/soundEffects/Intro/23.29_41.05.mp3",
+      ],
+      [
+        "audio",
+        "introSoundEffect7",
+        "/movies/intro/soundEffects/Intro/41.07_49.01.mp3",
+      ],
+      [
+        "audio",
+        "introSoundEffect8",
+        "/movies/intro/soundEffects/Intro/55.00_101.02.mp3",
+      ],
+      [
+        "audio",
+        "introSoundEffect9",
+        "/movies/intro/soundEffects/Intro/101.02_120.17.mp3",
+      ],
+      // CINEMATICA 1
       // SCENE 1
       ["image", "backgroundCine1", "/movies/cinemato1/scene1/back.png"],
       ["image", "starsBackground", "/movies/cinemato1/scene1/estrellas.png"],
@@ -460,14 +736,34 @@ const loadAssets = {
       ["image", "nubeBg3", "/movies/cinemato1/scene1/nube3.png"],
       ["image", "nubeCielo", "/movies/cinemato1/scene1/nubeCielo.png"],
       // SCENE 2
-      ["image", "aroCondensadorBottom", "/movies/cinemato1/scene2/aroCondensadorBottom.png"],
-      ["image", "aroCondensadorTop", "/movies/cinemato1/scene2/aroCondensadorTop.png"],
-      ["image", "brilloCondensador", "/movies/cinemato1/scene2/brilloCondensador.png"],
+      [
+        "image",
+        "aroCondensadorBottom",
+        "/movies/cinemato1/scene2/aroCondensadorBottom.png",
+      ],
+      [
+        "image",
+        "aroCondensadorTop",
+        "/movies/cinemato1/scene2/aroCondensadorTop.png",
+      ],
+      [
+        "image",
+        "brilloCondensador",
+        "/movies/cinemato1/scene2/brilloCondensador.png",
+      ],
       ["image", "condensador", "/movies/cinemato1/scene2/condensador.png"],
-      ["image", "CristalCondensador", "/movies/cinemato1/scene2/CristalCondensador.png"],
+      [
+        "image",
+        "CristalCondensador",
+        "/movies/cinemato1/scene2/CristalCondensador.png",
+      ],
       // SCENE 3
       ["image", "aspasVent", "/movies/cinemato1/scene3/aspasVent.png"],
-      ["image", "backgroundComerdor", "/movies/cinemato1/scene3/backgroundComerdor.png"],
+      [
+        "image",
+        "backgroundComerdor",
+        "/movies/cinemato1/scene3/backgroundComerdor.png",
+      ],
       ["image", "brazoDer", "/movies/cinemato1/scene3/brazoDer.png"],
       ["image", "brazoIzq", "/movies/cinemato1/scene3/brazoIzq.png"],
       ["image", "noodleCup", "/movies/cinemato1/scene3/noodleCup.png"],
@@ -481,14 +777,30 @@ const loadAssets = {
       ["image", "cinturonIzq", "/movies/cinemato1/scene5/cinturonIzq.png"],
       ["image", "sillon", "/movies/cinemato1/scene5/sillon.png"],
       // SCENE 7
-      ["image", "backgroundAcelerar", "/movies/cinemato1/scene7/backgroundAcelerar.png"],
-      ["image", "barraColorEmpty", "/movies/cinemato1/scene7/barraColorEmpty.png"],
-      ["image", "barraColorFull", "/movies/cinemato1/scene7/barraColorFull.png"],
+      [
+        "image",
+        "backgroundAcelerar",
+        "/movies/cinemato1/scene7/backgroundAcelerar.png",
+      ],
+      [
+        "image",
+        "barraColorEmpty",
+        "/movies/cinemato1/scene7/barraColorEmpty.png",
+      ],
+      [
+        "image",
+        "barraColorFull",
+        "/movies/cinemato1/scene7/barraColorFull.png",
+      ],
       ["image", "brazoAcelerar", "/movies/cinemato1/scene7/brazoAcelerar.png"],
-      ["image", "lucesPrendidasAcelerar", "/movies/cinemato1/scene7/lucesPrendidasAcelerar.png"],
+      [
+        "image",
+        "lucesPrendidasAcelerar",
+        "/movies/cinemato1/scene7/lucesPrendidasAcelerar.png",
+      ],
       ["image", "palanca", "/movies/cinemato1/scene7/palanca.png"],
-    ]
-  }
+    ],
+  },
 };
 
 // Scene in class
@@ -497,12 +809,11 @@ class AssetsLoader {
   finished: boolean = false;
   constructor(scene: MultiScene) {
     // super({ key: "SceneLoader" });
-    this.scene = scene
+    this.scene = scene;
   }
 
   runPreload(this: AssetsLoader) {
     if (!this.finished) {
-
       this.scene.cameras.main.setBackgroundColor(
         Phaser.Display.Color.GetColor(30, 30, 30)
       );
@@ -552,7 +863,12 @@ class AssetsLoader {
         percentText.setText(Math.floor(Number(value * 100)) + "%");
         progressBar.clear();
         progressBar.fillStyle(0xff0000, 1);
-        progressBar.fillRect(width / 2 - 160, height / 2 + 100, 300 * value, 30);
+        progressBar.fillRect(
+          width / 2 - 160,
+          height / 2 + 100,
+          300 * value,
+          30
+        );
       });
 
       this.scene.load.on("fileprogress", function (file: any) {
@@ -560,17 +876,35 @@ class AssetsLoader {
       });
 
       this.scene.load.once("complete", function (this: AssetsLoader) {
+        let sceneToPlay;
+
         progressBar.destroy();
         progressBox.destroy();
         loadingText.destroy();
         percentText.destroy();
         assetText.destroy();
-        this.finished = true
+        this.finished = true;
         // this.scene.scene.restart({text:"menu"})
         // this.scene.makeTransition("startMovie", undefined);
-        this.scene.makeTransition("CinematographyMod", { keyname: "cine_movie_7" });
+        sceneToPlay = () =>
+          this.scene.makeTransition("CinematographyMod", {
+            keyname: "cine_intro_1",
+          });
         // this.scene.makeTransition("Game", { level: 0, lifes: 3 });
+
+        // get center of the screen
+        const center = {
+          x: this.scene.cameras.main.width / 2,
+          y: this.scene.cameras.main.height / 2,
+        }
+        
+        const button = this.scene.add
+          .image(center.x, center.y, "fireball")
+          .setScale(0.3)
+          .setInteractive();
+        if (sceneToPlay) button.on("pointerdown", sceneToPlay);
       });
+
       const scenesTitles: Array<SceneKeys> = [
         "Menu",
         "Scenes",
@@ -597,12 +931,15 @@ class AssetsLoader {
         });
       }
       /*Load Fonts*/
-      const ArcadeFont = this.scene.add.text(0, 0, ":)", { fontFamily: "Arcade" });
+      const ArcadeFont = this.scene.add.text(0, 0, ":)", {
+        fontFamily: "Arcade",
+      });
+
+      // this.scene.load.start();
     }
   }
 
-  update() {
-  }
+  update() {}
 }
 
 export default AssetsLoader;

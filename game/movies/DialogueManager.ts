@@ -2,9 +2,16 @@ import Phaser from "phaser";
 import TextBox from "../assets/TextBox";
 
 // Scene in class
+
+export type WithTappingConfig = {
+  audios: string[],
+  delay: number,
+  count: number,
+}
 export type DialogConfig = {
   keepAlive: number
   delay: number
+  withTapping?: WithTappingConfig,
   position?: {
     x: number,
     y: number,
@@ -72,10 +79,10 @@ class DialogueManager {
     const temporalText = this.scene.add.text(0, 0, text, {
       fixedWidth: width ? width : this.screenWidth * 0.8,
       fontSize: 20,
-      lineSpacing: 24,
+      lineSpacing: 20,
       padding: {
         x: 20,
-        y: 20
+        y: 22
       },
       color: "black",
       stroke: 'black',
@@ -175,17 +182,38 @@ class DialogueManager {
 
   play() {
     // if dely exist, call delayed
-    this.createContainer(this.texts[this.textCounter], this.config[this.textCounter])
-    if (this.config[this.textCounter] && this.config[this.textCounter].delay) {
+    const texts = this.texts[this.textCounter]
+    const config = this.config[this.textCounter] 
+    this.createContainer(texts, config)
+    if (config && config.delay) {
       setTimeout(() => {
         this.state = "PLAY";
         this.container?.setVisible(true);
-        this.textBuilder(this.texts[this.textCounter], this.timeBetweenLetters);
-      }, this.config[this.textCounter].delay);
+        this.textBuilder(texts, this.timeBetweenLetters);
+        //   this.textBuilder(texts, this.timeBetweenLetters);
+        if(config.withTapping){
+            console.log("1111111111 bb")
+            const { count, delay, audios } = config.withTapping;
+              let left = count || 1;
+              const randomAudio = Math.floor(Math.random() * audios.length);
+              this.playAudio(audios[randomAudio]);
+              left -= 1;
+              const audioInterval = setInterval(() => {
+                left -= 1;
+                if(left <= 0) clearInterval(audioInterval);
+                if(config.withTapping && audios){
+                  const randomAudio = Math.floor(Math.random() * audios.length);
+                  this.playAudio(audios[randomAudio]);
+                }
+              }, delay);
+      
+          }
+      }, config.delay);
     } else {
       this.state = "PLAY";
       this.container?.setVisible(true);
-      this.textBuilder(this.texts[this.textCounter], this.timeBetweenLetters);
+      this.textBuilder(texts, this.timeBetweenLetters);
+        //this.textBuilder(texts, this.timeBetweenLetters);
     }
   }
 
@@ -202,39 +230,58 @@ class DialogueManager {
   continueWithNextText() {
     this.canChangeText = false;
     if (this.textCounterMax) {
+      const texts = this.texts[this.textCounter]
+      const config = this.config[this.textCounter] 
       if (this.textCounter < this.textCounterMax) {
+
         if (
-          this.config[this.textCounter] &&
-          this.config[this.textCounter].delay
+          config &&
+          config.delay
         ) {
           this.destroyContainer()
-          this.createContainer(this.texts[this.textCounter], this.config[this.textCounter])
+          this.createContainer(texts, config)
           // this.continueText?.setVisible(false);
           // hide text container
           this.container?.setVisible(false);
           setTimeout(() => {
             this.container?.setVisible(true);
             this.textDisplayed?.setText("");
-            this.textBuilder(this.texts[this.textCounter], this.timeBetweenLetters);
-          }, this.config[this.textCounter].delay);
+            this.textBuilder(texts, this.timeBetweenLetters);
+            if(config.withTapping){
+              const { count, delay, audios } = config.withTapping;
+                let left = count || 1;
+                const randomAudio = Math.floor(Math.random() * audios.length);
+                this.playAudio(audios[randomAudio]);
+                left -= 1;
+                const audioInterval = setInterval(() => {
+                  left -= 1;
+                  if(left <= 0) clearInterval(audioInterval);
+                  if(config.withTapping && audios){
+                    const randomAudio = Math.floor(Math.random() * audios.length);
+                    this.playAudio(audios[randomAudio]);
+                  }
+                }, delay);
+        
+            }
+          }, config.delay);
         } else {
           this.destroyContainer()
-          this.createContainer(this.texts[this.textCounter], this.config[this.textCounter])
+          this.createContainer(texts, config)
           this.textDisplayed?.setText("");
           // this.continueText?.setVisible(false);
-          this.textBuilder(this.texts[this.textCounter], this.timeBetweenLetters);
+          this.textBuilder(texts, this.timeBetweenLetters);
         }
       } else {
         if (
-          this.config[this.textCounter] &&
-          this.config[this.textCounter].delay
+          config &&
+          config.delay
         ) {
           setTimeout(() => {
             this.stateFunctions.forEach((fn) => {
               fn("FINISHED");
             });
             this.container?.destroy();
-          }, this.config[this.textCounter].delay);
+          }, config.delay);
         } else {
           this.stateFunctions.forEach((fn) => {
             fn("FINISHED");
@@ -299,6 +346,7 @@ class DialogueManager {
         fn("WRITING => '" + text + "'");
       });
     }
+
   }
 
   showText(
@@ -313,7 +361,7 @@ class DialogueManager {
     if (index === 0) this.playAudio(this.audios[this.textCounter]);
     if (index < message.length) {
       const self = this;
-      target.setText(target.text + message[index]);
+      target.setText((target.text + message[index]).toUpperCase());
       setTimeout(() => {
         index++;
         callBack.bind(self)(

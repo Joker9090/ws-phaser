@@ -186,11 +186,21 @@ class cineIntro7 {
       this.dialogue = new DialogueManager(
         this.cine,
         ["Oh Dann, you’d definitely love this..."],
-        ["intro7audio1"],
+        [], // ["intro7audio1"],
         [
           {
             delay: 1000,
+            withTapping: {
+              audios: ["key01", "key02"],
+              count: 16,
+              delay: 180,
+            },
             keepAlive: 1000,
+             position: {
+              x: middlePoint.x - 500,
+              y: (middlePoint.y * 2) - 200,
+              width: 1000
+            }
           },
         ]
       );

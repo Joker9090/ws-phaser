@@ -124,11 +124,21 @@ class cineIntro2 {
         [
           "I hope they've manage to escape in time.",
         ],
-        ["intro2audio2"],
+        [], // ["intro2audio2"],
         [
           {
             delay: 1000,
+            withTapping: {
+              audios: ["key01", "key02"],
+              count: 19,
+              delay: 180,
+            },
             keepAlive: 1000,
+            position: {
+              x: middlePoint.x - 500,
+              y: (middlePoint.y * 2) - 200,
+              width: 1000
+            }
           },
         ],
         60
@@ -192,11 +202,21 @@ class cineIntro2 {
         [
           "I still haven't heard from Dann or the rest of the crew...",
         ],
-        ["intro2audio1"],
+        [], // ["intro2audio1"],
         [
           {
             delay: 500,
+            withTapping: {
+              audios: ["key01", "key02"],
+              count: 19,
+              delay: 180,
+            },
             keepAlive: 1000,
+            position: {
+              x: middlePoint.x - 500,
+              y: (middlePoint.y * 2) - 200,
+              width: 1000
+            }
           },
         ],
         50

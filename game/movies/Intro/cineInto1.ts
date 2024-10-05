@@ -226,11 +226,21 @@ class cineIntro1 {
         [
           "Emergency log number 325...",
         ],
-        ["intro1audio1"],
+        [],//["intro1audio1"],
         [
           {
-            delay: 500,
-            keepAlive: 1000,
+            delay: 100,
+            withTapping: {
+              audios: ["key01", "key02"],
+              count: 15,
+              delay: 180,
+            },
+            keepAlive: 1500,
+            position: {
+              x: middlePoint.x - 300,
+              y: (middlePoint.y * 2) - 200,
+              width: 500
+            }
           },
         ], 
         90
@@ -312,11 +322,21 @@ class cineIntro1 {
         [
           "it's been more than 45 days since the incident...",
         ],
-        ["intro1audio2"],
+        [],//["intro1audio2"],
         [
           {
             delay: 500,
-            keepAlive: 2000,
+            withTapping: {
+              audios: ["key01", "key02"],
+              count: 19,
+              delay: 180,
+            },
+            keepAlive: 1250,
+            position: {
+              x: middlePoint.x - 500,
+              y: (middlePoint.y * 2) - 200,
+              width: 1000
+            }
           },
         ],
         60
@@ -408,6 +428,7 @@ class cineIntro1 {
         );
       })
     );
+
   }
 
   update(this: cineIntro1, time: number, delta: number) {

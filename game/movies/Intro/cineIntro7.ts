@@ -191,15 +191,13 @@ class cineIntro7 {
           {
             delay: 1000,
             withTapping: {
-              audios: ["key01", "key02"],
+              audios: ["key01","key01", "key02"],
               count: 16,
               delay: 180,
             },
             keepAlive: 1000,
              position: {
-              x: middlePoint.x - 500,
-              y: (middlePoint.y * 2) - 200,
-              width: 1000
+              width: 650
             }
           },
         ]

@@ -13,9 +13,9 @@ export type DialogConfig = {
   delay: number
   withTapping?: WithTappingConfig,
   position?: {
-    x: number,
-    y: number,
-    width: number
+    x?: number,
+    y?: number,
+    width?: number
   }
 };
 class DialogueManager {
@@ -81,7 +81,7 @@ class DialogueManager {
       fontSize: 20,
       lineSpacing: 20,
       padding: {
-        x: 20,
+        x: 0,
         y: 22
       },
       color: "black",
@@ -99,17 +99,14 @@ class DialogueManager {
     this.container = this.scene.add
       .container()
 
-    this.container.setPosition(
-      config?.position?.x ? config?.position?.x : (this.screenWidth * 0.2) / 2,
-      config?.position?.y ? config?.position?.y : this.screenHeigth * 0.75
-    );
+    
 
-    this.textDisplayed = this.scene.add.text(40, 40, "", {
+    this.textDisplayed = this.scene.add.text(0, 8, "", {
       fontSize: 20,
       lineSpacing: 15,
       padding: {
-        x: 20,
-        y: 10
+        x: 0,
+        y: 14 
       },
       color: "#34cceb",
       stroke: "#34cceb",
@@ -129,24 +126,59 @@ class DialogueManager {
     //   this.textDisplayed.width,
     //   this.textDisplayed.height)
 
+    const XcenterOfText = ((this.scene.cameras.main.width / 2) - this.textDisplayed.width / 2) 
+
+    if(config?.position && config?.position.x && config?.position.y) {
+
+      this.container.setPosition(
+        XcenterOfText + config?.position?.x ? config?.position?.x : 0,
+        (this.scene.cameras.main.height / 2) + config?.position?.y ? config?.position?.y : 0
+      ).setDepth(99)
+    } else {
+      this.container.setPosition(
+        XcenterOfText,
+        (this.scene.cameras.main.height) - (this.calculateHeigth(text, undefined) + 50)
+      ).setDepth(99)
+    }
+  
+
+    // const addSpriteMiddlePoint = (sprite: Phaser.GameObjects.Sprite) => {
+    //   sprite.setPosition(
+    //     this.scene.cameras.main.width / 2,
+    //     this.scene.cameras.main.height / 2
+    //   )
+    // }
+
+    // const sprite = this.scene.add.sprite(0, 0, "textBox").setOrigin(0.5,0.5)
+    // addSpriteMiddlePoint(sprite)
 
     const graphics = this.scene.add.graphics()
     graphics.fillStyle(0x192224, 0.6);
     graphics.lineStyle(5, 0x34cceb, 0.6)
     graphics.strokeRoundedRect(
       this.textDisplayed.x,
-      this.textDisplayed.y - 10,
+      this.textDisplayed.y - 6,
       this.textDisplayed.width,
       this.textDisplayed.height,
       this.borderRounder
     )
     graphics.fillRoundedRect(
       this.textDisplayed.x,
-      this.textDisplayed.y - 10,
+      this.textDisplayed.y - 6,
       this.textDisplayed.width,
       this.textDisplayed.height,
       this.borderRounder
-    );
+    )
+    graphics.setAlpha(0)
+    //tween to show the text
+    this.scene.tweens.add({
+      targets: graphics,
+      alpha: 1,
+      duration: 350,
+      ease: 'Linear',
+      repeat: 0,
+      yoyo: false
+    })
 
     // Use the rounded rectangle as a mask for the text
 
@@ -154,13 +186,13 @@ class DialogueManager {
       .add([graphics, this.textDisplayed])
       .setVisible(false);
 
-    if (this.gameObjectsScaler) {
-      this.container.setScale(
-        this.gameObjectsScaler.x < this.gameObjectsScaler.y
-          ? this.gameObjectsScaler.y
-          : this.gameObjectsScaler.x
-      );
-    }
+    // if (this.gameObjectsScaler) {
+    //   this.container.setScale(
+    //     this.gameObjectsScaler.x < this.gameObjectsScaler.y
+    //       ? this.gameObjectsScaler.y
+    //       : this.gameObjectsScaler.x
+    //   );
+    // }
 
     this.scene.cameras.main.ignore(this.container);
     
@@ -192,7 +224,6 @@ class DialogueManager {
         this.textBuilder(texts, this.timeBetweenLetters);
         //   this.textBuilder(texts, this.timeBetweenLetters);
         if(config.withTapping){
-            console.log("1111111111 bb")
             const { count, delay, audios } = config.withTapping;
               let left = count || 1;
               const randomAudio = Math.floor(Math.random() * audios.length);
@@ -203,7 +234,7 @@ class DialogueManager {
                 if(left <= 0) clearInterval(audioInterval);
                 if(config.withTapping && audios){
                   const randomAudio = Math.floor(Math.random() * audios.length);
-                  this.playAudio(audios[randomAudio]);
+                  this.playAudio(audios[randomAudio], 0.55);
                 }
               }, delay);
       
@@ -258,7 +289,7 @@ class DialogueManager {
                   if(left <= 0) clearInterval(audioInterval);
                   if(config.withTapping && audios){
                     const randomAudio = Math.floor(Math.random() * audios.length);
-                    this.playAudio(audios[randomAudio]);
+                    this.playAudio(audios[randomAudio], 0.55);
                   }
                 }, delay);
         
@@ -385,12 +416,12 @@ class DialogueManager {
     }
   }
 
-  playAudio(name?: string) {
+  playAudio(name?: string, customVolume: number = 1) {
     if (name){
       if (this.activeAudio) {
         this.activeAudio.stop();
       }
-      this.activeAudio = this.scene.sound.add(name).setVolume(1);
+      this.activeAudio = this.scene.sound.add(name).setVolume(customVolume);
       this.activeAudio.play();
     }
   }

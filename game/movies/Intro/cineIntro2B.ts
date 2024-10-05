@@ -278,7 +278,7 @@ class cineIntro2B {
       .setOrigin(0.5)
       .setFlipX(true);
     this.backgroundPanel = this.cine.add
-      .image(0, 70, "backgroundPanel")
+      .image(-10, 70, "backgroundPanel")
       .setOrigin(0.5);
     let marker = 0;
     setInterval(() => {
@@ -461,42 +461,36 @@ class cineIntro2B {
           {
             delay: 1000,
             withTapping: {
-              audios: ["key01", "key02"],
+              audios: ["key01","key01", "key02"],
               count: 8,
               delay: 180,
             },
             keepAlive: 500,
             position: {
-              x: middlePoint.x - 300,
-              y: (middlePoint.y * 2) - 200,
-              width: 650
+              width: 500
             }
           },
           {
             delay: 500,
             withTapping: {
-              audios: ["key01", "key02"],
+              audios: ["key01","key01", "key02"],
               count: 14,
               delay: 180,
             },
             keepAlive: 500,
             position: {
-              x: middlePoint.x - 500,
-              y: (middlePoint.y * 2) - 200,
-              width: 1000
+              width: 870
             }
           },
           {
             delay: 1000,
             withTapping: {
-              audios: ["key01", "key02"],
+              audios: ["key01","key01", "key02"],
               count: 37,
               delay: 180,
             },
             keepAlive: 1000,
             position: {
-              x: middlePoint.x - 500,
-              y: (middlePoint.y * 2) - 200,
               width: 1000
             }
           },
@@ -734,10 +728,13 @@ class cineIntro2B {
           audio.stop()
 
           setTimeout(() => {
+            audio2.setVolume(0.25).play() 
+          }, 1175);
+
+          setTimeout(() => {
             t1.stop();
             t2.stop();
             this.planetOnRadar?.setVisible(true);
-            audio2.play() //bartex acá podes separarlo en 2 setTimeouts si quieren que el sonido arranque un toque antes que el radar encontrando el planeta
           }, 3600);
           this.ticker.deleteJob(job.id);
         }
@@ -760,7 +757,7 @@ class cineIntro2B {
           {
             delay: 4000,
              withTapping: {
-              audios: ["key01", "key02"],
+              audios: ["key01","key01", "key02"],
               count: 33,
               delay: 180,
             },

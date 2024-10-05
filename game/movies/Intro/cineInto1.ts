@@ -231,14 +231,12 @@ class cineIntro1 {
           {
             delay: 100,
             withTapping: {
-              audios: ["key01", "key02"],
+              audios: ["key01", "key01", "key02"],
               count: 15,
               delay: 180,
             },
             keepAlive: 1500,
             position: {
-              x: middlePoint.x - 300,
-              y: (middlePoint.y * 2) - 200,
               width: 500
             }
           },
@@ -327,14 +325,12 @@ class cineIntro1 {
           {
             delay: 500,
             withTapping: {
-              audios: ["key01", "key02"],
+              audios: ["key01","key01", "key02"],
               count: 19,
               delay: 180,
             },
             keepAlive: 1250,
             position: {
-              x: middlePoint.x - 500,
-              y: (middlePoint.y * 2) - 200,
               width: 1000
             }
           },

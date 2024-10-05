@@ -452,9 +452,9 @@ class cineIntro2B {
       this.dialogue = new DialogueManager(
         this.cine,
         [
-          "Supplies are running out…",
-          "And fuel levels aren't very encouraging either...",
-          "I've decided to shut down all systems except life support and navigation to buy myself some time",
+          "Fuel is running out…",
+          // "And fuel levels aren't very encouraging either...",
+          "I've decided to shut down all systems except life support and navigation",
         ],
         [], // ["intro2audio3", "intro2audio4", "intro2audio5"],
         [
@@ -470,26 +470,26 @@ class cineIntro2B {
               width: 500
             }
           },
-          {
-            delay: 500,
-            withTapping: {
-              audios: ["key01","key01", "key02"],
-              count: 14,
-              delay: 180,
-            },
-            keepAlive: 500,
-            position: {
-              width: 870
-            }
-          },
+          // {
+          //   delay: 500,
+          //   withTapping: {
+          //     audios: ["key01","key01", "key02"],
+          //     count: 14,
+          //     delay: 180,
+          //   },
+          //   keepAlive: 500,
+          //   position: {
+          //     width: 870
+          //   }
+          // },
           {
             delay: 1000,
             withTapping: {
               audios: ["key01","key01", "key02"],
-              count: 37,
+              count: 27,
               delay: 180,
             },
-            keepAlive: 1000,
+            keepAlive: 800,
             position: {
               width: 1000
             }
@@ -750,7 +750,7 @@ class cineIntro2B {
       this.dialogue = new DialogueManager(
         this.cine,
         [
-          "The radar has detected a planet in the vicinity that seems to have a possible energy source",
+          "The radar has detected a planet that seems to have a possible energy source",
         ],
         [], // ["intro2audio6"],
         [
@@ -758,13 +758,11 @@ class cineIntro2B {
             delay: 4000,
              withTapping: {
               audios: ["key01","key01", "key02"],
-              count: 33,
+              count: 30,
               delay: 180,
             },
-            keepAlive: 1000,
+            keepAlive: 800,
             position: {
-              x: middlePoint.x - 500,
-              y: (middlePoint.y * 2) - 200,
               width: 1000
             }
           },

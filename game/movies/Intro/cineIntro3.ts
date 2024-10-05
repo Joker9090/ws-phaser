@@ -49,7 +49,7 @@ class cineIntro3 {
           setTimeout(() => {
             const audio2 = this.cine.sound.add("introSoundEffect9").setVolume(0.55)
             audio2.play()
-          },4500)
+          },4000)
         },
         false,
         6000,

@@ -480,6 +480,12 @@ const loadAssets = {
       ["image", "cinturonDer", "/movies/cinemato1/scene5/cinturonDer.png"],
       ["image", "cinturonIzq", "/movies/cinemato1/scene5/cinturonIzq.png"],
       ["image", "sillon", "/movies/cinemato1/scene5/sillon.png"],
+      // SCENE 6
+      ["image", "backgroundPressButton", "/movies/cinemato1/scene6/backgroundPressButton.png"],
+      ["image", "backgroundButtonsOn", "/movies/cinemato1/scene6/backgroundButtonsOn.png"],
+      ["image", "brazoPressButton", "/movies/cinemato1/scene6/brazoPressButton.png"],
+      ["image", "pinkButton", "/movies/cinemato1/scene6/pinkButton.png"],
+      ["image", "violetButton", "/movies/cinemato1/scene6/violetButton.png"],
       // SCENE 7
       ["image", "backgroundAcelerar", "/movies/cinemato1/scene7/backgroundAcelerar.png"],
       ["image", "barraColorEmpty", "/movies/cinemato1/scene7/barraColorEmpty.png"],
@@ -487,6 +493,12 @@ const loadAssets = {
       ["image", "brazoAcelerar", "/movies/cinemato1/scene7/brazoAcelerar.png"],
       ["image", "lucesPrendidasAcelerar", "/movies/cinemato1/scene7/lucesPrendidasAcelerar.png"],
       ["image", "palanca", "/movies/cinemato1/scene7/palanca.png"],
+      // SCENE 9
+      ["image", "planetEarth", "/movies/cinemato1/scene9/Planeta.png"],
+      ["image", "shipCine2Scene9", "/movies/cinemato1/scene9/nave.png"],
+      ["image", "stoneEarth1", "/movies/cinemato1/scene9/piedra1.png"],
+      ["image", "stoneEarth2", "/movies/cinemato1/scene9/piedra3.png"],
+      ["image", "stoneEarth3", "/movies/cinemato1/scene9/piedra4-1.png"],
     ]
   }
 };
@@ -568,7 +580,7 @@ class AssetsLoader {
         this.finished = true
         // this.scene.scene.restart({text:"menu"})
         // this.scene.makeTransition("startMovie", undefined);
-        this.scene.makeTransition("CinematographyMod", { keyname: "cine_movie_7" });
+        this.scene.makeTransition("CinematographyMod", { keyname: "cine_movie_1" });
         // this.scene.makeTransition("Game", { level: 0, lifes: 3 });
       });
       const scenesTitles: Array<SceneKeys> = [

@@ -3,13 +3,13 @@ import Ticker, { TickerJob } from "../Ticker";
 import DialogueManager from "../DialogueManager";
 import CinematographyModular from "@/game/movies/Cinematography-modular";
 
-class cineMovie6 {
+class cineMovie9 {
   ticker: Ticker;
   cine: CinematographyModular;
   nextCine: boolean = false;
   dialogue?: DialogueManager;
   //assets
-  backgroundPressButton?: Phaser.GameObjects.Image;
+  backgroundStars?: Phaser.GameObjects.Image;
   backgroundButtonsOn?: Phaser.GameObjects.Image;
   brazoPressButton?: Phaser.GameObjects.Image;
   pinkButton?: Phaser.GameObjects.Image;
@@ -27,7 +27,7 @@ class cineMovie6 {
     // music
   }
 
-  playCine(this: cineMovie6) {
+  playCine(this: cineMovie9) {
     this.cine.time.addEvent({
       delay: this.ticker.ms,
       callback: this.ticker.runTicker,
@@ -46,9 +46,9 @@ class cineMovie6 {
       y: window.innerHeight / 927,
     };
 
-    this.backgroundPressButton = this.cine.add
-      .image(0, 0, "backgroundPressButton")
-      .setOrigin(0.5);
+    // this.backgroundPressButton = this.cine.add
+    //   .image(0, 0, "backgroundPressButton")
+    //   .setOrigin(0.5);
     this.backgroundButtonsOn = this.cine.add
       .image(0, 0, "backgroundButtonsOn")
       .setOrigin(0.5);
@@ -75,7 +75,7 @@ class cineMovie6 {
     console.log(this.cine);
 
     const gameObjects = [
-      this.backgroundPressButton,
+    //   this.backgroundPressButton,
       this.backgroundButtonsOn,
       this.violetButton,
       // this.pinkButton,
@@ -188,10 +188,10 @@ class cineMovie6 {
     );
   }
 
-  update(this: cineMovie6, time: number, delta: number) {
+  update(this: cineMovie9, time: number, delta: number) {
     if (this.dialogue) this.dialogue.update();
-    if (this.nextCine) this.cine.scene.restart({ keyname: "cine_movie_7" });
+    if (this.nextCine) this.cine.scene.restart({ keyname: "cine_movie_9" });
   }
 }
 
-export default cineMovie6;
+export default cineMovie9;

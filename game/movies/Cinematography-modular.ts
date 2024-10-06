@@ -21,7 +21,7 @@ import cineMovie5 from "./Cinemato1/cineMovie5";
 import cineMovie6 from "./Cinemato1/cineMovie6";
 import cineMovie7 from "./Cinemato1/cineMovie7";
 import cineMovie8 from "./Cinemato1/cineMovie8";
-
+import cineMovie9 from "./Cinemato1/cineMovie9";
 
 class CinematographyModular extends Phaser.Scene {
   ticker: Ticker;
@@ -36,8 +36,11 @@ class CinematographyModular extends Phaser.Scene {
     this.ticker = new Ticker(tickerMS);
   }
 
-  create(this: CinematographyModular, { keyname, lifes }: { keyname: string, lifes?: any }) {
-    const isPostal = keyname.includes("postal")
+  create(
+    this: CinematographyModular,
+    { keyname, lifes }: { keyname: string; lifes?: any }
+  ) {
+    const isPostal = keyname.includes("postal");
     this.cursors = this.input.keyboard?.createCursorKeys();
     this.holdableButton = new HoldableButton(
       this,
@@ -46,7 +49,10 @@ class CinematographyModular extends Phaser.Scene {
       20,
       0xffffff,
       () => {
-        this.makeTransition("Game", { level: this.nextLevel ? this.nextLevel : 0, lifes: 3 });
+        this.makeTransition("Game", {
+          level: this.nextLevel ? this.nextLevel : 0,
+          lifes: 3,
+        });
       },
       isPostal
     ).setDepth(999999999);
@@ -62,39 +68,39 @@ class CinematographyModular extends Phaser.Scene {
     switch (keyname) {
       case "cine_intro_1":
         this.playingCine = new cineIntro1(this);
-        this.nextLevel = 0
+        this.nextLevel = 0;
         break;
       case "cine_intro_2":
         this.playingCine = new cineIntro2(this);
-        this.nextLevel = 0
+        this.nextLevel = 0;
         break;
       case "cine_intro_2B":
         this.playingCine = new cineIntro2B(this);
-        this.nextLevel = 0
+        this.nextLevel = 0;
         break;
       case "cine_intro_2C":
         this.playingCine = new cineIntro2C(this);
-        this.nextLevel = 0
+        this.nextLevel = 0;
         break;
       case "cine_intro_3":
         this.playingCine = new cineIntro3(this);
-        this.nextLevel = 0
+        this.nextLevel = 0;
         break;
       case "cine_intro_4":
         this.playingCine = new cineIntro4(this);
-        this.nextLevel = 0
+        this.nextLevel = 0;
         break;
       case "cine_intro_5":
         this.playingCine = new cineIntro5(this);
-        this.nextLevel = 0
+        this.nextLevel = 0;
         break;
       case "cine_intro_6":
         this.playingCine = new cineIntro6(this);
-        this.nextLevel = 0
+        this.nextLevel = 0;
         break;
       case "cine_intro_7":
         this.playingCine = new cineIntro7(this);
-        this.nextLevel = 0
+        this.nextLevel = 0;
         break;
       case "cine_movie_1":
         this.playingCine = new cineMovie1(this);
@@ -128,22 +134,25 @@ class CinematographyModular extends Phaser.Scene {
         this.playingCine = new cineMovie8(this);
         // this.nextLevel = 0
         break;
+      case "cine_movie_9":
+        this.playingCine = new cineMovie9(this);
+        // this.nextLevel = 0
+        break;
       case "postal1_planeta1":
         this.playingCine = new postalManager(this, "postal1Planeta1", 1, lifes);
-        this.nextLevel = 1
+        this.nextLevel = 1;
         break;
       case "postal2_planeta1":
         this.playingCine = new postalManager(this, "postal2Planeta1", 3, lifes);
-        this.nextLevel = 3
+        this.nextLevel = 3;
         break;
       default:
-        
     }
   }
 
   update(time: number, delta: number) {
     if (this.playingCine.update) this.playingCine.update(this, time, delta);
-    this.holdableButton?.update()
+    this.holdableButton?.update();
   }
 
   makeTransition(sceneName: string, data: any) {

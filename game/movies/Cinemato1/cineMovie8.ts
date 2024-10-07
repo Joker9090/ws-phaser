@@ -45,11 +45,9 @@ class cineMovie8 {
             1,
             10,
             () => { 
-              const audio = this.cine.sound.add("introSoundEffect8").setVolume(0.45)
-              audio.play()
             },
             false,
-            6000,
+            3000,
             true,
             (job: TickerJob) => {
               // spaceshipCrashSoundEffect.stop()

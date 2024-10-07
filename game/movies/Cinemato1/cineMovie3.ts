@@ -190,7 +190,7 @@ class cineMovie3 {
 
     update(this: cineMovie3, time: number, delta: number) {
         if (this.dialogue) this.dialogue.update();
-        if (this.nextCine) this.cine.scene.restart({ keyname: "cine_movie_5" });
+        if (this.nextCine) this.cine.scene.restart({ keyname: "cine_movie_4" });
     }
 }
 

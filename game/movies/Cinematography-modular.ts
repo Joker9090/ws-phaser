@@ -29,6 +29,7 @@ class CinematographyModular extends Phaser.Scene {
   nextLevel?: number | undefined;
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   holdableButton?: HoldableButton;
+  UIcontainer?: Phaser.GameObjects.Container;
   constructor() {
     super({ key: "CinematographyMod" });
 
@@ -55,7 +56,8 @@ class CinematographyModular extends Phaser.Scene {
         });
       },
       isPostal
-    ).setDepth(999999999);
+    ).setDepth(999999999)
+
     /* Audio */
     const getMasterManagerScene = this.game.scene.getScene(
       "MasterManager"

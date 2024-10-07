@@ -9,13 +9,14 @@ class cineMovie9 {
   nextCine: boolean = false;
   dialogue?: DialogueManager;
   //assets
-  backgroundStars?: Phaser.GameObjects.Image;
-  backgroundButtonsOn?: Phaser.GameObjects.Image;
-  brazoPressButton?: Phaser.GameObjects.Image;
-  pinkButton?: Phaser.GameObjects.Image;
-  violetButton?: Phaser.GameObjects.Image;
-  graphics?: Phaser.GameObjects.Graphics;
-  mask?: Phaser.Display.Masks.GeometryMask;
+  backgroundEarthStars?: Phaser.GameObjects.Image;
+  backgroundEarth?: Phaser.GameObjects.Image;
+  planetEarth?: Phaser.GameObjects.Image;
+  shipCine2Scene9?: Phaser.GameObjects.Image;
+  stoneEarth1?: Phaser.GameObjects.Image;
+  stoneEarth2?: Phaser.GameObjects.Image;
+  stoneEarth3?: Phaser.GameObjects.Image;
+  nubesEarth?: Phaser.GameObjects.Image;
   // controllers
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   setPos?: Function;
@@ -49,45 +50,25 @@ class cineMovie9 {
     // this.backgroundPressButton = this.cine.add
     //   .image(0, 0, "backgroundPressButton")
     //   .setOrigin(0.5);
-    this.backgroundButtonsOn = this.cine.add
-      .image(0, 0, "backgroundButtonsOn")
-      .setOrigin(0.5);
-    this.brazoPressButton = this.cine.add
-      .image(300, -500, "brazoPressButton")
-      .setOrigin(0, 0.5);
-
-    this.pinkButton = this.cine.add
-      .image(0, 0, "pinkButton")
-      .setOrigin(0.5)
-      .setVisible(false);
-    this.violetButton = this.cine.add
-      .image(-50, -60, "violetButton")
-      .setOrigin(0.5);
-    // this.violetButton = this.cine.add
-    //   .image(-middlePoint.x + 300, -middlePoint.y, "violetButton")
-    //   .setOrigin(0.5);
-
-    this.graphics = this.cine.add.graphics();
-    this.graphics.fillStyle(0xffffff, 0);
-    const graphg = this.graphics.fillCircle(-60, -185, 350).setScale
-    (0.9,0.44);
- 
-    console.log(this.cine);
+    this.backgroundEarthStars = this.cine.add.image(0, 0, "backgroundEarthStars").setOrigin(0.5);
+    this.backgroundEarth = this.cine.add.image(0, 0, "backgroundEarth").setOrigin(0.5);
+    this.nubesEarth = this.cine.add.image(0, 0, "nubesEarth").setOrigin(0.5);
+    this.planetEarth = this.cine.add.image(200, -200, "planetEarth").setOrigin(0.5).setScale(0.5);
+    this.shipCine2Scene9 = this.cine.add.image(-200, 200, "shipCine2Scene9").setOrigin(0.5);
+    this.stoneEarth1 = this.cine.add.image(-middlePoint.x - 400, -400, "stoneEarth1").setOrigin(0, 0.5);
+    this.stoneEarth2 = this.cine.add.image(-middlePoint.x - 300, -200, "stoneEarth2").setOrigin(0.5);
+    this.stoneEarth3 = this.cine.add.image(-middlePoint.x - 200, 0, "stoneEarth3").setOrigin(0.5);
 
     const gameObjects = [
-    //   this.backgroundPressButton,
-      this.backgroundButtonsOn,
-      this.violetButton,
-      // this.pinkButton,
-      this.brazoPressButton,
+      this.backgroundEarth,
+      this.backgroundEarthStars,
+      this.nubesEarth,
+      this.planetEarth,
+      this.shipCine2Scene9,
+      this.stoneEarth1,
+      this.stoneEarth2,
+      this.stoneEarth3,
     ];
-
-    this.mask = this.graphics.createGeometryMask();
-    this.mask?.setShape(graphg);
-    console.log(this.violetButton.x, this.violetButton.y);
-
-    this.mask.geometryMask.setPosition(middlePoint.x , middlePoint.y)
-    this.violetButton.setMask(this.mask);
 
     const darkMask = this.cine.add.rectangle(
       0,
@@ -95,7 +76,7 @@ class cineMovie9 {
       window.innerWidth * 1.1,
       window.innerHeight * 1.1,
       0,
-      0
+      0.2
     );
 
     const container = this.cine.add
@@ -119,14 +100,14 @@ class cineMovie9 {
       window.innerHeight
     );
     cameraDialogue.ignore(container);
-
     const camera = this.cine.cameras.main;
     camera.postFX.addVignette(0.5, 0.5, 0.8);
+    if (this.cine.UIcontainer !== undefined) camera.ignore(this.cine.UIcontainer);
 
     const part1 = (job: TickerJob) => {
       this.dialogue = new DialogueManager(
         this.cine,
-        ["Power core is stable...", "Thrusters are ready..."],
+        ["Well, here we are... ", "This would be a lot more fun if you were here, Dann"],
         ["", ""],
         [
           {
@@ -134,43 +115,63 @@ class cineMovie9 {
             keepAlive: 1000,
           },
           {
-            delay: 1500,
+            delay: 500,
             keepAlive: 1000,
           },
         ],
         90
       );
-        this.dialogue?.play();
+      this.dialogue?.play();
       this.cine.tweens.add({
-        targets: [ this.brazoPressButton ],
-        x: -250,
-        y: -200,
+        targets: [camera],
+        zoom: 1.3,
         delay: 0,
-        duration: 3500,
-        onComplete: ()=> {
-          this.violetButton?.setTint(0xff0000)
+        duration: 15000,
+        onLoop: (e) => {
+          console.log("ARIEL ON LOOP", e)
+        },
+        onYoyo: (e) => {
+          console.log("ARIEL ON YOYO", e)
         },
         ease: "ease",
-        yoyo: true
-    });
-    this.cine.tweens.add({
-      targets: [ this.backgroundButtonsOn ],
-      alpha: 0,
-      delay: 0,
-      duration: 1000,
-      loop: -1,
-      ease: "expo",
-  });
+      });
       this.cine.tweens.add({
-        targets: [ this.violetButton ],
-        y: 100,
-        delay: 2000,
-        duration: 1500,
-        onComplete: ()=> {
-          this.violetButton?.setTint(0xff0000)
-        },
+        targets: [this.shipCine2Scene9],
+        y: '+=10',
+        loop: -1,
+        yoyo: true,
+        // rotation: Math.PI / 8,
+        delay: 0,
+        duration: 6500,
         ease: "ease",
-    });
+      });
+      this.cine.tweens.add({
+        targets: [this.stoneEarth3],
+        x: middlePoint.x + 100,
+        y: 50,
+        rotation: Math.PI / 8,
+        delay: 0,
+        duration: 8500,
+        ease: "ease",
+      });
+      this.cine.tweens.add({
+        targets: [this.stoneEarth2],
+        x: middlePoint.x + 100,
+        y: -150,
+        rotation: Math.PI / 12,
+        delay: 3000,
+        duration: 8500,
+        ease: "ease",
+      });
+      this.cine.tweens.add({
+        targets: [this.stoneEarth1],
+        x: middlePoint.x + 100,
+        y: -350,
+        rotation: Math.PI / 10,
+        delay: 1500,
+        duration: 12500,
+        ease: "ease",
+      });
       const dialogueListener = (newState: string, nextText?: string) => {
         if (newState === "CONTINUE") {
         } else if (newState === "FINISHED") {
@@ -190,7 +191,7 @@ class cineMovie9 {
 
   update(this: cineMovie9, time: number, delta: number) {
     if (this.dialogue) this.dialogue.update();
-    if (this.nextCine) this.cine.scene.restart({ keyname: "cine_movie_9" });
+    if (this.nextCine) this.cine.scene.restart({ keyname: "cine_movie_1" });
   }
 }
 

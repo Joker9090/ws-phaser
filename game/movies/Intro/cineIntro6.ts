@@ -56,6 +56,10 @@ class cineIntro6 {
       y: window.innerHeight / 927,
     };
 
+    const scale =  gameObjectScaler.x < gameObjectScaler.y
+    ? gameObjectScaler.y
+    : gameObjectScaler.x
+
     this.background3 = this.cine.add.image(0, 0, "fondo3").setOrigin(0.5);
     this.background2 = this.cine.add.image(0, 0, "fondo2").setOrigin(0.5);
     this.background1 = this.cine.add.image(0, 0, "fondo1").setOrigin(0.5);
@@ -95,7 +99,7 @@ class cineIntro6 {
 
     const graphics = this.cine.make.graphics({ x: 0, y: 0 }, false);
     graphics.fillStyle(0xffffff);
-    graphics.fillCircle(middlePoint.x - 30, middlePoint.y, 400);
+    graphics.fillCircle(middlePoint.x - 30, middlePoint.y, 400 * scale);
 
     // Create a mask from the graphics object
     const mask = graphics.createGeometryMask();
@@ -132,11 +136,7 @@ class cineIntro6 {
       // this.VidrioVisorView2,
       // this.VidrioVisor2,
     ]);
-    container.setScale(
-      gameObjectScaler.x < gameObjectScaler.y
-        ? gameObjectScaler.y
-        : gameObjectScaler.x
-    );
+    container.setScale(scale);
     const camera = this.cine.cameras.main;
     camera.postFX.addVignette(0.5, 0.5, 0.8);
 

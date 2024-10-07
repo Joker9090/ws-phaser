@@ -886,6 +886,7 @@ class AssetsLoader {
         this.finished = true;
         // this.scene.scene.restart({text:"menu"})
         // this.scene.makeTransition("startMovie", undefined);
+        // console.log("BARTO ACAA")
         sceneToPlay = () =>
           this.scene.makeTransition("CinematographyMod", {
             keyname: "cine_intro_1",
@@ -931,7 +932,7 @@ class AssetsLoader {
         });
       }
       /*Load Fonts*/
-      const ArcadeFont = this.scene.add.text(0, 0, ":)", {
+      const ArcadeFont = this.scene.add.text(0, 0, " .", {
         fontFamily: "Arcade",
       });
 

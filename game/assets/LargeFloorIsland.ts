@@ -29,7 +29,7 @@ class LargeFloorIsland extends Phaser.GameObjects.Container {
   scene: Phaser.Scene;
   group: Phaser.Physics.Arcade.Group;
   parts: Phaser.Physics.Arcade.Sprite[];
-  constructor(scene: Phaser.Scene, config: LargeFloorIslandConfig, group: Phaser.Physics.Arcade.Group, frame?: string | number | undefined) {
+  constructor(scene: Phaser.Scene, config: LargeFloorIslandConfig, group: Phaser.Physics.Arcade.Group, frame?: string | number | undefined, velocity?: number) {
     super(scene, config.pos.x, config.pos.y)
     this.parts = [];
     this.scene = scene;
@@ -46,11 +46,12 @@ class LargeFloorIsland extends Phaser.GameObjects.Container {
         index === 0 ? 0 : index === config.large - 1 ? lastTilePos : (index - 1)*config.width.textureB + config.width.textureA,
         0,
         t).setOrigin(0, 0.5)
+      
       if (config.rotated) s.setFlipY(true)
       this.add(s)
+
     }
 
-    
 
     const sizeWidth = config.width.textureA + config.width.textureC + config.width.textureB * (config.large - 2)
 

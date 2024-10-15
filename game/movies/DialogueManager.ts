@@ -113,7 +113,7 @@ class DialogueManager {
       wordWrap: {
         width: config?.position?.width ? config?.position?.width * 0.8 : this.screenWidth * 0.8 - 80,
       },
-    }).setVisible(false);
+    });
 
     // this.textBox = new TextBox(
     //   this.scene,
@@ -124,22 +124,22 @@ class DialogueManager {
 
 
     const graphics = this.scene.add.graphics()
-    // graphics.fillStyle(0x192224, 0.6);
-    // graphics.lineStyle(5, 0x34cceb, 0.6)
-    // graphics.strokeRoundedRect(
-    //   this.textDisplayed.x,
-    //   this.textDisplayed.y - 10,
-    //   this.textDisplayed.width,
-    //   this.textDisplayed.height,
-    //   this.borderRounder
-    // )
-    // graphics.fillRoundedRect(
-    //   this.textDisplayed.x,
-    //   this.textDisplayed.y - 10,
-    //   this.textDisplayed.width,
-    //   this.textDisplayed.height,
-    //   this.borderRounder
-    // );
+    graphics.fillStyle(0x192224, 0.6);
+    graphics.lineStyle(5, 0x34cceb, 0.6)
+    graphics.strokeRoundedRect(
+      this.textDisplayed.x,
+      this.textDisplayed.y - 10,
+      this.textDisplayed.width,
+      this.textDisplayed.height,
+      this.borderRounder
+    )
+    graphics.fillRoundedRect(
+      this.textDisplayed.x,
+      this.textDisplayed.y - 10,
+      this.textDisplayed.width,
+      this.textDisplayed.height,
+      this.borderRounder
+    );
 
     // Use the rounded rectangle as a mask for the text
 

@@ -20,6 +20,12 @@ class Mapa1 {
     width: 10000,
     height: 2500,
   };
+  cameraBounds = {
+    x: 0,
+    y: 0,
+    width: 3700,
+    height: 1450
+  }
   // normales
   pisos?: Phaser.Physics.Arcade.Group;
   // de vuelta al inicio
@@ -149,7 +155,7 @@ class Mapa1 {
     ])
   }
 
-  animateBackground(player: Phaser.GameObjects.Sprite) {
+  animateBackground(player: Phaser.GameObjects.Sprite | Phaser.Math.Vector2) {
     const offsetLevel = 300
     const { x, y } = this.startingPoint;
     const { x: x2, y: y2 } = player;
@@ -289,7 +295,7 @@ class Mapa1 {
       width: 140,
       height: 50,
     };
-    const p1 = new Floor(this.scene, p1Config, this.pisos);
+    const p1 = new Floor(this.scene, p1Config, this.pisos).setFlipX(true);
 
     // const p2Config: FloorConfig = {
     //   texture: "plataformaNuevaA",
@@ -339,7 +345,7 @@ class Mapa1 {
       width: 140,
       height: 50,
     };
-    const p5 = new Floor(this.scene, p5Config, this.pisos);
+    const p5 = new Floor(this.scene, p5Config, this.pisos).setFlipX(true);
 
     const p7Config: FloorConfig = {
       pos: { x: 1600, y: 1300 },
@@ -377,7 +383,7 @@ class Mapa1 {
     };
     const p9 = new Floor(this.scene, p9Config, this.pisos2).setTint(
       Phaser.Display.Color.GetColor(255, 101, 0)
-    );
+    ).setFlipX(true);
 
 
     const p10Config: LargeFloorIslandConfig = {
@@ -483,15 +489,7 @@ class Mapa1 {
       this.scene.scene.pause()
     }
     /* Attach controls to player */
-    if (this.scene.monchi) {
-      // if (this.scene.cameraNormal) {
-      //   this.scene.monchi.checkMove(this.scene.cursors, this.isFloating);
-      // } else {
-      //   this.scene.monchi?.checkMoveRot(this.scene.cursors);
-      // }
-      /* Attach background anim */
-      this.animateBackground(this.scene.monchi);
-    }
+    if (this.scene.monchi) this.animateBackground(this.scene.cameras.main.midPoint);
   }
 }
 export default Mapa1;

@@ -134,7 +134,6 @@ const loadAssets = {
       ["image", "plataformaNuevaLargaB", "/game/planeta1/platforms/newPlatB.png"],
       ["image", "plataformaNuevaLargaC", "/game/planeta1/platforms/newPlatC.png"],
       ["image", "plataformaFinalP1", "/game/planeta1/platforms/plataformaFinal.png"],
-
       [
         "svg",
         "background0P1",
@@ -231,48 +230,74 @@ const loadAssets = {
       ["image", "piedra3", "/game/lvl1/plataformas/plataformaMedio.png"],
 
       // planeta2
-      ["image", "bg", "/game/lvl2/background/bg.png"],
-      ["image", "nube1", "/game/lvl2/background/nube1.png"],
-      ["image", "nube2", "/game/lvl2/background/nube2.png"],
-      ["image", "nube3", "/game/lvl2/background/nube3.png"],
-      ["image", "nube4", "/game/lvl2/background/nube4.png"],
-      ["image", "nube5", "/game/lvl2/background/nube5.png"],
-      ["image", "nube6", "/game/lvl2/background/nube6.png"],
-      ["image", "arbol", "/game/lvl2/background/arbol.png"],
-      ["image", "arbol2", "/game/lvl2/background/arbol2.png"],
-      ["image", "pisoLvl2", "/game/lvl2/background/piso_2.png"],
-      ["image", "plataformaLvl2", "/game/lvl2/plataforma/plataforma.png"],
-      ["image", "auraLvl2", "/game/lvl2/auraCristalLvl2.png"],
-      ["image", "cristalLvl2", "/game/lvl2/cristalLvl2.png"],
-
-      ["image", "plataformaInicioLvl2", "/game/lvl2/plataforma/plataformaInicio.png"],
-      ["image", "plataformaMedioLvl2", "/game/lvl2/plataforma/plataformaMedio.png"],
-      ["image", "plataformaFinLvl2", "/game/lvl2/plataforma/plataformaFin.png"],
-
-      ["image", "starsLvl2", "/game/lvl2/background/stars.png"],
-      ["image", "stars2Lvl2", "/game/lvl2/background/stars2.png"],
-      ["image", "stars3Lvl2", "/game/lvl2/background/stars3.png"],
-      ["image", "stars4Lvl2", "/game/lvl2/background/stars4.png"],
-
-      // sun
-
-      ["image", "bgSun1", "/game/lvl3/background/bg1.png"],
-      ["image", "bgSun2", "/game/lvl3/background/bg2.png"],
-      ["image", "bgSun3", "/game/lvl3/background/bg3.png"],
-      ["image", "bgSun4", "/game/lvl3/background/bg4.png"],
-      ["image", "bgSun5", "/game/lvl3/background/bg5.png"],
-
-      ["image", "planetaSun1", "/game/lvl3/background/planet1.png"],
-      ["image", "planetaSun2", "/game/lvl3/background/planet2.png"],
-      ["image", "planetaSun3", "/game/lvl3/background/planet3.png"],
-      ["image", "planetaSun4", "/game/lvl3/background/planet4.png"],
-
-      ["image", "sol", "/game/lvl3/background/sol.png"],
-      ["image", "brilloSol", "/game/lvl3/background/solBrillo.png"],
-      ["image", "plataformaSun", "/game/lvl3/plataforma.png"],
-      ["image", "plataformaInicioSun", "/game/lvl3/plataformaInicioSun.png"],
-      ["image", "plataformaMedioSun", "/game/lvl3/plataformaMedioSun.png"],
-      ["image", "plataformaFinSun", "/game/lvl3/plataformaFinSun.png"],
+      [
+        "svg",
+        "p1backgroundDia",
+        "/game/planeta2/bgdia.svg",
+        { scale: 1.4 }
+      ],
+      [
+        "svg",
+        "p1backgroundNoche",
+        "/game/planeta2/bgnoche.svg",
+        { scale: 1.4 }
+      ],
+      [
+        "svg",
+        "p1capaOscuridad",
+        "/game/planeta2/capaOscuridad.svg",
+        { scale: 1.4 }
+      ],
+      [
+        "svg",
+        "p1neblina",
+        "/game/planeta2/neblinaBackground.svg",
+        { scale: 1.4 }
+      ],
+      [
+        "svg",
+        "p1nubeBackground1",
+        "/game/planeta2/nubeBackground1.svg",
+        { scale: 1.4 }
+      ],
+      [
+        "svg",
+        "p1nubeBackground2",
+        "/game/planeta2/nubeBackground2.svg",
+        { scale: 1.4 }
+      ],
+      [
+        "svg",
+        "p1Stars",
+        "/game/planeta2/starsBackground.svg",
+        { scale: 1.4 }
+      ],
+      ["image", "frontground1p1", "/game/planeta2/frontground1.png"],
+      ["image", "frontground2p1", "/game/planeta2/frontground2.png"],
+      ["image", "huesoFrontp1", "/game/planeta2/huesoFront.png"],
+      ["image", "longFloorLeftp1", "/game/planeta2/longFloorLeft.png"],
+      ["image", "longFloorRightp1", "/game/planeta2/longFloorRight.png"],
+      ["image", "longFloorMiddleAp1", "/game/planeta2/longFloorMiddleA.png"],
+      ["image", "longFloorMiddleBp1", "/game/planeta2/longFloorMiddleB.png"],
+      [
+        "spritesheet",
+        "meteoritop1",
+        "/game/planeta2/meteorito.png",
+        { frameWidth: 98, frameHeight: 210 },
+      ],
+      ["image", "montaña1p1", "/game/planeta2/montaña1.png"],
+      ["image", "montaña2p1", "/game/planeta2/montaña2.png"],
+      ["image", "montaña3p1", "/game/planeta2/montaña3.png"],
+      ["image", "montaña4p1", "/game/planeta2/montaña4.png"],
+      ["image", "montaña5p1", "/game/planeta2/montaña5.png"],
+      ["image", "nube1p1", "/game/planeta2/nube1.png"],
+      ["image", "nube2p1", "/game/planeta2/nube2.png"],
+      ["image", "piedra1p1", "/game/planeta2/piedra1.png"],
+      ["image", "pSimple1p1", "/game/planeta2/pSimple1.png"],
+      ["image", "pSimple2p1", "/game/planeta2/pSimple2.png"],
+      ["image", "comida", "/game/planeta2/comida.png"],
+      ["image", "cuevap1", "/game/planeta2/cuevap1.png"],
+      
     ],
 
 
@@ -307,7 +332,9 @@ const loadAssets = {
   Postales: {
     assets: [
       ["image", "postal1Planeta1", "/postals/planet1/postal1Planet1.png"],
-      ["image", "postal2Planeta1", "/postals/planet1/postal2Planet1.png"],
+      ["image", "postal2Planeta1", "/postals/planet1/postal1Planet1.png"],
+      ["image", "postal1Planeta2", "/postals/planeta2/Postal1.png"],
+      ["image", "postal2Planeta2", "/postals/planeta2/Postal2.png"],
       // ["image", "cine_capsula", "/game/cine_2.png"],
     ],
   },
@@ -587,8 +614,8 @@ class AssetsLoader {
         this.finished = true
         // this.scene.scene.restart({text:"menu"})
         // this.scene.makeTransition("startMovie", undefined);
-        this.scene.makeTransition("CinematographyMod", { keyname: "cine_movie_1" });
-        // this.scene.makeTransition("Game", { level: 0, lifes: 3 });
+        // this.scene.makeTransition("CinematographyMod", { keyname: "cine_movie_1" });
+        this.scene.makeTransition("Game", { level: 6, lifes: 3 });
       });
       const scenesTitles: Array<SceneKeys> = [
         "Menu",

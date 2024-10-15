@@ -21,6 +21,12 @@ class Mapa3 {
         width: 10000,
         height: 1520,
     };
+    cameraBounds = {
+        x: 0,
+        y: -200,
+        width: 6000,
+        height: 2000
+      }
     // normales
     pisos?: Phaser.Physics.Arcade.Group;
     // de vuelta al inicio
@@ -165,7 +171,7 @@ class Mapa3 {
         ])
     }
 
-    animateBackground(player: Phaser.GameObjects.Sprite) {
+    animateBackground(player: Phaser.GameObjects.Sprite | Phaser.Math.Vector2) {
         const offsetLevel = 400
         const offsetLevel2 = 300
         const { x, y } = this.startingPoint;
@@ -356,7 +362,7 @@ class Mapa3 {
             width: 140,
             height: 50,
         };
-        const p3 = new Floor(this.scene, p3Config, this.pisos);
+        const p3 = new Floor(this.scene, p3Config, this.pisos).setFlipX(true);
 
         const p5Config: FloorConfig = {
             pos: { x: 1100, y: 1100 }, // 1100 800
@@ -403,7 +409,7 @@ class Mapa3 {
         };
         const p9 = new Floor(this.scene, p9Config, this.pisos2).setTint(
             Phaser.Display.Color.GetColor(255, 101, 0)
-        );
+        ).setFlipX(true);
 
         // const p4Config: LargeFloorConfig = {
         //     textureA: "plataformaLarga2",
@@ -451,7 +457,7 @@ class Mapa3 {
             width: 140,
             height: 50,
         };
-        const p12 = new Floor(this.scene, p12Config, this.pisos).setFlipY(true);
+        const p12 = new Floor(this.scene, p12Config, this.pisos).setFlipY(true).setFlipX(true);
 
         const p13Config: FloorConfig = {
             pos: { x: 3400, y: 450 }, //3550 700
@@ -509,7 +515,7 @@ class Mapa3 {
             width: 140,
             height: 50,
         };
-        const p15 = new Floor(this.scene, p15Config, this.pisos).setFlipY(true);
+        const p15 = new Floor(this.scene, p15Config, this.pisos).setFlipY(true).setFlipX(true);
 
         const p16Config: FloorConfig = {
             pos: { x: 4050, y: 450 },
@@ -552,7 +558,7 @@ class Mapa3 {
             width: 140,
             height: 50,
         };
-        const p18 = new Floor(this.scene, p18Config, this.pisos).setFlipY(true);
+        const p18 = new Floor(this.scene, p18Config, this.pisos).setFlipY(true).setFlipX(true);
 
         const p19Config: FloorConfig = {
             pos: { x: 4900, y: 500 },
@@ -644,8 +650,7 @@ class Mapa3 {
 
     }
     update() {
-        /* Attach background anim */
-        if (this.scene.monchi) this.animateBackground(this.scene.monchi);
+        if (this.scene.monchi) this.animateBackground(this.scene.cameras.main.midPoint);
     }
 }
 export default Mapa3;

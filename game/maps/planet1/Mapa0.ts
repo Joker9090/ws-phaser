@@ -22,6 +22,12 @@ class Mapa0 {
     width: 10000,
     height: 1300,
   };
+  cameraBounds = {
+    x: 0,
+    y: 0,
+    width: 2700,
+    height: 1300
+  }
   // normales
   pisos?: Phaser.Physics.Arcade.Group;
   // de vuelta al inicio
@@ -140,9 +146,10 @@ class Mapa0 {
     ])
   }
 
-  animateBackground(player: Phaser.GameObjects.Sprite) {
+  animateBackground(player: Phaser.GameObjects.Sprite | Phaser.Math.Vector2 ) {
     const { x, y } = this.startingPoint;
     const { x: x2, y: y2 } = player;
+
     // animation backgrounds statics
     const { ajusteBX, ajusteBY } = { ajusteBX: 1.1, ajusteBY: 1.1 }
     const calcDiffBX = (x2 - x) / ajusteBX
@@ -154,9 +161,9 @@ class Mapa0 {
     const { ajusteFX, ajusteFY } = { ajusteFX: 4, ajusteFY: 2 }
     const calcDiffFX = (x2 - x) / ajusteFX
     const calcDiffFY = (y2 - y) / ajusteFY;
-    this.background4.setPosition(x + calcDiffFX, y + 470 + calcDiffFY);
-    this.background5.setPosition(x + calcDiffFX, y + 470 + calcDiffFY);
-    this.background6.setPosition(x + this.background5.width - 15 + calcDiffFX, y + 470 + calcDiffFY);
+    this.background4.setPosition(x + calcDiffFX, y + 570 + calcDiffFY);
+    this.background5.setPosition(x + calcDiffFX, y + 570 + calcDiffFY);
+    this.background6.setPosition(x + this.background5.width - 15 + calcDiffFX, y + 570 + calcDiffFY);
     this.mountain4.setPosition(-200 + calcDiffFX, this.startingPoint.y + calcDiffFY)
     this.mountain5.setPosition(1100 + calcDiffFX, this.startingPoint.y + calcDiffFY)
     // // animation front mountains
@@ -278,7 +285,7 @@ class Mapa0 {
       width: 140,
       height: 50,
     };
-    const p2 = new Floor(this.scene, p2Config, this.pisos);
+    const p2 = new Floor(this.scene, p2Config, this.pisos).setFlipX(true);
 
     const p3Config: FloorConfig = {
       pos: { x: 1100, y: 920 },
@@ -298,7 +305,7 @@ class Mapa0 {
       width: 140,
       height: 50,
     };
-    const p4 = new Floor(this.scene, p4Config, this.pisos);
+    const p4 = new Floor(this.scene, p4Config, this.pisos).setFlipX(true);
 
 
     //Portal, Coin and Asteroids
@@ -379,6 +386,9 @@ class Mapa0 {
     this.scene.UICamera?.ignore(this.mapContainer)
     this.scene.UICamera?.ignore(this.frontContainer)
   }
+
+
+
   update() {
     if (this.tutorialStep === 2 || this.tutorialStep === 4) {
       this.textTutorial1?.setVisible(false)
@@ -391,8 +401,9 @@ class Mapa0 {
     }
 
     /* Attach background anim */
-    if (this.scene.monchi) this.animateBackground(this.scene.monchi);
-   
+    // if (this.scene.monchi) this.animateBackground(this.scene.monchi);
+    if (this.scene.monchi) this.animateBackground(this.scene.cameras.main.midPoint);
+
   }
 }
 export default Mapa0;

@@ -22,6 +22,12 @@ class Mapa2 {
     width: 10000,
     height: 1850,
   };
+  cameraBounds = {
+    x: 0,
+    y: 300,
+    width: 3500,
+    height: 1650
+  }
   // normales
   pisos?: Phaser.Physics.Arcade.Group;
   // de vuelta al inicio
@@ -150,7 +156,7 @@ class Mapa2 {
     ])
   }
 
-  animateBackground(player: Phaser.GameObjects.Sprite) {
+  animateBackground(player: Phaser.GameObjects.Sprite | Phaser.Math.Vector2) {
     const offsetLevel = 150
     const { x, y } = this.startingPoint;
     const { x: x2, y: y2 } = player;
@@ -324,7 +330,7 @@ class Mapa2 {
       width: 140,
       height: 50,
     };
-    const p2 = new Floor(this.scene, p2Config, this.pisos);
+    const p2 = new Floor(this.scene, p2Config, this.pisos).setFlipX(true);
 
     const p3Config: FloorConfig = {
       pos: { x: 1100, y: 1400 },
@@ -347,7 +353,7 @@ class Mapa2 {
     const p4 = new Floor(this.scene, p4Config, this.pisos3);
     p4.setTint(
       Phaser.Display.Color.GetColor(255, 101, 0)
-    );
+    ).setFlipX(true);
 
     const p5Config: FloorConfig = {
       pos: { x: 1600, y: 1250 },
@@ -377,7 +383,7 @@ class Mapa2 {
       large: 13,
       rotated: true
     };
-    const p6 = new LargeFloorIsland(this.scene, p6Config, this.pisos);
+    const p6 = new LargeFloorIsland(this.scene, p6Config, this.pisos)
 
 
     const p7Config: LargeFloorIslandConfig = {
@@ -493,8 +499,7 @@ class Mapa2 {
     if (this.tutorialStep === 2 || this.tutorialStep === 4) {
       this.textTutorial1?.setVisible(false)
     }
-    /* Attach background anim */
-    if (this.scene.monchi) this.animateBackground(this.scene.monchi);
+    if (this.scene.monchi) this.animateBackground(this.scene.cameras.main.midPoint);
   }
 }
 export default Mapa2;

@@ -4,38 +4,37 @@ import p1Mapa0 from "./maps/planet1/Mapa0";
 import p1Mapa1 from "./maps/planet1/Mapa1";
 import p1Mapa2 from "./maps/planet1/Mapa2";
 import p1Mapa3 from "./maps/planet1/Mapa3";
-import p1Mapa4 from "./maps/planet1/Mapa4";
 // MAPAS PLANETA 2
-import p2Mapa1 from "./maps/planet2/p2Mapa1";
-import p2Mapa2 from "./maps/planet2/p2Mapa2";
-import p2Mapa3 from "./maps/planet2/p2Mapa3";
-// MAPAS PLANETA 3
-import p3Mapa1 from "./maps/planet3/p3Mapa1";
-import p3Mapa2 from "./maps/planet3/p3Mapa2";
-import p3Mapa3 from "./maps/planet3/p3Mapa3";
-// MAPAS PLANETA 4
-import sMapa1 from "./maps/sun/sMapa1";
-import sMapa2 from "./maps/sun/sMapa2";
-import sMapa3 from "./maps/sun/sMapa3";
+import p2Mapa1 from "./maps/planet2/Mapa4";
+import p2Mapa2 from "./maps/planet2/Mapa5";
+import p2Mapa3 from "./maps/planet2/Mapa6";
+import p2Mapa4 from "./maps/planet2/Mapa7";
+
 // OTRAS COSAS
 import Player from "./assets/Player";
 import UIClass from "./assets/UIClass";
 import MasterManager from "./MasterManager";
 import BetweenScenes, { BetweenScenesStatus } from "./BetweenScenes";
-import { loseConfigFromMapType } from "./Types";
 
-
+export type PossibleMaps = p1Mapa0 | p1Mapa1 | p1Mapa2 | p1Mapa3 |
+  p2Mapa1 | p2Mapa2 | p2Mapa3 |
+  p2Mapa4
 // Scene in class
+export const keyCodesAWSD = {
+  w: Phaser.Input.Keyboard.KeyCodes.W,
+  a: Phaser.Input.Keyboard.KeyCodes.A,
+  s: Phaser.Input.Keyboard.KeyCodes.S,
+  d: Phaser.Input.Keyboard.KeyCodes.D
+}
 class Game extends Phaser.Scene {
+  //creative mode
+  cursorsAWSD?: object;
+
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   EscKeyboard?: Phaser.Input.Keyboard.Key;
   monchi?: Player;
   graphics?: Phaser.GameObjects.Graphics;
-  map?:
-    p1Mapa0 | p1Mapa1 | p1Mapa2 | p1Mapa3 | p1Mapa4 |
-    p2Mapa1 | p2Mapa2 | p2Mapa3 |
-    p3Mapa1 | p3Mapa2 | p3Mapa3 |
-    sMapa1 | sMapa2 | sMapa3;
+  map?: PossibleMaps;
   lifes?: number;
   levelIs: number = 0;
   timeLevel: number = 0;
@@ -108,27 +107,50 @@ class Game extends Phaser.Scene {
   }
 
   rotateCam(isNormal: boolean, time: number) {
+    console.log("ENTRO ACA ARI 3")
+
     if (this.monchi) this.monchi.setCameraState(!isNormal ? 'NORMAL' : 'ROTATED')
     if (isNormal) {
+      console.log("ENTRO ACA ARI 1")
+
       this.cameraNormal = false;
     } else {
+      console.log("ENTRO ACA AR2")
+
       this.cameraNormal = true;
     }
     if (this.canRot) {
       if (!this.gravityDown) {
-      }
-      for (let i = 0; i < 25; i++) {
-        this.time.delayedCall(time * i, () =>
-          ((rotate) => {
-            if (isNormal) {
-              this.cameras.main.setRotation(rotate);
-            } else {
-              this.cameras.main.setRotation(Math.PI - rotate);
-            }
-          })((Math.PI * i) / 24),
-        );
-        if (i == 24) {
-          this.canRot = false;
+        console.log("ENTRO ACA ARI")
+        for (let i = 0; i < 25; i++) {
+          this.time.delayedCall(time * i, () =>
+            ((rotate) => {
+              if (isNormal) {
+                this.cameras.main.setRotation(rotate);
+              } else {
+                this.cameras.main.setRotation(Math.PI - rotate);
+              }
+            })((Math.PI * i) / 24),
+          );
+          if (i == 24) {
+            this.canRot = false;
+          }
+        }
+      } else {
+
+        for (let i = 0; i < 25; i++) {
+          this.time.delayedCall(time * i, () =>
+            ((rotate) => {
+              if (isNormal) {
+                this.cameras.main.setRotation(rotate);
+              } else {
+                this.cameras.main.setRotation(Math.PI - rotate);
+              }
+            })((Math.PI * i) / 24),
+          );
+          if (i == 24) {
+            this.canRot = false;
+          }
         }
       }
     }
@@ -184,7 +206,7 @@ class Game extends Phaser.Scene {
           this.monchi.setPlayerState(config.PlayerDirection)
 
           // Game changes
-          if (config.PlayerDirection === 'NORMAL'){
+          if (config.PlayerDirection === 'NORMAL') {
             this.moveCameraOffset('down', true)
           } else {
             this.moveCameraOffset("up", true)
@@ -217,7 +239,42 @@ class Game extends Phaser.Scene {
     }
   }
 
+  handleCameraMovement() {
+    let cam = this.cameras.main;
+    const cameraSpeed = 25;
+    // Camera moves up
+    //@ts-ignore
+    if (this.cursorsAWSD?.w.isDown) {
+      cam.scrollY -= cameraSpeed;
+    }
+    // Camera moves down
+    //@ts-ignore
+    if (this.cursorsAWSD?.s.isDown) {
+      cam.scrollY += cameraSpeed;
+    }
+    // Camera moves left
+    //@ts-ignore
+    if (this.cursorsAWSD?.a.isDown) {
+      cam.scrollX -= cameraSpeed;
+    }
+    // Camera moves right
+    //@ts-ignore
+    if (this.cursorsAWSD?.d.isDown) {
+      cam.scrollX += cameraSpeed;
+    }
+  }
+
   create(this: Game, data: { level: number; lifes: number, stagePoint: number }) {
+    // CREATIVE
+    this.cursorsAWSD = this.input.keyboard?.addKeys({
+      w: Phaser.Input.Keyboard.KeyCodes.W,
+      a: Phaser.Input.Keyboard.KeyCodes.A,
+      s: Phaser.Input.Keyboard.KeyCodes.S,
+      d: Phaser.Input.Keyboard.KeyCodes.D
+    });
+    this.cameras.main.zoom = 0.5
+    // CREATIVE
+
     this.checkPoint = 0;
     this.levelIs = data.level;
     this.lifes = data.lifes;
@@ -236,34 +293,16 @@ class Game extends Phaser.Scene {
         this.map = new p1Mapa3(this, this.monchi!);
         break;
       case 4:
-        this.map = new p1Mapa4(this);
-        break;
-      case 5:
         this.map = new p2Mapa1(this, this.monchi!);
         break;
-      case 6:
+      case 5:
         this.map = new p2Mapa2(this, this.monchi!);
         break;
-      case 7:
+      case 6:
         this.map = new p2Mapa3(this, this.monchi!);
         break;
-      case 8:
-        this.map = new p3Mapa1(this, this.monchi!);
-        break;
-      case 9:
-        this.map = new p3Mapa2(this, this.monchi!);
-        break;
-      case 10:
-        this.map = new p3Mapa3(this, this.monchi!);
-        break;
-      case 11:
-        this.map = new sMapa1(this, this.monchi!);
-        break;
-      case 12:
-        this.map = new sMapa2(this, this.monchi!);
-        break;
-      case 13:
-        this.map = new sMapa3(this, this.monchi!);
+      case 7:
+        this.map = new p2Mapa4(this, this.monchi!);
         break;
       default:
         this.map = new p1Mapa0(this, this.monchi!);
@@ -278,31 +317,39 @@ class Game extends Phaser.Scene {
     if (!this.masterManagerScene.scene.isActive())
       this.scene.launch("MasterManager").sendToBack();
     else if (this.levelIs == 0) {
-      this.masterManagerScene.playMusic("songTutorial");
+      // this.masterManagerScene.playMusic("songTutorial");
     } else if (this.levelIs == 1) {
-      this.masterManagerScene.playMusic("songLevel1");
+      // this.masterManagerScene.playMusic("songLevel1");
     } else if (this.levelIs == 2) {
-      this.masterManagerScene.playMusic("songLevel2");
+      // this.masterManagerScene.playMusic("songLevel2");
     }
 
     /* UI SCENE  */
 
     this.UICamera = this.cameras.add(0, 0, window.innerWidth, window.innerHeight)
     this.UIClass = new UIClass(this, this.levelIs, this.lifes, this.timeLevel)
-    
+
     /* CREATE MAP */
     this.map.createMap(data);
-
+    const {
+      x: boundX,
+      y: boundY,
+      width: boundWidth,
+      height: boundHeight
+    } = this.map.cameraBounds
+    console.log("CAMERA BOUNDS", this.map.cameraBounds)
+    this.cameras.main.setBounds(boundX, boundY, boundWidth, boundHeight)
     /* CONTROLS */
     this.EscKeyboard = this.input.keyboard?.addKey(
       Phaser.Input.Keyboard.KeyCodes.ESC
     );
+    // this.cursors = this.input.keyboard?.createCursorKeys();
     this.cursors = this.input.keyboard?.createCursorKeys();
+
     const { x, y } = this.map.startingPoint;
     this.monchi = new Player(this, x, y, "character", 2);
     this.canWin = false;
     this.canRot = true;
-
     /* CAMERAS */
     this.cameras.main.zoom = 1;
     this.cameraWidth = this.cameras.main.width;
@@ -351,13 +398,14 @@ class Game extends Phaser.Scene {
       this.cameras.main.zoom =
         this.cameras.main.width / this.cameras.main.height;
     }
-
     if (this.monchi && this.map) {
-      //@ts-ignore
       this.map.update();
       this.monchi.checkMove(this.cursors)
     }
+    // CREATIVE MODE
+    this.handleCameraMovement(); 
   }
+
 }
 
 export default Game;

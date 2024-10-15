@@ -148,6 +148,14 @@ class CinematographyModular extends Phaser.Scene {
         this.playingCine = new postalManager(this, "postal2Planeta1", 3, lifes);
         this.nextLevel = 3;
         break;
+      case "postal1_planeta2":
+        this.playingCine = new postalManager(this, "postal1Planeta2", 5, lifes);
+        this.nextLevel = 5;
+        break;
+      case "postal2_planeta2":
+        this.playingCine = new postalManager(this, "postal2Planeta2", 7, lifes);
+        this.nextLevel = 7;
+        break;
       default:
     }
   }

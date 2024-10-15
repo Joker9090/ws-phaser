@@ -154,12 +154,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       const { left, right, up, space } = cursors;
       /* Left*/
       if (left.isDown) {
-        this.setVelocityX(this.cameraState === 'NORMAL' ? -160 : 160);
+        this.setVelocityX(this.cameraState === 'NORMAL' ? -200 : 200);
         this.setFlipX(this.cameraState === 'NORMAL' ? true : false);
         if (!this.isJumping && !this.isRotating) this.anims.play("monchiMove", true);
       } else if (right.isDown) {
         /* Right*/
-        this.setVelocityX(this.cameraState === 'NORMAL' ? 160 : -160);
+        this.setVelocityX(this.cameraState === 'NORMAL' ? 200 : -200);
         this.setFlipX(this.cameraState === 'NORMAL' ? false : true);
         if (!this.isJumping && !this.isRotating) this.anims.play("monchiMove", true);
       }

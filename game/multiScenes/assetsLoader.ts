@@ -614,8 +614,8 @@ class AssetsLoader {
         this.finished = true
         // this.scene.scene.restart({text:"menu"})
         // this.scene.makeTransition("startMovie", undefined);
-        // this.scene.makeTransition("CinematographyMod", { keyname: "cine_movie_1" });
-        this.scene.makeTransition("Game", { level: 6, lifes: 3 });
+        this.scene.makeTransition("CinematographyMod", { keyname: "cine_movie_1" });
+        // this.scene.makeTransition("Game", { level: 4, lifes: 3 });
       });
       const scenesTitles: Array<SceneKeys> = [
         "Menu",

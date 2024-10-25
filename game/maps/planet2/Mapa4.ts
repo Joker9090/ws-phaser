@@ -77,6 +77,7 @@ class Mapa4 {
     nextScene: string | undefined = 'postal1_planeta2';
 
     background: Phaser.GameObjects.Image;
+    backgroundStars: Phaser.GameObjects.Image;
     background2: Phaser.GameObjects.Image;
     background3: Phaser.GameObjects.Image;
     background4: Phaser.GameObjects.Image;
@@ -117,6 +118,9 @@ class Mapa4 {
         this.background = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "p1backgroundDia")
             .setOrigin(0.5, 0.5)
+        this.backgroundStars = this.scene.add
+            .image(this.startingPoint.x, this.startingPoint.y, "p1backgroundDia")
+            .setOrigin(0.5, 0.5)
         this.background2 = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "p1backgroundNoche")
             .setOrigin(0.5, 0.5)
@@ -134,7 +138,7 @@ class Mapa4 {
         //     .setOrigin(0, 1).setScale(1)
         // this.background7 = this.scene.add
         //     .image(this.startingPoint.x - 5 + this.background6.x, this.startingPoint.y + 530, "frontground1p1")
-            // .setOrigin(0, 1).setScale(1).setFlipX(true);
+        // .setOrigin(0, 1).setScale(1).setFlipX(true);
         this.mountain4 = this.scene.add.image(200, this.startingPoint.y + 500, "montaña1p1")
         this.mountain5 = this.scene.add.image(1100, this.startingPoint.y + 520, "montaña2p1")
 
@@ -146,6 +150,7 @@ class Mapa4 {
         this.mapContainer.add([
             this.background,
             this.background2,
+            this.backgroundStars,
             this.background3,
             this.background4,
             this.background5,
@@ -172,6 +177,7 @@ class Mapa4 {
         const { ajusteBX, ajusteBY } = { ajusteBX: 1.1, ajusteBY: 1.1 }
         const calcDiffBX = (x2 - x) / ajusteBX
         const calcDiffBY = (y2 - y) / ajusteBY;
+        this.backgroundStars.setPosition(x + calcDiffBX, y + calcDiffBY);
         this.background.setPosition(x + calcDiffBX, y + calcDiffBY);
         this.background2.setPosition(x + calcDiffBX, y + calcDiffBY);
         this.background3.setPosition(x + calcDiffBX, y + calcDiffBY);

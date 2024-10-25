@@ -110,8 +110,8 @@ class cineMovie1 {
                 [""],
                 [
                     {
-                        delay: 2000,
-                        keepAlive: 3000,
+                        delay: 1000,
+                        keepAlive: 1000,
                     },
                 ],
                 90
@@ -173,7 +173,7 @@ class cineMovie1 {
         };
 
         this.ticker.addJob(
-            new TickerJob(1, 10, part1, false, undefined, true, (job: TickerJob) => {
+            new TickerJob(1, 10, part1, false, 5000, true, (job: TickerJob) => {
                 // soundChangeScene.stop()
                 this.nextCine = true;
             })

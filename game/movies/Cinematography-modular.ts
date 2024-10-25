@@ -49,6 +49,7 @@ class CinematographyModular extends Phaser.Scene {
       50,
       20,
       0xffffff,
+      "#ffffff66",
       () => {
         this.makeTransition("Game", {
           level: this.nextLevel ? this.nextLevel : 0,

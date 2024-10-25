@@ -278,7 +278,7 @@ class cineIntro2B {
       .setOrigin(0.5)
       .setFlipX(true);
     this.backgroundPanel = this.cine.add
-      .image(0, 70, "backgroundPanel")
+      .image(-10, 70, "backgroundPanel")
       .setOrigin(0.5);
     let marker = 0;
     setInterval(() => {
@@ -452,23 +452,47 @@ class cineIntro2B {
       this.dialogue = new DialogueManager(
         this.cine,
         [
-          "Supplies are running out…",
-          "And fuel levels aren't very encouraging either...",
-          "I've decided to shut down all systems except life support and navigation to buy myself some time",
+          "Fuel is running out…",
+          // "And fuel levels aren't very encouraging either...",
+          "I've decided to shut down all systems except life support and navigation",
         ],
-        ["intro2audio3", "intro2audio4", "intro2audio5"],
+        [], // ["intro2audio3", "intro2audio4", "intro2audio5"],
         [
           {
             delay: 1000,
+            withTapping: {
+              audios: ["key01","key01", "key02"],
+              count: 8,
+              delay: 180,
+            },
             keepAlive: 500,
+            position: {
+              width: 500
+            }
           },
-          {
-            delay: 500,
-            keepAlive: 500,
-          },
+          // {
+          //   delay: 500,
+          //   withTapping: {
+          //     audios: ["key01","key01", "key02"],
+          //     count: 14,
+          //     delay: 180,
+          //   },
+          //   keepAlive: 500,
+          //   position: {
+          //     width: 870
+          //   }
+          // },
           {
             delay: 1000,
-            keepAlive: 1000,
+            withTapping: {
+              audios: ["key01","key01", "key02"],
+              count: 27,
+              delay: 180,
+            },
+            keepAlive: 800,
+            position: {
+              width: 1000
+            }
           },
         ]
       );
@@ -704,10 +728,13 @@ class cineIntro2B {
           audio.stop()
 
           setTimeout(() => {
+            audio2.setVolume(0.25).play() 
+          }, 1175);
+
+          setTimeout(() => {
             t1.stop();
             t2.stop();
             this.planetOnRadar?.setVisible(true);
-            audio2.play() //bartex acá podes separarlo en 2 setTimeouts si quieren que el sonido arranque un toque antes que el radar encontrando el planeta
           }, 3600);
           this.ticker.deleteJob(job.id);
         }
@@ -723,13 +750,21 @@ class cineIntro2B {
       this.dialogue = new DialogueManager(
         this.cine,
         [
-          "The radar has detected a planet in the vicinity that seems to have a possible energy source",
+          "The radar has detected a planet that seems to have a possible energy source",
         ],
-        ["intro2audio6"],
+        [], // ["intro2audio6"],
         [
           {
             delay: 4000,
-            keepAlive: 1000,
+             withTapping: {
+              audios: ["key01","key01", "key02"],
+              count: 30,
+              delay: 180,
+            },
+            keepAlive: 800,
+            position: {
+              width: 1000
+            }
           },
         ]
       );

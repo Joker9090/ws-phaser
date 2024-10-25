@@ -24,6 +24,7 @@ class HoldableButton extends Phaser.GameObjects.Container {
         y: number,
         radius: number,
         color: number,
+        colorText: string,
         callBack: Function,
         isPostal: boolean,
     ) {
@@ -38,12 +39,15 @@ class HoldableButton extends Phaser.GameObjects.Container {
         this.graphics = this.scene.add.graphics();
         this.text = this.scene.add.text(x + radius*2 + 10, y, isPostal ? "Hold SPACE to continue" : "Hold SPACE to skip", {
             fontSize: 28,
+            color: colorText,
             fontFamily: 'Arcade'
         }).setOrigin(0, 0.5)
     }
 
     updateCircle(progress: number) {
         this.graphics.clear();
+        //set opacity on depens of progress
+        this.graphics.setAlpha(progress);
         this.graphics.lineStyle(2, this.color, 1);
         this.graphics.strokeCircle(this.x, this.y, this.radius);
         this.graphics.beginPath();

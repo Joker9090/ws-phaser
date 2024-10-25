@@ -38,14 +38,18 @@ class cineIntro3 {
 
     // const spaceshipCrashSoundEffect = this.cine.sound.add("spaceshipCrash")
     // spaceshipCrashSoundEffect.play()
-
+    
     this.ticker.addJob(
       new TickerJob(
         1,
         10,
         () => { 
-          const audio = this.cine.sound.add("introSoundEffect8").setVolume(0.45)
+          const audio = this.cine.sound.add("introSoundEffect8").setVolume(0.55)
           audio.play()
+          setTimeout(() => {
+            const audio2 = this.cine.sound.add("introSoundEffect9").setVolume(0.55)
+            audio2.play()
+          },3000)
         },
         false,
         6000,

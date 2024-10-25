@@ -2,14 +2,21 @@ import Phaser from "phaser";
 import TextBox from "../assets/TextBox";
 
 // Scene in class
+
+export type WithTappingConfig = {
+  audios: string[];
+  delay: number;
+  count: number;
+};
 export type DialogConfig = {
-  keepAlive: number
-  delay: number
+  keepAlive: number;
+  delay: number;
+  withTapping?: WithTappingConfig;
   position?: {
-    x: number,
-    y: number,
-    width: number
-  }
+    x?: number;
+    y?: number;
+    width?: number;
+  };
 };
 class DialogueManager {
   scene: Phaser.Scene;
@@ -37,16 +44,16 @@ class DialogueManager {
   timeBetweenLetters: number = 70;
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   gameObjectsScaler?: {
-    x: number,
-    y: number
-  }
+    x: number;
+    y: number;
+  };
   textBox?: TextBox;
   constructor(
     scene: Phaser.Scene,
     texts: string[],
     audios?: string[],
     config?: DialogConfig[],
-    timeBetweenLetters?: number,
+    timeBetweenLetters?: number
   ) {
     this.scene = scene;
     this.cursors = this.scene.input.keyboard?.createCursorKeys();
@@ -64,54 +71,51 @@ class DialogueManager {
       x: window.innerWidth / 1920,
       y: window.innerHeight / 927,
     };
-
-
   }
 
   calculateHeigth(text: string, width: number | undefined) {
-    const temporalText = this.scene.add.text(0, 0, text, {
-      fixedWidth: width ? width : this.screenWidth * 0.8,
-      fontSize: 20,
-      lineSpacing: 24,
-      padding: {
-        x: 20,
-        y: 20
-      },
-      color: "black",
-      stroke: 'black',
-      wordWrap: {
-        width: width ? width * 0.8 : this.screenWidth * 0.8 - 80,
-      },
-    }).setVisible(false)
-    const textHeight = temporalText.height
-    return textHeight
+    const temporalText = this.scene.add
+      .text(0, 0, text, {
+        fixedWidth: width ? width : this.screenWidth * 0.8,
+        fontSize: 20,
+        lineSpacing: 20,
+        padding: {
+          x: 0,
+          y: 22,
+        },
+        color: "black",
+        stroke: "black",
+        wordWrap: {
+          width: width ? width * 0.8 : this.screenWidth * 0.8 - 80,
+        },
+      })
+      .setVisible(false);
+    const textHeight = temporalText.height;
+    return textHeight;
   }
 
-
   createContainer(text: string, config?: DialogConfig) {
-    this.container = this.scene.add
-      .container()
+    this.container = this.scene.add.container();
 
-    this.container.setPosition(
-      config?.position?.x ? config?.position?.x : (this.screenWidth * 0.2) / 2,
-      config?.position?.y ? config?.position?.y : this.screenHeigth * 0.75
-    );
-
-    this.textDisplayed = this.scene.add.text(40, 40, "", {
+    this.textDisplayed = this.scene.add.text(0, 8, "", {
       fontSize: 20,
       lineSpacing: 15,
       padding: {
-        x: 20,
-        y: 10
+        x: 0,
+        y: 14,
       },
       color: "#34cceb",
       stroke: "#34cceb",
       align: "center",
       fontFamily: "Arcade",
-      fixedWidth: config?.position?.width ? config?.position?.width : this.screenWidth * 0.8,
+      fixedWidth: config?.position?.width
+        ? config?.position?.width
+        : this.screenWidth * 0.8,
       fixedHeight: this.calculateHeigth(text, config?.position?.width),
       wordWrap: {
-        width: config?.position?.width ? config?.position?.width * 0.8 : this.screenWidth * 0.8 - 80,
+        width: config?.position?.width
+          ? config?.position?.width * 0.8
+          : this.screenWidth * 0.8 - 80,
       },
     });
 
@@ -122,42 +126,103 @@ class DialogueManager {
     //   this.textDisplayed.width,
     //   this.textDisplayed.height)
 
+    // const addSpriteMiddlePoint = (sprite: Phaser.GameObjects.Sprite) => {
+    //   sprite.setPosition(
+    //     this.scene.cameras.main.width / 2,
+    //     this.scene.cameras.main.height / 2
+    //   )
+    // }
 
-    const graphics = this.scene.add.graphics()
+    // const sprite = this.scene.add.sprite(0, 0, "textBox").setOrigin(0.5,0.5)
+    // addSpriteMiddlePoint(sprite)
+
+    const graphics = this.scene.add.graphics();
     graphics.fillStyle(0x192224, 0.6);
-    graphics.lineStyle(5, 0x34cceb, 0.6)
+    graphics.lineStyle(5, 0x34cceb, 0.6);
     graphics.strokeRoundedRect(
       this.textDisplayed.x,
-      this.textDisplayed.y - 10,
-      this.textDisplayed.width,
-      this.textDisplayed.height,
-      this.borderRounder
-    )
-    graphics.fillRoundedRect(
-      this.textDisplayed.x,
-      this.textDisplayed.y - 10,
+      this.textDisplayed.y - 6,
       this.textDisplayed.width,
       this.textDisplayed.height,
       this.borderRounder
     );
+    graphics.fillRoundedRect(
+      this.textDisplayed.x,
+      this.textDisplayed.y - 6,
+      this.textDisplayed.width,
+      this.textDisplayed.height,
+      this.borderRounder
+    );
+    graphics.setAlpha(0);
+    //tween to show the text
+    this.scene.tweens.add({
+      targets: graphics,
+      alpha: 1,
+      duration: 350,
+      ease: "Linear",
+      repeat: 0,
+      yoyo: false,
+    });
 
     // Use the rounded rectangle as a mask for the text
 
-    this.container
-      .add([graphics, this.textDisplayed])
-      .setVisible(false);
+    this.container.add([graphics, this.textDisplayed]).setVisible(false);
 
     if (this.gameObjectsScaler) {
-      this.container.setScale(
+      const scale =
         this.gameObjectsScaler.x < this.gameObjectsScaler.y
           ? this.gameObjectsScaler.y
-          : this.gameObjectsScaler.x
-      );
+          : this.gameObjectsScaler.x;
+
+      this.container.setScale(scale);
+
+      const XcenterOfText =
+        this.scene.cameras.main.width / 2 -
+        (this.textDisplayed.width * scale) / 2;
+
+      if (config?.position && config?.position.x && config?.position.y) {
+        this.container
+          .setPosition(
+            XcenterOfText + config?.position?.x ? config?.position?.x : 0,
+            this.scene.cameras.main.height / 2 + config?.position?.y
+              ? config?.position?.y
+              : 0
+          )
+          .setDepth(99);
+      } else {
+        this.container
+          .setPosition(
+            XcenterOfText,
+            this.scene.cameras.main.height -
+              (this.calculateHeigth(text, undefined) + 50) * scale
+          )
+          .setDepth(99);
+      }
+    } else {
+      const XcenterOfText =
+        this.scene.cameras.main.width / 2 - this.textDisplayed.width / 2;
+
+      if (config?.position && config?.position.x && config?.position.y) {
+        this.container
+          .setPosition(
+            XcenterOfText + config?.position?.x ? config?.position?.x : 0,
+            this.scene.cameras.main.height / 2 + config?.position?.y
+              ? config?.position?.y
+              : 0
+          )
+          .setDepth(99);
+      } else {
+        this.container
+          .setPosition(
+            XcenterOfText,
+            this.scene.cameras.main.height -
+              (this.calculateHeigth(text, undefined) + 50)
+          )
+          .setDepth(99);
+      }
     }
 
     this.scene.cameras.main.ignore(this.container);
-    
-
   }
 
   getState(fn: Function) {
@@ -175,17 +240,36 @@ class DialogueManager {
 
   play() {
     // if dely exist, call delayed
-    this.createContainer(this.texts[this.textCounter], this.config[this.textCounter])
-    if (this.config[this.textCounter] && this.config[this.textCounter].delay) {
+    const texts = this.texts[this.textCounter];
+    const config = this.config[this.textCounter];
+    this.createContainer(texts, config);
+    if (config && config.delay) {
       setTimeout(() => {
         this.state = "PLAY";
         this.container?.setVisible(true);
-        this.textBuilder(this.texts[this.textCounter], this.timeBetweenLetters);
-      }, this.config[this.textCounter].delay);
+        this.textBuilder(texts, this.timeBetweenLetters);
+        //   this.textBuilder(texts, this.timeBetweenLetters);
+        if (config.withTapping) {
+          const { count, delay, audios } = config.withTapping;
+          let left = count || 1;
+          const randomAudio = Math.floor(Math.random() * audios.length);
+          this.playAudio(audios[randomAudio]);
+          left -= 1;
+          const audioInterval = setInterval(() => {
+            left -= 1;
+            if (left <= 0) clearInterval(audioInterval);
+            if (config.withTapping && audios) {
+              const randomAudio = Math.floor(Math.random() * audios.length);
+              this.playAudio(audios[randomAudio], 0.55);
+            }
+          }, delay);
+        }
+      }, config.delay);
     } else {
       this.state = "PLAY";
       this.container?.setVisible(true);
-      this.textBuilder(this.texts[this.textCounter], this.timeBetweenLetters);
+      this.textBuilder(texts, this.timeBetweenLetters);
+      //this.textBuilder(texts, this.timeBetweenLetters);
     }
   }
 
@@ -196,45 +280,56 @@ class DialogueManager {
 
   destroyContainer() {
     // this.container?.getAll().forEach((el)=>el.destroy())
-    this.container?.destroy()
+    this.container?.destroy();
   }
 
   continueWithNextText() {
     this.canChangeText = false;
     if (this.textCounterMax) {
+      const texts = this.texts[this.textCounter];
+      const config = this.config[this.textCounter];
       if (this.textCounter < this.textCounterMax) {
-        if (
-          this.config[this.textCounter] &&
-          this.config[this.textCounter].delay
-        ) {
-          this.destroyContainer()
-          this.createContainer(this.texts[this.textCounter], this.config[this.textCounter])
+        if (config && config.delay) {
+          this.destroyContainer();
+          this.createContainer(texts, config);
           // this.continueText?.setVisible(false);
           // hide text container
           this.container?.setVisible(false);
           setTimeout(() => {
             this.container?.setVisible(true);
             this.textDisplayed?.setText("");
-            this.textBuilder(this.texts[this.textCounter], this.timeBetweenLetters);
-          }, this.config[this.textCounter].delay);
+            this.textBuilder(texts, this.timeBetweenLetters);
+            if (config.withTapping) {
+              const { count, delay, audios } = config.withTapping;
+              let left = count || 1;
+              const randomAudio = Math.floor(Math.random() * audios.length);
+              this.playAudio(audios[randomAudio]);
+              left -= 1;
+              const audioInterval = setInterval(() => {
+                left -= 1;
+                if (left <= 0) clearInterval(audioInterval);
+                if (config.withTapping && audios) {
+                  const randomAudio = Math.floor(Math.random() * audios.length);
+                  this.playAudio(audios[randomAudio], 0.55);
+                }
+              }, delay);
+            }
+          }, config.delay);
         } else {
-          this.destroyContainer()
-          this.createContainer(this.texts[this.textCounter], this.config[this.textCounter])
+          this.destroyContainer();
+          this.createContainer(texts, config);
           this.textDisplayed?.setText("");
           // this.continueText?.setVisible(false);
-          this.textBuilder(this.texts[this.textCounter], this.timeBetweenLetters);
+          this.textBuilder(texts, this.timeBetweenLetters);
         }
       } else {
-        if (
-          this.config[this.textCounter] &&
-          this.config[this.textCounter].delay
-        ) {
+        if (config && config.delay) {
           setTimeout(() => {
             this.stateFunctions.forEach((fn) => {
               fn("FINISHED");
             });
             this.container?.destroy();
-          }, this.config[this.textCounter].delay);
+          }, config.delay);
         } else {
           this.stateFunctions.forEach((fn) => {
             fn("FINISHED");
@@ -313,7 +408,7 @@ class DialogueManager {
     if (index === 0) this.playAudio(this.audios[this.textCounter]);
     if (index < message.length) {
       const self = this;
-      target.setText(target.text + message[index]);
+      target.setText((target.text + message[index]).toUpperCase());
       setTimeout(() => {
         index++;
         callBack.bind(self)(
@@ -337,12 +432,12 @@ class DialogueManager {
     }
   }
 
-  playAudio(name?: string) {
-    if (name){
+  playAudio(name?: string, customVolume: number = 1) {
+    if (name) {
       if (this.activeAudio) {
         this.activeAudio.stop();
       }
-      this.activeAudio = this.scene.sound.add(name).setVolume(1);
+      this.activeAudio = this.scene.sound.add(name).setVolume(customVolume);
       this.activeAudio.play();
     }
   }

@@ -110,11 +110,19 @@ class cineMovie1 {
                 [""],
                 [
                     {
-                        delay: 1000,
-                        keepAlive: 1000,
+                      delay: 500,
+                      withTapping: {
+                        audios: ["key01","key01", "key02"],
+                        count: 19,
+                        delay: 180,
+                      },
+                      keepAlive: 1250,
+                      position: {
+                        width: 1000
+                      }
                     },
-                ],
-                90
+                  ],
+                  60
             );
             this.dialogue?.play();
 

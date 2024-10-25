@@ -666,7 +666,7 @@ class AssetsLoader {
         // console.log("BARTO ACAA")
         sceneToPlay = () =>
           this.scene.makeTransition("CinematographyMod", {
-            keyname: "cine_intro_1",
+            keyname: "cine_movie_1",
           });
         // this.scene.makeTransition("Game", { level: 0, lifes: 3 });
 

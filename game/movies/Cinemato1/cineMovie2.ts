@@ -22,6 +22,8 @@ class cineMovie2 {
         const tickerMS = 100;
         this.ticker = new Ticker(tickerMS);
         this.playCine();
+        this.cine.sound.add("C2_5").setVolume(0.25).play()
+        this.cine.sound.add("C2_14").setVolume(0.25).play()
 
     }
 
@@ -65,8 +67,7 @@ class cineMovie2 {
             window.innerWidth,
             window.innerHeight,
             0,
-            0.3
-        );
+        ).setAlpha(0.3);
 
         const container = this.cine.add
             .container(middlePoint.x, middlePoint.y)
@@ -98,15 +99,38 @@ class cineMovie2 {
         const part1 = (job: TickerJob) => {
             this.dialogue = new DialogueManager(
                 this.cine,
-                ["It will be enough to get me going for now."],
+                [
+                    "Come on! Please work...",
+                    "Yeah! That's what I'm talking about"
+                ],
                 [""],
                 [
                     {
-                        delay: 2000,
-                        keepAlive: 3000,
+                        delay: 1000,
+                        withTapping: {
+                            audios: ["key01", "key01", "key02"],
+                            count: 12,
+                            delay: 180,
+                        },
+                        keepAlive: 1000,
+                        position: {
+                            width: 600
+                        }
+                    },
+                    {
+                        delay: 1000,
+                        withTapping: {
+                            audios: ["key01", "key01", "key02"],
+                            count: 15,
+                            delay: 180,
+                        },
+                        keepAlive: 1000,
+                        position: {
+                            width: 700
+                        }
                     },
                 ],
-                90
+                80
             );
             this.dialogue?.play();
 
@@ -121,7 +145,7 @@ class cineMovie2 {
             this.dialogue?.getState(dialogueListener);
             this.cine.tweens.add({
                 targets: [this.aroCondensadorBottom, this.aroCondensadorTop],
-                y:  60,
+                y: 60,
                 x: 40,
                 duration: 2000,
                 yoyo: true,
@@ -130,25 +154,25 @@ class cineMovie2 {
             });
             this.cine.tweens.add({
                 targets: [camera],
-                zoom:  1.3,
+                zoom: 1.3,
                 duration: 20000,
                 ease: "ease",
             });
             this.cine.tweens.add({
-                targets: [this.brilloCondensador],
-                alpha:  0.6,
-                duration: 1500,
+                targets: [darkMask],
+                alpha: 1,
+                delay: 7500,
+                duration: 500,
                 yoyo: false,
-                ease: "expo.inout",
-                loop: -1,
+                ease: "ease",
+                loop: 0,
             });
-
         };
 
 
 
         this.ticker.addJob(
-            new TickerJob(1, 10, part1, false, undefined, true,  (job: TickerJob) => {
+            new TickerJob(1, 10, part1, false, undefined, true, (job: TickerJob) => {
                 // soundChangeScene.stop()
                 this.nextCine = true;
             })

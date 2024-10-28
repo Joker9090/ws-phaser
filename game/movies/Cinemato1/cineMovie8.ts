@@ -19,9 +19,8 @@ class cineMovie8 {
         const tickerMS = 100;
         this.ticker = new Ticker(tickerMS);
         this.playCine();
-        // music
-        this.cine.sound.add("introSoundEffect1").setVolume(0.25).play()
-        this.cine.sound.add("introSoundEffect2").setVolume(0.25).play()
+        // music & music
+        
     }
 
     playCine(this: cineMovie8) {
@@ -47,7 +46,7 @@ class cineMovie8 {
             () => { 
             },
             false,
-            3000,
+            1000,
             true,
             (job: TickerJob) => {
               // spaceshipCrashSoundEffect.stop()

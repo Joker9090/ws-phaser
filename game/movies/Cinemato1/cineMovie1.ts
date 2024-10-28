@@ -27,6 +27,8 @@ class cineMovie1 {
         this.ticker = new Ticker(tickerMS);
         this.playCine();
         // music
+        this.cine.sound.add("C2_1").setVolume(0.25).play()
+
     }
 
     playCine(this: cineMovie1) {
@@ -53,11 +55,11 @@ class cineMovie1 {
         this.starsBackground = this.cine.add.image(0, 0, "starsBackground").setOrigin(0.5)
         this.nubeCielo = this.cine.add.image(-500, 0, "nubeCielo").setOrigin(0.5).setScale(2, 1)
         this.nubeBg3 = this.cine.add.image(-250, middlePoint.y - 200, "nubeBg3").setOrigin(0.5, 1).setScale(1.3)
-        this.nubeBg2 = this.cine.add.image( 100,middlePoint.y - 200, "nubeBg2").setOrigin(0.5, 1).setScale(1.3)
-        this.nubeBg1 = this.cine.add.image(-200,middlePoint.y - 200, "nubeBg1").setOrigin(0.5, 1).setScale(1.5)
+        this.nubeBg2 = this.cine.add.image(100, middlePoint.y - 200, "nubeBg2").setOrigin(0.5, 1).setScale(1.3)
+        this.nubeBg1 = this.cine.add.image(-200, middlePoint.y - 200, "nubeBg1").setOrigin(0.5, 1).setScale(1.5)
         this.backgroundCine1 = this.cine.add.image(0, middlePoint.y + 150, "backgroundCine1").setOrigin(0.5, 1)
-        this.naveSinLights = this.cine.add.image(0,0, "naveSinLights").setOrigin(0.5).setScale(0.8)
-        this.naveWithLights = this.cine.add.image(0,0, "naveWithLights").setOrigin(0.5).setAlpha(0).setScale(0.8)
+        this.naveSinLights = this.cine.add.image(0, 0, "naveSinLights").setOrigin(0.5).setScale(0.8)
+        this.naveWithLights = this.cine.add.image(0, 0, "naveWithLights").setOrigin(0.5).setAlpha(0).setScale(0.8)
 
         const darkMask = this.cine.add.rectangle(
             0,
@@ -76,8 +78,8 @@ class cineMovie1 {
             this.nubeBg2,
             this.nubeBg1,
             this.backgroundCine1,
-            this.naveSinLights,
             this.naveWithLights,
+            this.naveSinLights,
             darkMask
         ];
 
@@ -110,19 +112,19 @@ class cineMovie1 {
                 [""],
                 [
                     {
-                      delay: 500,
-                      withTapping: {
-                        audios: ["key01","key01", "key02"],
-                        count: 19,
-                        delay: 180,
-                      },
-                      keepAlive: 1250,
-                      position: {
-                        width: 1000
-                      }
+                        delay: 1000,
+                        withTapping: {
+                            audios: ["key01", "key01", "key02"],
+                            count: 12,
+                            delay: 180,
+                        },
+                        keepAlive: 1250,
+                        position: {
+                            width: 600
+                        }
                     },
-                  ],
-                  60
+                ],
+                80
             );
             this.dialogue?.play();
 

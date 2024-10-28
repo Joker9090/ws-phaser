@@ -11,6 +11,8 @@ class cineMovie6 {
   //assets
   backgroundPressButton?: Phaser.GameObjects.Image;
   backgroundButtonsOn?: Phaser.GameObjects.Image;
+  buttonsOnA?: Phaser.GameObjects.Image;
+  buttonsOnB?: Phaser.GameObjects.Image;
   brazoPressButton?: Phaser.GameObjects.Image;
   pinkButton?: Phaser.GameObjects.Image;
   violetButton?: Phaser.GameObjects.Image;
@@ -24,7 +26,12 @@ class cineMovie6 {
     const tickerMS = 100;
     this.ticker = new Ticker(tickerMS);
     this.playCine();
-    // music
+    // music & sound
+    this.cine.sound.add("C2_10").setVolume(0.25).play()
+    setTimeout(() => {
+      this.cine.sound.add("C2_11").setVolume(0.25).play()
+    }, 1000)
+
   }
 
   playCine(this: cineMovie6) {
@@ -49,15 +56,17 @@ class cineMovie6 {
     this.backgroundPressButton = this.cine.add
       .image(0, 0, "backgroundPressButton")
       .setOrigin(0.5);
-    this.backgroundButtonsOn = this.cine.add
-      .image(0, 0, "backgroundButtonsOn")
+    this.buttonsOnA = this.cine.add
+      .image(0, 0, "buttonsOnA")
+      .setOrigin(0.5);
+    this.buttonsOnB = this.cine.add
+      .image(0, 0, "buttonsOnB")
       .setOrigin(0.5);
     this.brazoPressButton = this.cine.add
       .image(300, -500, "brazoPressButton")
       .setOrigin(0, 0.5);
-
     this.pinkButton = this.cine.add
-      .image(0, 0, "pinkButton")
+      .image(-50, -60, "pinkButton")
       .setOrigin(0.5)
       .setVisible(false);
     this.violetButton = this.cine.add
@@ -70,15 +79,16 @@ class cineMovie6 {
     this.graphics = this.cine.add.graphics();
     this.graphics.fillStyle(0xffffff, 0);
     const graphg = this.graphics.fillCircle(-60, -185, 350).setScale
-    (0.9,0.44);
- 
+      (0.9, 0.44);
+
     console.log(this.cine);
 
     const gameObjects = [
       this.backgroundPressButton,
-      this.backgroundButtonsOn,
+      this.buttonsOnA,
+      this.buttonsOnB,
       this.violetButton,
-      // this.pinkButton,
+      this.pinkButton,
       this.brazoPressButton,
     ];
 
@@ -86,8 +96,9 @@ class cineMovie6 {
     this.mask?.setShape(graphg);
     console.log(this.violetButton.x, this.violetButton.y);
 
-    this.mask.geometryMask.setPosition(middlePoint.x , middlePoint.y)
+    this.mask.geometryMask.setPosition(middlePoint.x, middlePoint.y)
     this.violetButton.setMask(this.mask);
+    this.pinkButton.setMask(this.mask);
 
     const darkMask = this.cine.add.rectangle(
       0,
@@ -95,7 +106,7 @@ class cineMovie6 {
       window.innerWidth * 1.1,
       window.innerHeight * 1.1,
       0,
-      0
+      0.2
     );
 
     const container = this.cine.add
@@ -126,51 +137,64 @@ class cineMovie6 {
     const part1 = (job: TickerJob) => {
       this.dialogue = new DialogueManager(
         this.cine,
-        ["Power core is stable...", "Thrusters are ready..."],
+        ["Power core is stable..."],
         ["", ""],
         [
           {
-            delay: 500,
-            keepAlive: 1000,
-          },
-          {
-            delay: 1500,
-            keepAlive: 1000,
+            delay: 1000,
+            withTapping: {
+              audios: ["key01", "key01", "key02"],
+              count: 12,
+              delay: 180,
+            },
+            keepAlive: 1250,
+            position: {
+              width: 450
+            }
           },
         ],
-        90
+        80
       );
-        this.dialogue?.play();
+      this.dialogue?.play();
       this.cine.tweens.add({
-        targets: [ this.brazoPressButton ],
-        x: -250,
-        y: -200,
+        targets: [this.brazoPressButton],
+        x: -350,
+        y: -275,
         delay: 0,
-        duration: 3500,
-        onComplete: ()=> {
-          this.violetButton?.setTint(0xff0000)
+        duration: 2000,
+        onComplete: () => {
+          // this.violetButton?.setTint(0xff0000)
         },
         ease: "ease",
         yoyo: true
-    });
-    this.cine.tweens.add({
-      targets: [ this.backgroundButtonsOn ],
-      alpha: 0,
-      delay: 0,
-      duration: 1000,
-      loop: -1,
-      ease: "expo",
-  });
+      });
       this.cine.tweens.add({
-        targets: [ this.violetButton ],
-        y: 100,
-        delay: 2000,
-        duration: 1500,
-        onComplete: ()=> {
-          this.violetButton?.setTint(0xff0000)
+        targets: [this.buttonsOnA],
+        alpha: 0,
+        delay: 0,
+        duration: 733,
+        loop: -1,
+        ease: "expo",
+      });
+      this.cine.tweens.add({
+        targets: [this.buttonsOnB],
+        alpha: 0,
+        delay: 1000,
+        duration: 589,
+        loop: -1,
+        ease: "expo",
+      });
+      this.cine.tweens.add({
+        targets: [this.violetButton, this.pinkButton],
+        y: 0,
+        delay: 1500,
+        duration: 500,
+        onComplete: () => {
+          this.violetButton?.setVisible(false)
+          this.pinkButton?.setVisible(true)
         },
         ease: "ease",
-    });
+      });
       const dialogueListener = (newState: string, nextText?: string) => {
         if (newState === "CONTINUE") {
         } else if (newState === "FINISHED") {

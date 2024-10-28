@@ -348,6 +348,16 @@ const loadAssets = {
   //MOVIES
   IntroMovie: {
     assets: [
+      [
+        "audio",
+        "key01",
+        "/sounds/bs15.mp3",
+      ],
+      [
+        "audio",
+        "key02",
+        "/sounds/bs13.mp3",
+      ],
       // INTRO
       ["image", "startButton", "/movies/startButton.png"],
       ["image", "backgroundStarsMovie", "/movies/intro/scene1/fondo1.png"],
@@ -527,6 +537,9 @@ const loadAssets = {
       ["image", "noodleCup", "/movies/cinemato1/scene3/noodleCup.png"],
       ["image", "vent", "/movies/cinemato1/scene3/vent.png"],
       ["image", "lucesComedor", "/movies/cinemato1/scene3/lucesComedor.png"],
+      ["image", "luz1", "/movies/cinemato1/scene3/luz1.png"],
+      ["image", "luz2", "/movies/cinemato1/scene3/luz2.png"],
+      ["image", "luz3", "/movies/cinemato1/scene3/luz3.png"],
       // SCENE 4
       ["image", "comidaPopUp", "/movies/cinemato1/scene4/comidaPopUp.png"],
       ["image", "planetaPopUp", "/movies/cinemato1/scene4/planetaPopUp.png"],
@@ -541,6 +554,8 @@ const loadAssets = {
       // SCENE 6
       ["image", "backgroundPressButton", "/movies/cinemato1/scene6/backgroundPressButton.png"],
       ["image", "backgroundButtonsOn", "/movies/cinemato1/scene6/backgroundButtonsOn.png"],
+      ["image", "buttonsOnA", "/movies/cinemato1/scene6/buttonsOnA.png"],
+      ["image", "buttonsOnB", "/movies/cinemato1/scene6/buttonsOnB.png"],
       ["image", "brazoPressButton", "/movies/cinemato1/scene6/brazoPressButton.png"],
       ["image", "pinkButton", "/movies/cinemato1/scene6/pinkButton.png"],
       ["image", "violetButton", "/movies/cinemato1/scene6/violetButton.png"],
@@ -576,6 +591,23 @@ const loadAssets = {
       ["image", "stoneEarth1", "/movies/cinemato1/scene9/piedra1.png"],
       ["image", "stoneEarth2", "/movies/cinemato1/scene9/piedra3.png"],
       ["image", "stoneEarth3", "/movies/cinemato1/scene9/piedra4-1.png"],
+      ["audio", "C2_1", "/movies/cinemato1/soundEffects/C2_1.mp3"],
+      ["audio", "C2_2", "/movies/cinemato1/soundEffects/C2_2.mp3"],
+      ["audio", "C2_3", "/movies/cinemato1/soundEffects/C2_3.mp3"],
+      ["audio", "C2_4", "/movies/cinemato1/soundEffects/C2_4.mp3"],
+      ["audio", "C2_5", "/movies/cinemato1/soundEffects/C2_5.mp3"],
+      ["audio", "C2_6", "/movies/cinemato1/soundEffects/C2_6.mp3"],
+      ["audio", "C2_7", "/movies/cinemato1/soundEffects/C2_7.mp3"],
+      ["audio", "C2_8", "/movies/cinemato1/soundEffects/C2_8.mp3"],
+      ["audio", "C2_9", "/movies/cinemato1/soundEffects/C2_9.mp3"],
+      ["audio", "C2_10", "/movies/cinemato1/soundEffects/C2_10.mp3"],
+      ["audio", "C2_11", "/movies/cinemato1/soundEffects/C2_11.mp3"],
+      ["audio", "C2_12", "/movies/cinemato1/soundEffects/C2_12.mp3"],
+      ["audio", "C2_13", "/movies/cinemato1/soundEffects/C2_13.mp3"],
+      ["audio", "C2_14", "/movies/cinemato1/soundEffects/C2_14.mp3"],
+      ["audio", "C2_15", "/movies/cinemato1/soundEffects/C2_15.mp3"],
+      ["audio", "C2_16", "/movies/cinemato1/soundEffects/C2_16.mp3"],
+
     ]
   }
 };
@@ -666,6 +698,7 @@ class AssetsLoader {
         // console.log("BARTO ACAA")
         sceneToPlay = () =>
           this.scene.makeTransition("CinematographyMod", {
+            // keyname: "cine_intro_1",
             keyname: "cine_movie_1",
           });
         // this.scene.makeTransition("Game", { level: 0, lifes: 3 });
@@ -681,7 +714,21 @@ class AssetsLoader {
           .setScale(0.3)
           .setInteractive();
         if (sceneToPlay) button.on("pointerdown", sceneToPlay);
+        this.scene.tweens.add({
+          targets: button,
+          rotation: Math.PI * 2,
+          duration: 10000,
+          loop: -1,
+        })
+        this.scene.tweens.add({
+          targets: button,
+          scale: 0.35,
+          duration: 3333,
+          loop: -1,
+          yoyo: true
+        })
       });
+
 
       const scenesTitles: Array<SceneKeys> = [
         "Menu",

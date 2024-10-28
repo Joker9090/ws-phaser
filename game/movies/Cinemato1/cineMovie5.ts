@@ -23,7 +23,8 @@ class cineMovie5 {
         const tickerMS = 100;
         this.ticker = new Ticker(tickerMS);
         this.playCine();
-
+        // sound & music
+        this.cine.sound.add("C2_15").setVolume(0.25).play()
     }
 
     playCine(this: cineMovie5) {
@@ -47,10 +48,10 @@ class cineMovie5 {
         };
 
         this.astro = this.cine.add.image(0, 0, "astro").setOrigin(0.5)
-        this.brazoCintDer = this.cine.add.image(600, 50, "brazoCintDer").setOrigin(0,0.5)
-        this.cinturonDer = this.cine.add.image(600 , 50, "cinturonDer").setOrigin(0,0.5)
-        this.cinturonIzq = this.cine.add.image(-600 , 50, "cinturonIzq").setOrigin(1,0.5)
-        this.brazoCintIzq = this.cine.add.image(-600, 50, "brazoCintIzq").setOrigin(1,0.4)
+        this.brazoCintDer = this.cine.add.image(300, 50, "brazoCintDer").setOrigin(0, 0.5)
+        this.cinturonDer = this.cine.add.image(300, 50, "cinturonDer").setOrigin(0, 0.5)
+        this.cinturonIzq = this.cine.add.image(-300, 50, "cinturonIzq").setOrigin(1, 0.5)
+        this.brazoCintIzq = this.cine.add.image(-300, 50, "brazoCintIzq").setOrigin(1, 0.4)
         this.sillon = this.cine.add.image(0, 0, "sillon").setOrigin(0.5)
 
         const gameObjects = [
@@ -102,21 +103,24 @@ class cineMovie5 {
             this.dialogue = new DialogueManager(
                 this.cine,
                 [
-                    "With those levels of oxygen concentration there must be something I can eat.",
                     "Let’s get to it then."
                 ],
                 [""],
                 [
                     {
-                        delay: 2000,
-                        keepAlive: 500,
-                    },
-                    {
-                        delay: 500,
-                        keepAlive: 3000,
+                        delay: 1500,
+                        withTapping: {
+                            audios: ["key01", "key01", "key02"],
+                            count: 12,
+                            delay: 180,
+                        },
+                        keepAlive: 2000,
+                        position: {
+                            width: 400
+                        }
                     },
                 ],
-                90
+                80
             );
             this.dialogue?.play();
 
@@ -132,16 +136,19 @@ class cineMovie5 {
             this.cine.tweens.add({
                 targets: [this.cinturonDer, this.brazoCintDer],
                 x: 50,
-                y:0,
-                duration: 8000,
+                y: 0,
+                duration: 2000,
                 ease: "ease.out",
             });
 
-             this.cine.tweens.add({
+            this.cine.tweens.add({
                 targets: [this.cinturonIzq, this.brazoCintIzq],
-                x: 200,
-                y:0,
-                duration: 8000,
+                x: 175,
+                y: 0,
+                duration: 2000,
+                onComplete: () => {
+                    this.cine.sound.add("C2_9").setVolume(0.25).play()
+                },
                 ease: "ease.out",
             });
             this.cine.tweens.add({
@@ -152,19 +159,19 @@ class cineMovie5 {
             });
 
             this.cine.tweens.add({
-                targets: [ this.brazoCintDer],
+                targets: [this.brazoCintDer],
                 x: 650,
-                delay: 9500,
+                delay: 2000,
                 y: 150,
                 duration: 4000,
                 ease: "ease.in",
             });
 
-             this.cine.tweens.add({
+            this.cine.tweens.add({
                 targets: [this.brazoCintIzq],
                 y: 200,
                 x: -650,
-                delay: 9500,
+                delay: 2000,
                 duration: 4000,
                 ease: "ease.in",
             });

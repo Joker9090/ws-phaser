@@ -16,6 +16,9 @@ class cineMovie3 {
     noodleCup?: Phaser.GameObjects.Image;
     vent?: Phaser.GameObjects.Image;
     lucesComedor?: Phaser.GameObjects.Image;
+    luz1?: Phaser.GameObjects.Image;
+    luz2?: Phaser.GameObjects.Image;
+    luz3?: Phaser.GameObjects.Image;
     vent2?: Phaser.GameObjects.Image;
     aspasVent2?: Phaser.GameObjects.Image;
     vent3?: Phaser.GameObjects.Image;
@@ -28,7 +31,13 @@ class cineMovie3 {
         const tickerMS = 100;
         this.ticker = new Ticker(tickerMS);
         this.playCine();
-
+        // sound & music
+        setTimeout(() => {
+            this.cine.sound.add("C2_2").setVolume(0.25).play()
+        }, 500)
+        setTimeout(() => {
+            this.cine.sound.add("C2_6").setVolume(0.25).play()
+        }, 2500)
     }
 
     playCine(this: cineMovie3) {
@@ -55,7 +64,10 @@ class cineMovie3 {
         this.brazoDer = this.cine.add.image(450, middlePoint.y + 50, "brazoDer").setOrigin(0.5, 1)
         this.brazoIzq = this.cine.add.image(-550, middlePoint.y + 100, "brazoIzq").setOrigin(0.5, 1)
         this.noodleCup = this.cine.add.image(100, 200, "noodleCup").setOrigin(0.5)
-        this.lucesComedor = this.cine.add.image(0, 0, "lucesComedor").setOrigin(0.5)
+        // this.lucesComedor = this.cine.add.image(0, 0, "lucesComedor").setOrigin(0.5)
+        this.luz1 = this.cine.add.image(0, 0, "luz1").setOrigin(0.5)
+        this.luz2 = this.cine.add.image(0, 0, "luz2").setOrigin(0.5)
+        this.luz3 = this.cine.add.image(0, 0, "luz3").setOrigin(0.5)
         this.aspasVent = this.cine.add.image(647, -250, "aspasVent").setOrigin(0.5)
         this.vent = this.cine.add.image(647, -250, "vent").setOrigin(0.5)
         this.aspasVent2 = this.cine.add.image(647, 0, "aspasVent").setOrigin(0.5)
@@ -65,7 +77,10 @@ class cineMovie3 {
 
         const gameObjects = [
             this.backgroundComerdor,
-            this.lucesComedor,
+            // this.lucesComedor,
+            this.luz1,
+            this.luz2,
+            this.luz3,
             this.vent,
             this.aspasVent,
             this.vent2,
@@ -115,15 +130,23 @@ class cineMovie3 {
         const part1 = (job: TickerJob) => {
             this.dialogue = new DialogueManager(
                 this.cine,
-                ["Now I should worry about getting some source of energy for myself."],
+                ["Now I should worry about getting some food."],
                 [""],
                 [
                     {
-                        delay: 2000,
-                        keepAlive: 2000,
+                      delay: 1000,
+                      withTapping: {
+                        audios: ["key01","key01", "key02"],
+                        count: 18,
+                        delay: 180,
+                      },
+                      keepAlive: 1250,
+                      position: {
+                        width: 800
+                      }
                     },
-                ],
-                90
+                  ],
+                80
             );
             this.dialogue?.play();
 
@@ -145,9 +168,29 @@ class cineMovie3 {
             });
 
             this.cine.tweens.add({
-                targets: [this.lucesComedor],
+                targets: [this.luz1],
                 alpha: 0.1,
-                duration: 1500,
+                delay: 300,
+                duration: 666,
+                loop: -1,
+                ease: "expo",
+            });
+
+            
+            this.cine.tweens.add({
+                targets: [this.luz2],
+                alpha: 0.1,
+                duration: 555,
+                loop: -1,
+                ease: "expo",
+            });
+
+            
+            this.cine.tweens.add({
+                targets: [this.luz3],
+                delay: 100,
+                alpha: 0.1,
+                duration: 333,
                 loop: -1,
                 ease: "expo",
             });

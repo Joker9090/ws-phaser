@@ -25,7 +25,12 @@ class cineMovie9 {
     const tickerMS = 100;
     this.ticker = new Ticker(tickerMS);
     this.playCine();
-    // music
+    // music & sound
+    this.cine.sound.add("C2_4").setVolume(0.25).play()
+    this.cine.sound.add("C2_13").setVolume(0.25).play()
+    setTimeout(() => {
+      this.cine.sound.add("C2_16").setVolume(0.25).play()
+  }, 3500)
   }
 
   playCine(this: cineMovie9) {
@@ -53,11 +58,11 @@ class cineMovie9 {
     this.backgroundEarthStars = this.cine.add.image(0, 0, "backgroundEarthStars").setOrigin(0.5);
     this.backgroundEarth = this.cine.add.image(0, 0, "backgroundEarth").setOrigin(0.5);
     this.nubesEarth = this.cine.add.image(0, 0, "nubesEarth").setOrigin(0.5);
-    this.planetEarth = this.cine.add.image(200, -200, "planetEarth").setOrigin(0.5).setScale(0.5);
+    this.planetEarth = this.cine.add.image(350, -200, "planetEarth").setOrigin(0.5).setScale(0.35);
     this.shipCine2Scene9 = this.cine.add.image(-200, 200, "shipCine2Scene9").setOrigin(0.5);
-    this.stoneEarth1 = this.cine.add.image(-middlePoint.x - 400, -400, "stoneEarth1").setOrigin(0, 0.5);
-    this.stoneEarth2 = this.cine.add.image(-middlePoint.x - 300, -200, "stoneEarth2").setOrigin(0.5);
-    this.stoneEarth3 = this.cine.add.image(-middlePoint.x - 200, 0, "stoneEarth3").setOrigin(0.5);
+    this.stoneEarth1 = this.cine.add.image(-middlePoint.x - 400, -400, "stoneEarth1").setOrigin(0, 0.5).setVisible(false);
+    this.stoneEarth2 = this.cine.add.image(-middlePoint.x - 300, -200, "stoneEarth2").setOrigin(0.5).setVisible(false);
+    this.stoneEarth3 = this.cine.add.image(-200, 200, "stoneEarth3").setOrigin(0.5).setScale(0.1).setVisible(false)
 
     const gameObjects = [
       this.backgroundEarth,
@@ -111,15 +116,31 @@ class cineMovie9 {
         ["", ""],
         [
           {
-            delay: 500,
-            keepAlive: 1000,
+            delay: 1000,
+            withTapping: {
+              audios: ["key01","key01", "key02"],
+              count: 10,
+              delay: 180,
+            },
+            keepAlive: 1250,
+            position: {
+              width: 400
+            }
           },
           {
-            delay: 500,
-            keepAlive: 1000,
-          },
+            delay: 1000,
+            withTapping: {
+              audios: ["key01","key01", "key02"],
+              count: 25,
+              delay: 180,
+            },
+            keepAlive: 1250,
+            position: {
+              width: 1000
+            }
+          }
         ],
-        90
+        80
       );
       this.dialogue?.play();
       this.cine.tweens.add({
@@ -147,11 +168,11 @@ class cineMovie9 {
       });
       this.cine.tweens.add({
         targets: [this.stoneEarth3],
-        x: middlePoint.x + 100,
-        y: 50,
+        x: '+=200',
+        y: '+=100',
         rotation: Math.PI / 8,
         delay: 0,
-        duration: 8500,
+        duration: 18500,
         ease: "ease",
       });
       this.cine.tweens.add({

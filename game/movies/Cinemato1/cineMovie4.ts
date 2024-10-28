@@ -47,6 +47,10 @@ class cineMovie4 {
         const tickerMS = 100;
         this.ticker = new Ticker(tickerMS);
         this.playCine();
+        // sound & music
+        setTimeout(() => {
+            this.cine.sound.add("C2_7").setVolume(0.25).play()
+        }, 500)
     }
 
     playCine(this: cineMovie4) {
@@ -304,15 +308,6 @@ class cineMovie4 {
                 .setOrigin(0.5, 1)
                 .setRotation(- Math.PI / 2);
             barrasArr.push(barra);
-            //   const barraContainer = this.cine.add
-            //     .image(
-            //       barrasObject.firstPos + i * 15 + barrasObject.offset,
-            //       170,
-            //       "barEmpty"
-            //     )
-            //     .setScale(0.65, 0.8)
-            //     .setOrigin(0.5, 1);
-            //   barrasContArr.push(barraContainer);
         }
 
         const darkMask = this.cine.add.rectangle(
@@ -330,8 +325,6 @@ class cineMovie4 {
             this.radarInnerCircle2,
             this.radarInnerCircle3,
             this.radarSearcher,
-            this.radarCross,
-            this.planetOnRadar,
             this.titleTopLeft,
             this.titleTopRight,
             this.titleBottomLeft,
@@ -369,6 +362,8 @@ class cineMovie4 {
             this.extraStars,
             this.popUpFood,
             this.popUpPlanet,
+            this.planetOnRadar,
+            this.radarCross,
         ];
 
         // this.tintGroup(images)
@@ -398,20 +393,24 @@ class cineMovie4 {
             this.dialogue = new DialogueManager(
                 this.cine,
                 [
-                    "According to this, the nearest planet is class A",
-                    "With those levels of oxygen concentration there must be something I can eat."
+                    "Oh, great! Next planet looks promising"
                 ],
                 [""],
                 [
                     {
-                        delay: 3500,
-                        keepAlive: 1000,
+                      delay: 3500,
+                      withTapping: {
+                        audios: ["key01","key01", "key02"],
+                        count: 16,
+                        delay: 180,
+                      },
+                      keepAlive: 1050,
+                      position: {
+                        width: 750
+                      }
                     },
-                    {
-                        delay: 500,
-                        keepAlive: 1000,
-                    },
-                ]
+                  ],
+                  80
             );
               this.dialogue?.play();
 
@@ -526,24 +525,25 @@ class cineMovie4 {
                 repeat: -1,
             });
             this.cine.tweens.add({
-                targets: [this.popUpPlanet],
+                targets: [this.popUpPlanet, this.popUpFood],
                 scale: 0.9,
                 ease: "Power1",
-                delay: 2700,
+                delay: 3000,
                 onStart: () => {
+                    this.cine.sound.add("C2_8").setVolume(0.25).play()
                     t1.stop()
                     t2.stop()
                     this.planetOnRadar?.setVisible(true)
                 },
                 duration: 700,
             });
-            this.cine.tweens.add({
-                targets: [this.popUpFood, this.extraStars],
-                scale: 1,
-                ease: "Power1",
-                delay: 2700,
-                duration: 700,
-            });
+            // this.cine.tweens.add({
+            //     targets: [this.popUpFood, this.extraStars],
+            //     scale: 1,
+            //     ease: "Power1",
+            //     delay: 3000,
+            //     duration: 700,
+            // });
             this.cine.tweens.add({
                 targets: [this.popUpFood, this.popUpPlanet, this.extraStars, this.planetOnRadar],
                 alpha: 0.7,

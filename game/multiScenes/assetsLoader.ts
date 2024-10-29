@@ -544,6 +544,12 @@ const loadAssets = {
       ["image", "comidaPopUp", "/movies/cinemato1/scene4/comidaPopUp.png"],
       ["image", "planetaPopUp", "/movies/cinemato1/scene4/planetaPopUp.png"],
       ["image", "extraStars", "/movies/cinemato1/scene4/extraStars.png"],
+      ["image", "circle1c1", "/movies/cinemato1/scene4/circle1c1.png"],
+      ["image", "circle2c1", "/movies/cinemato1/scene4/circle2c1.png"],
+      ["image", "circle3c1", "/movies/cinemato1/scene4/circle3c1.png"],
+      ["image", "textBluec1", "/movies/cinemato1/scene4/textBluec1.png"],
+      ["image", "textTopLeftc1", "/movies/cinemato1/scene4/textTopLeftc1.png"],
+      ["image", "textTopRightc1", "/movies/cinemato1/scene4/textTopRightc1.png"],
       // SCENE 5
       ["image", "astro", "/movies/cinemato1/scene5/astro.png"],
       ["image", "brazoCintDer", "/movies/cinemato1/scene5/brazoCintDer.png"],

@@ -108,13 +108,13 @@ class cineMovie5 {
                 [""],
                 [
                     {
-                        delay: 1500,
+                        delay: 1000,
                         withTapping: {
                             audios: ["key01", "key01", "key02"],
                             count: 12,
                             delay: 180,
                         },
-                        keepAlive: 2000,
+                        keepAlive: 1000,
                         position: {
                             width: 400
                         }
@@ -137,7 +137,7 @@ class cineMovie5 {
                 targets: [this.cinturonDer, this.brazoCintDer],
                 x: 50,
                 y: 0,
-                duration: 2000,
+                duration: 1000,
                 ease: "ease.out",
             });
 
@@ -145,7 +145,7 @@ class cineMovie5 {
                 targets: [this.cinturonIzq, this.brazoCintIzq],
                 x: 175,
                 y: 0,
-                duration: 2000,
+                duration: 1000,
                 onComplete: () => {
                     this.cine.sound.add("C2_9").setVolume(0.25).play()
                 },
@@ -161,9 +161,9 @@ class cineMovie5 {
             this.cine.tweens.add({
                 targets: [this.brazoCintDer],
                 x: 650,
-                delay: 2000,
+                delay: 1000,
                 y: 150,
-                duration: 4000,
+                duration: 2000,
                 ease: "ease.in",
             });
 
@@ -171,8 +171,8 @@ class cineMovie5 {
                 targets: [this.brazoCintIzq],
                 y: 200,
                 x: -650,
-                delay: 2000,
-                duration: 4000,
+                delay: 1000,
+                duration: 2000,
                 ease: "ease.in",
             });
         };

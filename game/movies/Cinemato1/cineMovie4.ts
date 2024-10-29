@@ -22,12 +22,7 @@ class cineMovie4 {
     titleTopRight?: Phaser.GameObjects.Image;
     titleBottomLeft?: Phaser.GameObjects.Image;
     titleBottomRight?: Phaser.GameObjects.Image;
-    textSelectorLeft1?: Phaser.GameObjects.Image;
-    textSelectorLeft2?: Phaser.GameObjects.Image;
-    textSelectorRight1?: Phaser.GameObjects.Image;
-    textSelectorRight2?: Phaser.GameObjects.Image;
     subTextTopLeft?: Phaser.GameObjects.Image;
-    subTextTopRight?: Phaser.GameObjects.Image;
     subTextBottomRight?: Phaser.GameObjects.Image;
     subTextBottomLeft?: Phaser.GameObjects.Image;
     circle1?: Phaser.GameObjects.Image;
@@ -71,60 +66,60 @@ class cineMovie4 {
             y: window.innerHeight / 927,
         };
         this.radarInnerCircle1 = this.cine.add
-            .image(0, 0, "radarInnerCircle1")
+            .image(50, 0, "radarInnerCircle1")
             .setOrigin(0.5)
             .setScale(0.8)
             .setPosition(0, -90);
         this.radarInnerCircle2 = this.cine.add
-            .image(0, 0, "radarInnerCircle2")
+            .image(50, 0, "radarInnerCircle2")
             .setOrigin(0.5)
             .setScale(0.8)
             .setPosition(0, -90);
 
 
         this.popUpFood = this.cine.add
-            .image(-80, -130, "comidaPopUp")
+            .image(-80, -160, "comidaPopUp")
             .setOrigin(0, 1)
             .setScale(0)
 
         this.extraStars = this.cine.add
-            .image(-80, -130, "extraStars")
+            .image(-80, -160, "extraStars")
             .setOrigin(0.5)
             .setScale(0)
         this.popUpPlanet = this.cine.add
-            .image(-80, -130, "planetaPopUp")
+            .image(-80, -160, "planetaPopUp")
             .setOrigin(1, 0)
             .setScale(0)
 
         this.radarInnerCircle3 = this.cine.add
-            .image(0, 0, "radarInnerCircle3")
+            .image(50, 0, "radarInnerCircle3")
             .setOrigin(1, 0.5)
             .setScale(0.8)
             .setPosition(0, -90);
 
         this.radarSearcher = this.cine.add
-            .image(-80, -130, "radarSearcher")
+            .image(-80, -160, "radarSearcher")
             .setOrigin(0.5)
             .setScale(0.7);
 
         this.radarCross = this.cine.add
-            .image(0, 0, "radarCross")
+            .image(50, 0, "radarCross")
             .setScale(0.7)
             .setPosition(0, -90);
 
         this.planetOnRadar = this.cine.add
-            .image(-80, -130, "planetOnRadar")
+            .image(-80, -160, "planetOnRadar")
             .setOrigin(0.5)
             .setVisible(false);
         this.titleTopLeft = this.cine.add
-            .image(-390, -350, "titleTopLeft")
+            .image(-370, -270, "textTopLeftc1")
             .setOrigin(0.5)
-            .setScale(0.7);
+            .setScale(0.8);
 
         this.titleTopRight = this.cine.add
-            .image(480, -350, "titleTopRight-red")
+            .image(480, -250, "textTopRightc1")
             .setOrigin(1, 0.5)
-            .setScale(0.7);
+            .setScale(1);
 
         this.titleBottomLeft = this.cine.add
             .image(-390, 0, "titleBottomLeft-red")
@@ -136,37 +131,8 @@ class cineMovie4 {
             .setOrigin(1, 0.5)
             .setScale(0.7);
 
-        this.textSelectorLeft1 = this.cine.add
-            .image(-350, -180, "textSelectorFull-red")
-            .setOrigin(0.5)
-            .setScale(0.7);
 
-        this.textSelectorLeft2 = this.cine.add
-            .image(-430, -180, "textSelectorEmpty-red")
-            .setOrigin(0.5)
-            .setScale(0.7);
 
-        this.textSelectorRight1 = this.cine.add
-            .image(450, -180, "textSelectorFull-red")
-            .setOrigin(0.5)
-            .setScale(0.7);
-
-        this.textSelectorRight2 = this.cine.add
-            .image(370, -180, "textSelectorEmpty-red")
-            .setOrigin(0.5)
-            .setScale(0.7);
-
-        this.subTextTopLeft = this.cine.add
-            .image(-465, -260, "subTextTopLeft")
-            .setOrigin(0, 0.5)
-            .setFlipX(true)
-            .setScale(0.7);
-
-        this.subTextTopRight = this.cine.add
-            .image(485, -270, "subTextTopLeft2-red")
-            .setOrigin(1, 0.5)
-            .setFlipX(true)
-            .setScale(0.7);
 
         this.subTextBottomRight = this.cine.add
             .image(490, 190, "subTextBottomRight-red")
@@ -223,40 +189,31 @@ class cineMovie4 {
             .setOrigin(0.5)
             .setScale(0);
 
-        const arrow1Left = this.cine.add
-            .image(-340, -90, "arrowEmpty-red")
+        const circle1right = this.cine.add
+            .image(-455, -90, "circle1c1")
             .setOrigin(0.5);
-        const arrow1LeftFull = this.cine.add
-            .image(-340, -90, "arrowFull-red")
-            .setOrigin(0.5)
-            .setFlipX(true);
-        const arrow2Left = this.cine.add
-            .image(-380, -90, "arrowEmpty-red")
-            .setOrigin(0.5);
-        const arrow3Left = this.cine.add
-            .image(-420, -90, "arrowEmpty-red")
-            .setOrigin(0.5);
-        const arrow4eft = this.cine.add
-            .image(-460, -90, "arrowEmpty-red")
-            .setOrigin(0.5);
-        const arrow1Right = this.cine.add
-            .image(340, -90, "arrowEmpty-red")
-            .setOrigin(0.5)
-            .setFlipX(true);
-        const arrow1RightFull = this.cine.add
-            .image(340, -90, "arrowFull-red")
-            .setOrigin(0.5)
-            .setFlipX(false);
-        const arrow2Right = this.cine.add
-            .image(380, -90, "arrowEmpty-red")
-            .setOrigin(0.5)
-            .setFlipX(true);
-        const arrow3Right = this.cine.add
-            .image(420, -90, "arrowEmpty-red")
-            .setOrigin(0.5)
-            .setFlipX(true);
+        const circle2right = this.cine.add
+            .image(-395, -90, "circle2c1")
+            .setOrigin(1, 0.5);
+        const circle3right = this.cine.add
+            .image(-335, -90, "circle3c1")
+            .setOrigin(0.5,0.5);
+        this.cine.tweens.add({
+            targets: [circle1right, circle3right],
+            rotation: Math.PI*2,
+            duration: 3000,
+            loop: -1,
+
+        })
+        this.cine.tweens.add({
+            targets: [circle2right],
+            rotation: -Math.PI*2,
+            duration: 3000,
+            loop: -1,
+            
+        })
         const arrow4Right = this.cine.add
-            .image(460, -90, "arrowEmpty-red")
+            .image(400, -90, "textBluec1")
             .setOrigin(0.5)
             .setFlipX(true);
         const leftScreen = this.cine.add
@@ -271,25 +228,7 @@ class cineMovie4 {
             .image(0, 70, "backgroundPanel")
             .setOrigin(0.5);
         let marker = 0;
-        setInterval(() => {
-            if (marker === 0) {
-                marker = 1;
-                arrow1LeftFull.setPosition(-460, -90);
-                arrow1RightFull.setPosition(460, -90);
-            } else if (marker === 1) {
-                marker = 2;
-                arrow1LeftFull.setPosition(-420, -90);
-                arrow1RightFull.setPosition(420, -90);
-            } else if (marker === 2) {
-                marker = 3;
-                arrow1LeftFull.setPosition(-380, -90);
-                arrow1RightFull.setPosition(380, -90);
-            } else if (marker === 3) {
-                marker = 0;
-                arrow1LeftFull.setPosition(-340, -90);
-                arrow1RightFull.setPosition(340, -90);
-            }
-        }, 500);
+
         const barrasObject = {
             firstPos: 290,
             amount: 8,
@@ -329,12 +268,6 @@ class cineMovie4 {
             this.titleTopRight,
             this.titleBottomLeft,
             this.titleBottomRight,
-            this.textSelectorLeft1,
-            this.textSelectorLeft2,
-            this.textSelectorRight1,
-            this.textSelectorRight2,
-            this.subTextTopLeft,
-            this.subTextTopRight,
             this.subTextBottomRight,
             this.subTextBottomLeft,
             this.circle1,
@@ -346,18 +279,13 @@ class cineMovie4 {
             fillBarraCircle1,
             fillBarraCircle2,
             fillBarraCircle3,
-            arrow1Left,
-            arrow2Left,
-            arrow3Left,
-            arrow1Right,
-            arrow2Right,
-            arrow3Right,
-            arrow1LeftFull,
-            arrow1RightFull,
+
+            circle1right,
+            circle2right,
+            circle3right,
             leftScreen,
             rightScreen,
             darkMask,
-            arrow4eft,
             arrow4Right,
             this.extraStars,
             this.popUpFood,
@@ -398,21 +326,21 @@ class cineMovie4 {
                 [""],
                 [
                     {
-                      delay: 3500,
-                      withTapping: {
-                        audios: ["key01","key01", "key02"],
-                        count: 16,
-                        delay: 180,
-                      },
-                      keepAlive: 1050,
-                      position: {
-                        width: 750
-                      }
+                        delay: 3500,
+                        withTapping: {
+                            audios: ["key01", "key01", "key02"],
+                            count: 16,
+                            delay: 180,
+                        },
+                        keepAlive: 1050,
+                        position: {
+                            width: 750
+                        }
                     },
-                  ],
-                  80
+                ],
+                80
             );
-              this.dialogue?.play();
+            this.dialogue?.play();
 
             this.cine.tweens.add({
                 targets: [camera],
@@ -509,7 +437,7 @@ class cineMovie4 {
                 repeat: -1,
             });
             const t1 = this.cine.tweens.add({
-                targets: [this.radarSearcher, this.planetOnRadar, this.popUpFood, this.popUpPlanet],
+                targets: [this.radarSearcher, this.planetOnRadar, this.popUpFood, this.popUpPlanet, this.extraStars],
                 x: "+=200",
                 ease: "ease",
                 duration: 4324,
@@ -517,7 +445,7 @@ class cineMovie4 {
                 yoyo: true,
             });
             const t2 = this.cine.tweens.add({
-                targets: [this.radarSearcher, this.planetOnRadar, this.popUpFood, this.popUpPlanet],
+                targets: [this.radarSearcher, this.planetOnRadar, this.popUpFood, this.popUpPlanet, this.extraStars],
                 y: "+=150",
                 ease: "ease",
                 duration: 1333,
@@ -525,7 +453,7 @@ class cineMovie4 {
                 repeat: -1,
             });
             this.cine.tweens.add({
-                targets: [this.popUpPlanet, this.popUpFood],
+                targets: [this.popUpPlanet, this.popUpFood, this.extraStars],
                 scale: 0.9,
                 ease: "Power1",
                 delay: 3000,
@@ -544,15 +472,15 @@ class cineMovie4 {
             //     delay: 3000,
             //     duration: 700,
             // });
-            this.cine.tweens.add({
-                targets: [this.popUpFood, this.popUpPlanet, this.extraStars, this.planetOnRadar],
-                alpha: 0.7,
-                ease: "expo",
-                delay: 2700,
-                duration: 700,
-                loop: -1, 
-                yoyo: true,
-            });
+            // this.cine.tweens.add({
+            //     targets: [this.popUpFood, this.popUpPlanet, this.extraStars, this.planetOnRadar],
+            //     alpha: 0.7,
+            //     ease: "expo",
+            //     delay: 2700,
+            //     duration: 700,
+            //     loop: -1,
+            //     yoyo: true,
+            // });
             this.cine.tweens.add({
                 targets: fillBarraCircle3,
                 scale: 0.7,

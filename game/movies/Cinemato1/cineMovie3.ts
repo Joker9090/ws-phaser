@@ -36,7 +36,7 @@ class cineMovie3 {
             this.cine.sound.add("C2_2").setVolume(0.25).play()
         }, 500)
         setTimeout(() => {
-            this.cine.sound.add("C2_6").setVolume(0.25).play()
+            this.cine.sound.add("C2_6").setVolume(0.7).play()
         }, 2500)
     }
 

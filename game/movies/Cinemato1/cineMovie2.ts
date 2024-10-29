@@ -49,7 +49,7 @@ class cineMovie2 {
 
         this.aroCondensadorBottom = this.cine.add.image(-20, -60, "aroCondensadorBottom").setOrigin(0.5)
         this.aroCondensadorTop = this.cine.add.image(-20, -60, "aroCondensadorTop").setOrigin(0.5)
-        this.brilloCondensador = this.cine.add.image(0, -19, "brilloCondensador").setOrigin(0.5)
+        this.brilloCondensador = this.cine.add.image(0, -19, "brilloCondensador").setOrigin(0.5).setAlpha(0.2)
         this.condensador = this.cine.add.image(0, 0, "condensador").setOrigin(0.5)
         this.CristalCondensador = this.cine.add.image(0, 0, "CristalCondensador").setOrigin(0.5)
 
@@ -133,10 +133,19 @@ class cineMovie2 {
                 80
             );
             this.dialogue?.play();
-
+            const t1 = this.cine.tweens.add({
+                targets: [this.brilloCondensador],
+                alpha: 1,
+                duration: 2000,
+                yoyo: false,
+                ease: "expo.inout",
+                loop: 0,
+                paused: true,
+            });
 
             const dialogueListener = (newState: string, nextText?: string) => {
                 if (newState === "CONTINUE") {
+                    t1.play()
                 } else if (newState === "FINISHED") {
                     this.ticker.deleteJob(job.id);
                 }
@@ -152,6 +161,7 @@ class cineMovie2 {
                 ease: "expo.inout",
                 loop: -1,
             });
+
             this.cine.tweens.add({
                 targets: [camera],
                 zoom: 1.3,

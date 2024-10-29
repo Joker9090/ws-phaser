@@ -707,7 +707,7 @@ class AssetsLoader {
           //   // keyname: "cine_intro_1",
           //   keyname: "cine_movie_1",
           // });
-        this.scene.makeTransition("Game", { level: 0, lifes: 3 });
+        this.scene.makeTransition("Game", { level: 4, lifes: 3 });
 
         // get center of the screen
         const center = {

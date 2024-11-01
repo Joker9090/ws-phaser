@@ -75,7 +75,7 @@ class Mapa0 {
   mountain3: Phaser.GameObjects.Image;
   mountain4: Phaser.GameObjects.Image;
   mountain5: Phaser.GameObjects.Image;
-
+  UIItemToGrab: string = 'cristal3';
   cristal?: Floor;
   collected: Boolean = false;
   endPortal?: Floor;
@@ -329,6 +329,8 @@ class Mapa0 {
     };
     this.cristal = new Floor(this.scene, coinConfig, this.coin).setBodySize(140, 180);
 
+    const cloudsGroup = this.scene.add.group()
+
     const c1Config: AsteroidGeneratorConfig = {
       texture: "nube1",
       x: 0,
@@ -338,6 +340,7 @@ class Mapa0 {
       velocity: 20,
       scale: 1,
       depth: 99,
+      group: cloudsGroup,
     };
     const c1 = new AsteroidGenerator(this.scene, c1Config);
     c1.start();
@@ -350,6 +353,7 @@ class Mapa0 {
       direction: 1,
       velocity: 30,
       scale: 1,
+      group: cloudsGroup,
       depth: 99,
     };
     const c2 = new AsteroidGenerator(this.scene, c2Config);
@@ -363,13 +367,16 @@ class Mapa0 {
       direction: 0,
       velocity: 10,
       scale: 1.2,
+      group: cloudsGroup,
       depth: 99,
     };
     const c3 = new AsteroidGenerator(this.scene, c3Config);
     c3.start();
 
+
     const mapObjects =
-      this.movingFloor.getChildren().concat(
+    cloudsGroup.getChildren().concat(
+      this.movingFloor.getChildren(),
         this.movingFloorRot.getChildren(),
         this.pisos.getChildren(),
         this.pisosBack.getChildren(),

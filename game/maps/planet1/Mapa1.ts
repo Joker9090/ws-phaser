@@ -83,6 +83,7 @@ class Mapa1 {
   mountain3: Phaser.GameObjects.Image;
   mountain4: Phaser.GameObjects.Image;
   mountain5: Phaser.GameObjects.Image;
+  UIItemToGrab: string = 'cristal2';
 
   cristal?: Floor;
   collected: Boolean = false;
@@ -163,13 +164,13 @@ class Mapa1 {
     const { ajusteBX, ajusteBY } = { ajusteBX: 1.1, ajusteBY: 1.1 }
     const calcDiffBX = (x2 - x) / ajusteBX
     const calcDiffBY = (y2 - y) / ajusteBY;
-    this.background.setPosition(x + calcDiffBX, y  + calcDiffBY);
-    this.background2.setPosition(x + calcDiffBX, y  + calcDiffBY);
-    this.background3.setPosition(x + calcDiffBX, y  + calcDiffBY);
+    this.background.setPosition(x + calcDiffBX, y + calcDiffBY);
+    this.background2.setPosition(x + calcDiffBX, y + calcDiffBY);
+    this.background3.setPosition(x + calcDiffBX, y + calcDiffBY);
     // // animation frontgrounds
     const { ajusteFX, ajusteFY } = { ajusteFX: 4, ajusteFY: 2 }
     const calcDiffFX = (x2 - x) / ajusteFX
-    const calcDiffFY = (y2 - y ) / ajusteFY;
+    const calcDiffFY = (y2 - y) / ajusteFY;
     this.background4.setPosition(x + calcDiffFX, y + offsetLevel + 470 + calcDiffFY);
     this.background5.setPosition(x + calcDiffFX, y + offsetLevel + 470 + calcDiffFY);
     this.background6.setPosition(x + this.background5.width - 15 + calcDiffFX, y + offsetLevel + 470 + calcDiffFY);
@@ -199,8 +200,8 @@ class Mapa1 {
           this.scene.monchi,
           this.pisos2,
           () => {
-            if (this.tutorialStep === 0){
-              setTimeout(()=>{
+            if (this.tutorialStep === 0) {
+              setTimeout(() => {
                 this.tutorialStep = 1
                 this.textTutorial1?.setVisible(true)
                 this.scene.scene.pause()
@@ -242,7 +243,7 @@ class Mapa1 {
   }
 
   createMap(data: { level: number; lifes: number }) {
-   
+
     this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
     this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });
     this.pisos = this.scene.physics.add.group({ allowGravity: false });
@@ -259,7 +260,7 @@ class Mapa1 {
 
 
     this.textTutorial1 = new TextBox(
-      this.scene, 
+      this.scene,
       "What's happening??!!",
       2000,
       1200,
@@ -267,7 +268,7 @@ class Mapa1 {
     ).setVisible(false)
 
     this.textTutorial2 = new TextBox(
-      this.scene, 
+      this.scene,
       "It seems like gravity reverses when I step on that kind of rock, I better record this.",
       2000,
       400,
@@ -326,17 +327,17 @@ class Mapa1 {
       //     repeat: -1,
       //     y: "-=800",
       // },
-  };
-  const p2 = new Floor(this.scene, p2Config, this.movingFloor).setVelocityY(-300);
+    };
+    const p2 = new Floor(this.scene, p2Config, this.movingFloor).setVelocityY(-300);
 
-  this.scene.tweens.add({
+    this.scene.tweens.add({
       duration: 3000,
       paused: false,
       yoyo: true,
       repeat: -1,
       targets: p2.body?.velocity,
       y: "+=600",
-  })
+    })
 
     const p5Config: FloorConfig = {
       pos: { x: 1100, y: 1100 }, // 1100 800
@@ -366,7 +367,7 @@ class Mapa1 {
         textureB: 67,
         textureC: 115,
       },
-      scale: {width: 0.7, height: 0.7},
+      scale: { width: 0.7, height: 0.7 },
       height: 127,
       large: 4,
       rotated: false
@@ -396,7 +397,7 @@ class Mapa1 {
         textureB: 67,
         textureC: 115,
       },
-      scale: {width: 0.7, height: 0.7},
+      scale: { width: 0.7, height: 0.7 },
       height: 127,
       large: 40,
       rotated: true
@@ -421,6 +422,7 @@ class Mapa1 {
       fix: 10,
     };
     this.cristal = new Floor(this.scene, coinConfig, this.coin).setBodySize(140, 180);
+    const cloudsGroup = this.scene.add.group()
 
     const c1Config: AsteroidGeneratorConfig = {
       texture: "nube1",
@@ -430,6 +432,7 @@ class Mapa1 {
       direction: 0,
       velocity: 20,
       scale: 1,
+      group: cloudsGroup,
       depth: 99,
     };
     const c1 = new AsteroidGenerator(this.scene, c1Config);
@@ -443,6 +446,7 @@ class Mapa1 {
       direction: 1,
       velocity: 30,
       scale: 1,
+      group: cloudsGroup,
       depth: 99,
     };
     const c2 = new AsteroidGenerator(this.scene, c2Config);
@@ -456,13 +460,15 @@ class Mapa1 {
       direction: 0,
       velocity: 10,
       scale: 1.2,
+      group: cloudsGroup,
       depth: 99,
     };
     const c3 = new AsteroidGenerator(this.scene, c3Config);
     c3.start();
 
     const mapObjects =
-      this.movingFloor.getChildren().concat(
+      cloudsGroup.getChildren().concat(
+        this.movingFloor.getChildren(),
         this.movingFloorRot.getChildren(),
         this.pisos.getChildren(),
         this.pisosBack.getChildren(),
@@ -475,6 +481,9 @@ class Mapa1 {
         this.aura.getChildren(),
       )
     this.mapContainer.add(mapObjects)
+    this.mapContainer.setDepth(999)
+
+    this.scene.UICamera?.ignore(this.frontContainer)
     this.scene.UICamera?.ignore(this.mapContainer)
 
   }
@@ -483,7 +492,7 @@ class Mapa1 {
       this.textTutorial1?.setVisible(false)
       this.textTutorial2?.setVisible(false)
     }
-    if(this.scene.monchi?.body?.touching.up && this.tutorialStep === 2){
+    if (this.scene.monchi?.body?.touching.up && this.tutorialStep === 2) {
       this.tutorialStep = 3
       this.textTutorial2?.setVisible(true)
       this.scene.scene.pause()

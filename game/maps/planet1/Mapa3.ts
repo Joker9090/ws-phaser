@@ -43,7 +43,7 @@ class Mapa3 {
     aura?: Phaser.Physics.Arcade.Group;
     movingFloor?: Phaser.Physics.Arcade.Group;
     movingFloorRot?: Phaser.Physics.Arcade.Group;
-
+    
     amountLifes: number = 0;
     sideGrav: boolean = false;
     goingBack: boolean = false;
@@ -72,7 +72,7 @@ class Mapa3 {
         {
             positions: this.checkPointPos1,
             cameraDirection: "NORMAL",
-            PlayerDirection: "ROTATED",
+            PlayerDirection: "NORMAL",
             gravityDown: false
         },
         {
@@ -97,6 +97,7 @@ class Mapa3 {
     mountain4: Phaser.GameObjects.Image;
     mountain5: Phaser.GameObjects.Image;
     mountain6: Phaser.GameObjects.Image;
+    UIItemToGrab: string = 'cristal1';
 
     cristal?: Floor;
     collected: Boolean = false;
@@ -589,7 +590,8 @@ class Mapa3 {
             height: 18,
             fix: 10,
         };
-        this.cristal = new Floor(this.scene, coinConfig, this.coin).setBodySize(140, 180);
+        this.cristal = new Floor(this.scene, coinConfig, this.coin).setBodySize(140, 180).setDepth(9999);
+        const cloudsGroup = this.scene.add.group()
 
         const c1Config: AsteroidGeneratorConfig = {
             texture: "nube1",
@@ -599,6 +601,7 @@ class Mapa3 {
             direction: 0,
             velocity: 20,
             scale: 1,
+      group: cloudsGroup,
             depth: 99,
         };
         const c1 = new AsteroidGenerator(this.scene, c1Config);
@@ -612,6 +615,7 @@ class Mapa3 {
             direction: 1,
             velocity: 30,
             scale: 1,
+      group: cloudsGroup,
             depth: 99,
         };
         const c2 = new AsteroidGenerator(this.scene, c2Config);
@@ -625,6 +629,7 @@ class Mapa3 {
             direction: 0,
             velocity: 10,
             scale: 1.2,
+      group: cloudsGroup,
             depth: 99,
         };
         const c3 = new AsteroidGenerator(this.scene, c3Config);
@@ -633,7 +638,8 @@ class Mapa3 {
 
 
         const mapObjects =
-            this.movingFloor.getChildren().concat(
+            cloudsGroup.getChildren().concat(
+                this.movingFloor.getChildren(),
                 this.movingFloorRot.getChildren(),
                 this.pisos.getChildren(),
                 this.pisosBack.getChildren(),
@@ -643,10 +649,12 @@ class Mapa3 {
                 this.coin.getChildren(),
                 this.aura.getChildren(),
                 this.portal.getChildren(),
-                this.aura.getChildren(),
             )
         this.mapContainer.add(mapObjects)
+        this.mapContainer.setDepth(999)
         this.scene.UICamera?.ignore(this.mapContainer)
+    this.scene.UICamera?.ignore(this.frontContainer)
+
 
     }
     update() {

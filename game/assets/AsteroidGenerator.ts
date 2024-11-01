@@ -10,6 +10,7 @@ export type AsteroidGeneratorConfig = {
   scale: number;
   velocity: number;
   depth?: number;
+  group?: Phaser.GameObjects.Group;
 };
 
 class AsteroidGenerator {
@@ -47,7 +48,14 @@ class AsteroidGenerator {
   createAsteroid(x: number, y: number) {
     const asteroid = this.scene.physics.add.sprite(x, y, this.config.texture);
     if (this.config.depth) asteroid.setDepth(this.config.depth);
+    if (this.config.group) this.config.group.add(asteroid)
     asteroid.setScale(this.config.scale * this.randomProp());
+    // this.scene.tweens.add({
+    //   targets: [asteroid],
+    //   scale: this.config.scale * this.randomProp(),
+    //   duration: 2000,
+    //   ease: 'ease'
+    // })
     this.asteroids.add(asteroid);
     this.scene.UICamera?.ignore(asteroid)
     asteroid.setVelocityX(this.randomVelocity());

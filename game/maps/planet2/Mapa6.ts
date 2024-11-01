@@ -89,6 +89,7 @@ class Mapa5 {
     mountain4: Phaser.GameObjects.Image;
     mountain5: Phaser.GameObjects.Image;
     // mountain6: Phaser.GameObjects.Image;
+    UIItemToGrab: string = 'comida';
 
     cristal?: Floor;
     collected: Boolean = false;

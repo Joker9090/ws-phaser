@@ -62,8 +62,9 @@ export default class UIClass {
 
       const coinConf: UIConfig = {
         pos: { x: lifes + 95, y: 70 },
-        texture: "coin",
-        scale: 0.15,
+        //@ts-ignore
+        texture: this.scene.map?.UIItemToGrab,
+        scale: 0.55,
       };
       this.coinUI = new UI(this.scene, coinConf)
         .setTint(Phaser.Display.Color.GetColor(0, 0, 0));

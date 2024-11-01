@@ -108,11 +108,9 @@ class Game extends Phaser.Scene {
 
   rotateCam(isNormal: boolean, time: number) {
     console.log("ENTRO ACA ARI 3")
-
     if (this.monchi) this.monchi.setCameraState(!isNormal ? 'NORMAL' : 'ROTATED')
     if (isNormal) {
       console.log("ENTRO ACA ARI 1")
-
       this.cameraNormal = false;
     } else {
       console.log("ENTRO ACA AR2")
@@ -187,6 +185,7 @@ class Game extends Phaser.Scene {
   }
 
   lose() {
+    this.canRot = true
     if (this.map) {
       //@ts-ignore
       const config = this.map.loseConfig[this.checkPoint]
@@ -272,7 +271,7 @@ class Game extends Phaser.Scene {
       s: Phaser.Input.Keyboard.KeyCodes.S,
       d: Phaser.Input.Keyboard.KeyCodes.D
     });
-    this.cameras.main.zoom = 0.5
+    // this.cameras.main.zoom = 0.5
     // CREATIVE
 
     this.checkPoint = 0;
@@ -351,10 +350,10 @@ class Game extends Phaser.Scene {
     this.canWin = false;
     this.canRot = true;
     /* CAMERAS */
-    // this.cameras.main.zoom = 1;
+    this.cameras.main.zoom = 1;
     this.cameraWidth = this.cameras.main.width;
     this.cameraHeight = this.cameras.main.height;
-    // this.cameras.main.startFollow(this.monchi, true, 0.5, 0.5, 0, this.cameraHeight / 2 - 200);
+    this.cameras.main.startFollow(this.monchi, true, 0.5, 0.5, 0, this.cameraHeight / 2 - 200);
 
     /* COLLIDERS */
     //@ts-ignore

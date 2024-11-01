@@ -39,6 +39,7 @@ class Mapa5 {
     pisos4?: Phaser.Physics.Arcade.Group;
     // no float + rotate cam
     pisos5?: Phaser.Physics.Arcade.Group;
+    UIItemToGrab: string = 'comida';
 
     fireballGroup?: Phaser.Physics.Arcade.Group;
     coin?: Phaser.Physics.Arcade.Group;

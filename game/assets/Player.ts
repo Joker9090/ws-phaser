@@ -8,6 +8,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   playerState: "NORMAL" | "ROTATED" = "NORMAL";
   cameraState: "NORMAL" | "ROTATED" = "NORMAL";
   scene: Game;
+  gravityAnimSprite?: Phaser.GameObjects.Sprite;
 
   constructor(
     scene: Game,
@@ -81,6 +82,16 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       repeat: 0,
     }
 
+    const gravityAnimFrames = scene.anims.generateFrameNumbers("gravityAnim", {
+      frames: Array.from({ length: 10 }, (_, i) => i),
+    });
+    const gravityAnimConfig = {
+      key: "gravityAnimKey",
+      frames: gravityAnimFrames,
+      frameRate: 10,
+      repeat: 0,
+    };
+
     /* Monchi animations */
     scene.anims.create(monchiJumpConfig);
     scene.anims.create(monchiMoveConfig);
@@ -89,6 +100,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     scene.anims.create(monchiRotate2Config);
     scene.anims.create(monchiRotate3Config);
     scene.anims.create(monchiRotateReverseConfig);
+    scene.anims.create(gravityAnimConfig);
 
     /* Monchi add to physic world */
     scene.physics.add.existing(this);
@@ -104,7 +116,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     /* Monchi add to scene */
     scene.add.existing(this);
     this.scene.UICamera?.ignore(this)
-
+    this.gravityAnimSprite = this.scene.add.sprite(this.x, this.y, "gravityAnim", 0).setVisible(false).setDepth(999);
+    
+    // this.scene.add.rectangle(this.x, this.y, 100, 100, 0xffffff).setVisible(true)
     /* Monchi Collission with end of map */
     this.setCollideWorldBounds(true);
     if (this.body) {
@@ -119,7 +133,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
   setPlayerState(state: "NORMAL" | "ROTATED") {
     this.playerState = state
-  } 
+  }
 
   idle() {
     this.isJumping = false;
@@ -128,7 +142,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
   jump() {
     const condition = this.playerState === 'NORMAL' ? this.body?.touching.down : this.body?.touching.up
-    
+
     if (!this.isJumping && condition) {
       this.isJumping = true;
       this.anims.play("monchiJump");
@@ -141,12 +155,17 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   rotate(speed: 1 | 2 | 3 = 2) {
     if (!this.isRotating) {
       this.isRotating = true
+      this.gravityAnimSprite?.setVisible(true)
+      this.gravityAnimSprite?.anims.play("gravityAnimKey").once('animationcomplete', () => this.gravityAnimSprite?.setVisible(false))
       this.setPlayerState(this.playerState === 'NORMAL' ? 'ROTATED' : 'NORMAL')
       this.anims.play(speed === 1 ? 'monchiRotate1' : speed === 2 ? 'monchiRotate2' : 'monchiRotate3').once('animationcomplete', this.idle)
     }
   }
 
+
+
   checkMove(cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined) {
+    this.gravityAnimSprite?.setPosition(this.x, this.y)
     if (this.playerState === "ROTATED") this.setFlipY(true)
     else if (this.playerState === "NORMAL") this.setFlipY(false)
     /* Keywords press */

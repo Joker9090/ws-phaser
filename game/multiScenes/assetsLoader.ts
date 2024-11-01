@@ -46,6 +46,12 @@ const loadAssets = {
       ],
       [
         "spritesheet",
+        "gravityAnim",
+        "/game/player/gravityEffect.png",
+        { frameWidth: 140, frameHeight: 280 },
+      ],
+      [
+        "spritesheet",
         "player",
         "/game/player/playerSpriteSheet.png",
         { frameWidth: 200, frameHeight: 200 },
@@ -307,7 +313,7 @@ const loadAssets = {
       ["image", "pSimple2p1", "/game/planeta2/pSimple2.png"],
       ["image", "comida", "/game/planeta2/comida.png"],
       ["image", "cuevap1", "/game/planeta2/cuevap1.png"],
-      
+
     ],
   },
 
@@ -720,19 +726,20 @@ class AssetsLoader {
         // this.scene.scene.restart({text:"menu"})
         // this.scene.makeTransition("startMovie", undefined);
         // console.log("BARTO ACAA")
-        sceneToPlay = () =>
-          this.scene.makeTransition("CinematographyMod", {
-            keyname: "cine_movie_4",
-            // keyname: "postal2_planeta1",
-          });
-        // this.scene.makeTransition("Game", { level: 2, lifes: 3 });
+        sceneToPlay = () => {
+          // this.scene.makeTransition("CinematographyMod", {
+          //   keyname: "cine_movie_4",
+          //   // keyname: "postal2_planeta1",
+          // });
+          this.scene.makeTransition("Game", { level: 0, lifes: 3 });
+        }
 
         // get center of the screen
         const center = {
           x: this.scene.cameras.main.width / 2,
           y: this.scene.cameras.main.height / 2,
         }
-        
+
         const button = this.scene.add
           .image(center.x, center.y, "fireball")
           .setScale(0.3)

@@ -351,10 +351,10 @@ class Game extends Phaser.Scene {
     this.canWin = false;
     this.canRot = true;
     /* CAMERAS */
-    this.cameras.main.zoom = 1;
+    // this.cameras.main.zoom = 1;
     this.cameraWidth = this.cameras.main.width;
     this.cameraHeight = this.cameras.main.height;
-    this.cameras.main.startFollow(this.monchi, true, 0.5, 0.5, 0, this.cameraHeight / 2 - 200);
+    // this.cameras.main.startFollow(this.monchi, true, 0.5, 0.5, 0, this.cameraHeight / 2 - 200);
 
     /* COLLIDERS */
     //@ts-ignore

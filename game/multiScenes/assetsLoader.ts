@@ -339,7 +339,7 @@ const loadAssets = {
   Postales: {
     assets: [
       ["image", "postal1Planeta1", "/postals/planet1/postal1Planet1.png"],
-      ["image", "postal2Planeta1", "/postals/planet1/postal1Planet1.png"],
+      ["image", "postal2Planeta1", "/postals/planet1/postal2Planet1.png"],
       ["image", "postal1Planeta2", "/postals/planeta2/Postal1.png"],
       ["image", "postal2Planeta2", "/postals/planeta2/Postal2.png"],
       // ["image", "cine_capsula", "/game/cine_2.png"],
@@ -550,6 +550,24 @@ const loadAssets = {
       ["image", "textBluec1", "/movies/cinemato1/scene4/textBluec1.png"],
       ["image", "textTopLeftc1", "/movies/cinemato1/scene4/textTopLeftc1.png"],
       ["image", "textTopRightc1", "/movies/cinemato1/scene4/textTopRightc1.png"],
+      ["image", "latScreen1", "/movies/cinemato1/scene4/latScreen1.png"],
+      ["image", "latScreen2", "/movies/cinemato1/scene4/latScreen2.png"],
+      ["image", "latScreen3", "/movies/cinemato1/scene4/latScreen3.png"],
+      ["image", "latScreen4", "/movies/cinemato1/scene4/latScreen4.png"],
+      ["image", "latScreen5", "/movies/cinemato1/scene4/latScreen5.png"],
+      ["image", "latScreenRight1", "/movies/cinemato1/scene4/latScreenRight1.png"],
+      ["image", "latScreenRight2", "/movies/cinemato1/scene4/latScreenRight2.png"],
+      ["image", "latScreenRight3", "/movies/cinemato1/scene4/latScreenRight3.png"],
+      ["image", "latScreenRight4", "/movies/cinemato1/scene4/latScreenRight4.png"],
+      ["image", "innerCircle1", "/movies/cinemato1/scene4/innerCircle1.png"],
+      ["image", "innerCircle2", "/movies/cinemato1/scene4/innerCircle2.png"],
+      ["image", "innerCircle3", "/movies/cinemato1/scene4/innerCircle3.png"],
+      ["image", "innerCircle4", "/movies/cinemato1/scene4/innerCircle4.png"],
+      ["image", "circleBottomRight", "/movies/cinemato1/scene4/circleBottomRight.png"],
+      ["image", "bottomText", "/movies/cinemato1/scene4/bottomText.png"],
+      ["image", "barrasRojas", "/movies/cinemato1/scene4/barrasRojas.png"],
+      ["image", "barrasAzules", "/movies/cinemato1/scene4/barrasAzules.png"],
+
       // SCENE 5
       ["image", "astro", "/movies/cinemato1/scene5/astro.png"],
       ["image", "brazoCintDer", "/movies/cinemato1/scene5/brazoCintDer.png"],
@@ -703,11 +721,11 @@ class AssetsLoader {
         // this.scene.makeTransition("startMovie", undefined);
         // console.log("BARTO ACAA")
         sceneToPlay = () =>
-          // this.scene.makeTransition("CinematographyMod", {
-          //   // keyname: "cine_intro_1",
-          //   keyname: "cine_movie_1",
-          // });
-        this.scene.makeTransition("Game", { level: 4, lifes: 3 });
+          this.scene.makeTransition("CinematographyMod", {
+            keyname: "cine_movie_4",
+            // keyname: "postal2_planeta1",
+          });
+        // this.scene.makeTransition("Game", { level: 2, lifes: 3 });
 
         // get center of the screen
         const center = {
@@ -770,7 +788,9 @@ class AssetsLoader {
     }
   }
 
-  update() {}
+  update() {
+
+  }
 }
 
 export default AssetsLoader;

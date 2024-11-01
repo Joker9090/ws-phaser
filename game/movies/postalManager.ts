@@ -10,9 +10,11 @@ class postalManager {
     cine: CinematographyModular
     nextCine: boolean = false;
     postal: string;
+    code?: TextBox;
     nextLevel: number;
     lifes: number;
     container?: Phaser.GameObjects.Container;
+    codeVisible: boolean = true;
     // controllers
     cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
 
@@ -42,6 +44,8 @@ class postalManager {
             y: this.cine.cameras.main.displayHeight / 2,
         };
 
+        this.cursors = this.cine.input.keyboard?.createCursorKeys();
+
         const gameObjectScaler = {
             x: window.innerWidth / 1920,
             y: window.innerHeight / 927,
@@ -59,20 +63,20 @@ class postalManager {
             window.innerWidth,
             window.innerHeight,
             0,
-            0.3
+            0
         );
 
-        const code = new TextBox(this.cine, "Save this code to keep track of your progress: ASNDJ", 0, 0, 500)
+        this.code = new TextBox(this.cine, "Save this code to keep track of your progress: ASNDJ", 0, 0, 500)
         const midScreen = {
-            x: code.width / -2,
-            y: code.height / -2
+            x: this.code.width / -2,
+            y: this.code.height / -2
         }
-        code.setPosition(midScreen.x , midScreen.y)
+        this.code.setPosition(midScreen.x , midScreen.y)
 
         const assetsScenes = [
             background,
             darkMask,
-            code
+            this.code
         ];
 
         this.container = this.cine.add
@@ -102,7 +106,7 @@ class postalManager {
                 10,
                 () => { },
                 false,
-                8000,
+                undefined,
                 true,
                 (job: TickerJob) => {
                 }
@@ -131,7 +135,9 @@ class postalManager {
 
     update(this: postalManager, time: number, delta: number) {
         if (this.nextCine) this.makeTransition("Game", { level: this.nextLevel, lifes: this.lifes });
-
+        if (this.codeVisible) {
+            if (this.cursors?.space.isDown) this.code?.setVisible(false)
+        } 
     }
 }
 

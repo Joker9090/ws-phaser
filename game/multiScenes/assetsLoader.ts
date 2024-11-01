@@ -731,7 +731,7 @@ class AssetsLoader {
           //   keyname: "cine_movie_4",
           //   // keyname: "postal2_planeta1",
           // });
-          this.scene.makeTransition("Game", { level: 0, lifes: 3 });
+          this.scene.makeTransition("Game", { level: 8, lifes: 3 });
         }
 
         // get center of the screen
@@ -796,7 +796,8 @@ class AssetsLoader {
   }
 
   update() {
-
+          
+          if (this.finished)  this.scene.makeTransition("Game", { level: 8, lifes: 3 });
   }
 }
 

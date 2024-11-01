@@ -9,7 +9,11 @@ import p2Mapa1 from "./maps/planet2/Mapa4";
 import p2Mapa2 from "./maps/planet2/Mapa5";
 import p2Mapa3 from "./maps/planet2/Mapa6";
 import p2Mapa4 from "./maps/planet2/Mapa7";
-
+// MAPAS PLANETA 3
+import p3Mapa1 from "./maps/planet3/Mapa8";
+// import p3Mapa2 from "./maps/planet3/Mapa9";
+// import p3Mapa3 from "./maps/planet3/Mapa10";
+// import p3Mapa4 from "./maps/planet3/Mapa11";
 // OTRAS COSAS
 import Player from "./assets/Player";
 import UIClass from "./assets/UIClass";
@@ -271,7 +275,7 @@ class Game extends Phaser.Scene {
       s: Phaser.Input.Keyboard.KeyCodes.S,
       d: Phaser.Input.Keyboard.KeyCodes.D
     });
-    // this.cameras.main.zoom = 0.5
+    this.cameras.main.zoom = 0.5
     // CREATIVE
 
     this.checkPoint = 0;
@@ -303,6 +307,18 @@ class Game extends Phaser.Scene {
       case 7:
         this.map = new p2Mapa4(this, this.monchi!);
         break;
+      case 8:
+        this.map = new p3Mapa1(this, this.monchi!);
+        break;
+      // case 9:
+      //   this.map = new p2Mapa2(this, this.monchi!);
+      //   break;
+      // case 10:
+      //   this.map = new p2Mapa3(this, this.monchi!);
+      //   break;
+      // case 11:
+      //   this.map = new p2Mapa4(this, this.monchi!);
+      //   break;
       default:
         this.map = new p1Mapa0(this, this.monchi!);
         break;
@@ -350,10 +366,12 @@ class Game extends Phaser.Scene {
     this.canWin = false;
     this.canRot = true;
     /* CAMERAS */
-    this.cameras.main.zoom = 1;
     this.cameraWidth = this.cameras.main.width;
     this.cameraHeight = this.cameras.main.height;
-    this.cameras.main.startFollow(this.monchi, true, 0.5, 0.5, 0, this.cameraHeight / 2 - 200);
+
+
+    // this.cameras.main.zoom = 0.8;
+    // this.cameras.main.startFollow(this.monchi, true, 0.5, 0.5, 0, this.cameraHeight / 2 - 200);
 
     /* COLLIDERS */
     //@ts-ignore

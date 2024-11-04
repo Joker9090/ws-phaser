@@ -275,6 +275,13 @@ class Game extends Phaser.Scene {
     if (this.cursorsAWSD?.d.isDown) {
       cam.scrollX += cameraSpeed;
     }
+
+    console.log(
+      "left: " + (this.cameras.main.midPoint.x - window.innerWidth/2),
+      "right: " + (this.cameras.main.midPoint.x + window.innerWidth/2),
+      "top: " + (this.cameras.main.midPoint.y - window.innerHeight/2),
+      "bottom: " + (this.cameras.main.midPoint.y + window.innerHeight/2),
+    )
   }
 
   create(
@@ -288,7 +295,7 @@ class Game extends Phaser.Scene {
       s: Phaser.Input.Keyboard.KeyCodes.S,
       d: Phaser.Input.Keyboard.KeyCodes.D,
     });
-    this.cameras.main.zoom = 0.5
+    // this.cameras.main.zoom = 0.5
     // CREATIVE
 
     this.checkPoint = 0;
@@ -370,7 +377,7 @@ class Game extends Phaser.Scene {
     this.EscKeyboard = this.input.keyboard?.addKey(
       Phaser.Input.Keyboard.KeyCodes.ESC
     );
-    // this.cursors = this.input.keyboard?.createCursorKeys();
+
     this.cursors = this.input.keyboard?.createCursorKeys();
 
     const { x, y } = this.map.startingPoint;
@@ -378,17 +385,17 @@ class Game extends Phaser.Scene {
     this.canWin = false;
     this.canRot = true;
     /* CAMERAS */
-    // this.cameras.main.zoom = 1;
+    this.cameras.main.zoom = 1;
     this.cameraWidth = this.cameras.main.width;
     this.cameraHeight = this.cameras.main.height;
-    // this.cameras.main.startFollow(
-    //   this.monchi,
-    //   true,
-    //   0.5,
-    //   0.5,
-    //   0,
-    //   this.cameraHeight / 2 - 200
-    // );
+    this.cameras.main.startFollow(
+      this.monchi,
+      true,
+      0.5,
+      0.5,
+      0,
+      this.cameraHeight / 2 - 200
+    );
 
     /* COLLIDERS */
     //@ts-ignore
@@ -437,6 +444,7 @@ class Game extends Phaser.Scene {
     }
     // CREATIVE MODE
     this.handleCameraMovement();
+
   }
 }
 

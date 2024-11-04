@@ -11,7 +11,9 @@ import Player from "../../assets/Player";
 import portal, { portalConfig } from "../../assets/portal";
 import { Children } from "react";
 import { loseConfigFromMapType } from "@/game/Types";
-import LargeFloorIsland, { LargeFloorIslandConfig } from "@/game/assets/LargeFloorIsland";
+import LargeFloorIsland, {
+    LargeFloorIslandConfig,
+} from "@/game/assets/LargeFloorIsland";
 
 class Mapa4 {
     isJumping = false;
@@ -25,8 +27,8 @@ class Mapa4 {
         x: 0,
         y: -200,
         width: 6000,
-        height: 2000
-    }
+        height: 2000,
+    };
     // normales
     pisos?: Phaser.Physics.Arcade.Group;
     // de vuelta al inicio
@@ -65,17 +67,17 @@ class Mapa4 {
             positions: this.startingPoint,
             cameraDirection: "NORMAL",
             PlayerDirection: "NORMAL",
-            gravityDown: true
+            gravityDown: true,
         },
         {
             positions: this.checkPoint1,
             cameraDirection: "ROTATED",
             PlayerDirection: "ROTATED",
-            gravityDown: false
+            gravityDown: false,
         },
     ];
-    nextScene: string | undefined = 'postal1_planeta2';
-    UIItemToGrab: string = 'comida';
+    nextScene: string | undefined = "postal1_planeta2";
+    UIItemToGrab: string = "comida";
 
     background: Phaser.GameObjects.Image;
     backgroundStars: Phaser.GameObjects.Image;
@@ -86,7 +88,9 @@ class Mapa4 {
     frontground1: Phaser.GameObjects.Image;
     frontground2: Phaser.GameObjects.Image;
     frontground3: Phaser.GameObjects.Image;
-    // hueso1: Phaser.GameObjects.Image;
+    frontground4: Phaser.GameObjects.Image;
+    frontground5: Phaser.GameObjects.Image;
+    hueso1: Phaser.GameObjects.Image;
     // background7: Phaser.GameObjects.Image;
     // mountain1: Phaser.GameObjects.Image;
     // mountain2: Phaser.GameObjects.Image;
@@ -116,60 +120,115 @@ class Mapa4 {
             this.worldSize.height
         );
 
-        this.mapContainer = this.scene.add.container()
-        this.frontContainer = this.scene.add.container().setDepth(999999999999)
+        this.mapContainer = this.scene.add.container();
+        this.frontContainer = this.scene.add.container().setDepth(999999999999);
 
         this.background = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "p1backgroundDia")
-            .setOrigin(0.5, 0.5)
+            .setOrigin(0.5, 0.5);
         this.backgroundStars = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "p1Stars")
-            .setOrigin(0.5, 0.5).setAlpha(0)
+            .setOrigin(0.5, 0.5)
+            .setAlpha(0);
         this.background2 = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "p1backgroundNoche")
-            .setOrigin(0.5, 0.5).setAlpha(0)
+            .setOrigin(0.5, 0.5)
+            .setAlpha(0);
         this.background3 = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "p1capaOscuridad")
-            .setOrigin(0.5, 0.5).setAlpha(0)
+            .setOrigin(0.5, 0.5)
+            .setAlpha(0);
         this.scene.tweens.add({
             targets: [this.background2, this.background3, this.backgroundStars],
             alpha: 1,
             yoyo: true,
             duration: 30000,
             loop: -1,
-            ease: 'ease',
-        })
+            ease: "ease",
+        });
         this.scene.tweens.add({
             targets: [this.background],
             alpha: 0,
             yoyo: true,
             duration: 30000,
             loop: -1,
-            ease: 'ease',
-        })
+            ease: "ease",
+        });
         this.background4 = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y + 830, "frontground1p1")
-            .setOrigin(1, 1).setScale(1);
+            .setOrigin(1, 1)
+            .setScale(1);
         this.background5 = this.scene.add
-            .image(this.startingPoint.x - 5, this.startingPoint.y + 830, "frontground1p1")
-            .setOrigin(0, 1).setScale(1).setFlipX(true);
+            .image(
+                this.startingPoint.x - 5,
+                this.startingPoint.y + 830,
+                "frontground1p1"
+            )
+            .setOrigin(0, 1)
+            .setScale(1)
+            .setFlipX(true);
         this.frontground1 = this.scene.add
-            .image(this.startingPoint.x , this.startingPoint.y + 830, "frontground2p1")
-            .setOrigin(1, 1).setScale(1)
+            .image(this.startingPoint.x, this.startingPoint.y + 830, "frontground2p1")
+            .setOrigin(1, 1)
+            .setScale(1);
         this.frontground2 = this.scene.add
-            .image(this.startingPoint.x - 5, this.startingPoint.y + 830, "frontground2p1")
-            .setOrigin(0, 1).setScale(1).setFlipX(true);
+            .image(
+                this.startingPoint.x - 5,
+                this.startingPoint.y + 830,
+                "frontground2p1"
+            )
+            .setOrigin(0, 1)
+            .setScale(1)
+            .setFlipX(true);
         this.frontground3 = this.scene.add
-            .image(this.startingPoint.x - 5 + this.frontground2.x, this.startingPoint.y + 830, "frontground2p1")
-            .setOrigin(0, 1).setScale(1)
-        // this.hueso1 = this.scene.add
-        // .image(this.startingPoint.x , this.startingPoint.y + 530, "huesoFrontp1")
-        // .setOrigin(0.5, 1).setScale(1)
+            .image(
+                this.startingPoint.x - 5 + this.frontground2.x,
+                this.startingPoint.y + 830,
+                "frontground2p1"
+            )
+            .setOrigin(0, 1)
+            .setScale(1);
+        this.frontground3 = this.scene.add
+            .image(
+                this.startingPoint.x - 5 + this.frontground2.x,
+                this.startingPoint.y + 830,
+                "frontground2p1"
+            )
+            .setOrigin(0, 1)
+            .setScale(1);
+        this.frontground4 = this.scene.add
+            .image(
+                this.startingPoint.x - 5 + this.frontground3.x,
+                this.startingPoint.y + 830,
+                "frontground1p1"
+            )
+            .setOrigin(0, 1)
+            .setScale(1);
+            this.frontground5 = this.scene.add
+            .image(
+                this.startingPoint.x - 5 + this.frontground4.x,
+                this.startingPoint.y + 830,
+                "frontground2p1"
+            )
+            .setOrigin(0, 1)
+            .setScale(1);
+        this.hueso1 = this.scene.add
+            .image(this.startingPoint.x, this.startingPoint.y + 530, "huesoFrontp1")
+            .setOrigin(0.5, 1)
+            .setScale(1);
         // this.background7 = this.scene.add
         //     .image(this.startingPoint.x - 5 + this.background6.x, this.startingPoint.y + 530, "frontground1p1")
         // .setOrigin(0, 1).setScale(1).setFlipX(true);
-        this.mountain4 = this.scene.add.image(200, this.startingPoint.y + 500, "montaña1p1")
-        this.mountain5 = this.scene.add.image(1100, this.startingPoint.y + 520, "montaña2p1")
+        this.mountain4 = this.scene.add.image(
+            200,
+            this.startingPoint.y + 500,
+            "montaña1p1"
+        );
+        this.mountain5 = this.scene.add.image(
+            1100,
+            this.startingPoint.y + 520,
+            "montaña2p1"
+        );
 
         // this.mountain1 = this.scene.add.image(this.startingPoint.x + this.background5.width - 15, this.startingPoint.y - 370 + 300, "montaña3").setScale(1.2)
         // this.mountain2 = this.scene.add.image(this.startingPoint.x - 70, this.startingPoint.y + 350 + 500, "montaña5").setScale(1.4)
@@ -185,19 +244,21 @@ class Mapa4 {
             this.background5,
             this.mountain4,
             this.mountain5,
-            // this.background7,
-        ])
-
-        this.frontContainer.add([
             this.frontground1,
             this.frontground2,
             this.frontground3,
-            // this.hueso1,
+            this.frontground4,
+            this.frontground5,
+            // this.background7,
+        ]);
+
+        this.frontContainer.add([
+            this.hueso1,
             // this.mountain1,
             // this.mountain2,
             // this.mountain3,
             // this.mountain6
-        ])
+        ]);
     }
 
     // animateBackground(player: Phaser.GameObjects.Sprite | Phaser.Math.Vector2) {
@@ -248,7 +309,7 @@ class Mapa4 {
                     this.scene.monchi,
                     this.pisos2,
                     () => {
-                        this.scene.changeGravity(true, 1000, 3)
+                        this.scene.changeGravity(true, 1000, 3);
                         // this.scene.checkPoint = 1
                     },
                     () => true,
@@ -261,7 +322,7 @@ class Mapa4 {
                     () => {
                         if (this.scene.checkPoint === 0) {
                             this.scene.rotateCam(true, 10);
-                            this.scene.checkPoint = 1
+                            this.scene.checkPoint = 1;
                         }
                     },
                     () => true,
@@ -280,8 +341,8 @@ class Mapa4 {
                     this.scene.monchi,
                     this.fireballGroup,
                     () => {
-                        this.scene.touchItem("fireball")
-                        this.scene.monchi?.setVelocity(0)
+                        this.scene.touchItem("fireball");
+                        this.scene.monchi?.setVelocity(0);
                     },
                     () => true,
                     this.scene
@@ -299,8 +360,8 @@ class Mapa4 {
                     this.scene.monchi,
                     this.pisos4,
                     () => {
-                        this.scene.canRot = true // medio hack, revisar lógica
-                        this.scene.changeGravity(false, 1000, 3)
+                        this.scene.canRot = true; // medio hack, revisar lógica
+                        this.scene.changeGravity(false, 1000, 3);
                         // this.scene.rotateCam(false, 10)
                         // this.scene.checkPoint = 0
                     },
@@ -312,9 +373,9 @@ class Mapa4 {
                     this.scene.monchi,
                     this.pisos5,
                     () => {
-                        this.scene.canRot = true // medio hack, revisar lógica
-                        this.scene.changeGravity(false, 1000, 3)
-                        this.scene.rotateCam(false, 10)
+                        this.scene.canRot = true; // medio hack, revisar lógica
+                        this.scene.changeGravity(false, 1000, 3);
+                        this.scene.rotateCam(false, 10);
                         // this.scene.checkPoint = 0
                     },
                     () => true,
@@ -325,7 +386,7 @@ class Mapa4 {
                     this.scene.monchi,
                     this.movingFloor,
                     () => {
-                        this.scene.touch()
+                        this.scene.touch();
                     },
                     () => true,
                     this.scene
@@ -335,7 +396,7 @@ class Mapa4 {
                     this.scene.monchi,
                     this.movingFloorRot,
                     () => {
-                        this.scene.touch()
+                        this.scene.touch();
                     },
                     () => true,
                     this.scene
@@ -344,7 +405,6 @@ class Mapa4 {
     }
 
     createMap(data: { level: number; lifes: number }) {
-
         this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
         this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });
         this.pisos = this.scene.physics.add.group({ allowGravity: false });
@@ -356,12 +416,11 @@ class Mapa4 {
         this.pisos5 = this.scene.physics.add.group({ allowGravity: false });
         this.amountLifes = data.lifes;
         this.coin = this.scene.physics.add.group({ allowGravity: false });
-        this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
+        this.aura = this.scene.physics.add.group({
+            allowGravity: false,
+            immovable: true,
+        });
         this.portal = this.scene.physics.add.group({ allowGravity: false });
-
-
-
-
 
         const p1Config: FloorConfig = {
             pos: { x: 600, y: 1100 },
@@ -379,7 +438,9 @@ class Mapa4 {
             width: 140,
             height: 50,
         };
-        const p2 = new Floor(this.scene, p2Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
+        const p2 = new Floor(this.scene, p2Config, this.pisos2).setTint(
+            Phaser.Display.Color.GetColor(255, 101, 0)
+        );
 
         const fireball1Config: FloorConfig = {
             spriteSheet: "meteoritop1",
@@ -394,7 +455,11 @@ class Mapa4 {
             },
             frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
         };
-        const fireball = new Floor(this.scene, fireball1Config, this.fireballGroup).setScale(0.5)
+        const fireball = new Floor(
+            this.scene,
+            fireball1Config,
+            this.fireballGroup
+        ).setScale(0.5);
 
         const p3Config: FloorConfig = {
             pos: { x: 1100, y: 400 },
@@ -403,7 +468,10 @@ class Mapa4 {
             width: 140,
             height: 50,
         };
-        const p3 = new Floor(this.scene, p3Config, this.pisos4).setFlipX(true).setFlipY(true).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
+        const p3 = new Floor(this.scene, p3Config, this.pisos4)
+            .setFlipX(true)
+            .setFlipY(true)
+            .setTint(Phaser.Display.Color.GetColor(255, 101, 0));
 
         const fireball2Config: FloorConfig = {
             spriteSheet: "meteoritop1",
@@ -419,7 +487,9 @@ class Mapa4 {
             },
             frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
         };
-        const fireball2 = new Floor(this.scene, fireball2Config, this.fireballGroup).setScale(0.5).setFlipY(true)
+        const fireball2 = new Floor(this.scene, fireball2Config, this.fireballGroup)
+            .setScale(0.5)
+            .setFlipY(true);
 
         const p4Config: FloorConfig = {
             pos: { x: 1400, y: 1400 },
@@ -428,7 +498,9 @@ class Mapa4 {
             width: 140,
             height: 50,
         };
-        const p4 = new Floor(this.scene, p4Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
+        const p4 = new Floor(this.scene, p4Config, this.pisos2).setTint(
+            Phaser.Display.Color.GetColor(255, 101, 0)
+        );
 
         const fireball3Config: FloorConfig = {
             spriteSheet: "meteoritop1",
@@ -444,7 +516,11 @@ class Mapa4 {
             },
             frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
         };
-        const fireball3 = new Floor(this.scene, fireball3Config, this.fireballGroup).setScale(0.5)
+        const fireball3 = new Floor(
+            this.scene,
+            fireball3Config,
+            this.fireballGroup
+        ).setScale(0.5);
 
         const p5Config: FloorConfig = {
             pos: { x: 1600, y: 400 },
@@ -453,7 +529,10 @@ class Mapa4 {
             width: 140,
             height: 50,
         };
-        const p5 = new Floor(this.scene, p5Config, this.pisos3).setFlipX(true).setFlipY(true).setTint(Phaser.Display.Color.GetColor(255, 101, 255));
+        const p5 = new Floor(this.scene, p5Config, this.pisos3)
+            .setFlipX(true)
+            .setFlipY(true)
+            .setTint(Phaser.Display.Color.GetColor(255, 101, 255));
 
         const p6Config: FloorConfig = {
             pos: { x: 1900, y: 450 },
@@ -462,7 +541,7 @@ class Mapa4 {
             width: 140,
             height: 50,
         };
-        const p6 = new Floor(this.scene, p6Config, this.pisos).setFlipY(true)
+        const p6 = new Floor(this.scene, p6Config, this.pisos).setFlipY(true);
 
         const p7Config: FloorConfig = {
             pos: { x: 2400, y: 450 },
@@ -471,7 +550,9 @@ class Mapa4 {
             width: 140,
             height: 50,
         };
-        const p7 = new Floor(this.scene, p7Config, this.pisos).setFlipY(true).setVelocity(400, 0)
+        const p7 = new Floor(this.scene, p7Config, this.pisos)
+            .setFlipY(true)
+            .setVelocity(400, 0);
 
         this.scene.tweens.add({
             duration: 3000,
@@ -480,7 +561,7 @@ class Mapa4 {
             repeat: -1,
             targets: p7.body?.velocity,
             x: "-=800",
-        })
+        });
 
         const p8Config: LargeFloorIslandConfig = {
             textureA: "longFloorLeftp1",
@@ -495,7 +576,7 @@ class Mapa4 {
             scale: { width: 0.7, height: 0.7 },
             height: 89,
             large: 15,
-            rotated: true
+            rotated: true,
         };
         const p8 = new LargeFloorIsland(this.scene, p8Config, this.pisos);
 
@@ -506,7 +587,9 @@ class Mapa4 {
             width: 140,
             height: 50,
         };
-        const p9 = new Floor(this.scene, p9Config, this.pisos5).setFlipY(true).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
+        const p9 = new Floor(this.scene, p9Config, this.pisos5)
+            .setFlipY(true)
+            .setTint(Phaser.Display.Color.GetColor(255, 101, 0));
 
         const p10Config: LargeFloorIslandConfig = {
             textureA: "longFloorLeftp1",
@@ -521,7 +604,7 @@ class Mapa4 {
             scale: { width: 0.7, height: 0.7 },
             height: 89,
             large: 20,
-            rotated: false
+            rotated: false,
         };
         const p10 = new LargeFloorIsland(this.scene, p10Config, this.pisos);
 
@@ -532,8 +615,10 @@ class Mapa4 {
             width: 100,
             height: 100,
         };
-        const port = new Floor(this.scene, portalConfig, this.portal).setDepth(99).setScale(0.7)
-        this.endPortal = port
+        const port = new Floor(this.scene, portalConfig, this.portal)
+            .setDepth(99)
+            .setScale(0.7);
+        this.endPortal = port;
 
         const coinConfig: FloorConfig = {
             texture: "comida",
@@ -543,7 +628,10 @@ class Mapa4 {
             height: 18,
             fix: 10,
         };
-        this.cristal = new Floor(this.scene, coinConfig, this.coin).setBodySize(140, 180);
+        this.cristal = new Floor(this.scene, coinConfig, this.coin).setBodySize(
+            140,
+            180
+        );
 
         const c1Config: AsteroidGeneratorConfig = {
             texture: "nube1p1",
@@ -571,8 +659,9 @@ class Mapa4 {
         const c2 = new AsteroidGenerator(this.scene, c2Config);
         c2.start();
 
-        const mapObjects =
-            this.movingFloor.getChildren().concat(
+        const mapObjects = this.movingFloor
+            .getChildren()
+            .concat(
                 this.movingFloorRot.getChildren(),
                 this.fireballGroup.getChildren(),
                 this.pisos.getChildren(),
@@ -583,11 +672,10 @@ class Mapa4 {
                 this.pisos5.getChildren(),
                 this.coin.getChildren(),
                 this.aura.getChildren(),
-                this.portal.getChildren(),
-            )
-        this.mapContainer.add(mapObjects)
-        this.scene.UICamera?.ignore(this.mapContainer)
-
+                this.portal.getChildren()
+            );
+        this.mapContainer.add(mapObjects);
+        this.scene.UICamera?.ignore(this.mapContainer);
     }
     update() {
         // if (this.scene.monchi) this.animateBackground(this.scene.cameras.main.midPoint);

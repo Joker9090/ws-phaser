@@ -9,7 +9,8 @@ import p2Mapa1 from "./maps/planet2/Mapa4";
 import p2Mapa2 from "./maps/planet2/Mapa5";
 import p2Mapa3 from "./maps/planet2/Mapa6";
 import p2Mapa4 from "./maps/planet2/Mapa7";
-
+//MAPAS PLANETA 3
+import p3Mapa1 from "./maps/planet3/Mapa8"
 // OTRAS COSAS
 import Player from "./assets/Player";
 import UIClass from "./assets/UIClass";
@@ -17,8 +18,7 @@ import MasterManager from "./MasterManager";
 import BetweenScenes, { BetweenScenesStatus } from "./BetweenScenes";
 
 export type PossibleMaps = p1Mapa0 | p1Mapa1 | p1Mapa2 | p1Mapa3 |
-  p2Mapa1 | p2Mapa2 | p2Mapa3 |
-  p2Mapa4
+  p2Mapa1 | p2Mapa2 | p2Mapa3 | p2Mapa4 | p3Mapa1
 // Scene in class
 export const keyCodesAWSD = {
   w: Phaser.Input.Keyboard.KeyCodes.W,
@@ -303,6 +303,9 @@ class Game extends Phaser.Scene {
       case 7:
         this.map = new p2Mapa4(this, this.monchi!);
         break;
+      case 8:
+        this.map = new p3Mapa1(this, this.monchi!);
+        break
       default:
         this.map = new p1Mapa0(this, this.monchi!);
         break;

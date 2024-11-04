@@ -57,7 +57,7 @@ class Mapa8 {
         y: 1000, //800
     };
     checkPoint1 = {
-        x: 1700, //500
+        x: 3000, //500
         y: 800, //800
     };
     loseConfig: loseConfigFromMapType = [

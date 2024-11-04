@@ -91,18 +91,9 @@ class Game extends Phaser.Scene {
 
   changeGravity(float: boolean, time: number, speed?: 1 | 2 | 3) {
     if (this.monchi) {
-      switch (float) {
-        case true:
-          this.physics.world.gravity.y = -1000;
-          this.moveCameraOffset("up")
+          this.physics.world.gravity.y = this.physics.world.gravity.y <= 0 ? 1000 : -1000;
+          this.moveCameraOffset(this.physics.world.gravity.y <= 0 ? "down" : "up" )
           this.monchi.rotate(speed)
-          break;
-        case false:
-          this.physics.world.gravity.y = 1000;
-          this.moveCameraOffset("down")
-          this.monchi.rotate(speed)
-          break;
-      }
     }
   }
 

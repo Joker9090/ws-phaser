@@ -24,7 +24,7 @@ class Mapa8 {
     cameraBounds = {
         x: 0,
         y: -200,
-        width: 6000,
+        width: 8000,
         height: 2000
     }
     // normales
@@ -426,6 +426,102 @@ class Mapa8 {
             x: '+=800',
         })
 
+        const p8config:FloorConfig = {
+            pos: {  x: 4850, y: 1200,},
+            texture: "pSimple2p1",
+            scale: { width: 0.7, height: 0.7 },
+            width: 140,
+            height: 50,
+        };
+
+        const p8 = new Floor (this.scene, p8config, this.pisos).setVelocityX(-400);
+
+        this.scene.tweens.add({
+            duration: 3000,
+            paused: false,
+            yoyo: true,
+            repeat: -1,
+            targets: p8.body?.velocity,
+            x: '+=800',
+        })
+
+
+        const p9config:FloorConfig = {
+            pos: {  x: 5400, y: 1200,},
+            texture: "pSimple2p1",
+            scale: { width: 0.7, height: 0.7 },
+            width: 140,
+            height: 50,
+        };
+
+        const p9 = new Floor (this.scene, p9config, this.pisos2);
+
+        const p10config:FloorConfig = {
+            pos: {  x: 5400, y: 700,},
+            texture: "pSimple2p1",
+            scale: { width: 0.7, height: 0.7 },
+            width: 140,
+            height: 50,
+        };
+        const p10 = new Floor (this.scene, p10config, this.pisos3).setFlipY(true);
+
+        const p11config:FloorConfig = {
+            pos: {  x: 5750, y: 700,},
+            texture: "pSimple2p1",
+            scale: { width: 0.7, height: 0.7 },
+            width: 140,
+            height: 50,
+        };
+        const p11 = new Floor (this.scene, p11config, this.pisos2).setFlipY(true);
+
+        const p12config:FloorConfig = {
+            pos: {  x: 5750, y: 1200,},
+            texture: "pSimple2p1",
+            scale: { width: 0.7, height: 0.7 },
+            width: 140,
+            height: 50,
+        };
+        
+        const p12 = new Floor (this.scene, p12config, this.pisos)
+        
+        
+        const p13config:FloorConfig = {
+            pos: {  x: 5990, y: 1100,},
+            texture: "pSimple2p1",
+            scale: { width: 0.7, height: 0.7 },
+            width: 140,
+            height: 50,
+        };
+        
+        const p13 = new Floor (this.scene, p13config, this.pisos2);
+
+
+        const p14Config: LargeFloorIslandConfig = {
+            textureA: "longFloorLeftp1",
+            textureB: "longFloorMiddleBp1",
+            textureC: "longFloorRightp1",
+            pos: { x: 5970, y: 540 },
+            width: {
+                textureA: 120,
+                textureB: 45,
+                textureC: 122,
+            },
+            scale: { width: 0.7, height: 0.7 },
+            height: 89,
+            large: 20,
+            rotated: true,
+        };
+
+        const p14 = new LargeFloorIsland(this.scene, p14Config, this.pisos);
+        const portalConfig: FloorConfig = {
+            texture: "cuevap1",
+            pos: { x: 6500, y: 650 },
+            width: 100,
+            height: 100,
+        };
+        const port = new Floor(this.scene, portalConfig, this.portal).setDepth(99).setScale(0.7).setFlipY(true)
+
+        this.endPortal = port
 
         const mapObjects =
             this.movingFloor.getChildren().concat(

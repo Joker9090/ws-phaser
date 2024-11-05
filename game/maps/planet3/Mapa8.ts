@@ -39,14 +39,12 @@ class Mapa8 {
     pisos4?: Phaser.Physics.Arcade.Group;
     // no float + rotate cam
     pisos5?: Phaser.Physics.Arcade.Group;
-
     fireballGroup?: Phaser.Physics.Arcade.Group;
     coin?: Phaser.Physics.Arcade.Group;
     portal?: Phaser.Physics.Arcade.Group;
     aura?: Phaser.Physics.Arcade.Group;
     movingFloor?: Phaser.Physics.Arcade.Group;
     movingFloorRot?: Phaser.Physics.Arcade.Group;
-
     amountLifes: number = 0;
     sideGrav: boolean = false;
     goingBack: boolean = false;
@@ -57,8 +55,9 @@ class Mapa8 {
         y: 1000, //800
     };
     checkPoint1 = {
-        x: 3000, //500
-        y: 800, //800
+        x: 5400, //500
+        y: 900  //800
+       
     };
     loseConfig: loseConfigFromMapType = [
         {
@@ -75,7 +74,6 @@ class Mapa8 {
         },
     ];
     nextScene: string | undefined = undefined;
-
     background: Phaser.GameObjects.Image;
     background2: Phaser.GameObjects.Image;
     background3: Phaser.GameObjects.Image;
@@ -90,13 +88,10 @@ class Mapa8 {
     mountain5: Phaser.GameObjects.Image;
     // mountain6: Phaser.GameObjects.Image;
     UIItemToGrab: string = 'comida';
-
     cristal?: Floor;
     collected: Boolean = false;
     endPortal?: Floor;
-
     isFloating: boolean = false;
-
     mapContainer: Phaser.GameObjects.Container;
     frontContainer: Phaser.GameObjects.Container;
 
@@ -202,7 +197,12 @@ class Mapa8 {
                 this.scene.physics.add.collider(
                     this.scene.monchi,
                     this.pisos,
-                    this.scene.touch,
+                    () => {
+                        this.scene.touch()
+                        if(this.scene.checkPoint === 0 && this.scene.monchi && this.scene.monchi.x  >= 4800){
+                            this.scene.checkPoint = 1
+                        }
+                    },
                     () => true,
                     this.scene
                 );
@@ -212,6 +212,7 @@ class Mapa8 {
                     this.pisos2,
                     () => {
                         this.scene.changeGravity(true, 1000, 3);
+                       
                     },
                     () => true,
                     this.scene
@@ -230,7 +231,12 @@ class Mapa8 {
                 this.scene.physics.add.overlap(
                     this.scene.monchi,
                     this.coin,
-                    () => this.scene.touchItem("coin"),
+                    () => {
+                        this.scene.touchItem("coin")
+                        if(this.scene.checkPoint === 0 ){
+                            this.scene.checkPoint = 1
+                        }
+                    },
                     () => true,
                     this.scene
                 );
@@ -394,7 +400,7 @@ class Mapa8 {
             height: 50,
         };
 
-        const p6 = new Floor (this.scene, p6config, this.pisos2).setFlipY(true).setVelocityX(-400);
+        const p6 = new Floor (this.scene, p6config, this.pisos2).setFlipY(true).setVelocityX(-400).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
 
         this.scene.tweens.add({
             duration: 3000,
@@ -415,7 +421,7 @@ class Mapa8 {
             height: 50,
         };
 
-        const p7 = new Floor (this.scene, p7config, this.pisos2).setFlipY(true).setVelocityX(-400);
+        const p7 = new Floor (this.scene, p7config, this.pisos2).setFlipY(true).setVelocityX(-400).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
 
         this.scene.tweens.add({
             duration: 3000,
@@ -439,6 +445,7 @@ class Mapa8 {
         this.scene.tweens.add({
             duration: 3000,
             paused: false,
+            delay:200,
             yoyo: true,
             repeat: -1,
             targets: p8.body?.velocity,
@@ -454,7 +461,7 @@ class Mapa8 {
             height: 50,
         };
 
-        const p9 = new Floor (this.scene, p9config, this.pisos2);
+        const p9 = new Floor (this.scene, p9config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
 
         const p10config:FloorConfig = {
             pos: {  x: 5400, y: 700,},
@@ -472,7 +479,7 @@ class Mapa8 {
             width: 140,
             height: 50,
         };
-        const p11 = new Floor (this.scene, p11config, this.pisos2).setFlipY(true);
+        const p11 = new Floor (this.scene, p11config, this.pisos2).setFlipY(true).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
 
         const p12config:FloorConfig = {
             pos: {  x: 5750, y: 1200,},
@@ -493,7 +500,7 @@ class Mapa8 {
             height: 50,
         };
         
-        const p13 = new Floor (this.scene, p13config, this.pisos2);
+        const p13 = new Floor (this.scene, p13config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
 
 
         const p14Config: LargeFloorIslandConfig = {
@@ -523,6 +530,27 @@ class Mapa8 {
 
         this.endPortal = port
 
+        
+        const coinConfig: FloorConfig = {
+            texture: "comida",
+            pos: {  x: 4850, y: 1150},
+            scale: { width: 0.5, height: 0.5 },
+            width: 10,
+            height: 18,
+            fix: 10,
+        };
+
+        this.cristal = new Floor(this.scene, coinConfig, this.coin).setBodySize(140, 180).setVelocityX(-400);
+
+        this.scene.tweens.add({
+                duration: 3000,
+                paused: false,
+                delay:200,
+                yoyo: true,
+                repeat: -1,
+                targets: this.cristal.body?.velocity,
+                x: '+=800',
+        })
         const mapObjects =
             this.movingFloor.getChildren().concat(
                 this.movingFloorRot.getChildren(),

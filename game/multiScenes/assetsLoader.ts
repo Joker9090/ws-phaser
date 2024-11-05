@@ -341,6 +341,7 @@ const loadAssets = {
       ["audio", "songLose", "/sounds/lose.mp3"],
       ["audio", "songMenu", "/sounds/menu.mp3"],
       ["audio", "planet0LoopMusic", "/game/planeta1/loopMusic.mp3"],
+      ["audio", "planet1LoopMusic", "/game/planeta2/loopMusic.mp3"],
     ],
   },
   Postales: {
@@ -732,7 +733,7 @@ class AssetsLoader {
           //   keyname: "cine_movie_4",
           //   // keyname: "postal2_planeta1",
           // });
-          this.scene.makeTransition("Game", { level: 4, lifes: 3 });
+          this.scene.makeTransition("Game", { level: 6, lifes: 3 });
         }
 
         // get center of the screen

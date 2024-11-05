@@ -82,6 +82,7 @@ class Game extends Phaser.Scene {
   moveCameraOffset(position: "up" | "down", instant: boolean = false) {
     setTimeout(() => {
       let newPosition = this.cameraHeight / 2 - 200;
+      console.log(newPosition, 'NEW POSITIONS CAMERA')
       if (position === "up") newPosition = -newPosition;
       if (instant) {
         this.cameras.main.followOffset.y = newPosition;
@@ -99,7 +100,7 @@ class Game extends Phaser.Scene {
   changeGravity(float: boolean, time: number, speed?: 1 | 2 | 3) {
     if (this.monchi) {
           this.physics.world.gravity.y = this.physics.world.gravity.y <= 0 ? 1000 : -1000;
-          this.moveCameraOffset(this.physics.world.gravity.y <= 0 ? "down" : "up" )
+          this.moveCameraOffset(this.physics.world.gravity.y <= 0 ? "up" : "down" )
           this.monchi.rotate(speed)
     }
   }
@@ -267,12 +268,12 @@ class Game extends Phaser.Scene {
       cam.scrollX += cameraSpeed;
     }
 
-    console.log(
-      "left: " + (this.cameras.main.midPoint.x - window.innerWidth/2),
-      "right: " + (this.cameras.main.midPoint.x + window.innerWidth/2),
-      "top: " + (this.cameras.main.midPoint.y - window.innerHeight/2),
-      "bottom: " + (this.cameras.main.midPoint.y + window.innerHeight/2),
-    )
+    // console.log(
+    //   "left: " + (this.cameras.main.midPoint.x - window.innerWidth/2),
+    //   "right: " + (this.cameras.main.midPoint.x + window.innerWidth/2),
+    //   "top: " + (this.cameras.main.midPoint.y - window.innerHeight/2),
+    //   "bottom: " + (this.cameras.main.midPoint.y + window.innerHeight/2),
+    // )
   }
 
   create(
@@ -312,19 +313,19 @@ class Game extends Phaser.Scene {
         break;
       case 4:
         this.map = new p2Mapa1(this, this.monchi!);
-        this.loopMusic = undefined;
+        this.loopMusic = "planet1LoopMusic";
         break;
       case 5:
         this.map = new p2Mapa2(this, this.monchi!);
-        this.loopMusic = undefined;
+        this.loopMusic = "planet1LoopMusic";
         break;
       case 6:
-        this.map = new p2Mapa3(this, this.monchi!);
-        this.loopMusic = undefined;
+        this.map = new p2Mapa4(this, this.monchi!);
+        this.loopMusic = "planet1LoopMusic";
         break;
       case 7:
-        this.map = new p2Mapa4(this, this.monchi!);
-        this.loopMusic = undefined;
+        this.map = new p2Mapa3(this, this.monchi!);
+        this.loopMusic = "planet1LoopMusic";
         break;
       default:
         this.map = new p1Mapa0(this, this.monchi!);
@@ -354,6 +355,17 @@ class Game extends Phaser.Scene {
     );
     this.UIClass = new UIClass(this, this.levelIs, this.lifes, this.timeLevel);
 
+    /* CONTROLS */
+    this.EscKeyboard = this.input.keyboard?.addKey(
+      Phaser.Input.Keyboard.KeyCodes.ESC
+    );
+    
+    this.cursors = this.input.keyboard?.createCursorKeys();
+    
+    const { x, y } = this.map.startingPoint;
+    this.monchi = new Player(this, x, y, "character", 2);
+    this.canWin = false;
+    this.canRot = true;
     /* CREATE MAP */
     this.map.createMap(data);
     const {
@@ -364,17 +376,6 @@ class Game extends Phaser.Scene {
     } = this.map.cameraBounds;
     console.log("CAMERA BOUNDS", this.map.cameraBounds);
     this.cameras.main.setBounds(boundX, boundY, boundWidth, boundHeight);
-    /* CONTROLS */
-    this.EscKeyboard = this.input.keyboard?.addKey(
-      Phaser.Input.Keyboard.KeyCodes.ESC
-    );
-
-    this.cursors = this.input.keyboard?.createCursorKeys();
-
-    const { x, y } = this.map.startingPoint;
-    this.monchi = new Player(this, x, y, "character", 2);
-    this.canWin = false;
-    this.canRot = true;
     /* CAMERAS */
     this.cameras.main.zoom = 1;
     this.cameraWidth = this.cameras.main.width;

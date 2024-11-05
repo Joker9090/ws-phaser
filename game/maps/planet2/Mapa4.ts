@@ -21,7 +21,7 @@ class Mapa4 {
   scene: Game;
   worldSize = {
     width: 10000,
-    height: 1820,
+    height: 3000,
   };
   cameraBounds = {
     x: 0,
@@ -255,9 +255,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
       .image(3600, this.startingPoint.y + 920, "huesoFrontp1")
       .setOrigin(0.5, 1)
       .setScale(0.9);
-    // this.background7 = this.scene.add
-    //     .image(this.startingPoint.x - 5 + this.background6.x, this.startingPoint.y + 530, "frontground1p1")
-    // .setOrigin(0, 1).setScale(1).setFlipX(true);
+
     this.mountain1 = this.scene.add.image(
       200,
       this.startingPoint.y + 500,
@@ -385,31 +383,6 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
       { x: this.startingPoint.x, y: this.startingPoint.y },
       { fixX: -20, fixY: -30 }
     );
-    //   const { ajusteBX, ajusteBY } = { ajusteBX: 1.1, ajusteBY: 1.1 }
-    //   const calcDiffBX = (x2 - x) / ajusteBX
-    //   const calcDiffBY = (y2 - y) / ajusteBY;
-    //   this.backgroundStars.setPosition(x + calcDiffBX, y + calcDiffBY);
-    //   this.background.setPosition(x + calcDiffBX, y + calcDiffBY);
-    //   this.background2.setPosition(x + calcDiffBX, y + calcDiffBY);
-    //   this.background3.setPosition(x + calcDiffBX, y + calcDiffBY);
-    //   // animation frontgrounds
-    //   const { ajusteFX, ajusteFY } = { ajusteFX: 4, ajusteFY: 2 }
-    //   const calcDiffFX = (x2 - x) / ajusteFX
-    //   const calcDiffFY = (y2 - y) / ajusteFY;
-    //   this.background4.setPosition(x + calcDiffFX, y + offsetLevel + 470 + calcDiffFY);
-    //   this.background5.setPosition(x + calcDiffFX, y + offsetLevel + 470 + calcDiffFY);
-    //   // this.background6.setPosition(x + this.background5.width - 15 + calcDiffFX, y + offsetLevel + 470 + calcDiffFY);
-    //   // this.background7.setPosition(x + this.background5.width + this.background6.width - 15 + calcDiffFX, y + offsetLevel + 470 + calcDiffFY);
-    //   this.mountain4.setPosition(-200 + calcDiffFX, y + offsetLevel + calcDiffFY)
-    //   this.mountain5.setPosition(1100 + calcDiffFX, y + offsetLevel + calcDiffFY)
-    //   // // // animation front mountains
-    //   // const { ajusteFMX, ajusteFMY } = { ajusteFMX: 20, ajusteFMY: 30 }
-    //   // const calcDiffFMX = -(x2 - x) / ajusteFMX
-    //   // const calcDiffFMY = -(y2 - y) / ajusteFMY;
-    //   // this.mountain1.setPosition(this.startingPoint.x + this.background5.width - 85 + calcDiffFMX, y + offsetLevel2 + 320 + calcDiffFMY)
-    //   // this.mountain2.setPosition(this.startingPoint.x - 270 + calcDiffFMX, y + offsetLevel2 + 350 + calcDiffFMY)
-    //   // this.mountain3.setPosition(1100 + calcDiffFMX, y + offsetLevel2 + 470 + calcDiffFMY)
-    //   // this.mountain6.setPosition(x + this.background5.width + this.background6.width - 15 + calcDiffFMX, y + 470 + offsetLevel2 + calcDiffFMY)
   }
 
   addColliders() {

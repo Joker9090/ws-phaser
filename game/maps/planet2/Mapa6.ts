@@ -19,7 +19,7 @@ class Mapa5 {
     scene: Game;
     worldSize = {
         width: 10000,
-        height: 1820,
+        height: 3000,
     };
     cameraBounds = {
         x: 0,
@@ -383,31 +383,6 @@ class Mapa5 {
         { x: this.startingPoint.x, y: this.startingPoint.y },
         { fixX: -20, fixY: -30 }
       );
-      //   const { ajusteBX, ajusteBY } = { ajusteBX: 1.1, ajusteBY: 1.1 }
-      //   const calcDiffBX = (x2 - x) / ajusteBX
-      //   const calcDiffBY = (y2 - y) / ajusteBY;
-      //   this.backgroundStars.setPosition(x + calcDiffBX, y + calcDiffBY);
-      //   this.background.setPosition(x + calcDiffBX, y + calcDiffBY);
-      //   this.background2.setPosition(x + calcDiffBX, y + calcDiffBY);
-      //   this.background3.setPosition(x + calcDiffBX, y + calcDiffBY);
-      //   // animation frontgrounds
-      //   const { ajusteFX, ajusteFY } = { ajusteFX: 4, ajusteFY: 2 }
-      //   const calcDiffFX = (x2 - x) / ajusteFX
-      //   const calcDiffFY = (y2 - y) / ajusteFY;
-      //   this.background4.setPosition(x + calcDiffFX, y + offsetLevel + 470 + calcDiffFY);
-      //   this.background5.setPosition(x + calcDiffFX, y + offsetLevel + 470 + calcDiffFY);
-      //   // this.background6.setPosition(x + this.background5.width - 15 + calcDiffFX, y + offsetLevel + 470 + calcDiffFY);
-      //   // this.background7.setPosition(x + this.background5.width + this.background6.width - 15 + calcDiffFX, y + offsetLevel + 470 + calcDiffFY);
-      //   this.mountain4.setPosition(-200 + calcDiffFX, y + offsetLevel + calcDiffFY)
-      //   this.mountain5.setPosition(1100 + calcDiffFX, y + offsetLevel + calcDiffFY)
-      //   // // // animation front mountains
-      //   // const { ajusteFMX, ajusteFMY } = { ajusteFMX: 20, ajusteFMY: 30 }
-      //   // const calcDiffFMX = -(x2 - x) / ajusteFMX
-      //   // const calcDiffFMY = -(y2 - y) / ajusteFMY;
-      //   // this.mountain1.setPosition(this.startingPoint.x + this.background5.width - 85 + calcDiffFMX, y + offsetLevel2 + 320 + calcDiffFMY)
-      //   // this.mountain2.setPosition(this.startingPoint.x - 270 + calcDiffFMX, y + offsetLevel2 + 350 + calcDiffFMY)
-      //   // this.mountain3.setPosition(1100 + calcDiffFMX, y + offsetLevel2 + 470 + calcDiffFMY)
-      //   // this.mountain6.setPosition(x + this.background5.width + this.background6.width - 15 + calcDiffFMX, y + 470 + offsetLevel2 + calcDiffFMY)
     }
 
     addColliders() {
@@ -471,25 +446,76 @@ class Mapa5 {
                     () => true,
                     this.scene
                 );
-            if (this.pisos4)
-                this.scene.physics.add.collider(
+                if (this.pisos4)
+                  this.scene.physics.add.collider(
                     this.scene.monchi,
                     this.pisos4,
                     (player, floor) => {
-                        setTimeout(() => {
+                      //@ts-ignore
+                      const originalY = floor.y
+                      console.log(originalY)
+                      setTimeout(() => {
+                        //@ts-ignore
+                        if (floor.y > 1000) {
+                          //@ts-ignore
+                          // floor.setVelocityY(500)
+                          this.scene.tweens.add({
                             //@ts-ignore
-                            if (floor.y > 1000) {
+                            targets: [floor],
+                            y: originalY + 200,
+                            duration: 1000,
+                            ease: 'ease', 
+                            onComplete: () => {
+                              this.scene.tweens.add({
                                 //@ts-ignore
-                                floor.setVelocityY(500)
-                            } else {
+                                targets: [floor],
+                                y: originalY,
+                                duration: 1000,
+                                ease: 'ease', 
+                                onComplete: () => {
+                                  //@ts-ignore
+                                  floor.body.enable = true;
+                                },
+                              });
+                            },
+                            onStart: () => {
+                              //@ts-ignore
+                              floor.body.enable = false;
+                            },
+                          });
+                        } else {
+                               //@ts-ignore
+                          // floor.setVelocityY(500)
+                          this.scene.tweens.add({
+                            //@ts-ignore
+                            targets: [floor],
+                            y: originalY - 200,
+                            duration: 1000,
+                            ease: 'ease', 
+                            onComplete: () => {
+                              this.scene.tweens.add({
                                 //@ts-ignore
-                                floor.setVelocityY(-500)
-                            }
-                        }, 400)
+                                targets: [floor],
+                                y: originalY,
+                                duration: 1000,
+                                ease: 'ease', 
+                                onComplete: () => {
+                                  //@ts-ignore
+                                  floor.body.enable = true;
+                                },
+                              });
+                            },
+                            onStart: () => {
+                              //@ts-ignore
+                              floor.body.enable = false;
+                            },
+                          });
+                        }
+                      }, 400);
                     },
                     () => true,
                     this.scene
-                );
+                  );
             if (this.pisos5)
                 this.scene.physics.add.collider(
                     this.scene.monchi,
@@ -527,6 +553,7 @@ class Mapa5 {
     }
 
     createMap(data: { level: number; lifes: number }) {
+      this.scene.monchi?.setFlipX(true)
 
         this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
         this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });

@@ -729,11 +729,11 @@ class AssetsLoader {
         // this.scene.makeTransition("startMovie", undefined);
         // console.log("BARTO ACAA")
         sceneToPlay = () => {
-          // this.scene.makeTransition("CinematographyMod", {
-          //   keyname: "cine_movie_4",
-          //   // keyname: "postal2_planeta1",
-          // });
-          this.scene.makeTransition("Game", { level: 0, lifes: 3 });
+          this.scene.makeTransition("CinematographyMod", {
+            keyname: "cine_movie_1",
+            // keyname: "postal2_planeta1",
+          });
+          // this.scene.makeTransition("Game", { level: 0, lifes: 3 });
         }
 
         // get center of the screen

@@ -177,7 +177,7 @@ class Mapa8 {
                     this.pisos,
                     () => {
                         this.scene.touch()
-                        if(this.scene.checkPoint === 0 && this.scene.monchi && this.scene.monchi.x  >= 4800){
+                        if(this.scene.checkPoint === 0 && this.scene.monchi && this.scene.monchi.x  >= 5350){
                             this.scene.checkPoint = 1
                         }
                     },
@@ -448,7 +448,7 @@ class Mapa8 {
             width: 140,
             height: 50,
         };
-        const p10 = new Floor (this.scene, p10config, this.pisos).setFlipY(true).setTint(Phaser.Display.Color.GetColor(0, 0, 0));
+        const p10 = new Floor (this.scene, p10config, this.pisos).setFlipY(true).setTint(Phaser.Display.Color.GetColor(0,0,0));
 
         const p11config:FloorConfig = {
             pos: {  x: 5750, y: 700,},
@@ -519,6 +519,37 @@ class Mapa8 {
         };
 
         this.cristal = new Floor(this.scene, coinConfig, this.coin).setBodySize(140, 180).setVelocityX(-400);
+
+        const fireballConfig: FloorConfig = {
+            spriteSheet: "meteorito",
+            texture: "meteorito",
+            pos: { x: 2850, y: 0 }, // 500 1580
+            width: 100,
+            height: 100,
+            tween: {
+              duration: 4000,
+              repeat: -1,
+              y: "+=2500",
+            },
+            frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+          };
+        const fireball = new Floor(this.scene, fireballConfig, this.fireballGroup).setScale(0.5)    
+
+
+        const fireball2Config: FloorConfig = {
+            spriteSheet: "meteorito",
+            texture: "meteorito",
+            pos: { x: 5200, y: 0 }, // 500 1580
+            width: 100,
+            height: 100,
+            tween: {
+              duration: 4000,
+              repeat: -1,
+              y: "+=2800",
+            },
+            frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+          };
+        const fireball2 = new Floor(this.scene, fireball2Config, this.fireballGroup).setScale(0.5)    
 
         this.scene.tweens.add({
                 duration: 3000,

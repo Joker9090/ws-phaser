@@ -314,6 +314,19 @@ const loadAssets = {
       ["image", "comida", "/game/planeta2/comida.png"],
       ["image", "cuevap1", "/game/planeta2/cuevap1.png"],
 
+      //planeta 3
+      
+      ["image", "pSimple1p3", "/game/planeta3/pSimple1.png"],
+      ["image", "pSimple2p3", "/game/planeta3/pSimple2.png"],
+      ["image", "longFloorLeftp3", "/game/planeta3/longFloorLeft.png"],
+      ["image", "longFloorRightp3", "/game/planeta3/longFloorRight.png"],
+      ["image", "longFloorMiddlep3", "/game/planeta3/longFloorMiddle.png"],
+      ["image", "cuevap3", "/game/planeta3/cuevaA.png"],
+      ["image", "background1p3", "/game/planeta3/bg1p3.png"],
+      ["image", "background2p3", "/game/planeta3/bg2p3.png"],
+      ["image", "background3p3", "/game/planeta3/bg3p3.png"],
+
+
     ],
   },
 

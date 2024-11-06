@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import MultiScene from "../MultiScene";
 import BetweenScenes, { BetweenScenesStatus } from "../BetweenScenes";
+import PreLoadScene from "../PreLoadScene";
 
 export type SceneKeys =
   | "Menu"
@@ -17,6 +18,7 @@ export type SceneKeys =
 export type LoadTypes = "image" | "spritesheet" | "audio" | "svg";
 
 const loadAssets = {
+
   Menu: {
     assets: [
       ["image", "glass", "/game/glass.png"],
@@ -677,18 +679,21 @@ const loadAssets = {
 
 // Scene in class
 class AssetsLoader {
-  scene: MultiScene;
+  scene: MultiScene  | PreLoadScene;
   finished: boolean = false;
-  constructor(scene: MultiScene) {
+  loadKey: SceneKeys = "BetweenScenes";
+  constructor(scene: MultiScene  | PreLoadScene, loadKey: SceneKeys = "BetweenScenes") {
     // super({ key: "SceneLoader" });
     this.scene = scene;
+    this.loadKey = loadKey;
   }
 
-  runPreload(this: AssetsLoader) {
+  runPreload(callback?: Function) {
+    
     if (!this.finished) {
-      this.scene.cameras.main.setBackgroundColor(
-        Phaser.Display.Color.GetColor(30, 30, 30)
-      );
+      // this.scene.cameras.main.setBackgroundColor(
+      //   Phaser.Display.Color.GetColor(30, 30, 30)
+      // );
       var width = this.scene.cameras.main.width;
       var height = this.scene.cameras.main.height;
       var loadingText = this.scene.make.text({
@@ -749,6 +754,7 @@ class AssetsLoader {
 
       this.scene.load.once("complete", function (this: AssetsLoader) {
         let sceneToPlay;
+        console.log("Termino de cargar")
 
         progressBar.destroy();
         progressBox.destroy();
@@ -756,57 +762,61 @@ class AssetsLoader {
         percentText.destroy();
         assetText.destroy();
         this.finished = true;
+        if(callback) callback()
+
         // this.scene.scene.restart({text:"menu"})
         // this.scene.makeTransition("startMovie", undefined);
         // console.log("BARTO ACAA")
-        sceneToPlay = () => {
-          this.scene.makeTransition("CinematographyMod", {
-            keyname: "cine_2_movie_2",
-            // keyname: "postal2_planeta1",
-          });
-          // this.scene.makeTransition("Game", { level: 0, lifes: 3 });
-        }
+        // sceneToPlay = () => {
+        //   this.scene.makeTransition("CinematographyMod", {
+        //     keyname: "cine_2_movie_2",
+        //     // keyname: "postal2_planeta1",
+        //   });
+        //   // this.scene.makeTransition("Game", { level: 0, lifes: 3 });
+        // }
 
         // get center of the screen
-        const center = {
-          x: this.scene.cameras.main.width / 2,
-          y: this.scene.cameras.main.height / 2,
-        }
+        // const center = {
+        //   x: this.scene.cameras.main.width / 2,
+        //   y: this.scene.cameras.main.height / 2,
+        // }
 
-        const button = this.scene.add
-          .image(center.x, center.y, "fireball")
-          .setScale(0.3)
-          .setInteractive();
+        // const button = this.scene.add
+        //   .image(center.x, center.y, "fireball")
+        //   .setScale(0.3)
+        //   .setInteractive();
 
-        if (sceneToPlay) button.on("pointerdown", sceneToPlay);
-        this.scene.tweens.add({
-          targets: button,
-          rotation: Math.PI * 2,
-          duration: 10000,
-          loop: -1,
-        })
-        this.scene.tweens.add({
-          targets: button,
-          scale: 0.35,
-          duration: 3333,
-          loop: -1,
-          yoyo: true
-        })
+        // // if (sceneToPlay) button.on("pointerdown", sceneToPlay);
+        // this.scene.tweens.add({
+        //   targets: button,
+        //   rotation: Math.PI * 2,
+        //   duration: 10000,
+        //   loop: -1,
+        // })
+        // this.scene.tweens.add({
+        //   targets: button,
+        //   scale: 0.35,
+        //   duration: 3333,
+        //   loop: -1,
+        //   yoyo: true
+        // })
       });
 
 
-      const scenesTitles: Array<SceneKeys> = [
-        "Menu",
-        "Scenes",
-        "Tutorial",
-        "Music",
-        "Intro",
-        "LevelMap",
-        "BetweenScenes",
-        "Sandbox",
-        "Postales",
-        "IntroMovie",
-      ];
+      // const scenesTitles: Array<SceneKeys> = [
+      //   "Menu",
+      //   "Scenes",
+      //   "Tutorial",
+      //   "Music",
+      //   "Intro",
+      //   "LevelMap",
+      //   "BetweenScenes",
+      //   "Sandbox",
+      //   "Postales",
+      //   "IntroMovie",
+      // ];
+      const scenesTitles: Array<SceneKeys> = [this.loadKey]
+      console.log("Esta por cargar?", scenesTitles)
       for (let i = 0; i < scenesTitles.length; i++) {
         loadAssets[scenesTitles[i]].assets.map((sceneAssetConfig) => {
           const type = sceneAssetConfig[0] as LoadTypes;

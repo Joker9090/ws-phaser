@@ -8,14 +8,13 @@ import LevelClass from "./multiScenes/levels";
 import CreditsClass from "./multiScenes/credits";
 import AssetsLoader from "./multiScenes/assetsLoader";
 
-
 export default class MultiScene extends Phaser.Scene {
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   scenekey?: string;
   getMasterManagerScene?: MasterManager;
   activeScene?: WonClass | LoseClass | MenuClass | LevelClass | CreditsClass;
   assetLoaderClass?: AssetsLoader;
-  sceneData?: { text?: string};
+  sceneData?: { text?: string };
 
   constructor() {
     super({ key: "MultiScene" });
@@ -24,15 +23,18 @@ export default class MultiScene extends Phaser.Scene {
   init(data: { text: string }) {
     this.cursors = this.input.keyboard?.createCursorKeys();
     if (data.text) {
-      this.sceneData = data
-    } else this.sceneData = undefined
+      this.sceneData = data;
+    } else this.sceneData = undefined;
   }
 
-  preload(){
-        if (this.sceneData === undefined){
-          this.assetLoaderClass = new AssetsLoader(this)
-          this.assetLoaderClass.runPreload()
-        }
+  preload() {
+    if (this.sceneData === undefined) {
+      this.assetLoaderClass = new AssetsLoader(this,"BetweenScenes");
+      this.assetLoaderClass.runPreload(() => {
+        // intro
+        this.makeTransition("CinematographyMod", { keyname: "cine_2_movie_1", loadKey: "IntroMovie" });
+      });
+    }
   }
 
   makeTransition(sceneName: string, data: any) {
@@ -55,7 +57,7 @@ export default class MultiScene extends Phaser.Scene {
   }
 
   create(this: MultiScene, data: { text: string }) {
-    this.scenekey = data.text
+    this.scenekey = data.text;
     // /* Audio */
     // this.getMasterManagerScene = this.game.scene.getScene(
     //   "MasterManager"
@@ -63,34 +65,30 @@ export default class MultiScene extends Phaser.Scene {
     // if (!this.getMasterManagerScene.scene.isActive())
     //   this.scene.launch("MasterManager").sendToBack();
 
-
     switch (this.scenekey) {
       case "win":
-        this.activeScene = new WonClass(this)
+        this.activeScene = new WonClass(this);
         break;
 
       case "lose":
-        this.activeScene = new LoseClass(this)
+        this.activeScene = new LoseClass(this);
         break;
 
       case "menu":
-        this.activeScene = new MenuClass(this)
+        this.activeScene = new MenuClass(this);
         break;
 
       case "levels":
-        this.activeScene = new LevelClass(this)
+        this.activeScene = new LevelClass(this);
         break;
 
       case "credits":
-        this.activeScene = new CreditsClass(this)
+        this.activeScene = new CreditsClass(this);
         break;
-      
     }
   }
 
-
-
   update() {
-    if (this.activeScene) this.activeScene.update()
+    if (this.activeScene) this.activeScene.update();
   }
-} 
+}

@@ -1,4 +1,6 @@
 import Phaser from "phaser";
+import AssetsLoader from "./multiScenes/assetsLoader";
+import PreLoadScene from "./PreLoadScene";
 
 export enum BetweenScenesStatus {
   IDLE,
@@ -27,6 +29,7 @@ export default class BetweenScenesScene extends Phaser.Scene {
   }
 
   loadNewScene() {
+    console.log("loadNewScene",this.status, this.newSceneName)
     if (this.status == BetweenScenesStatus.PROCCESSING) {
       this.status = BetweenScenesStatus.WAITING;
       if (this.newSceneName) {
@@ -74,6 +77,20 @@ export default class BetweenScenesScene extends Phaser.Scene {
       }
     });
   }
+  
+  onTurnOnComplete() {
+  
+    // start PreLoadScene to load the next scene
+    const preloadScene = new PreLoadScene(this.newSceneWith.loadKey, () => {
+      this.loadNewScene()
+      this.turnOff()
+    });
+
+    const scene = this.scene.add("PreLoadScene", preloadScene, true);
+    this.game.scene.start("PreLoadScene").bringToTop("PreLoadScene");
+    
+
+  }
   turnOn() {
     const self = this;
     let i = 0;
@@ -93,7 +110,7 @@ export default class BetweenScenesScene extends Phaser.Scene {
         repeat: 0,
         yoyo: false,
         hold: 200,
-        onComplete: ii == 107 ? self.loadNewScene.bind(self) : () => { },
+        onComplete: ii == 107 ? this.onTurnOnComplete.bind(self) : () => { },
       });
       i++;
       ii++;
@@ -152,6 +169,7 @@ export default class BetweenScenesScene extends Phaser.Scene {
     if (this.firstRender && time - this.startTime >980) {
       this.firstRender = false
       this.turnOn();
+      
     }
   }
 }

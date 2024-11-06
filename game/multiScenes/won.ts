@@ -56,7 +56,7 @@ export default class WonClass {
         if (this.scene.cursors) {
             const space = this.scene.cursors.space;
             space.on("down", () => {
-                this.scene.makeTransition("MultiScene", { text: "menu" });
+                // this.scene.makeTransition("MultiScene", { text: "menu" });
 
             });
         }

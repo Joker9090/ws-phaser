@@ -336,7 +336,7 @@ export default class MenuClass {
             this.selectedButtonIndex = 0;
         });
         this.credits.on("selected", () => {
-            this.scene.makeTransition("MultiScene", { text: "credits" });
+            // this.scene.makeTransition("MultiScene", { text: "credits" });
             this.selectedButtonIndex = 0;
         });
         this.exit.on("selected", () => {

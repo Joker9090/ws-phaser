@@ -311,21 +311,21 @@ export default class LevelClass {
 
     this.planetTutorial.on("selected", () => {
 
-      this.scene.makeTransition("Game", { level: 1, lifes: 3 });
+      // this.scene.makeTransition("Game", { level: 1, lifes: 3 });
       //this.scene.start("Game", { level: 0, lifes: 3 });
       this.selectedPlanetIndex = 0;
     });
 
     this.planetLevel1.on("selected", () => {
 
-      this.scene.makeTransition("Game", { level: 3, lifes: 3 });
+      // this.scene.makeTransition("Game", { level: 3, lifes: 3 });
       //this.scene.start("Game", { level: 1, lifes: 3 });
       this.selectedPlanetIndex = 0;
     });
 
     this.planetLevel2.on("selected", () => {
 
-      this.scene.makeTransition("Game", { level: 6, lifes: 3 });
+      // this.scene.makeTransition("Game", { level: 6, lifes: 3 });
 
       //this.scene.start("Game", { level: 2, lifes: 3 });
       this.selectedPlanetIndex = 0;
@@ -333,7 +333,7 @@ export default class LevelClass {
 
     this.sun.on("selected", () => {
 
-      this.scene.makeTransition("Game", { level: 9, lifes: 3 });
+      // this.scene.makeTransition("Game", { level: 9, lifes: 3 });
       //this.scene.start("Game", { level: 3, lifes: 3 });
       this.selectedPlanetIndex = 0;
     });

@@ -1,6 +1,7 @@
 import Phaser from "phaser";
-import AssetsLoader from "./multiScenes/assetsLoader";
+import AssetsLoader, { SceneKeys } from "./multiScenes/assetsLoader";
 import PreLoadScene from "./PreLoadScene";
+import { CinematoDataType, GamePlayDataType } from "./Types";
 
 export enum BetweenScenesStatus {
   IDLE,
@@ -19,7 +20,7 @@ export default class BetweenScenesScene extends Phaser.Scene {
     this.status = BetweenScenesStatus.IDLE;
   }
 
-  changeSceneTo(sceneName: string, data: any) {
+  changeSceneTo(sceneName: string, data: CinematoDataType | GamePlayDataType | undefined) {
     if (this.status == BetweenScenesStatus.IDLE) {
       this.newSceneName = sceneName;
       this.newSceneWith = data;
@@ -44,6 +45,8 @@ export default class BetweenScenesScene extends Phaser.Scene {
     this.newSceneName = undefined;
     this.newSceneWith = undefined;
     this.status = BetweenScenesStatus.IDLE;
+    this.scene.remove('PreLoadScene')
+    this.scene.remove('MultiScene')
     this.scene.stop();
   }
 
@@ -88,7 +91,6 @@ export default class BetweenScenesScene extends Phaser.Scene {
 
     const scene = this.scene.add("PreLoadScene", preloadScene, true);
     this.game.scene.start("PreLoadScene").bringToTop("PreLoadScene");
-    
 
   }
   turnOn() {

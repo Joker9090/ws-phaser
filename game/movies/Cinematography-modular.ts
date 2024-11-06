@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import { CinematoDataType } from "../Types";
 import Ticker, { TickerJob } from "./Ticker";
 import cineIntro1 from "./Intro/cineInto1";
 import cineIntro2 from "./Intro/cineIntro2";
@@ -24,6 +25,7 @@ import cineMovie8 from "./Cinemato1/cineMovie8";
 import cineMovie9 from "./Cinemato1/cineMovie9";
 import cine2Movie1 from "./Cinemato2/cine2Movie1";
 import cine2Movie2 from "./Cinemato2/cine2Movie2";
+import MultiScene from "../MultiScene";
 // import cine2Movie2 from "./Cinemato2/cine2Movie2";
 // import cine2Movie3 from "./Cinemato2/cine2Movie3";
 // import cine2Movie4 from "./Cinemato2/cine2Movie4";
@@ -46,7 +48,7 @@ class CinematographyModular extends Phaser.Scene {
 
   create(
     this: CinematographyModular,
-    { keyname, lifes }: { keyname: string; lifes?: any }
+    { keyname, lifes }: CinematoDataType
   ) {
     const isPostal = keyname.includes("postal");
     this.cursors = this.input.keyboard?.createCursorKeys();
@@ -58,10 +60,14 @@ class CinematographyModular extends Phaser.Scene {
       0xffffff,
       "#ffffff66",
       () => {
-        this.makeTransition("Game", {
-          level: this.nextLevel ? this.nextLevel : 0,
-          lifes: 3,
-        });
+        // console.log("ari", this.game.scene.getScenes())
+        // this.game.scene.getScene("MultiScene").scene.remove('MultiScene')
+        // console.log("ari2", this.game.scene.getScene("MultiScene"))
+        // setTimeout(() => {
+          const multiScene = new MultiScene("Game", { level: 0, lifes: 3, loadKey: 'GamePlay1' });
+          const scene = this.scene.add("MultiScene", multiScene, true);
+          this.scene.start("MultiScene").bringToTop("MultiScene");
+        // },300)
       },
       isPostal
     ).setDepth(999999999)
@@ -148,30 +154,30 @@ class CinematographyModular extends Phaser.Scene {
         this.playingCine = new cineMovie9(this);
         // this.nextLevel = 0
         break;
-        case "cine_2_movie_1":
-          this.playingCine = new cine2Movie1(this);
-          // this.nextLevel = 0
-          break;
-        case "cine_2_movie_2":
-          this.playingCine = new cine2Movie2(this);
-          // this.nextLevel = 0
-          break;
-        // case "cine_2_movie_3":
-        //   this.playingCine = new cine2Movie3(this);
-        //   // this.nextLevel = 0
-        //   break;
-        // case "cine_2_movie_4":
-        //   this.playingCine = new cine2Movie4(this);
-        //   // this.nextLevel = 0
-        //   break;
-        // case "cine_2_movie_5":
-        //   this.playingCine = new cine2Movie5(this);
-        //   // this.nextLevel = 0
-        //   break;
-        // case "cine_2_movie_6":
-        //   this.playingCine = new cine2Movie6(this);
-        //   // this.nextLevel = 0
-        //   break;
+      case "cine_2_movie_1":
+        this.playingCine = new cine2Movie1(this);
+        // this.nextLevel = 0
+        break;
+      case "cine_2_movie_2":
+        this.playingCine = new cine2Movie2(this);
+        // this.nextLevel = 0
+        break;
+      // case "cine_2_movie_3":
+      //   this.playingCine = new cine2Movie3(this);
+      //   // this.nextLevel = 0
+      //   break;
+      // case "cine_2_movie_4":
+      //   this.playingCine = new cine2Movie4(this);
+      //   // this.nextLevel = 0
+      //   break;
+      // case "cine_2_movie_5":
+      //   this.playingCine = new cine2Movie5(this);
+      //   // this.nextLevel = 0
+      //   break;
+      // case "cine_2_movie_6":
+      //   this.playingCine = new cine2Movie6(this);
+      //   // this.nextLevel = 0
+      //   break;
       case "postal1_planeta1":
         this.playingCine = new postalManager(this, "postal1Planeta1", 1, lifes);
         this.nextLevel = 1;
@@ -197,24 +203,6 @@ class CinematographyModular extends Phaser.Scene {
     this.holdableButton?.update();
   }
 
-  makeTransition(sceneName: string, data: any) {
-    const getBetweenScenesScene = this.game.scene.getScene(
-      "BetweenScenes"
-    ) as BetweenScenes;
-    if (getBetweenScenesScene) {
-      if (getBetweenScenesScene.status != BetweenScenesStatus.IDLE)
-        return false;
-      getBetweenScenesScene.changeSceneTo(sceneName, data);
-      this.time.delayedCall(1000, () => {
-        this.scene.stop();
-      });
-    } else {
-      this.scene.start(sceneName, data);
-      this.time.delayedCall(1000, () => {
-        this.scene.stop();
-      });
-    }
-  }
 }
 
 export default CinematographyModular;

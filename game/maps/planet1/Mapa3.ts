@@ -82,7 +82,7 @@ class Mapa3 {
             gravityDown: false
         },
     ];
-    nextScene: string | undefined = undefined;
+    nextScene: string | undefined = 'cine_movie_1';
 
     background: Phaser.GameObjects.Image;
     background2: Phaser.GameObjects.Image;

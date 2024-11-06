@@ -4,145 +4,27 @@ import BetweenScenes, { BetweenScenesStatus } from "../BetweenScenes";
 import PreLoadScene from "../PreLoadScene";
 
 export type SceneKeys =
-  | "Menu"
-  | "Scenes"
-  | "Tutorial"
-  | "Music"
-  | "Intro"
-  | "LevelMap"
-  | "Sandbox"
-  | "BetweenScenes"
+  | "BaseLoad"
   | "Postales"
-  | "IntroMovie";
+  | "GamePlay1"
+  | "GamePlay2"
+  | "GamePlay3"
+  | "Cinemato0"
+  | "Cinemato1"
+  | "Cinemato2"
 
 export type LoadTypes = "image" | "spritesheet" | "audio" | "svg";
 
 const loadAssets = {
 
-  Menu: {
+  BaseLoad: {
+    assets: [["image", "block", "/game/50x50.png"]],
+  },
+  GamePlay1: {
     assets: [
-      ["image", "glass", "/game/glass.png"],
-      ["image", "hover", "/game/hover.png"],
-      ["image", "click", "/game/click.png"],
-      ["image", "background", "/game/menuBg1.png"],
-      ["image", "background2", "/game/menuBg2.png"],
-      ["image", "background3", "/game/menuBg3.png"],
-      ["image", "background5", "/game/menuBg4.png"],
-      ["image", "astronauta", "/game/astronauta.png"],
-      ["image", "nube4", "/game/nube4.png"],
-      ["image", "nube5", "/game/nube5.png"],
-      ["image", "nube2", "/game/nube2.png"],
-      ["image", "nube1", "/game/nube1.png"],
-      ["image", "menuAsteroids", "/game/meteoritos2.png"],
-      ["image", "menuAsteroidsSmall", "/game/meteoritos1.png"],
-
-      ["image", "planeta1", "/game/planeta1.png"],
-      ["image", "planeta2", "/game/planeta2.png"],
-      ["image", "menuLogo", "/game/menuLogo.png"],
-      ["image", "cursor", "/game/cursor.png"],
-      [
-        "spritesheet",
-        "character",
-        "/game/character.png",
-        { frameWidth: 330, frameHeight: 450 },
-      ],
-      [
-        "spritesheet",
-        "gravityAnim",
-        "/game/player/gravityEffect.png",
-        { frameWidth: 140, frameHeight: 280 },
-      ],
-      [
-        "spritesheet",
-        "player",
-        "/game/player/playerSpriteSheet.png",
-        { frameWidth: 200, frameHeight: 200 },
-      ],
-    ],
-  },
-  Intro: {
-    assets: [["image", "logoNoswar", "/game/logo.png"]],
-  },
-  Sandbox: {
-    assets: [["image", "logoNoswar", "/game/logo.png"]],
-  },
-  LevelMap: {
-    assets: [
-      // ["image", "backgroundLevelMap", "/game/backgroundLevelMap.png"],
-      // ["image", "sun", "/game/sun.png"],
-      // ["image", "planetTutorial", "/game/planetTutorialSprite.png"],
-      // ["image", "planetLevel1", "/game/planetlvl1.png"],
-      // ["image", "planetLevel2", "/game/planetlvl2.png"],
-      [
-        "spritesheet",
-        "tutorial",
-        "/game/tutorial.png",
-        { frameWidth: 150, frameHeight: 150 },
-      ],
-      [
-        "spritesheet",
-        "lvl1",
-        "/game/lvl1.png",
-        { frameWidth: 150, frameHeight: 150 },
-      ],
-      [
-        "spritesheet",
-        "lvl2",
-        "/game/lvl2.png",
-        { frameWidth: 150, frameHeight: 150 },
-      ],
-      [
-        "spritesheet",
-        "sun",
-        "/game/sun.png",
-        { frameWidth: 150, frameHeight: 150 },
-      ],
-      [
-        "spritesheet",
-        "portal1",
-        "/game/portal1.png",
-        { frameWidth: 100, frameHeight: 150 },
-      ],
-      [
-        "spritesheet",
-        "portal2",
-        "/game/portal2.png",
-        { frameWidth: 100, frameHeight: 150 },
-      ],
-      [
-        "spritesheet",
-        "portal3",
-        "/game/portal3.png",
-        { frameWidth: 100, frameHeight: 150 },
-      ],
-      [
-        "spritesheet",
-        "portal4",
-        "/game/portal4.png",
-        { frameWidth: 100, frameHeight: 150 },
-      ],
-      [
-        "spritesheet",
-        "meteorito",
-        "/game/planeta1/meteoritoSpriteVerde.png",
-        { frameWidth: 140, frameHeight: 300 },
-      ],
-      [
-        "spritesheet",
-        "personRing",
-        "/game/personRing.png",
-        { frameWidth: 400, frameHeight: 252 },
-      ],
-    ],
-  },
-  Scenes: {
-    assets: [
-      //planeta 1
-      ["image", "plataformaNuevaA", "/game/planeta1/platforms/plataformaNuevaA.png"],
-      ["image", "plataformaNuevaLargaA", "/game/planeta1/platforms/newPlatA.png"],
-      ["image", "plataformaNuevaLargaB", "/game/planeta1/platforms/newPlatB.png"],
-      ["image", "plataformaNuevaLargaC", "/game/planeta1/platforms/newPlatC.png"],
-      ["image", "plataformaFinalP1", "/game/planeta1/platforms/plataformaFinal.png"],
+      // AUDIOS
+      ["audio", "planet0LoopMusic", "/game/planeta1/loopMusic.mp3"],
+      // SVGs
       [
         "svg",
         "background0P1",
@@ -167,6 +49,12 @@ const loadAssets = {
         "/game/planeta1/backgrounds/montañaEnd.svg",
         { scale: 3 },
       ],
+      // IMAGES
+      ["image", "plataformaNuevaA", "/game/planeta1/platforms/plataformaNuevaA.png"],
+      ["image", "plataformaNuevaLargaA", "/game/planeta1/platforms/newPlatA.png"],
+      ["image", "plataformaNuevaLargaB", "/game/planeta1/platforms/newPlatB.png"],
+      ["image", "plataformaNuevaLargaC", "/game/planeta1/platforms/newPlatC.png"],
+      ["image", "plataformaFinalP1", "/game/planeta1/platforms/plataformaFinal.png"],
       ["image", "frontGround1", "/game/planeta1/backgrounds/frontGround1.png"],
       ["image", "frontGround2", "/game/planeta1/backgrounds/frontGround2.png"],
       ["image", "cristal1", "/game/planeta1/cristal1.png"],
@@ -182,7 +70,6 @@ const loadAssets = {
       ["image", "nube3", "/game/planeta1/backgrounds/nube3.png"],
       ["image", "nube4", "/game/planeta1/backgrounds/nube4.png"],
       ["image", "nube5", "/game/planeta1/backgrounds/nube5.png"],
-
       ["image", "plataformaA", "/game/plataforma.png"],
       ["image", "plataformaB", "/game/plataforma2.png"],
       ["image", "plataformaLarga", "/game/plataformalarga.png"],
@@ -204,14 +91,12 @@ const loadAssets = {
       ["image", "uiLifeSection", "/game/uiLifeSection.png"],
       ["image", "uiLifeSectionEmpty", "/game/uiLifeSectionEmpty.png"],
       ["image", "uiGravity", "/game/uiGravityIndicator.png"],
-
       ["image", "newBg1", "/game/bg1.png"],
       ["image", "newBg2", "/game/bg2.png"],
       ["image", "newBg3", "/game/bg3.png"],
       ["image", "newBg4", "/game/bg4.png"],
       ["image", "newBg5", "/game/bg5.png"],
       ["image", "newBg6", "/game/bg6.png"],
-
       ["image", "bg1Lvl1", "/game/lvl1/background/bg1.png"],
       ["image", "bg2Lvl1", "/game/lvl1/background/bg2.png"],
       ["image", "bg3Lvl1", "/game/lvl1/background/bg3.png"],
@@ -225,7 +110,6 @@ const loadAssets = {
       ["image", "piedras", "/game/lvl1/background/piedras.png"],
       ["image", "auraLvl1", "/game/lvl1/auraCristalLvl1.png"],
       ["image", "cristalLvl1", "/game/lvl1/cristalLvl1.png"],
-
       ["image", "plataformaLvl1", "/game/lvl1/plataformas/plataforma.png"],
       [
         "image",
@@ -242,12 +126,16 @@ const loadAssets = {
         "plataformaFinLvl1",
         "/game/lvl1/plataformas/plataformaFin.png",
       ],
-
       ["image", "piedra1", "/game/lvl1/plataformas/plataformaMedio.png"],
       ["image", "piedra2", "/game/lvl1/plataformas/plataformaMedio.png"],
       ["image", "piedra3", "/game/lvl1/plataformas/plataformaMedio.png"],
-
-      // planeta2
+    ],
+  },
+  GamePlay2: {
+    assets: [
+      // AUDIOS
+      ["audio", "planet1LoopMusic", "/game/planeta2/loopMusic.mp3"],
+      // SVGs
       [
         "svg",
         "p1backgroundDia",
@@ -290,6 +178,13 @@ const loadAssets = {
         "/game/planeta2/starsBackground.svg",
         { scale: 1.4 }
       ],
+      [
+        "spritesheet",
+        "meteoritop1",
+        "/game/planeta2/meteorito.png",
+        { frameWidth: 98, frameHeight: 210 },
+      ],
+      // IMAGES
       ["image", "frontground1p1", "/game/planeta2/frontground1.png"],
       ["image", "frontground2p1", "/game/planeta2/frontground2.png"],
       ["image", "huesoFrontp1", "/game/planeta2/huesoFront.png"],
@@ -297,12 +192,6 @@ const loadAssets = {
       ["image", "longFloorRightp1", "/game/planeta2/longFloorRight.png"],
       ["image", "longFloorMiddleAp1", "/game/planeta2/longFloorMiddleA.png"],
       ["image", "longFloorMiddleBp1", "/game/planeta2/longFloorMiddleB.png"],
-      [
-        "spritesheet",
-        "meteoritop1",
-        "/game/planeta2/meteorito.png",
-        { frameWidth: 98, frameHeight: 210 },
-      ],
       ["image", "montaña1p1", "/game/planeta2/montaña1.png"],
       ["image", "montaña2p1", "/game/planeta2/montaña2.png"],
       ["image", "montaña3p1", "/game/planeta2/montaña3.png"],
@@ -315,9 +204,11 @@ const loadAssets = {
       ["image", "pSimple2p1", "/game/planeta2/pSimple2.png"],
       ["image", "comida", "/game/planeta2/comida.png"],
       ["image", "cuevap1", "/game/planeta2/cuevap1.png"],
-
-      //planeta 3
-      
+    ],
+  },
+  GamePlay3: {
+    assets: [
+      // IMAGES
       ["image", "pSimple1p3", "/game/planeta3/pSimple1.png"],
       ["image", "pSimple2p3", "/game/planeta3/pSimple2.png"],
       ["image", "longFloorLeftp3", "/game/planeta3/longFloorLeft.png"],
@@ -327,36 +218,6 @@ const loadAssets = {
       ["image", "background1p3", "/game/planeta3/bg1p3.png"],
       ["image", "background2p3", "/game/planeta3/bg2p3.png"],
       ["image", "background3p3", "/game/planeta3/bg3p3.png"],
-
-
-    ],
-  },
-
-  Tutorial: {
-    assets: [
-      ["image", "fireball", "/game/fireball.png"],
-      ["image", "textBox", "/game/textBox.png"],
-      ["svg", "bordeGlow", "/assets/textBox/bordeGlow.svg", { scale: 7 }],
-      ["svg", "fondoDegrade", "/assets/textBox/fondoDegrade.svg", { scale: 7 }],
-      ["svg", "lineaAbajo", "/assets/textBox/lineaAbajo.svg", { scale: 1 }],
-      ["svg", "lineaArriba", "/assets/textBox/lineaArriba.svg", { scale: 1 }],
-      ["svg", "lineaDer", "/assets/textBox/lineaDer.svg", { scale: 1 }],
-      ["svg", "lineaIzq", "/assets/textBox/lineaIzq.svg", { scale: 1 }],
-    ],
-  },
-  BetweenScenes: {
-    assets: [["image", "block", "/game/50x50.png"]],
-  },
-  Music: {
-    assets: [
-      ["audio", "songTutorial", "/sounds/tutorial.mp3"],
-      ["audio", "songLevel1", "/sounds/monchiSpace.mp3"],
-      ["audio", "songLevel2", "/sounds/level2.mp3"],
-      ["audio", "songWon", "/sounds/won.mp3"],
-      ["audio", "songLose", "/sounds/lose.mp3"],
-      ["audio", "songMenu", "/sounds/menu.mp3"],
-      ["audio", "planet0LoopMusic", "/game/planeta1/loopMusic.mp3"],
-      ["audio", "planet1LoopMusic", "/game/planeta2/loopMusic.mp3"],
     ],
   },
   Postales: {
@@ -365,11 +226,9 @@ const loadAssets = {
       ["image", "postal2Planeta1", "/postals/planet1/postal2Planet1.png"],
       ["image", "postal1Planeta2", "/postals/planeta2/Postal1.png"],
       ["image", "postal2Planeta2", "/postals/planeta2/Postal2.png"],
-      // ["image", "cine_capsula", "/game/cine_2.png"],
     ],
   },
-  //MOVIES
-  IntroMovie: {
+  Cinemato0: {
     assets: [
       [
         "audio",
@@ -515,13 +374,22 @@ const loadAssets = {
       ["audio", "introSoundEffect7", "/movies/intro/soundEffects/Intro/41.07_49.01.mp3"],
       ["audio", "introSoundEffect8", "/movies/intro/soundEffects/Intro/55.00_101.02.mp3"],
       ["audio", "introSoundEffect9", "/movies/intro/soundEffects/Intro/101.02_120.17.mp3"],
-
-      // SCENE 2
+    ]
+  },
+  Cinemato1: {
+    assets: [
+      // BASE
       [
-        "image",
-        "aroCondensadorBottom",
-        "/movies/cinemato1/scene2/aroCondensadorBottom.png",
-      ],     // CINEMATICA 1 
+        "audio",
+        "key01",
+        "/sounds/bs15.mp3",
+      ],
+      [
+        "audio",
+        "key02",
+        "/sounds/bs13.mp3",
+      ],
+
       // SCENE 1
       ["image", "backgroundCine1", "/movies/cinemato1/scene1/back.png"],
       ["image", "starsBackground", "/movies/cinemato1/scene1/estrellas.png"],
@@ -547,6 +415,12 @@ const loadAssets = {
         "image",
         "CristalCondensador",
         "/movies/cinemato1/scene2/CristalCondensador.png",
+      ],
+      // SCENE 2
+      [
+        "image",
+        "aroCondensadorBottom",
+        "/movies/cinemato1/scene2/aroCondensadorBottom.png",
       ],
       // SCENE 3
       ["image", "aspasVent", "/movies/cinemato1/scene3/aspasVent.png"],
@@ -654,8 +528,21 @@ const loadAssets = {
       ["audio", "C2_14", "/movies/cinemato1/soundEffects/C2_14.mp3"],
       ["audio", "C2_15", "/movies/cinemato1/soundEffects/C2_15.mp3"],
       ["audio", "C2_16", "/movies/cinemato1/soundEffects/C2_16.mp3"],
-
-      // CINEMATICA 2
+    ]
+  },
+  Cinemato2: {
+    assets: [
+      // BASE
+      [
+        "audio",
+        "key01",
+        "/sounds/bs15.mp3",
+      ],
+      [
+        "audio",
+        "key02",
+        "/sounds/bs13.mp3",
+      ],
       // SCENE 1
       ["image", "arm1", "/movies/cinemato2/scene1/arm1.png"],
       ["image", "arm2", "/movies/cinemato2/scene1/arm2.png"],
@@ -665,7 +552,7 @@ const loadAssets = {
       ["image", "food", "/movies/cinemato2/scene1/food.png"],
       ["image", "skyDay", "/movies/cinemato2/skyDay.png"],
       ["image", "cloudsDay", "/movies/cinemato2/cloudsDay.png"],
-      // SCENE 1
+      // SCENE 2
       ["image", "destello1", "/movies/cinemato2/scene2/destello1.png"],
       ["image", "destello2", "/movies/cinemato2/scene2/destello2.png"],
       ["image", "destello3", "/movies/cinemato2/scene2/destello3.png"],
@@ -677,23 +564,18 @@ const loadAssets = {
   }
 };
 
-// Scene in class
 class AssetsLoader {
-  scene: MultiScene  | PreLoadScene;
+  scene: MultiScene | PreLoadScene;
   finished: boolean = false;
-  loadKey: SceneKeys = "BetweenScenes";
-  constructor(scene: MultiScene  | PreLoadScene, loadKey: SceneKeys = "BetweenScenes") {
-    // super({ key: "SceneLoader" });
+  loadKey: SceneKeys = "BaseLoad";
+  constructor(scene: MultiScene | PreLoadScene, loadKey: SceneKeys = "BaseLoad") {
     this.scene = scene;
     this.loadKey = loadKey;
   }
 
   runPreload(callback?: Function) {
-    
+
     if (!this.finished) {
-      // this.scene.cameras.main.setBackgroundColor(
-      //   Phaser.Display.Color.GetColor(30, 30, 30)
-      // );
       var width = this.scene.cameras.main.width;
       var height = this.scene.cameras.main.height;
       var loadingText = this.scene.make.text({
@@ -753,70 +635,16 @@ class AssetsLoader {
       });
 
       this.scene.load.once("complete", function (this: AssetsLoader) {
-        let sceneToPlay;
-        console.log("Termino de cargar")
-
         progressBar.destroy();
         progressBox.destroy();
         loadingText.destroy();
         percentText.destroy();
         assetText.destroy();
         this.finished = true;
-        if(callback) callback()
-
-        // this.scene.scene.restart({text:"menu"})
-        // this.scene.makeTransition("startMovie", undefined);
-        // console.log("BARTO ACAA")
-        // sceneToPlay = () => {
-        //   this.scene.makeTransition("CinematographyMod", {
-        //     keyname: "cine_2_movie_2",
-        //     // keyname: "postal2_planeta1",
-        //   });
-        //   // this.scene.makeTransition("Game", { level: 0, lifes: 3 });
-        // }
-
-        // get center of the screen
-        // const center = {
-        //   x: this.scene.cameras.main.width / 2,
-        //   y: this.scene.cameras.main.height / 2,
-        // }
-
-        // const button = this.scene.add
-        //   .image(center.x, center.y, "fireball")
-        //   .setScale(0.3)
-        //   .setInteractive();
-
-        // // if (sceneToPlay) button.on("pointerdown", sceneToPlay);
-        // this.scene.tweens.add({
-        //   targets: button,
-        //   rotation: Math.PI * 2,
-        //   duration: 10000,
-        //   loop: -1,
-        // })
-        // this.scene.tweens.add({
-        //   targets: button,
-        //   scale: 0.35,
-        //   duration: 3333,
-        //   loop: -1,
-        //   yoyo: true
-        // })
+        if (callback) callback()
       });
 
-
-      // const scenesTitles: Array<SceneKeys> = [
-      //   "Menu",
-      //   "Scenes",
-      //   "Tutorial",
-      //   "Music",
-      //   "Intro",
-      //   "LevelMap",
-      //   "BetweenScenes",
-      //   "Sandbox",
-      //   "Postales",
-      //   "IntroMovie",
-      // ];
       const scenesTitles: Array<SceneKeys> = [this.loadKey]
-      console.log("Esta por cargar?", scenesTitles)
       for (let i = 0; i < scenesTitles.length; i++) {
         loadAssets[scenesTitles[i]].assets.map((sceneAssetConfig) => {
           const type = sceneAssetConfig[0] as LoadTypes;
@@ -830,12 +658,9 @@ class AssetsLoader {
           }
         });
       }
-      /*Load Fonts*/
       const ArcadeFont = this.scene.add.text(0, 0, " .", {
         fontFamily: "Arcade",
       });
-
-      // this.scene.load.start();
     }
   }
 

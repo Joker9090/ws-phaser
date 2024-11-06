@@ -16,6 +16,7 @@ import Player from "./assets/Player";
 import UIClass from "./assets/UIClass";
 import MasterManager from "./MasterManager";
 import BetweenScenes, { BetweenScenesStatus } from "./BetweenScenes";
+import { GamePlayDataType } from "./Types";
 
 export type PossibleMaps = p1Mapa0 | p1Mapa1 | p1Mapa2 | p1Mapa3 |
   p2Mapa1 | p2Mapa2 | p2Mapa3 | p2Mapa4 | p3Mapa1
@@ -272,7 +273,7 @@ class Game extends Phaser.Scene {
 
   create(
     this: Game,
-    data: { level: number; lifes: number; stagePoint: number }
+    data: GamePlayDataType
   ) {
     // CREATIVE
     this.cursorsAWSD = this.input.keyboard?.addKeys({

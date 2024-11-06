@@ -383,8 +383,8 @@ class Game extends Phaser.Scene {
     this.cameras.main.startFollow(
       this.monchi,
       true,
-      0.5,
-      0.5,
+      0.1,
+      0.1,
       0,
       this.cameraHeight / 2 - 200
     );

@@ -384,6 +384,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         { fixX: -20, fixY: -30 }
       );
     }
+    
     addColliders() {
         if (this.scene.monchi) {
             if (this.pisos)

@@ -111,7 +111,7 @@ class Mapa8 {
         this.frontContainer = this.scene.add.container().setDepth(999999999999)
 
         this.background = this.scene.add
-            .image(this.startingPoint.x, this.startingPoint.y, "p1backgroundDia")
+            .image(this.startingPoint.x, this.startingPoint.y, "background1p3")
             .setOrigin(0.5, 0.5)
         this.background2 = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "p1backgroundNoche")
@@ -125,19 +125,9 @@ class Mapa8 {
         this.background5 = this.scene.add
             .image(this.startingPoint.x - 5, this.startingPoint.y + 530, "frontground1p1")
             .setOrigin(0, 1).setScale(1).setFlipX(true);
-        // this.background6 = this.scene.add
-        //     .image(this.startingPoint.x - 5 + this.background5.x, this.startingPoint.y + 530, "frontground1p1")
-        //     .setOrigin(0, 1).setScale(1)
-        // this.background7 = this.scene.add
-        //     .image(this.startingPoint.x - 5 + this.background6.x, this.startingPoint.y + 530, "frontground1p1")
-        // .setOrigin(0, 1).setScale(1).setFlipX(true);
+
         this.mountain4 = this.scene.add.image(200, this.startingPoint.y + 500, "montaña1p1")
         this.mountain5 = this.scene.add.image(1100, this.startingPoint.y + 520, "montaña2p1")
-
-        // this.mountain1 = this.scene.add.image(this.startingPoint.x + this.background5.width - 15, this.startingPoint.y - 370 + 300, "montaña3").setScale(1.2)
-        // this.mountain2 = this.scene.add.image(this.startingPoint.x - 70, this.startingPoint.y + 350 + 500, "montaña5").setScale(1.4)
-        // this.mountain3 = this.scene.add.image(1400, this.startingPoint.y + 770, "montaña3").setScale(1.3)
-        // this.mountain6 = this.scene.add.image(this.startingPoint.x + this.background5.width + this.background6.width - 15, this.startingPoint.y + 770, "montaña5").setOrigin(0.5, 0).setScale(1.3)
 
         this.mapContainer.add([
             this.background,
@@ -145,18 +135,16 @@ class Mapa8 {
             this.background3,
             this.background4,
             this.background5,
-            // this.background6,
-            // this.background7,
             this.mountain4,
             this.mountain5,
         ])
 
-        this.frontContainer.add([
+     //   this.frontContainer.add([
             // this.mountain1,
             // this.mountain2,
             // this.mountain3,
             // this.mountain6
-        ])
+        //])
     }
 
     animateBackground(player: Phaser.GameObjects.Sprite | Phaser.Math.Vector2) {
@@ -177,18 +165,8 @@ class Mapa8 {
         const calcDiffFY = (y2 - y) / ajusteFY;
         this.background4.setPosition(x + calcDiffFX, y + offsetLevel + 470 + calcDiffFY);
         this.background5.setPosition(x + calcDiffFX, y + offsetLevel + 470 + calcDiffFY);
-        // this.background6.setPosition(x + this.background5.width - 15 + calcDiffFX, y + offsetLevel + 470 + calcDiffFY);
-        // this.background7.setPosition(x + this.background5.width + this.background6.width - 15 + calcDiffFX, y + offsetLevel + 470 + calcDiffFY);
         this.mountain4.setPosition(-200 + calcDiffFX, y + offsetLevel + calcDiffFY)
         this.mountain5.setPosition(1100 + calcDiffFX, y + offsetLevel + calcDiffFY)
-        // // // animation front mountains
-        // const { ajusteFMX, ajusteFMY } = { ajusteFMX: 20, ajusteFMY: 30 }
-        // const calcDiffFMX = -(x2 - x) / ajusteFMX
-        // const calcDiffFMY = -(y2 - y) / ajusteFMY;
-        // this.mountain1.setPosition(this.startingPoint.x + this.background5.width - 85 + calcDiffFMX, y + offsetLevel2 + 320 + calcDiffFMY)
-        // this.mountain2.setPosition(this.startingPoint.x - 270 + calcDiffFMX, y + offsetLevel2 + 350 + calcDiffFMY)
-        // this.mountain3.setPosition(1100 + calcDiffFMX, y + offsetLevel2 + 470 + calcDiffFMY)
-        // this.mountain6.setPosition(x + this.background5.width + this.background6.width - 15 + calcDiffFMX, y + 470 + offsetLevel2 + calcDiffFMY)
     }
 
     addColliders() {
@@ -333,7 +311,7 @@ class Mapa8 {
 
         const p1Config:FloorConfig = {
             pos: {  x: 2700, y: 1200,},
-            texture: "pSimple2p1",
+            texture: "pSimple1p3",
             scale: { width: 0.7, height: 0.7 },
             width: 140,
             height: 50,
@@ -343,7 +321,7 @@ class Mapa8 {
 
         const p2Config:FloorConfig = {
             pos: {  x: 3300, y: 1200,},
-            texture: "pSimple2p1",
+            texture: "pSimple1p3",
             scale: { width: 0.7, height: 0.7 },
             width: 140,
             height: 50,
@@ -362,7 +340,7 @@ class Mapa8 {
 
         const p3Config:FloorConfig = {
             pos: {  x: 3900, y: 1200,},
-            texture: "pSimple2p1",
+            texture: "pSimple1p3",
             scale: { width: 0.7, height: 0.7 },
             width: 140,
             height: 50,
@@ -373,7 +351,7 @@ class Mapa8 {
 
         const p4Config:FloorConfig = {
             pos: {  x: 3900, y: 700,},
-            texture: "pSimple2p1",
+            texture: "pSimple1p3",
             scale: { width: 0.7, height: 0.7 },
             width: 140,
             height: 50,
@@ -383,7 +361,7 @@ class Mapa8 {
 
         const p5config:FloorConfig = {
             pos: {  x: 4250, y: 700,},
-            texture: "pSimple2p1",
+            texture: "pSimple1p3",
             scale: { width: 0.7, height: 0.7 },
             width: 140,
             height: 50,
@@ -394,7 +372,7 @@ class Mapa8 {
 
         const p6config:FloorConfig = {
             pos: {  x: 4850, y: 700,},
-            texture: "pSimple2p1",
+            texture: "pSimple1p3",
             scale: { width: 0.7, height: 0.7 },
             width: 140,
             height: 50,
@@ -415,7 +393,7 @@ class Mapa8 {
 
         const p7config:FloorConfig = {
             pos: {  x: 4850, y: 700,},
-            texture: "pSimple2p1",
+            texture: "pSimple1p3",
             scale: { width: 0.7, height: 0.7 },
             width: 140,
             height: 50,
@@ -434,7 +412,7 @@ class Mapa8 {
 
         const p8config:FloorConfig = {
             pos: {  x: 4850, y: 1200,},
-            texture: "pSimple2p1",
+            texture: "pSimple1p3",
             scale: { width: 0.7, height: 0.7 },
             width: 140,
             height: 50,
@@ -455,7 +433,7 @@ class Mapa8 {
 
         const p9config:FloorConfig = {
             pos: {  x: 5400, y: 1200,},
-            texture: "pSimple2p1",
+            texture: "pSimple1p3",
             scale: { width: 0.7, height: 0.7 },
             width: 140,
             height: 50,
@@ -465,16 +443,16 @@ class Mapa8 {
 
         const p10config:FloorConfig = {
             pos: {  x: 5400, y: 700,},
-            texture: "pSimple2p1",
+            texture: "pSimple1p3",
             scale: { width: 0.7, height: 0.7 },
             width: 140,
             height: 50,
         };
-        const p10 = new Floor (this.scene, p10config, this.pisos3).setFlipY(true);
+        const p10 = new Floor (this.scene, p10config, this.pisos).setFlipY(true).setTint(Phaser.Display.Color.GetColor(0, 0, 0));
 
         const p11config:FloorConfig = {
             pos: {  x: 5750, y: 700,},
-            texture: "pSimple2p1",
+            texture: "pSimple1p3",
             scale: { width: 0.7, height: 0.7 },
             width: 140,
             height: 50,
@@ -483,7 +461,7 @@ class Mapa8 {
 
         const p12config:FloorConfig = {
             pos: {  x: 5750, y: 1200,},
-            texture: "pSimple2p1",
+            texture: "pSimple1p3",
             scale: { width: 0.7, height: 0.7 },
             width: 140,
             height: 50,
@@ -494,7 +472,7 @@ class Mapa8 {
         
         const p13config:FloorConfig = {
             pos: {  x: 5990, y: 1100,},
-            texture: "pSimple2p1",
+            texture: "pSimple1p3",
             scale: { width: 0.7, height: 0.7 },
             width: 140,
             height: 50,
@@ -504,25 +482,25 @@ class Mapa8 {
 
 
         const p14Config: LargeFloorIslandConfig = {
-            textureA: "longFloorLeftp1",
-            textureB: "longFloorMiddleBp1",
-            textureC: "longFloorRightp1",
+            textureA: "longFloorLeftp3",
+            textureB: "longFloorMiddlep3",
+            textureC: "longFloorRightp3",
             pos: { x: 5970, y: 540 },
             width: {
-                textureA: 120,
-                textureB: 45,
+                textureA: 110,
+                textureB: 140,
                 textureC: 122,
             },
             scale: { width: 0.7, height: 0.7 },
             height: 89,
-            large: 20,
+            large: 10,
             rotated: true,
         };
 
         const p14 = new LargeFloorIsland(this.scene, p14Config, this.pisos);
         const portalConfig: FloorConfig = {
-            texture: "cuevap1",
-            pos: { x: 6500, y: 650 },
+            texture: "cuevap3",
+            pos: { x: 6500, y: 625 },
             width: 100,
             height: 100,
         };
@@ -551,6 +529,24 @@ class Mapa8 {
                 targets: this.cristal.body?.velocity,
                 x: '+=800',
         })
+
+        const fireballConfig: FloorConfig = {
+            spriteSheet: "meteorito",
+            texture: "meteorito",
+            pos: { x: 2850, y: 0 }, // 500 1580
+            width: 100,
+            height: 100,
+            tween: {
+              duration: 5000,
+              repeat: -1,
+              y: "+=2500",
+              delay:1000
+            },
+            frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+          };
+        const fireball = new Floor(this.scene, fireballConfig, this.fireballGroup).setScale(0.5)
+
+
         const mapObjects =
             this.movingFloor.getChildren().concat(
                 this.movingFloorRot.getChildren(),

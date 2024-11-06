@@ -22,6 +22,13 @@ import cineMovie6 from "./Cinemato1/cineMovie6";
 import cineMovie7 from "./Cinemato1/cineMovie7";
 import cineMovie8 from "./Cinemato1/cineMovie8";
 import cineMovie9 from "./Cinemato1/cineMovie9";
+import cine2Movie1 from "./Cinemato2/cine2Movie1";
+import cine2Movie2 from "./Cinemato2/cine2Movie2";
+// import cine2Movie2 from "./Cinemato2/cine2Movie2";
+// import cine2Movie3 from "./Cinemato2/cine2Movie3";
+// import cine2Movie4 from "./Cinemato2/cine2Movie4";
+// import cine2Movie5 from "./Cinemato2/cine2Movie5";
+// import cine2Movie6 from "./Cinemato2/cine2Movie6";
 
 class CinematographyModular extends Phaser.Scene {
   ticker: Ticker;
@@ -141,6 +148,30 @@ class CinematographyModular extends Phaser.Scene {
         this.playingCine = new cineMovie9(this);
         // this.nextLevel = 0
         break;
+        case "cine_2_movie_1":
+          this.playingCine = new cine2Movie1(this);
+          // this.nextLevel = 0
+          break;
+        case "cine_2_movie_2":
+          this.playingCine = new cine2Movie2(this);
+          // this.nextLevel = 0
+          break;
+        // case "cine_2_movie_3":
+        //   this.playingCine = new cine2Movie3(this);
+        //   // this.nextLevel = 0
+        //   break;
+        // case "cine_2_movie_4":
+        //   this.playingCine = new cine2Movie4(this);
+        //   // this.nextLevel = 0
+        //   break;
+        // case "cine_2_movie_5":
+        //   this.playingCine = new cine2Movie5(this);
+        //   // this.nextLevel = 0
+        //   break;
+        // case "cine_2_movie_6":
+        //   this.playingCine = new cine2Movie6(this);
+        //   // this.nextLevel = 0
+        //   break;
       case "postal1_planeta1":
         this.playingCine = new postalManager(this, "postal1Planeta1", 1, lifes);
         this.nextLevel = 1;

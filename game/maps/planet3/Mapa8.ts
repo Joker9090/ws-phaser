@@ -177,9 +177,6 @@ class Mapa8 {
                     this.pisos,
                     () => {
                         this.scene.touch()
-                        if(this.scene.checkPoint === 0 && this.scene.monchi && this.scene.monchi.x  >= 5350){
-                            this.scene.checkPoint = 1
-                        }
                     },
                     () => true,
                     this.scene
@@ -211,9 +208,6 @@ class Mapa8 {
                     this.coin,
                     () => {
                         this.scene.touchItem("coin")
-                        if(this.scene.checkPoint === 0 ){
-                            this.scene.checkPoint = 1
-                        }
                     },
                     () => true,
                     this.scene
@@ -241,17 +235,10 @@ class Mapa8 {
                 this.scene.physics.add.collider(
                     this.scene.monchi,
                     this.pisos4,
-                    (player, floor) => {
-                        setTimeout(() => {
-                            //@ts-ignore
-                            if (floor.y > 1000) {
-                                //@ts-ignore
-                                floor.setVelocityY(500)
-                            } else {
-                                //@ts-ignore
-                                floor.setVelocityY(-500)
-                            }
-                        }, 400)
+                    () => {
+                        if(this.scene.checkPoint === 0 && this.scene.monchi){
+                            this.scene.checkPoint = 1
+                        }
                     },
                     () => true,
                     this.scene
@@ -448,7 +435,7 @@ class Mapa8 {
             width: 140,
             height: 50,
         };
-        const p10 = new Floor (this.scene, p10config, this.pisos).setFlipY(true);
+        const p10 = new Floor (this.scene, p10config, this.pisos4).setFlipY(true);
 
         const p11config:FloorConfig = {
             pos: {  x: 5750, y: 700,},

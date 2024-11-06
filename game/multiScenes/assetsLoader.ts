@@ -353,6 +353,8 @@ const loadAssets = {
       ["audio", "songWon", "/sounds/won.mp3"],
       ["audio", "songLose", "/sounds/lose.mp3"],
       ["audio", "songMenu", "/sounds/menu.mp3"],
+      ["audio", "planet0LoopMusic", "/game/planeta1/loopMusic.mp3"],
+      ["audio", "planet1LoopMusic", "/game/planeta2/loopMusic.mp3"],
     ],
   },
   Postales: {
@@ -740,11 +742,11 @@ class AssetsLoader {
         // this.scene.makeTransition("startMovie", undefined);
         // console.log("BARTO ACAA")
         sceneToPlay = () => {
-          // this.scene.makeTransition("CinematographyMod", {
-          //   keyname: "cine_movie_4",
-          //   // keyname: "postal2_planeta1",
-          // });
-          this.scene.makeTransition("Game", { level: 8, lifes: 3 });
+          this.scene.makeTransition("CinematographyMod", {
+            keyname: "cine_movie_1",
+            // keyname: "postal2_planeta1",
+          });
+          // this.scene.makeTransition("Game", { level: 0, lifes: 3 });
         }
 
         // get center of the screen
@@ -757,6 +759,7 @@ class AssetsLoader {
           .image(center.x, center.y, "fireball")
           .setScale(0.3)
           .setInteractive();
+          
         if (sceneToPlay) button.on("pointerdown", sceneToPlay);
         this.scene.tweens.add({
           targets: button,

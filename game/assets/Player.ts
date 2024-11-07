@@ -117,6 +117,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     scene.add.existing(this);
     this.scene.UICamera?.ignore(this)
     this.gravityAnimSprite = this.scene.add.sprite(this.x, this.y, "gravityAnim", 0).setVisible(false).setDepth(999);
+    this.scene.UICamera?.ignore(this.gravityAnimSprite)
     
     // this.scene.add.rectangle(this.x, this.y, 100, 100, 0xffffff).setVisible(true)
     /* Monchi Collission with end of map */

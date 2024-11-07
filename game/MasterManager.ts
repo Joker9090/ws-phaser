@@ -14,14 +14,15 @@ export default class MasterManager extends Phaser.Scene {
   ticker: Ticker;
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   GameScene?: Game;
+
   constructor() {
     super({ key: "MasterManager" });
     const tickerMS = 100;
     this.ticker = new Ticker(tickerMS);
-
   }
 
   preload() {
+
   }
 
   manageGameSceneTutorial() {
@@ -34,6 +35,7 @@ export default class MasterManager extends Phaser.Scene {
     }
   }
 
+
   stopMusic() {
     if (this.music) {
       this.music.stop();
@@ -41,24 +43,16 @@ export default class MasterManager extends Phaser.Scene {
     }
   }
 
-  playMusic(name: string) {
+  playMusic(name: string, volume: number = 0.4, loop: boolean = false) {
     if (this.music) {
       this.music.stop();
     }
-    this.music = this.sound.add(name).setVolume(0.3);
+    console.log(volume, loop, "vol and loop")
+    this.music = this.sound.add(name,{
+      volume: volume,
+      loop: loop
+    });
     this.music.play();
-  }
-
-  playSoundsIntro() {
-    const introSoundEffect1Music = this.sound.add("introSoundEffect1").setVolume(0.25)
-    const introSoundEffect2Music = this.sound.add("introSoundEffect2").setVolume(0.25)
-    const introSoundEffect3Music = this.sound.add("introSoundEffect3").setVolume(0.25)
-    const introSoundEffect4Music = this.sound.add("introSoundEffect4").setVolume(0.25)
-    const introSoundEffect5Music = this.sound.add("introSoundEffect5").setVolume(0.25)
-    const introSoundEffect6Music = this.sound.add("introSoundEffect6").setVolume(0.25)
-    const introSoundEffect7Music = this.sound.add("introSoundEffect7").setVolume(0.25)
-    const introSoundEffect8Music = this.sound.add("introSoundEffect8").setVolume(0.25)
-    const introSoundEffect9Music = this.sound.add("introSoundEffect9").setVolume(0.25)
   }
 
   create(/* {song} */) {

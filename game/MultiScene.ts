@@ -36,7 +36,7 @@ export default class MultiScene extends Phaser.Scene {
           this.makeTransition(this.scenekey, this.sceneData ?? undefined);
         } else {
           // intro
-          this.makeTransition("CinematographyMod", { keyname: "cine_intro_1", loadKey: "Cinemato0" });
+          this.makeTransition("CinematographyMod", { keyname: "cine_2_movie_6", loadKey: "Cinemato2" });
         }
       });
   }

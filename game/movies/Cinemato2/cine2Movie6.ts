@@ -3,20 +3,23 @@ import Ticker, { TickerJob } from "../Ticker";
 import DialogueManager from "../DialogueManager";
 import CinematographyModular from "@/game/movies/Cinematography-modular";
 
-class cine2Movie2 {
+class cine2Movie6 {
   ticker: Ticker;
   cine: CinematographyModular;
   nextCine: boolean = false;
   dialogue?: DialogueManager;
   //assets
-  destello1?: Phaser.GameObjects.Image;
-  destello2?: Phaser.GameObjects.Image;
-  destello3?: Phaser.GameObjects.Image;
-  luzNaveScene2?: Phaser.GameObjects.Image;
-  mountainsBackgroundScene2?: Phaser.GameObjects.Image;
-  nubesScene2?: Phaser.GameObjects.Image;
-  shipCrashed?: Phaser.GameObjects.Image;
-  skyDay?: Phaser.GameObjects.Image;
+
+  backgroundScene5?: Phaser.GameObjects.Image;
+  starsScene5?: Phaser.GameObjects.Image;
+  nubesScene6?: Phaser.GameObjects.Image;
+  mountainsBackgroundScene6?: Phaser.GameObjects.Image;
+  bubblesScene6?: Phaser.GameObjects.Image;
+  neblina?: Phaser.GameObjects.Image;
+  mountainFrontScene6?: Phaser.GameObjects.Image;
+  shipScene6?: Phaser.GameObjects.Image;
+  astronautScene6?: Phaser.GameObjects.Image;
+  opacityScene6?: Phaser.GameObjects.Image;
 
 
   // controllers
@@ -32,7 +35,7 @@ class cine2Movie2 {
 
   }
 
-  playCine(this: cine2Movie2) {
+  playCine(this: cine2Movie6) {
     this.cine.time.addEvent({
       delay: this.ticker.ms,
       callback: this.ticker.runTicker,
@@ -51,45 +54,37 @@ class cine2Movie2 {
       y: window.innerHeight / 927,
     };
 
-    this.skyDay = this.cine.add
-      .image(0, 0, "skyDay")
+    this.backgroundScene5 = this.cine.add
+      .image(0, 0, "backgroundScene5")
       .setOrigin(0.5);
-    this.nubesScene2 = this.cine.add
-      .image(-600, 0, "nubesScene2")
+    this.nubesScene6 = this.cine.add
+      .image(-600, 0, "nubesScene6")
       .setOrigin(0.5)
       .setScale(1.5, 1.3);
-
-    this.shipCrashed = this.cine.add
-      .image(-0, 0, "shipCrashed")
+    this.starsScene5 = this.cine.add
+      .image(0, 0, "starsScene5")
       .setOrigin(0.5)
-    this.mountainsBackgroundScene2 = this.cine.add
-      .image(0, 0, "mountainsBackgroundScene2")
+    this.mountainsBackgroundScene6 = this.cine.add
+      .image(0, 0, "mountainsBackgroundScene6")
       .setOrigin(0.5);
-    this.luzNaveScene2 = this.cine.add
-      .image(0, 0, "luzNaveScene2")
+    this.bubblesScene6 = this.cine.add
+      .image(0, 0, "bubblesScene6")
       .setOrigin(0.5);
-    this.destello3 = this.cine.add
-      .image(0, 0, "destello3")
+    this.neblina = this.cine.add
+      .image(0, 0, "neblina")
       .setOrigin(0.5);
-    this.destello2 = this.cine.add
-      .image(0, 0, "destello2")
+    this.mountainFrontScene6 = this.cine.add
+      .image(0, 0, "mountainFrontScene6")
       .setOrigin(0.5);
-    this.destello1 = this.cine.add
-      .image(0, 0, "destello1")
+    this.shipScene6 = this.cine.add
+      .image(0, 0, "shipScene6")
       .setOrigin(0.5);
-
-    const gameObjects = [
-      this.skyDay,
-      this.nubesScene2,
-      this.mountainsBackgroundScene2,
-      this.shipCrashed,
-      this.luzNaveScene2,
-      this.destello3,
-      this.destello2,
-      this.destello1,
-    ];
-
-    // this.cine.cameras.main.zoom = 0.5
+    this.astronautScene6 = this.cine.add
+      .image(0, 0, "astronautScene6")
+      .setOrigin(0.5);
+    this.opacityScene6 = this.cine.add
+      .image(0, 0, "opacityScene6")
+      .setOrigin(0.5);
 
     const darkMask = this.cine.add.rectangle(
       0,
@@ -97,8 +92,24 @@ class cine2Movie2 {
       window.innerWidth * 1.5,
       window.innerHeight * 1.5,
       0,
-      0.2
-    );
+      1
+    ).setAlpha(0);
+
+    const gameObjects = [
+      this.backgroundScene5,
+      this.nubesScene6,
+      this.starsScene5,
+      this.mountainsBackgroundScene6,
+      this.bubblesScene6,
+      this.neblina,
+      this.mountainFrontScene6,
+      this.shipScene6,
+      this.astronautScene6,
+      this.opacityScene6,
+    ];
+
+    // this.cine.cameras.main.zoom = 0.8
+
 
     const container = this.cine.add
       .container(middlePoint.x, middlePoint.y)
@@ -106,7 +117,7 @@ class cine2Movie2 {
 
     container.add(gameObjects);
 
-    container.add([darkMask]);
+    // container.add([darkMask]);
 
     container.setScale(
       gameObjectScaler.x < gameObjectScaler.y
@@ -129,19 +140,19 @@ class cine2Movie2 {
     const part1 = (job: TickerJob) => {
       this.dialogue = new DialogueManager(
         this.cine,
-        ["oh no... you have to be kidding me..."],
+        ["Let's get some oxygen"],
         [""],
         [
           {
             delay: 1500,
             withTapping: {
               audios: ["key01", "key01", "key02"],
-              count: 18,
+              count: 16,
               delay: 180,
             },
             keepAlive: 1500,
             position: {
-              width: 700,
+              width: 750,
             },
           },
         ],
@@ -156,49 +167,25 @@ class cine2Movie2 {
         ease: "ease",
       });
 
-
       this.cine.tweens.add({
-        targets: [this.luzNaveScene2],
-        alpha: 0,
-        duration: 1000,
-        yoyo: true,
-        loop: -1,
+        targets: [this.nubesScene6],
+        x: '+=600',
+        delay: 0,
+        duration: 40000,
         ease: "ease",
       });
 
       this.cine.tweens.add({
-        targets: [this.destello1],
-        alpha: 0,
+        targets: [this.bubblesScene6],
+        x: '+=10',
         delay: 0,
-        duration: 150,
         yoyo: true,
-        loop: -1,
-        ease: "Power1",
+        duration: 2000,
+        ease: "ease",
       });
-
       this.cine.tweens.add({
-        targets: [this.destello2],
-        alpha: 0,
-        delay: 400,
-        duration: 150,
-        yoyo: true,
-        loop: -1,
-        ease: "Power2",
-      });
-
-      this.cine.tweens.add({
-        targets: [this.destello3],
-        alpha: 0,
-        delay: 352,
-        duration: 150,
-        yoyo: true,
-        loop: -1,
-        ease: "Power3",
-      });
-
-      this.cine.tweens.add({
-        targets: [this.nubesScene2],
-        x: '+=600',
+        targets: [this.bubblesScene6],
+        y: '-=400',
         delay: 0,
         duration: 40000,
         ease: "ease",
@@ -221,10 +208,10 @@ class cine2Movie2 {
     );
   }
 
-  update(this: cine2Movie2, time: number, delta: number) {
+  update(this: cine2Movie6, time: number, delta: number) {
     if (this.dialogue) this.dialogue.update();
-    if (this.nextCine) this.cine.scene.restart({ keyname: "cine_2_movie_3" });
+    if (this.nextCine) this.cine.scene.restart({ keyname: "cine_2_movie_1" });
   }
 }
 
-export default cine2Movie2;
+export default cine2Movie6;

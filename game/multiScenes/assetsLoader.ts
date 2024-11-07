@@ -560,6 +560,32 @@ const loadAssets = {
       ["image", "mountainsBackgroundScene2", "/movies/cinemato2/scene2/mountainsBackgroundScene2.png"],
       ["image", "nubesScene2", "/movies/cinemato2/scene2/nubesScene2.png"],
       ["image", "shipCrashed", "/movies/cinemato2/scene2/shipCrashed.png"],
+      // SCENE 3
+      ["image", "nightSky", "/movies/cinemato2/scene3/nightSky.png"],
+      ["image", "nightClouds", "/movies/cinemato2/scene3/nightClouds.png"],
+      ["image", "mountainsNight", "/movies/cinemato2/scene3/mountainsNight.png"],
+      ["image", "shipLightScene3", "/movies/cinemato2/scene3/shipLightScene3.png"],
+      ["image", "welderAstronaut", "/movies/cinemato2/scene3/welderAstronaut.png"],
+      ["image", "welderScreen", "/movies/cinemato2/scene3/welderScreen.png"],
+      ["image", "weldingShip", "/movies/cinemato2/scene3/weldingShip.png"],
+      ["image", "destelloWelder", "/movies/cinemato2/scene3/destello.png"],
+      // SCENE 5
+      ["image", "BackgroundMountainScene5", "/movies/cinemato2/scene5/BackgroundMountainScene5.png"],
+      ["image", "bubbles", "/movies/cinemato2/scene5/bubbles.png"],
+      ["image", "cloudScene5", "/movies/cinemato2/scene5/cloudsScene5.png"],
+      ["image", "frontMountainScene5", "/movies/cinemato2/scene5/frontMountainScene5.png"],
+      ["image", "opacityScene5", "/movies/cinemato2/scene5/opacityScene5.png"],
+      ["image", "starsScene5", "/movies/cinemato2/scene5/starsScene5.png"],
+      ["image", "backgroundScene5", "/movies/cinemato2/scene5/backgroundScene5.png"],
+      // SCENE 6
+      ["image", "astronautScene6", "/movies/cinemato2/scene6/astronautScene6.png"],
+      ["image", "bubblesScene6", "/movies/cinemato2/scene6/bubblesScene6.png"],
+      ["image", "mountainFrontScene6", "/movies/cinemato2/scene6/mountainFrontScene6.png"],
+      ["image", "mountainsBackgroundScene6", "/movies/cinemato2/scene6/mountainsBackgroundScene6.png"],
+      ["image", "neblina", "/movies/cinemato2/scene6/neblina.png"],
+      ["image", "nubesScene6", "/movies/cinemato2/scene6/nubesScene6.png"],
+      ["image", "opacityScene6", "/movies/cinemato2/scene6/opacityScene6.png"],
+      ["image", "shipScene6", "/movies/cinemato2/scene6/shipScene6.png"],
     ]
   }
 };

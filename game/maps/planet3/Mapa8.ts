@@ -41,6 +41,7 @@ class Mapa8 {
     pisos5?: Phaser.Physics.Arcade.Group;
     fireballGroup?: Phaser.Physics.Arcade.Group;
     coin?: Phaser.Physics.Arcade.Group;
+    EmptyCoin?: Phaser.Physics.Arcade.Group;
     portal?: Phaser.Physics.Arcade.Group;
     aura?: Phaser.Physics.Arcade.Group;
     movingFloor?: Phaser.Physics.Arcade.Group;
@@ -87,8 +88,10 @@ class Mapa8 {
     mountain4: Phaser.GameObjects.Image;
     mountain5: Phaser.GameObjects.Image;
     // mountain6: Phaser.GameObjects.Image;
-    UIItemToGrab: string = 'comida';
+    UIItemToGrab: string = 'plantap3';
     cristal?: Floor;
+    EmptyCristal?: Floor;
+    auraImage?:Floor;
     collected: Boolean = false;
     endPortal?: Floor;
     isFloating: boolean = false;
@@ -208,6 +211,7 @@ class Mapa8 {
                     this.coin,
                     () => {
                         this.scene.touchItem("coin")
+                        this.EmptyCoin?.setVisible(true)
                     },
                     () => true,
                     this.scene
@@ -292,6 +296,7 @@ class Mapa8 {
         this.pisos5 = this.scene.physics.add.group({ allowGravity: false });
         this.amountLifes = data.lifes;
         this.coin = this.scene.physics.add.group({ allowGravity: false });
+        this.EmptyCoin = this.scene.physics.add.group({allowGravity:false}).setVisible(false)
         this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
         this.portal = this.scene.physics.add.group({ allowGravity: false });
 
@@ -497,8 +502,8 @@ class Mapa8 {
 
         
         const coinConfig: FloorConfig = {
-            texture: "comida",
-            pos: {  x: 4850, y: 1150},
+            texture: "plantap3",
+            pos: {  x: 4850, y: 1130},
             scale: { width: 0.5, height: 0.5 },
             width: 10,
             height: 18,
@@ -506,6 +511,27 @@ class Mapa8 {
         };
 
         this.cristal = new Floor(this.scene, coinConfig, this.coin).setBodySize(140, 180).setVelocityX(-400);
+
+        const emptyCoinConfig: FloorConfig = {
+            texture: "plantaVaciap3",
+            pos: {  x: 4850, y: 1130},
+            scale: { width: 0.5, height: 0.5 },
+            width: 10,
+            height: 18,
+            fix: 10,
+        };
+
+        this.EmptyCristal = new Floor(this.scene, emptyCoinConfig, this.EmptyCoin).setBodySize(140, 180).setVelocityX(-400);
+        const auraConfig: FloorConfig = {
+            texture: "brilloPlantap3",
+            pos: {  x: 4850, y: 1130},
+            scale: { width: 0.5, height: 0.5 },
+            width: 10,
+            height: 18,
+            fix: 10,
+        };
+
+        this.auraImage = new Floor(this.scene, auraConfig, this.aura).setBodySize(140, 180).setVelocityX(-400);
 
         const fireballConfig: FloorConfig = {
             spriteSheet: "meteorito",
@@ -547,7 +573,34 @@ class Mapa8 {
                 targets: this.cristal.body?.velocity,
                 x: '+=800',
         })
-
+        this.scene.tweens.add({
+            duration: 3000,
+            paused: false,
+            delay:200,
+            yoyo: true,
+            repeat: -1,
+            targets: this.EmptyCristal.body?.velocity,
+            x: '+=800',
+        })
+        this.scene.tweens.add({
+            duration: 3000,
+            paused: false,
+            delay:200,
+            yoyo: true,
+            repeat: -1,
+            targets: this.auraImage.body?.velocity,
+            x: '+=800',
+        })
+        this.scene.tweens.add({
+            alpha: { from: 1, to: 0.2 }, 
+            duration: 1500, 
+            yoyo: true, 
+            repeat: -1, 
+            ease: 'Sine.easeInOut', 
+            targets: this.auraImage,
+        })
+    
+        
   
 
         const mapObjects =

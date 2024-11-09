@@ -75,19 +75,20 @@ class Mapa8 {
         },
     ];
     nextScene: string | undefined = undefined;
-    background: Phaser.GameObjects.Image;
+ 
     background2: Phaser.GameObjects.Image;
     background3: Phaser.GameObjects.Image;
     background4: Phaser.GameObjects.Image;
     background5: Phaser.GameObjects.Image;
-    // background6: Phaser.GameObjects.Image;
-    // background7: Phaser.GameObjects.Image;
-    // mountain1: Phaser.GameObjects.Image;
-    // mountain2: Phaser.GameObjects.Image;
-    // mountain3: Phaser.GameObjects.Image;
+    background6: Phaser.GameObjects.Image;
+    mountain1: Phaser.GameObjects.Image;
+    mountain2: Phaser.GameObjects.Image;
+    mountain3: Phaser.GameObjects.Image;
     mountain4: Phaser.GameObjects.Image;
-    mountain5: Phaser.GameObjects.Image;
-    // mountain6: Phaser.GameObjects.Image;
+    plant1: Phaser.GameObjects.Image;
+    plant2: Phaser.GameObjects.Image;
+    plant3: Phaser.GameObjects.Image;
+    plant4: Phaser.GameObjects.Image;
     UIItemToGrab: string = 'plantap3';
     cristal?: Floor;
     EmptyCristal?: Floor;
@@ -113,41 +114,55 @@ class Mapa8 {
         this.mapContainer = this.scene.add.container()
         this.frontContainer = this.scene.add.container().setDepth(999999999999)
 
-        this.background = this.scene.add
-            .image(this.startingPoint.x, this.startingPoint.y, "background1p3")
+        this.background3 = this.scene.add
+            .image(this.startingPoint.x, this.startingPoint.y, "background3p3")
+            .setOrigin(0.5, 0.5)
+        this.background5 = this.scene.add
+            .image(this.startingPoint.x + this.background3.width, this.startingPoint.y, "background3p3")
             .setOrigin(0.5, 0.5)
         this.background2 = this.scene.add
-            .image(this.startingPoint.x, this.startingPoint.y, "p1backgroundNoche")
-            .setOrigin(0.5, 0.5)
-        this.background3 = this.scene.add
-            .image(this.startingPoint.x, this.startingPoint.y, "p1capaOscuridad")
-            .setOrigin(0.5, 0.5)
+            .image(this.startingPoint.x , this.startingPoint.y + 220, "background2p3")
+            .setOrigin(0.5, 0.5) 
         this.background4 = this.scene.add
-            .image(this.startingPoint.x, this.startingPoint.y + 530, "frontground1p1")
-            .setOrigin(1, 1).setScale(1);
-        this.background5 = this.scene.add
-            .image(this.startingPoint.x - 5, this.startingPoint.y + 530, "frontground1p1")
-            .setOrigin(0, 1).setScale(1).setFlipX(true);
+            .image(this.startingPoint.x + this.background2.width -10, this.startingPoint.y + 220, "background2p3")
+            .setOrigin(0.5, 0.5)
+        this.background6 = this.scene.add
+            .image(this.startingPoint.x + (this.background2.width * 2) -20, this.startingPoint.y + 220, "background2p3")
+            .setOrigin(0.5, 0.5)
+            this.mountain2 = this.scene.add.image(2800, this.startingPoint.y, "montaña2p3")
+            this.mountain3 = this.scene.add.image(3600, this.startingPoint.y, "montaña3p3")
+            this.mountain1 = this.scene.add.image(4000, this.startingPoint.y, "montaña1p3")
+            this.mountain4 = this.scene.add.image(4800, this.startingPoint.y, "montaña2p3").setScale(0.7)
 
-        this.mountain4 = this.scene.add.image(200, this.startingPoint.y + 500, "montaña1p1")
-        this.mountain5 = this.scene.add.image(1100, this.startingPoint.y + 520, "montaña2p1")
+            
+            this.plant1 = this.scene.add.image(4700, this.startingPoint.y, "planta1p3").setScale(0.3)
+            this.plant2 = this.scene.add.image(5200, this.startingPoint.y, "planta2p3").setScale(0.3)
+            this.plant3 = this.scene.add.image(2700, this.startingPoint.y, "planta1p3").setScale(0.3)
+            this.plant4 = this.scene.add.image(3200, this.startingPoint.y, "planta2p3").setScale(0.3)
 
         this.mapContainer.add([
-            this.background,
-            this.background2,
-            this.background3,
-            this.background4,
             this.background5,
+            this.background3,
+            //this.background,
+            this.mountain3,
+            this.mountain1,
             this.mountain4,
-            this.mountain5,
+            this.mountain2,
+          
+        
+            this.background4,
+            this.background6,
+            this.background2,
+            this.plant3,
+            this.plant1,
+            this.plant2,
+            this.plant4,
+            
         ])
 
-     //   this.frontContainer.add([
-            // this.mountain1,
-            // this.mountain2,
-            // this.mountain3,
-            // this.mountain6
-        //])
+       this.frontContainer.add([
+          
+        ])
     }
 
     animateBackground(player: Phaser.GameObjects.Sprite | Phaser.Math.Vector2) {
@@ -159,17 +174,26 @@ class Mapa8 {
         const { ajusteBX, ajusteBY } = { ajusteBX: 1.1, ajusteBY: 1.1 }
         const calcDiffBX = (x2 - x) / ajusteBX
         const calcDiffBY = (y2 - y) / ajusteBY;
-        this.background.setPosition(x + calcDiffBX, y + calcDiffBY);
-        this.background2.setPosition(x + calcDiffBX, y + calcDiffBY);
-        this.background3.setPosition(x + calcDiffBX, y + calcDiffBY);
+     //   this.background.setPosition(x + calcDiffBX, y + calcDiffBY);        
+        this.background2.setPosition(this.background2.x, y + calcDiffBY + 420);        
+        this.background4.setPosition(this.background4.x , y + calcDiffBY + 420);
+        this.background6.setPosition(this.background6.x , y + calcDiffBY + 420);
+
+        this.background3.setPosition(x + calcDiffBX , y + calcDiffBY );
+        this.background5.setPosition(x + this.background3.width + calcDiffBX , y + calcDiffBY );
+                
         // // animation frontgrounds
         const { ajusteFX, ajusteFY } = { ajusteFX: 4, ajusteFY: 2 }
         const calcDiffFX = (x2 - x) / ajusteFX
         const calcDiffFY = (y2 - y) / ajusteFY;
-        this.background4.setPosition(x + calcDiffFX, y + offsetLevel + 470 + calcDiffFY);
-        this.background5.setPosition(x + calcDiffFX, y + offsetLevel + 470 + calcDiffFY);
-        this.mountain4.setPosition(-200 + calcDiffFX, y + offsetLevel + calcDiffFY)
-        this.mountain5.setPosition(1100 + calcDiffFX, y + offsetLevel + calcDiffFY)
+        this.plant1.setPosition(this.plant1.x , y + calcDiffBY + 370)      
+        this.plant2.setPosition(this.plant2.x , y + calcDiffBY + 370)      
+        this.plant3.setPosition(this.plant3.x , y + calcDiffBY + 370)      
+        this.plant4.setPosition(this.plant4.x , y + calcDiffBY + 370)      
+        this.mountain1.setPosition(4300 + calcDiffFX, y  + calcDiffFY +200 )
+        this.mountain2.setPosition(2800 + calcDiffFX, y  + calcDiffFY +200 )
+        this.mountain3.setPosition(3600 + calcDiffFX, y  + calcDiffFY +200 )
+        this.mountain4.setPosition(4800 + calcDiffFX, y + calcDiffFY + 350)
     }
 
     addColliders() {
@@ -190,7 +214,8 @@ class Mapa8 {
                     this.pisos2,
                     () => {
                         this.scene.changeGravity(true, 1000, 3);
-                       
+                        //this.background2.setPosition(this.startingPoint.x, this.startingPoint.y + 320)
+                        //this.background4.setPosition(this.startingPoint.x, this.startingPoint.y + 320)
                     },
                     () => true,
                     this.scene
@@ -534,7 +559,7 @@ class Mapa8 {
         this.auraImage = new Floor(this.scene, auraConfig, this.aura).setBodySize(140, 180).setVelocityX(-400);
 
         const fireballConfig: FloorConfig = {
-            spriteSheet: "meteorito",
+            spriteSheet: "meteoritop3",
             texture: "meteorito",
             pos: { x: 2850, y: 0 }, // 500 1580
             width: 100,
@@ -550,7 +575,7 @@ class Mapa8 {
 
 
         const fireball2Config: FloorConfig = {
-            spriteSheet: "meteorito",
+            spriteSheet: "meteoritop3",
             texture: "meteorito",
             pos: { x: 5200, y: 0 }, // 500 1580
             width: 100,

@@ -125,6 +125,14 @@ const loadAssets = {
         "/game/planeta1/meteoritoSpriteVerde.png",
         { frameWidth: 140, frameHeight: 300 },
       ],
+
+      [
+        "spritesheet",
+        "meteoritop3",
+        "/game/planeta3/meteoritop3.png",
+        { frameWidth: 140, frameHeight: 300 },
+      ],
+
       [
         "spritesheet",
         "personRing",
@@ -315,7 +323,12 @@ const loadAssets = {
       ["image", "cuevap1", "/game/planeta2/cuevap1.png"],
 
       //planeta 3
-      
+      [
+        "spritesheet",
+        "meteoritop3",
+        "/game/planeta3/meteoritop3.png",
+        { frameWidth: 98, frameHeight: 210 },
+      ],
       ["image", "pSimple1p3", "/game/planeta3/pSimple1.png"],
       ["image", "pSimple2p3", "/game/planeta3/pSimple2.png"],
       ["image", "longFloorLeftp3", "/game/planeta3/longFloorLeft.png"],
@@ -328,6 +341,16 @@ const loadAssets = {
       ["image", "plantap3", "/game/planeta3/plantaP3.png"],
       ["image", "plantaVaciap3", "/game/planeta3/plantaVaciaP3.png"],
       ["image", "brilloPlantap3", "/game/planeta3/brilloPlantap3.png"],
+      ["image", "meteoritop3", "/game/planeta3/meteoritop3.png"],
+
+      ["image", "montaña1p3", "/game/planeta3/montaña1p3.png"],
+      ["image", "montaña2p3", "/game/planeta3/montaña2p3.png"],
+      ["image", "montaña3p3", "/game/planeta3/montaña3p3.png"],
+      
+      ["image", "planta1p3", "/game/planeta3/planta1p3.png"],
+      ["image", "planta2p3", "/game/planeta3/planta2p3.png"],
+
+    
 
 
 
@@ -746,11 +769,11 @@ class AssetsLoader {
         // this.scene.makeTransition("startMovie", undefined);
         // console.log("BARTO ACAA")
         sceneToPlay = () => {
-          this.scene.makeTransition("CinematographyMod", {
-            keyname: "cine_movie_1",
+          //this.scene.makeTransition("CinematographyMod", {
+            //keyname: "cine_movie_1",
             // keyname: "postal2_planeta1",
-          });
-          // this.scene.makeTransition("Game", { level: 0, lifes: 3 });
+         // });
+           this.scene.makeTransition("Game", { level: 8, lifes: 3 });
         }
 
         // get center of the screen

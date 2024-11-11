@@ -143,13 +143,10 @@ class Mapa8 {
         this.mapContainer.add([
             this.background5,
             this.background3,
-            //this.background,
             this.mountain3,
             this.mountain1,
             this.mountain4,
             this.mountain2,
-          
-        
             this.background4,
             this.background6,
             this.background2,
@@ -588,6 +585,47 @@ class Mapa8 {
             frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
           };
         const fireball2 = new Floor(this.scene, fireball2Config, this.fireballGroup).setScale(0.5)    
+        const bubblesGroup = this.scene.add.group()
+
+        const b1Config: AsteroidGeneratorConfig = {
+            texture: "burbujap3",
+            x: this.startingPoint.x,
+            y: this.startingPoint.y,
+            delayed: 100,
+            direction: 1,
+            velocity: 15,
+            depth:-99,
+            scale: 1,
+            group: bubblesGroup,
+            upStraigth: true,
+            amount:40,
+            spawnRange: {
+                x:4,
+                y:1
+            }
+          };
+          const b1 = new AsteroidGenerator(this.scene, b1Config);
+          b1.start();
+
+          const b2Config: AsteroidGeneratorConfig = {
+            texture: "burbujap3",
+            x: this.startingPoint.x + 3300,
+            y: this.startingPoint.y,
+            delayed: 1500,
+            direction: 1,
+            velocity: 15,
+            depth:-99,
+            scale: 1,
+            group: bubblesGroup,
+            upStraigth: true,
+            amount:40,
+            spawnRange: {
+                x:2,
+                y:1
+            }
+          };
+          const b2 = new AsteroidGenerator(this.scene, b2Config);
+          b2.start();
 
         this.scene.tweens.add({
                 duration: 3000,

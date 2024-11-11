@@ -11,6 +11,12 @@ export type AsteroidGeneratorConfig = {
   velocity: number;
   depth?: number;
   group?: Phaser.GameObjects.Group;
+  amount?:number;
+  upStraigth?:boolean;
+  spawnRange? : {
+    x:number,
+    y:number
+  }
 };
 
 class AsteroidGenerator {
@@ -41,7 +47,7 @@ class AsteroidGenerator {
   }
 
   run() {
-    this.createAsteroid(this.config.x, this.config.y);
+    this.runCreation();
     this.scene.time.delayedCall(this.randomTime(), this.run, [], this);
   }
 
@@ -58,7 +64,32 @@ class AsteroidGenerator {
     // })
     this.asteroids.add(asteroid);
     this.scene.UICamera?.ignore(asteroid)
-    asteroid.setVelocityX(this.randomVelocity());
+    if(this.config.upStraigth){
+      asteroid.setVelocityY(this.randomVelocity());
+    }else{
+      asteroid.setVelocityX(this.randomVelocity())  ;
+    }
+  }
+
+  runCreation(){
+    if(this.config.amount){
+      if(this.config.spawnRange){
+        for (let i = 0; i < this.config.amount; i++){
+          const randomX = this.config.x + (Math.random() - 0.5) * this.config.spawnRange.x * 1000;
+          const randomY = this.config.y + (Math.random() - 0.5) * this.config.spawnRange.y * 1000;
+          this.createAsteroid(randomX, randomY)
+        }
+      }else{
+        for (let i = 0; i < this.config.amount; i++){
+          const randomX = this.config.x + (Math.random() - 0.5) * 1;
+          const randomY = this.config.y + (Math.random() - 0.5) * 1;
+          this.createAsteroid(randomX, randomY)
+        }
+      }
+     
+    }else{
+      this.createAsteroid(this.config.x, this.config.y)
+    }
   }
 
   start() {

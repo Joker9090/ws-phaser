@@ -460,7 +460,7 @@ class cineIntro7 {
   update(this: cineIntro7, time: number, delta: number) {
     if (this.dialogue) this.dialogue.update();
     if (this.nextCine) {
-      const multiScene = new MultiScene("Game", { level: 0, lifes: 3, loadKey: 'GamePlay1' });
+      const multiScene = new MultiScene("Game", { level: 0, lifes: 3, loadKey: ['GamePlay1'] });
       const scene = this.cine.scene.add("MultiScene", multiScene, true);
       this.cine.scene.start("MultiScene").bringToTop("MultiScene");
       

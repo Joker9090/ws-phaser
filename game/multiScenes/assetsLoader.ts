@@ -569,6 +569,10 @@ const loadAssets = {
       ["image", "welderScreen", "/movies/cinemato2/scene3/welderScreen.png"],
       ["image", "weldingShip", "/movies/cinemato2/scene3/weldingShip.png"],
       ["image", "destelloWelder", "/movies/cinemato2/scene3/destello.png"],
+           // SCENE 4
+           ["image", "oxygen1", "/movies/cinemato2/scene4/oxygen1.png"],
+           ["image", "oxygen2", "/movies/cinemato2/scene4/oxygen2.png"],
+           ["image", "popUpPlanetBubble", "/movies/cinemato2/scene4/popUpPlanetBubble.png"],
       // SCENE 5
       ["image", "BackgroundMountainScene5", "/movies/cinemato2/scene5/BackgroundMountainScene5.png"],
       ["image", "bubbles", "/movies/cinemato2/scene5/bubbles.png"],
@@ -593,8 +597,8 @@ const loadAssets = {
 class AssetsLoader {
   scene: MultiScene | PreLoadScene;
   finished: boolean = false;
-  loadKey: SceneKeys = "BaseLoad";
-  constructor(scene: MultiScene | PreLoadScene, loadKey: SceneKeys = "BaseLoad") {
+  loadKey: SceneKeys[] = ["BaseLoad"];
+  constructor(scene: MultiScene | PreLoadScene, loadKey: SceneKeys[] = ["BaseLoad"]) {
     this.scene = scene;
     this.loadKey = loadKey;
   }
@@ -670,7 +674,7 @@ class AssetsLoader {
         if (callback) callback()
       });
 
-      const scenesTitles: Array<SceneKeys> = [this.loadKey]
+      const scenesTitles: Array<SceneKeys> = this.loadKey
       for (let i = 0; i < scenesTitles.length; i++) {
         loadAssets[scenesTitles[i]].assets.map((sceneAssetConfig) => {
           const type = sceneAssetConfig[0] as LoadTypes;

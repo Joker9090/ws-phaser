@@ -29,14 +29,14 @@ export default class MultiScene extends Phaser.Scene {
 
 
   preload() {
-      this.assetLoaderClass = new AssetsLoader(this, "BaseLoad");
+      this.assetLoaderClass = new AssetsLoader(this, ["BaseLoad"]);
       this.assetLoaderClass.runPreload(() => {
 
         if(this.scenekey) {
           this.makeTransition(this.scenekey, this.sceneData ?? undefined);
         } else {
           // intro
-          this.makeTransition("CinematographyMod", { keyname: "cine_2_movie_6", loadKey: "Cinemato2" });
+          this.makeTransition("CinematographyMod", { keyname: "cine_2_movie_4", loadKey: ["Cinemato2", "Cinemato1", "Cinemato0"] });
         }
       });
   }

@@ -25,10 +25,10 @@ import cineMovie9 from "./Cinemato1/cineMovie9";
 import cine2Movie1 from "./Cinemato2/cine2Movie1";
 import cine2Movie2 from "./Cinemato2/cine2Movie2";
 import cine2Movie3 from "./Cinemato2/cine2Movie3";
-// import cine2Movie4 from "./Cinemato2/cine2Movie4";
+import cine2Movie4 from "./Cinemato2/cine2Movie4";
+import cine2Movie5 from "./Cinemato2/cine2Movie5";
 import cine2Movie6 from "./Cinemato2/cine2Movie6";
 import MultiScene from "../MultiScene";
-import cine2Movie5 from "./Cinemato2/cine2Movie5";
 
 class CinematographyModular extends Phaser.Scene {
   ticker: Ticker;
@@ -58,7 +58,7 @@ class CinematographyModular extends Phaser.Scene {
       0xffffff,
       "#ffffff66",
       () => {
-          const multiScene = new MultiScene("Game", { level: 0, lifes: 3, loadKey: 'GamePlay1' });
+          const multiScene = new MultiScene("Game", { level: 0, lifes: 3, loadKey: ['GamePlay1'] });
           const scene = this.scene.add("MultiScene", multiScene, true);
           this.scene.start("MultiScene").bringToTop("MultiScene");
       },
@@ -159,14 +159,10 @@ class CinematographyModular extends Phaser.Scene {
         this.playingCine = new cine2Movie3(this);
         // this.nextLevel = 0
         break;
-        // case "cine_2_movie_3B":
-        //   this.playingCine = new cine2Movie3B(this);
-        //   // this.nextLevel = 0
-        //   break;
-      // case "cine_2_movie_4":
-      //   this.playingCine = new cine2Movie4(this);
-      //   // this.nextLevel = 0
-      //   break;
+      case "cine_2_movie_4":
+        this.playingCine = new cine2Movie4(this);
+        // this.nextLevel = 0
+        break;
       case "cine_2_movie_5":
         this.playingCine = new cine2Movie5(this);
         // this.nextLevel = 0

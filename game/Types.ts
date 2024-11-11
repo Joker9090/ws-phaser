@@ -13,11 +13,11 @@ export type loseConfigFromMapType = {
 export type GamePlayDataType = {
   level: number
   lifes: number
-  loadKey?: SceneKeys
+  loadKey?: SceneKeys[]
 }
 
 export type CinematoDataType = {
   keyname: string
   lifes?: number
-  loadKey?: SceneKeys
+  loadKey?: SceneKeys[]
 }

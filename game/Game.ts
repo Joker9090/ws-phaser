@@ -323,6 +323,7 @@ class Game extends Phaser.Scene {
         break;
       case 8:
         this.map = new p3Mapa1(this, this.monchi!);
+        this.loopMusic = "planet1LoopMusic";
         break
       default:
         this.map = new p1Mapa0(this, this.monchi!);

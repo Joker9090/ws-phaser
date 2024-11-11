@@ -45,6 +45,7 @@ class Mapa8 {
     portal?: Phaser.Physics.Arcade.Group;
     aura?: Phaser.Physics.Arcade.Group;
     movingFloor?: Phaser.Physics.Arcade.Group;
+    graphic?:any;
     movingFloorRot?: Phaser.Physics.Arcade.Group;
     amountLifes: number = 0;
     sideGrav: boolean = false;
@@ -75,16 +76,18 @@ class Mapa8 {
         },
     ];
     nextScene: string | undefined = undefined;
- 
+    background: Phaser.GameObjects.Image;
     background2: Phaser.GameObjects.Image;
     background3: Phaser.GameObjects.Image;
     background4: Phaser.GameObjects.Image;
     background5: Phaser.GameObjects.Image;
     background6: Phaser.GameObjects.Image;
+    background7: Phaser.GameObjects.Image;
     mountain1: Phaser.GameObjects.Image;
     mountain2: Phaser.GameObjects.Image;
     mountain3: Phaser.GameObjects.Image;
     mountain4: Phaser.GameObjects.Image;
+   
     plant1: Phaser.GameObjects.Image;
     plant2: Phaser.GameObjects.Image;
     plant3: Phaser.GameObjects.Image;
@@ -113,26 +116,37 @@ class Mapa8 {
 
         this.mapContainer = this.scene.add.container()
         this.frontContainer = this.scene.add.container().setDepth(999999999999)
-
+        this.background = this.scene.add
+        .image(this.startingPoint.x, this.startingPoint.y, "p3backgroundGradiant")
+        .setOrigin(0.5, 0.5)
+    
+        .setScale(4);
         this.background3 = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "background3p3")
             .setOrigin(0.5, 0.5)
         this.background5 = this.scene.add
-            .image(this.startingPoint.x + this.background3.width, this.startingPoint.y, "background3p3")
+            .image(this.startingPoint.x + this.background3.width , this.startingPoint.y, "background3p3")
             .setOrigin(0.5, 0.5)
+        this.background7 = this.scene.add
+            .image(this.startingPoint.x + (this.background3.width* 2) , this.startingPoint.y, "background3p3")
+            .setOrigin(0.5, 0.5)
+
+
         this.background2 = this.scene.add
             .image(this.startingPoint.x , this.startingPoint.y + 220, "background2p3")
             .setOrigin(0.5, 0.5) 
         this.background4 = this.scene.add
-            .image(this.startingPoint.x + this.background2.width -10, this.startingPoint.y + 220, "background2p3")
+            .image(this.startingPoint.x + this.background2.width -2, this.startingPoint.y + 220, "background2p3")
             .setOrigin(0.5, 0.5)
         this.background6 = this.scene.add
             .image(this.startingPoint.x + (this.background2.width * 2) -20, this.startingPoint.y + 220, "background2p3")
             .setOrigin(0.5, 0.5)
+
             this.mountain2 = this.scene.add.image(2800, this.startingPoint.y, "montaña2p3")
-            this.mountain3 = this.scene.add.image(3600, this.startingPoint.y, "montaña3p3")
+            this.mountain3 = this.scene.add.image(3600, this.startingPoint.y, "montaña3p3").setScale(1.1)
             this.mountain1 = this.scene.add.image(4000, this.startingPoint.y, "montaña1p3")
             this.mountain4 = this.scene.add.image(4800, this.startingPoint.y, "montaña2p3").setScale(0.7)
+
 
             
             this.plant1 = this.scene.add.image(4700, this.startingPoint.y, "planta1p3").setScale(0.3)
@@ -141,8 +155,10 @@ class Mapa8 {
             this.plant4 = this.scene.add.image(3200, this.startingPoint.y, "planta2p3").setScale(0.3)
 
         this.mapContainer.add([
+            this.background,
             this.background5,
             this.background3,
+            this.background7,
             this.mountain3,
             this.mountain1,
             this.mountain4,
@@ -171,13 +187,16 @@ class Mapa8 {
         const { ajusteBX, ajusteBY } = { ajusteBX: 1.1, ajusteBY: 1.1 }
         const calcDiffBX = (x2 - x) / ajusteBX
         const calcDiffBY = (y2 - y) / ajusteBY;
+        this.background.setDepth(-999999)
      //   this.background.setPosition(x + calcDiffBX, y + calcDiffBY);        
         this.background2.setPosition(this.background2.x, y + calcDiffBY + 420);        
         this.background4.setPosition(this.background4.x , y + calcDiffBY + 420);
         this.background6.setPosition(this.background6.x , y + calcDiffBY + 420);
-
-        this.background3.setPosition(x + calcDiffBX , y + calcDiffBY );
-        this.background5.setPosition(x + this.background3.width + calcDiffBX , y + calcDiffBY );
+        
+        this.background3.setPosition(this.background3.x , y + calcDiffBY + 100);
+        this.background5.setPosition(this.background5.x , y + calcDiffBY + 100);
+        this.background7.setPosition(this.background7.x , y + calcDiffBY + 100);
+      
                 
         // // animation frontgrounds
         const { ajusteFX, ajusteFY } = { ajusteFX: 4, ajusteFY: 2 }
@@ -187,10 +206,10 @@ class Mapa8 {
         this.plant2.setPosition(this.plant2.x , y + calcDiffBY + 370)      
         this.plant3.setPosition(this.plant3.x , y + calcDiffBY + 370)      
         this.plant4.setPosition(this.plant4.x , y + calcDiffBY + 370)      
-        this.mountain1.setPosition(4300 + calcDiffFX, y  + calcDiffFY +200 )
-        this.mountain2.setPosition(2800 + calcDiffFX, y  + calcDiffFY +200 )
-        this.mountain3.setPosition(3600 + calcDiffFX, y  + calcDiffFY +200 )
-        this.mountain4.setPosition(4800 + calcDiffFX, y + calcDiffFY + 350)
+        this.mountain1.setPosition(4300 + calcDiffFX, y  + calcDiffFY   +200 )
+        this.mountain2.setPosition(2800 + calcDiffFX, y  + calcDiffFY  +220 )
+        this.mountain3.setPosition(3600 + calcDiffFX, y  + calcDiffFY  + 160 )
+        this.mountain4.setPosition(4800 + calcDiffFX, y + calcDiffFY  + 350)
     }
 
     addColliders() {
@@ -305,8 +324,9 @@ class Mapa8 {
         }
     }
 
-    createMap(data: { level: number; lifes: number }) {
+    
 
+    createMap(data: { level: number; lifes: number }) {
         this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
         this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });
         this.pisos = this.scene.physics.add.group({ allowGravity: false });
@@ -594,7 +614,7 @@ class Mapa8 {
             delayed: 100,
             direction: 1,
             velocity: 15,
-            depth:-99,
+
             scale: 1,
             group: bubblesGroup,
             upStraigth: true,

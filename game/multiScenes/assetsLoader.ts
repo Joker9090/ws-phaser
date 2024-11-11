@@ -351,7 +351,12 @@ const loadAssets = {
       ["image", "planta2p3", "/game/planeta3/planta2p3.png"],
       ["image", "burbujap3", "/game/planeta3/burbuja.png"],
 
-    
+      [
+        "svg",
+        "p3backgroundGradiant",
+        "/game/planeta3/bgGradiant.svg",
+        { scale: 1.4 }
+      ],
 
 
 

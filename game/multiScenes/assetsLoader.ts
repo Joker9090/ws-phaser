@@ -19,6 +19,7 @@ const loadAssets = {
 
   BaseLoad: {
     assets: [["image", "block", "/game/50x50.png"]],
+
   },
   GamePlay1: {
     assets: [
@@ -48,6 +49,24 @@ const loadAssets = {
         "montañaEnd",
         "/game/planeta1/backgrounds/montañaEnd.svg",
         { scale: 3 },
+      ],
+      [
+        "spritesheet",
+        "character",
+        "/game/character.png",
+        { frameWidth: 330, frameHeight: 450 },
+      ],
+      [
+        "spritesheet",
+        "gravityAnim",
+        "/game/player/gravityEffect.png",
+        { frameWidth: 140, frameHeight: 280 },
+      ],
+      [
+        "spritesheet",
+        "player",
+        "/game/player/playerSpriteSheet.png",
+        { frameWidth: 200, frameHeight: 200 },
       ],
       // IMAGES
       ["image", "plataformaNuevaA", "/game/planeta1/platforms/plataformaNuevaA.png"],

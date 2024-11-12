@@ -17,6 +17,7 @@ import UIClass from "./assets/UIClass";
 import MasterManager from "./MasterManager";
 import BetweenScenes, { BetweenScenesStatus } from "./BetweenScenes";
 import { GamePlayDataType } from "./Types";
+import MultiScene from "./MultiScene";
 
 export type PossibleMaps = p1Mapa0 | p1Mapa1 | p1Mapa2 | p1Mapa3 |
   p2Mapa1 | p2Mapa2 | p2Mapa3 | p2Mapa4 | p3Mapa1
@@ -94,9 +95,9 @@ class Game extends Phaser.Scene {
 
   changeGravity(float: boolean, time: number, speed?: 1 | 2 | 3) {
     if (this.monchi) {
-          this.physics.world.gravity.y = this.physics.world.gravity.y <= 0 ? 1000 : -1000;
-          this.moveCameraOffset(this.physics.world.gravity.y <= 0 ? "up" : "down" )
-          this.monchi.rotate(speed)
+      this.physics.world.gravity.y = this.physics.world.gravity.y <= 0 ? 1000 : -1000;
+      this.moveCameraOffset(this.physics.world.gravity.y <= 0 ? "up" : "down")
+      this.monchi.rotate(speed)
     }
   }
 
@@ -151,15 +152,14 @@ class Game extends Phaser.Scene {
   win() {
     if (this.canWin && this.monchi) {
       if (this.map?.nextScene) {
-        this.makeTransition("CinematographyMod", {
-          keyname: this.map.nextScene,
-          lifes: this.lifes,
-        });
-      } else {
-        this.makeTransition("Game", {
-          level: this.levelIs + 1,
-          lifes: this.lifes,
-        });
+        const multiScene = new MultiScene("CinematographyMod", { keyname: this.map.nextScene, lifes: this.lifes ? this.lifes : 3,  loadKey: ["Postales"] });
+        const scene = this.scene.add("MultiScene", multiScene, true);
+        this.scene.start("MultiScene").bringToTop("MultiScene");
+      }
+      else {
+        const multiScene = new MultiScene("Game", { level: this.levelIs + 1, lifes: this.lifes ? this.lifes : 3 });
+        const scene = this.scene.add("MultiScene", multiScene, true);
+        this.scene.start("MultiScene").bringToTop("MultiScene");
       }
     }
     // lógica para pasar a movie dependiendo el nivel
@@ -191,8 +191,10 @@ class Game extends Phaser.Scene {
       if (this.lifes) {
         this.lifes -= 1;
         if (this.lifes === 0) {
-          // this.makeTransition("MultiScene", { text: 'lose' });
-          this.makeTransition("Game", { level: this.levelIs, lifes: 3 });
+          
+          const multiScene = new MultiScene("Game", { level: this.levelIs, lifes: this.lifes ? this.lifes : 3 });
+          const scene = this.scene.add("MultiScene", multiScene, true);
+          this.scene.start("MultiScene").bringToTop("MultiScene");
         } else if (this.lifes > 0 && this.monchi) {
           // UI changes
           this.UIClass?.loseLife(this.lifes);
@@ -217,25 +219,6 @@ class Game extends Phaser.Scene {
           this.monchi.y = config.positions.y;
         }
       }
-    }
-  }
-
-  makeTransition(sceneName: string, data: any) {
-    const getBetweenScenesScene = this.game.scene.getScene(
-      "BetweenScenes"
-    ) as BetweenScenes;
-    if (getBetweenScenesScene) {
-      if (getBetweenScenesScene.status != BetweenScenesStatus.IDLE)
-        return false;
-      getBetweenScenesScene.changeSceneTo(sceneName, data);
-      this.time.delayedCall(1000, () => {
-        this.scene.stop();
-      });
-    } else {
-      this.scene.start(sceneName, data);
-      this.time.delayedCall(1000, () => {
-        this.scene.stop();
-      });
     }
   }
 
@@ -357,9 +340,9 @@ class Game extends Phaser.Scene {
     this.EscKeyboard = this.input.keyboard?.addKey(
       Phaser.Input.Keyboard.KeyCodes.ESC
     );
-    
+
     this.cursors = this.input.keyboard?.createCursorKeys();
-    
+
     const { x, y } = this.map.startingPoint;
     this.monchi = new Player(this, x, y, "character", 2);
     this.canWin = false;
@@ -405,22 +388,22 @@ class Game extends Phaser.Scene {
       this
     );
 
-    if (this.EscKeyboard)
-      this.EscKeyboard.once(
-        "down",
-        () => {
-          this.monchi?.body?.destroy();
-          this.goingBack = false;
-          this.canWin = false;
-          this.canNextLevel = false;
-          this.canRot = true;
-          this.makeTransition("LevelMap", { stagePoint: this.stagePoint });
-          if (this.masterManagerScene?.music?.key !== "songMenu")
-            this.masterManagerScene?.stopMusic();
-          this.masterManagerScene?.playMusic("songMenu");
-        },
-        this
-      );
+    // if (this.EscKeyboard)
+    //   this.EscKeyboard.once(
+    //     "down",
+    //     () => {
+    //       this.monchi?.body?.destroy();
+    //       this.goingBack = false;
+    //       this.canWin = false;
+    //       this.canNextLevel = false;
+    //       this.canRot = true;
+    //       this.makeTransition("LevelMap", { stagePoint: this.stagePoint });
+    //       if (this.masterManagerScene?.music?.key !== "songMenu")
+    //         this.masterManagerScene?.stopMusic();
+    //       this.masterManagerScene?.playMusic("songMenu");
+    //     },
+    //     this
+    //   );
   }
 
   update(this: Game) {

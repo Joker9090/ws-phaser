@@ -149,12 +149,6 @@ class cineMovie9 {
         zoom: 1.3,
         delay: 0,
         duration: 15000,
-        onLoop: (e) => {
-          console.log("ARIEL ON LOOP", e)
-        },
-        onYoyo: (e) => {
-          console.log("ARIEL ON YOYO", e)
-        },
         ease: "ease",
       });
       this.cine.tweens.add({

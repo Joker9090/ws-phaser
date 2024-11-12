@@ -81,7 +81,6 @@ class cineMovie6 {
     const graphg = this.graphics.fillCircle(-60, -185, 350).setScale
       (0.9, 0.44);
 
-    console.log(this.cine);
 
     const gameObjects = [
       this.backgroundPressButton,
@@ -94,7 +93,6 @@ class cineMovie6 {
 
     this.mask = this.graphics.createGeometryMask();
     this.mask?.setShape(graphg);
-    console.log(this.violetButton.x, this.violetButton.y);
 
     this.mask.geometryMask.setPosition(middlePoint.x, middlePoint.y)
     this.violetButton.setMask(this.mask);

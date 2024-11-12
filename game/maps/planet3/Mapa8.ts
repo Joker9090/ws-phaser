@@ -570,7 +570,6 @@ class Mapa8 {
     }
     update() {
         if (this.scene.monchi) this.animateBackground(this.scene.cameras.main.midPoint);
-        console.log(this.scene.checkPoint, "CHECKPOINT")
     }
 }
 export default Mapa8;

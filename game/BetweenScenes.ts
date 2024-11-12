@@ -30,7 +30,6 @@ export default class BetweenScenesScene extends Phaser.Scene {
   }
 
   loadNewScene() {
-    console.log("loadNewScene",this.status, this.newSceneName)
     if (this.status == BetweenScenesStatus.PROCCESSING) {
       this.status = BetweenScenesStatus.WAITING;
       if (this.newSceneName) {

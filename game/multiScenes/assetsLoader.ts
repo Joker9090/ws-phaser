@@ -18,7 +18,11 @@ export type LoadTypes = "image" | "spritesheet" | "audio" | "svg";
 const loadAssets = {
 
   BaseLoad: {
-    assets: [["image", "block", "/game/50x50.png"]],
+    assets: [
+      ["image", "block", "/game/50x50.png"],
+      ["svg", "bordeGlow", "/assets/textBox/bordeGlow.svg", { scale: 7 }],
+      ["svg", "fondoDegrade", "/assets/textBox/fondoDegrade.svg", { scale: 7 }],
+    ]
 
   },
   GamePlay1: {
@@ -67,6 +71,12 @@ const loadAssets = {
         "player",
         "/game/player/playerSpriteSheet.png",
         { frameWidth: 200, frameHeight: 200 },
+      ],
+      [
+        "spritesheet",
+        "meteorito",
+        "/game/planeta1/meteoritoSpriteVerde.png",
+        { frameWidth: 140, frameHeight: 300 },
       ],
       // IMAGES
       ["image", "plataformaNuevaA", "/game/planeta1/platforms/plataformaNuevaA.png"],
@@ -588,10 +598,10 @@ const loadAssets = {
       ["image", "welderScreen", "/movies/cinemato2/scene3/welderScreen.png"],
       ["image", "weldingShip", "/movies/cinemato2/scene3/weldingShip.png"],
       ["image", "destelloWelder", "/movies/cinemato2/scene3/destello.png"],
-           // SCENE 4
-           ["image", "oxygen1", "/movies/cinemato2/scene4/oxygen1.png"],
-           ["image", "oxygen2", "/movies/cinemato2/scene4/oxygen2.png"],
-           ["image", "popUpPlanetBubble", "/movies/cinemato2/scene4/popUpPlanetBubble.png"],
+      // SCENE 4
+      ["image", "oxygen1", "/movies/cinemato2/scene4/oxygen1.png"],
+      ["image", "oxygen2", "/movies/cinemato2/scene4/oxygen2.png"],
+      ["image", "popUpPlanetBubble", "/movies/cinemato2/scene4/popUpPlanetBubble.png"],
       // SCENE 5
       ["image", "BackgroundMountainScene5", "/movies/cinemato2/scene5/BackgroundMountainScene5.png"],
       ["image", "bubbles", "/movies/cinemato2/scene5/bubbles.png"],

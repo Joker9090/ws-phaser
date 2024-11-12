@@ -453,7 +453,6 @@ class Mapa5 {
           (player, floor) => {
             //@ts-ignore
             const originalY = floor.y
-            console.log(originalY)
             setTimeout(() => {
               //@ts-ignore
               if (floor.y > 1000) {

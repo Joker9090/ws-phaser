@@ -457,7 +457,6 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
                     (player, floor) => {
                       //@ts-ignore
                       const originalY = floor.y
-                      console.log(originalY)
                       setTimeout(() => {
                         //@ts-ignore
                         if (floor.y > 1000) {
@@ -843,7 +842,6 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
     }
     update() {
         if (this.scene.monchi) this.animateBackground();
-        console.log(this.scene.checkPoint, "CHECKPOINT")
     }
 }
 export default Mapa7;

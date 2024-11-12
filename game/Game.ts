@@ -78,7 +78,6 @@ class Game extends Phaser.Scene {
   moveCameraOffset(position: "up" | "down", instant: boolean = false) {
     setTimeout(() => {
       let newPosition = this.cameraHeight / 2 - 200;
-      console.log(newPosition, 'NEW POSITIONS CAMERA')
       if (position === "up") newPosition = -newPosition;
       if (instant) {
         this.cameras.main.followOffset.y = newPosition;
@@ -102,20 +101,15 @@ class Game extends Phaser.Scene {
   }
 
   rotateCam(isNormal: boolean, time: number) {
-    console.log("ENTRO ACA ARI 3");
     if (this.monchi)
       this.monchi.setCameraState(!isNormal ? "NORMAL" : "ROTATED");
     if (isNormal) {
-      console.log("ENTRO ACA ARI 1");
       this.cameraNormal = false;
     } else {
-      console.log("ENTRO ACA AR2");
-
       this.cameraNormal = true;
     }
     if (this.canRot) {
       if (!this.gravityDown) {
-        console.log("ENTRO ACA ARI");
         for (let i = 0; i < 25; i++) {
           this.time.delayedCall(time * i, () =>
             ((rotate) => {
@@ -152,10 +146,16 @@ class Game extends Phaser.Scene {
   win() {
     if (this.canWin && this.monchi) {
       if (this.map?.nextScene) {
-        const multiScene = new MultiScene("CinematographyMod", { keyname: this.map.nextScene, lifes: this.lifes ? this.lifes : 3,  loadKey: ["Postales"] });
+        if (this.levelIs === 3) {
+          const multiScene = new MultiScene("Game", { level: 0, lifes: 3 });
         const scene = this.scene.add("MultiScene", multiScene, true);
         this.scene.start("MultiScene").bringToTop("MultiScene");
-      }
+        } else {
+          const multiScene = new MultiScene("CinematographyMod", { keyname: this.map.nextScene, lifes: this.lifes ? this.lifes : 3,  loadKey: ["Postales"] });
+          const scene = this.scene.add("MultiScene", multiScene, true);
+          this.scene.start("MultiScene").bringToTop("MultiScene");
+        }
+        }
       else {
         const multiScene = new MultiScene("Game", { level: this.levelIs + 1, lifes: this.lifes ? this.lifes : 3 });
         const scene = this.scene.add("MultiScene", multiScene, true);
@@ -355,7 +355,6 @@ class Game extends Phaser.Scene {
       width: boundWidth,
       height: boundHeight,
     } = this.map.cameraBounds;
-    console.log("CAMERA BOUNDS", this.map.cameraBounds);
     this.cameras.main.setBounds(boundX, boundY, boundWidth, boundHeight);
     /* CAMERAS */
     this.cameras.main.zoom = 1;

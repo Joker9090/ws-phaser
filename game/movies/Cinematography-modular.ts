@@ -58,7 +58,7 @@ class CinematographyModular extends Phaser.Scene {
       0xffffff,
       "#ffffff66",
       () => {
-          const multiScene = new MultiScene("Game", { level: 0, lifes: 3, loadKey: ['GamePlay1'] });
+          const multiScene = new MultiScene("Game", { level: this.nextLevel ? this.nextLevel : 0, lifes: lifes ? lifes : 3, loadKey: ['GamePlay1'] });
           const scene = this.scene.add("MultiScene", multiScene, true);
           this.scene.start("MultiScene").bringToTop("MultiScene");
       },

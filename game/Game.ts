@@ -146,8 +146,8 @@ class Game extends Phaser.Scene {
   win() {
     if (this.canWin && this.monchi) {
       if (this.map?.nextScene) {
-        if (this.levelIs === 3) {
-          const multiScene = new MultiScene("Game", { level: 0, lifes: 3 });
+        if (this.levelIs === 7) {
+          const multiScene = new MultiScene("Game", { level: 4, lifes: 3 });
         const scene = this.scene.add("MultiScene", multiScene, true);
         this.scene.start("MultiScene").bringToTop("MultiScene");
         } else {

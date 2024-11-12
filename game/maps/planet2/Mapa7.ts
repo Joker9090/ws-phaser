@@ -57,7 +57,7 @@ class Mapa7 {
         y: 1000, //800
     };
     checkPoint1 = {
-        x: 1700, //500
+        x: 1800, //500
         y: 800, //800
     };
     checkPoint2 = {
@@ -73,7 +73,7 @@ class Mapa7 {
         },
         {
             positions: this.checkPoint1,
-            cameraDirection: "ROTATED",
+            cameraDirection: "NORMAL",
             PlayerDirection: "ROTATED",
             gravityDown: false
         },
@@ -84,7 +84,7 @@ class Mapa7 {
           gravityDown: true
       },
     ];
-    nextScene: string | undefined = 'cine_2_movie_1';
+    nextScene: string | undefined = 'postal2_planeta2';
 
     background: Phaser.GameObjects.Image;
   backgroundStars: Phaser.GameObjects.Image;
@@ -117,7 +117,6 @@ originalPositionsBackgroundsMiddle: {x: number, y:number}[]
 originalPositionsBackgroundsFront: {x: number, y:number}[]
 
     UIItemToGrab: string = 'comida';
-
     cristal?: Floor;
     collected: Boolean = false;
     endPortal?: Floor;
@@ -410,7 +409,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
                     this.scene.monchi,
                     this.pisos2,
                     (player, floor) => {
-                        if (this.scene.checkPoint === 0) {
+                        if (this.scene.checkPoint === 0 && (floor as Floor).body?.touching.up) {
                         this.scene.changeGravity(true, 1000, 3);
                         (floor as Floor).setTint(0xffffff);
                         this.scene.checkPoint = 1
@@ -427,7 +426,6 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
                     this.pisos3,
                     () => {
                         if (this.scene.checkPoint === 1) {
-                            this.scene.canRot = true
                             this.scene.rotateCam(true, 10);
                         }
                     },
@@ -806,13 +804,15 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         };
 
         this.cristal = new Floor(this.scene, coinConfig, this.coin).setBodySize(140, 180);
+        const cloudsGroup = this.scene.add.group()
 
         const c1Config: AsteroidGeneratorConfig = {
             texture: "nube1p1",
             x: 0,
             y: 1500,
             delayed: 100,
-            direction: 0,
+      group: cloudsGroup,
+      direction: 0,
             velocity: 20,
             scale: 1,
             depth: 99,
@@ -825,16 +825,16 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
             x: 3000,
             y: 600,
             delayed: 100,
-            direction: 1,
+      group: cloudsGroup,
+      direction: 1,
             velocity: 30,
             scale: 1,
             depth: 99,
         };
         const c2 = new AsteroidGenerator(this.scene, c2Config);
         c2.start();
-
-        const mapObjects =
-            this.movingFloor.getChildren().concat(
+        const mapObjects = cloudsGroup.getChildren().concat(
+          this.movingFloor.getChildren(),
                 this.movingFloorRot.getChildren(),
                 this.fireballGroup.getChildren(),
                 this.pisos.getChildren(),

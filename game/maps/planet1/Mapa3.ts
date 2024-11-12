@@ -72,7 +72,7 @@ class Mapa3 {
         {
             positions: this.checkPointPos1,
             cameraDirection: "NORMAL",
-            PlayerDirection: "NORMAL",
+            PlayerDirection: "ROTATED",
             gravityDown: false
         },
         {
@@ -98,6 +98,7 @@ class Mapa3 {
     mountain5: Phaser.GameObjects.Image;
     mountain6: Phaser.GameObjects.Image;
     UIItemToGrab: string = 'cristal1';
+
 
     cristal?: Floor;
     collected: Boolean = false;
@@ -268,7 +269,9 @@ class Mapa3 {
                         this.scene.canRot = true // medio hack, revisar lógica
                         this.scene.changeGravity(false, 1000, 2)
                         this.scene.rotateCam(false, 10)
-                        this.scene.checkPoint = 0
+                        if (this.cristal?.visible) {
+                            this.scene.checkPoint = 0
+                        }
                     },
                     () => true,
                     this.scene

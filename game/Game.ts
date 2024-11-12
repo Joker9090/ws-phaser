@@ -146,17 +146,17 @@ class Game extends Phaser.Scene {
   win() {
     if (this.canWin && this.monchi) {
       if (this.map?.nextScene) {
-      if (this.levelIs === 7){
-        const multiScene = new MultiScene("Game", { level: 4, lifes: 3 });
-        const scene = this.scene.add("MultiScene", multiScene, true);
-        this.scene.start("MultiScene").bringToTop("MultiScene");
-      } else {
+      // if (this.levelIs === 7){
+      //   const multiScene = new MultiScene("Game", { level: 4, lifes: 3 });
+      //   const scene = this.scene.add("MultiScene", multiScene, true);
+      //   this.scene.start("MultiScene").bringToTop("MultiScene");
+      // } else {
 
         const multiScene = new MultiScene("CinematographyMod", { keyname: this.map.nextScene, lifes: this.lifes ? this.lifes : 3,  loadKey: ["Postales"] });
         const scene = this.scene.add("MultiScene", multiScene, true);
         this.scene.start("MultiScene").bringToTop("MultiScene");
       }
-        }
+        // }
       else {
         const multiScene = new MultiScene("Game", { level: this.levelIs + 1, lifes: this.lifes ? this.lifes : 3 });
         const scene = this.scene.add("MultiScene", multiScene, true);

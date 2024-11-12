@@ -723,6 +723,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
       140,
       180
     );
+    const cloudsGroup = this.scene.add.group()
 
     const c1Config: AsteroidGeneratorConfig = {
       texture: "nube1p1",
@@ -732,6 +733,8 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
       direction: 0,
       velocity: 20,
       scale: 1,
+      group: cloudsGroup,
+
       depth: 99,
     };
     const c1 = new AsteroidGenerator(this.scene, c1Config);
@@ -745,14 +748,15 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
       direction: 1,
       velocity: 30,
       scale: 1,
+      group: cloudsGroup,
+
       depth: 99,
     };
     const c2 = new AsteroidGenerator(this.scene, c2Config);
     c2.start();
 
-    const mapObjects = this.movingFloor
-      .getChildren()
-      .concat(
+    const mapObjects = cloudsGroup.getChildren().concat(
+        this.movingFloor.getChildren(),
         this.movingFloorRot.getChildren(),
         this.fireballGroup.getChildren(),
         this.pisos.getChildren(),

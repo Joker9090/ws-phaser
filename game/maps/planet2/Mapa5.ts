@@ -842,6 +842,7 @@ class Mapa5 {
       140,
       180
     );
+    const cloudsGroup = this.scene.add.group()
 
     const c1Config: AsteroidGeneratorConfig = {
       texture: "nube1p1",
@@ -850,6 +851,7 @@ class Mapa5 {
       delayed: 100,
       direction: 0,
       velocity: 20,
+      group: cloudsGroup,
       scale: 1,
       depth: 99,
     };
@@ -862,6 +864,7 @@ class Mapa5 {
       y: 600,
       delayed: 100,
       direction: 1,
+      group: cloudsGroup,
       velocity: 30,
       scale: 1,
       depth: 99,
@@ -869,9 +872,9 @@ class Mapa5 {
     const c2 = new AsteroidGenerator(this.scene, c2Config);
     c2.start();
 
-    const mapObjects = this.movingFloor
-      .getChildren()
-      .concat(
+
+    const mapObjects = cloudsGroup.getChildren().concat(
+      this.movingFloor.getChildren(),
         this.movingFloorRot.getChildren(),
         this.fireballGroup.getChildren(),
         this.pisos.getChildren(),

@@ -60,6 +60,10 @@ class Mapa7 {
         x: 1700, //500
         y: 800, //800
     };
+    checkPoint2 = {
+      x: 1850, //500
+      y: 1200, //800
+  };
     loseConfig: loseConfigFromMapType = [
         {
             positions: this.startingPoint,
@@ -73,6 +77,12 @@ class Mapa7 {
             PlayerDirection: "ROTATED",
             gravityDown: false
         },
+        {
+          positions: this.checkPoint2,
+          cameraDirection: "NORMAL",
+          PlayerDirection: "NORMAL",
+          gravityDown: true
+      },
     ];
     nextScene: string | undefined = 'cine_2_movie_1';
 
@@ -399,12 +409,14 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
                 this.scene.physics.add.collider(
                     this.scene.monchi,
                     this.pisos2,
-                    () => {
+                    (player, floor) => {
                         if (this.scene.checkPoint === 0) {
-                        this.scene.changeGravity(true, 1000, 3)
+                        this.scene.changeGravity(true, 1000, 3);
+                        (floor as Floor).setTint(0xffffff);
                         this.scene.checkPoint = 1
-                    }
-
+                      } else if (this.scene.checkPoint === 1) {
+                        this.scene.checkPoint = 2
+                      }
                     },
                     () => true,
                     this.scene
@@ -415,9 +427,8 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
                     this.pisos3,
                     () => {
                         if (this.scene.checkPoint === 1) {
-                          this.scene.canRot = true
+                            this.scene.canRot = true
                             this.scene.rotateCam(true, 10);
-                            this.scene.checkPoint = 2
                         }
                     },
                     () => true,
@@ -592,7 +603,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         const p1 = new LargeFloorIsland(this.scene, p1Config, this.pisos);
 
         const p2Config: FloorConfig = {
-            pos: { x: 2200, y: 1350 },
+            pos: { x: 2300, y: 1350 },
             texture: "pSimple2p1",
             scale: { width: 0.7, height: 0.7 },
             width: 140,

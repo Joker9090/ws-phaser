@@ -146,15 +146,16 @@ class Game extends Phaser.Scene {
   win() {
     if (this.canWin && this.monchi) {
       if (this.map?.nextScene) {
-        if (this.levelIs === 7) {
-          const multiScene = new MultiScene("Game", { level: 4, lifes: 3 });
+      if (this.levelIs === 7){
+        const multiScene = new MultiScene("Game", { level: 4, lifes: 3 });
         const scene = this.scene.add("MultiScene", multiScene, true);
         this.scene.start("MultiScene").bringToTop("MultiScene");
-        } else {
-          const multiScene = new MultiScene("CinematographyMod", { keyname: this.map.nextScene, lifes: this.lifes ? this.lifes : 3,  loadKey: ["Postales"] });
-          const scene = this.scene.add("MultiScene", multiScene, true);
-          this.scene.start("MultiScene").bringToTop("MultiScene");
-        }
+      } else {
+
+        const multiScene = new MultiScene("CinematographyMod", { keyname: this.map.nextScene, lifes: this.lifes ? this.lifes : 3,  loadKey: ["Postales"] });
+        const scene = this.scene.add("MultiScene", multiScene, true);
+        this.scene.start("MultiScene").bringToTop("MultiScene");
+      }
         }
       else {
         const multiScene = new MultiScene("Game", { level: this.levelIs + 1, lifes: this.lifes ? this.lifes : 3 });
@@ -188,6 +189,8 @@ class Game extends Phaser.Scene {
     if (this.map) {
       //@ts-ignore
       const config = this.map.loseConfig[this.checkPoint];
+      console.log(config, "config")
+      console.log(this.checkPoint, "checkpoint")
       if (this.lifes) {
         this.lifes -= 1;
         if (this.lifes === 0) {

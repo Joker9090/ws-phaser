@@ -638,8 +638,8 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
 
       const p4Config: FloorConfig = {
         texture: "pSimple1p3",
-        pos: { x: 1900, y: 1200 },
-        scale: { width: 1, height: 0.7 },
+        pos: { x: 1950, y: 1200 },
+        scale: { width: 0.8, height: 0.7 },
         width: 170,
         height: 50,
       };
@@ -658,7 +658,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         paused: false,
         yoyo: true,
         repeat: -1,
-        x: "-=300",
+        x: "-=250",
       },
       };
 
@@ -709,7 +709,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
           paused: false,
           yoyo: true,
           repeat: -1,
-          x: "-=200",
+          x: "-=130",
         },
       };
 
@@ -718,7 +718,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
 
       const p11Config: FloorConfig = {
         texture: "pSimple1p3",
-        pos: { x: 1200, y: 1100 },
+        pos: { x: 1100, y: 1100 },
         scale: { width: 2, height: 0.7 },
         width: 170,
         height: 50,
@@ -732,7 +732,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         //Portal, Coin and Asteroids
         const portalConfig: FloorConfig = {
             texture: "cuevap1",
-            pos: { x: 1150, y: 1190 },
+            pos: { x: 1050, y: 1190 },
             width: 100,
             height: 100,
             inverted:true
@@ -751,6 +751,51 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         };
 
         this.cristal = new Floor(this.scene, coinConfig, this.coin).setBodySize(140, 180);
+
+
+        const fireballConfig: FloorConfig = {
+          spriteSheet: "meteoritop3",
+          texture: "meteorito",
+          pos: { x: 1400, y: 0 }, // 500 1580
+          width: 100,
+          height: 100,
+          tween: {
+            duration: 4000,
+            repeat: -1,
+            y: "+=2500",
+          },
+          frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+      };
+      const fireball = new Floor(this.scene, fireballConfig, this.fireballGroup).setScale(0.5)    
+
+      const fireball2Config: FloorConfig = {
+        spriteSheet: "meteoritop3",
+        texture: "meteorito",
+        pos: { x: 1850, y: 0 }, // 500 1580
+        width: 100,
+        height: 100,
+        tween: {
+          duration: 4000,
+          repeat: -1,
+          y: "+=2500",
+        },
+        frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+    };
+    const fireball2 = new Floor(this.scene, fireball2Config, this.fireballGroup).setScale(0.5) 
+    const fireball3Config: FloorConfig = {
+      spriteSheet: "meteoritop3",
+      texture: "meteorito",
+      pos: { x: 2650, y: 0 }, // 500 1580
+      width: 100,
+      height: 100,
+      tween: {
+        duration: 4000,
+        repeat: -1,
+        y: "+=2500",
+      },
+      frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+  };
+  const fireball3 = new Floor(this.scene, fireball3Config, this.fireballGroup).setScale(0.5) 
 
         const c1Config: AsteroidGeneratorConfig = {
             texture: "nube1p1",

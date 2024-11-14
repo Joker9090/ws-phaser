@@ -606,7 +606,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
           rotated: false,
       };
 
-      const p2 = new Floor(this.scene, p2Config, this.pisos3);
+      const p2 = new Floor(this.scene, p2Config, this.pisos3).setTint(Phaser.Display.Color.GetColor(255, 101, 255));
 
       const p7Config: FloorConfig = {
         texture: "pSimple1p3",
@@ -616,7 +616,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         height: 50,
       };
 
-      const p7 = new Floor(this.scene, p7Config, this.pisos2);
+      const p7 = new Floor(this.scene, p7Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
 
       const p3Config: FloorConfig = {
         texture: "pSimple1p3",
@@ -644,7 +644,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         height: 50,
       };
 
-    const p4 = new Floor(this.scene, p4Config, this.pisos3);
+    const p4 = new Floor(this.scene, p4Config, this.pisos3).setTint(Phaser.Display.Color.GetColor(255, 101, 255));
 
       const p5Config: FloorConfig = {
        texture: "pSimple1p3",
@@ -672,7 +672,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         height: 50,
       };
 
-      const p6 = new Floor(this.scene, p6Config, this.pisos2);
+      const p6 = new Floor(this.scene, p6Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
 
       const p8Config: FloorConfig = {
         texture: "pSimple1p3",
@@ -695,7 +695,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
        
       };
 
-      const p9 = new Floor(this.scene, p9Config, this.pisos3);
+      const p9 = new Floor(this.scene, p9Config, this.pisos3).setTint(Phaser.Display.Color.GetColor(255, 101, 255));
 
       const p10Config: FloorConfig = {
         texture: "pSimple1p3",
@@ -719,7 +719,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
       const p11Config: FloorConfig = {
         texture: "pSimple1p3",
         pos: { x: 1200, y: 1100 },
-        scale: { width: 1.5, height: 0.7 },
+        scale: { width: 2, height: 0.7 },
         width: 170,
         height: 50,
         inverted:true,
@@ -732,17 +732,18 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         //Portal, Coin and Asteroids
         const portalConfig: FloorConfig = {
             texture: "cuevap1",
-            pos: { x: 3100, y: 1220 },
+            pos: { x: 1150, y: 1190 },
             width: 100,
             height: 100,
+            inverted:true
         };
-        const port = new Floor(this.scene, portalConfig, this.portal).setDepth(99).setScale(0.7)
+        const port = new Floor(this.scene, portalConfig, this.portal).setDepth(99).setScale(0.5)
 
         this.endPortal = port
 
         const coinConfig: FloorConfig = {
             texture: "comida",
-            pos: { x: 1300, y: 750 },
+            pos: { x: 2400, y: 1150 },
             scale: { width: 0.5, height: 0.5 },
             width: 10,
             height: 18,

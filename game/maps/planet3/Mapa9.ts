@@ -49,6 +49,8 @@ class Mapa9 {
     movingFloor?: Phaser.Physics.Arcade.Group;
     movingFloorRot?: Phaser.Physics.Arcade.Group;
 
+    t1?:Phaser.Tweens.Tween;
+    p3?:Floor;
     amountLifes: number = 0;
     sideGrav: boolean = false;
     goingBack: boolean = false;
@@ -60,7 +62,7 @@ class Mapa9 {
     };
     checkPoint1 = {
         x: 2800, //500
-        y: 800, //800
+        y: 900, //800
     };
     loseConfig: loseConfigFromMapType = [
         {
@@ -427,7 +429,15 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
                 this.scene.physics.add.overlap(
                     this.scene.monchi,
                     this.coin,
-                    () => this.scene.touchItem("coin"),
+                    () => {
+                      this.scene.touchItem("coin")
+                      this.scene.checkPoint = 1
+                      if(this.t1){
+                        this.t1.play();
+                        this.p3?.setVelocityY(150)
+                        this.p3?.setY(850)
+                      }
+                    },
                     () => true,
                     this.scene
                 );
@@ -536,8 +546,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
                       this.scene.monchi,
                       this.pisos6,
                       () => {
-                        this.scene.checkPoint = 1
-                        console.log("checkpoint", this.scene.checkPoint)
+                        
                       },
                       () => true,
                       this.scene
@@ -564,7 +573,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
                 );
         }
     }
-
+  
     createMap(data: { level: number; lifes: number }) {
       
       this.scene.monchi?.setFlipX(true)
@@ -619,22 +628,23 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
       const p7 = new Floor(this.scene, p7Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
 
       const p3Config: FloorConfig = {
-        texture: "pSimple1p3",
+        texture: "pDoblep3",
         pos: { x: 1600, y: 1200 },
         scale: { width: 1.5, height: 0.7 },
         width: 170,
         height: 50,
-        tween: {
-           duration: 4500,
-          paused: false,
-            yoyo: true,
-            repeat: -1,
-            y: "-=500",
-          },
       };
-
-      const p3 = new Floor(this.scene, p3Config, this.movingFloor);
-
+    
+      this.p3 = new Floor(this.scene, p3Config, this.pisos);
+      this.t1 = this.scene.tweens.add({
+        duration: 4000,
+        paused: true,
+        yoyo: true,
+        repeat: -1,
+        targets:this.p3.body?.velocity,
+        y: "-=300",
+      })
+      
 
       const p4Config: FloorConfig = {
         texture: "pSimple1p3",
@@ -648,22 +658,28 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
 
       const p5Config: FloorConfig = {
        texture: "pSimple1p3",
-       pos: { x: 2500, y: 1200 },
+       pos: { x: 2350, y: 1200 },
        scale: { width: 1.3, height: 0.7 },
        width: 170,
        height: 50,
-       friction:100,
-       tween: {
+       /*tween: {
         duration: 4500,
         paused: false,
         yoyo: true,
         repeat: -1,
         x: "-=250",
-      },
+       },*/
       };
 
-      const p5 = new Floor(this.scene, p5Config, this.movingFloor);
-
+      const p5 = new Floor(this.scene, p5Config, this.movingFloor).setVelocityX(150);
+      this.scene.tweens.add({
+       duration: 4500,
+        paused: false,
+        yoyo: true,
+        repeat: -1,
+        targets:p5.body?.velocity,
+        x: "-=300",
+      })
       const p6Config: FloorConfig = {
         texture: "pSimple1p3",
         pos: { x: 2800, y: 1200 },
@@ -699,22 +715,23 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
 
       const p10Config: FloorConfig = {
         texture: "pSimple1p3",
-        pos: { x: 2100, y: 800 },
+        pos: { x: 2050, y: 800 },
         scale: { width: 1, height: 0.7 },
         width: 170,
         height: 50,
         inverted:true,
-        tween: {
-          duration: 2500,
-          paused: false,
-          yoyo: true,
-          repeat: -1,
-          x: "-=130",
-        },
       };
+     
 
-      const p10 = new Floor(this.scene, p10Config, this.pisos);
-
+      const p10 = new Floor(this.scene, p10Config, this.pisos).setVelocityX(100);
+      this.scene.tweens.add({
+        duration: 4500,
+        paused: false,
+        yoyo: true,
+        repeat: -1,
+        targets:p10.body?.velocity,
+        x: "-=200",
+      })
 
       const p11Config: FloorConfig = {
         texture: "pSimple1p3",
@@ -743,7 +760,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
 
         const coinConfig: FloorConfig = {
             texture: "comida",
-            pos: { x: 2400, y: 1150 },
+            pos: { x: 2800, y: 850 },
             scale: { width: 0.5, height: 0.5 },
             width: 10,
             height: 18,

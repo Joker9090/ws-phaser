@@ -331,6 +331,7 @@ const loadAssets = {
       ],
       ["image", "pSimple1p3", "/game/planeta3/pSimple1.png"],
       ["image", "pSimple2p3", "/game/planeta3/pSimple2.png"],
+      ["image", "pDoblep3", "/game/planeta3/pDoblep3.png"],
       ["image", "longFloorLeftp3", "/game/planeta3/longFloorLeft.png"],
       ["image", "longFloorRightp3", "/game/planeta3/longFloorRight.png"],
       ["image", "longFloorMiddlep3", "/game/planeta3/longFloorMiddle.png"],

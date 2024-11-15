@@ -56,6 +56,10 @@ class Mapa9 {
     goingBack: boolean = false;
     pisoGoBack?: Phaser.GameObjects.Sprite;
     monchi?: Player;
+    EmptyCoin?: Phaser.Physics.Arcade.Group;
+    EmptyCristal?: Floor;
+    auraImage?:Floor;
+
     startingPoint = {
         x: 1000, //500
         y: 1000, //800
@@ -591,6 +595,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         this.amountLifes = data.lifes;
         this.coin = this.scene.physics.add.group({ allowGravity: false });
         this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
+        this.EmptyCoin = this.scene.physics.add.group({allowGravity:false}).setVisible(false)
         this.portal = this.scene.physics.add.group({ allowGravity: false });
 
 
@@ -759,16 +764,47 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         this.endPortal = port
 
         const coinConfig: FloorConfig = {
-            texture: "comida",
-            pos: { x: 2800, y: 850 },
+          texture: "plantap3",
+          pos: {  x: 2800, y: 870},
+          scale: { width: 0.5, height: 0.5 },
+          width: 10,
+          height: 18,
+          fix: 10,
+          inverted:true
+        };
+        this.cristal = new Floor(this.scene, coinConfig, this.coin).setBodySize(140, 180);
+
+        const emptyCoinConfig: FloorConfig = {
+            texture: "plantaVaciap3",
+            pos: {  x: 2800, y: 870},
             scale: { width: 0.5, height: 0.5 },
             width: 10,
             height: 18,
             fix: 10,
+            inverted:true
+
         };
+        this.EmptyCristal = new Floor(this.scene, emptyCoinConfig, this.EmptyCoin).setBodySize(140, 180);
+        
+        const auraConfig: FloorConfig = {
+            texture: "brilloPlantap3",
+            pos: {  x: 2800, y: 870},
+            scale: { width: 0.5, height: 0.5 },
+            width: 10,
+            height: 18,
+            fix: 10,
+          inverted:true
 
-        this.cristal = new Floor(this.scene, coinConfig, this.coin).setBodySize(140, 180);
-
+        };
+        this.auraImage = new Floor(this.scene, auraConfig, this.aura).setBodySize(140, 180);
+        this.scene.tweens.add({
+          alpha: { from: 1, to: 0.2 }, 
+          duration: 1500, 
+          yoyo: true, 
+          repeat: -1, 
+          ease: 'Sine.easeInOut', 
+          targets: this.auraImage,
+      })
 
         const fireballConfig: FloorConfig = {
           spriteSheet: "meteoritop3",

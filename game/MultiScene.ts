@@ -32,13 +32,11 @@ export default class MultiScene extends Phaser.Scene {
       this.assetLoaderClass = new AssetsLoader(this, ["BaseLoad"]);
       this.assetLoaderClass.runPreload(() => {
         if(this.scenekey) {
-          console.log("ENTRO ACA 1", this.sceneData)
           this.makeTransition(this.scenekey, this.sceneData ?? undefined);
         } else {
-          console.log("ENTRO ACA 2")
-          // intro
-          this.makeTransition("CinematographyMod", { keyname: "cine_intro_1", loadKey: ["Cinemato2", "Cinemato1", "Cinemato0"] });
-          // this.makeTransition("Game", { level: 6, lifes: 3, loadKey: ["GamePlay1", "GamePlay2"] });
+          // this.makeTransition("CinematographyMod", { keyname: "cine_3_movie_1", loadKey: ["Cinemato3"] });
+          // this.makeTransition("Game", { level: 999, lifes: 3, loadKey: ["GamePlay1", "GamePlay2"] });
+          this.makeTransition("MenuScene", undefined);
         }
       });
   }
@@ -61,38 +59,6 @@ export default class MultiScene extends Phaser.Scene {
       });
     }
   }
-
-  // create(this: MultiScene, data: { text: string }) {
-  //   this.scenekey = data.text;
-  //   // /* Audio */
-  //   // this.getMasterManagerScene = this.game.scene.getScene(
-  //   //   "MasterManager"
-  //   // ) as MasterManager;
-  //   // if (!this.getMasterManagerScene.scene.isActive())
-  //   //   this.scene.launch("MasterManager").sendToBack();
-
-  //   switch (this.scenekey) {
-  //     case "win":
-  //       this.activeScene = new WonClass(this);
-  //       break;
-
-  //     case "lose":
-  //       this.activeScene = new LoseClass(this);
-  //       break;
-
-  //     case "menu":
-  //       this.activeScene = new MenuClass(this);
-  //       break;
-
-  //     case "levels":
-  //       this.activeScene = new LevelClass(this);
-  //       break;
-
-  //     case "credits":
-  //       this.activeScene = new CreditsClass(this);
-  //       break;
-  //   }
-  // }
 
   update() {
     if (this.activeScene) this.activeScene.update();

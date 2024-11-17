@@ -18,9 +18,10 @@ import MasterManager from "./MasterManager";
 import BetweenScenes, { BetweenScenesStatus } from "./BetweenScenes";
 import { GamePlayDataType } from "./Types";
 import MultiScene from "./MultiScene";
+import Sandbox from "./maps/sandbox/sandbox";
 
 export type PossibleMaps = p1Mapa0 | p1Mapa1 | p1Mapa2 | p1Mapa3 |
-  p2Mapa1 | p2Mapa2 | p2Mapa3 | p2Mapa4 | p3Mapa1
+  p2Mapa1 | p2Mapa2 | p2Mapa3 | p2Mapa4 | p3Mapa1 | Sandbox
 // Scene in class
 export const keyCodesAWSD = {
   w: Phaser.Input.Keyboard.KeyCodes.W,
@@ -276,6 +277,10 @@ class Game extends Phaser.Scene {
     this.lifes = data.lifes;
     /* CHOSE LEVEL, LIFES AND AUDIO */
     switch (data.level) {
+      case 999:
+        this.map = new Sandbox(this, this.monchi!);
+        // this.loopMusic = "planet0LoopMusic";
+        break;
       case 0:
         this.map = new p1Mapa0(this, this.monchi!);
         this.loopMusic = "planet0LoopMusic";

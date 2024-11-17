@@ -28,6 +28,11 @@ import cine2Movie3 from "./Cinemato2/cine2Movie3";
 import cine2Movie4 from "./Cinemato2/cine2Movie4";
 import cine2Movie5 from "./Cinemato2/cine2Movie5";
 import cine2Movie6 from "./Cinemato2/cine2Movie6";
+import cine3Movie1 from "./Cinemato3/cine3Movie1";
+import cine3Movie2 from "./Cinemato3/cine3Movie2";
+import cine3Movie3 from "./Cinemato3/cine3Movie3";
+import cine3Movie4 from "./Cinemato3/cine3Movie4";
+import cine3Movie5 from "./Cinemato3/cine3Movie5";
 import MultiScene from "../MultiScene";
 
 class CinematographyModular extends Phaser.Scene {
@@ -58,9 +63,9 @@ class CinematographyModular extends Phaser.Scene {
       0xffffff,
       "#ffffff66",
       () => {
-          const multiScene = new MultiScene("Game", { level: this.nextLevel ? this.nextLevel : 0, lifes: lifes ? lifes : 3, loadKey: ['GamePlay1'] });
-          const scene = this.scene.add("MultiScene", multiScene, true);
-          this.scene.start("MultiScene").bringToTop("MultiScene");
+        const multiScene = new MultiScene("Game", { level: this.nextLevel ? this.nextLevel : 0, lifes: lifes ? lifes : 3, loadKey: ['GamePlay1'] });
+        const scene = this.scene.add("MultiScene", multiScene, true);
+        this.scene.start("MultiScene").bringToTop("MultiScene");
       },
       isPostal
     ).setDepth(999999999)
@@ -113,62 +118,82 @@ class CinematographyModular extends Phaser.Scene {
         break;
       case "cine_movie_1":
         this.playingCine = new cineMovie1(this);
-        // this.nextLevel = 0
+        this.nextLevel = 4
         break;
       case "cine_movie_2":
         this.playingCine = new cineMovie2(this);
-        // this.nextLevel = 0
+        this.nextLevel = 4
         break;
       case "cine_movie_3":
         this.playingCine = new cineMovie3(this);
-        // this.nextLevel = 0
+        this.nextLevel = 4
         break;
       case "cine_movie_4":
         this.playingCine = new cineMovie4(this);
-        // this.nextLevel = 0
+        this.nextLevel = 4
         break;
       case "cine_movie_5":
         this.playingCine = new cineMovie5(this);
-        // this.nextLevel = 0
+        this.nextLevel = 4
         break;
       case "cine_movie_6":
         this.playingCine = new cineMovie6(this);
-        // this.nextLevel = 0
+        this.nextLevel = 4
         break;
       case "cine_movie_7":
         this.playingCine = new cineMovie7(this);
-        // this.nextLevel = 0
+        this.nextLevel = 4
         break;
       case "cine_movie_8":
         this.playingCine = new cineMovie8(this);
-        // this.nextLevel = 0
+        this.nextLevel = 4
         break;
       case "cine_movie_9":
         this.playingCine = new cineMovie9(this);
-        // this.nextLevel = 0
+        this.nextLevel = 4
         break;
       case "cine_2_movie_1":
         this.playingCine = new cine2Movie1(this);
-        // this.nextLevel = 0
+        // this.nextLevel = 8
         break;
       case "cine_2_movie_2":
         this.playingCine = new cine2Movie2(this);
-        // this.nextLevel = 0
+        // this.nextLevel = 8
         break;
       case "cine_2_movie_3":
         this.playingCine = new cine2Movie3(this);
-        // this.nextLevel = 0
+        // this.nextLevel = 8
         break;
       case "cine_2_movie_4":
         this.playingCine = new cine2Movie4(this);
-        // this.nextLevel = 0
+        // this.nextLevel = 8
         break;
       case "cine_2_movie_5":
         this.playingCine = new cine2Movie5(this);
-        // this.nextLevel = 0
+        // this.nextLevel = 8
         break;
       case "cine_2_movie_6":
         this.playingCine = new cine2Movie6(this);
+        // this.nextLevel = 8
+        break;
+      case "cine_3_movie_1":
+        this.playingCine = new cine3Movie1(this);
+        // this.nextLevel = 0
+        break;
+      case "cine_3_movie_2":
+        this.playingCine = new cine3Movie2(this);
+        // this.nextLevel = 0
+        break;
+      case "cine_3_movie_3":
+        this.playingCine = new cine3Movie3(this);
+        // this.nextLevel = 0
+        break;
+      case "cine_3_movie_4":
+        this.playingCine = new cine3Movie4(this);
+        // this.nextLevel = 0
+        break;
+      case "cine_3_movie_5":
+        this.playingCine = new cine3Movie5(this);
         // this.nextLevel = 0
         break;
       case "postal1_planeta1":

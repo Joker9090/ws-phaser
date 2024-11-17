@@ -83,7 +83,7 @@ export default class BetweenScenesScene extends Phaser.Scene {
   onTurnOnComplete() {
   
     // start PreLoadScene to load the next scene
-    const preloadScene = new PreLoadScene(this.newSceneWith.loadKey, () => {
+    const preloadScene = new PreLoadScene(this.newSceneWith && this.newSceneWith.loadKey ? this.newSceneWith.loadKey : undefined, () => {
       this.loadNewScene()
       this.turnOff()
     });

@@ -12,6 +12,7 @@ export type SceneKeys =
   | "Cinemato0"
   | "Cinemato1"
   | "Cinemato2"
+  | "Cinemato3"
 
 export type LoadTypes = "image" | "spritesheet" | "audio" | "svg";
 
@@ -619,6 +620,44 @@ const loadAssets = {
       ["image", "nubesScene6", "/movies/cinemato2/scene6/nubesScene6.png"],
       ["image", "opacityScene6", "/movies/cinemato2/scene6/opacityScene6.png"],
       ["image", "shipScene6", "/movies/cinemato2/scene6/shipScene6.png"],
+    ]
+  },
+  Cinemato3: {
+    assets: [
+      // BASE
+      [
+        "audio",
+        "key01",
+        "/sounds/bs15.mp3",
+      ],
+      [
+        "audio",
+        "key02",
+        "/sounds/bs13.mp3",
+      ],
+      // SCENE 1
+      ["image", "backgroundC3S1", "/movies/cinemato3/scene1/backgroundC3S1.png"],
+      ["image", "bubblesC3S1", "/movies/cinemato3/scene1/bubblesC3S1.png"],
+      ["image", "cloud1C3S1", "/movies/cinemato3/scene1/cloud1C3S1.png"],
+      ["image", "cloud2C3S1", "/movies/cinemato3/scene1/cloud2C3S1.png"],
+      ["image", "shipAndAstro", "/movies/cinemato3/scene1/shipAndAstro.png"],
+      ["image", "shipLightsC3S1", "/movies/cinemato3/scene1/shipLightsC3S1.png"],
+      ["image", "starsC3S1", "/movies/cinemato3/scene1/starsC3S1.png"],
+      ["image", "treeFrontC3S1", "/movies/cinemato3/scene1/treeFrontC3S1.png"],
+      // SCENE 2
+      ["image", "backgroundC3S2", "/movies/cinemato3/scene2/backgroundC3S2.png"],
+      // SCENE 3
+      ["image", "panelC3S3", "/movies/cinemato3/scene3/panelC3S3.png"],
+      ["image", "soundBarFullC3S3", "/movies/cinemato3/scene3/soundBarFullC3S3.png"],
+      ["image", "soundBarOpacityC3S3", "/movies/cinemato3/scene3/soundBarOpacityC3S3.png"],
+      ["image", "soundBarSmallC3S3", "/movies/cinemato3/scene3/soundBarSmallC3S3.png"],
+      // SCENE 4
+      ["image", "astroC3S4", "/movies/cinemato3/scene4/astroC3S4.png"],
+      ["image", "background1C3S4", "/movies/cinemato3/scene4/background1C3S4.png"],
+      ["image", "background2C3S4", "/movies/cinemato3/scene4/background2C3S4.png"],
+      ["image", "shipC3S4", "/movies/cinemato3/scene4/shipC3S4.png"],
+      // SCENE 5
+      ["image", "backgroundC3S5", "/movies/cinemato3/scene5/backgroundC3S5.png"],
     ]
   }
 };

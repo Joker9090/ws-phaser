@@ -8,9 +8,9 @@ export enum BetweenScenesStatus {
 }
 export default class PreLoadScene extends Phaser.Scene {
   callback: Function
-  keyLoad: SceneKeys[]
+  keyLoad: SceneKeys[] | undefined
   
-  constructor(keyLoad: SceneKeys[], callback: Function) {
+  constructor(keyLoad: SceneKeys[] | undefined, callback: Function) {
     super({ key: "PreLoadScene" });
     this.keyLoad = keyLoad
     this.callback = callback

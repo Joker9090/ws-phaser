@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import Game from "../Game";
 
 export type FloorTween =
   | Phaser.Tweens.Tween
@@ -10,6 +11,16 @@ export type FloorConfig = {
   width?: number;
   height?: number;
   fix?: number;
+  animation?: {
+    xAxis?: {
+      xDistance: number;
+      xVel: number
+    }
+    yAxis?: {
+      yDistance: number;
+      yVel: number
+    }
+  }
   pos: {
     x: number;
     y: number;
@@ -29,11 +40,18 @@ export type FloorConfig = {
 // Scene in class
 class Floor extends Phaser.Physics.Arcade.Sprite {
   isJumping = false;
-  scene: Phaser.Scene;
+  scene: Game;
   hasEvent?: string;
   group: Phaser.Physics.Arcade.Group;
+  animState: {
+    x: 'start' | 'reverse'
+    y: 'start' | 'reverse'
+  } = {
+    x: 'start',
+    y: 'start'
+  }
   constructor(
-    scene: Phaser.Scene,
+    scene: Game,
     config: FloorConfig,
     group: Phaser.Physics.Arcade.Group,
     frame?: string | number | undefined
@@ -110,9 +128,68 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
       }
     }
 
-
+    if (config.animation) {
+      if (config.animation.xAxis) {
+        this.setVelocityX(config.animation.xAxis.xVel);
+      }
+      if (config.animation.yAxis) {
+        this.setVelocityY(config.animation.yAxis.yVel);
+      }
+      
+      // on scene update run animation with config
+      scene.events.on("update", () => {
+        this.animation(config)
+      })
+      // remove listener if scene is stop
+      scene.events.on("shutdown", () => {
+        scene.events.off("update");
+      })
+    }
   }
 
-}
+  animation = (config: FloorConfig) => {
+    if (config.animation) {
+      if (config.animation.xAxis) {
+        if (this.x >= config.pos.x + config.animation.xAxis.xDistance / 2 && this.animState.x === 'start') {
+          this.setVelocityX(-config.animation.xAxis.xVel);
+          if (config.animation.yAxis) {
+            if (this.scene.monchi && this.scene.monchi.body?.touching.down){
+              this.scene.monchi.setVelocityY(-config.animation.yAxis.yVel);
+            }
+            this.setVelocityY(-config.animation.yAxis.yVel);
+          }
+          this.animState.x = 'reverse'
+        } else if (this.x <= config.pos.x - config.animation.xAxis.xDistance / 2 && this.animState.x === 'reverse') {
+          this.setVelocityX(config.animation.xAxis.xVel);
+          if (config.animation.yAxis) {
+            if (this.scene.monchi && this.scene.monchi.body?.touching.down){
+              this.scene.monchi.setVelocityY(config.animation.yAxis.yVel);
+            }
+            this.setVelocityY(config.animation.yAxis.yVel);
+          }
+          this.animState.x = 'start'
+        } 
+      } else if (config.animation.yAxis) {
+        if (this.y >= config.pos.y + config.animation.yAxis.yDistance / 2 && this.animState.y === 'start') {
+          this.setVelocityY(-config.animation.yAxis.yVel);
+          if (this.scene.monchi && this.scene.monchi.body?.touching.down){
+            this.scene.monchi.setVelocityY(-config.animation.yAxis.yVel);
+          }
+          this.animState.y = 'reverse'
+        } else if (this.y <= config.pos.y - config.animation.yAxis.yDistance / 2 && this.animState.y === 'reverse') {
+          this.setVelocityY(config.animation.yAxis.yVel);
+          if (this.scene.monchi && this.scene.monchi.body?.touching.down){
+            this.scene.monchi.setVelocityY(config.animation.yAxis.yVel);
+          }
+          this.animState.y = 'start'
+        }
+      }
+    }
+  }
 
+  // update() {
+  //   this.animation()
+  // }
+
+}
 export default Floor;

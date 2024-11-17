@@ -23,6 +23,7 @@ export default function Home() {
        
        import("@/game/movies/Cinematography-modular"),
       import("@/game/MasterManager"),
+      import("@/game/Menu"),
 
       import("@/game/Game"),
       import("@/game/BetweenScenes"),

@@ -23,6 +23,27 @@ const loadAssets = {
       ["image", "block", "/game/50x50.png"],
       ["svg", "bordeGlow", "/assets/textBox/bordeGlow.svg", { scale: 7 }],
       ["svg", "fondoDegrade", "/assets/textBox/fondoDegrade.svg", { scale: 7 }],
+      // menu credits
+      ["image", "backButton", "/menu/credits/backButton.png"],
+      ["image", "credits_barto", "/menu/credits/credits_barto.png"],
+      ["image", "credits_clari", "/menu/credits/credits_clari.png"],
+      ["image", "credits_hache", "/menu/credits/credits_hache.png"],
+      ["image", "credits_jeimi", "/menu/credits/credits_jeimi.png"],
+      ["image", "credits_joaco", "/menu/credits/credits_joaco.png"],
+      ["image", "credits_lu", "/menu/credits/credits_lu.png"],
+      ["image", "credits_mai", "/menu/credits/credits_mai.png"],
+      ["image", "credits_nano", "/menu/credits/credits_nano.png"],
+      ["image", "creditsTitle", "/menu/credits/creditsTitle.png"],
+      // menu credits
+      ["image", "creditsButton", "/menu/initial/creditsButton.png"],
+      ["image", "gameTitle", "/menu/initial/gameTitle.png"],
+      ["image", "logoNoswar", "/menu/initial/logoNoswar.png"],
+      ["image", "playButton", "/menu/initial/playButton.png"],
+      ["image", "scoreButton", "/menu/initial/scoreButton.png"],
+      ["image", "settingsButton", "/menu/initial/settingsButton.png"],
+      // menu play
+      ["image", "enterCodeButton", "/menu/play/enterCodeButton.png"],
+      ["image", "newGameButton", "/menu/play/newGameButton.png"],
     ]
 
   },

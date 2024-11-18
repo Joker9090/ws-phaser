@@ -21,3 +21,20 @@ export type CinematoDataType = {
   lifes?: number
   loadKey?: SceneKeys[]
 }
+
+export type ContainerMenuConfigType = {
+  x: number,
+  y: number,
+  panToCredits?: {
+    x: number,
+    y:number
+  },
+  panToInitial?: {
+    x: number,
+    y:number
+  },
+  panToPlay?: {
+    x: number,
+    y:number
+  },
+}

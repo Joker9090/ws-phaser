@@ -113,7 +113,7 @@ class Mapa10 {
 originalPositionsBackgroundsMiddle: {x: number, y:number}[]
 originalPositionsBackgroundsFront: {x: number, y:number}[]
 
-    UIItemToGrab: string = 'comida';
+    UIItemToGrab: string = 'uiItemp3';
 
     cristal?: Floor;
     collected: Boolean = false;

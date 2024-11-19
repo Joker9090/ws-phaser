@@ -832,7 +832,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
       const fireball2Config: FloorConfig = {
         spriteSheet: "meteoritop3",
         texture: "meteorito",
-        pos: { x: 1700, y: 2500 }, // 500 1580
+        pos: { x: 1700, y: 2000 }, // 500 1580
         width: 100,
         height: 100,
         inverted:true,
@@ -863,7 +863,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
   const fireball4Config: FloorConfig = {
     spriteSheet: "meteoritop3",
     texture: "meteorito",
-    pos: { x: 2400, y: 2500 }, // 500 1580
+    pos: { x: 2400, y: 2000 }, // 500 1580
     width: 100,
     inverted:true,
     height: 100,

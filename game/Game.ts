@@ -11,7 +11,7 @@ import p2Mapa3 from "./maps/planet2/Mapa6";
 import p2Mapa4 from "./maps/planet2/Mapa7";
 //MAPAS PLANETA 3
 import p3Mapa1 from "./maps/planet3/Mapa8"
-// OTRAS COSAS
+// OTRAS COSAS 
 import Player from "./assets/Player";
 import UIClass from "./assets/UIClass";
 import MasterManager from "./MasterManager";

@@ -329,6 +329,12 @@ const loadAssets = {
         "/game/planeta3/meteoritop3.png",
         { frameWidth: 98, frameHeight: 210 },
       ],
+      [
+        "svg",
+        "p3backgroundGradiant",
+        "/game/planeta3/bgGradiant.svg",
+        { scale: 1.4 }
+      ],
       ["image", "pSimple1p3", "/game/planeta3/pSimple1.png"],
       ["image", "pSimple2p3", "/game/planeta3/pSimple2.png"],
       ["image", "pDoblep3", "/game/planeta3/pDoblep3.png"],
@@ -352,12 +358,7 @@ const loadAssets = {
       ["image", "planta2p3", "/game/planeta3/planta2p3.png"],
       ["image", "burbujap3", "/game/planeta3/burbuja.png"],
 
-      [
-        "svg",
-        "p3backgroundGradiant",
-        "/game/planeta3/bgGradiant.svg",
-        { scale: 1.4 }
-      ],
+      
 
 
 
@@ -780,7 +781,7 @@ class AssetsLoader {
             //keyname: "cine_movie_1",
             // keyname: "postal2_planeta1",
          // });
-           this.scene.makeTransition("Game", { level: 9, lifes: 3 });
+           this.scene.makeTransition("Game", { level: 10, lifes: 3 });
         }
 
         // get center of the screen

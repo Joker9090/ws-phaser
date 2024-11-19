@@ -12,6 +12,7 @@ import p2Mapa4 from "./maps/planet2/Mapa7";
 //MAPAS PLANETA 3
 import p3Mapa1 from "./maps/planet3/Mapa8"
 import p3Mapa2 from "./maps/planet3/Mapa9"
+import p3Mapa3 from "./maps/planet3/Mapa10"
 // OTRAS COSAS
 import Player from "./assets/Player";
 import UIClass from "./assets/UIClass";
@@ -19,7 +20,7 @@ import MasterManager from "./MasterManager";
 import BetweenScenes, { BetweenScenesStatus } from "./BetweenScenes";
 
 export type PossibleMaps = p1Mapa0 | p1Mapa1 | p1Mapa2 | p1Mapa3 |
-  p2Mapa1 | p2Mapa2 | p2Mapa3 | p2Mapa4 | p3Mapa1 | p3Mapa2
+  p2Mapa1 | p2Mapa2 | p2Mapa3 | p2Mapa4 | p3Mapa1 | p3Mapa2 | p3Mapa3
 // Scene in class
 export const keyCodesAWSD = {
   w: Phaser.Input.Keyboard.KeyCodes.W,
@@ -282,7 +283,7 @@ class Game extends Phaser.Scene {
       s: Phaser.Input.Keyboard.KeyCodes.S,
       d: Phaser.Input.Keyboard.KeyCodes.D,
     });
-     this.cameras.main.zoom = 1
+     this.cameras.main.zoom = 0.5
     // CREATIVE
 
     this.checkPoint = 0;
@@ -328,6 +329,10 @@ class Game extends Phaser.Scene {
         break
       case 9:
           this.map = new p3Mapa2(this, this.monchi!);
+          this.loopMusic = "planet1LoopMusic";
+          break
+      case 10:
+          this.map = new p3Mapa3(this, this.monchi!);
           this.loopMusic = "planet1LoopMusic";
           break
       default:

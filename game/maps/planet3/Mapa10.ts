@@ -19,7 +19,7 @@ class Mapa10 {
     scene: Game;
     worldSize = {
         width: 10000,
-        height: 3000,
+        height: 5000,
     };
     cameraBounds = {
         x: 0,
@@ -44,8 +44,11 @@ class Mapa10 {
 
     fireballGroup?: Phaser.Physics.Arcade.Group;
     coin?: Phaser.Physics.Arcade.Group;
+    EmptyCoin?: Phaser.Physics.Arcade.Group;
+    EmptyCristal?: Floor;
     portal?: Phaser.Physics.Arcade.Group;
     aura?: Phaser.Physics.Arcade.Group;
+    auraImage?:Floor;
     movingFloor?: Phaser.Physics.Arcade.Group;
     movingFloorRot?: Phaser.Physics.Arcade.Group;
 
@@ -61,8 +64,8 @@ class Mapa10 {
         y: 700, //800
     };
     checkPoint1 = {
-        x: 2800, //500
-        y: 900, //800
+        x: 2900, //500
+        y: 1000, //800
     };
     loseConfig: loseConfigFromMapType = [
         {
@@ -74,8 +77,8 @@ class Mapa10 {
         {
             positions: this.checkPoint1,
             cameraDirection: "ROTATED",
-            PlayerDirection: "ROTATED",
-            gravityDown: false
+            PlayerDirection: "NORMAL",
+            gravityDown: true
         },
     ];
     nextScene: string | undefined = undefined;
@@ -589,6 +592,8 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         this.pisos5 = this.scene.physics.add.group({ allowGravity: false });
         this.pisos6 = this.scene.physics.add.group({ allowGravity: false });
         this.amountLifes = data.lifes;
+        this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
+        this.EmptyCoin = this.scene.physics.add.group({allowGravity:false}).setVisible(false)
         this.coin = this.scene.physics.add.group({ allowGravity: false });
         this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
         this.portal = this.scene.physics.add.group({ allowGravity: false });
@@ -596,7 +601,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
 
         const p1Config: FloorConfig = {
             texture: "pSimple1p3",
-            pos: { x: 1000, y: 300 },
+            pos: { x: 1000, y: 500 },
             inverted:true,
             scale: { width: 0.7, height: 0.7 },
             height: 89,
@@ -607,7 +612,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
 
         const p2Config: FloorConfig = {
           texture: "pSimple1p3",
-          pos: { x: 1350, y: 300 },
+          pos: { x: 1350, y: 500 },
           inverted:true,
           scale: { width: 0.7, height: 0.7 },
           height: 89,
@@ -618,7 +623,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
 
       const p3Config: FloorConfig = {
         texture: "pSimple1p3",
-        pos: { x: 1550, y: 450 },
+        pos: { x: 1550, y: 690 },
         inverted:true,
         scale: { width: 0.7, height: 0.7 },
         height: 89,
@@ -629,7 +634,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
 
       const p4Config: FloorConfig = {
        texture: "pSimple1p3",
-        pos: { x: 1550, y: 950 },
+        pos: { x: 1550, y: 1190 },
         scale: { width: 0.7, height: 0.7 },
         height: 89,
         rotated: false,
@@ -639,7 +644,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
        
       const p5Config: FloorConfig = {
         texture: "pSimple1p3",
-        pos: { x: 1850, y: 950 },
+        pos: { x: 1850, y: 1190 },
         scale: { width: 0.7, height: 0.7 },
         height: 89,
         rotated: false,
@@ -649,7 +654,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
 
     const p6Config: FloorConfig = {
       texture: "pSimple1p3",
-      pos: { x: 1850, y: 450 },
+      pos: { x: 1850, y: 690 },
       inverted:true,
       scale: { width: 0.7, height: 0.7 },
       height: 89,
@@ -662,7 +667,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
       textureA: "longFloorLeftp3",
       textureB: "longFloorMiddlep3",
       textureC: "longFloorRightp3",
-      pos: { x: 2100, y: 450 },
+      pos: { x: 2100, y: 650 },
       
       width: {
         textureA: 90,
@@ -679,9 +684,9 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
 
     const p8Config: FloorConfig = {
       texture: "pDoblep3",
-      pos: { x: 2500, y: 550 },
+      pos: { x: 2500, y: 950 },
       inverted:true,
-      scale: { width: 0.7, height: 0.7 },
+      scale: { width: 0.8, height: 0.7 },
       height: 89,
       rotated: false,
     };
@@ -696,12 +701,72 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
       y: '-=600',
     })
 
+
+    const p9Config: LargeFloorIslandConfig = {
+      textureA: "longFloorLeftp3",
+      textureB: "longFloorMiddlep3",
+      textureC: "longFloorRightp3",
+      pos: { x: 2700, y: 1150 },
+      
+      width: {
+        textureA: 90,
+        textureB: 67,
+        textureC: 115,
+      },
+      scale: { width: 0.7, height: 0.7 },
+      height: 127,
+      large: 10,
+      rotated: false
+    };
+
+    const p9 = new LargeFloorIsland(this.scene, p9Config, this.pisos);
+
+    const p10Config: FloorConfig = {
+      texture: "pSimple1p3",
+      pos: { x: 3300, y: 650 },
+      inverted:true,
+      scale: { width: 0.7, height: 0.7 },
+      height: 89,
+      rotated: false,
+    };
+
+    const p10 = new Floor(this.scene, p10Config, this.pisos);
+
+    const p11Config: FloorConfig = {
+      texture: "pSimple1p3",
+      pos: { x: 2980, y: 650 },
+      inverted:true,
+      scale: { width: 0.7, height: 0.7 },
+      height: 89,
+      rotated: false,
+    };
+
+    const p11 = new Floor(this.scene, p11Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
+
+    const p12Config: LargeFloorIslandConfig = {
+      textureA: "longFloorLeftp3",
+      textureB: "longFloorMiddlep3",
+      textureC: "longFloorRightp3",
+      pos: { x: 1400, y: 150 },
+      
+      width: {
+        textureA: 90,
+        textureB: 67,
+        textureC: 115,
+      },
+      scale: { width: 0.7, height: 0.7 },
+      height: 127,
+      large: 4,
+      rotated: false
+    };
+
+    const p12 = new LargeFloorIsland(this.scene, p12Config, this.pisos);
         //Portal, Coin and Asteroids
         const portalConfig: FloorConfig = {
-            texture: "cuevap1",
-            pos: { x: 1050, y: 1190 },
-            width: 100,
-            height: 100,
+            texture: "cuevap3",
+            pos: { x: 1530, y: 220 },
+            width: 90,
+            height: 90,
             inverted:true
         };
         const port = new Floor(this.scene, portalConfig, this.portal).setDepth(99).setScale(0.5)
@@ -709,15 +774,121 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         this.endPortal = port
 
         const coinConfig: FloorConfig = {
-            texture: "comida",
-            pos: { x: 2800, y: 850 },
+          texture: "plantap3",
+            pos: { x: 2900, y: 1090 },
             scale: { width: 0.5, height: 0.5 },
             width: 10,
             height: 18,
             fix: 10,
         };
-
         this.cristal = new Floor(this.scene, coinConfig, this.coin).setBodySize(140, 180);
+
+        const emptyCoinConfig: FloorConfig = {
+          texture: "plantaVaciap3",
+          pos: {  x: 2900, y: 1090},
+          scale: { width: 0.5, height: 0.5 },
+          width: 10,
+          height: 18,
+          fix: 10,
+        };
+      this.EmptyCristal = new Floor(this.scene, emptyCoinConfig, this.EmptyCoin).setBodySize(140, 180);
+
+        const auraConfig: FloorConfig = {
+        texture: "brilloPlantap3",
+         pos: {  x: 2900, y: 1090},
+         scale: { width: 0.5, height: 0.5 },
+         width: 10,
+         height: 18,
+         fix: 10,
+        };
+
+        this.auraImage = new Floor(this.scene, auraConfig, this.aura).setBodySize(140, 180);
+        this.scene.tweens.add({
+          alpha: { from: 1, to: 0.2 }, 
+          duration: 1500, 
+          yoyo: true, 
+          repeat: -1, 
+          ease: 'Sine.easeInOut', 
+          targets: this.auraImage,
+        })
+
+
+
+        const fireballConfig: FloorConfig = {
+          spriteSheet: "meteoritop3",
+          texture: "meteorito",
+          pos: { x: 1200, y: 0 }, // 500 1580
+          width: 100,
+          height: 100,
+          tween: {
+            duration: 4000,
+            repeat: -1,
+            y: "+=2500",
+          },
+          frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+      };
+      const fireball = new Floor(this.scene, fireballConfig, this.fireballGroup).setScale(0.5)
+
+      const fireball2Config: FloorConfig = {
+        spriteSheet: "meteoritop3",
+        texture: "meteorito",
+        pos: { x: 1700, y: 2500 }, // 500 1580
+        width: 100,
+        height: 100,
+        inverted:true,
+        tween: {
+          duration: 4000,
+          repeat: -1,
+          y: "-=2800",
+        },
+        frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+    };
+    const fireball2 = new Floor(this.scene, fireball2Config, this.fireballGroup).setScale(0.5)
+
+    const fireball3Config: FloorConfig = {
+      spriteSheet: "meteoritop3",
+      texture: "meteorito",
+      pos: { x: 2000, y: 0 }, // 500 1580
+      width: 100,
+      height: 100,
+      tween: {
+        duration: 4000,
+        repeat: -1,
+        y: "+=2800",
+      },
+      frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+  };
+  const fireball3 = new Floor(this.scene, fireball3Config, this.fireballGroup).setScale(0.5)
+
+  const fireball4Config: FloorConfig = {
+    spriteSheet: "meteoritop3",
+    texture: "meteorito",
+    pos: { x: 2400, y: 2500 }, // 500 1580
+    width: 100,
+    inverted:true,
+    height: 100,
+    tween: {
+      duration: 4000,
+      repeat: -1,
+      y: "-=2800",
+    },
+    frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+};
+const fireball4 = new Floor(this.scene, fireball4Config, this.fireballGroup).setScale(0.5)
+const fireball5Config: FloorConfig = {
+  spriteSheet: "meteoritop3",
+  texture: "meteorito",
+  pos: { x: 2600, y: 0 }, // 500 1580
+  width: 100, 
+  height: 100,
+  tween: {
+    duration: 4000,
+    repeat: -1,
+    y: "+=2800",
+  },
+  frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+};
+const fireball5 = new Floor(this.scene, fireball5Config, this.fireballGroup).setScale(0.5)
 
         const c1Config: AsteroidGeneratorConfig = {
             texture: "nube1p1",

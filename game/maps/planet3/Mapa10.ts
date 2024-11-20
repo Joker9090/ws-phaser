@@ -622,10 +622,10 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
       const p2 = new Floor(this.scene, p2Config, this.pisos);
 
       const p3Config: FloorConfig = {
-        texture: "pSimple1p3",
+        texture: "pDoblep3",
         pos: { x: 1550, y: 690 },
         inverted:true,
-        scale: { width: 0.7, height: 0.7 },
+        scale: { width: 1, height: 0.7 },
         height: 89,
         rotated: false,
     };
@@ -653,10 +653,10 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
     const p5 = new Floor(this.scene, p5Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
 
     const p6Config: FloorConfig = {
-      texture: "pSimple1p3",
+      texture: "pDoblep3",
       pos: { x: 1850, y: 690 },
       inverted:true,
-      scale: { width: 0.7, height: 0.7 },
+      scale: { width: 1, height: 0.7 },
       height: 89,
       rotated: false,
     };
@@ -670,8 +670,8 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
       pos: { x: 2100, y: 650 },
       
       width: {
-        textureA: 90,
-        textureB: 67,
+        textureA: 110,
+        textureB: 120,
         textureC: 115,
       },
       scale: { width: 0.7, height: 0.7 },
@@ -709,8 +709,8 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
       pos: { x: 2700, y: 1150 },
       
       width: {
-        textureA: 90,
-        textureB: 67,
+        textureA: 110,
+        textureB: 120,
         textureC: 115,
       },
       scale: { width: 0.7, height: 0.7 },
@@ -749,9 +749,9 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
       textureC: "longFloorRightp3",
       pos: { x: 1400, y: 150 },
       
-      width: {
-        textureA: 90,
-        textureB: 67,
+       width: {
+        textureA: 110,
+        textureB: 120,
         textureC: 115,
       },
       scale: { width: 0.7, height: 0.7 },

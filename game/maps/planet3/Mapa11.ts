@@ -658,8 +658,8 @@ const p6Config: LargeFloorIslandConfig = {
   textureC: "longFloorRightp3",
   pos: { x: 2100, y: 750 },
   width: {
-    textureA: 90,
-    textureB: 67,
+    textureA: 110,
+    textureB: 140,
     textureC: 115,
   },
   scale: { width: 0.7, height: 0.7 },
@@ -742,8 +742,8 @@ const p13Config: LargeFloorIslandConfig = {
   textureC: "longFloorRightp3",
   pos: { x: 2860, y: 180},
   width: {
-    textureA: 90,
-    textureB: 67,
+    textureA: 110,
+    textureB: 140,
     textureC: 115,
   },
   scale: { width: 0.7, height: 0.7 },

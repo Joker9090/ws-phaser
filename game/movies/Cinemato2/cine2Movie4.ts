@@ -10,6 +10,8 @@ class cine2Movie4 {
     container?: Phaser.GameObjects.Container;
     dialogue?: DialogueManager;
     //assets
+    foodC2S4?: Phaser.GameObjects.Image;
+    planetC2S4?: Phaser.GameObjects.Image;
     backgroundPanel?: Phaser.GameObjects.Image;
     radarInnerCircle1?: Phaser.GameObjects.Image;
     radarInnerCircle2?: Phaser.GameObjects.Image;
@@ -44,9 +46,9 @@ class cine2Movie4 {
         this.ticker = new Ticker(tickerMS);
         this.playCine();
         // sound & music
-        setTimeout(() => {
-            this.cine.sound.add("C2_7").setVolume(0.25).play()
-        }, 500)
+        // setTimeout(() => {
+        //     this.cine.sound.add("C2_7").setVolume(0.25).play()
+        // }, 500)
     }
 
     playCine(this: cine2Movie4) {
@@ -66,36 +68,50 @@ class cine2Movie4 {
             x: window.innerWidth / 1920,
             y: window.innerHeight / 927,
         };
-        this.radarInnerCircle1 = this.cine.add
-            .image(100, 0, "innerCircle1")
+        this.foodC2S4 = this.cine.add
+            .image(100, 0, "foodC2S4")
             .setOrigin(0.5)
-            .setPosition(10, -110);
-            this.oxygen1 = this.cine.add
+            .setPosition(100, -110);
+        this.planetC2S4 = this.cine.add
+            .image(100, 0, "planetC2S4")
+            .setOrigin(0.5)
+            .setPosition(-100, 50);
+        this.oxygen1 = this.cine.add
             .image(100, 0, "oxygen1")
             .setOrigin(0.5)
             .setVisible(false)
             .setPosition(10, -110);
-            this.popUpPlanetBubble = this.cine.add
+        this.popUpPlanetBubble = this.cine.add
             .image(100, 0, "popUpPlanetBubble")
             .setOrigin(0.5)
             .setScale(0)
             .setPosition(10, -110);
-            this.oxygen2 = this.cine.add
+        this.oxygen2 = this.cine.add
             .image(100, 0, "oxygen2")
             .setOrigin(0.5)
             .setVisible(false)
             .setPosition(10, -110);
+
+        this.radarInnerCircle1 = this.cine.add
+            .image(100, 0, "innerCircle1")
+            .setOrigin(0.5)
+            .setPosition(10, -110).setVisible(false);
         this.radarInnerCircle2 = this.cine.add
             .image(100, 0, "innerCircle2")
             .setOrigin(0.5)
-            .setPosition(10, -110);
-        this.radarInnerCircle3 = this.cine.add
-            .image(100, 0, "innerCircle3")
-            .setOrigin(1, 0.5)
-            .setPosition(10, -110);
+            .setPosition(10, -110).setVisible(false);
         this.radarInnerCircle3 = this.cine.add
             .image(100, 0, "innerCircle4")
             .setOrigin(1, 0.5)
+            .setPosition(10, -110).setVisible(false);
+        this.radarSearcher = this.cine.add
+            .image(-80, -160, "radarSearcher")
+            .setOrigin(0.5)
+            .setScale(0.7).setVisible(false);
+
+        this.radarCross = this.cine.add
+            .image(70, 0, "radarCross")
+            .setScale(0.65)
             .setPosition(10, -110);
 
         this.popUpFood = this.cine.add
@@ -111,18 +127,6 @@ class cine2Movie4 {
             .image(-80, -160, "planetaPopUp")
             .setOrigin(1, 0)
             .setScale(0).setVisible(false)
-
-
-        this.radarSearcher = this.cine.add
-            .image(-80, -160, "radarSearcher")
-            .setOrigin(0.5)
-            .setScale(0.7);
-
-        this.radarCross = this.cine.add
-            .image(70, 0, "radarCross")
-            .setScale(0.65)
-            .setPosition(10, -110);
-
         this.planetOnRadar = this.cine.add
             .image(-80, -160, "planetOnRadar")
             .setOrigin(0.5)
@@ -249,8 +253,8 @@ class cine2Movie4 {
             .setOrigin(0.5);
         let marker = 0;
         const barrasAzules = this.cine.add
-        .image(375, 110, "barrasAzules")
-        .setOrigin(0.5);
+            .image(375, 110, "barrasAzules")
+            .setOrigin(0.5);
 
         const barrasObject = {
             firstPos: 290,
@@ -284,6 +288,8 @@ class cine2Movie4 {
         );
 
         const assetsScenes = [
+            this.foodC2S4,
+            this.planetC2S4,
             this.backgroundPanel,
             this.radarInnerCircle1,
             this.radarInnerCircle2,
@@ -399,15 +405,32 @@ class cine2Movie4 {
             this.cine.tweens.add({
                 targets: [this.oxygen2],
                 alpha: 0.7,
-                duration: 1000,
+                duration: 400,
+                delay: 0,
+                yoyo: true,
+                loop: -1,
+                ease: "ease",
+            });
+
+            this.cine.tweens.add({
+                targets: [this.oxygen2],
+                scale: 1,
+                duration: 1500,
                 delay: 3000,
-                yoyo: true, 
+                yoyo: true,
                 onStart: () => {
                     this.oxygen2?.setVisible(true)
+                    this.oxygen1?.setVisible(true)
                 },
                 onComplete: () => {
                     this.oxygen2?.setVisible(false)
-                    this.oxygen1?.setVisible(true)
+                    this.oxygen1?.setVisible(false)
+                    this.foodC2S4?.setVisible(false)
+                    this.planetC2S4?.setVisible(false)
+                    this.radarInnerCircle1?.setVisible(true)
+                    this.radarInnerCircle2?.setVisible(true)
+                    this.radarInnerCircle3?.setVisible(true)
+                    this.radarSearcher?.setVisible(true)
                 },
                 ease: "ease",
             });
@@ -547,7 +570,7 @@ class cine2Movie4 {
                 if (newState === "CONTINUE") {
                     this.oxygen1?.setVisible(false)
                     this.playingPart += 1
-                    if (this.playingPart === 3){ 
+                    if (this.playingPart === 3) {
                         this.t3?.play()
                         this.t4?.play()
                     }
@@ -569,7 +592,7 @@ class cine2Movie4 {
 
     update(this: cine2Movie4, time: number, delta: number) {
         if (this.dialogue) this.dialogue.update();
-        if (this.nextCine) this.cine.scene.restart({ keyname: "cine_2_movie_5" });
+        if (this.nextCine) this.cine.scene.restart({ keyname: "cine_2_movie_4" });
     }
 }
 

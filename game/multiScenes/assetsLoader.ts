@@ -624,6 +624,9 @@ const loadAssets = {
       ["image", "oxygen1", "/movies/cinemato2/scene4/oxygen1.png"],
       ["image", "oxygen2", "/movies/cinemato2/scene4/oxygen2.png"],
       ["image", "popUpPlanetBubble", "/movies/cinemato2/scene4/popUpPlanetBubble.png"],
+      ["image", "foodC2S4", "/movies/cinemato2/scene4/foodC2S4.png"],
+      ["image", "planetC2S4", "/movies/cinemato2/scene4/planetC2S4.png"],
+
       // SCENE 5
       ["image", "BackgroundMountainScene5", "/movies/cinemato2/scene5/BackgroundMountainScene5.png"],
       ["image", "bubbles", "/movies/cinemato2/scene5/bubbles.png"],

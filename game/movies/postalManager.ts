@@ -3,6 +3,7 @@ import CinematographyModular from "@/game/movies/Cinematography-modular";
 import Ticker, { TickerJob } from "./Ticker";
 import BetweenScenes, { BetweenScenesStatus } from "@/game/BetweenScenes";
 import TextBox from "../assets/TextBox";
+import MultiScene from "../MultiScene";
 
 
 class postalManager {
@@ -19,11 +20,11 @@ class postalManager {
     cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
 
 
-    constructor(cine: CinematographyModular, postal: string, nextLevel: number, lifes: number) {
+    constructor(cine: CinematographyModular, postal: string, nextLevel: number, lifes?: number, loadKey?: string) {
         this.cine = cine
         this.postal = postal
         this.nextLevel = nextLevel
-        this.lifes = lifes
+        this.lifes = lifes ? lifes : 3
         const tickerMS = 100;
         this.ticker = new Ticker(tickerMS);
         this.playCine()
@@ -114,27 +115,14 @@ class postalManager {
         );
     }
 
-    makeTransition(sceneName: string, data: any) {
-        const getBetweenScenesScene = this.cine.game.scene.getScene(
-            "BetweenScenes"
-        ) as BetweenScenes;
-        if (getBetweenScenesScene) {
-            if (getBetweenScenesScene.status != BetweenScenesStatus.IDLE)
-                return false;
-            getBetweenScenesScene.changeSceneTo(sceneName, data);
-            this.cine.time.delayedCall(1000, () => {
-                this.cine.scene.stop();
-            });
-        } else {
-            this.cine.scene.start(sceneName, data);
-            this.cine.time.delayedCall(1000, () => {
-                this.cine.scene.stop();
-            });
-        }
-    }
+
 
     update(this: postalManager, time: number, delta: number) {
-        if (this.nextCine) this.makeTransition("Game", { level: this.nextLevel, lifes: this.lifes });
+        if (this.nextCine) {
+            const multiScene = new MultiScene("Game", { level: this.nextLevel, lifes: this.lifes});
+            const scene = this.cine.scene.add("MultiScene", multiScene, true);
+            this.cine.scene.start("MultiScene").bringToTop("MultiScene");
+          }
         if (this.codeVisible) {
             if (this.cursors?.space.isDown) this.code?.setVisible(false)
         } 

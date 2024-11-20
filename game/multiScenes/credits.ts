@@ -305,15 +305,15 @@ export default class CreditsClass {
         this.spaceship.y = this.scene.cameras.main.height + 100;
       }
     }
-    if (this.EscKeyboard)
-      this.EscKeyboard.on("down", () => {
-        this.scene.makeTransition("MultiScene", { text: "menu" });
-        // this.scene.start("Menu");
-      });
-    if (this.scene.cursors)
-      this.scene.cursors.space.on("down", () => {
-        this.scene.makeTransition("MultiScene", { text: "menu" });
-        //this.scene.start("Menu");
-      });
+    // if (this.EscKeyboard)
+    //   this.EscKeyboard.on("down", () => {
+    //     this.scene.makeTransition("MultiScene", { text: "menu" });
+    //     // this.scene.start("Menu");
+    //   });
+    // if (this.scene.cursors)
+    //   this.scene.cursors.space.on("down", () => {
+    //     this.scene.makeTransition("MultiScene", { text: "menu" });
+    //     //this.scene.start("Menu");
+    //   });
   }
 }

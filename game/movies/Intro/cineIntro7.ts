@@ -4,6 +4,7 @@ import DialogueManager from "../DialogueManager";
 import CinematographyModular from "@/game/movies/Cinematography-modular";
 import SmallObjects from "../smallObjectsFalling";
 import BetweenScenes, { BetweenScenesStatus } from "@/game/BetweenScenes";
+import MultiScene from "@/game/MultiScene";
 
 class cineIntro7 {
   ticker: Ticker;
@@ -448,34 +449,22 @@ class cineIntro7 {
     };
 
     this.ticker.addJob(
-      new TickerJob(1, 10, part1, false, 9000, true, (job: TickerJob) => {
+      new TickerJob(1, 10, part1, false, undefined, true, (job: TickerJob) => {
         this.nextCine = true;
       })
     );
   }
 
-  makeTransition(sceneName: string, data: any) {
-    const getBetweenScenesScene = this.cine.game.scene.getScene(
-      "BetweenScenes"
-    ) as BetweenScenes;
-    if (getBetweenScenesScene) {
-      if (getBetweenScenesScene.status != BetweenScenesStatus.IDLE)
-        return false;
-      getBetweenScenesScene.changeSceneTo(sceneName, data);
-      this.cine.time.delayedCall(1000, () => {
-        this.cine.scene.stop();
-      });
-    } else {
-      this.cine.scene.start(sceneName, data);
-      this.cine.time.delayedCall(1000, () => {
-        this.cine.scene.stop();
-      });
-    }
-  }
+
 
   update(this: cineIntro7, time: number, delta: number) {
     if (this.dialogue) this.dialogue.update();
-    if (this.nextCine) this.makeTransition("Game", { level: 0, lifes: 3 });
+    if (this.nextCine) {
+      const multiScene = new MultiScene("Game", { level: 0, lifes: 3, loadKey: ['GamePlay1'] });
+      const scene = this.cine.scene.add("MultiScene", multiScene, true);
+      this.cine.scene.start("MultiScene").bringToTop("MultiScene");
+      
+    }
   }
 }
 

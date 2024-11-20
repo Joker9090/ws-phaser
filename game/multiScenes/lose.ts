@@ -71,7 +71,7 @@ export default class LoseClass {
       /*Space*/
       space.on("down", () => {
         //this.scene.start("Menu");
-        this.scene.makeTransition("MultiScene", { text: "menu" });
+        // this.scene.makeTransition("MultiScene", { text: "menu" });
 
       });
     }

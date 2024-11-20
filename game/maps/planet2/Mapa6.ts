@@ -74,7 +74,7 @@ class Mapa5 {
             gravityDown: false
         },
     ];
-    nextScene: string | undefined = 'postal2_planeta2';
+    nextScene: string | undefined = 'cine_2_movie_1';
 
     background: Phaser.GameObjects.Image;
     backgroundStars: Phaser.GameObjects.Image;
@@ -453,7 +453,6 @@ class Mapa5 {
                     (player, floor) => {
                       //@ts-ignore
                       const originalY = floor.y
-                      console.log(originalY)
                       setTimeout(() => {
                         //@ts-ignore
                         if (floor.y > 1000) {
@@ -737,6 +736,7 @@ class Mapa5 {
         };
 
         this.cristal = new Floor(this.scene, coinConfig, this.coin).setBodySize(140, 180);
+        const cloudsGroup = this.scene.add.group()
 
         const c1Config: AsteroidGeneratorConfig = {
             texture: "nube1p1",
@@ -744,7 +744,8 @@ class Mapa5 {
             y: 500,
             delayed: 100,
             direction: 0,
-            velocity: 20,
+      group: cloudsGroup,
+      velocity: 20,
             scale: 1,
             depth: 99,
         };
@@ -757,15 +758,16 @@ class Mapa5 {
             y: 600,
             delayed: 100,
             direction: 1,
-            velocity: 30,
+      group: cloudsGroup,
+      velocity: 30,
             scale: 1,
             depth: 99,
         };
         const c2 = new AsteroidGenerator(this.scene, c2Config);
         c2.start();
 
-        const mapObjects =
-            this.movingFloor.getChildren().concat(
+        const mapObjects = cloudsGroup.getChildren().concat(
+          this.movingFloor.getChildren(),
                 this.movingFloorRot.getChildren(),
                 this.fireballGroup.getChildren(),
                 this.pisos.getChildren(),

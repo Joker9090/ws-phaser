@@ -47,7 +47,6 @@ export default class MasterManager extends Phaser.Scene {
     if (this.music) {
       this.music.stop();
     }
-    console.log(volume, loop, "vol and loop")
     this.music = this.sound.add(name,{
       volume: volume,
       loop: loop

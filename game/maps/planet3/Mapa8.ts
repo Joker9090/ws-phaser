@@ -359,19 +359,17 @@ class Mapa8 {
             scale: { width: 0.7, height: 0.7 },
             width: 140,
             height: 50,
+            animation:{
+                xAxis:{
+                    xDistance:800,
+                    xVel:200
+                }
+            }
         };
 
-        const p2 = new Floor (this.scene, p2Config, this.pisos3).setVelocityX(-400).setTint(Phaser.Display.Color.GetColor(255, 101, 255));
+        const p2 = new Floor (this.scene, p2Config, this.pisos3).setTint(Phaser.Display.Color.GetColor(255, 101, 255));
 
-        this.scene.tweens.add({
-            duration: 3000,
-            paused: false,
-            yoyo: true,
-            repeat: -1,
-            targets: p2.body?.velocity,
-            x: '+=800',
-        })
-
+    
         const p3Config:FloorConfig = {
             pos: {  x: 3900, y: 1200,},
             texture: "pSimple1p3",
@@ -405,44 +403,20 @@ class Mapa8 {
 
 
         const p6config:FloorConfig = {
-            pos: {  x: 4850, y: 700,},
+            pos: {  x: 4800, y: 700,},
             texture: "pSimple1p3",
             scale: { width: 0.7, height: 0.7 },
             width: 140,
             height: 50,
+            animation:{
+                xAxis:{
+                    xDistance:650,
+                    xVel:200
+                }
+            }
         };
 
-        const p6 = new Floor (this.scene, p6config, this.pisos2).setFlipY(true).setVelocityX(-400).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
-
-        this.scene.tweens.add({
-            duration: 3000,
-            paused: false,
-            yoyo: true,
-            repeat: -1,
-            targets: p6.body?.velocity,
-            x: '+=800',
-        })
-
-
-
-        const p7config:FloorConfig = {
-            pos: {  x: 4850, y: 700,},
-            texture: "pSimple1p3",
-            scale: { width: 0.7, height: 0.7 },
-            width: 140,
-            height: 50,
-        };
-
-        const p7 = new Floor (this.scene, p7config, this.pisos2).setFlipY(true).setVelocityX(-400).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
-
-        this.scene.tweens.add({
-            duration: 3000,
-            paused: false,
-            yoyo: true,
-            repeat: -1,
-            targets: p7.body?.velocity,
-            x: '+=800',
-        })
+        const p6 = new Floor (this.scene, p6config, this.pisos2).setFlipY(true).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
 
         const p8config:FloorConfig = {
             pos: {  x: 4850, y: 1200,},
@@ -450,19 +424,15 @@ class Mapa8 {
             scale: { width: 0.7, height: 0.7 },
             width: 140,
             height: 50,
+            animation:{
+                xAxis:{
+                    xDistance:650,
+                    xVel:200
+                }
+            }
         };
 
-        const p8 = new Floor (this.scene, p8config, this.pisos).setVelocityX(-400);
-
-        this.scene.tweens.add({
-            duration: 3000,
-            paused: false,
-            delay:200,
-            yoyo: true,
-            repeat: -1,
-            targets: p8.body?.velocity,
-            x: '+=800',
-        })
+        const p8 = new Floor (this.scene, p8config, this.pisos)
 
 
         const p9config:FloorConfig = {
@@ -550,10 +520,15 @@ class Mapa8 {
             width: 10,
             height: 18,
             fix: 10,
+            animation:{
+                xAxis:{
+                    xDistance:650,
+                    xVel:200
+                }
+            }
         };
 
-        this.cristal = new Floor(this.scene, coinConfig, this.coin).setBodySize(140, 180).setVelocityX(-400);
-
+        this.cristal = new Floor(this.scene, coinConfig, this.coin).setBodySize(140, 180)
         const emptyCoinConfig: FloorConfig = {
             texture: "plantaVaciap3",
             pos: {  x: 4850, y: 1130},
@@ -561,9 +536,15 @@ class Mapa8 {
             width: 10,
             height: 18,
             fix: 10,
+            animation:{
+                xAxis:{
+                    xDistance:650,
+                    xVel:200
+                }
+            }
         };
 
-        this.EmptyCristal = new Floor(this.scene, emptyCoinConfig, this.EmptyCoin).setBodySize(140, 180).setVelocityX(-400);
+        this.EmptyCristal = new Floor(this.scene, emptyCoinConfig, this.EmptyCoin).setBodySize(140, 180);
         const auraConfig: FloorConfig = {
             texture: "brilloPlantap3",
             pos: {  x: 4850, y: 1130},
@@ -571,9 +552,15 @@ class Mapa8 {
             width: 10,
             height: 18,
             fix: 10,
+            animation:{
+                xAxis:{
+                    xDistance:650,
+                    xVel:200
+                }
+            }
         };
 
-        this.auraImage = new Floor(this.scene, auraConfig, this.aura).setBodySize(140, 180).setVelocityX(-400);
+        this.auraImage = new Floor(this.scene, auraConfig, this.aura).setBodySize(140, 180);
 
         const fireballConfig: FloorConfig = {
             spriteSheet: "meteoritop3",
@@ -647,33 +634,6 @@ class Mapa8 {
           const b2 = new AsteroidGenerator(this.scene, b2Config);
           b2.start();
 
-        this.scene.tweens.add({
-                duration: 3000,
-                paused: false,
-                delay:200,
-                yoyo: true,
-                repeat: -1,
-                targets: this.cristal.body?.velocity,
-                x: '+=800',
-        })
-        this.scene.tweens.add({
-            duration: 3000,
-            paused: false,
-            delay:200,
-            yoyo: true,
-            repeat: -1,
-            targets: this.EmptyCristal.body?.velocity,
-            x: '+=800',
-        })
-        this.scene.tweens.add({
-            duration: 3000,
-            paused: false,
-            delay:200,
-            yoyo: true,
-            repeat: -1,
-            targets: this.auraImage.body?.velocity,
-            x: '+=800',
-        })
         this.scene.tweens.add({
             alpha: { from: 1, to: 0.2 }, 
             duration: 1500, 

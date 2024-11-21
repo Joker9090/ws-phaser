@@ -71,8 +71,8 @@ class Mapa11 {
         {
             positions: this.startingPoint,
             cameraDirection: "NORMAL",
-            PlayerDirection: "ROTATED",
-            gravityDown: false
+            PlayerDirection: "NORMAL",
+            gravityDown: true
         },
         {
             positions: this.checkPoint1,
@@ -754,8 +754,52 @@ const p13Config: LargeFloorIslandConfig = {
 
 const p13 = new LargeFloorIsland(this.scene, p13Config, this.pisos);
 
+      const fireballConfig: FloorConfig = {
+          spriteSheet: "meteoritop3",
+          texture: "meteorito",
+          pos: { x: 1500, y: 0 }, // 500 1580
+          width: 100,
+          height: 100,
+          tween: {
+            duration: 4000,
+            repeat: -1,
+            y: "+=2500",
+          },
+          frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+      };
+      const fireball = new Floor(this.scene, fireballConfig, this.fireballGroup).setScale(0.5)   
 
+      const fireball2Config: FloorConfig = {
+        spriteSheet: "meteoritop3",
+        texture: "meteorito",
+        pos: { x: 2050, y: 0 }, // 500 1580
+        width: 100,
+        height: 100,
+        tween: {
+          duration: 4000,
+          delay:500,
+          repeat: -1,
+          y: "+=2500",
+        },
+        frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+    };
+    const fireball2 = new Floor(this.scene, fireball2Config, this.fireballGroup).setScale(0.5)   
 
+    const fireball3Config: FloorConfig = {
+      spriteSheet: "meteoritop3",
+      texture: "meteorito",
+      pos: { x: 2700, y: 0 }, // 500 1580
+      width: 100,
+      height: 100,
+      tween: {
+        duration: 4000,
+        delay:300,
+        repeat: -1,
+        y: "+=2500",
+      },
+      frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+  };
+  const fireball3 = new Floor(this.scene, fireball3Config, this.fireballGroup).setScale(0.5)
         //Portal, Coin and Asteroids
         const portalConfig: FloorConfig = {
             texture: "cuevap3",

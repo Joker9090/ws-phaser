@@ -601,22 +601,19 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         const p1 = new LargeFloorIsland(this.scene, p1Config, this.pisos);
 
         const p2Config: FloorConfig = {
-            pos: { x: 2300, y: 1350 },
+            pos: { x: 2200, y: 1350 },
             texture: "pSimple2p1",
             scale: { width: 0.7, height: 0.7 },
             width: 140,
             height: 50,
+            animation:{
+              xAxis:{
+                xDistance:400,
+                xVel:150
+              }
+            }
         };
-        const p2 = new Floor(this.scene, p2Config, this.pisos).setVelocityX(-200);
-
-        this.scene.tweens.add({
-            duration: 3000,
-            paused: false,
-            yoyo: true,
-            repeat: -1,
-            targets: p2.body?.velocity,
-            x: '+=400',
-        })
+        const p2 = new Floor(this.scene, p2Config, this.pisos);
 
         const fireball1Config: FloorConfig = {
             spriteSheet: "meteoritop1",
@@ -673,17 +670,15 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
             scale: { width: 0.7, height: 0.7 },
             width: 140,
             height: 50,
+            animation:{
+              xAxis:{
+                xDistance:600,
+                xVel:200
+              }
+            }
+            
         };
-        const p5 = new Floor(this.scene, p5Config, this.pisos).setFlipX(true).setFlipY(true).setVelocityX(-300);
- 
-        this.scene.tweens.add({
-            duration: 3000,
-            paused: false,
-            yoyo: true,
-            repeat: -1,
-            targets: p5.body?.velocity,
-            x: '+=600',
-        })
+        const p5 = new Floor(this.scene, p5Config, this.pisos).setFlipX(true).setFlipY(true)
 
         const p6Config: FloorConfig = {
             pos: { x: 800, y: 600 },

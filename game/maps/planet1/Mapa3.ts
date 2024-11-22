@@ -335,11 +335,17 @@ class Mapa3 {
         const p1 = new Floor(this.scene, p1Config, this.pisos);
 
         const p2Config: FloorConfig = {
-            pos: { x: 850, y: 1100 },
+            pos: { x: 850, y: 1000 },
             texture: "plataformaNuevaA",
             scale: { width: 0.7, height: 0.7 },
             width: 140,
             height: 50,
+            animation:{
+                yAxis:{
+                  yDistance:400,
+                  yVel:100
+                }
+              }
             // tween: {
             //     duration: 4500,
             //     paused: false,
@@ -348,16 +354,16 @@ class Mapa3 {
             //     y: "-=800",
             // },
         };
-        const p2 = new Floor(this.scene, p2Config, this.movingFloor).setVelocityY(-300);
+        const p2 = new Floor(this.scene, p2Config, this.movingFloor);
 
-        this.scene.tweens.add({
-            duration: 3000,
-            paused: false,
-            yoyo: true,
-            repeat: -1,
-            targets: p2.body?.velocity,
-            y: "+=600",
-        })
+        // this.scene.tweens.add({
+        //     duration: 3000,
+        //     paused: false,
+        //     yoyo: true,
+        //     repeat: -1,
+        //     targets: p2.body?.velocity,
+        //     y: "+=600",
+        // })
 
         const p3Config: FloorConfig = {
             pos: { x: 600, y: 1300 },
@@ -469,20 +475,18 @@ class Mapa3 {
             scale: { width: 0.7, height: 0.7 },
             width: 140,
             height: 50,
+            animation:{
+                xAxis:{
+                  xDistance:400,
+                  xVel:100
+                }
+              }
         };
         const p13 = new Floor(this.scene, p13Config, this.pisos3).setTint(
             Phaser.Display.Color.GetColor(255, 101, 0)
-        ).setVelocityX(150).setFlipY(true);
+        ).setFlipY(true);
 
-        this.scene.tweens.add({
-            duration: 4500,
-            paused: false,
-            yoyo: true,
-            repeat: -1,
-            targets: p13.body?.velocity,
-            x: "-=300",
-        })
-
+    
         // const p14Config: LargeFloorConfig = {
         //     textureA: "plataformaLarga",
         //     textureB: "plataformaLarga",
@@ -536,24 +540,16 @@ class Mapa3 {
             scale: { width: 0.7, height: 0.7 },
             width: 140,
             height: 50,
-            // tween: {
-            //     duration: 5000,
-            //     paused: false,
-            //     yoyo: true,
-            //     repeat: -1,
-            //     y: "+=500",
-            // },
+            animation:{
+                yAxis:{
+                 yDistance:300,
+                 yVel:100
+                }
+              }
+       
         };
-        const p17 = new Floor(this.scene, p17Config, this.movingFloorRot).setFlipY(true).setVelocityY(150);
+        const p17 = new Floor(this.scene, p17Config, this.movingFloorRot).setFlipY(true);
 
-        this.scene.tweens.add({
-            duration: 3000,
-            paused: false,
-            yoyo: true,
-            repeat: -1,
-            targets: p17.body?.velocity,
-            y: "-=300",
-        })
 
         const p18Config: FloorConfig = {
             pos: { x: 4600, y: 600 },

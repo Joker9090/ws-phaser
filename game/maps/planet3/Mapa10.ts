@@ -467,68 +467,8 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
                   this.scene.physics.add.collider(
                     this.scene.monchi,
                     this.pisos4,
-                    (player, floor) => {
-                      //@ts-ignore
-                      const originalY = floor.y
-                      console.log(originalY)
-                      setTimeout(() => {
-                        //@ts-ignore
-                        if (floor.y > 1000) {
-                          //@ts-ignore
-                          // floor.setVelocityY(500)
-                          this.scene.tweens.add({
-                            //@ts-ignore
-                            targets: [floor],
-                            y: originalY + 200,
-                            duration: 1000,
-                            ease: 'ease', 
-                            onComplete: () => {
-                              this.scene.tweens.add({
-                                //@ts-ignore
-                                targets: [floor],
-                                y: originalY,
-                                duration: 1000,
-                                ease: 'ease', 
-                                onComplete: () => {
-                                  //@ts-ignore
-                                  floor.body.enable = true;
-                                },
-                              });
-                            },
-                            onStart: () => {
-                              //@ts-ignore
-                              floor.body.enable = false;
-                            },
-                          });
-                        } else {
-                               //@ts-ignore
-                          // floor.setVelocityY(500)
-                          this.scene.tweens.add({
-                            //@ts-ignore
-                            targets: [floor],
-                            y: originalY - 200,
-                            duration: 1000,
-                            ease: 'ease', 
-                            onComplete: () => {
-                              this.scene.tweens.add({
-                                //@ts-ignore
-                                targets: [floor],
-                                y: originalY,
-                                duration: 1000,
-                                ease: 'ease', 
-                                onComplete: () => {
-                                  //@ts-ignore
-                                  floor.body.enable = true;
-                                },
-                              });
-                            },
-                            onStart: () => {
-                              //@ts-ignore
-                              floor.body.enable = false;
-                            },
-                          });
-                        }
-                      }, 400);
+                    () => {
+                      
                     },
                     () => true,
                     this.scene
@@ -689,19 +629,17 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
       scale: { width: 0.8, height: 0.7 },
       height: 89,
       rotated: false,
+      animation:{
+        yAxis:{
+          yDistance:600,
+          yVel:100
+        }
+      }
     };
 
-    const p8 = new Floor(this.scene, p8Config, this.pisos3).setTint(Phaser.Display.Color.GetColor(255, 101, 255)).setVelocityY(300);
-    this.scene.tweens.add({
-      duration: 3000,
-      paused: false,
-      yoyo: true,
-      repeat: -1,
-      targets: p8.body?.velocity,
-      y: '-=600',
-    })
-
-
+    const p8 = new Floor(this.scene, p8Config, this.pisos3).setTint(Phaser.Display.Color.GetColor(255, 101, 255));
+  
+    
     const p9Config: LargeFloorIslandConfig = {
       textureA: "longFloorLeftp3",
       textureB: "longFloorMiddlep3",

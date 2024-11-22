@@ -320,24 +320,16 @@ class Mapa1 {
       scale: { width: 0.7, height: 0.7 },
       width: 140,
       height: 50,
-      // tween: {
-      //     duration: 4500,
-      //     paused: false,
-      //     yoyo: true,
-      //     repeat: -1,
-      //     y: "-=800",
-      // },
+      animation:{
+        yAxis:{
+          yDistance:300,
+          yVel:100
+        }
+      }
     };
-    const p2 = new Floor(this.scene, p2Config, this.movingFloor).setVelocityY(-300);
+    const p2 = new Floor(this.scene, p2Config, this.movingFloor);
 
-    this.scene.tweens.add({
-      duration: 3000,
-      paused: false,
-      yoyo: true,
-      repeat: -1,
-      targets: p2.body?.velocity,
-      y: "+=600",
-    })
+   
 
     const p5Config: FloorConfig = {
       pos: { x: 1100, y: 1100 }, // 1100 800

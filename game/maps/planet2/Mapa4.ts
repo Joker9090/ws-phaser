@@ -635,24 +635,30 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
     const p6 = new Floor(this.scene, p6Config, this.pisos).setFlipY(true);
 
     const p7Config: FloorConfig = {
-      pos: { x: 2400, y: 450 },
+      pos: { x: 2500, y: 450 },
       texture: "pSimple2p1",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
       height: 50,
+      animation:{
+        xAxis:{
+          xDistance:800,
+          xVel:200
+        }
+      }
     };
     const p7 = new Floor(this.scene, p7Config, this.pisos)
       .setFlipY(true)
-      .setVelocity(400, 0);
+    //   .setVelocity(400, 0);
 
-    this.scene.tweens.add({
-      duration: 3000,
-      paused: false,
-      yoyo: true,
-      repeat: -1,
-      targets: p7.body?.velocity,
-      x: "-=800",
-    });
+    // this.scene.tweens.add({
+    //   duration: 3000,
+    //   paused: false,
+    //   yoyo: true,
+    //   repeat: -1,
+    //   targets: p7.body?.velocity,
+    //   x: "-=800",
+    // });
 
     const p8Config: LargeFloorIslandConfig = {
       textureA: "longFloorLeftp1",

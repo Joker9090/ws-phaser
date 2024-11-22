@@ -468,68 +468,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
                   this.scene.physics.add.collider(
                     this.scene.monchi,
                     this.pisos4,
-                    (player, floor) => {
-                      //@ts-ignore
-                      const originalY = floor.y
-                      console.log(originalY)
-                      setTimeout(() => {
-                        //@ts-ignore
-                        if (floor.y > 1000) {
-                          //@ts-ignore
-                          // floor.setVelocityY(500)
-                          this.scene.tweens.add({
-                            //@ts-ignore
-                            targets: [floor],
-                            y: originalY + 200,
-                            duration: 1000,
-                            ease: 'ease', 
-                            onComplete: () => {
-                              this.scene.tweens.add({
-                                //@ts-ignore
-                                targets: [floor],
-                                y: originalY,
-                                duration: 1000,
-                                ease: 'ease', 
-                                onComplete: () => {
-                                  //@ts-ignore
-                                  floor.body.enable = true;
-                                },
-                              });
-                            },
-                            onStart: () => {
-                              //@ts-ignore
-                              floor.body.enable = false;
-                            },
-                          });
-                        } else {
-                               //@ts-ignore
-                          // floor.setVelocityY(500)
-                          this.scene.tweens.add({
-                            //@ts-ignore
-                            targets: [floor],
-                            y: originalY - 200,
-                            duration: 1000,
-                            ease: 'ease', 
-                            onComplete: () => {
-                              this.scene.tweens.add({
-                                //@ts-ignore
-                                targets: [floor],
-                                y: originalY,
-                                duration: 1000,
-                                ease: 'ease', 
-                                onComplete: () => {
-                                  //@ts-ignore
-                                  floor.body.enable = true;
-                                },
-                              });
-                            },
-                            onStart: () => {
-                              //@ts-ignore
-                              floor.body.enable = false;
-                            },
-                          });
-                        }
-                      }, 400);
+                    () => {
                     },
                     () => true,
                     this.scene
@@ -667,24 +606,16 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
        scale: { width: 1.3, height: 0.7 },
        width: 170,
        height: 50,
-       /*tween: {
-        duration: 4500,
-        paused: false,
-        yoyo: true,
-        repeat: -1,
-        x: "-=250",
-       },*/
+       animation:{
+        xAxis:{
+          xDistance:300,
+          xVel:100,
+        }
+       }
       };
 
-      const p5 = new Floor(this.scene, p5Config, this.movingFloor).setVelocityX(150);
-      this.scene.tweens.add({
-       duration: 4500,
-        paused: false,
-        yoyo: true,
-        repeat: -1,
-        targets:p5.body?.velocity,
-        x: "-=300",
-      })
+      const p5 = new Floor(this.scene, p5Config, this.movingFloor);
+
       const p6Config: FloorConfig = {
         texture: "pSimple1p3",
         pos: { x: 2800, y: 1200 },
@@ -720,23 +651,21 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
 
       const p10Config: FloorConfig = {
         texture: "pSimple1p3",
-        pos: { x: 2050, y: 800 },
+        pos: { x: 1950, y: 800 },
         scale: { width: 1, height: 0.7 },
         width: 170,
         height: 50,
         inverted:true,
+        animation:{
+          xAxis:{
+            xDistance:300,
+            xVel:100,
+          }
+         }
       };
      
 
-      const p10 = new Floor(this.scene, p10Config, this.pisos).setVelocityX(100);
-      this.scene.tweens.add({
-        duration: 4500,
-        paused: false,
-        yoyo: true,
-        repeat: -1,
-        targets:p10.body?.velocity,
-        x: "-=200",
-      })
+      const p10 = new Floor(this.scene, p10Config, this.pisos)
 
       const p11Config: FloorConfig = {
         texture: "pSimple1p3",

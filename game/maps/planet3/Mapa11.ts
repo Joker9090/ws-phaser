@@ -468,67 +468,6 @@ class Mapa11 {
                     this.scene.monchi,
                     this.pisos4,
                     (player, floor) => {
-                      //@ts-ignore
-                      const originalY = floor.y
-                      console.log(originalY)
-                      setTimeout(() => {
-                        //@ts-ignore
-                        if (floor.y > 1000) {
-                          //@ts-ignore
-                          // floor.setVelocityY(500)
-                          this.scene.tweens.add({
-                            //@ts-ignore
-                            targets: [floor],
-                            y: originalY + 200,
-                            duration: 1000,
-                            ease: 'ease', 
-                            onComplete: () => {
-                              this.scene.tweens.add({
-                                //@ts-ignore
-                                targets: [floor],
-                                y: originalY,
-                                duration: 1000,
-                                ease: 'ease', 
-                                onComplete: () => {
-                                  //@ts-ignore
-                                  floor.body.enable = true;
-                                },
-                              });
-                            },
-                            onStart: () => {
-                              //@ts-ignore
-                              floor.body.enable = false;
-                            },
-                          });
-                        } else {
-                               //@ts-ignore
-                          // floor.setVelocityY(500)
-                          this.scene.tweens.add({
-                            //@ts-ignore
-                            targets: [floor],
-                            y: originalY - 200,
-                            duration: 1000,
-                            ease: 'ease', 
-                            onComplete: () => {
-                              this.scene.tweens.add({
-                                //@ts-ignore
-                                targets: [floor],
-                                y: originalY,
-                                duration: 1000,
-                                ease: 'ease', 
-                                onComplete: () => {
-                                  //@ts-ignore
-                                  floor.body.enable = true;
-                                },
-                              });
-                            },
-                            onStart: () => {
-                              //@ts-ignore
-                              floor.body.enable = false;
-                            },
-                          });
-                        }
-                      }, 400);
                     },
                     () => true,
                     this.scene

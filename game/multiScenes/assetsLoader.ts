@@ -25,6 +25,8 @@ const loadAssets = {
       ["svg", "fondoDegrade", "/assets/textBox/fondoDegrade.svg", { scale: 7 }],
       // menu credits
       ["image", "backButton", "/menu/credits/backButton.png"],
+      ["image", "backButtonHover", "/menu/credits/backButtonHover.png"],
+      ["image", "backButtonPressed", "/menu/credits/backButtonPressed.png"],
       ["image", "credits_barto", "/menu/credits/credits_barto.png"],
       ["image", "credits_clari", "/menu/credits/credits_clari.png"],
       ["image", "credits_hache", "/menu/credits/credits_hache.png"],
@@ -51,7 +53,13 @@ const loadAssets = {
       ["image", "settingsButtonPressed", "/menu/initial/settingsButtonPressed.png"],
       // menu play
       ["image", "enterCodeButton", "/menu/play/enterCodeButton.png"],
+      ["image", "enterCodeButtonHover", "/menu/play/enterCodeButtonHover.png"],
+      ["image", "enterCodeButtonPressed", "/menu/play/enterCodeButtonPressed.png"],
       ["image", "newGameButton", "/menu/play/newGameButton.png"],
+      ["image", "newGameButtonPressed", "/menu/play/newGameButtonPressed.png"],
+      ["image", "newGameButtonHover", "/menu/play/newGameButtonHover.png"],
+      ["image", "backButtonHover", "/menu/play/backHover.png"],
+      ["image", "backButtonPressed", "/menu/play/backButtonPressed.png"],
     ]
 
   },

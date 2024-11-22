@@ -16,14 +16,36 @@ class containerPlay extends Phaser.GameObjects.Container {
         const offsetY = 100
         this.newGameButton = scene.add.image(this.width/2, this.height/2 + offsetY, "newGameButton")
         this.newGameButton.setInteractive().on('pointerdown', () => {
+            console.log('HOLA')
+            this.newGameButton.setTexture('newGameButtonPressed')
             if(config.panToPlay){
                 this.scene.cameras.main.pan(config.panToPlay.x, config.panToPlay.y, 1000, 'Expo', true)
             }
         })
+        this.newGameButton.on('pointerup',()=>{
+            this.newGameButton.setTexture('newGameButtonHover')
+        })
+        this.newGameButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER,()=>{
+            this.newGameButton.setTexture('newGameButtonHover')
+        })
+        this.newGameButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT,()=>{
+            this.newGameButton.setTexture('newGameButton')
+        })
+
         this.enterCodeButton = scene.add.image(0, 0, "enterCodeButton")
         this.enterCodeButton.setPosition(this.width/2, this.newGameButton.y + this.enterCodeButton.height + this.newGameButton.height/2)
         this.enterCodeButton.setInteractive().on('pointerdown', () => {
             console.log("ENTER CODE")
+            this.enterCodeButton.setTexture('enterCodeButtonPressed')
+        })
+        this.enterCodeButton.on('pointerup',()=>{
+            this.enterCodeButton.setTexture('enterCodeButtonHover')
+        })
+        this.enterCodeButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER,()=>{
+            this.enterCodeButton.setTexture('enterCodeButtonHover')
+        })
+        this.enterCodeButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT,()=>{
+            this.enterCodeButton.setTexture('enterCodeButton')
         })
         
         this.gameTitle = scene.add.image(0, 0, "gameTitle")
@@ -33,8 +55,18 @@ class containerPlay extends Phaser.GameObjects.Container {
         this.backButton.setPosition(this.backButton.width, this.height - this.backButton.height)
         this.backButton.setInteractive().on('pointerdown', () => {
             if(config.panToInitial){
+                this.backButton.setTexture('backButtonPressed')
                 this.scene.cameras.main.pan(config.panToInitial.x, config.panToInitial.y, 1000, 'Expo', true)
             }
+        })
+        this.backButton.on('pointerup',()=>{
+            this.backButton.setTexture('backButton')
+        })
+        this.backButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, ()=>{
+            this.backButton.setTexture('backButtonHover')
+        })
+        this.backButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, ()=>{
+            this.backButton.setTexture('backButton')
         })
 
 

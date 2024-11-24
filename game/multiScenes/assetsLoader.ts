@@ -629,7 +629,9 @@ const loadAssets = {
 
       // SCENE 5
       ["image", "BackgroundMountainScene5", "/movies/cinemato2/scene5/BackgroundMountainScene5.png"],
-      ["image", "bubbles", "/movies/cinemato2/scene5/bubbles.png"],
+      ["image", "bubble1", "/movies/cinemato2/scene5/bubble1.png"],
+      ["image", "bubble2", "/movies/cinemato2/scene5/bubble2.png"],
+      ["image", "bubble3", "/movies/cinemato2/scene5/bubble3.png"],
       ["image", "cloudScene5", "/movies/cinemato2/scene5/cloudsScene5.png"],
       ["image", "frontMountainScene5", "/movies/cinemato2/scene5/frontMountainScene5.png"],
       ["image", "opacityScene5", "/movies/cinemato2/scene5/opacityScene5.png"],

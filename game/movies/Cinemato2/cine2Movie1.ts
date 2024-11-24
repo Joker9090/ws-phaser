@@ -56,7 +56,7 @@ class cine2Movie1 {
       .image(0, 0, "skyDay")
       .setOrigin(0.5);
     this.cloudsDay = this.cine.add
-      .image(-600, 0, "cloudsDay")
+      .image(-300, 0, "cloudsDay")
       .setOrigin(0.5)
       .setScale(1.5, 1.3);
     this.arm1 = this.cine.add
@@ -160,17 +160,17 @@ class cine2Movie1 {
         targets: [this.astro, this.arm1, this.arm2,],
         y: '+=30',
         delay: 0,
-        duration: 2000,
+        duration: 1000,
         yoyo: true,
         loop: -1,
         ease: "ease",
       });
 
       this.cine.tweens.add({
-        targets: [this.bag, this.food],
+        targets: [this.bag],
         y: '+=25',
-        delay: 300,
-        duration: 2000,
+        delay: 100,
+        duration: 1000,
         yoyo: true,
         loop: -1,
         ease: "ease",
@@ -179,8 +179,8 @@ class cine2Movie1 {
       this.cine.tweens.add({
         targets: [this.food],
         y: '+=20',
-        delay: 400,
-        duration: 2000,
+        delay: 100,
+        duration: 1000,
         yoyo: true,
         loop: -1,
         ease: "ease",

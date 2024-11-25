@@ -626,13 +626,49 @@ class Mapa4 {
       .setTint(Phaser.Display.Color.GetColor(255, 101, 255));
 
     const p6Config: FloorConfig = {
-      pos: { x: 1900, y: 450 },
+      pos: { x: 1900, y: 650 },
+      texture: "pSimple1p1",
+      scale: { width: 0.7, height: 0.7 },
+      width: 140,
+      height: 50,
+      animation:{
+        yAxis:{
+          yDistance:500,
+          yVel:200
+        }
+      }
+    };
+    const p6 = new Floor(this.scene, p6Config, this.pisos).setFlipY(true);
+
+    const p11Config: FloorConfig = {
+      pos: { x: 2150, y: 900 },
       texture: "pSimple1p1",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
       height: 50,
     };
-    const p6 = new Floor(this.scene, p6Config, this.pisos).setFlipY(true);
+    const p11 = new Floor(this.scene, p11Config, this.pisos2).setFlipY(true).setTint(
+      Phaser.Display.Color.GetColor(255, 101, 0)
+    );
+
+
+    const p12Config: FloorConfig = {
+      pos: { x: 2150, y: 1400 },
+      texture: "pSimple1p1",
+      scale: { width: 0.7, height: 0.7 },
+      width: 140,
+      height: 50,
+    };
+    const p12 = new Floor(this.scene, p12Config, this.pisos).setFlipY(false);
+
+    const p13Config: FloorConfig = {
+      pos: { x: 1800, y: 1400 },
+      texture: "pSimple1p1",
+      scale: { width: 0.7, height: 0.7 },
+      width: 140,
+      height: 50,
+    };
+    const p13 = new Floor(this.scene, p13Config, this.pisos).setFlipY(false);
 
     const p7Config: FloorConfig = {
       pos: { x: 2500, y: 450 },
@@ -640,15 +676,18 @@ class Mapa4 {
       scale: { width: 0.7, height: 0.7 },
       width: 140,
       height: 50,
-      animation:{
-        xAxis:{
-          xDistance:800,
-          xVel:200
-        }
-      }
     };
     const p7 = new Floor(this.scene, p7Config, this.pisos)
       .setFlipY(true)
+
+      const p14Config: FloorConfig = {
+        pos: { x: 2500, y: 1400 },
+        texture: "pSimple2p1",
+        scale: { width: 0.7, height: 0.7 },
+        width: 140,
+        height: 50,
+      };
+      const p14 = new Floor(this.scene, p14Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));  
     //   .setVelocity(400, 0);
 
     // this.scene.tweens.add({
@@ -659,6 +698,16 @@ class Mapa4 {
     //   targets: p7.body?.velocity,
     //   x: "-=800",
     // });
+
+    const p15Config: FloorConfig = {
+      pos: { x: 2750, y: 590 },
+      texture: "pSimple2p1",
+      scale: { width: 0.7, height: 0.7 },
+      width: 140,
+      height: 50,
+    };
+    const p15 = new Floor(this.scene, p15Config, this.pisos)
+      .setFlipY(true)
 
     const p8Config: LargeFloorIslandConfig = {
       textureA: "longFloorLeftp1",
@@ -719,7 +768,7 @@ class Mapa4 {
 
     const coinConfig: FloorConfig = {
       texture: "comida",
-      pos: { x: 2150, y: 600 },
+      pos: { x: 1800, y: 1300 },
       scale: { width: 0.5, height: 0.5 },
       width: 10,
       height: 18,

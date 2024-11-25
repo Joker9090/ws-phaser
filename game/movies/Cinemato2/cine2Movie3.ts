@@ -55,29 +55,30 @@ class cine2Movie3 {
       .image(0, 0, "nightSky")
       .setOrigin(0.5);
     this.nightClouds = this.cine.add
-      .image(-600, 0, "nightClouds")
+      .image(-300, 0, "nightClouds")
       .setOrigin(0.5)
       .setScale(1.5, 1.3);
     this.mountainsNight = this.cine.add
       .image(-0, 0, "mountainsNight")
       .setOrigin(0.5)
     this.shipLightScene3 = this.cine.add
-      .image(0, 0, "shipLightScene3")
+      .image(0, 50, "shipLightScene3")
       .setOrigin(0.5);
     this.welderAstronaut = this.cine.add
-      .image(0, 0, "welderAstronaut")
+      .image(0, 50, "welderAstronaut")
       .setOrigin(0.5);
+      this.weldingShip = this.cine.add
+      .image(0, 50, "weldingShip")
+      .setOrigin(0.5);
+      this.destelloWelder = this.cine.add
+        .image(120, -210, "destelloWelder")
+        .setOrigin(0.5)
+        .setAlpha(0)
+        .setScale(0);
     this.welderScreen = this.cine.add
-      .image(0, 0, "welderScreen")
-      .setOrigin(0.5);
-    this.weldingShip = this.cine.add
-      .image(0, 0, "weldingShip")
-      .setOrigin(0.5);
-    this.destelloWelder = this.cine.add
-      .image(120, -260, "destelloWelder")
+      .image(0, 50, "welderScreen")
       .setOrigin(0.5)
-      .setAlpha(0)
-      .setScale(0);
+      .setAlpha(0);
 
       const darkMask = this.cine.add.rectangle(
         0,
@@ -128,6 +129,8 @@ class cine2Movie3 {
     camera.postFX.addVignette(0.5, 0.5, 0.8);
     if (this.cine.UIcontainer !== undefined)
       camera.ignore(this.cine.UIcontainer);
+
+    camera.zoom = 1.035870588235294 // zoom con el que queda la scene anterior
 
     const part1 = (job: TickerJob) => {
       this.dialogue = new DialogueManager(
@@ -246,6 +249,15 @@ class cine2Movie3 {
         delay: 0,
         duration: 40000,
         ease: "ease",
+      });
+
+      this.cine.tweens.add({
+        targets: [this.welderScreen],
+        alpha: 1,
+        delay: 0,
+        duration: 400,
+        loop: -1,
+        ease: (t: number) => weldingEase(t),
       });
 
       const dialogueListener = (newState: string, nextText?: string) => {

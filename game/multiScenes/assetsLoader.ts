@@ -662,7 +662,9 @@ const loadAssets = {
 
       // SCENE 5
       ["image", "BackgroundMountainScene5", "/movies/cinemato2/scene5/BackgroundMountainScene5.png"],
-      ["image", "bubbles", "/movies/cinemato2/scene5/bubbles.png"],
+      ["image", "bubble1", "/movies/cinemato2/scene5/bubble1.png"],
+      ["image", "bubble2", "/movies/cinemato2/scene5/bubble2.png"],
+      ["image", "bubble3", "/movies/cinemato2/scene5/bubble3.png"],
       ["image", "cloudScene5", "/movies/cinemato2/scene5/cloudsScene5.png"],
       ["image", "frontMountainScene5", "/movies/cinemato2/scene5/frontMountainScene5.png"],
       ["image", "opacityScene5", "/movies/cinemato2/scene5/opacityScene5.png"],
@@ -704,12 +706,16 @@ const loadAssets = {
       // SCENE 2
       ["image", "backgroundC3S2", "/movies/cinemato3/scene2/backgroundC3S2.png"],
       // SCENE 3
+      ["image", "speakerBack", "/movies/cinemato3/scene3/speakerBack.png"],
+      ["image", "speakerCenter", "/movies/cinemato3/scene3/speakerCenter.png"],
+      ["image", "speakerMesh", "/movies/cinemato3/scene3/speakerMesh.png"],
       ["image", "panelC3S3", "/movies/cinemato3/scene3/panelC3S3.png"],
       ["image", "soundBarFullC3S3", "/movies/cinemato3/scene3/soundBarFullC3S3.png"],
       ["image", "soundBarOpacityC3S3", "/movies/cinemato3/scene3/soundBarOpacityC3S3.png"],
       ["image", "soundBarSmallC3S3", "/movies/cinemato3/scene3/soundBarSmallC3S3.png"],
       // SCENE 4
       ["image", "astroC3S4", "/movies/cinemato3/scene4/astroC3S4.png"],
+      ["image", "astroFrontC4S4", "/movies/cinemato3/scene4/astroFrontC4S4.png"],
       ["image", "background1C3S4", "/movies/cinemato3/scene4/background1C3S4.png"],
       ["image", "background2C3S4", "/movies/cinemato3/scene4/background2C3S4.png"],
       ["image", "shipC3S4", "/movies/cinemato3/scene4/shipC3S4.png"],

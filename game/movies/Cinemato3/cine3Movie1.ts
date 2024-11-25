@@ -54,7 +54,7 @@ class cine3Movie1 {
       .image(0, 0, "backgroundC3S1")
       .setOrigin(0.5);
     this.bubblesC3S1 = this.cine.add
-      .image(0, 0, "bubblesC3S1")
+      .image(0, 200, "bubblesC3S1")
       .setOrigin(0.5)
     this.cloud1C3S1 = this.cine.add
       .image(300, -300, "cloud1C3S1")
@@ -149,10 +149,28 @@ class cine3Movie1 {
       this.dialogue?.play();
       this.cine.tweens.add({
         targets: [camera],
-        zoom: 1.1,
-        scrollX: -500,
+        zoom: 1.3,
+        scrollX: -200,
+        scrollY: 85,
         delay: 0,
         duration: 17000,
+        ease: "ease",
+      });
+
+      this.cine.tweens.add({
+        targets: [this.bubblesC3S1],
+        y: '-=100',
+        delay: 0,
+        duration: 17000,
+        ease: "ease",
+      });
+      this.cine.tweens.add({
+        targets: [this.bubblesC3S1],
+        x: '+=9',
+        delay: 0,
+        yoyo: true,
+        loop: -1,
+        duration: 7000,
         ease: "ease",
       });
 
@@ -176,7 +194,7 @@ class cine3Movie1 {
 
   update(this: cine3Movie1, time: number, delta: number) {
     if (this.dialogue) this.dialogue.update();
-    if (this.nextCine) this.cine.scene.restart({ keyname: "cine_3_movie_1" });
+    if (this.nextCine) this.cine.scene.restart({ keyname: "cine_3_movie_2" });
   }
 }
 

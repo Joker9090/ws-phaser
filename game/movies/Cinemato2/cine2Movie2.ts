@@ -55,9 +55,10 @@ class cine2Movie2 {
       .image(0, 0, "skyDay")
       .setOrigin(0.5);
     this.nubesScene2 = this.cine.add
-      .image(-600, 0, "nubesScene2")
+      .image(-300, 0, "nubesScene2")
       .setOrigin(0.5)
-      .setScale(1.5, 1.3);
+      .setScale(1.5, 1.3)
+      .setFlipX(true);
 
     this.shipCrashed = this.cine.add
       .image(-0, 0, "shipCrashed")
@@ -224,6 +225,7 @@ class cine2Movie2 {
   update(this: cine2Movie2, time: number, delta: number) {
     if (this.dialogue) this.dialogue.update();
     if (this.nextCine) this.cine.scene.restart({ keyname: "cine_2_movie_3" });
+    console.log("zoom: ", this.cine.cameras.main.zoom)
   }
 }
 

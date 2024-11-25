@@ -13,6 +13,9 @@ class cine3Movie3 {
   soundBarFullC3S3?: Phaser.GameObjects.Image;
   soundBarOpacityC3S3?: Phaser.GameObjects.Image;
   soundBarSmallC3S3?: Phaser.GameObjects.Image;
+  speakerBack?: Phaser.GameObjects.Image;
+  speakerCenter?: Phaser.GameObjects.Image;
+  speakerMesh?: Phaser.GameObjects.Image;
 
 
   // controllers
@@ -51,13 +54,22 @@ class cine3Movie3 {
       .image(0, 0, "panelC3S3")
       .setOrigin(0.5);
     this.soundBarFullC3S3 = this.cine.add
-      .image(0, 0, "soundBarFullC3S3")
+      .image(0, -220, "soundBarFullC3S3")
       .setOrigin(0.5)
     this.soundBarOpacityC3S3 = this.cine.add
-      .image(-0, 0, "soundBarOpacityC3S3")
+      .image(-0, -220, "soundBarOpacityC3S3")
       .setOrigin(0.5)
     this.soundBarSmallC3S3 = this.cine.add
-      .image(0, 0, "soundBarSmallC3S3")
+      .image(115, 87, "soundBarSmallC3S3")
+      .setOrigin(0.5);
+    this.speakerBack = this.cine.add
+      .image(0, 0, "speakerBack")
+      .setOrigin(0.5);
+    this.speakerCenter = this.cine.add
+      .image(687, -277, "speakerCenter")
+      .setOrigin(0.5);
+    this.speakerMesh = this.cine.add
+      .image(0, 0, "speakerMesh")
       .setOrigin(0.5);
 
       const darkMask = this.cine.add.rectangle(
@@ -74,6 +86,9 @@ class cine3Movie3 {
       this.soundBarFullC3S3,
       this.soundBarOpacityC3S3,
       this.soundBarSmallC3S3,
+      this.speakerBack,
+      this.speakerCenter,
+      this.speakerMesh,
     ];
 
     // this.cine.cameras.main.zoom = 0.5
@@ -127,12 +142,48 @@ class cine3Movie3 {
         80
       );
       this.dialogue?.play();
+      // this.cine.tweens.add({
+      //   targets: [camera],
+      //   zoom: 1.1,
+      //   delay: 0,
+      //   duration: 17000,
+      //   ease: "ease",
+      // });
       this.cine.tweens.add({
-        targets: [camera],
-        zoom: 1.1,
+        targets: [this.speakerCenter],
+        scale: 1.05,
+        delay: 100,
+        loop: -1,
+        yoyo: true,
+        duration: 444,
+        ease: "bounce",
+      });
+      this.cine.tweens.add({
+        targets: [this.soundBarFullC3S3],
+        scaleY: 0.3,
         delay: 0,
-        duration: 17000,
-        ease: "ease",
+        yoyo: true,
+        loop: -1,
+        duration: 333,
+        ease: "expo",
+      });
+      this.cine.tweens.add({
+        targets: [this.soundBarOpacityC3S3],
+        scaleY: 0.5,
+        delay: 0,        
+        yoyo: true,
+        loop: -1,
+        duration: 234,
+        ease: "quadratic",
+      });
+      this.cine.tweens.add({
+        targets: [this.soundBarSmallC3S3],
+        scaleY: 0.9,
+        delay: 0,        
+        yoyo: true,
+        loop: -1,
+        duration: 234,
+        ease: "quadratic",
       });
 
       const dialogueListener = (newState: string, nextText?: string) => {
@@ -154,7 +205,7 @@ class cine3Movie3 {
 
   update(this: cine3Movie3, time: number, delta: number) {
     if (this.dialogue) this.dialogue.update();
-    if (this.nextCine) this.cine.scene.restart({ keyname: "cine_3_movie_3" });
+    if (this.nextCine) this.cine.scene.restart({ keyname: "cine_3_movie_4" });
   }
 }
 

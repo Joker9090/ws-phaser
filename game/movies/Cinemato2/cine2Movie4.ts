@@ -71,11 +71,11 @@ class cine2Movie4 {
         this.foodC2S4 = this.cine.add
             .image(100, 0, "foodC2S4")
             .setOrigin(0.5)
-            .setPosition(100, -110);
+            .setPosition(140, -180);
         this.planetC2S4 = this.cine.add
             .image(100, 0, "planetC2S4")
             .setOrigin(0.5)
-            .setPosition(-100, 50);
+            .setPosition(-80, -60);
         this.oxygen1 = this.cine.add
             .image(100, 0, "oxygen1")
             .setOrigin(0.5)
@@ -323,6 +323,8 @@ class cine2Movie4 {
             this.popUpPlanet,
             this.planetOnRadar,
             this.radarCross,
+            this.foodC2S4,
+            this.planetC2S4,
             this.oxygen1,
             this.oxygen2,
             this.popUpPlanetBubble,
@@ -404,7 +406,7 @@ class cine2Movie4 {
 
             this.cine.tweens.add({
                 targets: [this.oxygen2],
-                alpha: 0.7,
+                alpha: 0.4,
                 duration: 400,
                 delay: 0,
                 yoyo: true,
@@ -592,7 +594,7 @@ class cine2Movie4 {
 
     update(this: cine2Movie4, time: number, delta: number) {
         if (this.dialogue) this.dialogue.update();
-        if (this.nextCine) this.cine.scene.restart({ keyname: "cine_2_movie_4" });
+        if (this.nextCine) this.cine.scene.restart({ keyname: "cine_2_movie_5" });
     }
 }
 

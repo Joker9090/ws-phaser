@@ -11,6 +11,7 @@ class cine3Movie4 {
     dialogue?: DialogueManager;
     //assets
     astroC3S4?: Phaser.GameObjects.Image;
+    astroFrontC4S4?: Phaser.GameObjects.Image;
     background1C3S4?: Phaser.GameObjects.Image;
     background2C3S4?: Phaser.GameObjects.Image;
     shipC3S4?: Phaser.GameObjects.Image;
@@ -46,9 +47,14 @@ class cine3Movie4 {
             y: window.innerHeight / 927,
         };
         this.astroC3S4 = this.cine.add
-            .image(0, 0, "astroC3S4")
+            .image(100, 100, "astroC3S4")
             .setOrigin(0.5)
-            .setPosition(10, -110);
+            .setPosition(30, 0)
+            .setAlpha(0);
+        this.astroFrontC4S4 = this.cine.add
+            .image(100, 100, "astroFrontC4S4")
+            .setOrigin(0.5)
+            .setPosition(30, 0);
             this.background1C3S4 = this.cine.add
             .image(0, 0, "background1C3S4")
             .setOrigin(0.5)
@@ -73,6 +79,7 @@ class cine3Movie4 {
             this.background2C3S4,
             this.shipC3S4,
             this.astroC3S4,
+            this.astroFrontC4S4,
             darkMask
         ];
 
@@ -86,6 +93,8 @@ class cine3Movie4 {
                 ? gameObjectScaler.y
                 : gameObjectScaler.x
         );
+        this.container.add(assetsScenes);
+
         const cameraDialogue = this.cine.cameras.add(
             0,
             0,
@@ -101,55 +110,37 @@ class cine3Movie4 {
 
             this.dialogue = new DialogueManager(
                 this.cine,
-                [
-                    "I knew something else was broken!",
-                    "Please radar... find something",
-                    "Yes! That's it!"
-                ],
                 [""],
-                [
-                    {
-                        delay: 3500,
-                        withTapping: {
-                            audios: ["key01", "key01", "key02"],
-                            count: 20,
-                            delay: 180,
-                        },
-                        keepAlive: 1000,
-                        position: {
-                            width: 750
-                        }
-                    },
-                    {
-                        delay: 1000,
-                        withTapping: {
-                            audios: ["key01", "key01", "key02"],
-                            count: 16,
-                            delay: 180,
-                        },
-                        keepAlive: 1000,
-                        position: {
-                            width: 750
-                        }
-                    },
-                    {
-                        delay: 2000,
-                        withTapping: {
-                            audios: ["key01", "key01", "key02"],
-                            count: 13,
-                            delay: 180,
-                        },
-                        keepAlive: 1000,
-                        position: {
-                            width: 750
-                        }
-                    },
-                ],
+                [""],
+                [],
                 80
             );
-            this.dialogue?.play();
+            // this.dialogue?.play();
 
-          
+            this.cine.tweens.add({
+                targets: [this.astroFrontC4S4],
+                scale: 1,
+                delay: 0,
+                duration: 4000,
+                onComplete: () => {
+                    this.cine.tweens.add({
+                        targets: [this.astroFrontC4S4],
+                        alpha: 0,
+                        delay: 0,
+                        duration: 300,
+                        ease: "ease",
+                      });
+                      this.cine.tweens.add({
+                        targets: [this.astroC3S4],
+                        alpha: 1,
+                        delay: 0,
+                        duration: 300,
+                        ease: "ease",
+                      });
+                },
+                ease: "bounce",
+              });
+
             const dialogueListener = (newState: string, nextText?: string) => {
                 if (newState === "CONTINUE") {
                 } else if (newState === "FINISHED") {
@@ -162,7 +153,7 @@ class cine3Movie4 {
 
 
         this.ticker.addJob(
-            new TickerJob(1, 10, part1, false, undefined, true, (job: TickerJob) => {
+            new TickerJob(1, 10, part1, false, 8000, true, (job: TickerJob) => {
                 this.nextCine = true;
             })
         );
@@ -170,7 +161,7 @@ class cine3Movie4 {
 
     update(this: cine3Movie4, time: number, delta: number) {
         if (this.dialogue) this.dialogue.update();
-        if (this.nextCine) this.cine.scene.restart({ keyname: "cine_3_movie_4" });
+        if (this.nextCine) this.cine.scene.restart({ keyname: "cine_3_movie_5" });
     }
 }
 

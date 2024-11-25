@@ -9,12 +9,14 @@ class cine2Movie5 {
   nextCine: boolean = false;
   dialogue?: DialogueManager;
   //assets
-  
+
   backgroundScene5?: Phaser.GameObjects.Image;
   cloudScene5?: Phaser.GameObjects.Image;
   starsScene5?: Phaser.GameObjects.Image;
   BackgroundMountainScene5?: Phaser.GameObjects.Image;
-  bubbles?: Phaser.GameObjects.Image;
+  bubble1?: Phaser.GameObjects.Image;
+  bubble2?: Phaser.GameObjects.Image;
+  bubble3?: Phaser.GameObjects.Image;
   frontMountainScene5?: Phaser.GameObjects.Image;
   opacityScene5?: Phaser.GameObjects.Image;
 
@@ -64,31 +66,39 @@ class cine2Movie5 {
     this.BackgroundMountainScene5 = this.cine.add
       .image(0, 0, "BackgroundMountainScene5")
       .setOrigin(0.5);
-    this.bubbles = this.cine.add
-      .image(0, 0, "bubbles")
+    this.bubble1 = this.cine.add
+      .image(0, 0, "bubble1")
+      .setOrigin(0.5);
+    this.bubble2 = this.cine.add
+      .image(0, 0, "bubble2")
+      .setOrigin(0.5);
+    this.bubble3 = this.cine.add
+      .image(0, 0, "bubble3")
       .setOrigin(0.5);
     this.frontMountainScene5 = this.cine.add
       .image(0, 0, "frontMountainScene5")
       .setOrigin(0.5);
-      this.opacityScene5 = this.cine.add
+    this.opacityScene5 = this.cine.add
       .image(0, 200, "opacityScene5")
       .setOrigin(0.5);
 
-      const darkMask = this.cine.add.rectangle(
-        0,
-        0,
-        window.innerWidth * 1.5,
-        window.innerHeight * 1.5,
-        0,
-        1
-      ).setAlpha(0);
+    const darkMask = this.cine.add.rectangle(
+      0,
+      0,
+      window.innerWidth * 1.5,
+      window.innerHeight * 1.5,
+      0,
+      1
+    ).setAlpha(0);
 
     const gameObjects = [
       this.backgroundScene5,
       this.starsScene5,
       this.cloudScene5,
       this.BackgroundMountainScene5,
-      this.bubbles,
+      this.bubble1,
+      this.bubble2,
+      this.bubble3,
       this.opacityScene5,
       this.frontMountainScene5,
       darkMask,
@@ -162,7 +172,7 @@ class cine2Movie5 {
       });
 
       this.cine.tweens.add({
-        targets: [this.bubbles],
+        targets: [this.bubble1],
         x: '+=10',
         delay: 0,
         yoyo: true,
@@ -170,10 +180,40 @@ class cine2Movie5 {
         ease: "ease",
       });
       this.cine.tweens.add({
-        targets: [this.bubbles],
+        targets: [this.bubble1],
         y: '-=400',
         delay: 0,
         duration: 40000,
+        ease: "ease",
+      });
+      this.cine.tweens.add({
+        targets: [this.bubble2],
+        x: '+=7',
+        delay: 0,
+        yoyo: true,
+        duration: 2000,
+        ease: "ease",
+      });
+      this.cine.tweens.add({
+        targets: [this.bubble2],
+        y: '-=50',
+        delay: 0,
+        duration: 20000,
+        ease: "ease",
+      });
+      this.cine.tweens.add({
+        targets: [this.bubble3],
+        x: '-=17',
+        delay: 0,
+        yoyo: true,
+        duration: 2000,
+        ease: "ease",
+      });
+      this.cine.tweens.add({
+        targets: [this.bubble3],
+        y: '-=100',
+        delay: 0,
+        duration: 10000,
         ease: "ease",
       });
 

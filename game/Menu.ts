@@ -14,7 +14,7 @@ class MenuScene extends Phaser.Scene {
 
     containerPlay?: Phaser.GameObjects.Container;
     centralPointPlay: { x: number, y: number } = { x: this.width / 2 + this.width, y: this.height / 2 };
-
+    background?: Phaser.GameObjects.Image;
 
     constructor() {
         super({ key: "MenuScene" });
@@ -22,6 +22,7 @@ class MenuScene extends Phaser.Scene {
     }
 
     create() {
+        this.background = this.add.image(window.innerWidth / 2 , window.innerHeight / 2, "menuBackground").setOrigin(0.5, 0.5)
         // set viewport and camera position
         this.cameras.main.setViewport(-this.width, 0, this.width * 3, this.height)
         this.cameras.main.centerOn(this.centralPointInitial.x, this.centralPointInitial.y)

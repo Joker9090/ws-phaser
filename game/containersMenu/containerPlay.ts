@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import { ContainerMenuConfigType } from "../Types";
+import MultiScene from "../MultiScene";
 
 class containerPlay extends Phaser.GameObjects.Container {
 
@@ -16,9 +17,11 @@ class containerPlay extends Phaser.GameObjects.Container {
         const offsetY = 100
         this.newGameButton = scene.add.image(this.width/2, this.height/2 + offsetY, "newGameButton")
         this.newGameButton.setInteractive().on('pointerdown', () => {
-            console.log('HOLA')
             this.newGameButton.setTexture('newGameButtonPressed')
             if(config.panToPlay){
+                console.log(
+                this.scene.scene.get('multiScene')
+                );
                 this.scene.cameras.main.pan(config.panToPlay.x, config.panToPlay.y, 1000, 'Expo', true)
             }
         })

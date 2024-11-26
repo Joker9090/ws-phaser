@@ -533,6 +533,15 @@ class Mapa4 {
       Phaser.Display.Color.GetColor(255, 101, 0)
     );
 
+    const p16Config: FloorConfig = {
+      pos: { x: 800, y: 400 },
+      texture: "pSimple2p1",
+      scale: { width: 0.7, height: 0.7 },
+      width: 140,
+      height: 50,
+    };
+    const p16 = new Floor(this.scene, p16Config, this.pisos).setFlipY(true);
+
     const fireball1Config: FloorConfig = {
       spriteSheet: "meteoritop1",
       texture: "meteoritop1",
@@ -563,6 +572,15 @@ class Mapa4 {
       .setFlipX(true)
       .setFlipY(true)
       .setTint(Phaser.Display.Color.GetColor(255, 101, 0));
+
+      const p17Config: FloorConfig = {
+        pos: { x: 1100, y: 1400 },
+        texture: "pSimple2p1",
+        scale: { width: 0.7, height: 0.7 },
+        width: 140,
+        height: 50,
+      };
+      const p17 = new Floor(this.scene, p17Config, this.pisos);
 
     const fireball2Config: FloorConfig = {
       spriteSheet: "meteoritop1",

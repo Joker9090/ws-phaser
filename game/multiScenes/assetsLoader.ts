@@ -60,7 +60,10 @@ const loadAssets = {
       ["image", "newGameButtonHover", "/menu/play/newGameButtonHover.png"],
       ["image", "backButtonHover", "/menu/play/backHover.png"],
       ["image", "backButtonPressed", "/menu/play/backButtonPressed.png"],
+      ["image", "menuBackground", "/menu/menuBackground.png"],
+    
     ]
+
 
   },
   GamePlay1: {

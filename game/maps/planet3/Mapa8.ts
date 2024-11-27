@@ -603,7 +603,8 @@ class Mapa8 {
             delayed: 100,
             direction: 1,
             velocity: 15,
-
+            scaleTweenDuration:3000,
+            tweenScale:true,
             scale: 1,
             group: bubblesGroup,
             upStraigth: true,
@@ -624,6 +625,8 @@ class Mapa8 {
             direction: 1,
             velocity: 15,
             depth:-99,
+            scaleTweenDuration:3000,
+            tweenScale:true,
             scale: 1,
             group: bubblesGroup,
             upStraigth: true,

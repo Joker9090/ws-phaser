@@ -8,6 +8,8 @@ export type AsteroidGeneratorConfig = {
   delayed: number;
   direction: 0 | 1;
   scale: number;
+  tweenScale?:boolean
+  scaleTweenDuration?:number,
   velocity: number;
   depth?: number;
   group?: Phaser.GameObjects.Group;
@@ -56,12 +58,7 @@ class AsteroidGenerator {
     if (this.config.depth) asteroid.setDepth(this.config.depth);
     if (this.config.group) this.config.group.add(asteroid)
     asteroid.setScale(this.config.scale * this.randomProp());
-    // this.scene.tweens.add({
-    //   targets: [asteroid],
-    //   scale: this.config.scale * this.randomProp(),
-    //   duration: 2000,
-    //   ease: 'ease'
-    // })
+    
     this.asteroids.add(asteroid);
     this.scene.UICamera?.ignore(asteroid)
     if(this.config.upStraigth){
@@ -69,6 +66,14 @@ class AsteroidGenerator {
     }else{
       asteroid.setVelocityX(this.randomVelocity())  ;
     }
+    if(this.config.tweenScale){
+    this.scene.tweens.add({
+      targets: [asteroid],
+      scale: { from: 0, to: this.config.scale }, 
+      duration: this.config.scaleTweenDuration,
+      ease: 'ease'
+    })
+}
   }
 
   runCreation(){

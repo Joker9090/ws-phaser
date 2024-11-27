@@ -571,6 +571,7 @@ class Mapa8 {
             tween: {
               duration: 4000,
               repeat: -1,
+              delay:Math.random() * 1000,
               y: "+=2500",
             },
             frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -587,6 +588,7 @@ class Mapa8 {
             tween: {
               duration: 4000,
               repeat: -1,
+              delay:Math.random() * 1200,
               y: "+=2800",
             },
             frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],

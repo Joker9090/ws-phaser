@@ -743,6 +743,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
           height: 100,
           tween: {
             duration: 4000,
+            delay:Math.random() * 1100,
             repeat: -1,
             y: "+=2500",
           },
@@ -758,6 +759,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         height: 100,
         tween: {
           duration: 4000,
+          delay:Math.random() * 1300,
           repeat: -1,
           y: "+=2500",
         },

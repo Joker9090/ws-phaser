@@ -10,6 +10,7 @@ class containerInitial extends Phaser.GameObjects.Container {
     logoNoswar: Phaser.GameObjects.Image;
     playButton: Phaser.GameObjects.Image;
     scoreButton: Phaser.GameObjects.Image;
+    albumButton: Phaser.GameObjects.Image;
     settingsButton: Phaser.GameObjects.Image;
 
     constructor(scene: Phaser.Scene, config: ContainerMenuConfigType) {
@@ -25,18 +26,21 @@ class containerInitial extends Phaser.GameObjects.Container {
             this.playButton.setTexture('playButton');
         });
         this.playButton.on('pointerdown', () => {
-            if(config.panToPlay){
-                this.playButton.setTexture('playButtonPressed')
-                this.scene.cameras.main.pan(config.panToPlay.x, config.panToPlay.y, 1000, 'Expo', true)
-            }
+            this.playButton.setTexture('playButtonPressed')
+            
         })
         this.playButton.on('pointerup', () => {
+            if(config.panToPlay){
+                this.scene.cameras.main.pan(config.panToPlay.x, config.panToPlay.y, 1000, 'Expo', true)
+            }
             this.playButton.setTexture('playButtonHover')
         })
 
+
+
         console.log(this.playButton.width, this.playButton.height, "PLAY BUTTON")
         this.creditsButton = scene.add.image(0, 0, "creditsButton")
-        this.creditsButton.setPosition(this.width/2, this.playButton.y + this.creditsButton.height + this.playButton.height/2 + offsetY)
+        this.creditsButton.setPosition(this.width/2 -130, this.playButton.y + this.creditsButton.height + this.playButton.height/2 + offsetY)
 
         this.creditsButton.setInteractive();
         this.creditsButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
@@ -47,16 +51,36 @@ class containerInitial extends Phaser.GameObjects.Container {
         });
         this.creditsButton.on('pointerup', () => {
             this.creditsButton.setTexture('creditsButtonHover')
-        })
-
-
-        this.creditsButton.on('pointerdown', () => {
             if(config.panToCredits){
-                this.creditsButton.setTexture('creditsButtonPressed')
                 this.scene.cameras.main.pan(config.panToCredits.x, config.panToCredits.y, 1000, 'Expo', true)
             }
+
         })
-        
+
+        this.creditsButton.on('pointerdown', () => {
+            this.creditsButton.setTexture('creditsButtonPressed')
+        })
+        this.albumButton = scene.add.image(0, 0, "albumButton")
+        this.albumButton.setPosition(this.creditsButton.x + this.albumButton.width + 50, this.playButton.y + this.creditsButton.height + this.playButton.height/2 + offsetY)
+
+        this.albumButton.setInteractive();
+        this.albumButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
+            this.albumButton.setTexture('albumButtonHover');
+        });
+        this.albumButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => {
+            this.albumButton.setTexture('albumButton');
+        });
+        this.albumButton.on('pointerup', () => {
+            this.albumButton.setTexture('albumButtonHover')
+        })
+
+        this.albumButton.on('pointerdown', () => {
+            this.albumButton.setTexture('albumButtonPressed')
+            if(config.panToCredits){
+                // this.scene.cameras.main.pan(config.panToCredits.x, config.panToCredits.y, 1000, 'Expo', true)
+            }
+        })
+
         this.gameTitle = scene.add.image(0, 0, "gameTitle")
         this.gameTitle.setPosition(this.width/2, (this.playButton.y - this.playButton.height/2)/2)
 

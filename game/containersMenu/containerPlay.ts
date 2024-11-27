@@ -17,16 +17,17 @@ class containerPlay extends Phaser.GameObjects.Container {
         const offsetY = 100
         this.newGameButton = scene.add.image(this.width/2, this.height/2 + offsetY, "newGameButton")
         this.newGameButton.setInteractive().on('pointerdown', () => {
+            
             this.newGameButton.setTexture('newGameButtonPressed')
-            if(config.panToPlay){
-                console.log(
-                this.scene.scene.get('multiScene')
-                );
-                this.scene.cameras.main.pan(config.panToPlay.x, config.panToPlay.y, 1000, 'Expo', true)
-            }
+
+            // if(config.panToPlay){
+            //     this.scene.cameras.main.pan(config.panToPlay.x, config.panToPlay.y, 1000, 'Expo', true)
+            // }
         })
         this.newGameButton.on('pointerup',()=>{
             this.newGameButton.setTexture('newGameButtonHover')
+            const multiScene = new MultiScene("CinematographyMod", { keyname: 'cine_intro_1',  loadKey: ["Cinemato0"] });
+            const scene = this.scene.scene.add("MultiScene", multiScene, true);
         })
         this.newGameButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER,()=>{
             this.newGameButton.setTexture('newGameButtonHover')
@@ -57,13 +58,14 @@ class containerPlay extends Phaser.GameObjects.Container {
         this.backButton = scene.add.image(0, 0, "backButton").setRotation(Math.PI)
         this.backButton.setPosition(this.backButton.width, this.height - this.backButton.height)
         this.backButton.setInteractive().on('pointerdown', () => {
-            if(config.panToInitial){
-                this.backButton.setTexture('backButtonPressed')
-                this.scene.cameras.main.pan(config.panToInitial.x, config.panToInitial.y, 1000, 'Expo', true)
-            }
+            this.backButton.setTexture('backButtonPressed')
         })
         this.backButton.on('pointerup',()=>{
             this.backButton.setTexture('backButton')
+            if (config.panToInitial) {
+                this.scene.cameras.main.pan(config.panToInitial.x, config.panToInitial.y, 1000, 'Expo', true)
+            }
+
         })
         this.backButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, ()=>{
             this.backButton.setTexture('backButtonHover')

@@ -762,6 +762,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
             duration: 4000,
             repeat: -1,
             y: "+=2500",
+            delay:Math.random() * 1300
           },
           frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
       };
@@ -778,6 +779,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
           duration: 4000,
           repeat: -1,
           y: "-=2800",
+          delay:Math.random() * 1200
         },
         frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
     };

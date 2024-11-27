@@ -52,13 +52,13 @@ class ContainerCredits extends Phaser.GameObjects.Container {
         this.creditsTitle.setPosition(this.width / 2, creditsPosY).setOrigin(0.5, 0)
         this.backButton.setPosition(this.width - this.backButton.width, this.height - this.backButton.height)
         this.backButton.setInteractive().on('pointerdown', () => {
-            if (config.panToInitial) {
-                this.backButton.setTexture('backButtonPressed')
-                this.scene.cameras.main.pan(config.panToInitial.x, config.panToInitial.y, 1000, 'Expo', true)
-            }
+            this.backButton.setTexture('backButtonPressed')
         })
         this.backButton.setInteractive().on('pointerup', () => {
             this.backButton.setTexture('backButtonHover')
+            if (config.panToInitial) {
+                this.scene.cameras.main.pan(config.panToInitial.x, config.panToInitial.y, 1000, 'Expo', true)
+            }
         })
         this.backButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, ()=>{
             this.backButton.setTexture('backButtonHover')

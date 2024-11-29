@@ -308,6 +308,12 @@ const loadAssets = {
         "/game/planeta3/meteoritop3.png",
         { frameWidth: 98, frameHeight: 210 },
       ],
+      [
+        "svg",
+        "p3Gradiant",
+        "/game/planeta3/bgGradiant.svg",
+        { scale: 1.4 }
+      ],
     ],
   },
   Postales: {

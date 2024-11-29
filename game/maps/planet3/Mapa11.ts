@@ -791,34 +791,49 @@ const p13 = new LargeFloorIsland(this.scene, p13Config, this.pisos);
           targets: this.auraImage,
         })
 
-        const c1Config: AsteroidGeneratorConfig = {
-            texture: "nube1p1",
-            x: 0,
-            y: 1500,
-            delayed: 100,
-            direction: 0,
-            velocity: 20,
-            scale: 1,
-            depth: 99,
-        };
-        const c1 = new AsteroidGenerator(this.scene, c1Config);
-        c1.start();
+        const bubblesGroup = this.scene.add.group()
 
-        const c2Config: AsteroidGeneratorConfig = {
-            texture: "nube2p1",
-            x: 3000,
-            y: 600,
+        const b1Config: AsteroidGeneratorConfig = {
+            texture: "burbujap3",
+            x: this.startingPoint.x,
+            y: this.startingPoint.y,
             delayed: 100,
             direction: 1,
-            velocity: 30,
+            velocity: 15,
             scale: 1,
-            depth: 99,
-        };
-        const c2 = new AsteroidGenerator(this.scene, c2Config);
-        c2.start();
+            group: bubblesGroup,
+            upStraigth: true,
+            amount:40,
+            spawnRange: {
+                x:4,
+                y:1
+            }
+          };
+          const b1 = new AsteroidGenerator(this.scene, b1Config);
+          b1.start();
+
+          const b2Config: AsteroidGeneratorConfig = {
+            texture: "burbujap3",
+            x: this.startingPoint.x + 3300,
+            y: this.startingPoint.y,
+            delayed: 1500,
+            direction: 1,
+            velocity: 15,
+            depth:-99,
+            scale: 1,
+            group: bubblesGroup,
+            upStraigth: true,
+            amount:40,
+            spawnRange: {
+                x:2,
+                y:1
+            }
+          };
+          const b2 = new AsteroidGenerator(this.scene, b2Config);
+          b2.start();
 
         const mapObjects =
-            this.movingFloor.getChildren().concat(
+            bubblesGroup.getChildren().concat(
                 this.movingFloorRot.getChildren(),
                 this.fireballGroup.getChildren(),
                 this.pisos.getChildren(),

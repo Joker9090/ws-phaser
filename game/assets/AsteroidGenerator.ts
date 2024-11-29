@@ -66,7 +66,7 @@ class AsteroidGenerator {
     }else{
       asteroid.setVelocityX(this.randomVelocity())  ;
     }
-    if(this.config.tweenScale){
+    if(this.config.tweenScale && this.config.scale > 0){
     this.scene.tweens.add({
       targets: [asteroid],
       scale: { from: 0, to: this.config.scale }, 

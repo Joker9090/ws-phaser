@@ -51,6 +51,7 @@ class Mapa9 {
 
     t1?:Phaser.Tweens.Tween;
     p3?:Floor;
+    p7?:Floor;
     amountLifes: number = 0;
     sideGrav: boolean = false;
     goingBack: boolean = false;
@@ -119,7 +120,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
     cristal?: Floor;
     collected: Boolean = false;
     endPortal?: Floor;
-
+    cameraNormal: boolean;
     isFloating: boolean = false;
 
     mapContainer: Phaser.GameObjects.Container;
@@ -420,6 +421,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
                     this.scene.monchi,
                     this.pisos3,
                     () => {
+                      
                         this.scene.rotateCam(true, 10);
                         //if (this.scene.checkPoint === 1) {
                         //  this.scene.canRot = true
@@ -438,8 +440,10 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
                       this.scene.checkPoint = 1
                       if(this.t1){
                         this.t1.play();
-                        this.p3?.setVelocityY(150)
-                        this.p3?.setY(850)
+                        this.p3?.setVelocityY(200)
+                        this.p3?.setY(1050)
+                        this.p7?.body?.destroy()
+                        this.p7?.setVisible(false)
                       }
                     },
                     () => true,
@@ -569,30 +573,30 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         height: 50,
       };
 
-      const p7 = new Floor(this.scene, p7Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
-
+       this.p7 = new Floor(this.scene, p7Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
+  
       const p3Config: FloorConfig = {
         texture: "pDoblep3",
-        pos: { x: 1600, y: 1200 },
+        pos: { x: 1600, y: 1300 },
         scale: { width: 1.5, height: 0.7 },
         width: 170,
         height: 50,
       };
     
-      this.p3 = new Floor(this.scene, p3Config, this.pisos);
+      this.p3 = new Floor(this.scene, p3Config, this.pisos).setTint(0,0,0);
       this.t1 = this.scene.tweens.add({
         duration: 4000,
         paused: true,
         yoyo: true,
         repeat: -1,
         targets:this.p3.body?.velocity,
-        y: "-=300",
+        y: "-=400",
       })
       
 
       const p4Config: FloorConfig = {
         texture: "pSimple1p3",
-        pos: { x: 1950, y: 1200 },
+        pos: { x: 1950, y: 1300 },
         scale: { width: 0.8, height: 0.7 },
         width: 170,
         height: 50,
@@ -602,13 +606,13 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
 
       const p5Config: FloorConfig = {
        texture: "pSimple1p3",
-       pos: { x: 2350, y: 1200 },
+       pos: { x: 2400, y: 1300 },
        scale: { width: 1.3, height: 0.7 },
        width: 170,
        height: 50,
        animation:{
         xAxis:{
-          xDistance:300,
+          xDistance:200,
           xVel:100,
         }
        }
@@ -618,7 +622,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
 
       const p6Config: FloorConfig = {
         texture: "pSimple1p3",
-        pos: { x: 2800, y: 1200 },
+        pos: { x: 2800, y: 1300 },
         scale: { width: 1, height: 0.7 },
         width: 170,
         height: 50,
@@ -651,14 +655,14 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
 
       const p10Config: FloorConfig = {
         texture: "pSimple1p3",
-        pos: { x: 1950, y: 800 },
+        pos: { x: 2050, y: 800 },
         scale: { width: 1, height: 0.7 },
         width: 170,
         height: 50,
         inverted:true,
         animation:{
           xAxis:{
-            xDistance:300,
+            xDistance:200,
             xVel:100,
           }
          }
@@ -669,7 +673,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
 
       const p11Config: FloorConfig = {
         texture: "pSimple1p3",
-        pos: { x: 1100, y: 1100 },
+        pos: { x: 1100, y: 1200 },
         scale: { width: 2, height: 0.7 },
         width: 170,
         height: 50,
@@ -683,7 +687,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         //Portal, Coin and Asteroids
         const portalConfig: FloorConfig = {
             texture: "cuevap1",
-            pos: { x: 1050, y: 1190 },
+            pos: { x: 1050, y: 1290 },
             width: 100,
             height: 100,
             inverted:true
@@ -738,7 +742,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         const fireballConfig: FloorConfig = {
           spriteSheet: "meteoritop3",
           texture: "meteorito",
-          pos: { x: 1400, y: 0 }, // 500 1580
+          pos: { x: 1430, y: 0 }, // 500 1580
           width: 100,
           height: 100,
           tween: {
@@ -754,7 +758,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
       const fireball2Config: FloorConfig = {
         spriteSheet: "meteoritop3",
         texture: "meteorito",
-        pos: { x: 1850, y: 0 }, // 500 1580
+        pos: { x: 1790, y: 0 }, // 500 1580
         width: 100,
         height: 100,
         tween: {
@@ -769,7 +773,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
     const fireball3Config: FloorConfig = {
       spriteSheet: "meteoritop3",
       texture: "meteorito",
-      pos: { x: 2650, y: 0 }, // 500 1580
+      pos: { x: 2600, y: 0 }, // 500 1580
       width: 100,
       height: 100,
       tween: {

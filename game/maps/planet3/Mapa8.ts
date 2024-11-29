@@ -57,8 +57,7 @@ class Mapa8 {
         y: 1000, //800
     };
     checkPoint1 = {
-        x: 5400, //500
-        y: 900  //800
+        x: 4250, y: 800
        
     };
     loseConfig: loseConfigFromMapType = [
@@ -77,21 +76,19 @@ class Mapa8 {
     ];
     nextScene: string | undefined = undefined;
     background: Phaser.GameObjects.Image;
-    background2: Phaser.GameObjects.Image;
-    background3: Phaser.GameObjects.Image;
-    background4: Phaser.GameObjects.Image;
-    background5: Phaser.GameObjects.Image;
-    background6: Phaser.GameObjects.Image;
-    background7: Phaser.GameObjects.Image;
-    mountain1: Phaser.GameObjects.Image;
-    mountain2: Phaser.GameObjects.Image;
-    mountain3: Phaser.GameObjects.Image;
-    mountain4: Phaser.GameObjects.Image;
-   
-    plant1: Phaser.GameObjects.Image;
-    plant2: Phaser.GameObjects.Image;
-    plant3: Phaser.GameObjects.Image;
-    plant4: Phaser.GameObjects.Image;
+  background2: Phaser.GameObjects.Image;
+  background3: Phaser.GameObjects.Image;
+  background3_2: Phaser.GameObjects.Image;
+  background4: Phaser.GameObjects.Image;
+  background5: Phaser.GameObjects.Image;
+  background6: Phaser.GameObjects.Image;
+  //mountain1: Phaser.GameObjects.Image;
+  mountain2: Phaser.GameObjects.Image;
+  mountain3: Phaser.GameObjects.Image;
+  mountain4: Phaser.GameObjects.Image;
+  mountain5: Phaser.GameObjects.Image;
+  planta1: Phaser.GameObjects.Image;
+  planta2: Phaser.GameObjects.Image;
     UIItemToGrab: string = 'plantap3';
     cristal?: Floor;
     EmptyCristal?: Floor;
@@ -117,101 +114,88 @@ class Mapa8 {
         this.mapContainer = this.scene.add.container()
         this.frontContainer = this.scene.add.container().setDepth(999999999999)
         this.background = this.scene.add
-        .image(this.startingPoint.x, this.startingPoint.y, "p3backgroundGradiant")
+        .image(this.startingPoint.x, this.startingPoint.y, "p3Gradiant")
         .setOrigin(0.5, 0.5)
-    
-        .setScale(4);
+      this.background2 = this.scene.add
+        .image(this.startingPoint.x, this.startingPoint.y, "background1P1")
+        .setOrigin(0.5, 0.5)
         this.background3 = this.scene.add
-            .image(this.startingPoint.x, this.startingPoint.y, "background3p3")
-            .setOrigin(0.5, 0.5)
-        this.background5 = this.scene.add
-            .image(this.startingPoint.x + this.background3.width , this.startingPoint.y, "background3p3")
-            .setOrigin(0.5, 0.5)
-        this.background7 = this.scene.add
-            .image(this.startingPoint.x + (this.background3.width* 2) , this.startingPoint.y, "background3p3")
-            .setOrigin(0.5, 0.5)
+        .image(this.startingPoint.x, this.startingPoint.y, "background3p3")
+        .setOrigin(0.5, 0.5)
+        this.background3_2 = this.scene.add
+        .image(this.startingPoint.x + this.background3.width ,  this.startingPoint.y, "background3p3")
+        .setOrigin(0.5, 0.5)
+      this.background4 = this.scene.add
+        .image(this.startingPoint.x +10, this.startingPoint.y + 470, "background2p3")
+        .setOrigin(1, 1).setScale(1.5);
+      this.background5 = this.scene.add
+        .image(this.startingPoint.x, this.startingPoint.y + 470, "background2p3")
+        .setOrigin(0, 1).setScale(1.5);
+      this.background6 = this.scene.add
+        .image(this.startingPoint.x + this.background5.width + 920, this.startingPoint.y + 470, "background2p3")
+        .setOrigin(0, 1).setScale(1.5);
+  
+      //this.mountain1 = this.scene.add.image(this.startingPoint.x + this.background5.width - 15, this.startingPoint.y - 370, "montaña3p3")
+      this.mountain2 = this.scene.add.image(this.startingPoint.x, this.startingPoint.y + 350, "montaña2p3")
+      this.mountain3 = this.scene.add.image(1200, this.startingPoint.y + 470, "montaña3p3")
+      this.mountain4 = this.scene.add.image(200, this.startingPoint.y, "montaña2p3")
+      this.mountain5 = this.scene.add.image(1100, this.startingPoint.y, "montaña1p3")
 
+      this.planta1 = this.scene.add.image(this.startingPoint.x - 250, this.startingPoint.y + 200, "planta1p3").setScale(0.5)
+      this.planta2 = this.scene.add.image(5600, this.startingPoint.y + 280, "planta2p3").setScale(0.3)
 
-        this.background2 = this.scene.add
-            .image(this.startingPoint.x , this.startingPoint.y + 220, "background2p3")
-            .setOrigin(0.5, 0.5) 
-        this.background4 = this.scene.add
-            .image(this.startingPoint.x + this.background2.width -2, this.startingPoint.y + 220, "background2p3")
-            .setOrigin(0.5, 0.5)
-        this.background6 = this.scene.add
-            .image(this.startingPoint.x + (this.background2.width * 2) -20, this.startingPoint.y + 220, "background2p3")
-            .setOrigin(0.5, 0.5)
+     this.mapContainer.add([
+        this.background,
+        this.background2,
+       // this.mountain1,
+        this.mountain2,
+        this.mountain4,
+        this.mountain3,
+        this.mountain5,
+        this.background3,
+        this.background3_2,
+        
 
-            this.mountain2 = this.scene.add.image(2800, this.startingPoint.y, "montaña2p3")
-            this.mountain3 = this.scene.add.image(3600, this.startingPoint.y, "montaña3p3").setScale(1.1)
-            this.mountain1 = this.scene.add.image(4000, this.startingPoint.y, "montaña1p3")
-            this.mountain4 = this.scene.add.image(4800, this.startingPoint.y, "montaña2p3").setScale(0.7)
+     ])
 
-
-            
-            this.plant1 = this.scene.add.image(4700, this.startingPoint.y, "planta1p3").setScale(0.3)
-            this.plant2 = this.scene.add.image(5200, this.startingPoint.y, "planta2p3").setScale(0.3)
-            this.plant3 = this.scene.add.image(2700, this.startingPoint.y, "planta1p3").setScale(0.3)
-            this.plant4 = this.scene.add.image(3200, this.startingPoint.y, "planta2p3").setScale(0.3)
-
-        this.mapContainer.add([
-            this.background,
-            this.background5,
-            this.background3,
-            this.background7,
-            this.mountain3,
-            this.mountain1,
-            this.mountain4,
-            this.mountain2,
+        this.frontContainer.add([
             this.background4,
+            this.background5,
             this.background6,
-            this.background2,
-            this.plant3,
-            this.plant1,
-            this.plant2,
-            this.plant4,
-            
-        ])
-
-       this.frontContainer.add([
-          
+            this.planta1,
+            this.planta2
         ])
     }
 
     animateBackground(player: Phaser.GameObjects.Sprite | Phaser.Math.Vector2) {
-        const offsetLevel = 400
-        const offsetLevel2 = 300
+        const offsetLevel = 150
         const { x, y } = this.startingPoint;
         const { x: x2, y: y2 } = player;
         // animation backgrounds statics
         const { ajusteBX, ajusteBY } = { ajusteBX: 1.1, ajusteBY: 1.1 }
         const calcDiffBX = (x2 - x) / ajusteBX
         const calcDiffBY = (y2 - y) / ajusteBY;
-        this.background.setDepth(-999999)
-     //   this.background.setPosition(x + calcDiffBX, y + calcDiffBY);        
-        this.background2.setPosition(this.background2.x, y + calcDiffBY + 420);        
-        this.background4.setPosition(this.background4.x , y + calcDiffBY + 420);
-        this.background6.setPosition(this.background6.x , y + calcDiffBY + 420);
-        
-        this.background3.setPosition(this.background3.x , y + calcDiffBY + 100);
-        this.background5.setPosition(this.background5.x , y + calcDiffBY + 100);
-        this.background7.setPosition(this.background7.x , y + calcDiffBY + 100);
-      
-                
+        this.background.setPosition(x + calcDiffBX, y + calcDiffBY);
+        this.background2.setPosition(x + calcDiffBX, y + calcDiffBY);
+        this.background3.setPosition(x + calcDiffBX  , y + calcDiffBY + 300 );
+        this.background3_2.setPosition(x + calcDiffBX  + this.background3.width , y + calcDiffBY + 300 );
         // // animation frontgrounds
         const { ajusteFX, ajusteFY } = { ajusteFX: 4, ajusteFY: 2 }
         const calcDiffFX = (x2 - x) / ajusteFX
         const calcDiffFY = (y2 - y) / ajusteFY;
-        this.plant1.setPosition(this.plant1.x , y + calcDiffBY + 370)      
-        this.plant2.setPosition(this.plant2.x , y + calcDiffBY + 370)      
-        this.plant3.setPosition(this.plant3.x , y + calcDiffBY + 370)      
-        this.plant4.setPosition(this.plant4.x , y + calcDiffBY + 370)      
-        this.mountain1.setPosition(4300 + calcDiffFX, y  + calcDiffFY   +200 )
-        this.mountain2.setPosition(2800 + calcDiffFX, y  + calcDiffFY  +220 )
-        this.mountain3.setPosition(3600 + calcDiffFX, y  + calcDiffFY  + 160 )
-        this.mountain4.setPosition(4800 + calcDiffFX, y + calcDiffFY  + 350)
-    }
-
+        //  this.background4.setPosition(x + calcDiffFX, y + offsetLevel + 490 + calcDiffFY);
+        //  this.background5.setPosition(x + calcDiffFX - 10, y + offsetLevel + 490 + calcDiffFY);
+        //  this.background6.setPosition(x + this.background5.width + 950 + calcDiffFX, y + offsetLevel + 490 + calcDiffFY);
+        this.mountain4.setPosition(x + calcDiffFX - 200, y + offsetLevel + 100 + calcDiffFY)
+        this.mountain5.setPosition(x + calcDiffFX + 300, y + offsetLevel + 200 + calcDiffFY)
+        this.mountain2.setPosition(this.startingPoint.x + 1370 + calcDiffFX, y + offsetLevel + 150 + calcDiffFY)
+        this.mountain3.setPosition( x + calcDiffFX - 1000 , y + offsetLevel + 200 + calcDiffFY)
+        // // animation front mountains
+        const { ajusteFMX, ajusteFMY } = { ajusteFMX: 20, ajusteFMY: 30 }
+        const calcDiffFMX = -(x2 - x) / ajusteFMX
+        const calcDiffFMY = -(y2 - y) / ajusteFMY;
+        //this.mountain1.setPosition(this.startingPoint.x + this.background5.width - 85 + calcDiffFMX, y + offsetLevel + 320 + calcDiffFMY)
+      }
     addColliders() {
         if (this.scene.monchi) {
             if (this.pisos)
@@ -253,6 +237,7 @@ class Mapa8 {
                     () => {
                         this.scene.touchItem("coin")
                         this.EmptyCoin?.setVisible(true)
+                        this.scene.checkPoint = 1
                     },
                     () => true,
                     this.scene
@@ -361,7 +346,7 @@ class Mapa8 {
             height: 50,
             animation:{
                 xAxis:{
-                    xDistance:800,
+                    xDistance:650,
                     xVel:200
                 }
             }
@@ -410,7 +395,7 @@ class Mapa8 {
             height: 50,
             animation:{
                 xAxis:{
-                    xDistance:650,
+                    xDistance:600,
                     xVel:200
                 }
             }
@@ -426,7 +411,7 @@ class Mapa8 {
             height: 50,
             animation:{
                 xAxis:{
-                    xDistance:650,
+                    xDistance:620,
                     xVel:200
                 }
             }
@@ -474,6 +459,7 @@ class Mapa8 {
         const p12 = new Floor (this.scene, p12config, this.pisos)
         
         
+        // 
         const p13config:FloorConfig = {
             pos: {  x: 5990, y: 1100,},
             texture: "pSimple1p3",
@@ -482,8 +468,8 @@ class Mapa8 {
             height: 50,
         };
         
-        const p13 = new Floor (this.scene, p13config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
-
+        const p13 = new Floor (this.scene, p13config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255,101,0))
+        
 
         const p14Config: LargeFloorIslandConfig = {
             textureA: "longFloorLeftp3",
@@ -522,7 +508,7 @@ class Mapa8 {
             fix: 10,
             animation:{
                 xAxis:{
-                    xDistance:650,
+                    xDistance:620,
                     xVel:200
                 }
             }
@@ -538,7 +524,7 @@ class Mapa8 {
             fix: 10,
             animation:{
                 xAxis:{
-                    xDistance:650,
+                    xDistance:620,
                     xVel:200
                 }
             }
@@ -554,7 +540,7 @@ class Mapa8 {
             fix: 10,
             animation:{
                 xAxis:{
-                    xDistance:650,
+                    xDistance:620,
                     xVel:200
                 }
             }
@@ -603,8 +589,7 @@ class Mapa8 {
             delayed: 100,
             direction: 1,
             velocity: 15,
-            scaleTweenDuration:3000,
-            tweenScale:true,
+
             scale: 1,
             group: bubblesGroup,
             upStraigth: true,
@@ -625,9 +610,9 @@ class Mapa8 {
             direction: 1,
             velocity: 15,
             depth:-99,
-            scaleTweenDuration:3000,
-            tweenScale:true,
             scale: 1,
+            tweenScale:true,
+            scaleTweenDuration:3000,
             group: bubblesGroup,
             upStraigth: true,
             amount:40,
@@ -652,7 +637,7 @@ class Mapa8 {
   
 
         const mapObjects =
-            this.movingFloor.getChildren().concat(
+            bubblesGroup.getChildren().concat(
                 this.movingFloorRot.getChildren(),
                 this.fireballGroup.getChildren(),
                 this.pisos.getChildren(),

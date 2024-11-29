@@ -214,6 +214,7 @@ class Mapa8 {
                     this.pisos2,
                     () => {
                         this.scene.changeGravity(true, 1000, 3);
+                        console.log("ENTRO ACA")
                         //this.background2.setPosition(this.startingPoint.x, this.startingPoint.y + 320)
                         //this.background4.setPosition(this.startingPoint.x, this.startingPoint.y + 320)
                     },
@@ -278,9 +279,7 @@ class Mapa8 {
                     this.scene.monchi,
                     this.pisos5,
                     () => {
-                        this.scene.canRot = true // medio hack, revisar lógica
-                        this.scene.changeGravity(false, 1000, 3)
-                        this.scene.rotateCam(false, 10)
+                        this.scene.changeGravity(true, 1000, 3);
                         // this.scene.checkPoint = 0
                     },
                     () => true,
@@ -328,7 +327,7 @@ class Mapa8 {
         this.portal = this.scene.physics.add.group({ allowGravity: false });
 
 
-        const p1Config:FloorConfig = {
+        const p1Config: FloorConfig = {
             pos: {  x: 2700, y: 1200,},
             texture: "pSimple1p3",
             scale: { width: 0.7, height: 0.7 },
@@ -459,17 +458,26 @@ class Mapa8 {
         const p12 = new Floor (this.scene, p12config, this.pisos)
         
         
-        // 
-        const p13config:FloorConfig = {
-            pos: {  x: 5990, y: 1100,},
+        // // 
+        // const p13config:FloorConfig = {
+        //     pos: {  x: 5990, y: 1100,},
+        //     texture: "pSimple1p3",
+        //     scale: { width: 0.7, height: 0.7 },
+        //     width: 140,
+        //     height: 50,
+        // };
+        
+        // const p13 = new Floor(this.scene, p13config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255,101,0))
+        
+        const ptestconfig:FloorConfig = {
+            pos: {   x: 5990, y: 1250 },
             texture: "pSimple1p3",
             scale: { width: 0.7, height: 0.7 },
             width: 140,
             height: 50,
         };
-        
-        const p13 = new Floor (this.scene, p13config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255,101,0))
-        
+
+        const ptest = new Floor (this.scene, ptestconfig, this.pisos5).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
 
         const p14Config: LargeFloorIslandConfig = {
             textureA: "longFloorLeftp3",
@@ -589,7 +597,8 @@ class Mapa8 {
             delayed: 100,
             direction: 1,
             velocity: 15,
-
+            tweenScale:true,
+            scaleTweenDuration:3000,
             scale: 1,
             group: bubblesGroup,
             upStraigth: true,
@@ -634,10 +643,11 @@ class Mapa8 {
         })
     
         
-  
+        console.log(bubblesGroup, "bubblesGroup")
 
         const mapObjects =
             bubblesGroup.getChildren().concat(
+                this.movingFloor.getChildren(),
                 this.movingFloorRot.getChildren(),
                 this.fireballGroup.getChildren(),
                 this.pisos.getChildren(),

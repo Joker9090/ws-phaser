@@ -105,6 +105,8 @@ class Game extends Phaser.Scene {
   }
 
   rotateCam(isNormal: boolean, time: number) {
+    console.log(isNormal, "isNormal")
+    console.log(this.gravityDown, "this.gravityDown")
     if (this.monchi)
       this.monchi.setCameraState(!isNormal ? "NORMAL" : "ROTATED");
     if (isNormal) {
@@ -113,13 +115,14 @@ class Game extends Phaser.Scene {
       this.cameraNormal = true;
     }
     if (this.canRot) {
-      if (!this.gravityDown) {
         for (let i = 0; i < 25; i++) {
           this.time.delayedCall(time * i, () =>
             ((rotate) => {
               if (isNormal) {
+                console.log("ENTRA ACA 1")
                 this.cameras.main.setRotation(rotate);
               } else {
+                console.log("ENTRA ACA 2")
                 this.cameras.main.setRotation(Math.PI - rotate);
               }
             })((Math.PI * i) / 24)
@@ -128,22 +131,6 @@ class Game extends Phaser.Scene {
             this.canRot = false;
           }
         }
-      } else {
-        for (let i = 0; i < 25; i++) {
-          this.time.delayedCall(time * i, () =>
-            ((rotate) => {
-              if (isNormal) {
-                this.cameras.main.setRotation(rotate);
-              } else {
-                this.cameras.main.setRotation(Math.PI - rotate);
-              }
-            })((Math.PI * i) / 24)
-          );
-          if (i == 24) {
-            this.canRot = false;
-          }
-        }
-      }
     }
   }
 
@@ -272,10 +259,10 @@ class Game extends Phaser.Scene {
       s: Phaser.Input.Keyboard.KeyCodes.S,
       d: Phaser.Input.Keyboard.KeyCodes.D,
     });
-     this.cameras.main.zoom =0.4
+    //  this.cameras.main.zoom =0.4
     // CREATIVE
 
-    this.checkPoint = 0;
+    this.checkPoint = 1;
     this.levelIs = data.level;
     this.lifes = data.lifes;
     /* CHOSE LEVEL, LIFES AND AUDIO */
@@ -370,7 +357,6 @@ class Game extends Phaser.Scene {
     const { x, y } = this.map.startingPoint;
     this.monchi = new Player(this, x, y, "character", 2);
     this.canWin = false;
-    this.canRot = true;
     /* CREATE MAP */
     this.map.createMap(data);
     const {

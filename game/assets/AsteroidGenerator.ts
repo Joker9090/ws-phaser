@@ -8,16 +8,16 @@ export type AsteroidGeneratorConfig = {
   delayed: number;
   direction: 0 | 1;
   scale: number;
-  tweenScale?:boolean
-  scaleTweenDuration?:number,
+  tweenScale?: boolean
+  scaleTweenDuration?: number,
   velocity: number;
   depth?: number;
   group?: Phaser.GameObjects.Group;
-  amount?:number;
-  upStraigth?:boolean;
-  spawnRange? : {
-    x:number,
-    y:number
+  amount?: number;
+  upStraigth?: boolean;
+  spawnRange?: {
+    x: number,
+    y: number
   }
 };
 
@@ -57,42 +57,43 @@ class AsteroidGenerator {
     const asteroid = this.scene.physics.add.sprite(x, y, this.config.texture);
     if (this.config.depth) asteroid.setDepth(this.config.depth);
     if (this.config.group) this.config.group.add(asteroid)
-    asteroid.setScale(this.config.scale * this.randomProp());
-    
+    asteroid.setScale( this.config.tweenScale ? 0.001 : this.config.scale * this.randomProp());
+
     this.asteroids.add(asteroid);
     this.scene.UICamera?.ignore(asteroid)
-    if(this.config.upStraigth){
+    if (this.config.upStraigth) {
       asteroid.setVelocityY(this.randomVelocity());
-    }else{
-      asteroid.setVelocityX(this.randomVelocity())  ;
+    } else {
+      asteroid.setVelocityX(this.randomVelocity());
     }
-    if(this.config.tweenScale && this.config.scale > 0){
-    this.scene.tweens.add({
-      targets: [asteroid],
-      scale: { from: 0, to: this.config.scale }, 
-      duration: this.config.scaleTweenDuration,
-      ease: 'ease'
-    })
-}
+    if (this.config.tweenScale && this.config.scale > 0 && this.config.scaleTweenDuration) {
+      this.scene.tweens.add({
+        targets: asteroid,
+        scale: 1,
+        delay: 1000 + 1000*Math.random(),
+        duration: 1000 + this.config.scaleTweenDuration * Math.random(),
+        ease: 'ease'
+      })
+    }
   }
 
-  runCreation(){
-    if(this.config.amount){
-      if(this.config.spawnRange){
-        for (let i = 0; i < this.config.amount; i++){
+  runCreation() {
+    if (this.config.amount) {
+      if (this.config.spawnRange) {
+        for (let i = 0; i < this.config.amount; i++) {
           const randomX = this.config.x + (Math.random() - 0.5) * this.config.spawnRange.x * 1000;
           const randomY = this.config.y + (Math.random() - 0.5) * this.config.spawnRange.y * 1000;
           this.createAsteroid(randomX, randomY)
         }
-      }else{
-        for (let i = 0; i < this.config.amount; i++){
+      } else {
+        for (let i = 0; i < this.config.amount; i++) {
           const randomX = this.config.x + (Math.random() - 0.5) * 1;
           const randomY = this.config.y + (Math.random() - 0.5) * 1;
           this.createAsteroid(randomX, randomY)
         }
       }
-     
-    }else{
+
+    } else {
       this.createAsteroid(this.config.x, this.config.y)
     }
   }

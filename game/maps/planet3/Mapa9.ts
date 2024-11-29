@@ -120,7 +120,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
     cristal?: Floor;
     collected: Boolean = false;
     endPortal?: Floor;
-    cameraNormal: boolean;
+    cameraNormal?: boolean;
     isFloating: boolean = false;
 
     mapContainer: Phaser.GameObjects.Container;
@@ -400,7 +400,10 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
                 this.scene.physics.add.collider(
                     this.scene.monchi,
                     this.pisos,
-                    this.scene.touch,
+                    () => {
+                      this.scene.touch()
+                      this.scene.canRot = true
+                    },
                     () => true,
                     this.scene
                 );
@@ -651,7 +654,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
        
       };
 
-      const p9 = new Floor(this.scene, p9Config, this.pisos3).setTint(Phaser.Display.Color.GetColor(255, 101, 255));
+      const p9 = new Floor(this.scene, p9Config, this.pisos5).setTint(Phaser.Display.Color.GetColor(255, 101, 255));
 
       const p10Config: FloorConfig = {
         texture: "pSimple1p3",
@@ -832,7 +835,6 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
     }
     update() {
         if (this.scene.monchi) this.animateBackground();
-        console.log(this.scene.checkPoint, "CHECKPOINT")
     }
 }
 export default Mapa9;

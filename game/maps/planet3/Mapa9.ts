@@ -412,7 +412,9 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
                     this.scene.monchi,
                     this.pisos2,
                     () => {
+
                       this.scene.changeGravity(true, 1000, 3)
+                      this.scene.canRot = true
                    
                     },
                     () => true,
@@ -424,7 +426,6 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
                     this.scene.monchi,
                     this.pisos3,
                     () => {
-                      
                         this.scene.rotateCam(true, 10);
                         //if (this.scene.checkPoint === 1) {
                         //  this.scene.canRot = true
@@ -439,6 +440,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
                     this.scene.monchi,
                     this.coin,
                     () => {
+                      this.scene.canRot = true
                       this.scene.touchItem("coin")
                       this.scene.checkPoint = 1
                       if(this.t1){
@@ -496,6 +498,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
                       this.scene.monchi,
                       this.pisos6,
                       () => {
+                      this.scene.rotateCam(true, 10);
                         
                       },
                       () => true,
@@ -525,6 +528,13 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
     }
   
     createMap(data: { level: number; lifes: number }) {
+      // inicio rotado
+      if( this.scene.monchi ){
+        this.scene.physics.world.gravity.y = -1000
+        this.scene.moveCameraOffset("up", true);
+        this.scene.monchi.setPlayerState("ROTATED")
+      }
+      // inicio rotado
       
       this.scene.monchi?.setFlipX(true)
 
@@ -586,7 +596,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         height: 50,
       };
     
-      this.p3 = new Floor(this.scene, p3Config, this.pisos).setTint(0,0,0);
+      this.p3 = new Floor(this.scene, p3Config, this.pisos);
       this.t1 = this.scene.tweens.add({
         duration: 4000,
         paused: true,
@@ -605,7 +615,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         height: 50,
       };
 
-    const p4 = new Floor(this.scene, p4Config, this.pisos3).setTint(Phaser.Display.Color.GetColor(255, 101, 255));
+    const p4 = new Floor(this.scene, p4Config, this.pisos5).setTint(Phaser.Display.Color.GetColor(255, 101, 255));
 
       const p5Config: FloorConfig = {
        texture: "pSimple1p3",
@@ -616,7 +626,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
        animation:{
         xAxis:{
           xDistance:200,
-          xVel:100,
+          xVel:150,
         }
        }
       };
@@ -642,7 +652,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         inverted:true,
       };
 
-      const p8 = new Floor(this.scene, p8Config, this.pisos6);
+      const p8 = new Floor(this.scene, p8Config, this.pisos);
 
       const p9Config: FloorConfig = {
         texture: "pSimple1p3",
@@ -654,7 +664,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
        
       };
 
-      const p9 = new Floor(this.scene, p9Config, this.pisos5).setTint(Phaser.Display.Color.GetColor(255, 101, 255));
+      const p9 = new Floor(this.scene, p9Config, this.pisos);
 
       const p10Config: FloorConfig = {
         texture: "pSimple1p3",
@@ -666,7 +676,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         animation:{
           xAxis:{
             xDistance:200,
-            xVel:100,
+            xVel:150,
           }
          }
       };

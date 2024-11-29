@@ -69,7 +69,7 @@ class Mapa10 {
       x: 2300, y: 850 
     }
     checkPoint2 = {
-        x: 2900, //500
+        x: 3200, //500
         y: 1000, //800
     };
     loseConfig: loseConfigFromMapType = [
@@ -363,7 +363,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
   
       this.frontContainer.add([this.hueso1, this.hueso2, this.hueso3]);
     }
- 
+
     updatePositionsRelativeToCamera = (
       originalPos: { x: number; y: number }[],
       images: Phaser.GameObjects.Image[],
@@ -481,8 +481,8 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
                     this.scene.monchi,
                     this.pisos4,
                     () => {
+                      if(this.scene.monchi && this.scene.monchi.x > 2260)
                       this.scene.checkPoint = 1
-                      console.log("HOLA")
                     },
                     () => true,
                     this.scene
@@ -530,10 +530,16 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
                 );
         }
     }
-  
+    
     createMap(data: { level: number; lifes: number }) {
-      
-      this.scene.monchi?.setFlipX(true)
+      // inicio rotado
+      if( this.scene.monchi ){
+        this.scene.physics.world.gravity.y = -1000
+        this.scene.moveCameraOffset("up", true);
+        this.scene.monchi.setPlayerState("ROTATED")
+      }
+      // inicio rotado
+
 
         this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
         this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });
@@ -594,7 +600,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         rotated: false,
       };
 
-      const p4 = new Floor(this.scene, p4Config, this.pisos);
+      const p4 = new Floor(this.scene, p4Config, this.pisos).setBodySize(150,80);
        
       const p5Config: FloorConfig = {
         texture: "pSimple1p3",
@@ -604,7 +610,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         rotated: false,
       };
 
-    const p5 = new Floor(this.scene, p5Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
+    const p5 = new Floor(this.scene, p5Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0)).setBodySize(150,80);
 
     const p6Config: FloorConfig = {
       texture: "pDoblep3",
@@ -638,15 +644,15 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
 
     const p8Config: FloorConfig = {
       texture: "pDoblep3",
-      pos: { x: 2800, y: 950 },
+      pos: { x: 2850, y: 850 },
       inverted:true,
-      scale: { width: 0.8, height: 0.7 },
+      scale: { width: 1.2, height: 0.7 },
       height: 89,
       rotated: false,
       animation:{
         yAxis:{
-          yDistance:600,
-          yVel:150
+          yDistance:850,
+          yVel:190
         }
       }
     };
@@ -682,7 +688,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
       rotated: false,
     };
 
-    const p10 = new Floor(this.scene, p10Config, this.pisos);
+    const p10 = new Floor(this.scene, p10Config, this.pisos).setBodySize(150,80);
 
     const p11Config: FloorConfig = {
       texture: "pSimple1p3",
@@ -693,13 +699,13 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
       rotated: false,
     };
 
-    const p11 = new Floor(this.scene, p11Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
+    const p11 = new Floor(this.scene, p11Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0)).setBodySize(150,80);
 
     const p12Config: LargeFloorIslandConfig = {
       textureA: "longFloorLeftp3",
       textureB: "longFloorMiddlep3",
       textureC: "longFloorRightp3",
-      pos: { x: 1400, y: 150 },
+      pos: { x: 3050, y: 350 },
       
        width: {
         textureA: 110,
@@ -716,10 +722,9 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         //Portal, Coin and Asteroids
         const portalConfig: FloorConfig = {
             texture: "cuevap3",
-            pos: { x: 1530, y: 220 },
+            pos: { x: 3230, y: 290 },
             width: 90,
-            height: 90,
-            inverted:true
+            height: 90,            
         };
         const port = new Floor(this.scene, portalConfig, this.portal).setDepth(99).setScale(0.5)
 

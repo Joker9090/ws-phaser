@@ -78,7 +78,7 @@ class Mapa9 {
         },
         {
             positions: this.checkPoint1,
-            cameraDirection: "ROTATED",
+            cameraDirection: "NORMAL",
             PlayerDirection: "ROTATED",
             gravityDown: false
         },
@@ -596,7 +596,7 @@ class Mapa9 {
         height: 50,
       };
     
-      this.p3 = new Floor(this.scene, p3Config, this.pisos);
+      this.p3 = new Floor(this.scene, p3Config, this.pisos).setBodySize(150,110);
       this.t1 = this.scene.tweens.add({
         duration: 4000,
         paused: true,

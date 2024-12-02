@@ -112,8 +112,8 @@ class Mapa9 {
   backgroundsMiddle: Phaser.GameObjects.Image[];
   backgroundsFront: Phaser.GameObjects.Image[];
   originalPositionsBackgroundsBack: {x: number, y:number}[]
-originalPositionsBackgroundsMiddle: {x: number, y:number}[]
-originalPositionsBackgroundsFront: {x: number, y:number}[]
+  originalPositionsBackgroundsMiddle: {x: number, y:number}[]
+  originalPositionsBackgroundsFront: {x: number, y:number}[]
 
     UIItemToGrab: string = 'uiItemp3';
 

@@ -89,7 +89,7 @@ class Mapa8 {
   mountain5: Phaser.GameObjects.Image;
   planta1: Phaser.GameObjects.Image;
   planta2: Phaser.GameObjects.Image;
-    UIItemToGrab: string = 'plantap3';
+  UIItemToGrab: string = 'uiItemp3';
     cristal?: Floor;
     EmptyCristal?: Floor;
     auraImage?:Floor;

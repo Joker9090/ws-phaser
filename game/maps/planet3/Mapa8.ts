@@ -42,6 +42,8 @@ class Mapa8 {
     fireballGroup?: Phaser.Physics.Arcade.Group;
     coin?: Phaser.Physics.Arcade.Group;
     EmptyCoin?: Phaser.Physics.Arcade.Group;
+    EmptyCristal?: Floor;
+    auraImage?:Floor;
     portal?: Phaser.Physics.Arcade.Group;
     aura?: Phaser.Physics.Arcade.Group;
     movingFloor?: Phaser.Physics.Arcade.Group;
@@ -838,7 +840,7 @@ class Mapa8 {
 
     }
     update() {
-        if (this.scene.monchi) this.animateBackground(this.scene.cameras.main.midPoint);
+        if (this.scene.monchi) this.animateBackground();
     }
 }
 export default Mapa8;

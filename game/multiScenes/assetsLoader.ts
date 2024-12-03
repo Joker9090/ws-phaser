@@ -61,8 +61,9 @@ const loadAssets = {
       ["image", "newGameButton", "/menu/play/newGameButton.png"],
       ["image", "newGameButtonPressed", "/menu/play/newGameButtonPressed.png"],
       ["image", "newGameButtonHover", "/menu/play/newGameButtonHover.png"],
-      ["image", "backButtonHover", "/menu/play/backHover.png"],
-      ["image", "backButtonPressed", "/menu/play/backButtonPressed.png"],
+      ["image", "playBackButton", "/menu/play/playBackButton.png"],
+      ["image", "playBackButtonHover", "/menu/play/backHover.png"],
+      ["image", "playBackButtonPressed", "/menu/play/backPressed.png"],
       ["image", "menuBackground", "/menu/menuBackground.png"],
     
     ]

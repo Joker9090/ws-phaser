@@ -31,7 +31,7 @@ class ContainerCredits extends Phaser.GameObjects.Container {
         this.credits_lu = scene.add.image(0, 0, "credits_lu").setAlpha(0.5)
         this.credits_mai = scene.add.image(0, 0, "credits_mai").setAlpha(0.5)
         this.credits_nano = scene.add.image(0, 0, "credits_nano").setAlpha(0.5)
-        this.creditsTitle = scene.add.image(0, 0, "creditsTitle").setAlpha(0.5)
+        this.creditsTitle = scene.add.image(0, 0, "creditsTitle").setAlpha(1)
 
         const creditsArray = [
             this.credits_lu,

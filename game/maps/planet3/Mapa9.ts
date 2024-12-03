@@ -116,6 +116,7 @@ class Mapa9 {
     originalPositionsBackgroundsFront: {x: number, y:number}[]
   
       UIItemToGrab: string = 'uiItemp3';
+      UIItemScale?: number = 0.3;
   
       cristal?: Floor;
       collected: Boolean = false;

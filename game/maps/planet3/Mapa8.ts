@@ -107,8 +107,8 @@ class Mapa8 {
     originalPositionsBackgroundsBack: {x: number, y:number}[]
     originalPositionsBackgroundsMiddle: {x: number, y:number}[]
     originalPositionsBackgroundsFront: {x: number, y:number}[]
-  
-      UIItemToGrab: string = 'uiItemp3';
+    UIItemToGrab: string = 'uiItemp3';
+    UIItemScale?: number = 0.3;
   
       cristal?: Floor;
       collected: Boolean = false;

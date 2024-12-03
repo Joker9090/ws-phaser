@@ -107,6 +107,7 @@ class Mapa5 {
   originalPositionsBackgroundsFront: {x: number, y:number}[]
   
     UIItemToGrab: string = 'comida';
+    UIItemScale?: number ;
 
     cristal?: Floor;
     collected: Boolean = false;

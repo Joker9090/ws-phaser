@@ -78,6 +78,7 @@ class Mapa4 {
   ];
   nextScene: string | undefined = "postal1_planeta2";
   UIItemToGrab: string = "comida";
+  UIItemScale?: number ;
 
   background: Phaser.GameObjects.Image;
   backgroundStars: Phaser.GameObjects.Image;

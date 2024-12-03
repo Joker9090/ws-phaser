@@ -19,7 +19,7 @@ class Mapa11 {
     scene: Game;
     worldSize = {
         width: 10000,
-        height: 5000,
+        height: 2500,
     };
     cameraBounds = {
         x: 0,
@@ -61,10 +61,10 @@ class Mapa11 {
     monchi?: Player;
     startingPoint = {
         x: 1000, //500
-        y: 700, //800
+        y: 800, //800
     };
     checkPoint1 = {
-        x: 2900, //500
+        x: 2600, //500
         y: 1000, //800
     };
     loseConfig: loseConfigFromMapType = [
@@ -76,7 +76,7 @@ class Mapa11 {
         },
         {
             positions: this.checkPoint1,
-            cameraDirection: "ROTATED",
+            cameraDirection: "NORMAL",
             PlayerDirection: "NORMAL",
             gravityDown: true
         },
@@ -222,7 +222,7 @@ class Mapa11 {
     this.hueso3 = this.scene.add
       .image(1750, this.startingPoint.y + 850, "planta1p3")
       .setOrigin(0.5, 1)
-      .setScale(1.1,1);
+      .setScale(0.9,0.7);
 
       this.hueso4 = this.scene.add
       .image(this.startingPoint.x * 1.6, this.startingPoint.y + 850, "planta3p3")
@@ -528,7 +528,7 @@ class Mapa11 {
             rotated: false,
         };
 
-        const p1 = new Floor(this.scene, p1Config, this.pisos);
+        const p1 = new Floor(this.scene, p1Config, this.pisos).setBodySize(150,75);
 
 
         const p2Config: FloorConfig = {
@@ -539,17 +539,17 @@ class Mapa11 {
           rotated: false,
       };
 
-      const p2 = new Floor(this.scene, p2Config, this.pisos);
+      const p2 = new Floor(this.scene, p2Config, this.pisos).setBodySize(150,75);
 
       const p3Config: FloorConfig = {
         texture: "pSimple1p3",
-        pos: { x: 1650, y: 900 },
+        pos: { x: 1650, y: 880 },
         scale: { width: 0.7, height: 0.7 },
         height: 89,
         rotated: false,
     };
 
-    const p3 = new Floor(this.scene, p3Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
+    const p3 = new Floor(this.scene, p3Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0)).setBodySize(150,75);
 
     const p4Config: FloorConfig = {
       texture: "pSimple1p3",
@@ -560,7 +560,7 @@ class Mapa11 {
       rotated: false,
   };
 
-  const p4 = new Floor(this.scene, p4Config, this.pisos);
+  const p4 = new Floor(this.scene, p4Config, this.pisos).setBodySize(150,75);
 
   const p5Config: FloorConfig = {
     texture: "pSimple1p3",
@@ -571,7 +571,7 @@ class Mapa11 {
     rotated: false,
 };
 
-const p5 = new Floor(this.scene, p5Config, this.pisos);
+const p5 = new Floor(this.scene, p5Config, this.pisos).setBodySize(150,75);
 
 const p6Config: LargeFloorIslandConfig = {
   textureA: "longFloorLeftp3",
@@ -593,25 +593,25 @@ const p6 = new LargeFloorIsland(this.scene, p6Config, this.pisos);
 
 const p7Config: FloorConfig = {
   texture: "pSimple1p3",
-  pos: { x: 2400, y: 380 },
+  pos: { x: 2600, y: 580 },
   scale: { width: 0.7, height: 0.7 },
   height: 89,
   inverted:true,
   rotated: false,
 };
 
-const p7 = new Floor(this.scene, p7Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
+const p7 = new Floor(this.scene, p7Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0)).setBodySize(150,75);
 
 const p8Config: FloorConfig = {
   texture: "pSimple1p3",
-  pos: { x: 2540, y: 1080 },
+  pos: { x: 2540, y: 1180 },
   scale: { width: 1, height: 0.7 },
   height: 89,
   
   rotated: false,
 };
 
-const p8 = new Floor(this.scene, p8Config, this.pisos3);
+const p8 = new Floor(this.scene, p8Config, this.pisos3).setBodySize(150,75);
 
 const p9Config: FloorConfig = {
   texture: "pSimple1p3",
@@ -621,7 +621,7 @@ const p9Config: FloorConfig = {
   rotated: false,
 };
 
-const p9 = new Floor(this.scene, p9Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
+const p9 = new Floor(this.scene, p9Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0)).setBodySize(150,75);
 
 const p10Config: FloorConfig = {
   texture: "pDoblep3",
@@ -632,7 +632,7 @@ const p10Config: FloorConfig = {
   inverted:true,
 };
 
-const p10 = new Floor(this.scene, p10Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
+const p10 = new Floor(this.scene, p10Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0)).setBodySize(150,75);
 
 const p11Config: FloorConfig = {
   texture: "pSimple1p3",
@@ -642,7 +642,7 @@ const p11Config: FloorConfig = {
   rotated: false,
 };
 
-const p11 = new Floor(this.scene, p11Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
+const p11 = new Floor(this.scene, p11Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0)).setBodySize(150,75);
 
 
 const p12Config: FloorConfig = {
@@ -654,7 +654,7 @@ const p12Config: FloorConfig = {
   inverted:true,
 };
 
-const p12 = new Floor(this.scene, p12Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
+const p12 = new Floor(this.scene, p12Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0)).setBodySize(150,75);
 
 
 const p13Config: LargeFloorIslandConfig = {
@@ -736,7 +736,7 @@ const p13 = new LargeFloorIsland(this.scene, p13Config, this.pisos);
 
         const coinConfig: FloorConfig = {
           texture: "plantap3",
-          pos: { x: 2540, y: 1010 },
+          pos: { x: 2540, y: 1110 },
             scale: { width: 0.5, height: 0.5 },
             width: 10,
             height: 18,
@@ -746,7 +746,7 @@ const p13 = new LargeFloorIsland(this.scene, p13Config, this.pisos);
 
         const emptyCoinConfig: FloorConfig = {
           texture: "plantaVaciap3",
-          pos: { x: 2540, y: 1010 },
+          pos: { x: 2540, y: 1110 },
           scale: { width: 0.5, height: 0.5 },
           width: 10,
           height: 18,
@@ -756,7 +756,7 @@ const p13 = new LargeFloorIsland(this.scene, p13Config, this.pisos);
 
         const auraConfig: FloorConfig = {
         texture: "brilloPlantap3",
-        pos: { x: 2540, y: 1010 },
+        pos: { x: 2540, y: 1110 },
          scale: { width: 0.5, height: 0.5 },
          width: 10,
          height: 18,

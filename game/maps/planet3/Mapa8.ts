@@ -205,34 +205,34 @@ class Mapa8 {
       .setOrigin(0, 1)
       .setScale(1);
     this.hueso1 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y + 700, "planta1p3")
+      .image(this.startingPoint.x - 200, this.startingPoint.y + 400, "planta1p3")
       .setOrigin(0.5, 1)
       .setScale(0.5);
     this.hueso2 = this.scene.add
-      .image(3000, this.startingPoint.y + 700, "planta2p3")
+      .image(3300, this.startingPoint.y + 400, "planta2p3")
       .setOrigin(0.5, 1)
       .setScale(1)
       .setFlipX(true)
       .setScale(0.4);
     this.hueso3 = this.scene.add
-      .image(4650, this.startingPoint.y + 700, "planta1p3")
+      .image(4650, this.startingPoint.y + 400, "planta1p3")
       .setOrigin(0.5, 1)
-      .setScale(1, 0.7);
+      .setScale( 0.7);
 
     this.hueso4 = this.scene.add
-      .image(this.startingPoint.x * 1.6, this.startingPoint.y + 700, "planta3p3")
+      .image(this.startingPoint.x * 1.6, this.startingPoint.y + 400, "planta3p3")
       .setOrigin(0.5, 1)
       .setScale(0.5);
     this.hueso5 = this.scene.add
-      .image(3000 * 2.1, this.startingPoint.y + 700, "planta2p3")
+      .image(3000 * 2.1, this.startingPoint.y + 400, "planta2p3")
       .setOrigin(0.5, 1)
       .setScale(1)
       .setFlipX(true)
       .setScale(0.4);
     this.hueso6 = this.scene.add
-      .image(4650 * 2.5, this.startingPoint.y + 700, "planta3p3")
+      .image(4650 * 2.5, this.startingPoint.y + 400, "planta3p3")
       .setOrigin(0.5, 1)
-      .setScale(1, 0.7);
+      .setScale(0.7);
     this.mountain1 = this.scene.add.image(
       200,
       this.startingPoint.y + 300,
@@ -647,7 +647,7 @@ class Mapa8 {
     // const p13 = new Floor(this.scene, p13config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255,101,0))
 
     const ptestconfig: FloorConfig = {
-      pos: { x: 5990, y: 1250 },
+      pos: { x: 5990, y: 1050 },
       texture: "pSimple1p3",
       scale: { width: 0.7, height: 0.7 },
       width: 140,

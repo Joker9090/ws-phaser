@@ -212,17 +212,17 @@ class Mapa11 {
         .setOrigin(0, 1)
         .setScale(1);
       this.hueso1 = this.scene.add
-        .image(this.startingPoint.x, this.startingPoint.y + 700, "planta1p3")
+        .image(this.startingPoint.x, this.startingPoint.y + 550, "planta1p3")
         .setOrigin(0.5, 1)
         .setScale(0.5);
       this.hueso2 = this.scene.add
-        .image(3000, this.startingPoint.y + 700, "planta2p3")
+        .image(3000, this.startingPoint.y + 550, "planta2p3")
         .setOrigin(0.5, 1)
         .setScale(1)
         .setFlipX(true)
         .setScale(0.4);
       this.hueso3 = this.scene.add
-        .image(4650, this.startingPoint.y + 700, "planta1p3")
+        .image(4650, this.startingPoint.y + 550, "planta1p3")
         .setOrigin(0.5, 1)
         .setScale(1, 0.7);
   

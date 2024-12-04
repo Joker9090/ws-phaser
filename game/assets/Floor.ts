@@ -172,15 +172,15 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
       } else if (config.animation.yAxis) {
         if (this.y >= config.pos.y + config.animation.yAxis.yDistance / 2 && this.animState.y === 'start') {
           this.setVelocityY(-config.animation.yAxis.yVel);
-          if (this.scene.monchi && this.scene.monchi.body?.touching.down){
-            this.scene.monchi.setVelocityY(-config.animation.yAxis.yVel);
-          }
+          // if (this.scene.monchi && this.scene.monchi.body?.touching.down){
+          //   this.scene.monchi.setVelocityY(-config.animation.yAxis.yVel);
+          // }
           this.animState.y = 'reverse'
         } else if (this.y <= config.pos.y - config.animation.yAxis.yDistance / 2 && this.animState.y === 'reverse') {
           this.setVelocityY(config.animation.yAxis.yVel);
-          if (this.scene.monchi && this.scene.monchi.body?.touching.down){
-            this.scene.monchi.setVelocityY(config.animation.yAxis.yVel);
-          }
+          // if (this.scene.monchi && this.scene.monchi.body?.touching.down){
+          //   this.scene.monchi.setVelocityY(config.animation.yAxis.yVel);
+          // }
           this.animState.y = 'start'
         }
       }

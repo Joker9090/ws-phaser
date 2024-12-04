@@ -19,11 +19,11 @@ class Mapa9 {
     scene: Game;
     worldSize = {
         width: 10000,
-        height: 3000,
+        height: 1700,
     };
     cameraBounds = {
         x: 0,
-        y: 0,
+        y: -200,
         width: 4600,
         height: 1630,
       };
@@ -128,24 +128,24 @@ class Mapa9 {
       frontContainer: Phaser.GameObjects.Container;
   
       constructor(scene: Game, monchi: Player) {
-          this.scene = scene;
-          this.monchi = monchi;
-  
-          /* World size*/
-          this.scene.physics.world.setBounds(
-              0,
-              0,
-              this.worldSize.width,
-              this.worldSize.height
-          );
-  
-          this.mapContainer = this.scene.add.container()
-          this.frontContainer = this.scene.add.container().setDepth(999999999999)
-  
-          this.background = this.scene.add
-          .image(this.startingPoint.x, this.startingPoint.y-20, "p3Gradiant")
+        this.scene = scene;
+        this.monchi = monchi;
+    
+        /* World size*/
+        this.scene.physics.world.setBounds(
+          0,
+          0,
+          this.worldSize.width,
+          this.worldSize.height
+        );
+    
+        this.mapContainer = this.scene.add.container()
+        this.frontContainer = this.scene.add.container().setDepth(999999999999)
+    
+        this.background = this.scene.add
+          .image(this.startingPoint.x, this.startingPoint.y, "p3Gradiant")
           .setOrigin(0.5, 0.5);
-     
+    
         this.background2 = this.scene.add
           .image(this.startingPoint.x, this.startingPoint.y, "p1backgroundNoche")
           .setOrigin(0.5, 0.5)
@@ -155,35 +155,35 @@ class Mapa9 {
           .setOrigin(0.5, 0.5)
           .setAlpha(0);
         this.background4 = this.scene.add
-          .image(this.startingPoint.x, this.startingPoint.y + 500, "background3p3")
+          .image(this.startingPoint.x, this.startingPoint.y + 180, "background3p3")
           .setOrigin(0.5, 0.5)
           .setAlpha(1)
           .setScale(2);
         this.background5 = this.scene.add
-          .image(this.startingPoint.x + this.background4.width * 1.9 + 191 , this.startingPoint.y + 500, "background3p3")
+          .image(this.startingPoint.x + this.background4.width * 2, this.startingPoint.y + 180, "background3p3")
           .setOrigin(0.5, 0.5)
           .setAlpha(1)
-          .setScale(2);    
-      
-       
+          .setScale(2);
+    
+    
         this.frontground1 = this.scene.add
-          .image(this.startingPoint.x, this.startingPoint.y + 730, "background2p3")
+          .image(this.startingPoint.x, this.startingPoint.y + 530, "background2p3")
           .setOrigin(1, 1)
           .setScale(1);
         this.frontground2 = this.scene.add
           .image(
             this.startingPoint.x - 5,
-            this.startingPoint.y + 730,
+            this.startingPoint.y + 530,
             "background2p3"
           )
           .setOrigin(0, 1)
           .setScale(1)
           .setFlipX(true);
-  
+    
         this.frontground3 = this.scene.add
           .image(
             this.frontground2.width - 5 + this.frontground2.x,
-            this.startingPoint.y + 730,
+            this.startingPoint.y + 530,
             "background2p3"
           )
           .setOrigin(0, 1)
@@ -191,7 +191,7 @@ class Mapa9 {
         this.frontground4 = this.scene.add
           .image(
             this.frontground3.width - 5 + this.frontground3.x,
-            this.startingPoint.y + 730,
+            this.startingPoint.y + 530,
             "background2p3"
           )
           .setOrigin(0, 1)
@@ -199,7 +199,7 @@ class Mapa9 {
         this.frontground5 = this.scene.add
           .image(
             this.frontground4.width - 5 + this.frontground4.x,
-            this.startingPoint.y + 730,
+            this.startingPoint.y + 530,
             "background2p3"
           )
           .setOrigin(0, 1)
@@ -207,7 +207,7 @@ class Mapa9 {
         this.frontground6 = this.scene.add
           .image(
             this.frontground5.width - 5 + this.frontground5.x,
-            this.startingPoint.y + 730,
+            this.startingPoint.y + 530,
             "background2p3"
           )
           .setOrigin(0, 1)
@@ -225,9 +225,9 @@ class Mapa9 {
         this.hueso3 = this.scene.add
           .image(4650, this.startingPoint.y + 700, "planta1p3")
           .setOrigin(0.5, 1)
-          .setScale(1,0.7);
-
-          this.hueso4 = this.scene.add
+          .setScale(1, 0.7);
+    
+        this.hueso4 = this.scene.add
           .image(this.startingPoint.x * 1.6, this.startingPoint.y + 700, "planta3p3")
           .setOrigin(0.5, 1)
           .setScale(0.5);
@@ -238,27 +238,27 @@ class Mapa9 {
           .setFlipX(true)
           .setScale(0.4);
         this.hueso6 = this.scene.add
-          .image(4650* 2.5, this.startingPoint.y + 700, "planta3p3")
+          .image(4650 * 2.5, this.startingPoint.y + 700, "planta3p3")
           .setOrigin(0.5, 1)
-          .setScale(1,0.7);
+          .setScale(1, 0.7);
         this.mountain1 = this.scene.add.image(
           200,
-          this.startingPoint.y + 500,
+          this.startingPoint.y + 300,
           "montaña1p3"
         );
         this.mountain2 = this.scene.add.image(
           1100,
-          this.startingPoint.y + 520,
+          this.startingPoint.y + 320,
           "montaña2p3"
         );
         this.mountain3 = this.scene.add
-          .image(2300, this.startingPoint.y + 400, "montaña3p3")
+          .image(2300, this.startingPoint.y + 300, "montaña3p3")
           .setScale(1.3);
         this.mountain4 = this.scene.add
-          .image(3400, this.startingPoint.y + 520, "montaña2p3")
+          .image(3400, this.startingPoint.y + 220, "montaña2p3")
           .setScale(1.1);
         this.mountain5 = this.scene.add
-          .image(4000, this.startingPoint.y + 500, "montaña1p3")
+          .image(4000, this.startingPoint.y + 300, "montaña1p3")
           .setScale(0.81);
     
         this.backgroundsBack = [
@@ -272,8 +272,6 @@ class Mapa9 {
           this.mountain3,
           this.mountain4,
           this.mountain5,
-          this.background4,
-          this.background5,
           this.frontground1,
           this.frontground2,
           this.frontground3,
@@ -286,11 +284,11 @@ class Mapa9 {
           this.hueso4,
           this.hueso5,
           this.hueso6,
-        
+          
         ];
         this.backgroundsFront = [
           
-
+    
         ];
     
         // animation backgrounds statics
@@ -319,26 +317,26 @@ class Mapa9 {
           this.mountain3,
           this.mountain4,
           this.mountain5,
-          
         ]);
         
         this.frontContainer.add([this.frontground1,
-            this.background4,
-            this.background5,
-            this.frontground2,
-            this.frontground3,
-            this.frontground4,
-            this.frontground5,
-            this.frontground6,
-            this.hueso1,
-            this.hueso2,
-            this.hueso3,
-            this.hueso4,
-            this.hueso5,
-            this.hueso6,
-          ]);
+          this.background4,
+          this.background5,
+          this.frontground1,
+          this.frontground2,
+          this.frontground3,
+          this.frontground4,
+          this.frontground5,
+          this.frontground6,
+          this.hueso1,
+          this.hueso2,
+          this.hueso3,
+          this.hueso4,
+          this.hueso5,
+          this.hueso6,
+        ]);
       }
-   
+    
       updatePositionsRelativeToCamera = (
         originalPos: { x: number; y: number }[],
         images: Phaser.GameObjects.Image[],
@@ -347,11 +345,11 @@ class Mapa9 {
         ponderation: { fixX: number; fixY: number }
       ) => {
         const offsetX = (camera.midPoint.x - fixedPoint.x) / ponderation.fixX;
-        const offsetY = (camera.midPoint.y - fixedPoint.y)/ ponderation.fixY;
+        const offsetY = (camera.midPoint.y - fixedPoint.y) / ponderation.fixY;
         images.forEach((image, index) => {
           image.setPosition(
             (originalPos[index].x + offsetX),
-            (originalPos[index].y + offsetY) 
+            (originalPos[index].y + offsetY)
           );
         });
       };
@@ -379,6 +377,7 @@ class Mapa9 {
           { fixX: -20, fixY: -30 }
         );
       };
+    
 
     
     addColliders() {

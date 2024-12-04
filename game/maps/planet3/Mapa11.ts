@@ -23,9 +23,9 @@ class Mapa11 {
     };
     cameraBounds = {
         x: 0,
-        y: -100,
+        y: 0,
         width: 4600,
-        height: 1630,
+        height: 1330,
       };
     // normales
     pisos?: Phaser.Physics.Arcade.Group;
@@ -166,13 +166,13 @@ class Mapa11 {
   
   
       this.frontground1 = this.scene.add
-        .image(this.startingPoint.x, this.startingPoint.y + 730, "background2p3")
+        .image(this.startingPoint.x, this.startingPoint.y + 600, "background2p3")
         .setOrigin(1, 1)
         .setScale(1);
       this.frontground2 = this.scene.add
         .image(
           this.startingPoint.x - 5,
-          this.startingPoint.y + 730,
+          this.startingPoint.y + 600,
           "background2p3"
         )
         .setOrigin(0, 1)
@@ -182,7 +182,7 @@ class Mapa11 {
       this.frontground3 = this.scene.add
         .image(
           this.frontground2.width - 5 + this.frontground2.x,
-          this.startingPoint.y + 730,
+          this.startingPoint.y + 600,
           "background2p3"
         )
         .setOrigin(0, 1)
@@ -190,7 +190,7 @@ class Mapa11 {
       this.frontground4 = this.scene.add
         .image(
           this.frontground3.width - 5 + this.frontground3.x,
-          this.startingPoint.y + 730,
+          this.startingPoint.y + 600,
           "background2p3"
         )
         .setOrigin(0, 1)
@@ -198,7 +198,7 @@ class Mapa11 {
       this.frontground5 = this.scene.add
         .image(
           this.frontground4.width - 5 + this.frontground4.x,
-          this.startingPoint.y + 730,
+          this.startingPoint.y + 600,
           "background2p3"
         )
         .setOrigin(0, 1)
@@ -206,7 +206,7 @@ class Mapa11 {
       this.frontground6 = this.scene.add
         .image(
           this.frontground5.width - 5 + this.frontground5.x,
-          this.startingPoint.y + 730,
+          this.startingPoint.y + 600,
           "background2p3"
         )
         .setOrigin(0, 1)

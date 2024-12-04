@@ -399,9 +399,10 @@ class Mapa9 {
                     this.scene.monchi,
                     this.pisos2,
                     () => {
-
-                      this.scene.changeGravity(true, 1000, 3)
-                      this.scene.canRot = true
+                      if(this.scene.monchi?.body?.touching.up || this.scene.monchi?.body?.touching.down){
+                        this.scene.changeGravity(true, 1000, 3)
+                        this.scene.canRot = true
+                      }
                    
                     },
                     () => true,

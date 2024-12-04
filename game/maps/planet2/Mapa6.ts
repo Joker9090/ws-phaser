@@ -401,7 +401,9 @@ class Mapa5 {
                     this.scene.monchi,
                     this.pisos2,
                     () => {
+                      if(this.scene.monchi?.body?.touching.up || this.scene.monchi?.body?.touching.down){
                         this.scene.changeGravity(true, 1000, 3)
+                      }
                         // this.scene.checkPoint = 1
                     },
                     () => true,
@@ -521,9 +523,11 @@ class Mapa5 {
                     this.scene.monchi,
                     this.pisos5,
                     () => {
+                      if(this.scene.monchi?.body?.touching.up || this.scene.monchi?.body?.touching.down){
                         this.scene.canRot = true // medio hack, revisar lógica
                         this.scene.changeGravity(false, 1000, 3)
                         this.scene.rotateCam(false, 10)
+                      }
                         // this.scene.checkPoint = 0
                     },
                     () => true,

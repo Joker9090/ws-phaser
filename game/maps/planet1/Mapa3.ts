@@ -220,8 +220,10 @@ class Mapa3 {
                     this.scene.monchi,
                     this.pisos2,
                     () => {
-                        this.scene.changeGravity(true, 1000, 1)
-                        this.scene.checkPoint = 1
+                        if(this.scene.monchi?.body?.touching.up || this.scene.monchi?.body?.touching.down){
+                            this.scene.changeGravity(true, 1000, 1)
+                            this.scene.checkPoint = 1
+                        }
                     },
                     () => true,
                     this.scene

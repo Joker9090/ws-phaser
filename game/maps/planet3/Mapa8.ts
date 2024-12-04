@@ -389,7 +389,9 @@ class Mapa8 {
                     this.scene.monchi,
                     this.pisos2,
                     () => {
+                      if(this.scene.monchi?.body?.touching.up || this.scene.monchi?.body?.touching.down){
                         this.scene.changeGravity(true, 1000, 3);
+                      }
                         console.log("ENTRO ACA")
                         //this.background2.setPosition(this.startingPoint.x, this.startingPoint.y + 320)
                         //this.background4.setPosition(this.startingPoint.x, this.startingPoint.y + 320)
@@ -455,7 +457,9 @@ class Mapa8 {
                     this.scene.monchi,
                     this.pisos5,
                     () => {
+                      if(this.scene.monchi?.body?.touching.up || this.scene.monchi?.body?.touching.down){
                         this.scene.changeGravity(true, 1000, 3);
+                      }
                         // this.scene.checkPoint = 0
                     },
                     () => true,

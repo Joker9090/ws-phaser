@@ -208,9 +208,12 @@ class Mapa1 {
                 this.scene.scene.pause()
               }, 300)
             }
-            this.scene.changeGravity(true, 1000)
-            this.isFloating = true
-            this.scene.checkPoint = 1
+            if(this.scene.monchi?.body?.touching.up || this.scene.monchi?.body?.touching.down){   
+              this.scene.changeGravity(true, 1000)
+              this.isFloating = true
+              this.scene.checkPoint = 1
+            }
+            
           },
           () => true,
           this.scene

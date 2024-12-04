@@ -390,7 +390,10 @@ class Mapa11 {
                     this.scene.monchi,
                     this.pisos2,
                     () => {
-                      this.scene.changeGravity(true, 1000, 3)
+                      if(this.scene.monchi?.body?.touching.up || this.scene.monchi?.body?.touching.down){
+                      
+                        this.scene.changeGravity(true, 1000, 3)
+                      }
                    
                     },
                     () => true,

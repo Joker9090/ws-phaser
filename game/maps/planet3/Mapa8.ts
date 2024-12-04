@@ -264,14 +264,14 @@ class Mapa8 {
           this.mountain3,
           this.mountain4,
           this.mountain5,
-          this.background4,
-          this.background5,
           this.frontground1,
           this.frontground2,
           this.frontground3,
           this.frontground4,
           this.frontground5,
           this.frontground6,
+          this.background5,
+          this.background4,
           this.hueso1,
           this.hueso2,
           this.hueso3,
@@ -768,6 +768,33 @@ class Mapa8 {
           };
         const fireball2 = new Floor(this.scene, fireball2Config, this.fireballGroup).setScale(0.5)    
         const bubblesGroup = this.scene.add.group()
+
+        const c1Config: AsteroidGeneratorConfig = {
+          texture: "nube1p3",
+          x: 0,
+          y: 1000,
+          delayed: 100,
+          direction: 0,
+          velocity: 20,
+          scale: 1,
+          depth: 99,
+      };
+      const c1 = new AsteroidGenerator(this.scene, c1Config);
+      c1.start();
+
+      const c2Config: AsteroidGeneratorConfig = {
+          texture: "nube2p3",
+          x: 3000,
+          y: 600,
+          delayed: 100,
+          direction: 1,
+          velocity: 30,
+          scale: 1,
+          depth: 99,
+      };
+      const c2 = new AsteroidGenerator(this.scene, c2Config);
+      c2.start();
+
 
         const b1Config: AsteroidGeneratorConfig = {
             texture: "burbujap3",

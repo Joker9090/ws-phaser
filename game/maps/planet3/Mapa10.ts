@@ -828,7 +828,31 @@ const fireball5Config: FloorConfig = {
 };
 const fireball5 = new Floor(this.scene, fireball5Config, this.fireballGroup).setScale(0.5)
 const bubblesGroup = this.scene.add.group()
+const c1Config: AsteroidGeneratorConfig = {
+  texture: "nube1p3",
+  x: 0,
+  y: 1000,
+  delayed: 100,
+  direction: 0,
+  velocity: 20,
+  scale: 1,
+  depth: 99,
+};
+const c1 = new AsteroidGenerator(this.scene, c1Config);
+c1.start();
 
+const c2Config: AsteroidGeneratorConfig = {
+  texture: "nube2p3",
+  x: 3000,
+  y: 600,
+  delayed: 100,
+  direction: 1,
+  velocity: 30,
+  scale: 1,
+  depth: 99,
+};
+const c2 = new AsteroidGenerator(this.scene, c2Config);
+c2.start();
 const b1Config: AsteroidGeneratorConfig = {
   texture: "burbujap3",
   x: this.startingPoint.x,

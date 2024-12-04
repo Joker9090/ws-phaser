@@ -787,9 +787,9 @@ class Mapa9 {
   const fireball3 = new Floor(this.scene, fireball3Config, this.fireballGroup).setScale(0.5) 
 
         const c1Config: AsteroidGeneratorConfig = {
-            texture: "nube1p1",
+            texture: "nube1p3",
             x: 0,
-            y: 1500,
+            y: 1000,
             delayed: 100,
             direction: 0,
             velocity: 20,
@@ -800,7 +800,7 @@ class Mapa9 {
         c1.start();
 
         const c2Config: AsteroidGeneratorConfig = {
-            texture: "nube2p1",
+            texture: "nube2p3",
             x: 3000,
             y: 600,
             delayed: 100,

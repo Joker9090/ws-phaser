@@ -475,7 +475,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
                     this.scene.monchi,
                     this.pisos4,
                     () => {
-                      if(this.scene.monchi && this.scene.monchi.x > 2260)
+                      if(this.scene.monchi && this.scene.monchi.x > 2260 && this.scene.checkPoint === 0)
                       this.scene.checkPoint = 1
                     },
                     () => true,

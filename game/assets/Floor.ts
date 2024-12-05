@@ -172,19 +172,49 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
       } else if (config.animation.yAxis) {
         if (this.y >= config.pos.y + config.animation.yAxis.yDistance / 2 && this.animState.y === 'start') {
           this.setVelocityY(-config.animation.yAxis.yVel);
-          this.scene.monchi?.setVelocityY(-config.animation.yAxis.yVel)
-          this.animState.y = 'reverse'
+      
+          // Aplicar velocidad al personaje solo si está tocando ESTA plataforma
+          if (this.scene.monchi?.body?.touching.down && this.isTouchingMonchi()) {
+            this.scene.monchi.setVelocityY(-config.animation.yAxis.yVel);
+          } else if (this.scene.monchi?.body?.touching.up && this.isTouchingMonchi()) {
+            this.scene.monchi.setVelocityY(-config.animation.yAxis.yVel);
+          }
+      
+          this.animState.y = 'reverse';
         } else if (this.y <= config.pos.y - config.animation.yAxis.yDistance / 2 && this.animState.y === 'reverse') {
           this.setVelocityY(config.animation.yAxis.yVel);
-          this.scene.monchi?.setVelocityY(config.animation.yAxis.yVel)
-          this.animState.y = 'start'
+      
+          // Aplicar velocidad al personaje solo si está tocando ESTA plataforma
+          if (this.scene.monchi?.body?.touching.down && this.isTouchingMonchi()) {
+            this.scene.monchi.setVelocityY(config.animation.yAxis.yVel);
+          } else if (this.scene.monchi?.body?.touching.up && this.isTouchingMonchi()) {
+            this.scene.monchi.setVelocityY(config.animation.yAxis.yVel);
+          }
+      
+          this.animState.y = 'start';
         }
       }
+      
 
     
     }
   }
-
+  isTouchingMonchi() {
+    const monchi = this.scene.monchi;
+  
+    // Verificar si Monchi está en contacto con esta plataforma
+    if (!monchi || !monchi.body) return false;
+  
+    const monchiBottom = monchi.y + monchi.height / 2;
+    const monchiTop = monchi.y - monchi.height / 2;
+    const platformTop = this.y - this.height / 2;
+    const platformBottom = this.y + this.height / 2;
+  
+    return (
+      (monchiBottom >= platformTop && monchiTop <= platformBottom) &&
+      Math.abs(monchi.x - this.x) < this.width / 2 // Monchi está alineado horizontalmente con la plataforma
+    );
+  }
   // update() {
   //   this.animation()
   // }

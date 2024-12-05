@@ -212,7 +212,7 @@ class Mapa11 {
         .setOrigin(0, 1)
         .setScale(1);
       this.hueso1 = this.scene.add
-        .image(this.startingPoint.x, this.startingPoint.y + 550, "planta1p3")
+        .image(this.startingPoint.x, this.startingPoint.y + 570, "planta1p3")
         .setOrigin(0.5, 1)
         .setScale(0.5);
       this.hueso2 = this.scene.add
@@ -277,12 +277,7 @@ class Mapa11 {
         this.frontground4,
         this.frontground5,
         this.frontground6,
-        this.hueso1,
-        this.hueso2,
-        this.hueso3,
-        this.hueso4,
-        this.hueso5,
-        this.hueso6,
+        
         
       ];
       this.backgroundsFront = [
@@ -550,7 +545,7 @@ class Mapa11 {
 
       const p3Config: FloorConfig = {
         texture: "pSimple1p3",
-        pos: { x: 1650, y: 880 },
+        pos: { x: 1650, y: 855 },
         scale: { width: 0.7, height: 0.7 },
         height: 89,
         rotated: false,
@@ -590,10 +585,10 @@ const p6Config: LargeFloorIslandConfig = {
     textureB: 140,
     textureC: 115,
   },
-  scale: { width: 0.7, height: 0.7 },
+  scale: { width: 0.7, height: -0.7 },
   height: 127,
+  rotated:false,
   large: 4,
-  rotated: false
 };
 
 const p6 = new LargeFloorIsland(this.scene, p6Config, this.pisos);
@@ -611,18 +606,18 @@ const p7 = new Floor(this.scene, p7Config, this.pisos2).setTint(Phaser.Display.C
 
 const p8Config: FloorConfig = {
   texture: "pSimple1p3",
-  pos: { x: 2540, y: 1180 },
+  pos: { x: 2580, y: 1210 },
   scale: { width: 1, height: 0.7 },
   height: 89,
   
   rotated: false,
 };
 
-const p8 = new Floor(this.scene, p8Config, this.pisos3).setBodySize(150,75);
+const p8 = new Floor(this.scene, p8Config, this.pisos3).setBodySize(150,75).setTint(Phaser.Display.Color.GetColor(255, 101, 255));
 
 const p9Config: FloorConfig = {
   texture: "pSimple1p3",
-  pos: { x: 2940, y: 1080 },
+  pos: { x: 2940, y: 1210 },
   scale: { width: 1, height: 0.7 },
   height: 89,
   rotated: false,
@@ -652,23 +647,13 @@ const p11Config: FloorConfig = {
 const p11 = new Floor(this.scene, p11Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0)).setBodySize(150,75);
 
 
-const p12Config: FloorConfig = {
-  texture: "pSimple1p3",
-  pos: { x: 3260, y: 280 },
-  scale: { width: 1, height: 0.7 },
-  height: 89,
-  rotated: false,
-  inverted:true,
-};
-
-const p12 = new Floor(this.scene, p12Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0)).setBodySize(150,75);
 
 
 const p13Config: LargeFloorIslandConfig = {
   textureA: "longFloorLeftp3",
   textureB: "longFloorMiddlep3",
   textureC: "longFloorRightp3",
-  pos: { x: 2860, y: 180},
+  pos: { x: 3160, y: 180},
   width: {
     textureA: 110,
     textureB: 140,
@@ -732,7 +717,7 @@ const p13 = new LargeFloorIsland(this.scene, p13Config, this.pisos);
         //Portal, Coin and Asteroids
         const portalConfig: FloorConfig = {
             texture: "cuevap3",
-            pos: { x:3010, y: 250 },
+            pos: { x:3300, y: 250 },
             width: 90,
             height: 90,
             inverted:true
@@ -743,7 +728,7 @@ const p13 = new LargeFloorIsland(this.scene, p13Config, this.pisos);
 
         const coinConfig: FloorConfig = {
           texture: "plantap3",
-          pos: { x: 2540, y: 1110 },
+          pos: { x: 2540, y: 1140 },
             scale: { width: 0.5, height: 0.5 },
             width: 10,
             height: 18,
@@ -753,7 +738,7 @@ const p13 = new LargeFloorIsland(this.scene, p13Config, this.pisos);
 
         const emptyCoinConfig: FloorConfig = {
           texture: "plantaVaciap3",
-          pos: { x: 2540, y: 1110 },
+          pos: { x: 2540, y: 1140 },
           scale: { width: 0.5, height: 0.5 },
           width: 10,
           height: 18,
@@ -763,7 +748,7 @@ const p13 = new LargeFloorIsland(this.scene, p13Config, this.pisos);
 
         const auraConfig: FloorConfig = {
         texture: "brilloPlantap3",
-        pos: { x: 2540, y: 1110 },
+        pos: { x: 2540, y: 1140 },
          scale: { width: 0.5, height: 0.5 },
          width: 10,
          height: 18,
@@ -814,6 +799,8 @@ const p13 = new LargeFloorIsland(this.scene, p13Config, this.pisos);
             direction: 1,
             velocity: 15,
             scale: 1,
+            tweenScale: true,
+            scaleTweenDuration: 3000,
             group: bubblesGroup,
             upStraigth: true,
             amount:40,
@@ -832,6 +819,8 @@ const p13 = new LargeFloorIsland(this.scene, p13Config, this.pisos);
             delayed: 50,
             direction: 1,
             velocity: 15,
+            tweenScale: true,
+            scaleTweenDuration: 3000,
             depth:-99,
             scale: 1,
             group: bubblesGroup,

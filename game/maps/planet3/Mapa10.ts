@@ -180,13 +180,13 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
   
   
       this.frontground1 = this.scene.add
-        .image(this.startingPoint.x, this.startingPoint.y + 730, "background2p3")
+        .image(this.startingPoint.x, this.startingPoint.y + 780, "background2p3")
         .setOrigin(1, 1)
         .setScale(1);
       this.frontground2 = this.scene.add
         .image(
           this.startingPoint.x - 5,
-          this.startingPoint.y + 730,
+          this.startingPoint.y + 780,
           "background2p3"
         )
         .setOrigin(0, 1)
@@ -196,7 +196,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
       this.frontground3 = this.scene.add
         .image(
           this.frontground2.width - 5 + this.frontground2.x,
-          this.startingPoint.y + 730,
+          this.startingPoint.y + 780,
           "background2p3"
         )
         .setOrigin(0, 1)
@@ -204,7 +204,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
       this.frontground4 = this.scene.add
         .image(
           this.frontground3.width - 5 + this.frontground3.x,
-          this.startingPoint.y + 730,
+          this.startingPoint.y + 780,
           "background2p3"
         )
         .setOrigin(0, 1)
@@ -212,7 +212,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
       this.frontground5 = this.scene.add
         .image(
           this.frontground4.width - 5 + this.frontground4.x,
-          this.startingPoint.y + 730,
+          this.startingPoint.y + 780,
           "background2p3"
         )
         .setOrigin(0, 1)
@@ -220,7 +220,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
       this.frontground6 = this.scene.add
         .image(
           this.frontground5.width - 5 + this.frontground5.x,
-          this.startingPoint.y + 730,
+          this.startingPoint.y + 780,
           "background2p3"
         )
         .setOrigin(0, 1)
@@ -256,22 +256,22 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         .setScale(1, 0.7);
       this.mountain1 = this.scene.add.image(
         200,
-        this.startingPoint.y + 300,
+        this.startingPoint.y + 400,
         "montaña1p3"
       );
       this.mountain2 = this.scene.add.image(
         1100,
-        this.startingPoint.y + 320,
+        this.startingPoint.y + 420,
         "montaña2p3"
       );
       this.mountain3 = this.scene.add
-        .image(2300, this.startingPoint.y + 300, "montaña3p3")
+        .image(2300, this.startingPoint.y + 400, "montaña3p3")
         .setScale(1.3);
       this.mountain4 = this.scene.add
-        .image(3400, this.startingPoint.y + 220, "montaña2p3")
+        .image(3400, this.startingPoint.y + 340, "montaña2p3")
         .setScale(1.1);
       this.mountain5 = this.scene.add
-        .image(4000, this.startingPoint.y + 300, "montaña1p3")
+        .image(4000, this.startingPoint.y + 350, "montaña1p3")
         .setScale(0.81);
   
       this.backgroundsBack = [

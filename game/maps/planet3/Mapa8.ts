@@ -56,7 +56,7 @@ class Mapa8 {
   monchi?: Player;
   startingPoint = {
     x: 2700, //500
-    y: 1000, //800
+    y: 400, //800
   };
   checkPoint1 = {
     x: 4250, y: 800
@@ -135,37 +135,37 @@ class Mapa8 {
     this.frontContainer = this.scene.add.container().setDepth(999999999999)
 
     this.background = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "p3Gradiant")
+      .image(this.startingPoint.x, this.startingPoint.y + 400,   "p3Gradiant")
       .setOrigin(0.5, 0.5);
 
     this.background2 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "p1backgroundNoche")
+      .image(this.startingPoint.x, this.startingPoint.y + 400,   "p1backgroundNoche")
       .setOrigin(0.5, 0.5)
       .setAlpha(0);
     this.background3 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "p1capaOscuridad")
+      .image(this.startingPoint.x, this.startingPoint.y + 400,   "p1capaOscuridad")
       .setOrigin(0.5, 0.5)
       .setAlpha(0);
     this.background4 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y + 100, "background3p3")
+      .image(this.startingPoint.x, this.startingPoint.y + 400  +  100, "background3p3")
       .setOrigin(0.5, 0.5)
       .setAlpha(1)
       .setScale(2);
     this.background5 = this.scene.add
-      .image(this.startingPoint.x + this.background4.width * 2, this.startingPoint.y + 100, "background3p3")
+      .image(this.startingPoint.x + this.background4.width * 2, this.startingPoint.y + 400  +  100, "background3p3")
       .setOrigin(0.5, 0.5)
       .setAlpha(1)
       .setScale(2);
 
 
     this.frontground1 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y + 430, "background2p3")
+      .image(this.startingPoint.x, this.startingPoint.y + 400  +  430, "background2p3")
       .setOrigin(1, 1)
       .setScale(1);
     this.frontground2 = this.scene.add
       .image(
         this.startingPoint.x - 5,
-        this.startingPoint.y + 430,
+        this.startingPoint.y + 400  +  430,
         "background2p3"
       )
       .setOrigin(0, 1)
@@ -175,7 +175,7 @@ class Mapa8 {
     this.frontground3 = this.scene.add
       .image(
         this.frontground2.width - 5 + this.frontground2.x,
-        this.startingPoint.y + 430,
+        this.startingPoint.y + 400  +  430,
         "background2p3"
       )
       .setOrigin(0, 1)
@@ -183,7 +183,7 @@ class Mapa8 {
     this.frontground4 = this.scene.add
       .image(
         this.frontground3.width - 5 + this.frontground3.x,
-        this.startingPoint.y + 430,
+        this.startingPoint.y + 400  +  430,
         "background2p3"
       )
       .setOrigin(0, 1)
@@ -191,7 +191,7 @@ class Mapa8 {
     this.frontground5 = this.scene.add
       .image(
         this.frontground4.width - 5 + this.frontground4.x,
-        this.startingPoint.y + 430,
+        this.startingPoint.y + 400  +  430,
         "background2p3"
       )
       .setOrigin(0, 1)
@@ -199,58 +199,58 @@ class Mapa8 {
     this.frontground6 = this.scene.add
       .image(
         this.frontground5.width - 5 + this.frontground5.x,
-        this.startingPoint.y + 430,
+        this.startingPoint.y + 400  +  430,
         "background2p3"
       )
       .setOrigin(0, 1)
       .setScale(1);
     this.hueso1 = this.scene.add
-      .image(this.startingPoint.x - 200, this.startingPoint.y + 400, "planta1p3")
+      .image(this.startingPoint.x - 200, this.startingPoint.y + 400  +  400, "planta1p3")
       .setOrigin(0.5, 1)
       .setScale(0.5);
     this.hueso2 = this.scene.add
-      .image(3300, this.startingPoint.y + 400, "planta2p3")
+      .image(3300, this.startingPoint.y + 400  +  400, "planta2p3")
       .setOrigin(0.5, 1)
       .setScale(1)
       .setFlipX(true)
       .setScale(0.4);
     this.hueso3 = this.scene.add
-      .image(4650, this.startingPoint.y + 400, "planta1p3")
+      .image(4650, this.startingPoint.y + 400  +  400, "planta1p3")
       .setOrigin(0.5, 1)
       .setScale( 0.7);
 
     this.hueso4 = this.scene.add
-      .image(this.startingPoint.x * 1.6, this.startingPoint.y + 400, "planta3p3")
+      .image(this.startingPoint.x * 1.6, this.startingPoint.y + 400  +  400, "planta3p3")
       .setOrigin(0.5, 1)
       .setScale(0.5);
     this.hueso5 = this.scene.add
-      .image(3000 * 2.1, this.startingPoint.y + 400, "planta2p3")
+      .image(3000 * 2.1, this.startingPoint.y + 400  +  400, "planta2p3")
       .setOrigin(0.5, 1)
       .setScale(1)
       .setFlipX(true)
       .setScale(0.4);
     this.hueso6 = this.scene.add
-      .image(4650 * 2.5, this.startingPoint.y + 400, "planta3p3")
+      .image(4650 * 2.5, this.startingPoint.y + 400  +  400, "planta3p3")
       .setOrigin(0.5, 1)
       .setScale(0.7);
     this.mountain1 = this.scene.add.image(
       200,
-      this.startingPoint.y + 300,
+      this.startingPoint.y + 400  +  300,
       "montaña1p3"
     );
     this.mountain2 = this.scene.add.image(
       1100,
-      this.startingPoint.y + 320,
+      this.startingPoint.y + 400  +  320,
       "montaña2p3"
     );
     this.mountain3 = this.scene.add
-      .image(2300, this.startingPoint.y + 300, "montaña3p3")
+      .image(2300, this.startingPoint.y + 400  +  300, "montaña3p3")
       .setScale(1.3);
     this.mountain4 = this.scene.add
-      .image(3400, this.startingPoint.y + 220, "montaña2p3")
+      .image(3400, this.startingPoint.y + 400  +  220, "montaña2p3")
       .setScale(1.1);
     this.mountain5 = this.scene.add
-      .image(4000, this.startingPoint.y + 300, "montaña1p3")
+      .image(4000, this.startingPoint.y + 400  +  300, "montaña1p3")
       .setScale(0.81);
 
     this.backgroundsBack = [
@@ -505,7 +505,7 @@ class Mapa8 {
 
 
     const p1Config: FloorConfig = {
-      pos: { x: 2700, y: 1200, },
+      pos: { x: 2700, y: 800, },
       texture: "pSimple1p3",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
@@ -515,7 +515,7 @@ class Mapa8 {
     const p1 = new Floor(this.scene, p1Config, this.pisos);
 
     const p2Config: FloorConfig = {
-      pos: { x: 3300, y: 1200, },
+      pos: { x: 3300, y: 800, },
       texture: "pSimple1p3",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
@@ -532,7 +532,7 @@ class Mapa8 {
 
 
     const p3Config: FloorConfig = {
-      pos: { x: 3900, y: 1200, },
+      pos: { x: 3900, y: 800, },
       texture: "pSimple1p3",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
@@ -543,7 +543,7 @@ class Mapa8 {
 
 
     const p4Config: FloorConfig = {
-      pos: { x: 3900, y: 700, },
+      pos: { x: 3900, y: 300, },
       texture: "pSimple1p3",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
@@ -553,7 +553,7 @@ class Mapa8 {
     const p4 = new Floor(this.scene, p4Config, this.pisos).setFlipY(true);
 
     const p5config: FloorConfig = {
-      pos: { x: 4250, y: 700, },
+      pos: { x: 4250, y: 300, },
       texture: "pSimple1p3",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
@@ -564,7 +564,7 @@ class Mapa8 {
 
 
     const p6config: FloorConfig = {
-      pos: { x: 4800, y: 700, },
+      pos: { x: 4800, y: 300, },
       texture: "pSimple1p3",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
@@ -580,7 +580,7 @@ class Mapa8 {
     const p6 = new Floor(this.scene, p6config, this.pisos2).setFlipY(true).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
 
     const p8config: FloorConfig = {
-      pos: { x: 4850, y: 1200, },
+      pos: { x: 4850, y: 800, },
       texture: "pSimple1p3",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
@@ -597,7 +597,7 @@ class Mapa8 {
 
 
     const p9config: FloorConfig = {
-      pos: { x: 5400, y: 1200, },
+      pos: { x: 5400, y: 800, },
       texture: "pSimple1p3",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
@@ -625,7 +625,7 @@ class Mapa8 {
     const p11 = new Floor(this.scene, p11config, this.pisos2).setFlipY(true).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
 
     const p12config: FloorConfig = {
-      pos: { x: 5750, y: 1200, },
+      pos: { x: 5750, y: 800, },
       texture: "pSimple1p3",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
@@ -647,7 +647,7 @@ class Mapa8 {
     // const p13 = new Floor(this.scene, p13config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255,101,0))
 
     const ptestconfig: FloorConfig = {
-      pos: { x: 5990, y: 1050 },
+      pos: { x: 5990, y: 750 },
       texture: "pSimple1p3",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
@@ -660,7 +660,7 @@ class Mapa8 {
       textureA: "longFloorLeftp3",
       textureB: "longFloorMiddlep3",
       textureC: "longFloorRightp3",
-      pos: { x: 5970, y: 540 },
+      pos: { x: 5970, y: 140 },
       width: {
         textureA: 110,
         textureB: 140,
@@ -675,7 +675,7 @@ class Mapa8 {
     const p14 = new LargeFloorIsland(this.scene, p14Config, this.pisos);
     const portalConfig: FloorConfig = {
       texture: "cuevap3",
-      pos: { x: 6500, y: 625 },
+      pos: { x: 6500, y: 225 },
       width: 100,
       height: 100,
     };
@@ -686,7 +686,7 @@ class Mapa8 {
 
     const coinConfig: FloorConfig = {
       texture: "plantap3",
-      pos: { x: 4850, y: 1130 },
+      pos: { x: 4850, y: 730 },
       scale: { width: 0.5, height: 0.5 },
       width: 10,
       height: 18,
@@ -702,7 +702,7 @@ class Mapa8 {
     this.cristal = new Floor(this.scene, coinConfig, this.coin).setBodySize(140, 180)
     const emptyCoinConfig: FloorConfig = {
       texture: "plantaVaciap3",
-      pos: { x: 4850, y: 1130 },
+      pos: { x: 4850, y: 730 },
       scale: { width: 0.5, height: 0.5 },
       width: 10,
       height: 18,
@@ -718,7 +718,7 @@ class Mapa8 {
     this.EmptyCristal = new Floor(this.scene, emptyCoinConfig, this.EmptyCoin).setBodySize(140, 180);
     const auraConfig: FloorConfig = {
       texture: "brilloPlantap3",
-      pos: { x: 4850, y: 1130 },
+      pos: { x: 4850, y: 730 },
       scale: { width: 0.5, height: 0.5 },
       width: 10,
       height: 18,

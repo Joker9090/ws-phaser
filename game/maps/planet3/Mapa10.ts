@@ -576,7 +576,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
       const p2 = new Floor(this.scene, p2Config, this.pisos);
 
       const p3Config: FloorConfig = {
-        texture: "pDoblep3",
+        texture: "pSimple1p3",
         pos: { x: 1650, y: 590 },
         inverted:true,
         scale: { width: 1, height: 0.7 },
@@ -607,7 +607,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
     const p5 = new Floor(this.scene, p5Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0)).setBodySize(150,80);
 
     const p6Config: FloorConfig = {
-      texture: "pDoblep3",
+      texture: "pSimple1p3",
       pos: { x: 1950, y: 590 },
       inverted:true,
       scale: { width: 1, height: 0.7 },
@@ -628,7 +628,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         textureB: 120,
         textureC: 115,
       },
-      scale: { width: 0.7, height: 0.7 },
+      scale: { width: 0.7, height: -0.7 },
       height: 127,
       large: 4,
       rotated: false

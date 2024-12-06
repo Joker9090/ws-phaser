@@ -394,7 +394,7 @@ class Mapa1 {
         textureC: 115,
       },
       scale: { width: 0.7, height: 0.7 },
-      height: 127,
+      height: 90,
       large: 40,
       rotated: true
     };

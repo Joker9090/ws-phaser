@@ -558,60 +558,60 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
             pos: { x: 1000, y: 590 },
             inverted:true,
             scale: { width: 0.7, height: 0.7 },
-            height: 89,
+            height: 20,
             rotated: false,
         };
 
-        const p1 = new Floor(this.scene, p1Config, this.pisos).setBodySize(180,80);
+        const p1 = new Floor(this.scene, p1Config, this.pisos);
 
         const p2Config: FloorConfig = {
           texture: "pSimple1p3",
           pos: { x: 1280, y: 590 },
           inverted:true,
           scale: { width: 0.7, height: 0.7 },
-          height: 89,
+          height: 20,
           rotated: false,
       };
 
-      const p2 = new Floor(this.scene, p2Config, this.pisos).setBodySize(180,80);
+      const p2 = new Floor(this.scene, p2Config, this.pisos);
 
       const p3Config: FloorConfig = {
         texture: "pSimple1p3",
         pos: { x: 1650, y: 590 },
         inverted:true,
         scale: { width: 1, height: 0.7 },
-        height: 89,
+        height: 20,
         rotated: false,
     };
 
-    const p3 = new Floor(this.scene, p3Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0)).setBodySize(180,80);
+    const p3 = new Floor(this.scene, p3Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
 
       const p4Config: FloorConfig = {
        texture: "pSimple1p3",
         pos: { x: 1650, y: 1090 },
         scale: { width: 0.7, height: 0.7 },
-        height: 89,
+        height: 20,
         rotated: false,
       };
 
-      const p4 = new Floor(this.scene, p4Config, this.pisos).setBodySize(180,80);
+      const p4 = new Floor(this.scene, p4Config, this.pisos);
        
       const p5Config: FloorConfig = {
         texture: "pSimple1p3",
         pos: { x: 1950, y: 1090 },
         scale: { width: 0.7, height: 0.7 },
-        height: 89,
+        height: 20,
         rotated: false,
       };
 
-    const p5 = new Floor(this.scene, p5Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0)).setBodySize(180,80);
+    const p5 = new Floor(this.scene, p5Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
 
     const p6Config: FloorConfig = {
       texture: "pSimple1p3",
       pos: { x: 1950, y: 590 },
       inverted:true,
       scale: { width: 1, height: 0.7 },
-      height: 89,
+      height: 20,
       rotated: false,
     };
 
@@ -629,7 +629,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         textureC: 115,
       },
       scale: { width: 0.7, height: -0.7 },
-      height: 127,
+      height: 80,
       large: 4,
       rotated: false
     };
@@ -641,7 +641,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
       pos: { x: 2850, y: 850 },
       inverted:true,
       scale: { width: 1.2, height: 0.7 },
-      height: 89,
+      height: 20,
       rotated: false,
       animation:{
         yAxis:{
@@ -651,7 +651,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
       }
     };
 
-    const p8 = new Floor(this.scene, p8Config, this.pisos3).setTint(Phaser.Display.Color.GetColor(255, 101, 255)).setBodySize(180,80);
+    const p8 = new Floor(this.scene, p8Config, this.pisos3).setTint(Phaser.Display.Color.GetColor(255, 101, 255));
   
     
     const p9Config: LargeFloorIslandConfig = {
@@ -666,7 +666,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         textureC: 115,
       },
       scale: { width: 0.7, height: 0.7 },
-      height: 127,
+      height: 80,
       large: 10,
       rotated: false
     };
@@ -678,22 +678,22 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
       pos: { x: 3900, y: 650 },
       inverted:true,
       scale: { width: 0.7, height: 0.7 },
-      height: 89,
+      height: 20,
       rotated: false,
     };
 
-    const p10 = new Floor(this.scene, p10Config, this.pisos).setBodySize(180,80);
+    const p10 = new Floor(this.scene, p10Config, this.pisos);
 
     const p11Config: FloorConfig = {
       texture: "pSimple1p3",
       pos: { x: 3580, y: 650 },
       inverted:true,
       scale: { width: 0.7, height: 0.7 },
-      height: 89,
+      height: 20,
       rotated: false,
     };
 
-    const p11 = new Floor(this.scene, p11Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0)).setBodySize(180,80);
+    const p11 = new Floor(this.scene, p11Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
 
     const p12Config: LargeFloorIslandConfig = {
       textureA: "longFloorLeftp3",
@@ -707,7 +707,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         textureC: 115,
       },
       scale: { width: 0.7, height: 0.7 },
-      height: 127,
+      height: 80,
       large: 4,
       rotated: false
     };

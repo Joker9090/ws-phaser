@@ -579,7 +579,7 @@ class Mapa5 {
             texture: "pSimple1p1",
             scale: { width: 0.7, height: 0.7 },
             width: 140,
-            height: 50,
+            height: 30,
         };
         const p1 = new Floor(this.scene, p1Config, this.pisos);
 
@@ -588,7 +588,7 @@ class Mapa5 {
             texture: "pSimple2p1",
             scale: { width: 0.7, height: 0.7 },
             width: 140,
-            height: 50,
+            height: 30,
         };
         const p2 = new Floor(this.scene, p2Config, this.pisos4);
 
@@ -612,7 +612,7 @@ class Mapa5 {
             texture: "pSimple1p1",
             scale: { width: 0.7, height: 0.7 },
             width: 140,
-            height: 50,
+            height: 30,
         };
         const p3 = new Floor(this.scene, p3Config, this.pisos4).setFlipX(true);
 
@@ -637,7 +637,7 @@ class Mapa5 {
             texture: "pSimple2p1",
             scale: { width: 0.7, height: 0.7 },
             width: 140,
-            height: 50,
+            height: 30,
         };
         const p4 = new Floor(this.scene, p4Config, this.pisos4);
 
@@ -662,7 +662,7 @@ class Mapa5 {
             texture: "pSimple2p1",
             scale: { width: 0.7, height: 0.7 },
             width: 140,
-            height: 50,
+            height: 30,
         };
         const p5 = new Floor(this.scene, p5Config, this.pisos2).setFlipX(true).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
 
@@ -671,7 +671,7 @@ class Mapa5 {
             texture: "pSimple2p1",
             scale: { width: 0.7, height: 0.7 },
             width: 140,
-            height: 50,
+            height: 30,
         };
         const p6 = new Floor(this.scene, p6Config, this.pisos3).setFlipY(true).setTint(Phaser.Display.Color.GetColor(255, 101, 255));
 
@@ -680,7 +680,7 @@ class Mapa5 {
             texture: "pSimple2p1",
             scale: { width: 1.7, height: 0.7 },
             width: 140,
-            height: 50,
+            height: 30,
         };
         const p7 = new Floor(this.scene, p7Config, this.pisos).setFlipY(true).setVelocityX(-200)
 
@@ -698,7 +698,7 @@ class Mapa5 {
             texture: "pSimple1p1",
             scale: { width: 0.7, height: 0.7 },
             width: 140,
-            height: 50,
+            height: 30,
         };
         const p8 = new Floor(this.scene, p8Config, this.pisos).setFlipY(true)
 

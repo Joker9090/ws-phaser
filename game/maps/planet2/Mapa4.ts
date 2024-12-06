@@ -525,7 +525,7 @@ class Mapa4 {
       texture: "pSimple1p1",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
-      height: 50,
+      height: 30,
     };
     const p1 = new Floor(this.scene, p1Config, this.pisos);
 
@@ -534,7 +534,7 @@ class Mapa4 {
       texture: "pSimple2p1",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
-      height: 50,
+      height: 30,
     };
     const p2 = new Floor(this.scene, p2Config, this.pisos2).setTint(
       Phaser.Display.Color.GetColor(255, 101, 0)
@@ -545,7 +545,7 @@ class Mapa4 {
       texture: "pSimple2p1",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
-      height: 50,
+      height: 30,
     };
     const p16 = new Floor(this.scene, p16Config, this.pisos).setFlipY(true);
 
@@ -573,7 +573,7 @@ class Mapa4 {
       texture: "pSimple1p1",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
-      height: 50,
+      height: 30,
     };
     const p3 = new Floor(this.scene, p3Config, this.pisos4)
       .setFlipX(true)
@@ -585,7 +585,7 @@ class Mapa4 {
         texture: "pSimple2p1",
         scale: { width: 0.7, height: 0.7 },
         width: 140,
-        height: 50,
+        height: 30,
       };
       const p17 = new Floor(this.scene, p17Config, this.pisos);
 
@@ -612,7 +612,7 @@ class Mapa4 {
       texture: "pSimple2p1",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
-      height: 50,
+      height: 30,
     };
     const p4 = new Floor(this.scene, p4Config, this.pisos2).setTint(
       Phaser.Display.Color.GetColor(255, 101, 0)
@@ -643,7 +643,7 @@ class Mapa4 {
       texture: "pSimple2p1",
       scale: { width: 1.7, height: 0.7 },
       width: 140,
-      height: 50,
+      height: 30,
     };
     const p5 = new Floor(this.scene, p5Config, this.pisos3)
       .setFlipX(true)
@@ -655,7 +655,7 @@ class Mapa4 {
       texture: "pSimple1p1",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
-      height: 50,
+      height: 30,
       animation:{
         yAxis:{
           yDistance:500,
@@ -670,7 +670,7 @@ class Mapa4 {
       texture: "pSimple1p1",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
-      height: 50,
+      height: 30,
     };
     const p11 = new Floor(this.scene, p11Config, this.pisos2).setFlipY(true).setTint(
       Phaser.Display.Color.GetColor(255, 101, 0)
@@ -682,7 +682,7 @@ class Mapa4 {
       texture: "pSimple1p1",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
-      height: 50,
+      height: 30,
     };
     const p12 = new Floor(this.scene, p12Config, this.pisos).setFlipY(false);
 
@@ -691,7 +691,7 @@ class Mapa4 {
       texture: "pSimple1p1",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
-      height: 50,
+      height: 30,
     };
     const p13 = new Floor(this.scene, p13Config, this.pisos).setFlipY(false);
 
@@ -700,7 +700,7 @@ class Mapa4 {
       texture: "pSimple2p1",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
-      height: 50,
+      height: 30,
     };
     const p7 = new Floor(this.scene, p7Config, this.pisos)
       .setFlipY(true)
@@ -710,7 +710,7 @@ class Mapa4 {
         texture: "pSimple2p1",
         scale: { width: 0.7, height: 0.7 },
         width: 140,
-        height: 50,
+        height: 30,
       };
       const p14 = new Floor(this.scene, p14Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));  
     //   .setVelocity(400, 0);
@@ -729,7 +729,7 @@ class Mapa4 {
       texture: "pSimple2p1",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
-      height: 50,
+      height: 30,
     };
     const p15 = new Floor(this.scene, p15Config, this.pisos)
       .setFlipY(true)
@@ -745,7 +745,7 @@ class Mapa4 {
         textureC: 122,
       },
       scale: { width: 0.7, height: 0.7 },
-      height: 89,
+      height: 59,
       large: 15,
       rotated: true,
     };
@@ -756,7 +756,7 @@ class Mapa4 {
       texture: "pSimple1p1",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
-      height: 50,
+      height: 30,
     };
     const p9 = new Floor(this.scene, p9Config, this.pisos5)
       .setFlipY(true)

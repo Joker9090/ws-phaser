@@ -148,7 +148,7 @@ class Mapa8 {
       .setOrigin(0.5, 0.5)
       .setAlpha(0);
     this.background4 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y + 400  +  100, "background3p3")
+      .image(this.startingPoint.x, this.startingPoint.y + 400  +  100 + 100, "background3p3")
       .setOrigin(0.5, 0.5)
       .setAlpha(1)
       .setScale(2);
@@ -510,7 +510,7 @@ class Mapa8 {
       texture: "pSimple1p3",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
-      height: 50,
+      height: 20,
     };
 
     const p1 = new Floor(this.scene, p1Config, this.pisos);
@@ -520,7 +520,7 @@ class Mapa8 {
       texture: "pSimple1p3",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
-      height: 50,
+      height: 20,
       animation: {
         xAxis: {
           xDistance: 650,
@@ -537,7 +537,7 @@ class Mapa8 {
       texture: "pSimple1p3",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
-      height: 50,
+      height: 20,
     };
 
     const p3 = new Floor(this.scene, p3Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
@@ -548,7 +548,7 @@ class Mapa8 {
       texture: "pSimple1p3",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
-      height: 50,
+      height: 20,
     };
 
     const p4 = new Floor(this.scene, p4Config, this.pisos).setFlipY(true);
@@ -558,7 +558,7 @@ class Mapa8 {
       texture: "pSimple1p3",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
-      height: 50,
+      height: 20,
     };
 
     const p5 = new Floor(this.scene, p5config, this.pisos).setFlipY(true);
@@ -569,7 +569,7 @@ class Mapa8 {
       texture: "pSimple1p3",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
-      height: 50,
+      height: 20,
       animation: {
         xAxis: {
           xDistance: 620,
@@ -585,7 +585,7 @@ class Mapa8 {
       texture: "pSimple1p3",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
-      height: 50,
+      height: 20,
       animation: {
         xAxis: {
           xDistance: 620,
@@ -602,7 +602,7 @@ class Mapa8 {
       texture: "pSimple1p3",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
-      height: 50,
+      height: 20,
     };
 
     const p9 = new Floor(this.scene, p9config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
@@ -612,7 +612,7 @@ class Mapa8 {
       texture: "pSimple1p3",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
-      height: 50,
+      height: 20,
     };
     const p10 = new Floor(this.scene, p10config, this.pisos4).setFlipY(true);
 
@@ -621,7 +621,7 @@ class Mapa8 {
       texture: "pSimple1p3",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
-      height: 50,
+      height: 20,
     };
     const p11 = new Floor(this.scene, p11config, this.pisos2).setFlipY(true).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
 
@@ -630,7 +630,7 @@ class Mapa8 {
       texture: "pSimple1p3",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
-      height: 50,
+      height: 20,
     };
 
     const p12 = new Floor(this.scene, p12config, this.pisos)
@@ -642,7 +642,7 @@ class Mapa8 {
     //     texture: "pSimple1p3",
     //     scale: { width: 0.7, height: 0.7 },
     //     width: 140,
-    //     height: 50,
+    //     height: 20,
     // };
 
     // const p13 = new Floor(this.scene, p13config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255,101,0))
@@ -652,7 +652,7 @@ class Mapa8 {
       texture: "pSimple1p3",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
-      height: 50,
+      height: 20,
     };
 
     const ptest = new Floor(this.scene, ptestconfig, this.pisos5).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
@@ -668,7 +668,7 @@ class Mapa8 {
         textureC: 122,
       },
       scale: { width: 0.7, height: 0.7 },
-      height: 89,
+      height: 39,
       large: 10,
       rotated: true,
     };

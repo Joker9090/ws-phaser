@@ -610,7 +610,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
             texture: "pSimple2p1",
             scale: { width: 0.7, height: 0.7 },
             width: 140,
-            height: 50,
+            height: 30,
             animation:{
               xAxis:{
                 xDistance:400,
@@ -640,7 +640,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
             texture: "pSimple2p1",
             scale: { width: 0.7, height: 0.7 },
             width: 140,
-            height: 50,
+            height: 30,
         };
         const p3 = new Floor(this.scene, p3Config, this.pisos2).setFlipX(false).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
 
@@ -649,7 +649,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
             texture: "pSimple1p1",
             scale: { width: 0.7, height: 0.7 },
             width: 140,
-            height: 50,
+            height: 30,
         };
         const p4 = new Floor(this.scene, p4Config, this.pisos).setFlipX(true).setFlipY(true)
 
@@ -674,7 +674,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
             texture: "pSimple1p1",
             scale: { width: 0.7, height: 0.7 },
             width: 140,
-            height: 50,
+            height: 30,
             animation:{
               xAxis:{
                 xDistance:600,
@@ -690,7 +690,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
             texture: "pSimple2p1",
             scale: { width: 0.7, height: 0.7 },
             width: 140,
-            height: 50,
+            height: 30,
         };
         const p6 = new Floor(this.scene, p6Config, this.pisos3).setTint(Phaser.Display.Color.GetColor(255, 101, 255)).setFlipY(true);
 
@@ -714,7 +714,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
             texture: "pSimple1p1",
             scale: { width: 0.7, height: 0.7 },
             width: 140,
-            height: 50,
+            height: 30,
         };
         const p7 = new Floor(this.scene, p7Config, this.pisos5).setFlipY(true).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
 
@@ -741,7 +741,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
             texture: "pSimple1p1",
             scale: { width: 0.7, height: 0.7 },
             width: 140,
-            height: 50,
+            height: 30,
         };
         const p9 = new Floor(this.scene, p9Config, this.pisos4).setFlipY(false)
 
@@ -750,7 +750,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
             texture: "pSimple2p1",
             scale: { width: 0.7, height: 0.7 },
             width: 140,
-            height: 50,
+            height: 30,
         };
         const p10 = new Floor(this.scene, p10Config, this.pisos4).setFlipY(false)
 
@@ -759,7 +759,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         //     texture: "pSimple2p1",
         //     scale: { width: 1.7, height: 0.7 },
         //     width: 140,
-        //     height: 50,
+        //     height: 30,
         // };
         // const p7 = new Floor(this.scene, p7Config, this.pisos).setFlipY(true).setVelocityX(-200)
 
@@ -777,7 +777,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         //     texture: "pSimple1p1",
         //     scale: { width: 0.7, height: 0.7 },
         //     width: 140,
-        //     height: 50,
+        //     height: 30,
         // };
         // const p8 = new Floor(this.scene, p8Config, this.pisos).setFlipY(true)
 

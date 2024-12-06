@@ -545,7 +545,7 @@ class Mapa9 {
             pos: { x: 1000, y: 700 },
             inverted:true,
             scale: { width: 0.7, height: 0.7 },
-            height: 89,
+            height: 20,
             rotated: false,
         };
 
@@ -557,7 +557,7 @@ class Mapa9 {
           pos: { x: 1300, y: 600 },
           inverted:true,
           scale: { width: 0.7, height: 0.7 },
-          height: 89,
+          height: 20,
           rotated: false,
       };
 
@@ -568,20 +568,20 @@ class Mapa9 {
         pos: { x: 1600, y: 500 },
         scale: { width: 1, height: 0.7 },
         width: 170,
-        height: 50,
+        height: 20,
       };
 
-       this.p7 = new Floor(this.scene, p7Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
+       this.p7 = new Floor(this.scene, p7Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0)).setFlipY(true);
   
       const p3Config: FloorConfig = {
         texture: "pDoblep3",
         pos: { x: 1600, y: 1300 },
         scale: { width: 1.5, height: 0.7 },
-        width: 170,
-        height: 50,
+        width: 100,
+        height: 30,
       };
     
-      this.p3 = new Floor(this.scene, p3Config, this.pisos).setBodySize(150,110);
+      this.p3 = new Floor(this.scene, p3Config, this.pisos);
       this.t1 = this.scene.tweens.add({
         duration: 4000,
         paused: true,
@@ -597,7 +597,7 @@ class Mapa9 {
         pos: { x: 1950, y: 1300 },
         scale: { width: 0.8, height: 0.7 },
         width: 170,
-        height: 50,
+        height: 20,
       };
 
     const p4 = new Floor(this.scene, p4Config, this.pisos5).setTint(Phaser.Display.Color.GetColor(255, 101, 255));
@@ -607,7 +607,7 @@ class Mapa9 {
        pos: { x: 2400, y: 1300 },
        scale: { width: 1.3, height: 0.7 },
        width: 170,
-       height: 50,
+       height: 20,
        animation:{
         xAxis:{
           xDistance:200,
@@ -623,7 +623,7 @@ class Mapa9 {
         pos: { x: 2800, y: 1300 },
         scale: { width: 1, height: 0.7 },
         width: 170,
-        height: 50,
+        height: 20,
       };
 
       const p6 = new Floor(this.scene, p6Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
@@ -633,7 +633,7 @@ class Mapa9 {
         pos: { x: 2800, y: 800 },
         scale: { width: 1, height: 0.7 },
         width: 170,
-        height: 50,
+        height: 20,
         inverted:true,
       };
 
@@ -644,7 +644,7 @@ class Mapa9 {
         pos: { x: 2400, y: 800 },
         scale: { width: 1, height: 0.7 },
         width: 170,
-        height: 50,
+        height: 20,
         inverted:true,
        
       };
@@ -656,7 +656,7 @@ class Mapa9 {
         pos: { x: 2050, y: 800 },
         scale: { width: 1, height: 0.7 },
         width: 170,
-        height: 50,
+        height: 20,
         inverted:true,
         animation:{
           xAxis:{
@@ -674,7 +674,7 @@ class Mapa9 {
         pos: { x: 1100, y: 1200 },
         scale: { width: 2, height: 0.7 },
         width: 170,
-        height: 50,
+        height: 20,
         inverted:true,
       
       };

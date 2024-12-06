@@ -385,7 +385,7 @@ class Mapa2 {
         textureC: 115,
       },
       scale: { width: 0.7, height: 0.7 },
-      height: 127,
+      height: 90,
       large: 13,
       rotated: true
     };
@@ -403,10 +403,11 @@ class Mapa2 {
         textureC: 115,
       },
       scale: { width: 0.7, height: 0.7 },
-      height: 127,
+      height: 90,
       large: 20,
       rotated: true
     };
+  
     const p7 = new LargeFloorIsland(this.scene, p7Config, this.pisos4);
     //Portal, Coin and Asteroids
     const portalConfig: FloorConfig = {

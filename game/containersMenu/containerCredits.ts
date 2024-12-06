@@ -21,7 +21,7 @@ class ContainerCredits extends Phaser.GameObjects.Container {
 
     constructor(scene: Phaser.Scene, config: ContainerMenuConfigType) {
         super(scene, config.x, config.y)
-
+        // this.setSize(1920,1080)
         this.backButton = scene.add.image(0, 0, "backButton")
         this.credits_barto = scene.add.image(0, 0, "credits_barto").setAlpha(0.5)
         this.credits_clari = scene.add.image(0, 0, "credits_clari").setAlpha(0.5)
@@ -46,11 +46,11 @@ class ContainerCredits extends Phaser.GameObjects.Container {
         this.setPositionCredits(creditsArray)
         this.handleInteractive(creditsArray)
 
-        const creditsPosY = (this.credits_nano.y - this.creditsTitle.height) / 2
-        this.add(creditsArray.concat([this.backButton, this.creditsTitle]))
-
-        this.creditsTitle.setPosition(this.width / 2, creditsPosY).setOrigin(0.5, 0)
-        this.backButton.setPosition(this.width - this.backButton.width, this.height - this.backButton.height)
+        const creditsPosY = -this.credits_nano.height - 40 - 40
+        
+        this.creditsTitle.setPosition(0, creditsPosY).setOrigin(0.5, 1)
+        console.log(this.backButton)
+        this.backButton.setPosition(this.width/2 - this.backButton.width, this.height/2 - this.backButton.height)
         this.backButton.setInteractive().on('pointerdown', () => {
             this.backButton.setTexture('backButtonPressed')
         })
@@ -60,40 +60,33 @@ class ContainerCredits extends Phaser.GameObjects.Container {
                 this.scene.cameras.main.pan(config.panToInitial.x, config.panToInitial.y, 1000, 'Expo', true)
             }
         })
-        this.backButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, ()=>{
+        this.backButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
             this.backButton.setTexture('backButtonHover')
-        }) 
-        this.backButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, ()=>{
+        })
+        this.backButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => {
             this.backButton.setTexture('backButton')
         })
-
+        
+        this.add(creditsArray.concat([this.backButton, this.creditsTitle]))
         scene.add.existing(this)
     }
 
     setPositionCredits(arr: Phaser.GameObjects.Image[]) {
         const width = arr[0].width
         const height = arr[0].height
-        let firstPosX = 0
-        let firstPosY = 0
-        let paddingX = (this.width - 4 * width) / 5
-        let paddingY = (this.height - 2 * height) / 3
         const maxPaddingX = 80
         const maxPaddingY = 80
-        if (paddingX > maxPaddingX) {
-            paddingX = maxPaddingX
-            firstPosX = (this.width - paddingX * 3 - 4 * width) / 2
-        }
-        if (paddingY > maxPaddingY) {
-            paddingY = maxPaddingY
-            firstPosY = (this.height - paddingY - 2 * height) / 2
-        }
-
+        let firstPosX = -(width + maxPaddingX) * 1.5
+        let firstPosY = -(height + maxPaddingY )* .5
+        // let paddingX = (this.width - 4 * width) / 5
+        // let paddingY = (this.height - 2 * height) / 3
+        // firstPosX = (this.width - maxPaddingX * 3 - 4 * width) / 2
+        // firstPosY = (this.height - paddingY - 2 * height) / 2
         arr.forEach((element: Phaser.GameObjects.Image, index: number) => {
-            element.setOrigin(0)
             if (index < 4) {
-                element.setPosition(firstPosX + index * (width + paddingX), firstPosY)
+                element.setPosition(firstPosX + index * (width + maxPaddingX), firstPosY)
             } else {
-                element.setPosition(firstPosX + (index - 4) * (width + paddingX), firstPosY + height + paddingY)
+                element.setPosition(firstPosX + (index - 4) * (width + maxPaddingX), firstPosY + height + maxPaddingY)
             }
         })
     }

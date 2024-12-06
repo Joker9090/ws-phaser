@@ -408,7 +408,6 @@ class Mapa9 {
                 );
             if (this.pisos3)
                 this.scene.physics.add.collider(
-                 
                     this.scene.monchi,
                     this.pisos3,
                     () => {

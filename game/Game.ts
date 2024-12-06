@@ -356,6 +356,7 @@ class Game extends Phaser.Scene {
 
     const { x, y } = this.map.startingPoint;
     this.monchi = new Player(this, x, y, "character", 2);
+    console.log(this.monchi, "MONCHI")
     this.canWin = false;
     /* CREATE MAP */
     this.map.createMap(data);

@@ -109,7 +109,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     /* Monchi change size and bounce */
     this.body?.setSize(100, 150);
     this.body?.setOffset(50, 40);
-  
+
     this.setScale(.7)
     this.setBounce(0);
     this.setDepth(999);
@@ -120,7 +120,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.scene.UICamera?.ignore(this)
     this.gravityAnimSprite = this.scene.add.sprite(this.x, this.y, "gravityAnim", 0).setVisible(false).setDepth(999);
     this.scene.UICamera?.ignore(this.gravityAnimSprite)
-    
+
     // this.scene.add.rectangle(this.x, this.y, 100, 100, 0xffffff).setVisible(true)
     /* Monchi Collission with end of map */
     this.setCollideWorldBounds(true);
@@ -169,8 +169,14 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
   checkMove(cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined) {
     this.gravityAnimSprite?.setPosition(this.x, this.y)
-    if (this.playerState === "ROTATED") this.setFlipY(true)
-    else if (this.playerState === "NORMAL") this.setFlipY(false)
+    if (this.playerState === "ROTATED") {
+      this.body?.setOffset(50,0)
+      this.setFlipY(true)
+    }
+    else if (this.playerState === "NORMAL") {
+      this.body?.setOffset(50,40)
+      this.setFlipY(false)
+    }
     /* Keywords press */
     if (cursors) {
       const { left, right, up, space } = cursors;

@@ -55,6 +55,9 @@ class CinematographyModular extends Phaser.Scene {
   ) {
     const isPostal = keyname.includes("postal");
     this.cursors = this.input.keyboard?.createCursorKeys();
+    const stopThisScene = () => {
+      this.scene.stop();
+    }
     this.holdableButton = new HoldableButton(
       this,
       50,
@@ -66,6 +69,7 @@ class CinematographyModular extends Phaser.Scene {
         const multiScene = new MultiScene("Game", { level: this.nextLevel ? this.nextLevel : 0, lifes: lifes ? lifes : 3, loadKey: ['GamePlay1'] });
         const scene = this.scene.add("MultiScene", multiScene, true);
         this.scene.start("MultiScene").bringToTop("MultiScene");
+        this.sound.stopAll();
       },
       isPostal
     ).setDepth(999999999)

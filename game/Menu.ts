@@ -22,10 +22,31 @@ class MenuScene extends Phaser.Scene {
     }
 
     create() {
-        this.background = this.add.image(window.innerWidth / 2 , window.innerHeight / 2, "menuBackground").setOrigin(0.5, 0.5)
+        this.background = this.add.image(window.innerWidth / 2, window.innerHeight / 2, "menuBackground").setOrigin(0.5, 0.5)
         // set viewport and camera position
         this.cameras.main.setViewport(-this.width, 0, this.width * 3, this.height)
         this.cameras.main.centerOn(this.centralPointInitial.x, this.centralPointInitial.y)
+
+        const gameObjectScaler = {
+            x: window.innerWidth / 1920,
+            y: window.innerHeight / 1080,
+        };
+
+        const scaleBy = () => {
+            if (window.innerWidth > 1920) {
+                return (
+                    gameObjectScaler.x > gameObjectScaler.y
+                        ? gameObjectScaler.y
+                        : gameObjectScaler.x
+                )
+            } else {
+                return (
+                    gameObjectScaler.x < gameObjectScaler.y
+                        ? gameObjectScaler.y
+                        : gameObjectScaler.x
+                )
+            }
+        }
 
         this.containerInitial = new containerInitial(this, {
             x: 0,
@@ -33,13 +54,15 @@ class MenuScene extends Phaser.Scene {
             panToCredits: this.centralPointCredits,
             panToPlay: this.centralPointPlay
         })
-
         // create credits container
         this.containerCredits = new ContainerCredits(this, {
-            x: -this.width,
-            y: 0,
+            x: -this.width / 2,
+            y: this.height / 2,
             panToInitial: this.centralPointInitial
         })
+
+        this.containerCredits.setScale(scaleBy());
+        console.log("SCALE", gameObjectScaler.x, gameObjectScaler.y)
 
         // create credits container
         this.containerPlay = new containerPlay(this, {

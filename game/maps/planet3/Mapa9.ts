@@ -278,17 +278,16 @@ class Mapa9 {
           this.frontground4,
           this.frontground5,
           this.frontground6,
+
+          
+        ];
+        this.backgroundsFront = [
           this.hueso1,
           this.hueso2,
           this.hueso3,
           this.hueso4,
           this.hueso5,
           this.hueso6,
-          
-        ];
-        this.backgroundsFront = [
-          
-    
         ];
     
         // animation backgrounds statics

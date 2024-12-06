@@ -123,6 +123,7 @@ class Mapa8 {
     this.scene = scene;
     this.monchi = monchi;
 
+
     /* World size*/
     this.scene.physics.world.setBounds(
       0,
@@ -135,7 +136,7 @@ class Mapa8 {
     this.frontContainer = this.scene.add.container().setDepth(999999999999)
 
     this.background = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y + 400,   "p3Gradiant")
+      .image(this.startingPoint.x, this.startingPoint.y ,   "p3Gradiant")
       .setOrigin(0.5, 0.5);
 
     this.background2 = this.scene.add
@@ -152,20 +153,20 @@ class Mapa8 {
       .setAlpha(1)
       .setScale(2);
     this.background5 = this.scene.add
-      .image(this.startingPoint.x + this.background4.width * 2, this.startingPoint.y + 400  +  100, "background3p3")
+      .image(this.startingPoint.x + this.background4.width * 2, this.startingPoint.y + 100 + 400  +  100, "background3p3")
       .setOrigin(0.5, 0.5)
       .setAlpha(1)
       .setScale(2);
 
 
     this.frontground1 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y + 400  +  430, "background2p3")
+      .image(this.startingPoint.x, this.startingPoint.y + 100 + 400  +  430, "background2p3")
       .setOrigin(1, 1)
       .setScale(1);
     this.frontground2 = this.scene.add
       .image(
         this.startingPoint.x - 5,
-        this.startingPoint.y + 400  +  430,
+        this.startingPoint.y + 100 + 400  +  430,
         "background2p3"
       )
       .setOrigin(0, 1)
@@ -175,7 +176,7 @@ class Mapa8 {
     this.frontground3 = this.scene.add
       .image(
         this.frontground2.width - 5 + this.frontground2.x,
-        this.startingPoint.y + 400  +  430,
+        this.startingPoint.y + 100 + 400  +  430,
         "background2p3"
       )
       .setOrigin(0, 1)
@@ -183,7 +184,7 @@ class Mapa8 {
     this.frontground4 = this.scene.add
       .image(
         this.frontground3.width - 5 + this.frontground3.x,
-        this.startingPoint.y + 400  +  430,
+        this.startingPoint.y + 100 + 400  +  430,
         "background2p3"
       )
       .setOrigin(0, 1)
@@ -191,7 +192,7 @@ class Mapa8 {
     this.frontground5 = this.scene.add
       .image(
         this.frontground4.width - 5 + this.frontground4.x,
-        this.startingPoint.y + 400  +  430,
+        this.startingPoint.y + 100 + 400  +  430,
         "background2p3"
       )
       .setOrigin(0, 1)
@@ -199,58 +200,58 @@ class Mapa8 {
     this.frontground6 = this.scene.add
       .image(
         this.frontground5.width - 5 + this.frontground5.x,
-        this.startingPoint.y + 400  +  430,
+        this.startingPoint.y + 100 + 400  +  430,
         "background2p3"
       )
       .setOrigin(0, 1)
       .setScale(1);
     this.hueso1 = this.scene.add
-      .image(this.startingPoint.x - 200, this.startingPoint.y + 400  +  400, "planta1p3")
+      .image(this.startingPoint.x - 200, this.startingPoint.y + 100 + 400  +  400, "planta1p3")
       .setOrigin(0.5, 1)
       .setScale(0.5);
     this.hueso2 = this.scene.add
-      .image(3300, this.startingPoint.y + 400  +  400, "planta2p3")
+      .image(3300, this.startingPoint.y + 100 + 400  +  400, "planta2p3")
       .setOrigin(0.5, 1)
       .setScale(1)
       .setFlipX(true)
       .setScale(0.4);
     this.hueso3 = this.scene.add
-      .image(4650, this.startingPoint.y + 400  +  400, "planta1p3")
+      .image(4650, this.startingPoint.y + 100 + 400  +  400, "planta1p3")
       .setOrigin(0.5, 1)
       .setScale( 0.7);
 
     this.hueso4 = this.scene.add
-      .image(this.startingPoint.x * 1.6, this.startingPoint.y + 400  +  400, "planta3p3")
+      .image(this.startingPoint.x * 1.6, this.startingPoint.y + 100 + 400  +  400, "planta3p3")
       .setOrigin(0.5, 1)
       .setScale(0.5);
     this.hueso5 = this.scene.add
-      .image(3000 * 2.1, this.startingPoint.y + 400  +  400, "planta2p3")
+      .image(3000 * 2.1, this.startingPoint.y + 100 + 400  +  400, "planta2p3")
       .setOrigin(0.5, 1)
       .setScale(1)
       .setFlipX(true)
       .setScale(0.4);
     this.hueso6 = this.scene.add
-      .image(4650 * 2.5, this.startingPoint.y + 400  +  400, "planta3p3")
+      .image(4650 * 2.5, this.startingPoint.y + 100 + 400  +  400, "planta3p3")
       .setOrigin(0.5, 1)
       .setScale(0.7);
     this.mountain1 = this.scene.add.image(
       200,
-      this.startingPoint.y + 400  +  300,
+      this.startingPoint.y + 100 + 400  +  300,
       "montaña1p3"
     );
     this.mountain2 = this.scene.add.image(
       1100,
-      this.startingPoint.y + 400  +  320,
+      this.startingPoint.y + 100 + 400  +  320,
       "montaña2p3"
     );
     this.mountain3 = this.scene.add
-      .image(2300, this.startingPoint.y + 400  +  300, "montaña3p3")
+      .image(2300, this.startingPoint.y + 100 + 400  +  300, "montaña3p3")
       .setScale(1.3);
     this.mountain4 = this.scene.add
-      .image(3400, this.startingPoint.y + 400  +  220, "montaña2p3")
+      .image(3400, this.startingPoint.y + 100 + 400  +  220, "montaña2p3")
       .setScale(1.1);
     this.mountain5 = this.scene.add
-      .image(4000, this.startingPoint.y + 400  +  300, "montaña1p3")
+      .image(4000, this.startingPoint.y + 100 + 400  +  300, "montaña1p3")
       .setScale(0.81);
 
     this.backgroundsBack = [
@@ -279,8 +280,8 @@ class Mapa8 {
       
     ];
     this.backgroundsFront = [
-      
-
+      this.background4,
+      this.background5
     ];
 
     // animation backgrounds statics
@@ -607,7 +608,7 @@ class Mapa8 {
     const p9 = new Floor(this.scene, p9config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
 
     const p10config: FloorConfig = {
-      pos: { x: 5400, y: 700, },
+      pos: { x: 5400, y: 200, },
       texture: "pSimple1p3",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
@@ -616,7 +617,7 @@ class Mapa8 {
     const p10 = new Floor(this.scene, p10config, this.pisos4).setFlipY(true);
 
     const p11config: FloorConfig = {
-      pos: { x: 5750, y: 700, },
+      pos: { x: 5750, y: 200, },
       texture: "pSimple1p3",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
@@ -865,7 +866,7 @@ class Mapa8 {
         this.portal.getChildren(),
       )
     this.mapContainer.add(mapObjects)
-    this.scene.UICamera?.ignore(this.mapContainer)
+    this.scene.UICamera?.ignore([this.mapContainer, this.frontContainer])
 
   }
   update() {

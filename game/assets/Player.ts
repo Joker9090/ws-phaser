@@ -20,6 +20,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     super(scene, x, y, texture);
     this.scene = scene;
     /* Monchi animations */
+    this.setOrigin()
     const monchiJumpFrames = scene.anims.generateFrameNumbers("player", {
       frames: Array.from({ length: 12 }, (_, i) => i + 36),
     });
@@ -107,7 +108,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     /* Monchi change size and bounce */
     this.body?.setSize(100, 150);
-    this.body?.setOffset(50, 30);
+    this.body?.setOffset(50, 40);
+  
     this.setScale(.7)
     this.setBounce(0);
     this.setDepth(999);

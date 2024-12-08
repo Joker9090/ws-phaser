@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import ContainerCredits from "./containersMenu/containerCredits";
 import containerInitial from "./containersMenu/containerInitial";
 import containerPlay from "./containersMenu/containerPlay";
+import containerSettings from "./containersMenu/containerSettings";
 
 class MenuScene extends Phaser.Scene {
     width: number = window.innerWidth;
@@ -14,6 +15,9 @@ class MenuScene extends Phaser.Scene {
 
     containerPlay?: Phaser.GameObjects.Container;
     centralPointPlay: { x: number, y: number } = { x: this.width / 2 + this.width, y: this.height / 2 };
+    
+    containerSettings?: Phaser.GameObjects.Container;
+    centralPointSettings: { x: number, y: number } = { x: this.width / 2, y: this.height / 2 + this.height };
     background?: Phaser.GameObjects.Image;
 
     constructor() {
@@ -52,7 +56,8 @@ class MenuScene extends Phaser.Scene {
             x: 0,
             y: 0,
             panToCredits: this.centralPointCredits,
-            panToPlay: this.centralPointPlay
+            panToPlay: this.centralPointPlay,
+            panToSettings: this.centralPointSettings
         })
         // create credits container
         this.containerCredits = new ContainerCredits(this, {
@@ -61,15 +66,23 @@ class MenuScene extends Phaser.Scene {
             panToInitial: this.centralPointInitial
         })
 
-        this.containerCredits.setScale(scaleBy());
-        console.log("SCALE", gameObjectScaler.x, gameObjectScaler.y)
-
         // create credits container
         this.containerPlay = new containerPlay(this, {
             x: this.width,
             y: 0,
             panToInitial: this.centralPointInitial
         })
+        this.containerSettings = new containerSettings(this, {
+            x: this.width / 2,
+            y: this.height * 1.5,
+            panToInitial: this.centralPointInitial
+        })
+     
+        this.containerCredits.setScale(scaleBy());
+        // this.containerInitial.setScale(scaleBy());
+        // this.containerPlay.setScale(scaleBy());
+        console.log("SCALE", gameObjectScaler.x, gameObjectScaler.y)
+
 
         // const rectInitial = this.add.rectangle(0, 0, this.width, this.height, 0xff0000, 0.5)
         // const rectCredits = this.add.rectangle(0, 0, this.width, this.height, 0x00ff00, 0.5)

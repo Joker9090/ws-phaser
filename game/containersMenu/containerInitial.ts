@@ -61,7 +61,7 @@ class containerInitial extends Phaser.GameObjects.Container {
             this.creditsButton.setTexture('creditsButtonPressed')
         })
         this.albumButton = scene.add.image(0, 0, "albumButton")
-        this.albumButton.setPosition(this.creditsButton.x + this.albumButton.width + 50, this.playButton.y + this.creditsButton.height + this.playButton.height/2 + offsetY)
+        this.albumButton.setPosition(this.width/2 + this.creditsButton.width - 80, this.playButton.y + this.creditsButton.height + this.playButton.height/2 + offsetY)
 
         this.albumButton.setInteractive();
         this.albumButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
@@ -117,6 +117,9 @@ class containerInitial extends Phaser.GameObjects.Container {
             this.settingsButton.setTexture('settingsButtonPressed')
         })
         this.settingsButton.on("pointerup", ()=>{
+            if(config.panToSettings){
+                this.scene.cameras.main.pan(config.panToSettings.x, config.panToSettings.y, 1000, 'Expo', true)
+            }
             this.settingsButton.setTexture('settingsButtonHover')
         })
         this.logoNoswar = scene.add.image(0, 0, "logoNoswar")

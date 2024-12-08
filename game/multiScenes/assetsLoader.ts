@@ -65,6 +65,18 @@ const loadAssets = {
       ["image", "playBackButtonHover", "/menu/play/backHover.png"],
       ["image", "playBackButtonPressed", "/menu/play/backPressed.png"],
       ["image", "menuBackground", "/menu/menuBackground.png"],
+
+      // menu settings
+      ["image", "settingsModal", "/menu/settings/settingModal.png"],
+      ["image", "settingsQuitGame", "/menu/settings/settingsQuitGame.png"],
+      ["image", "settingsCross", "/menu/settings/settingsCross.png"],
+      ["image", "settingsCheck", "/menu/settings/settingsCheck.png"],
+      ["image", "settingsAlbum", "/menu/settings/settingsAlbum.png"],
+      ["image", "settingsBrightness", "/menu/settings/settingsBrightness.png"],
+      ["image", "settingsBrightnessFull", "/menu/settings/settingsBrightnessFull.png"],
+      ["image", "settingsSound", "/menu/settings/settingsSound.png"],
+      ["image", "settingsSoundFull", "/menu/settings/settingsSoundFull.png"],
+      ["image", "settingsSlider", "/menu/settings/settingsSlider.png"],
     
     ]
 

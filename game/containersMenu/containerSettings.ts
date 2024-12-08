@@ -166,7 +166,7 @@ class containerSettings extends Phaser.GameObjects.Container {
         control.setInteractive({ draggable: true });
 
         // Evento para arrastrar el control
-        control.on("drag", (pointer, dragX) => {
+        control.on("drag", (dragX:number) => {
             control.x = Phaser.Math.Clamp(dragX, -140, 140);
             const value = Phaser.Math.Clamp((control.x + 200) / 400, 0, 1); // Valor entre 0 y 1
             fillBar.width = control.x + 150;

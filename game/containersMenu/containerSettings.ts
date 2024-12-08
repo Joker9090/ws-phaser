@@ -151,29 +151,52 @@ class containerSettings extends Phaser.GameObjects.Container {
         scene.add.existing(this);
     }
 
-    createSlider(scene: Phaser.Scene, x: number, y: number, onChange: (value: number) => void) {
-        // Crear contenedor para el slider
+    createSlider(
+        scene: Phaser.Scene,
+        x: number,
+        y: number,
+        onChange: (value: number) => void
+    ) {
         const slider = scene.add.container(x, y);
-
-        // Crear barra del slider
+    
+        // Barra principal del slider
         const bar = scene.add.image(0, 0, 'settingsSlider').setOrigin(0.5).setScale(0.8);
-        const control = scene.add.circle(-140, 0, 17, 0x00feff).setOrigin(0.5);
-        const fillBar = scene.add.rectangle(-140, 0, 0, 28, 0x00feff).setOrigin(0, 0.5);
-
-
-        slider.add([bar, control, fillBar]);
-
+    
+        // Relleno de la barra
+        const fillBar = scene.add.rectangle(-140, 0, 0, 24, 57055).setOrigin(0, 0.5);
+    
+        // Imagen al inicio del relleno
+        const fillBarStart = scene.add.image(-140, 0, 'fillBarStart').setOrigin(0.5).setScale(0.8);
+    
+        // Control como imagen
+        const control = scene.add.image(-125, 0, 'fillBarEnd').setOrigin(0.5).setScale(0.8);
+    
+        // Agregar elementos al contenedor en el orden correcto
+        slider.add([bar, fillBarStart, fillBar, control]);
+    
+        // Hacer que el control sea interactivo y arrastrable
         control.setInteractive({ draggable: true });
-
-        // Evento para arrastrar el control
-        control.on("drag", (dragX:number) => {
-            control.x = Phaser.Math.Clamp(dragX, -140, 140);
-            const value = Phaser.Math.Clamp((control.x + 200) / 400, 0, 1); // Valor entre 0 y 1
-            fillBar.width = control.x + 150;
+    
+        // Evento de arrastre
+        control.on('drag', (pointer: any, dragX: number) => {
+            // Limitar el movimiento del control dentro de los límites de la barra
+            control.x = Phaser.Math.Clamp(dragX, -125, 140);
+    
+            // Calcular el valor entre 0 y 1 basado en la posición del control
+            const value = Phaser.Math.Clamp((control.x + 140) / 280, 0, 1);
+    
+            // Ajustar el ancho del relleno de la barra basado en la posición del control
+            fillBar.width = control.x + 140;
+    
+            // Llamar a la función de cambio
             onChange(value);
         });
-
+    
+        // Asegurarse de que el control esté por encima del relleno (visual y en interacción)
+        control.setDepth(10);
+    
         this.add(slider);
     }
+    
 }
 export default containerSettings;

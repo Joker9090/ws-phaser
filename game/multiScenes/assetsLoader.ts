@@ -77,6 +77,8 @@ const loadAssets = {
       ["image", "settingsSound", "/menu/settings/settingsSound.png"],
       ["image", "settingsSoundFull", "/menu/settings/settingsSoundFull.png"],
       ["image", "settingsSlider", "/menu/settings/settingsSlider.png"],
+      ["image", "fillBarStart", "/menu/settings/fillBarStart.png"],
+      ["image", "fillBarEnd", "/menu/settings/fillBarEnd.png"],
     
     ]
 

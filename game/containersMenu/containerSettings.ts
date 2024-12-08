@@ -12,13 +12,13 @@ class containerSettings extends Phaser.GameObjects.Container {
     album: Phaser.GameObjects.Image;
     brightness: Phaser.GameObjects.Image;
     brightnessFull: Phaser.GameObjects.Image;
-    sound: Phaser.GameObjects.Image;
-    soundFull: Phaser.GameObjects.Image;
+    _sound: Phaser.GameObjects.Image;
+    _soundFull: Phaser.GameObjects.Image;
     music: Phaser.GameObjects.Image;
     musicFull: Phaser.GameObjects.Image;
     title: Phaser.GameObjects.Text;
     brightnessText: Phaser.GameObjects.Text;
-    soundText: Phaser.GameObjects.Text;
+    _soundText: Phaser.GameObjects.Text;
     musicText: Phaser.GameObjects.Text;
     albumText: Phaser.GameObjects.Text;
     // settingsButton: Phaser.GameObjects.Image;
@@ -29,6 +29,7 @@ class containerSettings extends Phaser.GameObjects.Container {
 
         this.modal = scene.add.image(0, 0, "settingsModal").setScale(0.9);
         this.modal.setOrigin(0.5);
+
 
 
         this.title = this.scene.add.text(-70, -420, 'Settings', {
@@ -71,10 +72,10 @@ class containerSettings extends Phaser.GameObjects.Container {
         this.brightnessFull.setOrigin(0.5);
 
 
-        this.sound = scene.add.image(-this.modal.width / 2 + 120, -70, "settingsSound");
-        this.sound.setOrigin(0.5);
-        this.soundFull = scene.add.image(this.modal.width / 2 - 180, -70, "settingsSoundFull");
-        this.soundFull.setOrigin(0.5);
+        this._sound = scene.add.image(-this.modal.width / 2 + 120, -70, "settingsSound");
+        this._sound.setOrigin(0.5);
+        this._soundFull = scene.add.image(this.modal.width / 2 - 180, -70, "settingsSoundFull");
+        this._soundFull.setOrigin(0.5);
 
 
         this.musicText = scene.add.text(-this.modal.width / 2 + 100, -235, 'Music', {
@@ -92,7 +93,7 @@ class containerSettings extends Phaser.GameObjects.Container {
         this.musicFull = scene.add.image(this.modal.width / 2 - 180, -170, "settingsSoundFull");
         this.musicFull.setOrigin(0.5);
 
-        this.soundText = scene.add.text(-this.modal.width / 2 + 100, -125, 'Sound', {
+        this._soundText = scene.add.text(-this.modal.width / 2 + 100, -125, 'Sound', {
             fontSize: 30,
             color: "#00feff",
             stroke: "#00feff",
@@ -122,13 +123,13 @@ class containerSettings extends Phaser.GameObjects.Container {
             this.album,
             this.brightness,
             this.brightnessFull,
-            this.sound,
-            this.soundFull,
+            this._sound,
+            this._soundFull,
             this.music,
             this.musicFull,
             this.title,
             this.brightnessText,
-            this.soundText,
+            this._soundText,
             this.musicText,
             this.albumText,
         ]
@@ -137,11 +138,13 @@ class containerSettings extends Phaser.GameObjects.Container {
         scene.add.existing(this)
         // Crear sliders
         this.createSlider(scene, -30, -170, (value) => {
+            this.scene.sound.volume = value * 100
             console.log("Music Slider Value:", value);
         });
 
         this.createSlider(scene, -30, -70, (value) => {
-            console.log("Sound Slider Value:", value);
+            this.scene.sound.volume = value * 100
+            console.log("Music Slider Value:", value);
         });
 
         this.createSlider(scene, -30, 30, (value) => {
@@ -158,45 +161,26 @@ class containerSettings extends Phaser.GameObjects.Container {
         onChange: (value: number) => void
     ) {
         const slider = scene.add.container(x, y);
-    
-        // Barra principal del slider
         const bar = scene.add.image(0, 0, 'settingsSlider').setOrigin(0.5).setScale(0.8);
-    
-        // Relleno de la barra
         const fillBar = scene.add.rectangle(-140, 0, 0, 24, 57055).setOrigin(0, 0.5);
-    
-        // Imagen al inicio del relleno
         const fillBarStart = scene.add.image(-140, 0, 'fillBarStart').setOrigin(0.5).setScale(0.8);
-    
-        // Control como imagen
         const control = scene.add.image(-125, 0, 'fillBarEnd').setOrigin(0.5).setScale(0.8);
-    
-        // Agregar elementos al contenedor en el orden correcto
+
         slider.add([bar, fillBarStart, fillBar, control]);
-    
-        // Hacer que el control sea interactivo y arrastrable
+
         control.setInteractive({ draggable: true });
-    
-        // Evento de arrastre
+
+
         control.on('drag', (pointer: any, dragX: number) => {
-            // Limitar el movimiento del control dentro de los límites de la barra
             control.x = Phaser.Math.Clamp(dragX, -125, 140);
-    
-            // Calcular el valor entre 0 y 1 basado en la posición del control
             const value = Phaser.Math.Clamp((control.x + 140) / 280, 0, 1);
-    
-            // Ajustar el ancho del relleno de la barra basado en la posición del control
             fillBar.width = control.x + 140;
-    
-            // Llamar a la función de cambio
             onChange(value);
         });
-    
-        // Asegurarse de que el control esté por encima del relleno (visual y en interacción)
+
         control.setDepth(10);
-    
         this.add(slider);
     }
-    
+
 }
 export default containerSettings;

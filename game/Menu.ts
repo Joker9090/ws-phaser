@@ -25,11 +25,13 @@ class MenuScene extends Phaser.Scene {
         console.log(this, "THIS")
     }
 
+
     create() {
         this.background = this.add.image(window.innerWidth / 2, window.innerHeight / 2, "menuBackground").setOrigin(0.5, 0.5)
         // set viewport and camera position
         this.cameras.main.setViewport(-this.width, 0, this.width * 3, this.height)
         this.cameras.main.centerOn(this.centralPointInitial.x, this.centralPointInitial.y)
+
 
         const gameObjectScaler = {
             x: window.innerWidth / 1920,

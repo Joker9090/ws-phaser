@@ -415,6 +415,7 @@ class Game extends Phaser.Scene {
     //     this
     //   );
   }
+ 
 
   update(this: Game) {
     if (this.cameras.main.width < this.cameras.main.height) {

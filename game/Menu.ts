@@ -80,7 +80,7 @@ class MenuScene extends Phaser.Scene {
      
         this.containerCredits.setScale(scaleBy());
         // this.containerInitial.setScale(scaleBy());
-        // this.containerPlay.setScale(scaleBy());
+        this.containerSettings.setScale(scaleBy());
         console.log("SCALE", gameObjectScaler.x, gameObjectScaler.y)
 
 

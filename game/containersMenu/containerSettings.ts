@@ -75,6 +75,7 @@ class containerSettings extends Phaser.GameObjects.Container {
         })
         this.cross.on('pointerup',()=>{
             this.cross.setTexture('settingsCrossHover')
+            this.volume = this.scene.sound.volume
             if (config.panToInitial) {
                 this.scene.cameras.main.pan(config.panToInitial.x, config.panToInitial.y, 1000, 'Expo', true)
             }
@@ -162,17 +163,17 @@ class containerSettings extends Phaser.GameObjects.Container {
 
         scene.add.existing(this)
         // Crear sliders
-        this.createSlider(scene, -30, -170, 0.5,(value) => {
+        this.createSlider(scene, -30, -170,(value) => {
             this.volume = value * 100
             console.log("Music Slider Value:", this.volume);
         });
 
-        this.createSlider(scene, -30, -70, 0.5,(value) => {
+        this.createSlider(scene, -30, -70,(value) => {
             this.volume = value * 100
             console.log("Music Slider Value:", this.volume);
         });
 
-        this.createSlider(scene, -30, 30, 0.5,(value) => {
+        this.createSlider(scene, -30, 30,(value) => {
             console.log("Brightness Slider Value:", value);
         });
 
@@ -203,7 +204,7 @@ class containerSettings extends Phaser.GameObjects.Container {
         scene.add.existing(this);
     }
 
-    createSlider( scene: Phaser.Scene,x: number,y: number,initialValue:number, onChange: (value: number) => void ) {
+    createSlider( scene: Phaser.Scene,x: number,y: number, onChange: (value: number) => void ) {
         const slider = scene.add.container(x, y);
         const bar = scene.add.image(0, 0, 'settingsSlider').setOrigin(0.5).setScale(0.8);
         const fillBar = scene.add.rectangle(-140, 0, 0, 24, 57055).setOrigin(0, 0.5);
@@ -227,6 +228,7 @@ class containerSettings extends Phaser.GameObjects.Container {
 
         control.setDepth(10);
         this.add(slider);
+        return { slider, control, fillBar };
     }
 
 }

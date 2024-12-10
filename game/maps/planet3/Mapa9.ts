@@ -155,25 +155,25 @@ class Mapa9 {
           .setOrigin(0.5, 0.5)
           .setAlpha(0);
         this.background4 = this.scene.add
-          .image(this.startingPoint.x, this.startingPoint.y + 180, "background3p3")
+          .image(this.startingPoint.x, this.startingPoint.y + 220, "background3p3")
           .setOrigin(0.5, 0.5)
           .setAlpha(1)
           .setScale(2);
         this.background5 = this.scene.add
-          .image(this.startingPoint.x + this.background4.width * 2, this.startingPoint.y + 180, "background3p3")
+          .image(this.startingPoint.x + this.background4.width * 2, this.startingPoint.y + 220, "background3p3")
           .setOrigin(0.5, 0.5)
           .setAlpha(1)
           .setScale(2);
     
     
         this.frontground1 = this.scene.add
-          .image(this.startingPoint.x, this.startingPoint.y + 530, "background2p3")
+          .image(this.startingPoint.x, this.startingPoint.y + 580, "background2p3")
           .setOrigin(1, 1)
           .setScale(1);
         this.frontground2 = this.scene.add
           .image(
             this.startingPoint.x - 5,
-            this.startingPoint.y + 530,
+            this.startingPoint.y + 580,
             "background2p3"
           )
           .setOrigin(0, 1)
@@ -183,7 +183,7 @@ class Mapa9 {
         this.frontground3 = this.scene.add
           .image(
             this.frontground2.width - 5 + this.frontground2.x,
-            this.startingPoint.y + 530,
+            this.startingPoint.y + 580,
             "background2p3"
           )
           .setOrigin(0, 1)
@@ -191,7 +191,7 @@ class Mapa9 {
         this.frontground4 = this.scene.add
           .image(
             this.frontground3.width - 5 + this.frontground3.x,
-            this.startingPoint.y + 530,
+            this.startingPoint.y + 580,
             "background2p3"
           )
           .setOrigin(0, 1)
@@ -199,7 +199,7 @@ class Mapa9 {
         this.frontground5 = this.scene.add
           .image(
             this.frontground4.width - 5 + this.frontground4.x,
-            this.startingPoint.y + 530,
+            this.startingPoint.y + 580,
             "background2p3"
           )
           .setOrigin(0, 1)
@@ -207,38 +207,38 @@ class Mapa9 {
         this.frontground6 = this.scene.add
           .image(
             this.frontground5.width - 5 + this.frontground5.x,
-            this.startingPoint.y + 530,
+            this.startingPoint.y + 580,
             "background2p3"
           )
           .setOrigin(0, 1)
           .setScale(1);
         this.hueso1 = this.scene.add
-          .image(this.startingPoint.x, this.startingPoint.y + 500, "planta1p3")
+          .image(this.startingPoint.x, this.startingPoint.y + 550, "planta1p3")
           .setOrigin(0.5, 1)
           .setScale(0.5);
         this.hueso2 = this.scene.add
-          .image(3000, this.startingPoint.y + 500, "planta2p3")
+          .image(3000, this.startingPoint.y + 550, "planta2p3")
           .setOrigin(0.5, 1)
           .setScale(1)
           .setFlipX(true)
           .setScale(0.4);
         this.hueso3 = this.scene.add
-          .image(4650, this.startingPoint.y + 500, "planta1p3")
+          .image(4650, this.startingPoint.y + 550, "planta1p3")
           .setOrigin(0.5, 1)
           .setScale(1, 0.7);
     
         this.hueso4 = this.scene.add
-          .image(this.startingPoint.x * 1.6, this.startingPoint.y + 500, "planta3p3")
+          .image(this.startingPoint.x * 1.6, this.startingPoint.y + 550, "planta3p3")
           .setOrigin(0.5, 1)
           .setScale(0.5);
         this.hueso5 = this.scene.add
-          .image(3000 * 2.1, this.startingPoint.y + 700, "planta2p3")
+          .image(3000 * 2.1, this.startingPoint.y + 750, "planta2p3")
           .setOrigin(0.5, 1)
           .setScale(1)
           .setFlipX(true)
           .setScale(0.4);
         this.hueso6 = this.scene.add
-          .image(4650 * 2.5, this.startingPoint.y + 700, "planta3p3")
+          .image(4650 * 2.5, this.startingPoint.y + 750, "planta3p3")
           .setOrigin(0.5, 1)
           .setScale(1, 0.7);
         this.mountain1 = this.scene.add.image(

@@ -3,6 +3,7 @@ import ContainerCredits from "./containersMenu/containerCredits";
 import containerInitial from "./containersMenu/containerInitial";
 import containerPlay from "./containersMenu/containerPlay";
 import containerSettings from "./containersMenu/containerSettings";
+import containerCode from "./containersMenu/containerCode";
 
 class MenuScene extends Phaser.Scene {
     width: number = window.innerWidth;
@@ -18,6 +19,9 @@ class MenuScene extends Phaser.Scene {
     
     containerSettings?: Phaser.GameObjects.Container;
     centralPointSettings: { x: number, y: number } = { x: this.width / 2, y: this.height / 2 + this.height };
+
+    containerCode?:Phaser.GameObjects.Container;
+    centralPointCode: {x:number,y:number} = { x: this.width / 2 + this.width * 2, y: this.height / 2 }
     background?: Phaser.GameObjects.Image;
 
     constructor() {
@@ -72,17 +76,23 @@ class MenuScene extends Phaser.Scene {
         this.containerPlay = new containerPlay(this, {
             x: this.width,
             y: 0,
-            panToInitial: this.centralPointInitial
+            panToInitial: this.centralPointInitial,
+            panToCode:this.centralPointCode
         })
         this.containerSettings = new containerSettings(this, {
             x: this.width / 2,
             y: this.height * 1.5,
             panToInitial: this.centralPointInitial
         })
-     
+     this.containerCode = new containerCode(this,{
+        x: this.width * 2.5,
+        y: this.height / 2,
+        panToInitial: this.centralPointInitial
+     })
         this.containerCredits.setScale(scaleBy());
         // this.containerInitial.setScale(scaleBy());
         this.containerSettings.setScale(scaleBy());
+        this.containerCode.setScale(scaleBy())
         console.log("SCALE", gameObjectScaler.x, gameObjectScaler.y)
 
 

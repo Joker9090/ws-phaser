@@ -42,9 +42,13 @@ class containerPlay extends Phaser.GameObjects.Container {
         this.enterCodeButton.setInteractive().on('pointerdown', () => {
             console.log("ENTER CODE")
             this.enterCodeButton.setTexture('enterCodeButtonPressed')
+         
         })
         this.enterCodeButton.on('pointerup',()=>{
             this.enterCodeButton.setTexture('enterCodeButtonHover')
+            if(config.panToCode){
+                this.scene.cameras.main.pan(config.panToCode.x, config.panToCode.y, 1000, 'Expo', true)
+            }
         })
         this.enterCodeButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER,()=>{
             this.enterCodeButton.setTexture('enterCodeButtonHover')

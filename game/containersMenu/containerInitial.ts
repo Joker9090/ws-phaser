@@ -83,6 +83,9 @@ class containerInitial extends Phaser.GameObjects.Container {
 
         this.gameTitle = scene.add.image(0, 0, "gameTitle")
         this.gameTitle.setPosition(this.width/2, (this.playButton.y - this.playButton.height/2)/2)
+        if(window.innerWidth < 1400){
+            this.gameTitle.setScale(0.7)
+        }
 
         this.scoreButton = scene.add.image(0, 0, "scoreButton")
         this.scoreButton.setInteractive()

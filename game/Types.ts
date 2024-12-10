@@ -41,4 +41,8 @@ export type ContainerMenuConfigType = {
     x:number,
     y:number
   }
+  panToCode?:{
+    x:number,
+    y:number
+  }
 }

@@ -21,6 +21,7 @@ class containerSettings extends Phaser.GameObjects.Container {
     _soundText: Phaser.GameObjects.Text;
     musicText: Phaser.GameObjects.Text;
     albumText: Phaser.GameObjects.Text;
+    volume?:number
     // settingsButton: Phaser.GameObjects.Image;
 
     constructor(scene: Phaser.Scene, config: ContainerMenuConfigType) {
@@ -93,6 +94,10 @@ class containerSettings extends Phaser.GameObjects.Container {
         })
         this.check.on('pointerup',()=>{
             this.check.setTexture('settingsCheckHover')
+            this.scene.sound.volume = this.volume as number < 5.5 ? 0 : this.volume as number
+            if (config.panToInitial) {
+                this.scene.cameras.main.pan(config.panToInitial.x, config.panToInitial.y, 1000, 'Expo', true)
+            }
         })
         this.album = scene.add.image(-this.modal.width / 2 + 120, 150, "settingsAlbum");
         this.album.setOrigin(0.5);
@@ -155,6 +160,24 @@ class containerSettings extends Phaser.GameObjects.Container {
             },
         });
 
+        scene.add.existing(this)
+        // Crear sliders
+        this.createSlider(scene, -30, -170, 0.5,(value) => {
+            this.volume = value * 100
+            console.log("Music Slider Value:", this.volume);
+        });
+
+        this.createSlider(scene, -30, -70, 0.5,(value) => {
+            this.volume = value * 100
+            console.log("Music Slider Value:", this.volume);
+        });
+
+        this.createSlider(scene, -30, 30, 0.5,(value) => {
+            console.log("Brightness Slider Value:", value);
+        });
+
+
+
 
         const arr = [
             this.modal,
@@ -176,42 +199,25 @@ class containerSettings extends Phaser.GameObjects.Container {
         ]
 
         this.add(arr)
-        scene.add.existing(this)
-        // Crear sliders
-        this.createSlider(scene, -30, -170, (value) => {
-            this.scene.sound.volume = value * 100
-            console.log("Music Slider Value:", value);
-        });
-
-        this.createSlider(scene, -30, -70, (value) => {
-            this.scene.sound.volume = value * 100
-            console.log("Music Slider Value:", value);
-        });
-
-        this.createSlider(scene, -30, 30, (value) => {
-            console.log("Brightness Slider Value:", value);
-        });
-
+    
         scene.add.existing(this);
     }
 
-    createSlider(
-        scene: Phaser.Scene,
-        x: number,
-        y: number,
-        onChange: (value: number) => void
-    ) {
+    createSlider( scene: Phaser.Scene,x: number,y: number,initialValue:number, onChange: (value: number) => void ) {
         const slider = scene.add.container(x, y);
         const bar = scene.add.image(0, 0, 'settingsSlider').setOrigin(0.5).setScale(0.8);
         const fillBar = scene.add.rectangle(-140, 0, 0, 24, 57055).setOrigin(0, 0.5);
         const fillBarStart = scene.add.image(-140, 0, 'fillBarStart').setOrigin(0.5).setScale(0.8);
         const control = scene.add.image(-125, 0, 'fillBarEnd').setOrigin(0.5).setScale(0.8);
 
+
+        const initialX = Phaser.Math.Clamp((this.scene.sound.volume * 280) - 140, -140, 140);
+        fillBar.width = initialX + 140
+        
         slider.add([bar, fillBarStart, fillBar, control]);
-
         control.setInteractive({ draggable: true });
-
-
+    
+        control.x = initialX;
         control.on('drag', (pointer: any, dragX: number) => {
             control.x = Phaser.Math.Clamp(dragX, -125, 140);
             const value = Phaser.Math.Clamp((control.x + 140) / 280, 0, 1);

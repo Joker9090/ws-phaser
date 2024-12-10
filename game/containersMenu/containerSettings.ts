@@ -46,13 +46,51 @@ class containerSettings extends Phaser.GameObjects.Container {
 
         this.quitGame = scene.add.image(-40, 250, 'settingsQuitGame');
         this.quitGame.setOrigin(0.5);
+        this.quitGame.setInteractive()
+        this.quitGame.on('pointerdown',()=>{
+            this.quitGame.setTexture('settingsQuitGamePressed')
+        })
+        this.quitGame.on('pointerup',()=>{
+            this.quitGame.setTexture('settingQuitGameHover')
+        })
+        this.quitGame.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER,()=>{
+            this.quitGame.setTexture('settingQuitGameHover')
+        })
+        this.quitGame.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT,()=>{
+            this.quitGame.setTexture('settingsQuitGame')
+        })
 
         this.cross = scene.add.image(-90, 350, 'settingsCross').setScale(0.8);
         this.cross.setOrigin(0.5);
+        this.cross.setInteractive();
+        this.cross.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER,()=>{
+            this.cross.setTexture('settingsCrossHover')
+        })
+        this.cross.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT,()=>{
+            this.cross.setTexture('settingsCross')
+        })
+        this.cross.on('pointerdown',()=>{
+            this.cross.setTexture('settingsCrossPessed')
+        })
+        this.cross.on('pointerup',()=>{
+            this.cross.setTexture('settingsCrossHover')
+        })
 
         this.check = scene.add.image(10, 350, 'settingsCheck').setScale(0.8);
         this.check.setOrigin(0.5);
-
+        this.check.setInteractive();
+        this.check.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER,()=>{
+            this.check.setTexture('settingsCheckHover')
+        })
+        this.check.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT,()=>{
+            this.check.setTexture('settingsCheck')
+        })
+        this.check.on('pointerdown',()=>{
+            this.check.setTexture('settingsCheckPressed')
+        })
+        this.check.on('pointerup',()=>{
+            this.check.setTexture('settingsCheckHover')
+        })
         this.album = scene.add.image(-this.modal.width / 2 + 120, 150, "settingsAlbum");
         this.album.setOrigin(0.5);
         this.albumText = scene.add.text(-this.modal.width / 2 + 150, 130, 'Album', {

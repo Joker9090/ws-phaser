@@ -71,6 +71,14 @@ const loadAssets = {
       ["image", "settingsQuitGame", "/menu/settings/settingsQuitGame.png"],
       ["image", "settingsCross", "/menu/settings/settingsCross.png"],
       ["image", "settingsCheck", "/menu/settings/settingsCheck.png"],
+      ["image", "settingQuitGameHover", "/menu/settings/settingQuitGameHover.png"],
+      ["image", "settingsCrossHover", "/menu/settings/settingsCrossHover.png"],
+      ["image", "settingsCheckHover", "/menu/settings/settigsCheckHover.png"],
+
+      ["image", "settingsQuitGamePressed", "/menu/settings/settingsQuitGamePressed.png"],
+      ["image", "settingsCrossPessed", "/menu/settings/settingsCrossPessed.png"],
+      ["image", "settingsCheckPressed", "/menu/settings/settingsCheckPressed.png"],
+
       ["image", "settingsAlbum", "/menu/settings/settingsAlbum.png"],
       ["image", "settingsBrightness", "/menu/settings/settingsBrightness.png"],
       ["image", "settingsBrightnessFull", "/menu/settings/settingsBrightnessFull.png"],

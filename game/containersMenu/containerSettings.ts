@@ -74,6 +74,9 @@ class containerSettings extends Phaser.GameObjects.Container {
         })
         this.cross.on('pointerup',()=>{
             this.cross.setTexture('settingsCrossHover')
+            if (config.panToInitial) {
+                this.scene.cameras.main.pan(config.panToInitial.x, config.panToInitial.y, 1000, 'Expo', true)
+            }
         })
 
         this.check = scene.add.image(10, 350, 'settingsCheck').setScale(0.8);

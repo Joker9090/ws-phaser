@@ -87,6 +87,10 @@ const loadAssets = {
       ["image", "settingsSlider", "/menu/settings/settingsSlider.png"],
       ["image", "fillBarStart", "/menu/settings/fillBarStart.png"],
       ["image", "fillBarEnd", "/menu/settings/fillBarEnd.png"],
+
+      // code container
+      ["image", "codeModal", "/menu/code/codeModal.png"],
+
     
     ]
 

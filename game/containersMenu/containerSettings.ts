@@ -95,7 +95,11 @@ class containerSettings extends Phaser.GameObjects.Container {
         })
         this.check.on('pointerup',()=>{
             this.check.setTexture('settingsCheckHover')
-            this.scene.sound.volume = this.volume as number < 5.5 ? 0 : this.volume as number
+            const volume = parseFloat(this.volume); // Convierte `this.volume` a un número flotante
+            if (!isNaN(volume) && volume !== this.scene.sound.volume) { 
+                // Solo asigna si `volume` es un número válido
+                this.scene.sound.volume = volume < 0.55 ? 0 : Math.min(1, Math.max(0, volume));
+            }
             if (config.panToInitial) {
                 this.scene.cameras.main.pan(config.panToInitial.x, config.panToInitial.y, 1000, 'Expo', true)
             }

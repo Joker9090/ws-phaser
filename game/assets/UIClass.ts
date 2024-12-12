@@ -1,4 +1,4 @@
-import Phaser, { GameObjects } from "phaser";
+import Phaser, { GameObjects, Textures } from "phaser";
 import UI, { UIConfig } from "./UI";
 import Game from "../Game";
 
@@ -9,6 +9,7 @@ export default class UIClass {
   coinUI?: Phaser.GameObjects.Image;
   uiContainer?: Phaser.GameObjects.Image;
   uiIndicator?: Phaser.GameObjects.Image;
+  settings?: Phaser.GameObjects.Image;
   UIboundsCoin: number = 0;
   UIboundsArrow: number = 0;
   UIboundsHeart: number = 0;
@@ -19,6 +20,23 @@ export default class UIClass {
   minutes: number = 0;
   container: Phaser.GameObjects.Container;
   progressParam: number = 0;
+  settingsVisible:boolean = false;
+  settingsModal?:Phaser.GameObjects.Image
+  quitGame?:Phaser.GameObjects.Image
+  cross?:Phaser.GameObjects.Image
+  check?:Phaser.GameObjects.Image
+  album?:Phaser.GameObjects.Image
+  brightness?:Phaser.GameObjects.Image
+  brightnessFull?:Phaser.GameObjects.Image
+  _sound?:Phaser.GameObjects.Image
+  _soundFull?:Phaser.GameObjects.Image
+  music?:Phaser.GameObjects.Image
+  musicFull?:Phaser.GameObjects.Image
+  title?:Phaser.GameObjects.Text
+  albumText?:Phaser.GameObjects.Text
+  musicSlider:any;
+  soundSlider:any;
+  brigthSlider:any;
 
   constructor(scene: Game, level: number, lifes: number, time: number) {
     this.scene = scene
@@ -42,7 +60,11 @@ export default class UIClass {
        
         this.container.add(coras);
       }
-
+      const settings: UIConfig = {
+        texture: "settingsButton",
+        pos: { x: window.innerWidth - 100, y: 70 },
+        scale: 0.9,
+      };
       const uiContainer: UIConfig = {
         texture: "uiEmpty",
         pos: { x: 200, y: 70 },
@@ -56,8 +78,166 @@ export default class UIClass {
 
       this.uiIndicator = new UI(this.scene, uiIndicator);
       this.uiContainer = new UI(this.scene, uiContainer);
+      this.settings = new UI(this.scene, settings);
+      this.settings.setInteractive()
+      this.settings.on('pointerup',()=>{
+        this.settingsVisible = !this.settingsVisible
+        if (this.settingsVisible ) {
+          if (!this.scene.graphics) {
+              this.scene.graphics = this.scene.add.graphics();
+          }
+          
+          this.scene.graphics.clear();
+          this.scene.graphics.fillStyle(0x000000, 0.5);
+          this.scene.graphics.fillRect(0, -100, window.innerWidth* 2, window.innerHeight *2);
+          this.settingsModal =  this.scene.add.image(window.innerWidth / 2, window.innerHeight / 2, "settingsModal").setScale(0.9);
+          this.title = this.scene.add.text(window.innerWidth / 2.2, 50, 'Settings', {
+            fontSize: 17,
+            color: "#00feff",
+            stroke: "#00feff",
+            align: "center",
+            fontFamily: "Arcade",
+            wordWrap: {
+                width: window.innerWidth * 0.9,
+            },
+          }).setFontSize('60px');
+          this.quitGame = this.scene.add.image(window.innerWidth / 2.1 + 20 , 750, 'settingsQuitGame');
+          this.quitGame.setOrigin(0.5);
+          this.quitGame.setInteractive()
+          this.quitGame.on('pointerdown',()=>{
+            if(this.quitGame)
+            this.quitGame.setTexture('settingsQuitGamePressed')
+          })
+          this.quitGame.on('pointerup',()=>{
+            if(this.quitGame)
+            this.quitGame.setTexture('settingQuitGameHover')
+          })
+          this.quitGame.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER,()=>{
+            if(this.quitGame)
+            this.quitGame.setTexture('settingQuitGameHover')
+          })
+          this.quitGame.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT,()=>{
+            if(this.quitGame)
+            this.quitGame.setTexture('settingsQuitGame')
+          })
+          this.cross = this.scene.add.image(window.innerWidth / 2.2 , 850, 'settingsCross').setScale(0.8);
+          this.cross.setOrigin(0.5);
+          this.cross.setInteractive();
+          this.cross.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER,()=>{
+            if(this.cross)
+              this.cross.setTexture('settingsCrossHover')
+          })
+          this.cross.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT,()=>{
+            if(this.cross)
+              this.cross.setTexture('settingsCross')
+          })
+          this.cross.on('pointerdown',()=>{
+            if(this.cross)
+              this.cross.setTexture('settingsCrossPessed')
+          })
+          this.cross.on('pointerup',()=>{
+            if(this.cross)
+              this.cross.setTexture('settingsCrossHover')
+              // this.volume = this.scene.sound.volume
+              // if (config.panToInitial) {
+              //     this.scene.cameras.main.pan(config.panToInitial.x, config.panToInitial.y, 1000, 'Expo', true)
+              // }
+          })
+          this.check = this.scene.add.image(window.innerWidth / 1.9 -10, 850, 'settingsCheck').setScale(0.8);
+          
+         this.check.setOrigin(0.5);
+         this.check.setInteractive();
+         this.check.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER,()=>{
+          if(this.check)
+            this.check.setTexture('settingsCheckHover')
+         })
+         this.check.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT,()=>{
+          if(this.check)
+            this.check.setTexture('settingsCheck')
+         })
+          this.check.on('pointerdown',()=>{
+          if(this.check)
+            this.check.setTexture('settingsCheckPressed')
+          })
+          this.check.on('pointerup',()=>{
+          if(this.check)
+            this.check.setTexture('settingsCheckHover')
+            // const volume = parseFloat((this.volume ?? '').toString());
+            // if (!isNaN(volume) && volume !== this.scene.sound.volume) { 
+            //     this.scene.sound.volume = volume < 0.55 ? 0 : Math.min(1, Math.max(0, volume));
+            // }
+            // if (config.panToInitial) {
+            //     this.scene.cameras.main.pan(config.panToInitial.x, config.panToInitial.y, 1000, 'Expo', true)
+            // }
+          })
+          this.album = this.scene.add.image(window.innerWidth / 3 + 120, 650, "settingsAlbum");
+          this.album.setOrigin(0.5);
+          this.albumText = this.scene.add.text(window.innerWidth / 3 + 150, 630, 'Album', {
+              fontSize: 30,
+              color: "#00feff",
+              stroke: "#00feff",
+              align: "center",
+              fontFamily: "Arcade",
+              wordWrap: {
+                  width: window.innerWidth * 0.9,
+              },
+          });
+          this.brightness = this.scene.add.image(window.innerWidth / 3 + 80,  520, "settingsBrightness");
+          this.brightness.setOrigin(0.5);
+          this.brightnessFull = this.scene.add.image(window.innerWidth / 2 + 160,  520, "settingsBrightnessFull");
+          this.brightnessFull.setOrigin(0.5);
+
+          this._sound = this.scene.add.image(window.innerWidth / 3 + 80, 380, "settingsSound");
+          this._sound.setOrigin(0.5);
+          this._soundFull = this.scene.add.image(window.innerWidth / 2 + 160, 380, "settingsSoundFull");
+          this._soundFull.setOrigin(0.5);
+
+          this.music = this.scene.add.image(window.innerWidth / 3 + 80, 240, "settingsSound");
+          this.music.setOrigin(0.5);
+          this.musicFull = this.scene.add.image(window.innerWidth / 2 + 160, 240, "settingsSoundFull");
+          this.musicFull.setOrigin(0.5);
+
+         this.musicSlider = this.createSlider(this.scene, window.innerWidth / 2 -30, 520,(value) => {
+            // this.volume = value * 100
+            // console.log("Music Slider Value:", this.volume);
+        });
+
+        this.soundSlider = this.createSlider(this.scene, window.innerWidth / 2 -30, 380,(value) => {
+            // this.volume = value * 100
+            // console.log("Music Slider Value:", this.volume);
+        });
+
+        this.brigthSlider =  this.createSlider(this.scene, window.innerWidth / 2 -30, 240,(value) => {
+            console.log("Brightness Slider Value:", value);
+        })
+
+        } else {
+          if (this.scene.graphics) {
+              this.scene.graphics.clear();
+              if(this.settingsModal && this.title){
+                this.settingsModal.destroy();
+                this.title.destroy();
+                this.quitGame?.destroy()
+                this.album?.destroy()
+                this.albumText?.destroy()
+                this.brightness?.destroy()
+                this.brightnessFull?.destroy()
+                this._sound?.destroy()
+                this._soundFull?.destroy()
+                this.music?.destroy()
+                this.musicFull?.destroy()
+                this.cross?.destroy()
+                this.check?.destroy()
+              }
+              
+          }
+      }
+        console.log(this.settingsVisible)
+      })
+
       this.container.add(this.uiContainer);
       this.container.add(this.uiIndicator);
+      this.container.add(this.settings);
 
 
       const coinConf: UIConfig = {
@@ -72,6 +252,32 @@ export default class UIClass {
       this.container.add(this.coinUI);
     }
   }
+  createSlider( scene: Phaser.Scene,x: number,y: number, onChange: (value: number) => void ) {
+    const slider = scene.add.container(x, y);
+    const bar = scene.add.image(0, 0, 'settingsSlider').setOrigin(0.5).setScale(0.8);
+    const fillBar = scene.add.rectangle(-140, 0, 0, 24, 57055).setOrigin(0, 0.5);
+    const fillBarStart = scene.add.image(-140, 0, 'fillBarStart').setOrigin(0.5).setScale(0.8);
+    const control = scene.add.image(-125, 0, 'fillBarEnd').setOrigin(0.5).setScale(0.8);
+
+
+    const initialX = Phaser.Math.Clamp((this.scene.sound.volume * 280) - 140, -140, 140);
+    fillBar.width = initialX + 140
+    
+    slider.add([bar, fillBarStart, fillBar, control]);
+    control.setInteractive({ draggable: true });
+
+    control.x = initialX;
+    control.on('drag', (pointer: any, dragX: number) => {
+        control.x = Phaser.Math.Clamp(dragX, -125, 140);
+        const value = Phaser.Math.Clamp((control.x + 140) / 280, 0, 1);
+        fillBar.width = control.x + 140;
+        onChange(value);
+    });
+
+    control.setDepth(10);
+    // this.scene.add(slider);
+    return { slider, control, fillBar };
+}
 
   rotateArrow(direction: string) {
     if (direction == "down") {

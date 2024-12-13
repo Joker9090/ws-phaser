@@ -94,9 +94,9 @@ export default class UIClass {
           ease:'bounce'
         })
         if (this.settingsVisible ) {
-          if (!this.scene.graphics) {
-              this.scene.graphics = this.scene.add.graphics();
-          }
+          // if (!this.scene.graphics) {
+          //     this.scene.graphics = this.scene.add.graphics();
+          // }
           
          
      
@@ -250,7 +250,7 @@ export default class UIClass {
 
       this.container.add(this.uiContainer);
       this.container.add(this.uiIndicator);
-      this.container.add(this.settings);
+      // this.container.add(this.settings);
 
 
 
@@ -265,32 +265,6 @@ export default class UIClass {
 
       this.container.add(this.coinUI);
     }
-  }
-  createSlider( scene: Phaser.Scene,x: number,y: number, onChange: (value: number) => void ) {
-    const slider = scene.add.container(x, y);
-    const bar = scene.add.image(0, 0, 'settingsSlider').setOrigin(0.5).setScale(0.8);
-    const fillBar = scene.add.rectangle(-140, 0, 0, 24, 57055).setOrigin(0, 0.5);
-    const fillBarStart = scene.add.image(-140, 0, 'fillBarStart').setOrigin(0.5).setScale(0.8);
-    const control = scene.add.image(-125, 0, 'fillBarEnd').setOrigin(0.5).setScale(0.8);
-
-
-    const initialX = Phaser.Math.Clamp((this.scene.sound.volume * 280) - 140, -140, 140);
-    fillBar.width = initialX + 140
-    
-    slider.add([bar, fillBarStart, fillBar, control]);
-    control.setInteractive({ draggable: true });
-
-    control.x = initialX;
-    control.on('drag', (pointer: any, dragX: number) => {
-        control.x = Phaser.Math.Clamp(dragX, -125, 140);
-        const value = Phaser.Math.Clamp((control.x + 140) / 280, 0, 1);
-        fillBar.width = control.x + 140;
-        onChange(value);
-    });
-
-    control.setDepth(10);
-    // this.scene.add(slider);
-    return { slider, control, fillBar };
   }
 
   rotateArrow(direction: string) {

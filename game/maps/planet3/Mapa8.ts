@@ -648,7 +648,7 @@ class Mapa8 {
     // const p13 = new Floor(this.scene, p13config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255,101,0))
 
     const ptestconfig: FloorConfig = {
-      pos: { x: 5990, y: 750 },
+      pos: { x: 5990, y: 780 },
       texture: "pSimple1p3",
       scale: { width: 0.7, height: 0.7 },
       width: 140,

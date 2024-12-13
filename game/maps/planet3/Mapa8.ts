@@ -772,27 +772,37 @@ class Mapa8 {
       texture: "nube1p3",
       x: 0,
       y: 1000,
-      delayed: 100,
+      delayed: 60,
       direction: 0,
       velocity: 20,
       scale: 1,
       depth: 99,
-    };
-    const c1 = new AsteroidGenerator(this.scene, c1Config);
-    c1.start();
+      amount:5,
+      spawnRange: {
+        x: 4,
+        y: 1
+      }
+  };
+  const c1 = new AsteroidGenerator(this.scene, c1Config);
+  c1.start();
 
-    const c2Config: AsteroidGeneratorConfig = {
+  const c2Config: AsteroidGeneratorConfig = {
       texture: "nube2p3",
       x: 3000,
       y: 600,
-      delayed: 100,
+      delayed: 60,
       direction: 1,
       velocity: 30,
       scale: 1,
       depth: 99,
-    };
-    const c2 = new AsteroidGenerator(this.scene, c2Config);
-    c2.start();
+      amount:5,
+      spawnRange: {
+        x: 4,
+        y: 1
+      }
+  };
+  const c2 = new AsteroidGenerator(this.scene, c2Config);
+  c2.start();
 
 
     const b1Config: AsteroidGeneratorConfig = {
@@ -820,7 +830,7 @@ class Mapa8 {
       texture: "burbujap3",
       x: this.startingPoint.x + 3300,
       y: this.startingPoint.y,
-      delayed: 20,
+      delayed: 30,
       direction: 1,
       velocity: 15,
       depth: -99,

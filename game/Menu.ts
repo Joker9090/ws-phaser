@@ -16,12 +16,12 @@ class MenuScene extends Phaser.Scene {
 
     containerPlay?: Phaser.GameObjects.Container;
     centralPointPlay: { x: number, y: number } = { x: this.width / 2 + this.width, y: this.height / 2 };
-    
-    containerSettings?: Phaser.GameObjects.Container;
+
+    containerSettings?: containerSettings;
     centralPointSettings: { x: number, y: number } = { x: this.width / 2, y: this.height / 2 + this.height };
 
-    containerCode?:Phaser.GameObjects.Container;
-    centralPointCode: {x:number,y:number} = { x: this.width / 2 + this.width * 2, y: this.height / 2 }
+    containerCode?: Phaser.GameObjects.Container;
+    centralPointCode: { x: number, y: number } = { x: this.width / 2 + this.width * 2, y: this.height / 2 }
     background?: Phaser.GameObjects.Image;
 
     constructor() {
@@ -32,8 +32,7 @@ class MenuScene extends Phaser.Scene {
 
     create() {
         this.background = this.add.image(window.innerWidth / 2, window.innerHeight / 2, "menuBackground").setOrigin(0.5, 0.5)
-        this.background.setScrollFactor(0)
-        
+
         // set viewport and camera position
         this.cameras.main.setViewport(-this.width, 0, this.width * 3, this.height)
         this.cameras.main.centerOn(this.centralPointInitial.x, this.centralPointInitial.y)
@@ -67,53 +66,33 @@ class MenuScene extends Phaser.Scene {
             panToPlay: this.centralPointPlay,
             panToSettings: this.centralPointSettings,
         })
-        // create credits container
         this.containerCredits = new ContainerCredits(this, {
             x: -this.width / 2,
             y: this.height / 2,
             panToInitial: this.centralPointInitial
         })
+        this.containerCredits.setScale(scaleBy());
 
-        // create credits container
         this.containerPlay = new containerPlay(this, {
             x: this.width,
             y: 0,
             panToInitial: this.centralPointInitial,
-            panToCode:this.centralPointCode
+            panToCode: this.centralPointCode
         })
+
         this.containerSettings = new containerSettings(this, {
             x: this.width / 2,
-            y: this.height * 1.5,
+            y: this.height / 2,
             panToInitial: this.centralPointInitial
-        })
-     this.containerCode = new containerCode(this,{
-        x: this.width * 2.5,
-        y: this.height / 2,
-        panToInitial: this.centralPointInitial
-     })
-        this.containerCredits.setScale(scaleBy());
-        // this.containerInitial.setScale(scaleBy());
-        this.containerSettings.setScale(scaleBy());
+        }).setVisible(false)
+        this.containerSettings.settingsModal.setScale(scaleBy());
+
+        this.containerCode = new containerCode(this, {
+            x: this.width*1.5,
+            y: this.height / 2,
+            panToInitial: this.centralPointInitial
+        }).setVisible(false)
         this.containerCode.setScale(scaleBy())
-        console.log("SCALE", gameObjectScaler.x, gameObjectScaler.y)
-
-
-        // const rectInitial = this.add.rectangle(0, 0, this.width, this.height, 0xff0000, 0.5)
-        // const rectCredits = this.add.rectangle(0, 0, this.width, this.height, 0x00ff00, 0.5)
-        // const rectPlay = this.add.rectangle(0, 0, this.width, this.height, 0x0000ff, 0.5)
-        // // when i click on rect center de camera in the other container
-        // rectInitial.setInteractive().on('pointerdown', () => {
-        //     this.cameras.main.pan(this.centralPointCredits[0], this.centralPointCredits[1], 1000, 'Expo', true)
-        // })
-        // rectCredits.setInteractive().on('pointerdown', () => {
-        //     this.cameras.main.pan(this.centralPointInitial[0], this.centralPointInitial[1], 1000, 'Expo', true)
-        // })
-        // rectPlay.setInteractive().on('pointerdown', () => {
-        //     this.cameras.main.pan(this.centralPointInitial[0], this.centralPointInitial[1], 1000, 'Expo', true)
-        // })
-        // this.containerInitial.add(rectInitial)
-        // this.containerCredits.add(rectCredits)
-        // this.containerPlay.add(rectPlay)
 
         this.events.removeAllListeners('shutdown')
     }

@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import { ContainerMenuConfigType } from "../Types";
+import MenuScene from "../Menu";
 
 class containerInitial extends Phaser.GameObjects.Container {
 
@@ -12,10 +13,10 @@ class containerInitial extends Phaser.GameObjects.Container {
     scoreButton: Phaser.GameObjects.Image;
     albumButton: Phaser.GameObjects.Image;
     settingsButton: Phaser.GameObjects.Image;
-
-    constructor(scene: Phaser.Scene, config: ContainerMenuConfigType) {
+    scene: MenuScene;
+    constructor(scene: MenuScene, config: ContainerMenuConfigType) {
         super(scene, config.x, config.y)
-
+        this.scene = scene
         const offsetY = 100
         this.playButton = scene.add.image(this.width / 2, this.height / 2 + offsetY, "playButton");
         this.playButton.setInteractive();
@@ -121,7 +122,10 @@ class containerInitial extends Phaser.GameObjects.Container {
         })
         this.settingsButton.on("pointerup", ()=>{
             if(config.panToSettings){
-                this.scene.cameras.main.pan(config.panToSettings.x, config.panToSettings.y, 1000, 'Expo', true)
+                (this.scene as MenuScene).containerSettings?.setVisible(!(this.scene as MenuScene).containerSettings?.visible)
+
+                // this.scene.background?.setScrollFactor(0)
+                // this.scene.cameras.main.pan(config.panToSettings.x, config.panToSettings.y, 1000, 'Expo', true)
             }
             this.settingsButton.setTexture('settingsButtonHover')
         })

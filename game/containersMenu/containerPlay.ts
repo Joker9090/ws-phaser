@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import { ContainerMenuConfigType } from "../Types";
 import MultiScene from "../MultiScene";
+import MenuScene from "../Menu";
 
 class containerPlay extends Phaser.GameObjects.Container {
 
@@ -47,7 +48,7 @@ class containerPlay extends Phaser.GameObjects.Container {
         this.enterCodeButton.on('pointerup',()=>{
             this.enterCodeButton.setTexture('enterCodeButtonHover')
             if(config.panToCode){
-                this.scene.cameras.main.pan(config.panToCode.x, config.panToCode.y, 1000, 'Expo', true)
+                (this.scene as MenuScene).containerCode?.setVisible(true)
             }
         })
         this.enterCodeButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER,()=>{

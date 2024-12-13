@@ -32,9 +32,11 @@ class containerCode extends Phaser.GameObjects.Container {
         this.input.on('pointerDown',()=>{
             writable = true
         })
-
+        // const background = this.scene.add.image(0,0,"NOMBRE DEL ASSET").setInteractive()
+        const background = this.scene.add.rectangle(0,0, 1920, 1080, 0x00ff00, 0.3).setInteractive()
 
         const arr = [
+            background,
             this.modal,
             this.input,
             this.title

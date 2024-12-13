@@ -1,5 +1,9 @@
 import Phaser from "phaser";
 import { ContainerMenuConfigType } from "../Types";
+import CinematographyModular from "../movies/Cinematography-modular";
+import MenuScene from "../Menu";
+import Game from "../Game";
+import MasterManager from "../MasterManager";
 
 class containerSettings extends Phaser.GameObjects.Container {
 
@@ -16,22 +20,59 @@ class containerSettings extends Phaser.GameObjects.Container {
     _soundFull: Phaser.GameObjects.Image;
     music: Phaser.GameObjects.Image;
     musicFull: Phaser.GameObjects.Image;
+    volumeMusic: number = 0.2;
+    volumeSound: number = 0.2;
+    darkness: number = 0.2;
     title: Phaser.GameObjects.Text;
     brightnessText: Phaser.GameObjects.Text;
     _soundText: Phaser.GameObjects.Text;
     musicText: Phaser.GameObjects.Text;
     albumText: Phaser.GameObjects.Text;
-    volume?:number
+    volume?: number;
+    scene: MenuScene | Game | CinematographyModular;
+    settingsModal: Phaser.GameObjects.Container;
     // settingsButton: Phaser.GameObjects.Image;
+    masterManager: MasterManager;
 
-    constructor(scene: Phaser.Scene, config: ContainerMenuConfigType) {
+    sliderMusic: {
+        slider: Phaser.GameObjects.Container,
+        control: Phaser.GameObjects.Image,
+        fillBar: Phaser.GameObjects.Rectangle
+    };
+    sliderSound: {
+        slider: Phaser.GameObjects.Container,
+        control: Phaser.GameObjects.Image,
+        fillBar: Phaser.GameObjects.Rectangle
+    };
+    sliderBrightness: {
+        slider: Phaser.GameObjects.Container,
+        control: Phaser.GameObjects.Image,
+        fillBar: Phaser.GameObjects.Rectangle
+    };
+
+    constructor(scene: MenuScene | Game | CinematographyModular, config: ContainerMenuConfigType) {
         super(scene, config.x, config.y)
         const offsetY = 100
-
+        this.scene = scene
         this.modal = scene.add.image(0, 0, "settingsModal").setScale(0.9);
         this.modal.setOrigin(0.5);
 
+        let masterManagerScene = scene.game.scene.getScene("MasterManager") as MasterManager;
+        if (!masterManagerScene) {
+            this.masterManager = new MasterManager();
+            this.scene.scene.add("MasterManager", this.masterManager, true);
+        } else {
+            this.masterManager = masterManagerScene;
+            this.scene.scene.launch("MasterManager");
+        }
+        this.volumeMusic = this.masterManager.volumeMusic
+        this.volumeSound = this.masterManager.volumeSound
+        this.darkness = this.masterManager.brightness
+        // this.masterManager.playMusic("planet1LoopMusic", true); 
+        // this.masterManager.playSound("planet1LoopMusic", true); 
 
+        const screenBlack = scene.add.rectangle(0, 0, window.innerWidth + 200, window.innerHeight + 200, 0x000000, 0.5).setInteractive();
+        this.settingsModal = this.scene.add.container()
 
         this.title = this.scene.add.text(-70, -420, 'Settings', {
             fontSize: 17,
@@ -48,55 +89,55 @@ class containerSettings extends Phaser.GameObjects.Container {
         this.quitGame = scene.add.image(-40, 250, 'settingsQuitGame');
         this.quitGame.setOrigin(0.5);
         this.quitGame.setInteractive()
-        this.quitGame.on('pointerdown',()=>{
+        this.quitGame.on('pointerdown', () => {
             this.quitGame.setTexture('settingsQuitGamePressed')
         })
-        this.quitGame.on('pointerup',()=>{
+        this.quitGame.on('pointerup', () => {
             this.quitGame.setTexture('settingQuitGameHover')
         })
-        this.quitGame.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER,()=>{
+        this.quitGame.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
             this.quitGame.setTexture('settingQuitGameHover')
         })
-        this.quitGame.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT,()=>{
+        this.quitGame.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => {
             this.quitGame.setTexture('settingsQuitGame')
         })
 
         this.cross = scene.add.image(-90, 350, 'settingsCross').setScale(0.8);
         this.cross.setOrigin(0.5);
         this.cross.setInteractive();
-        this.cross.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER,()=>{
+        this.cross.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
             this.cross.setTexture('settingsCrossHover')
         })
-        this.cross.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT,()=>{
+        this.cross.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => {
             this.cross.setTexture('settingsCross')
         })
-        this.cross.on('pointerdown',()=>{
+        this.cross.on('pointerdown', () => {
             this.cross.setTexture('settingsCrossPessed')
         })
-        this.cross.on('pointerup',()=>{
+        this.cross.on('pointerup', () => {
             this.cross.setTexture('settingsCrossHover')
             this.volume = this.scene.sound.volume
             if (config.panToInitial) {
-                this.scene.cameras.main.pan(config.panToInitial.x, config.panToInitial.y, 1000, 'Expo', true)
+                (this.scene as MenuScene).containerSettings?.setVisible(false)
             }
         })
 
         this.check = scene.add.image(10, 350, 'settingsCheck').setScale(0.8);
         this.check.setOrigin(0.5);
         this.check.setInteractive();
-        this.check.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER,()=>{
+        this.check.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
             this.check.setTexture('settingsCheckHover')
         })
-        this.check.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT,()=>{
+        this.check.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => {
             this.check.setTexture('settingsCheck')
         })
-        this.check.on('pointerdown',()=>{
+        this.check.on('pointerdown', () => {
             this.check.setTexture('settingsCheckPressed')
         })
-        this.check.on('pointerup',()=>{
+        this.check.on('pointerup', () => {
             this.check.setTexture('settingsCheckHover')
             const volume = parseFloat((this.volume ?? '').toString());
-            if (!isNaN(volume) && volume !== this.scene.sound.volume) { 
+            if (!isNaN(volume) && volume !== this.scene.sound.volume) {
                 this.scene.sound.volume = volume < 0.55 ? 0 : Math.min(1, Math.max(0, volume));
             }
             if (config.panToInitial) {
@@ -166,24 +207,23 @@ class containerSettings extends Phaser.GameObjects.Container {
 
         scene.add.existing(this)
         // Crear sliders
-        this.createSlider(scene, -30, -170,(value) => {
-            this.volume = value * 100
-            console.log("Music Slider Value:", this.volume);
-        });
+        this.sliderMusic = this.createSlider(scene, -30, -170, (value) => {
+            this.volumeMusic = value 
+            this.masterManager.changeVolume(value, 'music');
+        }, this.volumeMusic);
 
-        this.createSlider(scene, -30, -70,(value) => {
-            this.volume = value * 100
-            console.log("Music Slider Value:", this.volume);
-        });
+        this.sliderSound = this.createSlider(scene, -30, -70, (value) => {
+            this.volumeSound = value 
+            this.masterManager.changeVolume(value, 'sound');
+        }, this.volumeSound);
 
-        this.createSlider(scene, -30, 30,(value) => {
-            console.log("Brightness Slider Value:", value);
-        });
-
-
-
+        this.sliderBrightness = this.createSlider(scene, -30, 30, (value) => {
+            this.darkness = 1 - value
+            this.masterManager.changeBrightness( this.darkness);
+        }, 1 - this.darkness );
 
         const arr = [
+            screenBlack,
             this.modal,
             this.quitGame,
             this.cross,
@@ -202,25 +242,23 @@ class containerSettings extends Phaser.GameObjects.Container {
             this.albumText,
         ]
 
-        this.add(arr)
-    
+        this.settingsModal.add(arr)
+        this.add([screenBlack, this.settingsModal])
         scene.add.existing(this);
     }
 
-    createSlider( scene: Phaser.Scene,x: number,y: number, onChange: (value: number) => void ) {
+    createSlider(scene: Phaser.Scene, x: number, y: number, onChange: (value: number) => void, initialValue: number) {
         const slider = scene.add.container(x, y);
         const bar = scene.add.image(0, 0, 'settingsSlider').setOrigin(0.5).setScale(0.8);
         const fillBar = scene.add.rectangle(-140, 0, 0, 24, 57055).setOrigin(0, 0.5);
         const fillBarStart = scene.add.image(-140, 0, 'fillBarStart').setOrigin(0.5).setScale(0.8);
         const control = scene.add.image(-125, 0, 'fillBarEnd').setOrigin(0.5).setScale(0.8);
-
-
-        const initialX = Phaser.Math.Clamp((this.scene.sound.volume * 280) - 140, -140, 140);
+        const initialX = Phaser.Math.Clamp(( initialValue* 280) - 140, -140, 140);
         fillBar.width = initialX + 140
-        
+
         slider.add([bar, fillBarStart, fillBar, control]);
         control.setInteractive({ draggable: true });
-    
+
         control.x = initialX;
         control.on('drag', (pointer: any, dragX: number) => {
             control.x = Phaser.Math.Clamp(dragX, -125, 140);
@@ -230,7 +268,7 @@ class containerSettings extends Phaser.GameObjects.Container {
         });
 
         control.setDepth(10);
-        this.add(slider);
+        this.settingsModal.add(slider);
         return { slider, control, fillBar };
     }
 

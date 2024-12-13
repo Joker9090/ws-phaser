@@ -19,10 +19,10 @@ export default function Home() {
     Promise.all([
       
       import("@/game/MultiScene"),
+      import("@/game/MasterManager"),
       import("@/game/movies/startMovie"),
        
        import("@/game/movies/Cinematography-modular"),
-      import("@/game/MasterManager"),
       import("@/game/Menu"),
 
       import("@/game/Game"),

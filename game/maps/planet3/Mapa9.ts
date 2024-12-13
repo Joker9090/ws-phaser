@@ -111,6 +111,7 @@ class Mapa9 {
     backgroundsBack: Phaser.GameObjects.Image[];
     backgroundsMiddle: Phaser.GameObjects.Image[];
     backgroundsFront: Phaser.GameObjects.Image[];
+    rotate?:boolean = true
     originalPositionsBackgroundsBack: {x: number, y:number}[]
     originalPositionsBackgroundsMiddle: {x: number, y:number}[]
     originalPositionsBackgroundsFront: {x: number, y:number}[]
@@ -473,7 +474,10 @@ class Mapa9 {
                     this.scene.monchi,
                     this.pisos5,
                     () => {
-                      this.scene.rotateCam(false, 10);
+                      if(this.rotate === true){
+                        this.scene.rotateCam(false, 10);
+                        this.rotate = false
+                      }
                         // this.scene.checkPoint = 0
                     },
                     () => true,

@@ -179,7 +179,9 @@ class Game extends Phaser.Scene {
     this.canRot = true;
     if (this.map) {
       //@ts-ignore
+      this.map.rotate = true
       const config = this.map.loseConfig[this.checkPoint];
+      
       console.log(config, "config")
       console.log(this.checkPoint, "checkpoint")
       if (this.lifes) {

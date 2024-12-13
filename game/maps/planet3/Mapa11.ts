@@ -19,7 +19,7 @@ class Mapa11 {
     scene: Game;
     worldSize = {
         width: 10000,
-        height: 2500,
+        height: 1800,
     };
     cameraBounds = {
         x: 0,
@@ -270,6 +270,12 @@ class Mapa11 {
         this.mountain3,
         this.mountain4,
         this.mountain5,
+        this.hueso1,
+        this.hueso2,
+        this.hueso3,
+        this.hueso4,
+        this.hueso5,
+        this.hueso6,
         this.frontground1,
         this.frontground2,
         this.frontground3,
@@ -524,7 +530,7 @@ class Mapa11 {
 
         const p1Config: FloorConfig = {
             texture: "pSimple1p3",
-            pos: { x: 1000, y: 1000 },
+            pos: { x: 1000, y: -100 + 1000 },
             scale: { width: 0.7, height: 0.7 },
             height: 20,
             rotated: false,
@@ -535,7 +541,7 @@ class Mapa11 {
 
         const p2Config: FloorConfig = {
           texture: "pSimple1p3",
-          pos: { x: 1350, y: 1000 },
+          pos: { x: 1350, y: -100 + 1000 },
           scale: { width: 0.7, height: 0.7 },
           height: 20,
           rotated: false,
@@ -545,7 +551,7 @@ class Mapa11 {
 
       const p3Config: FloorConfig = {
         texture: "pSimple1p3",
-        pos: { x: 1650, y: 855 },
+        pos: { x: 1650, y: -100 + 855 },
         scale: { width: 0.7, height: 0.7 },
         height: 20,
         rotated: false,
@@ -555,7 +561,7 @@ class Mapa11 {
 
     const p4Config: FloorConfig = {
       texture: "pSimple1p3",
-      pos: { x: 1650, y: 400 },
+      pos: { x: 1650, y: -100 + 400 },
       scale: { width: 0.7, height: 0.7 },
       height: 20,
       inverted:true,
@@ -566,7 +572,7 @@ class Mapa11 {
 
   const p5Config: FloorConfig = {
     texture: "pSimple1p3",
-    pos: { x: 1900, y: 580 },
+    pos: { x: 1900, y: -100 + 580 },
     scale: { width: 0.7, height: 0.7 },
     height: 20,
     inverted:true,
@@ -579,7 +585,7 @@ const p6Config: LargeFloorIslandConfig = {
   textureA: "longFloorLeftp3",
   textureB: "longFloorMiddlep3",
   textureC: "longFloorRightp3",
-  pos: { x: 2100, y: 750 },
+  pos: { x: 2100, y: -100 + 750 },
   width: {
     textureA: 110,
     textureB: 140,
@@ -595,7 +601,7 @@ const p6 = new LargeFloorIsland(this.scene, p6Config, this.pisos);
 
 const p7Config: FloorConfig = {
   texture: "pSimple1p3",
-  pos: { x: 2600, y: 580 },
+  pos: { x: 2600, y: -100 + 580 },
   scale: { width: 0.7, height: 0.7 },
   height: 20,
   inverted:true,
@@ -606,7 +612,7 @@ const p7 = new Floor(this.scene, p7Config, this.pisos2).setTint(Phaser.Display.C
 
 const p8Config: FloorConfig = {
   texture: "pSimple1p3",
-  pos: { x: 2580, y: 1210 },
+  pos: { x: 2580, y: -100 + 1210 },
   scale: { width: 1, height: 0.7 },
   height: 20,
   
@@ -617,7 +623,7 @@ const p8 = new Floor(this.scene, p8Config, this.pisos3).setTint(Phaser.Display.C
 
 const p9Config: FloorConfig = {
   texture: "pSimple1p3",
-  pos: { x: 2940, y: 1210 },
+  pos: { x: 2940, y: -100 + 1210 },
   scale: { width: 1, height: 0.7 },
   height: 20,
   rotated: false,
@@ -627,7 +633,7 @@ const p9 = new Floor(this.scene, p9Config, this.pisos2).setTint(Phaser.Display.C
 
 const p10Config: FloorConfig = {
   texture: "pDoblep3",
-  pos: { x: 3100, y: 580 },
+  pos: { x: 3100, y: -100 + 580 },
   scale: { width: 1.5, height: 0.7 },
   height: 20,
   rotated: false,
@@ -638,7 +644,7 @@ const p10 = new Floor(this.scene, p10Config, this.pisos2).setTint(Phaser.Display
 
 const p11Config: FloorConfig = {
   texture: "pSimple1p3",
-  pos: { x: 3260, y: 1080 },
+  pos: { x: 3260, y: -100 + 1080 },
   scale: { width: 1, height: 0.7 },
   height: 20,
   rotated: false,
@@ -653,7 +659,7 @@ const p13Config: LargeFloorIslandConfig = {
   textureA: "longFloorLeftp3",
   textureB: "longFloorMiddlep3",
   textureC: "longFloorRightp3",
-  pos: { x: 3160, y: 180},
+  pos: { x: 3160, y: -100 + 180},
   width: {
     textureA: 110,
     textureB: 140,
@@ -670,7 +676,7 @@ const p13 = new LargeFloorIsland(this.scene, p13Config, this.pisos);
       const fireballConfig: FloorConfig = {
           spriteSheet: "meteoritop3",
           texture: "meteorito",
-          pos: { x: 1500, y: 0 }, // 500 1580
+          pos: { x: 1500, y:  + 0 }, // 500 1580
           width: 100,
           height: 100,
           tween: {
@@ -717,7 +723,7 @@ const p13 = new LargeFloorIsland(this.scene, p13Config, this.pisos);
         //Portal, Coin and Asteroids
         const portalConfig: FloorConfig = {
             texture: "cuevap3",
-            pos: { x:3300, y: 250 },
+            pos: { x:3300, y: -100 +250 },
             width: 90,
             height: 90,
             inverted:true
@@ -728,7 +734,7 @@ const p13 = new LargeFloorIsland(this.scene, p13Config, this.pisos);
 
         const coinConfig: FloorConfig = {
           texture: "plantap3",
-          pos: { x: 2540, y: 1140 },
+          pos: { x: 2540, y: -100 +1140 },
             scale: { width: 0.5, height: 0.5 },
             width: 10,
             height: 18,
@@ -738,7 +744,7 @@ const p13 = new LargeFloorIsland(this.scene, p13Config, this.pisos);
 
         const emptyCoinConfig: FloorConfig = {
           texture: "plantaVaciap3",
-          pos: { x: 2540, y: 1140 },
+          pos: { x: 2540, y: -100 +1140 },
           scale: { width: 0.5, height: 0.5 },
           width: 10,
           height: 18,
@@ -748,7 +754,7 @@ const p13 = new LargeFloorIsland(this.scene, p13Config, this.pisos);
 
         const auraConfig: FloorConfig = {
         texture: "brilloPlantap3",
-        pos: { x: 2540, y: 1140 },
+        pos: { x: 2540, y: -100 +1140 },
          scale: { width: 0.5, height: 0.5 },
          width: 10,
          height: 18,

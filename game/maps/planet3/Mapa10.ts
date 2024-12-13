@@ -19,7 +19,7 @@ class Mapa10 {
     scene: Game;
     worldSize = {
         width: 10000,
-        height: 5000,
+        height: 1900,
     };
     cameraBounds = {
         x: 0,

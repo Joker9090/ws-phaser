@@ -32,6 +32,8 @@ class MenuScene extends Phaser.Scene {
 
     create() {
         this.background = this.add.image(window.innerWidth / 2, window.innerHeight / 2, "menuBackground").setOrigin(0.5, 0.5)
+        this.background.setScrollFactor(0)
+        
         // set viewport and camera position
         this.cameras.main.setViewport(-this.width, 0, this.width * 3, this.height)
         this.cameras.main.centerOn(this.centralPointInitial.x, this.centralPointInitial.y)
@@ -63,7 +65,7 @@ class MenuScene extends Phaser.Scene {
             y: 0,
             panToCredits: this.centralPointCredits,
             panToPlay: this.centralPointPlay,
-            panToSettings: this.centralPointSettings
+            panToSettings: this.centralPointSettings,
         })
         // create credits container
         this.containerCredits = new ContainerCredits(this, {

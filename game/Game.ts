@@ -328,17 +328,17 @@ class Game extends Phaser.Scene {
     }
 
     /* Audio */
-    this.masterManagerScene = this.game.scene.getScene(
-      "MasterManager"
-    ) as MasterManager;
-    if (!this.masterManagerScene.scene.isActive())
-      this.scene.launch("MasterManager").sendToBack();
-    if (this.loopMusic)
-      this.masterManagerScene.playMusic(this.loopMusic, 0.3, true);
-    else {
-      if (this.loopMusic)
-        this.masterManagerScene.playMusic(this.loopMusic, 0.3, true);
-    }
+    // this.masterManagerScene = this.game.scene.getScene(
+    //   "MasterManager"
+    // ) as MasterManager;
+    // if (!this.masterManagerScene.scene.isActive())
+    //   this.scene.launch("MasterManager").sendToBack();
+    // if (this.loopMusic)
+    //   this.masterManagerScene.playMusic(this.loopMusic, true);
+    // else {
+    //   if (this.loopMusic)
+    //     this.masterManagerScene.playMusic(this.loopMusic, true);
+    // }
     /* UI SCENE  */
 
     this.UICamera = this.cameras.add(

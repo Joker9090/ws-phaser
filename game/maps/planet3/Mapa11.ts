@@ -153,17 +153,16 @@ class Mapa11 {
         .image(this.startingPoint.x, this.startingPoint.y, "p1capaOscuridad")
         .setOrigin(0.5, 0.5)
         .setAlpha(0);
-      this.background4 = this.scene.add
+        this.background4 = this.scene.add
         .image(this.startingPoint.x, this.startingPoint.y + 280, "background3p3")
         .setOrigin(0.5, 0.5)
         .setAlpha(1)
         .setScale(2);
       this.background5 = this.scene.add
-        .image(this.startingPoint.x + this.background4.width * 2 -3, this.startingPoint.y + 280, "background3p3")
+        .image(this.startingPoint.x + this.background4.width * 2 , this.startingPoint.y + 280, "background3p3")
         .setOrigin(0.5, 0.5)
         .setAlpha(1)
         .setScale(2);
-  
   
       this.frontground1 = this.scene.add
         .image(this.startingPoint.x, this.startingPoint.y + 600, "background2p3")
@@ -277,7 +276,8 @@ class Mapa11 {
         this.frontground4,
         this.frontground5,
         this.frontground6,
-        
+        this.background4,
+        this.background5
         
       ];
       this.backgroundsFront = [

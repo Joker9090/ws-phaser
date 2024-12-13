@@ -173,7 +173,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         .setAlpha(1)
         .setScale(2);
       this.background5 = this.scene.add
-        .image(this.startingPoint.x + this.background4.width * 2 -3, this.startingPoint.y + 280, "background3p3")
+        .image(this.startingPoint.x + this.background4.width * 2 , this.startingPoint.y + 280, "background3p3")
         .setOrigin(0.5, 0.5)
         .setAlpha(1)
         .setScale(2);
@@ -230,7 +230,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         .setOrigin(0.5, 1)
         .setScale(0.5);
       this.hueso2 = this.scene.add
-        .image(3000, this.startingPoint.y + 700, "planta2p3")
+        .image(2930, this.startingPoint.y + 700, "planta2p3")
         .setOrigin(0.5, 1)
         .setScale(1)
         .setFlipX(true)
@@ -251,7 +251,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         .setFlipX(true)
         .setScale(0.4);
       this.hueso6 = this.scene.add
-        .image(4650 * 2.5, this.startingPoint.y + 700, "planta3p3")
+        .image(4680 * 2.5, this.startingPoint.y + 700, "planta3p3")
         .setOrigin(0.5, 1)
         .setScale(1, 0.7);
       this.mountain1 = this.scene.add.image(
@@ -297,7 +297,8 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         this.hueso4,
         this.hueso5,
         this.hueso6,
-        
+        this.background4,
+        this.background5
       ];
       this.backgroundsFront = [
         

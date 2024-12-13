@@ -23,7 +23,7 @@ class Mapa9 {
     };
     cameraBounds = {
         x: 0,
-        y: -200,
+        y: -100,
         width: 4600,
         height: 1630,
       };
@@ -213,11 +213,11 @@ class Mapa9 {
           .setOrigin(0, 1)
           .setScale(1);
         this.hueso1 = this.scene.add
-          .image(this.startingPoint.x, this.startingPoint.y + 550, "planta1p3")
+          .image(this.startingPoint.x, this.startingPoint.y + 500, "planta1p3")
           .setOrigin(0.5, 1)
           .setScale(0.5);
         this.hueso2 = this.scene.add
-          .image(3000, this.startingPoint.y + 550, "planta2p3")
+          .image(3400, this.startingPoint.y + 490, "planta2p3")
           .setOrigin(0.5, 1)
           .setScale(1)
           .setFlipX(true)
@@ -278,16 +278,17 @@ class Mapa9 {
           this.frontground4,
           this.frontground5,
           this.frontground6,
-
-          
-        ];
-        this.backgroundsFront = [
+          this.background4,
+          this.background5,
           this.hueso1,
           this.hueso2,
           this.hueso3,
           this.hueso4,
           this.hueso5,
           this.hueso6,
+        ];
+        this.backgroundsFront = [
+         
         ];
     
         // animation backgrounds statics
@@ -431,7 +432,7 @@ class Mapa9 {
                       if(this.t1){
                         this.t1.play();
                         this.p3?.setVelocityY(200)
-                        this.p3?.setY(1050)
+                        this.p3?.setY(1050 -130)
                         this.p7?.body?.destroy()
                         this.p7?.setVisible(false)
                       }
@@ -542,7 +543,7 @@ class Mapa9 {
 
         const p1Config: FloorConfig = {
             texture: "pSimple1p3",
-            pos: { x: 1000, y: 700 },
+            pos: { x: 1000, y: -130 + 700 },
             inverted:true,
             scale: { width: 0.7, height: 0.7 },
             height: 20,
@@ -554,7 +555,7 @@ class Mapa9 {
 
         const p2Config: FloorConfig = {
           texture: "pSimple1p3",
-          pos: { x: 1300, y: 600 },
+          pos: { x: 1300, y: -130 + 600 },
           inverted:true,
           scale: { width: 0.7, height: 0.7 },
           height: 20,
@@ -565,7 +566,7 @@ class Mapa9 {
 
       const p7Config: FloorConfig = {
         texture: "pSimple1p3",
-        pos: { x: 1600, y: 500 },
+        pos: { x: 1600, y: -130 + 500 },
         scale: { width: 1, height: 0.7 },
         width: 170,
         height: 20,
@@ -575,7 +576,7 @@ class Mapa9 {
   
       const p3Config: FloorConfig = {
         texture: "pDoblep3",
-        pos: { x: 1600, y: 1300 },
+        pos: { x: 1600, y: -130 + 1300 },
         scale: { width: 1.5, height: 0.7 },
         width: 100,
         height: 30,
@@ -594,7 +595,7 @@ class Mapa9 {
 
       const p4Config: FloorConfig = {
         texture: "pSimple1p3",
-        pos: { x: 1950, y: 1300 },
+        pos: { x: 1950, y: -130 + 1300 },
         scale: { width: 0.8, height: 0.7 },
         width: 170,
         height: 20,
@@ -604,7 +605,7 @@ class Mapa9 {
 
       const p5Config: FloorConfig = {
        texture: "pSimple1p3",
-       pos: { x: 2400, y: 1300 },
+       pos: { x: 2400, y: -130 + 1300 },
        scale: { width: 1.3, height: 0.7 },
        width: 170,
        height: 20,
@@ -620,7 +621,7 @@ class Mapa9 {
 
       const p6Config: FloorConfig = {
         texture: "pSimple1p3",
-        pos: { x: 2800, y: 1300 },
+        pos: { x: 2800, y: -130 + 1300 },
         scale: { width: 1, height: 0.7 },
         width: 170,
         height: 20,
@@ -630,7 +631,7 @@ class Mapa9 {
 
       const p8Config: FloorConfig = {
         texture: "pSimple1p3",
-        pos: { x: 2800, y: 800 },
+        pos: { x: 2800, y: -130 + 800 },
         scale: { width: 1, height: 0.7 },
         width: 170,
         height: 20,
@@ -641,7 +642,7 @@ class Mapa9 {
 
       const p9Config: FloorConfig = {
         texture: "pSimple1p3",
-        pos: { x: 2400, y: 800 },
+        pos: { x: 2400, y: -130 + 800 },
         scale: { width: 1, height: 0.7 },
         width: 170,
         height: 20,
@@ -653,7 +654,7 @@ class Mapa9 {
 
       const p10Config: FloorConfig = {
         texture: "pSimple1p3",
-        pos: { x: 2050, y: 800 },
+        pos: { x: 2050, y: -130 + 800 },
         scale: { width: 1, height: 0.7 },
         width: 170,
         height: 20,
@@ -671,7 +672,7 @@ class Mapa9 {
 
       const p11Config: FloorConfig = {
         texture: "pSimple1p3",
-        pos: { x: 1100, y: 1200 },
+        pos: { x: 1100, y: -130 + 1200 },
         scale: { width: 2, height: 0.7 },
         width: 170,
         height: 20,
@@ -685,7 +686,7 @@ class Mapa9 {
         //Portal, Coin and Asteroids
         const portalConfig: FloorConfig = {
             texture: "cuevap3",
-            pos: { x: 1050, y: 1260 },
+            pos: { x: 1050, y: -130 + 1260 },
             width: 100,
             height: 100,
             inverted:true
@@ -696,7 +697,7 @@ class Mapa9 {
 
         const coinConfig: FloorConfig = {
           texture: "plantap3",
-          pos: {  x: 2800, y: 870},
+          pos: {  x: 2800, y: -130 + 870},
           scale: { width: 0.5, height: 0.5 },
           width: 10,
           height: 18,
@@ -707,7 +708,7 @@ class Mapa9 {
 
         const emptyCoinConfig: FloorConfig = {
             texture: "plantaVaciap3",
-            pos: {  x: 2800, y: 870},
+            pos: {  x: 2800, y: -130 + 870},
             scale: { width: 0.5, height: 0.5 },
             width: 10,
             height: 18,
@@ -719,7 +720,7 @@ class Mapa9 {
         
         const auraConfig: FloorConfig = {
             texture: "brilloPlantap3",
-            pos: {  x: 2800, y: 870},
+            pos: {  x: 2800, y: -130 + 870},
             scale: { width: 0.5, height: 0.5 },
             width: 10,
             height: 18,

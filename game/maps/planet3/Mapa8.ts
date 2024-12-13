@@ -148,12 +148,12 @@ class Mapa8 {
       .setOrigin(0.5, 0.5)
       .setAlpha(0);
     this.background4 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y + 400  +  100 + 100, "background3p3")
+      .image(this.startingPoint.x, this.startingPoint.y + 610 , "background3p3")
       .setOrigin(0.5, 0.5)
       .setAlpha(1)
       .setScale(2);
     this.background5 = this.scene.add
-      .image(this.startingPoint.x + this.background4.width * 2, this.startingPoint.y + 100 + 400  +  100, "background3p3")
+      .image(this.startingPoint.x + this.background4.width * 2, this.startingPoint.y  + 610 , "background3p3")
       .setOrigin(0.5, 0.5)
       .setAlpha(1)
       .setScale(2);
@@ -216,9 +216,9 @@ class Mapa8 {
       .setFlipX(true)
       .setScale(0.4);
     this.hueso3 = this.scene.add
-      .image(4650, this.startingPoint.y + 100 + 400  +  400, "planta1p3")
+      .image(4680, this.startingPoint.y + 100 + 400  +  400, "planta1p3")
       .setOrigin(0.5, 1)
-      .setScale( 0.7);
+      .setScale( 0.6);
 
     this.hueso4 = this.scene.add
       .image(this.startingPoint.x * 1.6, this.startingPoint.y + 100 + 400  +  400, "planta3p3")
@@ -277,11 +277,11 @@ class Mapa8 {
       this.hueso4,
       this.hueso5,
       this.hueso6,
-      
-    ];
-    this.backgroundsFront = [
       this.background4,
       this.background5
+    ];
+    this.backgroundsFront = [
+      
     ];
 
     // animation backgrounds statics

@@ -4,6 +4,8 @@ import containerInitial from "./containersMenu/containerInitial";
 import containerPlay from "./containersMenu/containerPlay";
 import containerSettings from "./containersMenu/containerSettings";
 import containerCode from "./containersMenu/containerCode";
+import MasterManager from "./MasterManager";
+
 
 class MenuScene extends Phaser.Scene {
     width: number = window.innerWidth;
@@ -23,16 +25,15 @@ class MenuScene extends Phaser.Scene {
     containerCode?: Phaser.GameObjects.Container;
     centralPointCode: { x: number, y: number } = { x: this.width / 2 + this.width * 2, y: this.height / 2 }
     background?: Phaser.GameObjects.Image;
-
+    masterManagerScene?: MasterManager;
     constructor() {
         super({ key: "MenuScene" });
-        console.log(this, "THIS")
+        console.log(this, "THIS") 
     }
 
 
     create() {
         this.background = this.add.image(window.innerWidth / 2, window.innerHeight / 2, "menuBackground").setOrigin(0.5, 0.5)
-
         // set viewport and camera position
         this.cameras.main.setViewport(-this.width, 0, this.width * 3, this.height)
         this.cameras.main.centerOn(this.centralPointInitial.x, this.centralPointInitial.y)
@@ -77,7 +78,12 @@ class MenuScene extends Phaser.Scene {
             x: this.width,
             y: 0,
             panToInitial: this.centralPointInitial,
-            panToCode: this.centralPointCode
+            panToCode: this.centralPointCode,
+            changeContainer: () => {
+                if (this.containerPlay && this.containerCode) {
+                  this.changeContainer(this.containerPlay, this.containerCode)
+                } 
+            }
         })
 
         this.containerSettings = new containerSettings(this, {
@@ -96,7 +102,33 @@ class MenuScene extends Phaser.Scene {
 
         this.events.removeAllListeners('shutdown')
     }
-
+    changeContainer(from:Phaser.GameObjects.Container, to:Phaser.GameObjects.Container){
+        console.log('funcion')
+        const circle = from.scene.add.circle(window.innerWidth, window.innerHeight, 1, 0x000, 1)
+        circle.setInteractive(  )
+        const diagonal = Math.sqrt(window.innerWidth ** 2 + window.innerHeight ** 2);
+        const finalScale = diagonal / (circle.radius * 2)  
+         from.scene.tweens.add({
+           targets: circle, 
+           scale: finalScale * 2 , 
+           duration: 1000, 
+           ease: 'Power2', 
+           onComplete: () => {
+               console.log('Animación completada, el círculo cubre toda la pantalla');
+               from.setVisible(false)
+               to.setVisible(true)
+               from.scene.tweens.add({
+                targets:circle,
+                scale: 0,
+                duration:1500,
+                ease:'Power2',
+                onComplete:()=>{
+                    circle.destroy()
+                }
+               })
+           }
+         }); 
+    }
     update() {
     }
 }

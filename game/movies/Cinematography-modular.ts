@@ -34,6 +34,7 @@ import cine3Movie3 from "./Cinemato3/cine3Movie3";
 import cine3Movie4 from "./Cinemato3/cine3Movie4";
 import cine3Movie5 from "./Cinemato3/cine3Movie5";
 import MultiScene from "../MultiScene";
+import UIClass from "../assets/UIClass";
 
 class CinematographyModular extends Phaser.Scene {
   ticker: Ticker;
@@ -42,6 +43,8 @@ class CinematographyModular extends Phaser.Scene {
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   holdableButton?: HoldableButton;
   UIcontainer?: Phaser.GameObjects.Container;
+    UIClass?: UIClass;
+    UICamera?: Phaser.Cameras.Scene2D.Camera;
   constructor() {
     super({ key: "CinematographyMod" });
 
@@ -218,6 +221,13 @@ class CinematographyModular extends Phaser.Scene {
         break;
       default:
     }
+      this.UICamera = this.cameras.add(
+          0,
+          0,
+          window.innerWidth,
+          window.innerHeight
+        );
+      this.UIClass = new UIClass(this, this.nextLevel ? this.nextLevel : 0, lifes ? lifes : 3, 0);
   }
 
   update(time: number, delta: number) {

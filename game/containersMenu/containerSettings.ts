@@ -4,6 +4,7 @@ import CinematographyModular from "../movies/Cinematography-modular";
 import MenuScene from "../Menu";
 import Game from "../Game";
 import MasterManager from "../MasterManager";
+import MultiScene from "../MultiScene";
 
 class containerSettings extends Phaser.GameObjects.Container {
 
@@ -94,12 +95,20 @@ class containerSettings extends Phaser.GameObjects.Container {
         })
         this.quitGame.on('pointerup', () => {
             this.quitGame.setTexture('settingQuitGameHover')
+            if(this.scene.scene.key !== 'MenuScene'){
+                const multiScene = new MultiScene("MenuScene", undefined);
+                const scene = this.scene.scene.add("MultiScene", multiScene, true);
+                this.scene.scene.start("MultiScene").bringToTop("MultiScene");
+            }else {
+                (this.scene as MenuScene).containerSettings?.setVisible(false)
+            }
         })
         this.quitGame.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
             this.quitGame.setTexture('settingQuitGameHover')
         })
         this.quitGame.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => {
             this.quitGame.setTexture('settingsQuitGame')
+          
         })
 
         this.cross = scene.add.image(-90, 350, 'settingsCross').setScale(0.8);

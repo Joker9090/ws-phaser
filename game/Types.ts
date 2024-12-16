@@ -45,4 +45,5 @@ export type ContainerMenuConfigType = {
     x:number,
     y:number
   },
+  changeContainer?:()=>void
 }

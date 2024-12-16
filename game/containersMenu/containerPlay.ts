@@ -47,8 +47,11 @@ class containerPlay extends Phaser.GameObjects.Container {
         })
         this.enterCodeButton.on('pointerup',()=>{
             this.enterCodeButton.setTexture('enterCodeButtonHover')
-            if(config.panToCode){
-                (this.scene as MenuScene).containerCode?.setVisible(true)
+            // if(config.panToCode){
+            //     (this.scene as MenuScene).containerCode?.setVisible(true)
+            // }
+            if (config.changeContainer) {
+                config.changeContainer();
             }
         })
         this.enterCodeButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER,()=>{

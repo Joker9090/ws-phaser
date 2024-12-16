@@ -22,7 +22,7 @@ export default class MasterManager extends Phaser.Scene {
   volumeMusic: number = 0.2;
   volumeSound: number = 0.2;
   brightness: number = 0;
-  MAX_VOLUME: number = 0.4;
+  MAX_VOLUME: number = 0.6;
   MAX_DARKNESS: number = 0.3;
   constructor() {
     super({ key: "MasterManager" });
@@ -55,6 +55,7 @@ export default class MasterManager extends Phaser.Scene {
         this.volumeMusic = volume > this.MAX_VOLUME ? this.MAX_VOLUME : volume;
         if (this.music) {
           this.music.setVolume(volume);
+        
         }
         break;
       case "sound":
@@ -97,4 +98,5 @@ export default class MasterManager extends Phaser.Scene {
   update() {
     this.scene.bringToTop("MasterManager");
   }
+
 }

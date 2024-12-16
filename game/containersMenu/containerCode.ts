@@ -15,7 +15,7 @@ class containerCode extends Phaser.GameObjects.Container {
         super(scene, config.x, config.y)
         const offsetY = 100
         let writable = false
-        this.title = this.scene.add.text(-70, -190, 'Code', {
+        this.title = this.scene.add.text(-230, 0, 'ENTER CODE', {
             fontSize: 17,
             color: "#00feff",
             stroke: "#00feff",
@@ -25,19 +25,35 @@ class containerCode extends Phaser.GameObjects.Container {
                 width: this.width * 0.9,
             },
         }).setFontSize('60px');
-        this.modal = scene.add.image(0, 0, "codeModal").setScale(0.9);
+        this.modal = scene.add.image(0, 100, "codeModal").setScale(0.9);
         this.modal.setOrigin(0.5);
-        this.input = scene.add.rectangle(-260 , 0, this.modal.width * 0.6, 80, 57055).setOrigin(0, 0.5);
+        this.input = scene.add.rectangle(-260 , 200, this.modal.width * 0.6, 80, 57055).setOrigin(0, 0.5);
         this.input.setInteractive()
         this.input.on('pointerDown',()=>{
             writable = true
         })
         // const background = this.scene.add.image(0,0,"NOMBRE DEL ASSET").setInteractive()
-        const background = this.scene.add.rectangle(0,0, 1920, 1080, 0x00ff00, 0.3).setInteractive()
+        const sky = this.scene.add.image(0,innerHeight/4 -200,'codeSky').setOrigin(0.5, 0.5)
+        const stars = this.scene.add.image(0,innerHeight/4 -350,'codeStars').setOrigin(0.5, 0.5)
+        const background0 = this.scene.add.image(0,innerHeight/4 -200, 'codeFondo0').setInteractive().setOrigin(0.5, 0.5)
+        const background1 = this.scene.add.image(0,innerHeight/4 -250, 'codeFondo1').setInteractive().setOrigin(0.5, 0.5)
+        const background2 = this.scene.add.image(0,innerHeight/4 -300, 'codeFondo2').setInteractive().setOrigin(0.5, 0.5)
+        const floor = this.scene.add.image(0,innerHeight/4 -150, 'codeFloor').setInteractive().setOrigin(0.5, 0.5)
+        const front = this.scene.add.image(0,innerHeight/4 -250, 'codeFront').setInteractive().setOrigin(0.5, 0.5)
+        const astroFront = this.scene.add.image(0,0, 'astroFront').setInteractive().setOrigin(0.5, 0.5)
+        const astroBack = this.scene.add.image(0, 0, 'astroBack').setInteractive().setOrigin(0.5, 0.5)
 
         const arr = [
-            background,
+            sky,
+            stars,
+            background2,
+            background1,
+            background0,
+            floor,
+            front,
+            astroBack,
             this.modal,
+            astroFront,
             this.input,
             this.title
         ]

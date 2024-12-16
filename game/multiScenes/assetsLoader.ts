@@ -91,8 +91,15 @@ const loadAssets = {
 
       // code container
       ["image", "codeModal", "/menu/code/codeModal.png"],
-
-    
+      ["image", "codeFondo0", "/menu/code/codeFondo0.png"],
+      ["image", "codeFondo1", "/menu/code/codeFondo1.png"],
+      ["image", "codeFondo2", "/menu/code/codeFondo2.png"],
+      ["image", "codeSky", "/menu/code/codeSky.png"],
+      ["image", "codeStars", "/menu/code/codeStars.png"],
+      ["image", "codeFloor", "/menu/code/codeFloor.png"],
+      ["image", "codeFront", "/menu/code/codeFront.png"],
+      ["image", "astroFront", "/menu/code/astroFront.png"],
+      ["image", "astroBack", "/menu/code/astroBack.png"],
     ]
 
 

@@ -115,6 +115,7 @@ class MenuScene extends Phaser.Scene {
            ease: 'Power2', 
            onComplete: () => {
                console.log('Animación completada, el círculo cubre toda la pantalla');
+                this.background?.setVisible(false)
                from.setVisible(false)
                to.setVisible(true)
                from.scene.tweens.add({

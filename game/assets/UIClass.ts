@@ -111,7 +111,7 @@ export default class UIClass {
           duration:600,
           ease:'bounce'
         })
-        if (this.settingsVisible ) {
+        if (this.settingsVisible) {
           if (this.scene.graphics) {
             this.scene.graphics.clear();
           }

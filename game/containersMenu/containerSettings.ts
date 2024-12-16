@@ -92,6 +92,7 @@ class containerSettings extends Phaser.GameObjects.Container {
         this.quitGame.setInteractive()
         this.quitGame.on('pointerdown', () => {
             this.quitGame.setTexture('settingsQuitGamePressed')
+            this.masterManager.playSound('buttonSound', false)
         })
         this.quitGame.on('pointerup', () => {
             this.quitGame.setTexture('settingQuitGameHover')
@@ -125,6 +126,7 @@ class containerSettings extends Phaser.GameObjects.Container {
         })
         this.cross.on('pointerup', () => {
             this.cross.setTexture('settingsCrossHover')
+            this.masterManager.playSound('buttonSound', false)
             this.volume = this.scene.sound.volume
             if (config.panToInitial) {
                 (this.scene as MenuScene).containerSettings?.setVisible(false)
@@ -145,6 +147,7 @@ class containerSettings extends Phaser.GameObjects.Container {
         })
         this.check.on('pointerup', () => {
             this.check.setTexture('settingsCheckHover')
+            this.masterManager.playSound('buttonSound', false)
             const volume = parseFloat((this.volume ?? '').toString());
             if (!isNaN(volume) && volume !== this.scene.sound.volume) {
                 this.scene.sound.volume = volume < 0.55 ? 0 : Math.min(1, Math.max(0, volume));
@@ -275,6 +278,9 @@ class containerSettings extends Phaser.GameObjects.Container {
             fillBar.width = control.x + 140;
             onChange(value);
         });
+        control.on('pointerdown',()=>{
+            this.masterManager.playSound('buttonSound', false)
+        })
 
         control.setDepth(10);
         this.settingsModal.add(slider);

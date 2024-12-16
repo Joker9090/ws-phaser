@@ -7,6 +7,7 @@ class containerCode extends Phaser.GameObjects.Container {
     height: number = window.innerHeight;
     modal: Phaser.GameObjects.Image;
     input: any;
+    displayText: Phaser.GameObjects.Text
     title: Phaser.GameObjects.Text;
     
    
@@ -15,7 +16,7 @@ class containerCode extends Phaser.GameObjects.Container {
         super(scene, config.x, config.y)
         const offsetY = 100
         let writable = false
-        this.title = this.scene.add.text(-230, 0, 'ENTER CODE', {
+        this.title = this.scene.add.text(-230, 50, 'ENTER CODE:', {
             fontSize: 17,
             color: "#00feff",
             stroke: "#00feff",
@@ -29,9 +30,29 @@ class containerCode extends Phaser.GameObjects.Container {
         this.modal.setOrigin(0.5);
         this.input = scene.add.rectangle(-260 , 200, this.modal.width * 0.6, 80, 57055).setOrigin(0, 0.5);
         this.input.setInteractive()
-        this.input.on('pointerDown',()=>{
-            writable = true
-        })
+        this.displayText = this.scene.add.text(-260 + 10, 200, '', {
+            fontSize: '24px',
+            color: '#000',
+        }).setOrigin(0, 0.5);
+        
+
+        // this.input.keyboard.on("keydown", (e:any) => {
+        //     if (this.displayText && writable) {
+        //       const TextCode = this.displayText.text;
+        //       if (e.keyCode === 8) {
+        //         const newCode = TextCode.substring(0, TextCode.length - 1);
+        //         this.displayText?.setText(newCode);
+        //       } else if (e.keyCode <= 90 && e.keyCode >= 65) {
+        //         const newCode = TextCode + e.key;
+        //         this.displayText?.setText(newCode);
+        //       } else if (e.keyCode === 13) {
+        //         console.log('holi')
+        //       }
+        //     }
+        // });
+        // this.input.on('pointerDown',()=>{
+        //     writable = true
+        // })
         // const background = this.scene.add.image(0,0,"NOMBRE DEL ASSET").setInteractive()
         const sky = this.scene.add.image(0,innerHeight/4 -200,'codeSky').setOrigin(0.5, 0.5)
         const stars = this.scene.add.image(0,innerHeight/4 -350,'codeStars').setOrigin(0.5, 0.5)

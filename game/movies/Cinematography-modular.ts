@@ -45,6 +45,7 @@ class CinematographyModular extends Phaser.Scene {
   UIcontainer?: Phaser.GameObjects.Container;
     UIClass?: UIClass;
     UICamera?: Phaser.Cameras.Scene2D.Camera;
+   graphics?: Phaser.GameObjects.Graphics;
   constructor() {
     super({ key: "CinematographyMod" });
 
@@ -52,10 +53,8 @@ class CinematographyModular extends Phaser.Scene {
     this.ticker = new Ticker(tickerMS);
   }
 
-  create(
-    this: CinematographyModular,
-    { keyname, lifes }: CinematoDataType
-  ) {
+  create(this: CinematographyModular,{ keyname, lifes }: CinematoDataType) {
+
     const isPostal = keyname.includes("postal");
     this.cursors = this.input.keyboard?.createCursorKeys();
     const stopThisScene = () => {

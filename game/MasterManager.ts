@@ -52,16 +52,17 @@ export default class MasterManager extends Phaser.Scene {
   changeVolume(volume: number, type: "music" | "sound") {
     switch (type) {
       case "music":
-        this.volumeMusic = volume > this.MAX_VOLUME ? this.MAX_VOLUME : volume;
+        this.volumeMusic = volume ;
+        console.log(this.volumeMusic)
         if (this.music) {
-          this.music.setVolume(volume);
+          this.music.setVolume(volume * this.MAX_VOLUME);
         
         }
         break;
       case "sound":
-        this.volumeSound = volume > this.MAX_VOLUME ? this.MAX_VOLUME : volume;
+        this.volumeSound = volume;
         if (this.sound) {
-          this.sound.setVolume(volume);
+          this.sound.setVolume(volume*this.MAX_VOLUME);
         }
         break;
     }

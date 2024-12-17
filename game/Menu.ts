@@ -39,26 +39,9 @@ class MenuScene extends Phaser.Scene {
         this.cameras.main.centerOn(this.centralPointInitial.x, this.centralPointInitial.y)
 
 
-        const gameObjectScaler = {
-            x: window.innerWidth / 1920,
-            y: window.innerHeight / 1080,
-        };
+       
 
-        const scaleBy = () => {
-            if (window.innerWidth > 1920) {
-                return (
-                    gameObjectScaler.x > gameObjectScaler.y
-                        ? gameObjectScaler.y
-                        : gameObjectScaler.x
-                )
-            } else {
-                return (
-                    gameObjectScaler.x < gameObjectScaler.y
-                        ? gameObjectScaler.y
-                        : gameObjectScaler.x
-                )
-            }
-        }
+    
 
         this.containerInitial = new containerInitial(this, {
             x: 0,
@@ -86,12 +69,12 @@ class MenuScene extends Phaser.Scene {
             }
         })
 
-        this.containerSettings = new containerSettings(this, {
-            x: this.width / 2,
-            y: this.height / 2,
-            panToInitial: this.centralPointInitial
-        }).setVisible(false)
-        this.containerSettings.settingsModal.setScale(scaleBy());
+        // this.containerSettings = new containerSettings(this, {
+        //     x: this.width / 2,
+        //     y: this.height / 2,
+        //     panToInitial: this.centralPointInitial
+        // }).setVisible(false)
+        // this.containerSettings.settingsModal.setScale(scaleBy());
 
         this.containerCode = new containerCode(this, {
             x: this.width*1.5,
@@ -131,6 +114,26 @@ class MenuScene extends Phaser.Scene {
          }); 
     }
     update() {
+    }
+}
+
+export  const scaleBy = () => {
+    const gameObjectScaler = {
+        x: window.innerWidth / 1920,
+        y: window.innerHeight / 1080,
+    };
+    if (window.innerWidth > 1920) {
+        return (
+            gameObjectScaler.x > gameObjectScaler.y
+                ? gameObjectScaler.y
+                : gameObjectScaler.x
+        )
+    } else {
+        return (
+            gameObjectScaler.x < gameObjectScaler.y
+                ? gameObjectScaler.y
+                : gameObjectScaler.x
+        )
     }
 }
 

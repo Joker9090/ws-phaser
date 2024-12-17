@@ -124,10 +124,10 @@ class Mapa10 {
   backgroundsMiddle: Phaser.GameObjects.Image[];
   backgroundsFront: Phaser.GameObjects.Image[];
   originalPositionsBackgroundsBack: {x: number, y:number}[]
-originalPositionsBackgroundsMiddle: {x: number, y:number}[]
-originalPositionsBackgroundsFront: {x: number, y:number}[]
-
-
+  originalPositionsBackgroundsMiddle: {x: number, y:number}[]
+  originalPositionsBackgroundsFront: {x: number, y:number}[]
+  moveCamera?: boolean = true;
+  oldOffset?:number
 
     UIItemToGrab: string = 'uiItemp3';
     UIItemScale?: number = 0.3;
@@ -488,8 +488,9 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
                     this.scene.monchi,
                     this.pisos5,
                     () => {
-                      this.scene.rotateCam(false, 10);
-                        // this.scene.checkPoint = 0
+                      if(this.oldOffset){
+                        this.scene.cameras.main.followOffset.y = this.oldOffset;
+                      } 
                     },
                     () => true,
                     this.scene
@@ -499,7 +500,11 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
                       this.scene.monchi,
                       this.pisos6,
                       () => {
-                        
+                        if(this.moveCamera){
+                          this.moveCamera = false
+                          this.oldOffset = this.scene.cameras.main.followOffset.y
+                          this.scene.cameras.main.followOffset.y = window.innerHeight / 2 -50;
+                        }
                       },
                       () => true,
                       this.scene
@@ -660,7 +665,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
       textureA: "longFloorLeftp3",
       textureB: "longFloorMiddlep3",
       textureC: "longFloorRightp3",
-      pos: { x: 3050, y: 1150 },
+      pos: { x: 3050, y: 1050 },
       
       width: {
         textureA: 110,
@@ -673,7 +678,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
       rotated: false
     };
 
-    const p9 = new LargeFloorIsland(this.scene, p9Config, this.pisos);
+    const p9 = new LargeFloorIsland(this.scene, p9Config, this.pisos6);
 
     const p10Config: FloorConfig = {
       texture: "pSimple1p3",
@@ -684,7 +689,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
       rotated: false,
     };
 
-    const p10 = new Floor(this.scene, p10Config, this.pisos);
+    const p10 = new Floor(this.scene, p10Config, this.pisos5);
 
     const p11Config: FloorConfig = {
       texture: "pSimple1p3",
@@ -728,7 +733,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
 
         const coinConfig: FloorConfig = {
           texture: "plantap3",
-            pos: { x: 3300, y: 1090 },
+            pos: { x: 3300, y: 990 },
             scale: { width: 0.5, height: 0.5 },
             width: 10,
             height: 18,
@@ -738,7 +743,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
 
         const emptyCoinConfig: FloorConfig = {
           texture: "plantaVaciap3",
-          pos: {  x: 3300, y: 1090},
+          pos: {  x: 3300, y: 990},
           scale: { width: 0.5, height: 0.5 },
           width: 10,
           height: 18,
@@ -748,7 +753,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
 
         const auraConfig: FloorConfig = {
         texture: "brilloPlantap3",
-         pos: {  x: 3300, y: 1090},
+         pos: {  x: 3300, y: 990},
          scale: { width: 0.5, height: 0.5 },
          width: 10,
          height: 18,

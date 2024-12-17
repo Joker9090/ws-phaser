@@ -80,6 +80,7 @@ class Game extends Phaser.Scene {
   }
 
   moveCameraOffset(position: "up" | "down", instant: boolean = false) {
+    console.log('hola from offset')
     setTimeout(() => {
       let newPosition = this.cameraHeight / 2 - 200;
       if (position === "up") newPosition = -newPosition;
@@ -261,7 +262,7 @@ class Game extends Phaser.Scene {
       s: Phaser.Input.Keyboard.KeyCodes.S,
       d: Phaser.Input.Keyboard.KeyCodes.D,
     });
-      this.cameras.main.zoom = 1
+      this.cameras.main.zoom = 0.2
     // CREATIVE
 
     this.checkPoint = 0;

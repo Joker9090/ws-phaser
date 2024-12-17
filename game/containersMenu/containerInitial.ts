@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import { ContainerMenuConfigType } from "../Types";
-import MenuScene from "../Menu";
+import MenuScene, { scaleBy } from "../Menu";
+import containerSettings from "./containerSettings";
 
 class containerInitial extends Phaser.GameObjects.Container {
 
@@ -122,7 +123,14 @@ class containerInitial extends Phaser.GameObjects.Container {
         })
         this.settingsButton.on("pointerup", ()=>{
             if(config.panToSettings){
-                (this.scene as MenuScene).containerSettings?.setVisible(!(this.scene as MenuScene).containerSettings?.visible)
+                // (this.scene as MenuScene).containerSettings?.setVisible(!(this.scene as MenuScene).containerSettings?.visible)
+                
+                 const settings = new containerSettings(this.scene, {
+                    x: this.width / 2,
+                    y: this.height / 2,
+                
+                })
+                settings.setScale(scaleBy());
 
                 // this.scene.background?.setScrollFactor(0)
                 // this.scene.cameras.main.pan(config.panToSettings.x, config.panToSettings.y, 1000, 'Expo', true)

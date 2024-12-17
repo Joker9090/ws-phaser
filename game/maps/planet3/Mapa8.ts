@@ -12,6 +12,7 @@ import portal, { portalConfig } from "../../assets/portal";
 import { Children } from "react";
 import { loseConfigFromMapType } from "@/game/Types";
 import LargeFloorIsland, { LargeFloorIslandConfig } from "@/game/assets/LargeFloorIsland";
+import colors from "@/game/assets/PlatformColors";
 
 class Mapa8 {
   isJumping = false;
@@ -529,7 +530,7 @@ class Mapa8 {
       }
     };
 
-    const p2 = new Floor(this.scene, p2Config, this.pisos3).setTint(Phaser.Display.Color.GetColor(255, 101, 255));
+    const p2 = new Floor(this.scene, p2Config, this.pisos3).setTint(colors.rotate);
 
 
     const p3Config: FloorConfig = {
@@ -540,7 +541,7 @@ class Mapa8 {
       height: 20,
     };
 
-    const p3 = new Floor(this.scene, p3Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
+    const p3 = new Floor(this.scene, p3Config, this.pisos2).setTint(colors.gravity);
 
 
     const p4Config: FloorConfig = {
@@ -578,7 +579,7 @@ class Mapa8 {
       }
     };
 
-    const p6 = new Floor(this.scene, p6config, this.pisos2).setFlipY(true).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
+    const p6 = new Floor(this.scene, p6config, this.pisos2).setFlipY(true).setTint(colors.gravity);
 
     const p8config: FloorConfig = {
       pos: { x: 4850, y: 800, },
@@ -605,7 +606,7 @@ class Mapa8 {
       height: 20,
     };
 
-    const p9 = new Floor(this.scene, p9config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
+    const p9 = new Floor(this.scene, p9config, this.pisos2).setTint(colors.gravity);
 
     const p10config: FloorConfig = {
       pos: { x: 5400, y: 200, },
@@ -623,7 +624,7 @@ class Mapa8 {
       width: 140,
       height: 20,
     };
-    const p11 = new Floor(this.scene, p11config, this.pisos2).setFlipY(true).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
+    const p11 = new Floor(this.scene, p11config, this.pisos2).setFlipY(true).setTint(colors.gravity);
 
     const p12config: FloorConfig = {
       pos: { x: 5750, y: 800, },
@@ -655,7 +656,7 @@ class Mapa8 {
       height: 20,
     };
 
-    const ptest = new Floor(this.scene, ptestconfig, this.pisos5).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
+    const ptest = new Floor(this.scene, ptestconfig, this.pisos5).setTint(colors.gravity);
 
     const p14Config: LargeFloorIslandConfig = {
       textureA: "longFloorLeftp3",

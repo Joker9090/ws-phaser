@@ -12,6 +12,7 @@ import portal, { portalConfig } from "../../assets/portal";
 import { Children } from "react";
 import { loseConfigFromMapType } from "@/game/Types";
 import LargeFloorIsland, { LargeFloorIslandConfig } from "@/game/assets/LargeFloorIsland";
+import colors from "@/game/assets/PlatformColors";
 
 class Mapa10 {
     isJumping = false;
@@ -585,7 +586,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         rotated: false,
     };
 
-    const p3 = new Floor(this.scene, p3Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
+    const p3 = new Floor(this.scene, p3Config, this.pisos2).setTint(colors.gravity);
 
       const p4Config: FloorConfig = {
        texture: "pSimple1p3",
@@ -605,7 +606,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
         rotated: false,
       };
 
-    const p5 = new Floor(this.scene, p5Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
+    const p5 = new Floor(this.scene, p5Config, this.pisos2).setTint(colors.gravity);
 
     const p6Config: FloorConfig = {
       texture: "pSimple1p3",
@@ -652,7 +653,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
       }
     };
 
-    const p8 = new Floor(this.scene, p8Config, this.pisos3).setTint(Phaser.Display.Color.GetColor(255, 101, 255));
+    const p8 = new Floor(this.scene, p8Config, this.pisos3).setTint(colors.rotate);
   
     
     const p9Config: LargeFloorIslandConfig = {
@@ -694,7 +695,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
       rotated: false,
     };
 
-    const p11 = new Floor(this.scene, p11Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
+    const p11 = new Floor(this.scene, p11Config, this.pisos2).setTint(colors.gravity);
 
     const p12Config: LargeFloorIslandConfig = {
       textureA: "longFloorLeftp3",

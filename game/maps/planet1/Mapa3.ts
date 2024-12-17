@@ -12,6 +12,7 @@ import portal, { portalConfig } from "../../assets/portal";
 import { Children } from "react";
 import { loseConfigFromMapType } from "@/game/Types";
 import LargeFloorIsland, { LargeFloorIslandConfig } from "@/game/assets/LargeFloorIsland";
+import colors from "@/game/assets/PlatformColors";
 
 class Mapa3 {
     isJumping = false;
@@ -420,7 +421,7 @@ class Mapa3 {
 
         };
         const p9 = new Floor(this.scene, p9Config, this.pisos2).setTint(
-            Phaser.Display.Color.GetColor(255, 101, 0)
+            colors.gravity
         ).setFlipX(true);
 
         // const p4Config: LargeFloorConfig = {
@@ -485,7 +486,7 @@ class Mapa3 {
               }
         };
         const p13 = new Floor(this.scene, p13Config, this.pisos3).setTint(
-            Phaser.Display.Color.GetColor(255, 101, 0)
+           colors.rotate
         ).setFlipY(true);
 
     

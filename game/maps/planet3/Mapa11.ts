@@ -12,6 +12,7 @@ import portal, { portalConfig } from "../../assets/portal";
 import { Children } from "react";
 import { loseConfigFromMapType } from "@/game/Types";
 import LargeFloorIsland, { LargeFloorIslandConfig } from "@/game/assets/LargeFloorIsland";
+import colors from "@/game/assets/PlatformColors";
 
 class Mapa11 {
     isJumping = false;
@@ -557,7 +558,7 @@ class Mapa11 {
         rotated: false,
     };
 
-    const p3 = new Floor(this.scene, p3Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0))
+    const p3 = new Floor(this.scene, p3Config, this.pisos2).setTint(colors.gravity)
 
     const p4Config: FloorConfig = {
       texture: "pSimple1p3",
@@ -608,7 +609,7 @@ const p7Config: FloorConfig = {
   rotated: false,
 };
 
-const p7 = new Floor(this.scene, p7Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0))
+const p7 = new Floor(this.scene, p7Config, this.pisos2).setTint(colors.gravity)
 
 const p8Config: FloorConfig = {
   texture: "pSimple1p3",
@@ -619,7 +620,7 @@ const p8Config: FloorConfig = {
   rotated: false,
 };
 
-const p8 = new Floor(this.scene, p8Config, this.pisos3).setTint(Phaser.Display.Color.GetColor(255, 101, 255));
+const p8 = new Floor(this.scene, p8Config, this.pisos3).setTint(colors.rotate);
 
 const p9Config: FloorConfig = {
   texture: "pSimple1p3",
@@ -629,7 +630,7 @@ const p9Config: FloorConfig = {
   rotated: false,
 };
 
-const p9 = new Floor(this.scene, p9Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0))
+const p9 = new Floor(this.scene, p9Config, this.pisos2).setTint(colors.gravity)
 
 const p10Config: FloorConfig = {
   texture: "pDoblep3",
@@ -640,7 +641,7 @@ const p10Config: FloorConfig = {
   inverted:true,
 };
 
-const p10 = new Floor(this.scene, p10Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0))
+const p10 = new Floor(this.scene, p10Config, this.pisos2).setTint(colors.gravity)
 
 const p11Config: FloorConfig = {
   texture: "pSimple1p3",
@@ -650,7 +651,7 @@ const p11Config: FloorConfig = {
   rotated: false,
 };
 
-const p11 = new Floor(this.scene, p11Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0))
+const p11 = new Floor(this.scene, p11Config, this.pisos2).setTint(colors.gravity)
 
 
 

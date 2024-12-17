@@ -13,6 +13,7 @@ import { Children } from "react";
 import { loseConfigFromMapType } from "@/game/Types";
 import LargeFloorIsland, { LargeFloorIslandConfig } from "@/game/assets/LargeFloorIsland";
 import TextBox from "@/game/assets/TextBox";
+import colors from "@/game/assets/PlatformColors";
 
 class Mapa2 {
   isJumping = false;
@@ -358,7 +359,7 @@ class Mapa2 {
     };
     const p4 = new Floor(this.scene, p4Config, this.pisos3);
     p4.setTint(
-      Phaser.Display.Color.GetColor(255, 101, 0)
+      colors.rotate
     ).setFlipX(true);
 
     const p5Config: FloorConfig = {
@@ -371,7 +372,7 @@ class Mapa2 {
     };
     const p5 = new Floor(this.scene, p5Config, this.pisos2);
     p5.setTint(
-      Phaser.Display.Color.GetColor(255, 101, 101)
+      colors.gravity
     );
 
     const p6Config: LargeFloorIslandConfig = {

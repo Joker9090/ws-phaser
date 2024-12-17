@@ -14,6 +14,7 @@ import { loseConfigFromMapType } from "@/game/Types";
 import LargeFloorIsland, {
   LargeFloorIslandConfig,
 } from "@/game/assets/LargeFloorIsland";
+import colors from "@/game/assets/PlatformColors";
 
 class Mapa5 {
   isJumping = false;
@@ -677,7 +678,7 @@ class Mapa5 {
     };
     const p5 = new Floor(this.scene, p5Config, this.pisos2)
       .setFlipX(true)
-      .setTint(Phaser.Display.Color.GetColor(255, 101, 0));
+      .setTint(colors.gravity);
 
     const p6Config: FloorConfig = {
       pos: { x: 1700, y: 550 },
@@ -686,7 +687,7 @@ class Mapa5 {
       width: 140,
       height: 30,
     };
-    const p6 = new Floor(this.scene, p6Config, this.pisos3).setFlipY(true);
+    const p6 = new Floor(this.scene, p6Config, this.pisos3).setFlipY(true).setTint(colors.rotate);
 
     const fireball4Config: FloorConfig = {
       spriteSheet: "meteoritop1",

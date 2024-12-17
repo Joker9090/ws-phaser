@@ -12,6 +12,7 @@ import portal, { portalConfig } from "../../assets/portal";
 import { Children } from "react";
 import { loseConfigFromMapType } from "@/game/Types";
 import LargeFloorIsland, { LargeFloorIslandConfig } from "@/game/assets/LargeFloorIsland";
+import colors from "@/game/assets/PlatformColors";
 
 class Mapa7 {
     isJumping = false;
@@ -642,7 +643,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
             width: 140,
             height: 30,
         };
-        const p3 = new Floor(this.scene, p3Config, this.pisos2).setFlipX(false).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
+        const p3 = new Floor(this.scene, p3Config, this.pisos2).setFlipX(false).setTint(colors.gravity);
 
         const p4Config: FloorConfig = {
             pos: { x: 1800, y: 600 },
@@ -692,7 +693,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
             width: 140,
             height: 30,
         };
-        const p6 = new Floor(this.scene, p6Config, this.pisos3).setTint(Phaser.Display.Color.GetColor(255, 101, 255)).setFlipY(true);
+        const p6 = new Floor(this.scene, p6Config, this.pisos3).setTint(colors.rotate).setFlipY(true);
 
         const fireball3Config: FloorConfig = {
             spriteSheet: "meteoritop1",

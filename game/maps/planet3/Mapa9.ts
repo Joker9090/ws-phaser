@@ -12,6 +12,7 @@ import portal, { portalConfig } from "../../assets/portal";
 import { Children } from "react";
 import { loseConfigFromMapType } from "@/game/Types";
 import LargeFloorIsland, { LargeFloorIslandConfig } from "@/game/assets/LargeFloorIsland";
+import colors from "@/game/assets/PlatformColors";
 
 class Mapa9 {
     isJumping = false;
@@ -566,7 +567,7 @@ class Mapa9 {
           rotated: false,
       };
 
-      const p2 = new Floor(this.scene, p2Config, this.pisos3).setTint(Phaser.Display.Color.GetColor(255, 101, 255));
+      const p2 = new Floor(this.scene, p2Config, this.pisos3).setTint(colors.rotate);
 
       const p7Config: FloorConfig = {
         texture: "pSimple1p3",
@@ -576,7 +577,7 @@ class Mapa9 {
         height: 20,
       };
 
-       this.p7 = new Floor(this.scene, p7Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0)).setFlipY(true);
+       this.p7 = new Floor(this.scene, p7Config, this.pisos2).setTint(colors.gravity).setFlipY(true);
   
       const p3Config: FloorConfig = {
         texture: "pDoblep3",
@@ -631,7 +632,7 @@ class Mapa9 {
         height: 20,
       };
 
-      const p6 = new Floor(this.scene, p6Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
+      const p6 = new Floor(this.scene, p6Config, this.pisos2).setTint(colors.gravity);
 
       const p8Config: FloorConfig = {
         texture: "pSimple1p3",

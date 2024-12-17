@@ -14,6 +14,7 @@ import { loseConfigFromMapType } from "@/game/Types";
 import LargeFloorIsland, {
   LargeFloorIslandConfig,
 } from "@/game/assets/LargeFloorIsland";
+import colors from "@/game/assets/PlatformColors";
 
 class Mapa4 {
   isJumping = false;
@@ -537,7 +538,7 @@ class Mapa4 {
       height: 30,
     };
     const p2 = new Floor(this.scene, p2Config, this.pisos2).setTint(
-      Phaser.Display.Color.GetColor(255, 101, 0)
+      colors.gravity
     );
 
     const p16Config: FloorConfig = {
@@ -615,7 +616,7 @@ class Mapa4 {
       height: 30,
     };
     const p4 = new Floor(this.scene, p4Config, this.pisos2).setTint(
-      Phaser.Display.Color.GetColor(255, 101, 0)
+      colors.gravity
     );
 
     const fireball3Config: FloorConfig = {
@@ -648,7 +649,7 @@ class Mapa4 {
     const p5 = new Floor(this.scene, p5Config, this.pisos3)
       .setFlipX(true)
       .setFlipY(true)
-      .setTint(Phaser.Display.Color.GetColor(255, 101, 255));
+      .setTint(colors.rotate);
 
     const p6Config: FloorConfig = {
       pos: { x: 1900, y: 650 },
@@ -673,7 +674,7 @@ class Mapa4 {
       height: 30,
     };
     const p11 = new Floor(this.scene, p11Config, this.pisos2).setFlipY(true).setTint(
-      Phaser.Display.Color.GetColor(255, 101, 0)
+     colors.gravity
     );
 
 
@@ -712,7 +713,7 @@ class Mapa4 {
         width: 140,
         height: 30,
       };
-      const p14 = new Floor(this.scene, p14Config, this.pisos2).setTint(Phaser.Display.Color.GetColor(255, 101, 0));  
+      const p14 = new Floor(this.scene, p14Config, this.pisos2).setTint(colors.gravity);  
     //   .setVelocity(400, 0);
 
     // this.scene.tweens.add({

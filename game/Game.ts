@@ -64,6 +64,7 @@ class Game extends Phaser.Scene {
   UIClass?: UIClass;
   UICamera?: Phaser.Cameras.Scene2D.Camera;
   masterManagerScene?: MasterManager;
+  stopMov: boolean = false;
   constructor() {
     super({ key: "Game" });
   }
@@ -77,6 +78,58 @@ class Game extends Phaser.Scene {
       this.monchi.idle();
       this.monchi.setVelocityX(0);
     }
+  }
+
+  animCameraPan(x: number, y: number, duration: number = 10000, hold: number = 1000) {
+    const self = this
+    this.stopMov = true;
+    this.cameras.main.pan(x, y, duration / 2, "Linear", false, (cam, progress) => {
+      if (progress === 1) {
+        this.stopMov = false;
+      }
+    }, self)
+
+    // const originalOffset = { x: this.cameras.main.followOffset.x, y: this.cameras.main.followOffset.y }
+    // this.cameras.main.stopFollow();
+    // const originPos = { x: this.cameras.main.midPoint.x, y: this.cameras.main.midPoint.y }
+    // this.cameras.main.pan(x, y, duration / 2, "Linear", false, (cam, progress) => {
+    // if (progress === 1) {
+    //   console.log("Entro aca 1 ARI")
+    //   this.time.delayedCall(hold, () => {
+    //     console.log("Entro aca 2 ARI")
+
+    //     this.cameras.main.pan(originPos.x, originPos.y, duration / 2, "Linear", false, (cam, progress) => {
+    //       console.log("Entro aca 3 ARI")
+
+    //       if (progress === 1) {
+    //         console.log("Entro aca 4 ARI")
+    //         this.cameras.main.startFollow(
+    //           //@ts-ignore
+    //           this.monchi,
+    //           true,
+    //           0.1,
+    //           0.1,
+    //           originalOffset.x,
+    //           originalOffset.y
+    //         );
+    //         this.stopMov = false;
+    //       }
+    //     }, self)
+    //   })
+    // }
+    // }, self)
+    // this.tweens.add({
+    //   targets: this.cameras.main.followOffset,
+    //   x: offsetAnim.x,
+    //   y: offsetAnim.y,
+    //   duration: offsetAnim.duration ? offsetAnim.duration : 1000,
+    //   ease: "ease",
+    //   hold: offsetAnim.hold ? offsetAnim.hold : 500,
+    //   onComplete: () => {
+    //     this.stopMov = false;
+    //   },
+    //   yoyo: true,
+    // })
   }
 
   moveCameraOffset(position: "up" | "down", instant: boolean = false) {
@@ -106,6 +159,7 @@ class Game extends Phaser.Scene {
   }
 
   rotateCam(isNormal: boolean, time: number) {
+    if (this.cameraNormal === !isNormal) return
     if (this.monchi)
       this.monchi.setCameraState(!isNormal ? "NORMAL" : "ROTATED");
     if (isNormal) {
@@ -114,39 +168,39 @@ class Game extends Phaser.Scene {
       this.cameraNormal = true;
     }
     if (this.canRot) {
-        for (let i = 0; i < 25; i++) {
-          this.time.delayedCall(time * i, () =>
-            ((rotate) => {
-              if (isNormal) {
-                console.log("ENTRA ACA 1")
-                this.cameras.main.setRotation(rotate);
-              } else {
-                console.log("ENTRA ACA 2")
-                this.cameras.main.setRotation(Math.PI - rotate);
-              }
-            })((Math.PI * i) / 24)
-          );
-          if (i == 24) {
-            this.canRot = false;
-          }
+      for (let i = 0; i < 25; i++) {
+        this.time.delayedCall(time * i, () =>
+          ((rotate) => {
+            if (isNormal) {
+              console.log("ENTRA ACA 1")
+              this.cameras.main.setRotation(rotate);
+            } else {
+              console.log("ENTRA ACA 2")
+              this.cameras.main.setRotation(Math.PI - rotate);
+            }
+          })((Math.PI * i) / 24)
+        );
+        if (i == 24) {
+          // this.canRot = false;
         }
+      }
     }
   }
 
   win() {
     if (this.canWin && this.monchi) {
       if (this.map?.nextScene) {
-      // if (this.levelIs === 7){
-      //   const multiScene = new MultiScene("Game", { level: 4, lifes: 3 });
-      //   const scene = this.scene.add("MultiScene", multiScene, true);
-      //   this.scene.start("MultiScene").bringToTop("MultiScene");
-      // } else {
+        // if (this.levelIs === 7){
+        //   const multiScene = new MultiScene("Game", { level: 4, lifes: 3 });
+        //   const scene = this.scene.add("MultiScene", multiScene, true);
+        //   this.scene.start("MultiScene").bringToTop("MultiScene");
+        // } else {
 
-        const multiScene = new MultiScene("CinematographyMod", { keyname: this.map.nextScene, lifes: this.lifes ? this.lifes : 3,  loadKey: ["Postales"] });
+        const multiScene = new MultiScene("CinematographyMod", { keyname: this.map.nextScene, lifes: this.lifes ? this.lifes : 3, loadKey: ["Postales"] });
         const scene = this.scene.add("MultiScene", multiScene, true);
         this.scene.start("MultiScene").bringToTop("MultiScene");
       }
-        // }
+      // }
       else {
         const multiScene = new MultiScene("Game", { level: this.levelIs + 1, lifes: this.lifes ? this.lifes : 3 });
         const scene = this.scene.add("MultiScene", multiScene, true);
@@ -180,13 +234,13 @@ class Game extends Phaser.Scene {
       //@ts-ignore
       this.map.rotate = true
       const config = this.map.loseConfig[this.checkPoint];
-      
+
       console.log(config, "config")
       console.log(this.checkPoint, "checkpoint")
       if (this.lifes) {
         this.lifes -= 1;
         if (this.lifes === 0) {
-          
+
           const multiScene = new MultiScene("Game", { level: this.levelIs, lifes: this.lifes ? this.lifes : 3 });
           const scene = this.scene.add("MultiScene", multiScene, true);
           this.scene.start("MultiScene").bringToTop("MultiScene");
@@ -197,6 +251,7 @@ class Game extends Phaser.Scene {
           //agregar cambio de arrow UI
 
           // Player changes
+          this.cameraNormal = config.cameraDirection === "NORMAL" ? true : false
           this.monchi.setCameraState(config.cameraDirection);
           this.monchi.setPlayerState(config.PlayerDirection);
 
@@ -254,13 +309,16 @@ class Game extends Phaser.Scene {
     data: GamePlayDataType
   ) {
     // CREATIVE
+    // this.time.delayedCall(4000, () => {
+    //   this.animCameraPan(2000, 500)
+    // })
     this.cursorsAWSD = this.input.keyboard?.addKeys({
       w: Phaser.Input.Keyboard.KeyCodes.W,
       a: Phaser.Input.Keyboard.KeyCodes.A,
       s: Phaser.Input.Keyboard.KeyCodes.S,
       d: Phaser.Input.Keyboard.KeyCodes.D,
     });
-      // this.cameras.main.zoom = 0.2
+    // this.cameras.main.zoom = 0.2
     // CREATIVE
 
     this.checkPoint = 0;
@@ -309,17 +367,17 @@ class Game extends Phaser.Scene {
         this.loopMusic = "planet1LoopMusic";
         break
       case 9:
-          this.map = new p3Mapa2(this, this.monchi!);
-          this.loopMusic = "planet1LoopMusic";
-          break
+        this.map = new p3Mapa2(this, this.monchi!);
+        this.loopMusic = "planet1LoopMusic";
+        break
       case 10:
-          this.map = new p3Mapa3(this, this.monchi!);
-          this.loopMusic = "planet1LoopMusic";
-          break
+        this.map = new p3Mapa3(this, this.monchi!);
+        this.loopMusic = "planet1LoopMusic";
+        break
       case 11:
-          this.map = new p3Mapa4(this, this.monchi!);
-          this.loopMusic = "planet1LoopMusic";
-          break
+        this.map = new p3Mapa4(this, this.monchi!);
+        this.loopMusic = "planet1LoopMusic";
+        break
       default:
         this.map = new p1Mapa0(this, this.monchi!);
         this.loopMusic = "planet0LoopMusic";
@@ -416,14 +474,14 @@ class Game extends Phaser.Scene {
     //     this
     //   );
   }
- 
+
 
   update(this: Game) {
     if (this.cameras.main.width < this.cameras.main.height) {
       this.cameras.main.zoom =
         this.cameras.main.width / this.cameras.main.height;
     }
-    if (this.monchi && this.map) {
+    if (this.monchi && this.map && !this.stopMov) {
       this.map.update();
       this.monchi.checkMove(this.cursors);
     }

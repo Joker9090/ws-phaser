@@ -23,8 +23,8 @@ class containerSettings extends Phaser.GameObjects.Container {
     musicFull: Phaser.GameObjects.Image;
     volumeMusic: number = 0.2;
     volumeSound: number = 0.2;
-    originalMusic: number = 0.2;
-    originalSound: number = 0.2;
+    // originalMusic: number = 0.2;
+    // originalSound: number = 0.2;
     darkness: number = 0.2;
     title: Phaser.GameObjects.Text;
     brightnessText: Phaser.GameObjects.Text;
@@ -70,11 +70,7 @@ class containerSettings extends Phaser.GameObjects.Container {
         }
         this.volumeMusic = this.masterManager.volumeMusic
         this.volumeSound = this.masterManager.volumeSound
-        this.originalSound = this.masterManager.volumeSound
-        this.originalMusic = this.masterManager.volumeMusic
         this.darkness = this.masterManager.brightness
-        // this.masterManager.playMusic("planet1LoopMusic", true); 
-        // this.masterManager.playSound("planet1LoopMusic", true); 
 
         const screenBlack = scene.add.rectangle(0, 0, window.innerWidth + 200, window.innerHeight + 200, 0x000000, 0.5).setInteractive();
         this.settingsModal = this.scene.add.container()
@@ -100,6 +96,8 @@ class containerSettings extends Phaser.GameObjects.Container {
         })
         this.quitGame.on('pointerup', () => {
             this.quitGame.setTexture('settingQuitGameHover')
+            this.masterManager.changeVolume(this.volumeMusic, 'music');
+            this.masterManager.changeVolume(this.volumeSound, 'sound');
             if(this.scene.scene.key !== 'MenuScene'){
                 const multiScene = new MultiScene("MenuScene", undefined);
                 const scene = this.scene.scene.add("MultiScene", multiScene, true);
@@ -108,6 +106,7 @@ class containerSettings extends Phaser.GameObjects.Container {
                 destroy()
             }
         })
+
         this.quitGame.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
             this.quitGame.setTexture('settingQuitGameHover')
         })
@@ -131,11 +130,9 @@ class containerSettings extends Phaser.GameObjects.Container {
         this.cross.on('pointerup', () => {
             this.cross.setTexture('settingsCrossHover')
             this.masterManager.playSound('buttonSound', false)
-            this.volumeMusic = this.originalMusic
-            this.volumeSound= this.originalSound
-            this.masterManager.changeVolume(this.originalMusic, 'music');
-            this.masterManager.changeVolume(this.originalSound, 'sound');
-            this.volume = this.scene.sound.volume
+            this.masterManager.changeVolume(this.volumeMusic, 'music');
+            this.masterManager.changeVolume(this.volumeSound, 'sound');
+            this.masterManager.changeBrightness(this.darkness);
             destroy()
 
         })
@@ -155,13 +152,6 @@ class containerSettings extends Phaser.GameObjects.Container {
         this.check.on('pointerup', () => {
             this.check.setTexture('settingsCheckHover')
             this.masterManager.playSound('buttonSound', false)
-            const volume = parseFloat((this.volume ?? '').toString());
-          
-            
-
-            if (!isNaN(volume) && volume !== this.scene.sound.volume) {
-                this.scene.sound.volume = volume < 0.55 ? 0 : Math.min(1, Math.max(0, volume));
-            }
             destroy()
 
         })
@@ -227,21 +217,17 @@ class containerSettings extends Phaser.GameObjects.Container {
         });
 
         scene.add.existing(this)
-        // Crear sliders
         this.sliderMusic = this.createSlider(scene, -30, -170, (value) => {
-            this.volumeMusic = value 
-            this.masterManager.changeVolume(this.volumeMusic, 'music');
+            this.masterManager.changeVolume(value, 'music');
             console.log(value)
         }, this.volumeMusic);
 
         this.sliderSound = this.createSlider(scene, -30, -70, (value) => {
-            this.volumeSound = value 
-            this.masterManager.changeVolume(this.volumeSound, 'sound');
+            this.masterManager.changeVolume(value, 'sound');
         }, this.volumeSound);
 
         this.sliderBrightness = this.createSlider(scene, -30, 30, (value) => {
-            this.darkness = 1 - value
-            this.masterManager.changeBrightness( this.darkness);
+            this.masterManager.changeBrightness(1 - value);
         }, 1 - this.darkness );
 
         const arr = [
@@ -269,6 +255,7 @@ class containerSettings extends Phaser.GameObjects.Container {
         scene.add.existing(this);
 
         const destroy = ()=>{
+            console.log('destroy')
             this.removeAll(true)
             this.destroy()
         }

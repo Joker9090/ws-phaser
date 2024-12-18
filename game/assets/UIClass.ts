@@ -3,6 +3,7 @@ import UI, { UIConfig } from "./UI";
 import Game from "../Game";
 import containerSettings from "../containersMenu/containerSettings";
 import CinematographyModular from "../movies/Cinematography-modular";
+import ContainerCredits from "../containersMenu/containerCredits";
 
 export default class UIClass {
   scene: Game | CinematographyModular;
@@ -100,23 +101,9 @@ export default class UIClass {
       this.settings = new UI(this.scene, settings);
       this.settings.setInteractive()
       const bg = this.scene.add.rectangle(0,0,window.innerWidth,window.innerHeight,0x000000, 0.3).setVisible(false).setOrigin(0);
-      const testContainer = new containerSettings(this.scene, {x:-window.innerWidth/2,y:window.innerHeight/2})
       this.container.add(bg);
       this.settings.on('pointerup',()=>{
-        this.settingsVisible = !this.settingsVisible
-        bg.setVisible(!bg.visible)
-        this.scene.tweens.add({
-          targets:testContainer,
-          x:testContainer.x < 0 ? window.innerWidth/2 : -window.innerWidth/2,
-          duration:600,
-          ease:'bounce'
-        })
-        if (this.settingsVisible) {
-          if (this.scene.graphics) {
-            this.scene.graphics.clear();
-          }
-        } 
-        console.log(this.settingsVisible)
+        const settingsModal = new containerSettings(this.scene, {x:window.innerWidth/2,y:window.innerHeight/2})
       })
     }
   }

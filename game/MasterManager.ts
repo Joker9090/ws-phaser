@@ -50,11 +50,16 @@ export default class MasterManager extends Phaser.Scene {
   }
 
   changeVolume(volume: number, type: "music" | "sound") {
+    console.log("NETRO ACA ARIEL", volume)
+    console.log("NETRO ACA ARIEL MUSIC", this.music)
     switch (type) {
       case "music":
         this.volumeMusic = volume ;
-        console.log(this.volumeMusic)
+      console.log("NETRO ACA ARIEL VOLUME MUSIC", this.volumeMusic)
+
+        console.log(this.volumeMusic, "ARIEL")
         if (this.music) {
+          console.log(volume, "VOLUME MUSIC IN MASTER MANAGER ARIEL")
           this.music.setVolume(volume * this.MAX_VOLUME);
         
         }
@@ -94,6 +99,7 @@ export default class MasterManager extends Phaser.Scene {
 
   create() {
     this.brightnessScreen = this.add.rectangle(window.innerWidth/2, window.innerHeight/2, window.innerWidth + 200, window.innerHeight + 200, 0x000000, 1).setAlpha(0);
+    
   }
 
   update() {

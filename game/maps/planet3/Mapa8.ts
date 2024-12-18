@@ -13,6 +13,7 @@ import { Children } from "react";
 import { loseConfigFromMapType } from "@/game/Types";
 import LargeFloorIsland, { LargeFloorIslandConfig } from "@/game/assets/LargeFloorIsland";
 import colors from "@/game/assets/PlatformColors";
+import ChangeCameraFloorArea from "@/game/assets/ChangeCameraFloor";
 
 class Mapa8 {
   isJumping = false;
@@ -40,6 +41,7 @@ class Mapa8 {
   pisos4?: Phaser.Physics.Arcade.Group;
   // no float + rotate cam
   pisos5?: Phaser.Physics.Arcade.Group;
+  pisos6?: Phaser.Physics.Arcade.Group;
   fireballGroup?: Phaser.Physics.Arcade.Group;
   coin?: Phaser.Physics.Arcade.Group;
   EmptyCoin?: Phaser.Physics.Arcade.Group;
@@ -499,6 +501,7 @@ class Mapa8 {
     this.fireballGroup = this.scene.physics.add.group({ allowGravity: false });
     this.pisos4 = this.scene.physics.add.group({ allowGravity: false });
     this.pisos5 = this.scene.physics.add.group({ allowGravity: false });
+    this.pisos6 = this.scene.physics.add.group({ allowGravity: false });
     this.amountLifes = data.lifes;
     this.coin = this.scene.physics.add.group({ allowGravity: false });
     this.EmptyCoin = this.scene.physics.add.group({ allowGravity: false }).setVisible(false)
@@ -522,13 +525,14 @@ class Mapa8 {
       scale: { width: 0.7, height: 0.7 },
       width: 140,
       height: 20,
-      animation: {
-        xAxis: {
-          xDistance: 650,
-          xVel: 200
-        }
-      }
+      // animation: {
+      //   xAxis: {
+      //     xDistance: 650,
+      //     xVel: 200
+      //   }
+      // }
     };
+    const p2Area = new ChangeCameraFloorArea(this.scene, { x: 3300, y: 800, width: 440, height: 220 }, this.pisos6)
 
     const p2 = new Floor(this.scene, p2Config, this.pisos3).setTint(colors.rotate);
 

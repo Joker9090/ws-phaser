@@ -106,8 +106,6 @@ class Game extends Phaser.Scene {
   }
 
   rotateCam(isNormal: boolean, time: number) {
-    console.log(isNormal, "isNormal")
-    console.log(this.gravityDown, "this.gravityDown")
     if (this.monchi)
       this.monchi.setCameraState(!isNormal ? "NORMAL" : "ROTATED");
     if (isNormal) {
@@ -262,7 +260,7 @@ class Game extends Phaser.Scene {
       s: Phaser.Input.Keyboard.KeyCodes.S,
       d: Phaser.Input.Keyboard.KeyCodes.D,
     });
-      this.cameras.main.zoom = 0.2
+      // this.cameras.main.zoom = 0.2
     // CREATIVE
 
     this.checkPoint = 0;

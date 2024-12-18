@@ -467,6 +467,16 @@ class Mapa8 {
           () => true,
           this.scene
         );
+        if (this.pisos6)
+          this.scene.physics.add.overlap(
+            this.scene.monchi,
+            this.pisos6,
+            () => {
+              if (!this.scene.canRot) this.scene.canRot = true
+            },
+            () => true,
+            this.scene
+          );
       if (this.movingFloor)
         this.scene.physics.add.collider(
           this.scene.monchi,
@@ -520,7 +530,7 @@ class Mapa8 {
     const p1 = new Floor(this.scene, p1Config, this.pisos);
 
     const p2Config: FloorConfig = {
-      pos: { x: 3300, y: 800, },
+      pos: { x: 3000, y: 800, },
       texture: "pSimple1p3",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
@@ -532,7 +542,7 @@ class Mapa8 {
       //   }
       // }
     };
-    const p2Area = new ChangeCameraFloorArea(this.scene, { x: 3300, y: 800, width: 440, height: 220 }, this.pisos6)
+    const p2Area = new ChangeCameraFloorArea(this.scene, { x: 3000, y: 800, width: 440, height: 220 }, this.pisos6)
 
     const p2 = new Floor(this.scene, p2Config, this.pisos3).setTint(colors.rotate);
 

@@ -318,7 +318,7 @@ class Game extends Phaser.Scene {
       s: Phaser.Input.Keyboard.KeyCodes.S,
       d: Phaser.Input.Keyboard.KeyCodes.D,
     });
-    this.cameras.main.zoom = 0.5
+    this.cameras.main.zoom = 1
     // CREATIVE
 
     this.checkPoint = 0;

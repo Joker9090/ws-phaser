@@ -102,6 +102,7 @@ export default class UIClass {
       this.settings.setInteractive()
       const bg = this.scene.add.rectangle(0,0,window.innerWidth,window.innerHeight,0x000000, 0.3).setVisible(false).setOrigin(0);
       this.container.add(bg);
+      this.container.add(this.settings);
       this.settings.on('pointerup',()=>{
         const settingsModal = new containerSettings(this.scene, {x:window.innerWidth/2,y:window.innerHeight/2}, this.settings)
         this.settings?.setVisible(false)

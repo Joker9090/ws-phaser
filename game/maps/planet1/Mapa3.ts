@@ -235,8 +235,8 @@ class Mapa3 {
                     this.scene.monchi,
                     this.pisos3,
                     () => {
-                            this.scene.rotateCam(true, 10);
-                            this.scene.checkPoint = 2
+                        this.scene.rotateCam(true, 10);
+                        this.scene.checkPoint = 2
                     },
                     () => true,
                     this.scene

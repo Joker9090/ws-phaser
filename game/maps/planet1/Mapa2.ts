@@ -229,9 +229,12 @@ class Mapa2 {
           this.pisos4,
           () => {
             if (this.tutorialStep === 0){
-            this.tutorialStep = 1
-            this.textTutorial1?.setVisible(true)
-            this.scene.scene.pause()
+              setTimeout(() => {
+                this.monchi?.setVelocity(0)
+                this.scene.stopMov = true
+                this.tutorialStep = 1
+                this.textTutorial1?.setVisible(true)
+              }, 500)
             }
           },
           () => true,
@@ -514,6 +517,11 @@ class Mapa2 {
   }
   update() {
     if (this.tutorialStep === 2 || this.tutorialStep === 4) {
+      this.textTutorial1?.setVisible(false)
+    }
+
+    if(this.tutorialStep === 1 && this.scene.cursors?.space?.isDown){
+      this.scene.stopMov = false
       this.textTutorial1?.setVisible(false)
     }
     if (this.scene.monchi) this.animateBackground(this.scene.cameras.main.midPoint);

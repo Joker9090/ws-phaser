@@ -130,6 +130,7 @@ class Mapa10 {
   originalPositionsBackgroundsFront: {x: number, y:number}[]
   moveCamera?: boolean = true;
   oldOffset?:number
+  p8?:Floor
 
     UIItemToGrab: string = 'uiItemp3';
     UIItemScale?: number = 0.3;
@@ -427,6 +428,8 @@ class Mapa10 {
                     this.pisos3,
                     () => {
                         this.scene.rotateCam(true, 10);
+                        this.p8?.clearTint()
+
                         //if (this.scene.checkPoint === 1) {
                         //  this.scene.canRot = true
                           //  this.scene.checkPoint = 2
@@ -657,7 +660,7 @@ class Mapa10 {
       }
     };
 
-    const p8 = new Floor(this.scene, p8Config, this.pisos3).setTint(colors.rotate);
+    this.p8  = new Floor(this.scene, p8Config, this.pisos3).setTint(colors.rotate);
   
     
     const p9Config: LargeFloorIslandConfig = {

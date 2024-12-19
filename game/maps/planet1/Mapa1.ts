@@ -207,7 +207,8 @@ class Mapa1 {
               setTimeout(() => {
                 this.tutorialStep = 1
                 this.textTutorial1?.setVisible(true)
-                this.scene.scene.pause()
+                this.monchi?.setVelocity(0);
+                this.scene.stopMov=true
               }, 300)
             }
             if(this.scene.monchi?.body?.touching.up || this.scene.monchi?.body?.touching.down){   
@@ -486,14 +487,19 @@ class Mapa1 {
 
   }
   update() {
-    if (this.tutorialStep === 2 || this.tutorialStep === 4) {
-      this.textTutorial1?.setVisible(false)
-      this.textTutorial2?.setVisible(false)
+    if (this.scene.cursors?.space.isDown && this.scene.stopMov) {
+      this.scene.stopMov = false;
+      if (this.tutorialStep === 1 || this.tutorialStep === 3)
+        this.tutorialStep++;
+      this.textTutorial1?.setVisible(false);
+      if (this.textTutorial2?.visible) this.textTutorial2?.setVisible(false);
     }
-    if (this.scene.monchi?.body?.touching.up && this.tutorialStep === 2) {
-      this.tutorialStep = 3
-      this.textTutorial2?.setVisible(true)
-      this.scene.scene.pause()
+
+    if (this.scene.monchi?.body?.touching.down && this.tutorialStep === 1) {
+      this.tutorialStep = 1;
+      this.textTutorial1?.setVisible(true);
+      // this.scene.scene.pause()
+      this.scene.stopMov = true;
     }
     /* Attach controls to player */
     if (this.scene.monchi) this.animateBackground(this.scene.cameras.main.midPoint);

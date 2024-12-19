@@ -41,6 +41,7 @@ class Game extends Phaser.Scene {
   monchi?: Player;
   graphics?: Phaser.GameObjects.Graphics;
   map?: PossibleMaps;
+
   lifes?: number;
   levelIs: number = 0;
   timeLevel: number = 0;
@@ -188,7 +189,8 @@ class Game extends Phaser.Scene {
   }
 
   win() {
-    if (this.canWin && this.monchi) {
+    if (this.canWin && this.monchi && this.map) {
+      this.cameraNormal = true;
       if (this.map?.nextScene) {
         // if (this.levelIs === 7){
         //   const multiScene = new MultiScene("Game", { level: 4, lifes: 3 });
@@ -206,6 +208,7 @@ class Game extends Phaser.Scene {
         this.scene.start("MultiScene").bringToTop("MultiScene");
       }
     }
+   
     // lógica para pasar a movie dependiendo el nivel
   }
 
@@ -267,6 +270,8 @@ class Game extends Phaser.Scene {
           this.monchi.x = config.positions.x;
           this.monchi.y = config.positions.y;
         }
+        this.cameraNormal = config.cameraDirection === "NORMAL" ? true : false
+
       }
     }
   }

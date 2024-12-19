@@ -161,7 +161,7 @@ class CinematographyModular extends Phaser.Scene {
         break;
       case "cine_2_movie_1":
         this.playingCine = new cine2Movie1(this);
-        // this.nextLevel = 8
+        this.nextLevel = 8
         break;
       case "cine_2_movie_2":
         this.playingCine = new cine2Movie2(this);

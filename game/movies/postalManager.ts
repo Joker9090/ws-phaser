@@ -12,6 +12,7 @@ class postalManager {
     nextCine: boolean = false;
     postal: string;
     code?: TextBox;
+    codeString?:string
     nextLevel: number;
     lifes: number;
     container?: Phaser.GameObjects.Container;
@@ -20,11 +21,13 @@ class postalManager {
     cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
 
 
-    constructor(cine: CinematographyModular, postal: string, nextLevel: number, lifes?: number, loadKey?: string) {
+    constructor(cine: CinematographyModular, postal: string, nextLevel: number, lifes?: number, code?:string, loadKey?: string ) {
         this.cine = cine
         this.postal = postal
         this.nextLevel = nextLevel
         this.lifes = lifes ? lifes : 3
+        this.codeString= code
+        
         const tickerMS = 100;
         this.ticker = new Ticker(tickerMS);
         this.playCine()
@@ -33,7 +36,6 @@ class postalManager {
 
 
     playCine(this: postalManager) {
-
         this.cine.time.addEvent({
             delay: this.ticker.ms,
             callback: this.ticker.runTicker,
@@ -67,7 +69,7 @@ class postalManager {
             0
         );
 
-        this.code = new TextBox(this.cine, "Save this code to keep track of your progress: ASNDJ", 0, 0, 500)
+        this.code = new TextBox(this.cine, "Save this code to keep track of your progress: " + this.codeString, 0, 0, 500)
         const midScreen = {
             x: this.code.width / -2,
             y: this.code.height / -2

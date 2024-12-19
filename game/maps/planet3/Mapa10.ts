@@ -93,14 +93,16 @@ class Mapa10 {
           gravityDown: true
       },
     ];
-    nextScene: string | undefined = undefined;
+    nextScene: string | undefined ='postal2_Planeta3';
+  postalCode: string | undefined = 'adjns'
+
 
     background: Phaser.GameObjects.Image;
 
   background2: Phaser.GameObjects.Image;
   background3: Phaser.GameObjects.Image;
   background4: Phaser.GameObjects.Image;
-  background5: Phaser.GameObjects.Image;
+  // background5: Phaser.GameObjects.Image;
 
   frontground1: Phaser.GameObjects.Image;
   frontground2: Phaser.GameObjects.Image;
@@ -172,12 +174,8 @@ class Mapa10 {
         .image(this.startingPoint.x, this.startingPoint.y + 280, "background3p3")
         .setOrigin(0.5, 0.5)
         .setAlpha(1)
-        .setScale(2);
-      this.background5 = this.scene.add
-        .image(this.startingPoint.x + this.background4.width * 2 , this.startingPoint.y + 280, "background3p3")
-        .setOrigin(0.5, 0.5)
-        .setAlpha(1)
-        .setScale(2);
+        .setScale(4,2);
+ 
   
   
       this.frontground1 = this.scene.add
@@ -336,7 +334,7 @@ class Mapa10 {
       
       this.frontContainer.add([this.frontground1,
         this.background4,
-        this.background5,
+        // this.background5,
         this.frontground1,
         this.frontground2,
         this.frontground3,

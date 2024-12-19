@@ -79,13 +79,14 @@ class Mapa8 {
       gravityDown: false
     },
   ];
-  nextScene: string | undefined = undefined;
+  nextScene: string | undefined = 'postal1_Planeta3';
+  postalCode: string | undefined = 'asdj34'
   background: Phaser.GameObjects.Image;
 
   background2: Phaser.GameObjects.Image;
   background3: Phaser.GameObjects.Image;
   background4: Phaser.GameObjects.Image;
-  background5: Phaser.GameObjects.Image;
+  // background5: Phaser.GameObjects.Image;
   frontground1: Phaser.GameObjects.Image;
   frontground2: Phaser.GameObjects.Image;
   frontground3: Phaser.GameObjects.Image;
@@ -154,13 +155,8 @@ class Mapa8 {
       .image(this.startingPoint.x, this.startingPoint.y + 610, "background3p3")
       .setOrigin(0.5, 0.5)
       .setAlpha(1)
-      .setScale(2);
-    this.background5 = this.scene.add
-      .image(this.startingPoint.x + this.background4.width * 2, this.startingPoint.y + 610, "background3p3")
-      .setOrigin(0.5, 0.5)
-      .setAlpha(1)
-      .setScale(2);
-
+      .setScale(4,2);
+ 
 
     this.frontground1 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y + 100 + 400 + 430, "background2p3")
@@ -281,7 +277,7 @@ class Mapa8 {
       this.hueso5,
       this.hueso6,
       this.background4,
-      this.background5
+      // this.background5
     ];
     this.backgroundsFront = [
 
@@ -317,7 +313,7 @@ class Mapa8 {
 
     this.frontContainer.add([this.frontground1,
     this.background4,
-    this.background5,
+    // this.background5,
     this.frontground1,
     this.frontground2,
     this.frontground3,
@@ -521,14 +517,14 @@ createMap(data: { level: number; lifes: number }) {
   const p1 = new Floor(this.scene, p1Config, this.pisos);
 
   const p2Config: FloorConfig = {
-    pos: { x: 3000, y: 800, },
+    pos: { x: 3290, y: 800, },
     texture: "pSimple1p3",
     scale: { width: 0.7, height: 0.7 },
     width: 140,
     height: 20,
     animation: {
       xAxis: {
-        xDistance: 350,
+        xDistance: 650,
         xVel: 200
       }
     }

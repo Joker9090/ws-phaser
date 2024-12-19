@@ -80,6 +80,7 @@ class Mapa5 {
     },
   ];
   nextScene: string | undefined = undefined;
+  postalCode: string | undefined = undefined
 
   background: Phaser.GameObjects.Image;
   backgroundStars: Phaser.GameObjects.Image;

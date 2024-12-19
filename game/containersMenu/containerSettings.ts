@@ -36,7 +36,7 @@ class containerSettings extends Phaser.GameObjects.Container {
     settingsModal: Phaser.GameObjects.Container;
     // settingsButton: Phaser.GameObjects.Image;
     masterManager: MasterManager;
-
+   
     sliderMusic: {
         slider: Phaser.GameObjects.Container,
         control: Phaser.GameObjects.Image,
@@ -53,7 +53,7 @@ class containerSettings extends Phaser.GameObjects.Container {
         fillBar: Phaser.GameObjects.Rectangle
     };
 
-    constructor(scene: MenuScene | Game | CinematographyModular, config: ContainerMenuConfigType) {
+    constructor(scene: MenuScene | Game | CinematographyModular, config: ContainerMenuConfigType,  settingsButtonUi?:Phaser.GameObjects.Image) {
         super(scene, config.x, config.y)
         const offsetY = 100
         this.scene = scene
@@ -133,6 +133,7 @@ class containerSettings extends Phaser.GameObjects.Container {
             this.masterManager.changeVolume(this.volumeMusic, 'music');
             this.masterManager.changeVolume(this.volumeSound, 'sound');
             this.masterManager.changeBrightness(this.darkness);
+            settingsButtonUi?.setVisible(true)
             destroy()
 
         })
@@ -152,6 +153,7 @@ class containerSettings extends Phaser.GameObjects.Container {
         this.check.on('pointerup', () => {
             this.check.setTexture('settingsCheckHover')
             this.masterManager.playSound('buttonSound', false)
+            settingsButtonUi?.setVisible(true)
             destroy()
 
         })

@@ -84,6 +84,7 @@ class Mapa3 {
         },
     ];
     nextScene: string | undefined = 'cine_movie_1';
+    postalCode: string | undefined = undefined
 
     background: Phaser.GameObjects.Image;
     background2: Phaser.GameObjects.Image;

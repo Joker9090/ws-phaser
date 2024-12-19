@@ -196,7 +196,7 @@ class Game extends Phaser.Scene {
         //   this.scene.start("MultiScene").bringToTop("MultiScene");
         // } else {
 
-        const multiScene = new MultiScene("CinematographyMod", { keyname: this.map.nextScene, lifes: this.lifes ? this.lifes : 3, loadKey: ["Postales"] });
+        const multiScene = new MultiScene("CinematographyMod", { keyname: this.map.nextScene, lifes: this.lifes ? this.lifes : 3, loadKey: ["Postales"], code:this.map.postalCode });
         const scene = this.scene.add("MultiScene", multiScene, true);
         this.scene.start("MultiScene").bringToTop("MultiScene");
       }
@@ -318,7 +318,7 @@ class Game extends Phaser.Scene {
       s: Phaser.Input.Keyboard.KeyCodes.S,
       d: Phaser.Input.Keyboard.KeyCodes.D,
     });
-    // this.cameras.main.zoom = 0.2
+    this.cameras.main.zoom = 0.5
     // CREATIVE
 
     this.checkPoint = 0;

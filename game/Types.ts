@@ -19,7 +19,8 @@ export type GamePlayDataType = {
 export type CinematoDataType = {
   keyname: string
   lifes?: number
-  loadKey?: SceneKeys[]
+  loadKey?: SceneKeys[],
+  code?:string
 }
 
 export type ContainerMenuConfigType = {

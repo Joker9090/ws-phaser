@@ -78,6 +78,8 @@ class Mapa4 {
     },
   ];
   nextScene: string | undefined = "postal1_planeta2";
+  postalCode: string | undefined = 'adjns'
+
   UIItemToGrab: string = "comida";
   UIItemScale?: number ;
 

@@ -592,7 +592,7 @@ const p6Config: LargeFloorIslandConfig = {
   width: {
     textureA: 110,
     textureB: 140,
-    textureC: 115,
+    textureC: 145,
   },
   scale: { width: 0.7, height: -0.7 },
   height: 90,
@@ -639,6 +639,7 @@ const p10Config: FloorConfig = {
   pos: { x: 3100, y: -100 + 580 },
   scale: { width: 1.5, height: 0.7 },
   height: 20,
+  width:100,
   rotated: false,
   inverted:true,
 };
@@ -666,7 +667,7 @@ const p13Config: LargeFloorIslandConfig = {
   width: {
     textureA: 110,
     textureB: 140,
-    textureC: 115,
+    textureC: 145,
   },
   scale: { width: 0.7, height: 0.7 },
   height: 20,

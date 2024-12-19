@@ -631,7 +631,7 @@ class Mapa10 {
       width: {
         textureA: 110,
         textureB: 120,
-        textureC: 115,
+        textureC: 145,
       },
       scale: { width: 0.7, height: -0.7 },
       height: 80,
@@ -647,6 +647,7 @@ class Mapa10 {
       inverted:true,
       scale: { width: 1.2, height: 0.7 },
       height: 20,
+      width: 100,
       rotated: false,
       animation:{
         yAxis:{
@@ -668,7 +669,7 @@ class Mapa10 {
       width: {
         textureA: 110,
         textureB: 120,
-        textureC: 115,
+        textureC: 145,
       },
       scale: { width: 0.7, height: 0.7 },
       height: 80,
@@ -709,7 +710,7 @@ class Mapa10 {
        width: {
         textureA: 110,
         textureB: 120,
-        textureC: 115,
+        textureC: 145,
       },
       scale: { width: 0.7, height: 0.7 },
       height: 80,

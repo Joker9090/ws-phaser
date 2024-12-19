@@ -667,15 +667,17 @@ createMap(data: { level: number; lifes: number }) {
     width: {
       textureA: 110,
       textureB: 140,
-      textureC: 122,
+      textureC: 152,
     },
     scale: { width: 0.7, height: 0.7 },
     height: 39,
     large: 10,
     rotated: true,
   };
+  console.log(p14Config.width.textureB * p14Config.large - 10) 
 
   const p14 = new LargeFloorIsland(this.scene, p14Config, this.pisos);
+
   const portalConfig: FloorConfig = {
     texture: "cuevap3",
     pos: { x: 6500, y: 225 },

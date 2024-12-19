@@ -36,23 +36,23 @@ class containerCode extends Phaser.GameObjects.Container {
         }).setOrigin(0, 0.5);
         
 
-        // this.input.keyboard.on("keydown", (e:any) => {
-        //     if (this.displayText && writable) {
-        //       const TextCode = this.displayText.text;
-        //       if (e.keyCode === 8) {
-        //         const newCode = TextCode.substring(0, TextCode.length - 1);
-        //         this.displayText?.setText(newCode);
-        //       } else if (e.keyCode <= 90 && e.keyCode >= 65) {
-        //         const newCode = TextCode + e.key;
-        //         this.displayText?.setText(newCode);
-        //       } else if (e.keyCode === 13) {
-        //         console.log('holi')
-        //       }
-        //     }
-        // });
-        // this.input.on('pointerDown',()=>{
-        //     writable = true
-        // })
+        this.scene.input.keyboard?.on("keydown", (e: any) => {
+            if (this.displayText && writable) {
+              const TextCode = this.displayText.text;
+              if (e.keyCode === 8) {
+                const newCode = TextCode.substring(0, TextCode.length - 1);
+                this.displayText?.setText(newCode);
+              } else if (e.keyCode <= 90 && e.keyCode >= 65) {
+                const newCode = TextCode + e.key;
+                this.displayText?.setText(newCode);
+              } else if (e.keyCode === 13) {
+                console.log('holi')
+              }
+            }
+        });
+        this.input.on('pointerdown', () => {
+            writable = true
+        })
         // const background = this.scene.add.image(0,0,"NOMBRE DEL ASSET").setInteractive()
         const sky = this.scene.add.image(0,innerHeight/4 -200,'codeSky').setOrigin(0.5, 0.5)
         const stars = this.scene.add.image(0,innerHeight/4 -350,'codeStars').setOrigin(0.5, 0.5)

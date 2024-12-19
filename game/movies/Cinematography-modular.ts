@@ -233,13 +233,13 @@ class CinematographyModular extends Phaser.Scene {
         break;
       default:
     }
-      this.UICamera = this.cameras.add(
-          0,
-          0,
-          window.innerWidth,
-          window.innerHeight
-        );
-      this.UIClass = new UIClass(this, this.nextLevel ? this.nextLevel : 0, lifes ? lifes : 3, 0);
+      // this.UICamera = this.cameras.add(
+      //     0,
+      //     0,
+      //     window.innerWidth,
+      //     window.innerHeight
+      //   );
+      // this.UIClass = new UIClass(this, this.nextLevel ? this.nextLevel : 0, lifes ? lifes : 3, 0);
   }
 
   update(time: number, delta: number) {

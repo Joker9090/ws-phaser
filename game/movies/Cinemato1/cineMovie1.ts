@@ -64,8 +64,8 @@ class cineMovie1 {
         const darkMask = this.cine.add.rectangle(
             0,
             0,
-            window.innerWidth,
-            window.innerHeight,
+            window.innerWidth*2,
+            window.innerHeight*2,
             0,
             0.3
         ).setOrigin(0.5);
@@ -183,7 +183,7 @@ class cineMovie1 {
         };
 
         this.ticker.addJob(
-            new TickerJob(1, 10, part1, false, 5000, true, (job: TickerJob) => {
+            new TickerJob(1, 10, part1, false, undefined, true, (job: TickerJob) => {
                 // soundChangeScene.stop()
                 this.nextCine = true;
             })

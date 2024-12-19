@@ -146,7 +146,8 @@ class cineIntro7 {
       .setSize(1920, 927);
 
     const darkMask = this.cine.add
-      .rectangle(0, 0, window.innerWidth, window.innerHeight, 0, 1)
+      .rectangle(0, 0,      window.innerWidth*2,
+        window.innerHeight*2, 0, 1)
       .setAlpha(0);
 
     container.add([

@@ -79,8 +79,8 @@ class cineMovie9 {
     const darkMask = this.cine.add.rectangle(
       0,
       0,
-      window.innerWidth * 1.1,
-      window.innerHeight * 1.1,
+      window.innerWidth*2,
+      window.innerHeight*2,
       0,
       0.2
     );

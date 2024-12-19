@@ -52,8 +52,8 @@ class cine3Movie5 {
       const darkMask = this.cine.add.rectangle(
         0,
         0,
-        window.innerWidth * 1.5,
-        window.innerHeight * 1.5,
+        window.innerWidth*2,
+        window.innerHeight*2,
         0,
         1
       ).setAlpha(0);

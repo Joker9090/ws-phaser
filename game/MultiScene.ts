@@ -29,12 +29,12 @@ export default class MultiScene extends Phaser.Scene {
 
 
   preload() {
-    this.assetLoaderClass = new AssetsLoader(this, ["BaseLoad"]);
+    this.assetLoaderClass = new AssetsLoader(this, ["BaseLoad","Cinemato0", "Cinemato1", "Cinemato2", "Cinemato3","GamePlay1", "GamePlay2", "GamePlay3"]);
     this.assetLoaderClass.runPreload(() => {
       if (this.scenekey) {
         this.makeTransition(this.scenekey, this.sceneData ?? undefined);
       } else {
-        // this.makeTransition("CinematographyMod", { keyname: "cine_intro_1", loadKey: ["Cinemato0", "Cinemato1", "Cinemato2", "Cinemato3"] });
+        // this.makeTransition("CinematographyMod", { keyname: "cine_movie_1", loadKey: ["Cinemato0", "Cinemato1", "Cinemato2", "Cinemato3"] });
          this.makeTransition("Game", { level: 0 , lifes: 3, loadKey: ["GamePlay1", "GamePlay2", "GamePlay3"] });
       // this.makeTransition("MenuScene", undefined);
       }

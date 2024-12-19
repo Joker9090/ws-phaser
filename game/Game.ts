@@ -194,9 +194,8 @@ class Game extends Phaser.Scene {
         //   const multiScene = new MultiScene("Game", { level: 4, lifes: 3 });
         //   const scene = this.scene.add("MultiScene", multiScene, true);
         //   this.scene.start("MultiScene").bringToTop("MultiScene");
-        // } else {
-
-        const multiScene = new MultiScene("CinematographyMod", { keyname: this.map.nextScene, lifes: this.lifes ? this.lifes : 3, loadKey: ["Postales"], code:this.map.postalCode });
+        // } else {;
+        const multiScene = new MultiScene("CinematographyMod", { keyname: this.map.nextScene, lifes: this.lifes ? this.lifes : 3, loadKey: ["Postales", "Cinemato1", "Cinemato2"], code:this.map.postalCode });
         const scene = this.scene.add("MultiScene", multiScene, true);
         this.scene.start("MultiScene").bringToTop("MultiScene");
       }
@@ -324,6 +323,8 @@ class Game extends Phaser.Scene {
     this.checkPoint = 0;
     this.levelIs = data.level;
     this.lifes = data.lifes;
+    this.cursors = this.input.keyboard?.createCursorKeys();
+
     /* CHOSE LEVEL, LIFES AND AUDIO */
     switch (data.level) {
       case 999:
@@ -411,7 +412,6 @@ class Game extends Phaser.Scene {
       Phaser.Input.Keyboard.KeyCodes.ESC
     );
 
-    this.cursors = this.input.keyboard?.createCursorKeys();
 
     const { x, y } = this.map.startingPoint;
     this.monchi = new Player(this, x, y, "character", 2);
@@ -487,7 +487,9 @@ class Game extends Phaser.Scene {
     }
     // CREATIVE MODE
     this.handleCameraMovement();
-
+    if (this.map?.update) {
+      this.map.update();
+    }
   }
 }
 

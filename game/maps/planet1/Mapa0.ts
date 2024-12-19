@@ -236,7 +236,7 @@ class Mapa0 {
       600,
       700,
       300
-    ).setVisible(true)
+    ).setVisible(false)
 
     this.textTutorial2 = new TextBox(
       this.scene, 
@@ -244,7 +244,7 @@ class Mapa0 {
       1700,
       400,
       400
-    ).setVisible(true)
+    ).setVisible(false)
     
     this.frontContainer.add([
       this.textTutorial1,
@@ -394,11 +394,28 @@ class Mapa0 {
 
     this.scene.UICamera?.ignore(this.mapContainer)
     this.scene.UICamera?.ignore(this.frontContainer)
+    this.scene.cursors?.space.on("keydown", (event: KeyboardEvent) => {
+      if (this.tutorialStep === 1) {
+        this.tutorialStep = 2
+        this.textTutorial1?.setVisible(false)
+        this.scene.stopMov = false
+        
+      }
+      if (this.tutorialStep === 3) {
+        this.tutorialStep = 4
+        this.textTutorial2?.setVisible(false)
+        this.scene.stopMov = false
+      }
+    });
   }
 
 
 
   update() {
+    if(this.scene.cursors?.space.isDown){
+      this.scene.stopMov = false
+      console.log('HOLA MUNDO')
+    }
     if (this.tutorialStep === 2 || this.tutorialStep === 4) {
       this.textTutorial1?.setVisible(false)
       this.textTutorial2?.setVisible(false)
@@ -406,7 +423,8 @@ class Mapa0 {
     if(this.scene.monchi?.body?.touching.down && this.tutorialStep === 0){
       this.tutorialStep = 1
       this.textTutorial1?.setVisible(true)
-      this.scene.scene.pause()
+      // this.scene.scene.pause()
+      this.scene.stopMov = true
     }
 
     /* Attach background anim */

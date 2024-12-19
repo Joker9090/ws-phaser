@@ -297,7 +297,7 @@ class Mapa10 {
         this.hueso5,
         this.hueso6,
         this.background4,
-        this.background5
+        // this.background5
       ];
       this.backgroundsFront = [
         

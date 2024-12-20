@@ -225,7 +225,7 @@ class Mapa1 {
         this.scene.physics.add.overlap(
           this.scene.monchi,
           this.coin,
-          () => {this.scene.touchItem("coin"), this.textTutorial2?.setVisible(true)},
+          () => {this.scene.touchItem("coin"), this.textTutorial2?.setVisible(true), this.scene.stopMov = true},
           () => true,
           this.scene
         );
@@ -489,7 +489,7 @@ class Mapa1 {
   update() {
     if (this.scene.cursors?.space.isDown && this.scene.stopMov) {
       this.scene.stopMov = false;
-      if (this.tutorialStep === 1 || this.tutorialStep === 3)
+      if (this.tutorialStep === 1 || this.tutorialStep === 2)
         this.tutorialStep++;
       this.textTutorial1?.setVisible(false);
       if (this.textTutorial2?.visible) this.textTutorial2?.setVisible(false);

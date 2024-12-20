@@ -21,12 +21,7 @@ class cineIntro3 {
     this.playCine()
   }
 
-  stopDialogue(){
-    console.log('entro')
-     this.dialogue?.stop();
-      this.dialogue?.destroyContainer();
-    this.dialogue = undefined;
-  }
+  
 
   playCine(this: cineIntro3) {
     // START ticker

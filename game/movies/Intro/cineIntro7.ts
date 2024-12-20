@@ -31,10 +31,10 @@ class cineIntro7 {
     this.playCine();
   }
   stopDialogue(){
-    console.log('entro')
-     this.dialogue?.stop();
+      console.log('entro')
+      this.dialogue?.stop();
       this.dialogue?.destroyContainer();
-    this.dialogue = undefined;
+      this.dialogue = undefined;
   }
 
   playCine(this: cineIntro7) {

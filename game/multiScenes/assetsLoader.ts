@@ -360,8 +360,8 @@ const loadAssets = {
       ["image", "postal2Planeta1", "/postals/planet1/postal2Planet1.png"],
       ["image", "postal1Planeta2", "/postals/planeta2/Postal1.png"],
       ["image", "postal2Planeta2", "/postals/planeta2/Postal2.png"],
-      ["image", "postal1Planeta3", "/postals/planeta3/Postal1Planet3.png"],
-      ["image", "postal2Planeta3", "/postals/planeta3/Postal2Planet3.png"],
+      ["image", "postal1Planeta3", "/postals/planeta3/postal1Planet3.png"],
+      ["image", "postal2Planeta3", "/postals/planeta3/postal2Planet3.png"],
     ],
   },
   Cinemato0: {

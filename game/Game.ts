@@ -200,12 +200,19 @@ class Game extends Phaser.Scene {
         const multiScene = new MultiScene("CinematographyMod", { keyname: this.map.nextScene, lifes: this.lifes ? this.lifes : 3, loadKey: ["Postales", "Cinemato1", "Cinemato2"], code:this.map.postalCode });
         const scene = this.scene.add("MultiScene", multiScene, true);
         this.scene.start("MultiScene").bringToTop("MultiScene");
+        this.masterManagerScene?.stopMusic();
       }
       // }
-      else {
+      else if(this.levelIs !== 11){ 
         const multiScene = new MultiScene("Game", { level: this.levelIs + 1, lifes: this.lifes ? this.lifes : 3 });
         const scene = this.scene.add("MultiScene", multiScene, true);
         this.scene.start("MultiScene").bringToTop("MultiScene");
+      } else {
+        const multiScene = new MultiScene("MenuScene", undefined);
+        const scene = this.scene.add("MultiScene", multiScene, true);
+        this.scene.start("MultiScene").bringToTop("MultiScene");
+        this.masterManagerScene?.stopMusic();
+
       }
     }
    
@@ -390,18 +397,19 @@ class Game extends Phaser.Scene {
         break;
     }
 
+
     /* Audio */
-    // this.masterManagerScene = this.game.scene.getScene(
-    //   "MasterManager"
-    // ) as MasterManager;
-    // if (!this.masterManagerScene.scene.isActive())
-    //   this.scene.launch("MasterManager").sendToBack();
-    // if (this.loopMusic)
-    //   this.masterManagerScene.playMusic(this.loopMusic, true);
-    // else {
-    //   if (this.loopMusic)
-    //     this.masterManagerScene.playMusic(this.loopMusic, true);
-    // }
+    this.masterManagerScene = this.game.scene.getScene(
+      "MasterManager"
+    ) as MasterManager;
+    if (!this.masterManagerScene.scene.isActive())
+      this.scene.launch("MasterManager").sendToBack();
+    if (this.loopMusic)
+      this.masterManagerScene.playMusic(this.loopMusic, true);
+    else {
+      if (this.loopMusic)
+        this.masterManagerScene.playMusic(this.loopMusic, true);
+    }
     /* UI SCENE  */
 
     this.UICamera = this.cameras.add(

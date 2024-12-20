@@ -250,7 +250,7 @@ class Mapa0 {
           () => {
             if (this.tutorialStep === 2) {
               this.scene.stopMov = true;
-              this.monchi?.setVelocity(0, 0);
+              this.monchi?.setVelocity(0)
               this.tutorialStep = 3;
               this.textTutorial2?.setVisible(true);
             }

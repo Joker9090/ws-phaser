@@ -497,6 +497,10 @@ class Game extends Phaser.Scene {
     if (this.monchi && this.map && !this.stopMov) {
       this.map.update();
       this.monchi.checkMove(this.cursors);
+    }else{
+      this.monchi?.setVelocity(0,17);
+      this.monchi?.setAcceleration(0)
+      this.monchi?.setGravityY(0); 
     }
     // CREATIVE MODE
     this.handleCameraMovement();

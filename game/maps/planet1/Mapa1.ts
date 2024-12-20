@@ -207,7 +207,7 @@ class Mapa1 {
               setTimeout(() => {
                 this.tutorialStep = 1
                 this.textTutorial1?.setVisible(true)
-                this.monchi?.setVelocity(0);
+                // this.monchi?.setVelocity(0);
                 this.scene.stopMov=true
               }, 300)
             }
@@ -225,7 +225,7 @@ class Mapa1 {
         this.scene.physics.add.overlap(
           this.scene.monchi,
           this.coin,
-          () => this.scene.touchItem("coin"),
+          () => {this.scene.touchItem("coin"), this.textTutorial2?.setVisible(true)},
           () => true,
           this.scene
         );

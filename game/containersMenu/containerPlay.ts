@@ -9,7 +9,7 @@ class containerPlay extends Phaser.GameObjects.Container {
     height: number = window.innerHeight;
     gameTitle: Phaser.GameObjects.Image;
     newGameButton: Phaser.GameObjects.Image;
-    enterCodeButton: Phaser.GameObjects.Image;
+    // enterCodeButton: Phaser.GameObjects.Image;
     backButton: Phaser.GameObjects.Image;
 
     constructor(scene: Phaser.Scene, config: ContainerMenuConfigType) {

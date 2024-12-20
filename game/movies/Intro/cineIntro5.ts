@@ -29,7 +29,12 @@ class cineIntro5 {
     this.ticker = new Ticker(tickerMS);
     this.playCine()
   }
-
+  stopDialogue(){
+    console.log('entro')
+     this.dialogue?.stop();
+      this.dialogue?.destroyContainer();
+    this.dialogue = undefined;
+  }
   playCine(this: cineIntro5) {
     // START ticker
     this.cine.time.addEvent({

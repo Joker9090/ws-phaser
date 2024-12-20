@@ -25,6 +25,12 @@ class cineIntro2C {
     const tickerMS = 100;
     this.ticker = new Ticker(tickerMS);
     this.playCine();
+  }  
+  stopDialogue(){
+    console.log('entro')
+     this.dialogue?.stop();
+      this.dialogue?.destroyContainer();
+    this.dialogue = undefined;
   }
 
   changeTextureGroup(items: Phaser.GameObjects.Image[]) {

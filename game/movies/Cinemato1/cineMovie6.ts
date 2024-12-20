@@ -34,6 +34,13 @@ class cineMovie6 {
 
   }
 
+  stopDialogue(){
+    console.log('entro')
+     this.dialogue?.stop();
+      this.dialogue?.destroyContainer();
+    this.dialogue = undefined;
+  }
+
   playCine(this: cineMovie6) {
     this.cine.time.addEvent({
       delay: this.ticker.ms,

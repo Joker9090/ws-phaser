@@ -29,11 +29,13 @@ class cineIntro1 {
     this.cine.sound.add("introSoundEffect2").setVolume(0.25).play()
     this.playCine();
   }
-
+  stopDialogue(){
+    console.log('entro')
+     this.dialogue?.stop();
+      this.dialogue?.destroyContainer();
+    this.dialogue = undefined;
+  }
   playCine(this: cineIntro1) {
-
-
-
     this.cine.time.addEvent({
       delay: this.ticker.ms,
       callback: this.ticker.runTicker,

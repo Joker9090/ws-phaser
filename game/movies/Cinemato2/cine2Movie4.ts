@@ -51,6 +51,13 @@ class cine2Movie4 {
         // }, 500)
     }
 
+     stopDialogue(){
+    console.log('entro')
+     this.dialogue?.stop();
+      this.dialogue?.destroyContainer();
+    this.dialogue = undefined;
+  }
+
     playCine(this: cine2Movie4) {
         // START ticker
         this.cine.time.addEvent({

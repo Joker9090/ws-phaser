@@ -23,6 +23,13 @@ class cineMovie8 {
         
     }
 
+    stopDialogue(){
+      console.log('entro')
+       this.dialogue?.stop();
+        this.dialogue?.destroyContainer();
+      this.dialogue = undefined;
+    }
+
     playCine(this: cineMovie8) {
         // START ticker
         this.cine.time.addEvent({

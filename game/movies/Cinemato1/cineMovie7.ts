@@ -31,7 +31,12 @@ class cineMovie7 {
       this.cine.sound.add("C2_3").setVolume(0.25).play()
   }, 2500)
   }
-
+  stopDialogue(){
+    console.log('entro')
+     this.dialogue?.stop();
+      this.dialogue?.destroyContainer();
+    this.dialogue = undefined;
+  }
   playCine(this: cineMovie7) {
     this.cine.time.addEvent({
       delay: this.ticker.ms,

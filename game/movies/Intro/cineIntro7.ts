@@ -443,6 +443,9 @@ class cineIntro7 {
         alpha: 1,
         duration: 1500,
         delay: 7500,
+        onComplete:()=>{
+          this.nextCine = true;
+        },
         ease: "ease",
       });
       const dialogueListener = (newState: string, nextText?: string) => {
@@ -470,7 +473,6 @@ class cineIntro7 {
       const multiScene = new MultiScene("Game", { level: 0, lifes: 3, loadKey: ['GamePlay1'] });
       const scene = this.cine.scene.add("MultiScene", multiScene, true);
       this.cine.scene.start("MultiScene").bringToTop("MultiScene");
-      
     }
   }
 }

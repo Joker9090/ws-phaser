@@ -234,9 +234,11 @@ class Mapa0 {
           this.scene.monchi,
           this.coin,
           () => {
+            if(this.tutorialStep === 2){
+              this.tutorialStep = 3;
+              this.textTutorial2?.setVisible(true);
+            }
             this.scene.touchItem("coin");
-            this.tutorialStep = 3;
-            this.textTutorial2?.setVisible(true);
           },
           () => true,
           this.scene
@@ -248,7 +250,7 @@ class Mapa0 {
           () => {
             if (this.tutorialStep === 2) {
               this.scene.stopMov = true;
-              this.monchi?.setVelocityX(0);
+              this.monchi?.setVelocity(0, 0);
               this.tutorialStep = 3;
               this.textTutorial2?.setVisible(true);
             }

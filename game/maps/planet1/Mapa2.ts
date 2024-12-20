@@ -516,9 +516,9 @@ class Mapa2 {
 
   }
   update() {
-    if (this.tutorialStep === 2 || this.tutorialStep === 4) {
-      this.textTutorial1?.setVisible(false)
-    }
+    // if (this.tutorialStep === 2 || this.tutorialStep === 4) {
+    //   this.textTutorial1?.setVisible(false)
+    // }
 
     if(this.tutorialStep === 1 && this.scene.cursors?.space?.isDown){
       this.scene.stopMov = false

@@ -52,6 +52,9 @@ class containerCode extends Phaser.GameObjects.Container {
         });
         this.input.on('pointerdown', () => {
             writable = true
+            if(config.changeContainer){
+              config.changeContainer()
+            }
         })
         // const background = this.scene.add.image(0,0,"NOMBRE DEL ASSET").setInteractive()
         const sky = this.scene.add.image(0,innerHeight/4 -200,'codeSky').setOrigin(0.5, 0.5)

@@ -79,7 +79,12 @@ class MenuScene extends Phaser.Scene {
         this.containerCode = new containerCode(this, {
             x: this.width*1.5,
             y: this.height / 2,
-            panToInitial: this.centralPointInitial
+            panToInitial: this.centralPointInitial,
+            changeContainer: () => {
+                if (this.containerCode && this.containerPlay) {
+                  this.changeContainer(this.containerCode, this.containerPlay)
+                } 
+            }
         }).setVisible(false)
         this.containerCode.setScale(scaleBy())
 
@@ -98,9 +103,8 @@ class MenuScene extends Phaser.Scene {
            ease: 'Power2', 
            onComplete: () => {
                console.log('Animación completada, el círculo cubre toda la pantalla');
-                this.background?.setVisible(false)
-               from.setVisible(false)
-               to.setVisible(true)
+                from.setVisible(false)
+                to.setVisible(true)
                from.scene.tweens.add({
                 targets:circle,
                 scale: 0,

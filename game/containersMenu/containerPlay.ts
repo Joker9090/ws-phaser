@@ -9,7 +9,7 @@ class containerPlay extends Phaser.GameObjects.Container {
     height: number = window.innerHeight;
     gameTitle: Phaser.GameObjects.Image;
     newGameButton: Phaser.GameObjects.Image;
-    // enterCodeButton: Phaser.GameObjects.Image;
+    enterCodeButton: Phaser.GameObjects.Image;
     backButton: Phaser.GameObjects.Image;
 
     constructor(scene: Phaser.Scene, config: ContainerMenuConfigType) {
@@ -38,28 +38,25 @@ class containerPlay extends Phaser.GameObjects.Container {
             this.newGameButton.setTexture('newGameButton')
         })
 
-        // this.enterCodeButton = scene.add.image(0, 0, "enterCodeButton")
-        // this.enterCodeButton.setPosition(this.width/2, this.newGameButton.y + this.enterCodeButton.height + this.newGameButton.height/2)
-        // this.enterCodeButton.setInteractive().on('pointerdown', () => {
-        //     console.log("ENTER CODE")
-        //     this.enterCodeButton.setTexture('enterCodeButtonPressed')
-        
-        // })
-        // this.enterCodeButton.on('pointerup',()=>{
-        //     this.enterCodeButton.setTexture('enterCodeButtonHover')
-        //     // if(config.panToCode){
-        //     //     (this.scene as MenuScene).containerCode?.setVisible(true)
-        //     // }
-        //     if (config.changeContainer) {
-        //         config.changeContainer();
-        //     }
-        // })
-        // this.enterCodeButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER,()=>{
-        //     this.enterCodeButton.setTexture('enterCodeButtonHover')
-        // })
-        // this.enterCodeButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT,()=>{
-        //     this.enterCodeButton.setTexture('enterCodeButton')
-        // })
+        this.enterCodeButton = scene.add.image(0, 0, "enterCodeButton")
+        this.enterCodeButton.setPosition(this.width/2, this.newGameButton.y + this.enterCodeButton.height + this.newGameButton.height/2)
+        this.enterCodeButton.setInteractive().on('pointerdown', () => {
+            console.log("ENTER CODE")
+            this.enterCodeButton.setTexture('enterCodeButtonPressed')
+         
+        })
+        this.enterCodeButton.on('pointerup',()=>{
+            this.enterCodeButton.setTexture('enterCodeButtonHover')
+            if (config.changeContainer) {
+                config.changeContainer();
+            }
+        })
+        this.enterCodeButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER,()=>{
+            this.enterCodeButton.setTexture('enterCodeButtonHover')
+        })
+        this.enterCodeButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT,()=>{
+            this.enterCodeButton.setTexture('enterCodeButton')
+        })
         
         this.gameTitle = scene.add.image(0, 0, "gameTitle")
         this.gameTitle.setPosition(this.width/2, (this.newGameButton.y - this.newGameButton.height/2)/2)
@@ -85,7 +82,7 @@ class containerPlay extends Phaser.GameObjects.Container {
 
 
         const arr = [
-            // this.enterCodeButton, 
+            this.enterCodeButton, 
             this.gameTitle, 
             this.newGameButton, 
             this.backButton, 

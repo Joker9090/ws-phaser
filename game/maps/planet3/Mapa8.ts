@@ -390,7 +390,6 @@ class Mapa8 {
           if (this.scene.monchi?.body?.touching.up || this.scene.monchi?.body?.touching.down) {
             this.scene.changeGravity(true, 1000, 3);
           }
-          console.log("ENTRO ACA")
           //this.background2.setPosition(this.startingPoint.x, this.startingPoint.y + 320)
           //this.background4.setPosition(this.startingPoint.x, this.startingPoint.y + 320)
         },
@@ -674,8 +673,6 @@ createMap(data: { level: number; lifes: number }) {
     large: 10,
     rotated: true,
   };
-  console.log(p14Config.width.textureB * p14Config.large - 10) 
-
   const p14 = new LargeFloorIsland(this.scene, p14Config, this.pisos);
 
   const portalConfig: FloorConfig = {
@@ -860,9 +857,6 @@ createMap(data: { level: number; lifes: number }) {
     ease: 'Sine.easeInOut',
     targets: this.auraImage,
   })
-
-
-  console.log(bubblesGroup, "bubblesGroup")
 
   const mapObjects =
     bubblesGroup.getChildren().concat(

@@ -937,7 +937,6 @@ b2.start();
     }
     update() {
         if (this.scene.monchi) this.animateBackground();
-        console.log(this.scene.checkPoint, "CHECKPOINT")
     }
 }
 export default Mapa10;

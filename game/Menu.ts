@@ -28,7 +28,6 @@ class MenuScene extends Phaser.Scene {
     masterManagerScene?: MasterManager;
     constructor() {
         super({ key: "MenuScene" });
-        console.log(this, "THIS") 
     }
 
 
@@ -91,7 +90,6 @@ class MenuScene extends Phaser.Scene {
         this.events.removeAllListeners('shutdown')
     }
     changeContainer(from:Phaser.GameObjects.Container, to:Phaser.GameObjects.Container){
-        console.log('funcion')
         const circle = from.scene.add.circle(window.innerWidth, window.innerHeight, 1, 0x000, 1)
         circle.setInteractive(  )
         const diagonal = Math.sqrt(window.innerWidth ** 2 + window.innerHeight ** 2);
@@ -102,7 +100,6 @@ class MenuScene extends Phaser.Scene {
            duration: 1000, 
            ease: 'Power2', 
            onComplete: () => {
-               console.log('Animación completada, el círculo cubre toda la pantalla');
                 from.setVisible(false)
                 to.setVisible(true)
                from.scene.tweens.add({

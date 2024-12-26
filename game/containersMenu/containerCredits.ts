@@ -49,7 +49,6 @@ class ContainerCredits extends Phaser.GameObjects.Container {
         const creditsPosY = -this.credits_nano.height - 40 - 40
         
         this.creditsTitle.setPosition(0, creditsPosY).setOrigin(0.5, 1)
-        console.log(this.backButton)
         this.backButton.setPosition(this.width/2 - this.backButton.width, this.height/2 - this.backButton.height)
         this.backButton.setInteractive().on('pointerdown', () => {
             this.backButton.setTexture('backButtonPressed')

@@ -51,8 +51,7 @@ class cine2Movie4 {
         // }, 500)
     }
 
-     stopDialogue(){
-    console.log('entro')
+    stopDialogue(){
      this.dialogue?.stop();
       this.dialogue?.destroyContainer();
     this.dialogue = undefined;

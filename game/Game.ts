@@ -95,15 +95,15 @@ class Game extends Phaser.Scene {
     // const originPos = { x: this.cameras.main.midPoint.x, y: this.cameras.main.midPoint.y }
     // this.cameras.main.pan(x, y, duration / 2, "Linear", false, (cam, progress) => {
     // if (progress === 1) {
-    //   console.log("Entro aca 1 ARI")
+    // 
     //   this.time.delayedCall(hold, () => {
-    //     console.log("Entro aca 2 ARI")
+    //   
 
     //     this.cameras.main.pan(originPos.x, originPos.y, duration / 2, "Linear", false, (cam, progress) => {
-    //       console.log("Entro aca 3 ARI")
+    //
 
     //       if (progress === 1) {
-    //         console.log("Entro aca 4 ARI")
+    
     //         this.cameras.main.startFollow(
     //           //@ts-ignore
     //           this.monchi,
@@ -134,7 +134,6 @@ class Game extends Phaser.Scene {
   }
 
   moveCameraOffset(position: "up" | "down", instant: boolean = false) {
-    console.log('hola from offset')
     setTimeout(() => {
       let newPosition = this.cameraHeight / 2 - 200;
       if (position === "up") newPosition = -newPosition;
@@ -173,10 +172,10 @@ class Game extends Phaser.Scene {
         this.time.delayedCall(time * i, () =>
           ((rotate) => {
             if (isNormal) {
-              console.log("ENTRA ACA 1")
+              
               this.cameras.main.setRotation(rotate);
             } else {
-              console.log("ENTRA ACA 2")
+              
               this.cameras.main.setRotation(Math.PI - rotate);
             }
           })((Math.PI * i) / 24)
@@ -244,8 +243,6 @@ class Game extends Phaser.Scene {
       this.map.rotate = true
       const config = this.map.loseConfig[this.checkPoint];
 
-      console.log(config, "config")
-      console.log(this.checkPoint, "checkpoint")
       if (this.lifes) {
         this.lifes -= 1;
         if (this.lifes === 0) {
@@ -428,7 +425,6 @@ class Game extends Phaser.Scene {
 
     const { x, y } = this.map.startingPoint;
     this.monchi = new Player(this, x, y, "character", 2);
-    console.log(this.monchi, "MONCHI")
     this.canWin = false;
     /* CREATE MAP */
     this.map.createMap(data);

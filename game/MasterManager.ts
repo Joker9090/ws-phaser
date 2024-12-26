@@ -50,18 +50,12 @@ export default class MasterManager extends Phaser.Scene {
   }
 
   changeVolume(volume: number, type: "music" | "sound") {
-    console.log("NETRO ACA ARIEL", volume)
-    console.log("NETRO ACA ARIEL MUSIC", this.music)
+
     switch (type) {
       case "music":
         this.volumeMusic = volume ;
-      console.log("NETRO ACA ARIEL VOLUME MUSIC", this.volumeMusic)
-
-        console.log(this.volumeMusic, "ARIEL")
         if (this.music) {
-          console.log(volume, "VOLUME MUSIC IN MASTER MANAGER ARIEL")
           this.music.setVolume(volume * this.MAX_VOLUME);
-        
         }
         break;
       case "sound":

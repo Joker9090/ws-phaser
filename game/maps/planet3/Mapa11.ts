@@ -875,7 +875,6 @@ const p13 = new LargeFloorIsland(this.scene, p13Config, this.pisos);
     }
     update() {
         if (this.scene.monchi) this.animateBackground();
-        console.log(this.scene.checkPoint, "CHECKPOINT")
     }
 }
 export default Mapa11;

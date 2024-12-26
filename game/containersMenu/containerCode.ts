@@ -46,7 +46,7 @@ class containerCode extends Phaser.GameObjects.Container {
                 const newCode = TextCode + e.key;
                 this.displayText?.setText(newCode);
               } else if (e.keyCode === 13) {
-                console.log('holi')
+      
               }
             }
         });

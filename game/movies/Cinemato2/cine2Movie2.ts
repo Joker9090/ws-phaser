@@ -33,7 +33,6 @@ class cine2Movie2 {
   }
 
    stopDialogue(){
-    console.log('entro')
      this.dialogue?.stop();
       this.dialogue?.destroyContainer();
     this.dialogue = undefined;
@@ -232,7 +231,6 @@ class cine2Movie2 {
   update(this: cine2Movie2, time: number, delta: number) {
     if (this.dialogue) this.dialogue.update();
     if (this.nextCine) this.cine.scene.restart({ keyname: "cine_2_movie_3" });
-    console.log("zoom: ", this.cine.cameras.main.zoom)
   }
 }
 

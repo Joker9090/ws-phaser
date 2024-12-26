@@ -221,7 +221,6 @@ class containerSettings extends Phaser.GameObjects.Container {
         scene.add.existing(this)
         this.sliderMusic = this.createSlider(scene, -30, -170, (value) => {
             this.masterManager.changeVolume(value, 'music');
-            console.log(value)
         }, this.volumeMusic);
 
         this.sliderSound = this.createSlider(scene, -30, -70, (value) => {
@@ -257,7 +256,6 @@ class containerSettings extends Phaser.GameObjects.Container {
         scene.add.existing(this);
 
         const destroy = ()=>{
-            console.log('destroy')
             this.removeAll(true)
             this.destroy()
         }
@@ -274,7 +272,6 @@ class containerSettings extends Phaser.GameObjects.Container {
         const control = scene.add.image(-125, 0, 'fillBarEnd').setOrigin(0.5).setScale(0.8);
         const initialX = Phaser.Math.Clamp((initialValue* 280) - 140, -140, 140);
         fillBar.width = initialX + 140
-            console.log(initialValue, 'initial')
         slider.add([bar, fillBarStart, fillBar, control]);
         control.setInteractive({ draggable: true });
 

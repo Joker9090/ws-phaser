@@ -31,7 +31,6 @@ class cine3Movie3 {
 
   }
  stopDialogue(){
-    console.log('entro')
      this.dialogue?.stop();
       this.dialogue?.destroyContainer();
     this.dialogue = undefined;

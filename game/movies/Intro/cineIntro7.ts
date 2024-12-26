@@ -31,7 +31,6 @@ class cineIntro7 {
     this.playCine();
   }
   stopDialogue(){
-      console.log('entro')
       this.dialogue?.stop();
       this.dialogue?.destroyContainer();
       this.dialogue = undefined;

@@ -71,7 +71,6 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
     }
     /* Floor add to physic world */
     scene.physics.add.existing(this);
-    console.log(config, "config")
     /* Floor add to scene */
     scene.add.existing(this);
 

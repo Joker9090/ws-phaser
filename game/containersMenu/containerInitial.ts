@@ -39,8 +39,6 @@ class containerInitial extends Phaser.GameObjects.Container {
         })
 
 
-
-        console.log(this.playButton.width, this.playButton.height, "PLAY BUTTON")
         this.creditsButton = scene.add.image(0, 0, "creditsButton")
         this.creditsButton.setPosition(this.width/2 -130, this.playButton.y + this.creditsButton.height + this.playButton.height/2 + offsetY)
 

@@ -27,7 +27,7 @@ class cineIntro2C {
     this.playCine();
   }  
   stopDialogue(){
-    console.log('entro')
+
      this.dialogue?.stop();
       this.dialogue?.destroyContainer();
     this.dialogue = undefined;

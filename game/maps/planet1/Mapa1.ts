@@ -196,12 +196,10 @@ class Mapa1 {
           this.pisos,
           () => { 
             if (this.tutorialStep === 2) {
-              console.log('j log', this.tutorialStep)
               setTimeout(() => {
                 this.textTutorial2?.setVisible(true);
                 this.scene.stopMov = true;
                 this.tutorialStep = 3;
-                console.log('j log',this.tutorialStep)
               }, 300);
             }
           },

@@ -41,7 +41,6 @@ class containerPlay extends Phaser.GameObjects.Container {
         this.enterCodeButton = scene.add.image(0, 0, "enterCodeButton")
         this.enterCodeButton.setPosition(this.width/2, this.newGameButton.y + this.enterCodeButton.height + this.newGameButton.height/2)
         this.enterCodeButton.setInteractive().on('pointerdown', () => {
-            console.log("ENTER CODE")
             this.enterCodeButton.setTexture('enterCodeButtonPressed')
          
         })

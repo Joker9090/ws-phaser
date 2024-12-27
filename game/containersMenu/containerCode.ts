@@ -7,15 +7,18 @@ class containerCode extends Phaser.GameObjects.Container {
     height: number = window.innerHeight;
     modal: Phaser.GameObjects.Image;
     input: any;
-    displayText: Phaser.GameObjects.Text
     title: Phaser.GameObjects.Text;
-    
+    backButton: Phaser.GameObjects.Image;
+    textDisplay: string[] = [];
+    displayText: Phaser.GameObjects.Text;
    
 
     constructor(scene: Phaser.Scene, config: ContainerMenuConfigType) {
         super(scene, config.x, config.y)
         const offsetY = 100
-        let writable = false
+        let isTyping = false;
+        let inputText = '';
+
         this.title = this.scene.add.text(-230, 50, 'ENTER CODE:', {
             fontSize: 17,
             color: "#00feff",
@@ -29,33 +32,59 @@ class containerCode extends Phaser.GameObjects.Container {
         this.modal = scene.add.image(0, 100, "codeModal").setScale(0.9);
         this.modal.setOrigin(0.5);
         this.input = scene.add.rectangle(-260 , 200, this.modal.width * 0.6, 80, 57055).setOrigin(0, 0.5);
+
         this.input.setInteractive()
-        this.displayText = this.scene.add.text(-260 + 10, 200, '', {
-            fontSize: '24px',
-            color: '#000',
-        }).setOrigin(0, 0.5);
+        this.input.on('pointerup', () => {
+          isTyping = true;
+          inputText = '';
+        });
+        scene.input.keyboard?.on('keydown', (event: any) => {
+          const key = event.key;
+          if (/^[a-zA-Z0-9]$/.test(key) && isTyping&&this.textDisplay.length<10) {
+              this.textDisplay.push(key);
+              inputText = this.textDisplay.join('');
+              this.displayText.setText(inputText);
+          }else if(key === 'Backspace'){
+              this.textDisplay.pop();
+              inputText = this.textDisplay.join('');
+              this.displayText.setText(inputText);
+          }
+        });
+
+        this.displayText = this.scene.add.text(-230, 160, '', {
+            fontSize: 70,
+            color: "#00feff",
+            stroke: "#00feff",
+            align: "center",
+            fontFamily: "Arcade",
+            fixedWidth: this.input.width - 50,
+            fixedHeight: this.input.height - 10,
+            wordWrap: {
+                width: this.width * 0.9,
+            },
+        });
         
 
-        this.scene.input.keyboard?.on("keydown", (e: any) => {
-            if (this.displayText && writable) {
-              const TextCode = this.displayText.text;
-              if (e.keyCode === 8) {
-                const newCode = TextCode.substring(0, TextCode.length - 1);
-                this.displayText?.setText(newCode);
-              } else if (e.keyCode <= 90 && e.keyCode >= 65) {
-                const newCode = TextCode + e.key;
-                this.displayText?.setText(newCode);
-              } else if (e.keyCode === 13) {
-      
+     this.backButton = scene.add.image(0, 0, "playBackButton")
+           this.backButton.setPosition(this.backButton.width, this.height - this.backButton.height)
+           this.backButton.setInteractive().on('pointerdown', () => {
+               this.backButton.setTexture('playBackButtonPressed')
+           })
+           this.backButton.on('pointerup',()=>{
+               this.backButton.setTexture('playBackButton')
+               if(config.changeContainer){
+                config.changeContainer()
               }
-            }
-        });
-        this.input.on('pointerdown', () => {
-            writable = true
-            if(config.changeContainer){
-              config.changeContainer()
-            }
-        })
+   
+           })
+           this.backButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, ()=>{
+               this.backButton.setTexture('playBackButtonHover')
+           })
+           this.backButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, ()=>{
+               this.backButton.setTexture('playBackButton')
+           })
+   
+        
         // const background = this.scene.add.image(0,0,"NOMBRE DEL ASSET").setInteractive()
         const sky = this.scene.add.image(0,innerHeight/4 -200,'codeSky').setOrigin(0.5, 0.5)
         const stars = this.scene.add.image(0,innerHeight/4 -350,'codeStars').setOrigin(0.5, 0.5)
@@ -79,7 +108,8 @@ class containerCode extends Phaser.GameObjects.Container {
             this.modal,
             astroFront,
             this.input,
-            this.title
+            this.title,
+            this.displayText
         ]
 
         this.add(arr)

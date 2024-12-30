@@ -49,6 +49,7 @@ export default class MasterManager extends Phaser.Scene {
     }
   }
 
+
   changeVolume(volume: number, type: "music" | "sound") {
 
     switch (type) {
@@ -90,6 +91,25 @@ export default class MasterManager extends Phaser.Scene {
     this.brightness = value
     this.brightnessScreen?.setAlpha( 0.3 * value);
   }
+  pauseGame(){
+    const gameScene = this.scene.get("Game");
+    if (gameScene) {
+        gameScene.physics.world.pause(); 
+        gameScene.tweens.pauseAll(); 
+        gameScene.input.enabled = true; 
+        gameScene.time.paused = true
+    }
+  }
+  resumeGame(){
+    const gameScene = this.scene.get("Game");
+    if (gameScene) {
+        gameScene.physics.world.resume(); 
+        gameScene.tweens.resumeAll(); 
+        gameScene.input.enabled = true; 
+        gameScene.time.paused = false
+    }
+  }
+
 
   create() {
     this.brightnessScreen = this.add.rectangle(window.innerWidth/2, window.innerHeight/2, window.innerWidth + 200, window.innerHeight + 200, 0x000000, 1).setAlpha(0);

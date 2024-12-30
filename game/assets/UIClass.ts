@@ -4,6 +4,7 @@ import Game from "../Game";
 import containerSettings from "../containersMenu/containerSettings";
 import CinematographyModular from "../movies/Cinematography-modular";
 import ContainerCredits from "../containersMenu/containerCredits";
+import MasterManager from "../MasterManager";
 
 export default class UIClass {
   scene: Game | CinematographyModular;
@@ -40,13 +41,23 @@ export default class UIClass {
   musicSlider:any;
   soundSlider:any;
   brigthSlider:any;
+  masterManager: MasterManager;
 
   constructor(scene: Game | CinematographyModular, level: number, lifes: number, time: number) {
     this.scene = scene
     this.container = this.scene.add.container(0,0);
  
     this.createUIContainer({ level, lifes, time })
-  }
+
+     let masterManagerScene = scene.game.scene.getScene("MasterManager") as MasterManager;
+     if (!masterManagerScene) {
+          this.masterManager = new MasterManager();
+         this.scene.scene.add("MasterManager", this.masterManager, true);
+      } else {
+          this.masterManager = masterManagerScene;
+          this.scene.scene.launch("MasterManager");
+      }
+    }
 
   createUI(lifes: number) {
     let quantityLifes = 0;
@@ -105,6 +116,8 @@ export default class UIClass {
       this.container.add(this.settings);
       this.settings.on('pointerup',()=>{
         const settingsModal = new containerSettings(this.scene, {x:window.innerWidth/2,y:window.innerHeight/2}, this.settings)
+        this.masterManager.playSound('buttonSound', false)
+        this.masterManager.pauseGame()
         this.settings?.setVisible(false)
         this.container.add(settingsModal)
       })

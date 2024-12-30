@@ -133,6 +133,7 @@ class containerSettings extends Phaser.GameObjects.Container {
             this.masterManager.changeVolume(this.volumeMusic, 'music');
             this.masterManager.changeVolume(this.volumeSound, 'sound');
             this.masterManager.changeBrightness(this.darkness);
+            this.masterManager.resumeGame()
             settingsButtonUi?.setVisible(true)
             destroy()
 
@@ -154,6 +155,7 @@ class containerSettings extends Phaser.GameObjects.Container {
             this.check.setTexture('settingsCheckHover')
             this.masterManager.playSound('buttonSound', false)
             settingsButtonUi?.setVisible(true)
+            this.masterManager.resumeGame()
             destroy()
 
         })

@@ -128,6 +128,8 @@ class Mapa10 {
   originalPositionsBackgroundsBack: {x: number, y:number}[]
   originalPositionsBackgroundsMiddle: {x: number, y:number}[]
   originalPositionsBackgroundsFront: {x: number, y:number}[]
+  background4OriginalPos: {x: number, y:number}
+
   moveCamera?: boolean = true;
   oldOffset?:number
   p8?:Floor
@@ -321,6 +323,8 @@ class Mapa10 {
           return { x: img.x, y: img.y };
         }
       );
+      this.background4OriginalPos = { x: this.background4.x, y: this.background4.y };
+
   
       this.mapContainer.add([
         this.background,
@@ -375,6 +379,13 @@ class Mapa10 {
         this.scene.cameras.main,
         { x: this.startingPoint.x, y: this.startingPoint.y },
         { fixX: 1.1, fixY: 1.1 }
+      );
+      this.updatePositionsRelativeToCamera(
+        [this.background4OriginalPos],
+        [this.background4],
+        this.scene.cameras.main,
+        { x: this.startingPoint.x, y: this.startingPoint.y },
+        { fixX: 1.1, fixY: 5 }
       );
       this.updatePositionsRelativeToCamera(
         this.originalPositionsBackgroundsMiddle,

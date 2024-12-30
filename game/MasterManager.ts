@@ -109,7 +109,7 @@ export default class MasterManager extends Phaser.Scene {
         gameScene.time.paused = false
     }
   }
-
+ 
 
   create() {
     this.brightnessScreen = this.add.rectangle(window.innerWidth/2, window.innerHeight/2, window.innerWidth + 200, window.innerHeight + 200, 0x000000, 1).setAlpha(0);

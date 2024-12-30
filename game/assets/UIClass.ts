@@ -63,7 +63,6 @@ export default class UIClass {
     let quantityLifes = 0;
     let xpos = 0;
     if (lifes) {
-      // checkeo si estoy en un lvl o una cinemato
       if(this.scene instanceof Game){
         for (let i = 0; i < lifes; i++) {
           quantityLifes += 1;
@@ -103,13 +102,12 @@ export default class UIClass {
   
         this.container.add(this.coinUI);
       }
-      // esto va fuera del if porque en ambos casos lo necesito
-      const settings: UIConfig = {
+      const settingsConf: UIConfig = {
         texture: "settingsButton",
         pos: { x: window.innerWidth - 100, y: 70 },
         scale: 0.9,
-      };   
-      this.settings = new UI(this.scene, settings);
+      }; 
+      this.settings = new UI(this.scene, settingsConf);
       this.settings.setInteractive()
       const bg = this.scene.add.rectangle(0,0,window.innerWidth,window.innerHeight,0x000000, 0.3).setVisible(false).setOrigin(0);
       this.container.add(bg);
@@ -120,8 +118,12 @@ export default class UIClass {
         this.masterManager.pauseGame()
         this.settings?.setVisible(false)
         this.container.add(settingsModal)
+        if(this.scene instanceof CinematographyModular){
+          this.scene.pauseDialogue()          
+        }
       })
     }
+    
   }
 
   rotateArrow(direction: string) {

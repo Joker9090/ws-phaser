@@ -117,6 +117,8 @@ class Mapa9 {
     originalPositionsBackgroundsBack: {x: number, y:number}[]
     originalPositionsBackgroundsMiddle: {x: number, y:number}[]
     originalPositionsBackgroundsFront: {x: number, y:number}[]
+    background4OriginalPos: {x: number, y:number}
+
   
       UIItemToGrab: string = 'uiItemp3';
       UIItemScale?: number = 0.3;
@@ -161,7 +163,7 @@ class Mapa9 {
           .image(this.startingPoint.x, this.startingPoint.y + 220, "background3p3")
           .setOrigin(0.5, 0.5)
           .setAlpha(1)
-          .setScale(4,2);
+          .setScale(2, 1);
 
         this.frontground1 = this.scene.add
           .image(this.startingPoint.x, this.startingPoint.y + 580, "background2p3")
@@ -304,6 +306,9 @@ class Mapa9 {
             return { x: img.x, y: img.y };
           }
         );
+
+       this.background4OriginalPos = { x: this.background4.x, y: this.background4.y };
+
     
         this.mapContainer.add([
           this.background,
@@ -358,6 +363,13 @@ class Mapa9 {
           this.scene.cameras.main,
           { x: this.startingPoint.x, y: this.startingPoint.y },
           { fixX: 1.1, fixY: 1.1 }
+        );
+        this.updatePositionsRelativeToCamera(
+          [this.background4OriginalPos],
+          [this.background4],
+          this.scene.cameras.main,
+          { x: this.startingPoint.x, y: this.startingPoint.y },
+          { fixX: 1.1, fixY: 5 }
         );
         this.updatePositionsRelativeToCamera(
           this.originalPositionsBackgroundsMiddle,

@@ -29,11 +29,12 @@ class cineIntro1 {
     this.cine.sound.add("introSoundEffect2").setVolume(0.25).play()
     this.playCine();
   }
-  stopDialogue(){
-
+  stopDialogue(notDestroy?: boolean) {
      this.dialogue?.stop();
+     if(notDestroy) {
       this.dialogue?.destroyContainer();
-    this.dialogue = undefined;
+      this.dialogue = undefined;
+     }
   }
   playCine(this: cineIntro1) {
     this.cine.time.addEvent({

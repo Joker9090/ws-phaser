@@ -581,7 +581,7 @@ class Mapa4 {
     const p3 = new Floor(this.scene, p3Config, this.pisos4)
       .setFlipX(true)
       .setFlipY(true)
-      .setTint(Phaser.Display.Color.GetColor(255, 101, 0));
+      .setTint(colors.gravity);
 
       const p17Config: FloorConfig = {
         pos: { x: 1100, y: 1400 },
@@ -763,7 +763,7 @@ class Mapa4 {
     };
     const p9 = new Floor(this.scene, p9Config, this.pisos5)
       .setFlipY(true)
-      .setTint(Phaser.Display.Color.GetColor(255, 101, 0));
+      .setTint(colors.gravity);
 
     const p10Config: LargeFloorIslandConfig = {
       textureA: "longFloorLeftp1",

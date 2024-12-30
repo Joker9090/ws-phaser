@@ -572,7 +572,7 @@ class Mapa3 {
             height: 50,
         };
         const p19 = new Floor(this.scene, p19Config, this.pisos4).setTint(
-            Phaser.Display.Color.GetColor(255, 101, 0)
+            colors.gravity
         ).setFlipY(true);
 
         //Portal, Coin and Asteroids

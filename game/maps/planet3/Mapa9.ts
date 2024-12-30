@@ -613,7 +613,7 @@ class Mapa9 {
         height: 20,
       };
 
-    const p4 = new Floor(this.scene, p4Config, this.pisos5).setTint(Phaser.Display.Color.GetColor(255, 101, 255));
+    const p4 = new Floor(this.scene, p4Config, this.pisos5).setTint(colors.rotate);
 
       const p5Config: FloorConfig = {
        texture: "pSimple1p3",

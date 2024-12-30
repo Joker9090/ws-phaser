@@ -762,7 +762,7 @@ class Mapa5 {
     };
     const p10 = new Floor(this.scene, p10Config, this.pisos5)
       .setFlipY(true)
-      .setTint(Phaser.Display.Color.GetColor(255, 101, 0));
+      .setTint(colors.gravity);
 
     // const p7Config: FloorConfig = {
     //     pos: { x: 2500, y: 450 },

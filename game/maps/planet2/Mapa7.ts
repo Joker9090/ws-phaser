@@ -718,7 +718,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
             width: 140,
             height: 30,
         };
-        const p7 = new Floor(this.scene, p7Config, this.pisos5).setFlipY(true).setTint(Phaser.Display.Color.GetColor(255, 101, 0));
+        const p7 = new Floor(this.scene, p7Config, this.pisos5).setFlipY(true).setTint(colors.gravity);
 
         const p8Config: LargeFloorIslandConfig = {
             textureA: "longFloorLeftp1",

@@ -13,6 +13,7 @@ import { Children } from "react";
 import { loseConfigFromMapType } from "@/game/Types";
 import LargeFloorIsland, { LargeFloorIslandConfig } from "@/game/assets/LargeFloorIsland";
 import TextBox from "@/game/assets/TextBox";
+import colors from "@/game/assets/PlatformColors";
 
 class Mapa1 {
   scene: Game;
@@ -391,7 +392,7 @@ class Mapa1 {
 
     };
     const p9 = new Floor(this.scene, p9Config, this.pisos2).setTint(
-      Phaser.Display.Color.GetColor(255, 101, 0)
+     colors.gravity
     ).setFlipX(true);
 
 

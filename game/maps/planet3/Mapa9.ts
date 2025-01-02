@@ -25,7 +25,7 @@ class Mapa9 {
     cameraBounds = {
         x: 0,
         y: -100,
-        width: 4600,
+        width: 3600,
         height: 1630,
       };
     // normales
@@ -530,6 +530,8 @@ class Mapa9 {
       if( this.scene.monchi ){
         this.scene.physics.world.gravity.y = -1000
         this.scene.moveCameraOffset("up", true);
+        this.scene.lateralCameraOffset("right", false, this.cameraBounds.width );
+
         this.scene.monchi.setPlayerState("ROTATED")
       }
       // inicio rotado

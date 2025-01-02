@@ -560,8 +560,8 @@ class Mapa5 {
     }
 
     createMap(data: { level: number; lifes: number }) {
-      this.scene.monchi?.setFlipX(true)
-
+      this.scene.lateralCameraOffset("left", false, this.cameraBounds.width - 1400);
+        this.scene.monchi?.setFlipX(true)
         this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
         this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });
         this.pisos = this.scene.physics.add.group({ allowGravity: false });

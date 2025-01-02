@@ -514,8 +514,7 @@ class Mapa10 {
                       () => {
                         if(this.moveCamera){
                           this.moveCamera = false
-                          this.oldOffset = this.scene.cameras.main.followOffset.y
-                          this.scene.cameras.main.followOffset.y = window.innerHeight / 2 -50;
+                          this.scene.moveCameraOffset("down", true);
                         }
                       },
                       () => true,
@@ -547,7 +546,8 @@ class Mapa10 {
     createMap(data: { level: number; lifes: number }) {
       // inicio rotado
       if( this.scene.monchi ){
-        this.scene.physics.world.gravity.y = -1000
+        this.scene.changeGravity(true, 1000, 3)
+        this.scene.lateralCameraOffset("right", false, this.cameraBounds.width);
         this.scene.moveCameraOffset("up", true);
         this.scene.monchi.setPlayerState("ROTATED")
       }
@@ -950,4 +950,5 @@ b2.start();
         if (this.scene.monchi) this.animateBackground();
     }
 }
+
 export default Mapa10;

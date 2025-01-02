@@ -26,7 +26,7 @@ class Mapa8 {
   cameraBounds = {
     x: 0,
     y: -450,
-    width: 8000,
+    width: 7000,
     height: 1800
   }
   // normales
@@ -494,6 +494,8 @@ class Mapa8 {
 
 
 createMap(data: { level: number; lifes: number }) {
+  this.scene.lateralCameraOffset("right", false, this.cameraBounds.width - 1400);
+
   this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
   this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });
   this.pisos = this.scene.physics.add.group({ allowGravity: false });

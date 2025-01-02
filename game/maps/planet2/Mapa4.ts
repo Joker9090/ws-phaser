@@ -139,7 +139,7 @@ class Mapa4 {
 
     this.background = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "p1backgroundDia")
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5, 0.5).setScale(1.1);
     this.backgroundStars = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "p1Stars")
       .setOrigin(0.5, 0.5)
@@ -147,7 +147,7 @@ class Mapa4 {
     this.background2 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "p1backgroundNoche")
       .setOrigin(0.5, 0.5)
-      .setAlpha(0);
+      .setAlpha(0).setScale(1.1);
     this.background3 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "p1capaOscuridad")
       .setOrigin(0.5, 0.5)
@@ -506,6 +506,7 @@ class Mapa4 {
   }
 
   createMap(data: { level: number; lifes: number }) {
+    this.scene.lateralCameraOffset("right", false, this.cameraBounds.width, 0.9);
     this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
     this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });
     this.pisos = this.scene.physics.add.group({ allowGravity: false });

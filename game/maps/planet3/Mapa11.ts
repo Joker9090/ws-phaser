@@ -25,7 +25,7 @@ class Mapa11 {
     cameraBounds = {
         x: 0,
         y: 0,
-        width: 4600,
+        width: 3600,
         height: 1330,
       };
     // normales
@@ -521,6 +521,8 @@ class Mapa11 {
     createMap(data: { level: number; lifes: number }) {
       
       this.scene.monchi?.setFlipX(true)
+      this.scene.lateralCameraOffset("right", false, this.cameraBounds.width );
+
 
         this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
         this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });

@@ -54,7 +54,7 @@ class Mapa5 {
     pisoGoBack?: Phaser.GameObjects.Sprite;
     monchi?: Player;
     startingPoint = {
-        x: 2700, //500
+        x: 2750, //500
         y: 1000, //800
     };
     checkPoint1 = {
@@ -560,7 +560,7 @@ class Mapa5 {
     }
 
     createMap(data: { level: number; lifes: number }) {
-      this.scene.lateralCameraOffset("left", false, this.cameraBounds.width - 1400);
+      // this.scene.lateralCameraOffset("left", false, this.cameraBounds.width - 1400);
         this.scene.monchi?.setFlipX(true)
         this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
         this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });

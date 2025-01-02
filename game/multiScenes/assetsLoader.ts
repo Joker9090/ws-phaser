@@ -21,6 +21,7 @@ const loadAssets = {
   BaseLoad: {
     assets: [
       ["audio", "planet1LoopMusic", "/game/planeta2/loopMusic.mp3"],
+      ["audio", "planet3LoopMusic", "/game/planeta3/p3BackgroundMusic.mp3"],
       ["audio", "buttonSound", "/sounds/buttonSound.wav"],
       ["image", "block", "/game/50x50.png"],
       ["svg", "bordeGlow", "/assets/textBox/bordeGlow.svg", { scale: 7 }],

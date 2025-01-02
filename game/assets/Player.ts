@@ -142,16 +142,13 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.isJumping = false;
     this.isRotating = false
   }
-
+  // agregar varable isGrounded
   jump() {
     const condition = this.playerState === 'NORMAL' ? this.body?.touching.down : this.body?.touching.up
-
     if (!this.isJumping && condition) {
       this.isJumping = true;
-      this.anims.play("monchiJump");
+      this.anims.play("monchiJump").once('animationcomplete', this.idle);
       this.setVelocityY(this.playerState === 'NORMAL' ? -630 : 630);
-      this.scene.time.delayedCall(1200, this.idle, [], this);
-      // cambiar esto apra que isJumping cambie cuando toca el piso
     }
   }
 

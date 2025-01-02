@@ -153,6 +153,7 @@ class Game extends Phaser.Scene {
   }
   lateralCameraOffset(position: "left" | "right", instant: boolean = false, levelWidth?: number, zoomOut?:number ){
     let newWidth = levelWidth ? levelWidth : this.cameraWidth;
+    this.time.paused = true;
     if (position === "right") newWidth = -newWidth;
     if(zoomOut) this.cameras.main.zoom = zoomOut
     if (instant) {
@@ -175,6 +176,7 @@ class Game extends Phaser.Scene {
                   zoom: 1,
                   duration: 1000,
                   ease: 'ease',
+                  onComplete: () => {this.time.paused = false}
                 });
               }
           });

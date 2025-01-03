@@ -527,11 +527,8 @@ class Mapa5 {
                     this.pisos5,
                     () => {
                       if(this.scene.monchi?.body?.touching.up || this.scene.monchi?.body?.touching.down){
-                        this.scene.canRot = true // medio hack, revisar lógica
-                        this.scene.changeGravity(false, 1000, 3)
-                        this.scene.rotateCam(false, 10)
+                        this.scene.moveCameraOffset("up", false)
                       }
-                        // this.scene.checkPoint = 0
                     },
                     () => true,
                     this.scene
@@ -560,7 +557,7 @@ class Mapa5 {
     }
 
     createMap(data: { level: number; lifes: number }) {
-      // this.scene.lateralCameraOffset("left", false, this.cameraBounds.width - 1400);
+      this.scene.lateralCameraOffset("left", false, this.cameraBounds.width - 1400);
         this.scene.monchi?.setFlipX(true)
         this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
         this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });
@@ -679,22 +676,70 @@ class Mapa5 {
         const p6 = new Floor(this.scene, p6Config, this.pisos3).setFlipY(true).setTint(colors.rotate);
 
         const p7Config: FloorConfig = {
-            pos: { x: 1100, y: 500 },
+            pos: { x: 1200, y: 500 },
             texture: "pSimple2p1",
-            scale: { width: 1.7, height: 0.7 },
+            scale: { width: 0.7, height: 0.7 },
             width: 140,
             height: 30,
         };
-        const p7 = new Floor(this.scene, p7Config, this.pisos).setFlipY(true).setVelocityX(-200)
+        const p7 = new Floor(this.scene, p7Config, this.pisos2).setFlipY(true).setTint(colors.gravity);
 
-        this.scene.tweens.add({
-            duration: 3000,
-            paused: false,
-            yoyo: true,
-            repeat: -1,
-            targets: p7.body?.velocity,
-            x: '+=400',
-        })
+        const p10Config: FloorConfig = {
+          pos: { x: 1210, y: 1100 },
+          texture: "pSimple2p1",
+          scale: { width: 0.7, height: 0.7 },
+          width: 140,
+          height: 30,
+        };
+        const p10 = new Floor(this.scene, p10Config, this.pisos5);
+
+        const p11Config: FloorConfig = {
+          pos: { x: 1200, y: 1500 },
+          texture: "pSimple2p1",
+          scale: { width: 0.7, height: 0.7 },
+          width: 140,
+          height: 30,
+          animation: {
+            xAxis: {
+              xDistance: 250,
+              xVel: 200
+            }
+          },
+        };
+        const p11 = new Floor(this.scene, p11Config, this.pisos);
+
+        // const p12Config: FloorConfig = {
+        //   pos: { x: 1100, y: 1500 },
+        //   texture: "pSimple2p1",
+        //   scale: { width: 0.7, height: 0.7 },
+        //   width: 140,
+        //   height: 30,
+        // };
+        // const p12 = new Floor(this.scene, p12Config, this.pisos);
+
+        // const p13Config: FloorConfig = {
+        //   pos: { x: 1400, y: 1300 },
+        //   texture: "pSimple2p1",
+        //   scale: { width: 0.7, height: 0.7 },
+        //   width: 140,
+        //   height: 30,
+        //   animation: {
+        //     yAxis: {
+        //       yDistance: 300,
+        //       yVel: 200
+        //     }
+        //   }
+        // };
+        // const p13 = new Floor(this.scene, p13Config, this.pisos);
+
+        // this.scene.tweens.add({
+        //     duration: 3000,
+        //     paused: false,
+        //     yoyo: true,
+        //     repeat: -1,
+        //     targets: p7.body?.velocity,
+        //     x: '+=400',
+        // })
 
         const p8Config: FloorConfig = {
             pos: { x: 600, y: 600 },
@@ -709,15 +754,15 @@ class Mapa5 {
             textureA: "longFloorLeftp1",
             textureB: "longFloorMiddleBp1",
             textureC: "longFloorRightp1",
-            pos: { x: 0, y: 500 },
+            pos: { x: 1600, y: 1500 },
             width: {
                 textureA: 120,
                 textureB: 45,
                 textureC: 122,
             },
-            scale: { width: 0.7, height: 0.7 },
+            scale: { width: 0.7, height: -0.7 },
             height: 89,
-            large: 12,
+            large: 8,
             rotated: true,
         };
 
@@ -726,17 +771,17 @@ class Mapa5 {
         //Portal, Coin and Asteroids
         const portalConfig: FloorConfig = {
             texture: "cuevap1",
-            pos: { x: 200, y: 620 },
+            pos: { x: 1800, y: 1400 },
             width: 100,
             height: 100,
         };
-        const port = new Floor(this.scene, portalConfig, this.portal).setDepth(99).setScale(0.7).setFlipY(true).setFlipX(true);
+        const port = new Floor(this.scene, portalConfig, this.portal).setDepth(99).setScale(0.5);
 
         this.endPortal = port
 
         const coinConfig: FloorConfig = {
             texture: "comida",
-            pos: { x: 1000, y: 660 },
+            pos: { x: 1210, y: 660 },
             scale: { width: 0.5, height: 0.5 },
             width: 10,
             height: 18,
@@ -752,8 +797,8 @@ class Mapa5 {
             y: 500,
             delayed: 100,
             direction: 0,
-      group: cloudsGroup,
-      velocity: 20,
+            group: cloudsGroup,
+            velocity: 20,
             scale: 1,
             depth: 99,
         };
@@ -766,8 +811,8 @@ class Mapa5 {
             y: 600,
             delayed: 100,
             direction: 1,
-      group: cloudsGroup,
-      velocity: 30,
+            group: cloudsGroup,
+            velocity: 30,
             scale: 1,
             depth: 99,
         };

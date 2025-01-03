@@ -133,9 +133,8 @@ class Game extends Phaser.Scene {
     // })
   }
 
-  moveCameraOffset(position: "up" | "down", instant: boolean = false, levelWidth?: number ) {
+  moveCameraOffset(position: "up" | "down", instant: boolean = false ) {
     setTimeout(() => {
-      
       let newPosition = this.cameraHeight / 2 - 200;
       if (position === "up") newPosition = -newPosition;
       if (instant) {

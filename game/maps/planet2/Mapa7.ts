@@ -572,7 +572,7 @@ originalPositionsBackgroundsFront: {x: number, y:number}[]
     }
 
     createMap(data: { level: number; lifes: number }) {
-        this.scene.lateralCameraOffset("left", false, this.cameraBounds.width);
+        this.scene.lateralCameraOffset("left", false, this.cameraBounds.width, 1,1000);
         this.scene.monchi?.setFlipX(true)
         this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
         this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });

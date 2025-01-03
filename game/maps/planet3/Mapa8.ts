@@ -494,7 +494,7 @@ class Mapa8 {
 
 
 createMap(data: { level: number; lifes: number }) {
-  this.scene.lateralCameraOffset("right", false, this.cameraBounds.width - 1400);
+  this.scene.lateralCameraOffset("right", false, this.cameraBounds.width - 1400, 1, 2000);
 
   this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
   this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });

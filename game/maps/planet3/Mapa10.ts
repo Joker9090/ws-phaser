@@ -547,7 +547,7 @@ class Mapa10 {
       // inicio rotado
       if( this.scene.monchi ){
         this.scene.changeGravity(true, 1000, 3)
-        this.scene.lateralCameraOffset("right", false, this.cameraBounds.width);
+        this.scene.lateralCameraOffset("right", false, this.cameraBounds.width, 1, 2000);
         this.scene.moveCameraOffset("up", true);
         this.scene.monchi.setPlayerState("ROTATED")
       }

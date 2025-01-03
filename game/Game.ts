@@ -135,6 +135,7 @@ class Game extends Phaser.Scene {
 
   moveCameraOffset(position: "up" | "down", instant: boolean = false ) {
     setTimeout(() => {
+      console.log("moving camera from move", position, this.cameras.main.followOffset);
       let newPosition = this.cameraHeight / 2 - 200;
       if (position === "up") newPosition = -newPosition;
       if (instant) {
@@ -150,9 +151,13 @@ class Game extends Phaser.Scene {
     
     }, 500);
   }
-  lateralCameraOffset(position: "left" | "right", instant: boolean = false, levelWidth?: number, zoomOut?:number ){
+  lateralCameraOffset(position: "left" | "right", instant: boolean = false, levelWidth?: number, zoomOut?:number, duration?:number, directionAfter?: "up" | "down") {
     let newWidth = levelWidth ? levelWidth : this.cameraWidth;
+    let newduration = 4000;
+    if(duration && duration !== 0) newduration = duration;
+ 
     this.time.paused = true;
+    setTimeout(() => {
     if (position === "right") newWidth = -newWidth;
     if(zoomOut) this.cameras.main.zoom = zoomOut
     if (instant) {
@@ -161,7 +166,7 @@ class Game extends Phaser.Scene {
       this.tweens.add({
         targets: this.cameras.main.followOffset,
         x: newWidth,
-        duration: 5000,
+        duration:newduration,
         ease: "ease",
         onComplete: () => {
           this.tweens.add({
@@ -175,7 +180,14 @@ class Game extends Phaser.Scene {
                   zoom: 1,
                   duration: 1000,
                   ease: 'ease',
-                  onComplete: () => {this.time.paused = false}
+                  onComplete: () => {
+                    this.time.paused = false
+                    if(directionAfter){
+                      if (directionAfter) {
+                        this.moveCameraOffset(directionAfter, true);
+                      }
+                    }
+                  }
                 });
               }
           });
@@ -183,6 +195,7 @@ class Game extends Phaser.Scene {
       });
     }
     console.log("moving camera", position, this.cameras.main.followOffset);
+    }, 1000);
   }
   changeGravity(float: boolean, time: number, speed?: 1 | 2 | 3) {
     if (this.monchi) {

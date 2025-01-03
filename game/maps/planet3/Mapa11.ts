@@ -521,7 +521,7 @@ class Mapa11 {
     createMap(data: { level: number; lifes: number }) {
       
       this.scene.monchi?.setFlipX(true)
-      this.scene.lateralCameraOffset("right", false, this.cameraBounds.width );
+      this.scene.lateralCameraOffset("right", false, this.cameraBounds.width, 1, 2000 );
 
 
         this.movingFloor = this.scene.physics.add.group({ allowGravity: false });

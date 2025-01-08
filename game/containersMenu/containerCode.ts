@@ -116,7 +116,7 @@ class containerCode extends Phaser.GameObjects.Container {
            })
            this.confirmButton.on('pointerup', () => {
                if(this.textDisplay.length>=textLength){
-                    this.masterManager?.enterCode(this.textDisplay.join(''), this);
+                    this.masterManager?.enterCode(this.textDisplay.join(''));
                     this.confirmButton.setTexture('playButtonHover')
                 }
            })

@@ -24,6 +24,8 @@ export default class MasterManager extends Phaser.Scene {
   brightness: number = 0;
   MAX_VOLUME: number = 0.6;
   MAX_DARKNESS: number = 0.3;
+  imagenesAlbum: string[] = []
+  codigos: { codigo: string, mapa:number, imagenes:string[] }[] = []
   constructor() {
     super({ key: "MasterManager" });
     const tickerMS = 100;
@@ -110,10 +112,27 @@ export default class MasterManager extends Phaser.Scene {
     }
   }
  
+  enterCode(code?:string,){
+    let codeFound = false;
+    this.codigos.forEach(c => {
+      if(c.codigo  === code ){
+        this.imagenesAlbum = c.imagenes
+          const multiScene = new MultiScene("Game", { level: c.mapa, lifes: 3, loadKey: ["GamePlay1", "GamePlay2", "GamePlay3"] });
+          const scene = this.scene.add("MultiScene", multiScene, true);
+          this.scene.start("MultiScene").bringToTop("MultiScene");
+          this.scene.stop("MenuScene");
+          codeFound = true;
+      }
+      if(!codeFound){
+        console.log("no perro")
+      }
+    }); 
+  }
 
   create() {
     this.brightnessScreen = this.add.rectangle(window.innerWidth/2, window.innerHeight/2, window.innerWidth + 200, window.innerHeight + 200, 0x000000, 1).setAlpha(0);
-    
+    this.codigos = this.cache.json.get('codigos');
+    this.registry.set('codigos', this.codigos)
   }
 
   update() {

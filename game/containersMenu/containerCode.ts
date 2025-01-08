@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import { ContainerMenuConfigType } from "../Types";
+import MasterManager from "../MasterManager";
 
 class containerCode extends Phaser.GameObjects.Container {
 
@@ -9,8 +10,10 @@ class containerCode extends Phaser.GameObjects.Container {
     input: any;
     title: Phaser.GameObjects.Text;
     backButton: Phaser.GameObjects.Image;
+    confirmButton: Phaser.GameObjects.Image;
     textDisplay: string[] = [];
     displayText: Phaser.GameObjects.Text;
+    masterManager?: MasterManager;
    
 
     constructor(scene: Phaser.Scene, config: ContainerMenuConfigType) {
@@ -18,6 +21,17 @@ class containerCode extends Phaser.GameObjects.Container {
         const offsetY = 100
         let isTyping = false;
         let inputText = '';
+        const textLength = 6
+
+        
+        let masterManagerScene = scene.game.scene.getScene("MasterManager") as MasterManager;
+        if (!masterManagerScene) {
+            this.masterManager = new MasterManager();
+            this.scene.scene.add("MasterManager", this.masterManager, true);
+        } else {
+            this.masterManager = masterManagerScene;
+            this.scene.scene.launch("MasterManager");
+        }
 
         this.title = this.scene.add.text(-230, 50, 'ENTER CODE:', {
             fontSize: 17,
@@ -40,7 +54,7 @@ class containerCode extends Phaser.GameObjects.Container {
         });
         scene.input.keyboard?.on('keydown', (event: any) => {
           const key = event.key;
-          if (/^[a-zA-Z0-9]$/.test(key) && isTyping&&this.textDisplay.length<10) {
+          if (/^[a-zA-Z0-9]$/.test(key) && isTyping&&this.textDisplay.length<textLength) {
               this.textDisplay.push(key);
               inputText = this.textDisplay.join('');
               this.displayText.setText(inputText);
@@ -65,7 +79,7 @@ class containerCode extends Phaser.GameObjects.Container {
         });
         
 
-     this.backButton = scene.add.image(0, 0, "playBackButton")
+        this.backButton = scene.add.image(0, 0, "playBackButton")
            this.backButton.setPosition(-900, 430)
            this.backButton.setInteractive().on('pointerdown', () => {
                this.backButton.setTexture('playBackButtonPressed')
@@ -82,7 +96,30 @@ class containerCode extends Phaser.GameObjects.Container {
            this.backButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, ()=>{
                this.backButton.setTexture('playBackButton')
            })
-   
+
+        this.confirmButton = scene.add.image(0, 370, "playButton").setScale(0.6);
+           this.confirmButton.setInteractive();
+           this.confirmButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
+                if(this.textDisplay.length>=textLength){
+                    this.confirmButton.setTexture('playButtonHover');
+                }
+           });
+           this.confirmButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => {
+                    if(this.textDisplay.length>=textLength){
+                        this.confirmButton.setTexture('playButton');
+                    }
+           });
+           this.confirmButton.on('pointerdown', () => {
+                if(this.textDisplay.length>=textLength){
+                    this.confirmButton.setTexture('playButtonPressed')
+                }  
+           })
+           this.confirmButton.on('pointerup', () => {
+               if(this.textDisplay.length>=textLength){
+                    this.masterManager?.enterCode(this.textDisplay.join(''), this);
+                    this.confirmButton.setTexture('playButtonHover')
+                }
+           })
         
         // const background = this.scene.add.image(0,0,"NOMBRE DEL ASSET").setInteractive()
         const sky = this.scene.add.image(0,innerHeight/4 -200,'codeSky').setOrigin(0.5, 0.5)
@@ -110,6 +147,7 @@ class containerCode extends Phaser.GameObjects.Container {
             this.title,
             this.displayText,
             this.backButton,
+            this.confirmButton
         ]
 
         this.add(arr)

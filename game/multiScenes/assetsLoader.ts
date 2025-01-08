@@ -20,6 +20,7 @@ const loadAssets = {
 
   BaseLoad: {
     assets: [
+      ["json", "codigos", "/game/codigos.json"],
       ["audio", "planet1LoopMusic", "/game/planeta2/loopMusic.mp3"],
       ["audio", "planet3LoopMusic", "/game/planeta3/p3BackgroundMusic.mp3"],
       ["audio", "buttonSound", "/sounds/buttonSound.wav"],

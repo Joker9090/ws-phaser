@@ -18,12 +18,7 @@ class containerPlay extends Phaser.GameObjects.Container {
         const offsetY = 100
         this.newGameButton = scene.add.image(this.width/2, this.height/2 + offsetY, "newGameButton")
         this.newGameButton.setInteractive().on('pointerdown', () => {
-            
             this.newGameButton.setTexture('newGameButtonPressed')
-
-            // if(config.panToPlay){
-            //     this.scene.cameras.main.pan(config.panToPlay.x, config.panToPlay.y, 1000, 'Expo', true)
-            // }
         })
         this.newGameButton.on('pointerup',()=>{
             this.newGameButton.setTexture('newGameButtonHover')

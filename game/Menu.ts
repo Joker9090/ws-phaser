@@ -40,7 +40,7 @@ class MenuScene extends Phaser.Scene {
 
        
 
-    
+        this.sound.add("menuBgMusic", {loop:true}).play()
 
         this.containerInitial = new containerInitial(this, {
             x: 0,

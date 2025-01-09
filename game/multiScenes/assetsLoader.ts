@@ -69,6 +69,7 @@ const loadAssets = {
       ["image", "playBackButtonHover", "/menu/play/backHover.png"],
       ["image", "playBackButtonPressed", "/menu/play/backPressed.png"],
       ["image", "menuBackground", "/menu/menuBackground.png"],
+      ["audio", "menuBgMusic", "/menu/menuBgMusic.mp3"],
 
       // menu settings
       ["image", "settingsModal", "/menu/settings/settingModal.png"],

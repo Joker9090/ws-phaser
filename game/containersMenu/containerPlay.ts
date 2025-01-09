@@ -21,6 +21,7 @@ class containerPlay extends Phaser.GameObjects.Container {
             this.newGameButton.setTexture('newGameButtonPressed')
         })
         this.newGameButton.on('pointerup',()=>{
+            this.scene.sound.play('buttonSound')
             this.newGameButton.setTexture('newGameButtonHover')
             const multiScene = new MultiScene("CinematographyMod", { keyname: 'cine_intro_1',  loadKey: ["Cinemato0"] });
             const scene = this.scene.scene.add("MultiScene", multiScene, true);
@@ -43,6 +44,8 @@ class containerPlay extends Phaser.GameObjects.Container {
             this.enterCodeButton.setTexture('enterCodeButtonHover')
             if (config.changeContainer) {
                 config.changeContainer();
+                this.scene.sound.play('buttonSound')
+
             }
         })
         this.enterCodeButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER,()=>{
@@ -62,6 +65,7 @@ class containerPlay extends Phaser.GameObjects.Container {
         })
         this.backButton.on('pointerup',()=>{
             this.backButton.setTexture('playBackButton')
+            this.scene.sound.play('buttonSound')
             if (config.panToInitial) {
                 this.scene.cameras.main.pan(config.panToInitial.x, config.panToInitial.y, 1000, 'Expo', true)
             }

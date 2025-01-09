@@ -3,6 +3,7 @@ import { ContainerMenuConfigType } from "../Types";
 import MenuScene, { scaleBy } from "../Menu";
 import containerSettings from "./containerSettings";
 
+
 class containerInitial extends Phaser.GameObjects.Container {
 
     width: number = window.innerWidth;
@@ -14,11 +15,17 @@ class containerInitial extends Phaser.GameObjects.Container {
     scoreButton: Phaser.GameObjects.Image;
     albumButton: Phaser.GameObjects.Image;
     settingsButton: Phaser.GameObjects.Image;
+
     scene: MenuScene;
     constructor(scene: MenuScene, config: ContainerMenuConfigType) {
         super(scene, config.x, config.y)
         this.scene = scene
         const offsetY = 100
+
+   
+
+
+
         this.playButton = scene.add.image(this.width / 2, this.height / 2 + offsetY, "playButton");
         this.playButton.setInteractive();
         this.playButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
@@ -34,6 +41,8 @@ class containerInitial extends Phaser.GameObjects.Container {
         this.playButton.on('pointerup', () => {
             if(config.panToPlay){
                 this.scene.cameras.main.pan(config.panToPlay.x, config.panToPlay.y, 1000, 'Expo', true)
+                this.scene.sound.play('buttonSound')
+
             }
             this.playButton.setTexture('playButtonHover')
         })
@@ -53,6 +62,8 @@ class containerInitial extends Phaser.GameObjects.Container {
             this.creditsButton.setTexture('creditsButtonHover')
             if(config.panToCredits){
                 this.scene.cameras.main.pan(config.panToCredits.x, config.panToCredits.y, 1000, 'Expo', true)
+            this.scene.sound.play('buttonSound')
+
             }
 
         })
@@ -72,6 +83,8 @@ class containerInitial extends Phaser.GameObjects.Container {
         });
         this.albumButton.on('pointerup', () => {
             this.albumButton.setTexture('albumButtonHover')
+            this.scene.sound.play('buttonSound')
+
         })
 
         this.albumButton.on('pointerdown', () => {
@@ -103,6 +116,8 @@ class containerInitial extends Phaser.GameObjects.Container {
         })
         this.scoreButton.on("pointerup", ()=>{
             this.scoreButton.setTexture('scoreButtonHover')
+            this.scene.sound.play('buttonSound')
+
         })
 
         this.settingsButton = scene.add.image(0, 0, "settingsButton")
@@ -132,6 +147,8 @@ class containerInitial extends Phaser.GameObjects.Container {
 
                 // this.scene.background?.setScrollFactor(0)
                 // this.scene.cameras.main.pan(config.panToSettings.x, config.panToSettings.y, 1000, 'Expo', true)
+                this.scene.sound.play('buttonSound')
+
             }
             this.settingsButton.setTexture('settingsButtonHover')
         })

@@ -57,6 +57,7 @@ class ContainerCredits extends Phaser.GameObjects.Container {
             this.backButton.setTexture('backButtonHover')
             if (config.panToInitial) {
                 this.scene.cameras.main.pan(config.panToInitial.x, config.panToInitial.y, 1000, 'Expo', true)
+                this.scene.sound.play('buttonSound')
             }
         })
         this.backButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {

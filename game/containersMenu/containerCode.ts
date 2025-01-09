@@ -1,6 +1,8 @@
 import Phaser from "phaser";
 import { ContainerMenuConfigType } from "../Types";
 import MasterManager from "../MasterManager";
+import containerSettings from "./containerSettings";
+import MenuScene from "../Menu";
 
 class containerCode extends Phaser.GameObjects.Container {
 
@@ -14,8 +16,8 @@ class containerCode extends Phaser.GameObjects.Container {
     textDisplay: string[] = [];
     displayText: Phaser.GameObjects.Text;
     masterManager?: MasterManager;
-   
-
+    settingsButton: Phaser.GameObjects.Image;
+    
     constructor(scene: Phaser.Scene, config: ContainerMenuConfigType) {
         super(scene, config.x, config.y)
         const offsetY = 100
@@ -120,6 +122,31 @@ class containerCode extends Phaser.GameObjects.Container {
                     this.confirmButton.setTexture('playButtonHover')
                 }
            })
+
+           this.settingsButton = scene.add.image(0, 0, "settingsButton")
+           this.settingsButton.setPosition(900,-430 ).setScrollFactor(1)
+           this.settingsButton.setInteractive()
+           this.settingsButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, ()=>{
+               this.settingsButton.setTexture('settingsButtonHover')
+           })
+        
+           this.settingsButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, ()=>{
+               this.settingsButton.setTexture('settingsButton')
+           })
+
+           this.settingsButton.on("pointerdown", ()=>{
+               this.settingsButton.setTexture('settingsButtonPressed')
+           })
+           this.settingsButton.on("pointerup", ()=>{
+                 const settings = new containerSettings(this.scene as MenuScene, {
+                    x: this.width * 1.5,
+                    y: this.height / 2,
+                
+                })
+                arr.push(settings)
+        
+            this.settingsButton.setTexture('settingsButtonHover')
+        })
         
         // const background = this.scene.add.image(0,0,"NOMBRE DEL ASSET").setInteractive()
         const sky = this.scene.add.image(0,innerHeight/4 -200,'codeSky').setOrigin(0.5, 0.5)
@@ -147,7 +174,8 @@ class containerCode extends Phaser.GameObjects.Container {
             this.title,
             this.displayText,
             this.backButton,
-            this.confirmButton
+            this.confirmButton,
+            this.settingsButton
         ]
 
         this.add(arr)

@@ -17,7 +17,7 @@ class containerCode extends Phaser.GameObjects.Container {
     displayText: Phaser.GameObjects.Text;
     masterManager?: MasterManager;
     settingsButton: Phaser.GameObjects.Image;
-    
+    error: Phaser.GameObjects.Text  
     constructor(scene: Phaser.Scene, config: ContainerMenuConfigType) {
         super(scene, config.x, config.y)
         const offsetY = 100
@@ -34,9 +34,16 @@ class containerCode extends Phaser.GameObjects.Container {
             this.masterManager = masterManagerScene;
             this.scene.scene.launch("MasterManager");
         }
-
+        this.error = this.scene.add.text(-400,-400,"Yikes, try that one again?", {
+            color: "#00feff",
+            stroke: "#00feff",
+            align: "center",
+            fontFamily: "Arcade",
+            wordWrap: {
+                width: this.width * 0.9,
+            },
+        }).setFontSize('60px').setVisible(false)
         this.title = this.scene.add.text(-230, 50, 'ENTER CODE:', {
-            fontSize: 17,
             color: "#00feff",
             stroke: "#00feff",
             align: "center",
@@ -99,27 +106,28 @@ class containerCode extends Phaser.GameObjects.Container {
                this.backButton.setTexture('playBackButton')
            })
 
-        this.confirmButton = scene.add.image(0, 370, "playButton").setScale(0.6);
+           this.confirmButton = scene.add.image(0, 370, "acceptButton");
+      
            this.confirmButton.setInteractive();
            this.confirmButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
                 if(this.textDisplay.length>=textLength){
-                    this.confirmButton.setTexture('playButtonHover');
+                    this.confirmButton.setTexture('acceptHover');
                 }
            });
            this.confirmButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => {
                     if(this.textDisplay.length>=textLength){
-                        this.confirmButton.setTexture('playButton');
+                        this.confirmButton.setTexture('acceptButton');
                     }
            });
            this.confirmButton.on('pointerdown', () => {
                 if(this.textDisplay.length>=textLength){
-                    this.confirmButton.setTexture('playButtonPressed')
+                    this.confirmButton.setTexture('acceptPressed')
                 }  
            })
            this.confirmButton.on('pointerup', () => {
                if(this.textDisplay.length>=textLength){
-                    this.masterManager?.enterCode(this.textDisplay.join(''));
-                    this.confirmButton.setTexture('playButtonHover')
+                    this.masterManager?.enterCode(this.textDisplay.join(''), this.error);
+                    this.confirmButton.setTexture('acceptHover')
                 }
            })
 
@@ -175,7 +183,8 @@ class containerCode extends Phaser.GameObjects.Container {
             this.displayText,
             this.backButton,
             this.confirmButton,
-            this.settingsButton
+            this.settingsButton,
+            this.error
         ]
 
         this.add(arr)

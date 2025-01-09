@@ -112,7 +112,7 @@ export default class MasterManager extends Phaser.Scene {
     }
   }
  
-  enterCode(code?:string,){
+  enterCode(code:string, error:Phaser.GameObjects.Text){
     let codeFound = false;
     this.codigos.forEach(c => {
       if(c.codigo  === code ){
@@ -124,7 +124,7 @@ export default class MasterManager extends Phaser.Scene {
           codeFound = true;
       }
       if(!codeFound){
-        console.log("no perro")
+        error.setVisible(true)
       }
     }); 
   }

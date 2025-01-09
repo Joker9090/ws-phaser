@@ -103,6 +103,9 @@ const loadAssets = {
       ["image", "codeFront", "/menu/code/codeFront.png"],
       ["image", "astroFront", "/menu/code/astroFront.png"],
       ["image", "astroBack", "/menu/code/astroBack.png"],
+      ["image", "acceptButton", "/menu/code/acceptButton.png"],
+      ["image", "acceptHover", "/menu/code/acceptHover.png"],
+      ["image", "acceptPressed", "/menu/code/acceptClick.png"],
     ]
 
 

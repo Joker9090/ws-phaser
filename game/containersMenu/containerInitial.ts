@@ -89,7 +89,7 @@ class containerInitial extends Phaser.GameObjects.Container {
 
         this.scoreButton = scene.add.image(0, 0, "scoreButton")
         this.scoreButton.setInteractive()
-        this.scoreButton.setPosition(this.scoreButton.width, this.scoreButton.height)
+        this.scoreButton.setPosition(this.scoreButton.width, this.scoreButton.height).setVisible(false)
 
         this.scoreButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, ()=>{
             this.scoreButton.setTexture('scoreButtonHover')

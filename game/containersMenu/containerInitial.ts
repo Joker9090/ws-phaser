@@ -84,6 +84,9 @@ class containerInitial extends Phaser.GameObjects.Container {
         this.albumButton.on('pointerup', () => {
             this.albumButton.setTexture('albumButtonHover')
             this.scene.sound.play('buttonSound')
+            if(config.changeContainer){
+                config.changeContainer()
+            }
 
         })
 
@@ -161,7 +164,8 @@ class containerInitial extends Phaser.GameObjects.Container {
             this.playButton, 
             this.scoreButton, 
             this.settingsButton, 
-            this.logoNoswar
+            this.logoNoswar,
+            this.albumButton
         ]
 
         this.add(arr)

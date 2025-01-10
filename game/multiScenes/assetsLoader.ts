@@ -107,6 +107,18 @@ const loadAssets = {
       ["image", "acceptButton", "/menu/code/acceptButton.png"],
       ["image", "acceptHover", "/menu/code/acceptHover.png"],
       ["image", "acceptPressed", "/menu/code/acceptClick.png"],
+
+      ["image", "backgroundAlbum", "/menu/album/fondoalbum.png"],
+      ["image", "bannerAlbum", "/menu/album/banner_album.png"],
+      ["image", "modalFiguirita", "/menu/album/modalFigurita.png"],
+
+      ["image", "planeta1_figu1", "/menu/album/figuritas/planeta1_figu1.png"],
+      ["image", "planeta1_figu2", "/menu/album/figuritas/planeta1_figu2.png"],
+      ["image", "planeta2_figu1", "/menu/album/figuritas/planeta2_figu1.png"],
+      ["image", "planeta2_figu2", "/menu/album/figuritas/planeta2_figu2.png"],
+      ["image", "planeta3_figu1", "/menu/album/figuritas/planeta3_figu1.png"],
+      ["image", "planeta3_figu2", "/menu/album/figuritas/planeta3_figu2.png"],
+
     ]
 
 

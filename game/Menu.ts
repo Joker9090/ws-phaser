@@ -5,6 +5,7 @@ import containerPlay from "./containersMenu/containerPlay";
 import containerSettings from "./containersMenu/containerSettings";
 import containerCode from "./containersMenu/containerCode";
 import MasterManager from "./MasterManager";
+import containerAlbum from "./containersMenu/containerAlbum";
 
 
 class MenuScene extends Phaser.Scene {
@@ -24,6 +25,9 @@ class MenuScene extends Phaser.Scene {
 
     containerCode?: Phaser.GameObjects.Container;
     centralPointCode: { x: number, y: number } = { x: this.width / 2 + this.width * 2, y: this.height / 2 }
+
+    containerAlbum?: Phaser.GameObjects.Container;
+
     background?: Phaser.GameObjects.Image;
     masterManagerScene?: MasterManager;
     constructor() {
@@ -48,6 +52,11 @@ class MenuScene extends Phaser.Scene {
             panToCredits: this.centralPointCredits,
             panToPlay: this.centralPointPlay,
             panToSettings: this.centralPointSettings,
+            changeContainer: ()=>{
+                if(this.containerInitial&&this.containerAlbum){
+                    this.changeContainer(this.containerInitial, this.containerAlbum)
+                }
+            } 
         })
         this.containerCredits = new ContainerCredits(this, {
             x: -this.width / 2,
@@ -86,6 +95,18 @@ class MenuScene extends Phaser.Scene {
             }
         }).setVisible(false)
         this.containerCode.setScale(scaleBy())
+
+        this.containerAlbum = new containerAlbum(this, {
+            x: 0,
+            y: 0,
+            panToInitial: this.centralPointInitial,
+            panToCode: this.centralPointCode,
+            changeContainer: () => {
+                if (this.containerAlbum && this.containerInitial) {
+                  this.changeContainer(this.containerAlbum, this.containerInitial)
+                } 
+            }
+        }).setVisible(false)
 
         this.events.removeAllListeners('shutdown')
     }

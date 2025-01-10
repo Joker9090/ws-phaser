@@ -6,57 +6,62 @@
     },
     {
         "codigo": "000002",
-        "imagenes": [],
+        "imagenes": ["planeta1_figu1"],
         "mapa": 1
     },
     {
         "codigo": "000003",
-        "imagenes": [],
+        "imagenes": ["planeta1_figu1"],
         "mapa": 2
     },
     {
         "codigo": "000004",
-        "imagenes": [],
+        "imagenes": ["planeta1_figu1", "planeta1_figu2"],
         "mapa": 3
     },
     {
         "codigo": "000005",
-        "imagenes": [],
+        "imagenes": ["planeta1_figu1","planeta1_figu2"],
         "mapa": 4
     },
     {
         "codigo": "000006",
-        "imagenes": [],
+        "imagenes": ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1"],
         "mapa": 5
     },
     {
         "codigo": "000007",
-        "imagenes": [],
+        "imagenes": ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1"],
         "mapa": 6
     },
     {
         "codigo": "000008",
-        "imagenes": [],
+        "imagenes": ["planeta1_figu1","planeta1_figu2","planeta2_figu1","planeta2_figu2"],
         "mapa": 7
     },
     {
         "codigo": "000009",
-        "imagenes": [],
+        "imagenes": ["planeta1_figu1","planeta1_figu2","planeta2_figu1","planeta2_figu2"],
         "mapa": 8
     },
     {
         "codigo": "000010",
-        "imagenes": [],
+        "imagenes": ["planeta1_figu1","planeta1_figu2","planeta2_figu1","planeta2_figu2","planeta3_figu1"],
         "mapa": 9
     },
     {
         "codigo": "000011",
-        "imagenes": [],
+        "imagenes": ["planeta1_figu1","planeta1_figu2","planeta2_figu1","planeta2_figu2","planeta3_figu1"],
         "mapa": 10
     },
     {
         "codigo": "000012",
-        "imagenes": [],
+        "imagenes": ["planeta1_figu1","planeta1_figu2","planeta2_figu1","planeta2_figu2","planeta3_figu1","planeta3_figu2"],
         "mapa": 11
+    },
+    {
+        "codigo": "unlkal",
+        "imagenes": ["planeta1_figu1", "planeta1_figu2","planeta2_figu1","planeta2_figu2","planeta3_figu1","planeta3_figu2"],
+        "mapa": 0
     }
 ]

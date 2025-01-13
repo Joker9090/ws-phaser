@@ -113,7 +113,7 @@ export default class UIClass {
       this.container.add(bg);
       this.container.add(this.settings);
       this.settings.on('pointerup',()=>{
-        const settingsModal = new containerSettings(this.scene, {x:window.innerWidth/2,y:window.innerHeight/2}, this.settings)
+        const settingsModal = new containerSettings(this.scene, {x:window.innerWidth/2,y:window.innerHeight/2},undefined, this.settings)
         this.masterManager.playSound('buttonSound', false)
         this.masterManager.pauseGame()
         this.settings?.setVisible(false)

@@ -132,6 +132,8 @@ class containerCode extends Phaser.GameObjects.Container {
                     this.masterManager?.enterCode(this.textDisplay.join(''), this.error);
                     this.confirmButton.setTexture('acceptHover')
                     this.scene.sound.play('buttonSound')
+                    this.scene.sound.stopAll()
+                    
                 }
            })
 

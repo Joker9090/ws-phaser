@@ -31,13 +31,15 @@ class containerAlbum extends Phaser.GameObjects.Container {
         this.background = scene.add.image(this.width / 2, this.height / 2, "backgroundAlbum").setScale(scaleBy(true))
         // this.background.setInteractive()
         this.banner = scene.add.image(this.width / 2, this.height / 6, "bannerAlbum")
-        this.title = this.scene.add.text(0, 0, "Album", {
+        let nivel = 1;
+        this.title = this.scene.add.text(this.width / 8, this.height / 8, `Level ${nivel}`, {
             color: "#00feff",
             stroke: "#00feff",
             align: "center",
             fontFamily: "Arcade",
+            fontSize: 65,
             wordWrap: {
-                width: this.width * 0.9,
+            width: this.width * 0.9,
             },
         })
         this.backButton = scene.add.image(0, 0, "playBackButton")
@@ -92,6 +94,8 @@ class containerAlbum extends Phaser.GameObjects.Container {
             if (end < this.masterManager.imagenesAlbum.length) {
                 start += step;
                 end += step;
+                nivel += 1
+                this.title.setText(`Level ${nivel}`)
                 updateFiguritas();
             }
         });
@@ -116,6 +120,8 @@ class containerAlbum extends Phaser.GameObjects.Container {
             if (start > 0) {
                 start -= step;
                 end -= step;
+                nivel -= 1
+                this.title.setText(`Level ${nivel}`)
                 updateFiguritas();
             }
         });
@@ -136,10 +142,10 @@ class containerAlbum extends Phaser.GameObjects.Container {
         // arr.push(nextButton, prevButton)
 
         this.add([
-            this.title,
             this.background,
             this.backButton,
             this.banner,
+            this.title,
             nextButton,
             prevButton
         ])

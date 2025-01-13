@@ -154,7 +154,7 @@ class containerCode extends Phaser.GameObjects.Container {
                     x: this.width * 1.5,
                     y: this.height / 2,
                 
-                })
+                }, config.changeContainer ? config.changeContainer : undefined)
                 arr.push(settings)
                 this.scene.sound.play('buttonSound')
             this.settingsButton.setTexture('settingsButtonHover')

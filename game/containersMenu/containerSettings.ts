@@ -53,7 +53,7 @@ class containerSettings extends Phaser.GameObjects.Container {
         fillBar: Phaser.GameObjects.Rectangle
     };
 
-    constructor(scene: MenuScene | Game | CinematographyModular, config: ContainerMenuConfigType,  settingsButtonUi?:Phaser.GameObjects.Image) {
+    constructor(scene: MenuScene | Game | CinematographyModular, config: ContainerMenuConfigType, changeContainer?: ()=>void, settingsButtonUi?: Phaser.GameObjects.Image) {
         super(scene, config.x, config.y)
         const offsetY = 100
         this.scene = scene
@@ -98,6 +98,9 @@ class containerSettings extends Phaser.GameObjects.Container {
             this.quitGame.setTexture('settingQuitGameHover')
             this.masterManager.changeVolume(this.volumeMusic, 'music');
             this.masterManager.changeVolume(this.volumeSound, 'sound');
+            if(changeContainer){
+                changeContainer()
+            }
             if(this.scene.scene.key !== 'MenuScene'){
                 const multiScene = new MultiScene("MenuScene", undefined);
                 const scene = this.scene.scene.add("MultiScene", multiScene, true);

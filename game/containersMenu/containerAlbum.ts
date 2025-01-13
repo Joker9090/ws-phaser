@@ -78,6 +78,7 @@ class containerAlbum extends Phaser.GameObjects.Container {
             const showFiguritas = this.masterManager.imagenesAlbum.slice(start, end);
             showFiguritas.forEach((data, index) => {
                 const figurita = new Figuritas(scene, posX * (index +1), this.height / 1.7, data).setScale(0.8).setAlpha(0.8);
+                
                 this.figuritas.push(figurita);
                 // posX += spacing;
             });
@@ -154,6 +155,10 @@ class containerAlbum extends Phaser.GameObjects.Container {
 
         // this.add(arr)
         scene.add.existing(this)
+    }
+
+    download(){
+        console.log("hola hola")
     }
 }
 export default containerAlbum;

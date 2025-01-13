@@ -42,9 +42,9 @@ class MenuScene extends Phaser.Scene {
         this.cameras.main.centerOn(this.centralPointInitial.x, this.centralPointInitial.y)
 
 
-       
 
-        this.sound.add("menuBgMusic", {loop:true}).play()
+
+        this.sound.add("menuBgMusic", { loop: true }).play()
 
         this.containerInitial = new containerInitial(this, {
             x: 0,
@@ -52,11 +52,11 @@ class MenuScene extends Phaser.Scene {
             panToCredits: this.centralPointCredits,
             panToPlay: this.centralPointPlay,
             panToSettings: this.centralPointSettings,
-            changeContainer: ()=>{
-                if(this.containerInitial&&this.containerAlbum){
+            changeContainer: () => {
+                if (this.containerInitial && this.containerAlbum) {
                     this.changeContainer(this.containerInitial, this.containerAlbum)
                 }
-            } 
+            }
         })
         this.containerCredits = new ContainerCredits(this, {
             x: -this.width / 2,
@@ -72,8 +72,8 @@ class MenuScene extends Phaser.Scene {
             panToCode: this.centralPointCode,
             changeContainer: () => {
                 if (this.containerPlay && this.containerCode) {
-                  this.changeContainer(this.containerPlay, this.containerCode)
-                } 
+                    this.changeContainer(this.containerPlay, this.containerCode)
+                }
             }
         })
 
@@ -85,13 +85,13 @@ class MenuScene extends Phaser.Scene {
         // this.containerSettings.settingsModal.setScale(scaleBy());
 
         this.containerCode = new containerCode(this, {
-            x: this.width*1.5,
+            x: this.width * 1.5,
             y: this.height / 2,
             panToInitial: this.centralPointInitial,
             changeContainer: () => {
                 if (this.containerCode && this.containerPlay) {
-                  this.changeContainer(this.containerCode, this.containerPlay)
-                } 
+                    this.changeContainer(this.containerCode, this.containerPlay)
+                }
             }
         }).setVisible(false)
         this.containerCode.setScale(scaleBy())
@@ -103,48 +103,48 @@ class MenuScene extends Phaser.Scene {
             panToCode: this.centralPointCode,
             changeContainer: () => {
                 if (this.containerAlbum && this.containerInitial) {
-                  this.changeContainer(this.containerAlbum, this.containerInitial)
-                } 
+                    this.changeContainer(this.containerAlbum, this.containerInitial)
+                }
             }
         }).setVisible(false)
 
         this.events.removeAllListeners('shutdown')
     }
-    changeContainer(from:Phaser.GameObjects.Container, to:Phaser.GameObjects.Container){
+    changeContainer(from: Phaser.GameObjects.Container, to: Phaser.GameObjects.Container) {
         const circle = from.scene.add.circle(window.innerWidth, window.innerHeight, 1, 0x000, 1)
-        circle.setInteractive(  )
+        circle.setInteractive()
         const diagonal = Math.sqrt(window.innerWidth ** 2 + window.innerHeight ** 2);
-        const finalScale = diagonal / (circle.radius * 2)  
-         from.scene.tweens.add({
-           targets: circle, 
-           scale: finalScale * 2 , 
-           duration: 1000, 
-           ease: 'Power2', 
-           onComplete: () => {
+        const finalScale = diagonal / (circle.radius * 2)
+        from.scene.tweens.add({
+            targets: circle,
+            scale: finalScale * 2,
+            duration: 1000,
+            ease: 'Power2',
+            onComplete: () => {
                 from.setVisible(false)
                 to.setVisible(true)
-               from.scene.tweens.add({
-                targets:circle,
-                scale: 0,
-                duration:1500,
-                ease:'Power2',
-                onComplete:()=>{
-                    circle.destroy()
-                }
-               })
-           }
-         }); 
+                from.scene.tweens.add({
+                    targets: circle,
+                    scale: 0,
+                    duration: 1500,
+                    ease: 'Power2',
+                    onComplete: () => {
+                        circle.destroy()
+                    }
+                })
+            }
+        });
     }
     update() {
     }
 }
 
-export  const scaleBy = () => {
+export const scaleBy = (isBackground: boolean = false) => {
     const gameObjectScaler = {
         x: window.innerWidth / 1920,
         y: window.innerHeight / 1080,
     };
-    if (window.innerWidth > 1920) {
+    if (window.innerWidth > 1920 && !isBackground) {
         return (
             gameObjectScaler.x > gameObjectScaler.y
                 ? gameObjectScaler.y

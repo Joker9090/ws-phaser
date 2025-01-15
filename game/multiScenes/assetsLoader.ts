@@ -108,10 +108,11 @@ const loadAssets = {
       ["image", "acceptHover", "/menu/code/acceptHover.png"],
       ["image", "acceptPressed", "/menu/code/acceptClick.png"],
 
+      // album
       ["image", "backgroundAlbum", "/menu/album/fondoalbum.png"],
       ["image", "bannerAlbum", "/menu/album/banner_album.png"],
       ["image", "modalFiguirita", "/menu/album/modalFigurita.png"],
-
+      ["image", 'downloadButton', "/menu/album/botonDownload.png"],
       ["image", "planeta1_figu1", "/menu/album/figuritas/Planeta1_figu1.png"],
       ["image", "planeta1_figu2", "/menu/album/figuritas/Planeta1_figu2.png"],
       ["image", "planeta2_figu1", "/menu/album/figuritas/Planeta2_figu1.png"],

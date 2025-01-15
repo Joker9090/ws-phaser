@@ -57,19 +57,21 @@ class Figuritas extends Phaser.GameObjects.Container {
     const group:any[] = []
     const background =this.scene.add.rectangle(this.scene.scale.width / 2,this.scene.scale.height /2,this.scene.scale.width,this.scene.scale.height, 0x0000, 0.7)
     const downloadImage = this.scene.add.image(this.scene.scale.width / 2,this.scene.scale.height /4 + 300, this.postal).setScale(0.2)
-    const check = this.scene.add.image(this.scene.scale.width / 2 - 300,this.scene.scale.height /4 + 600, "settingsCheck")
-    const cross = this.scene.add.image(this.scene.scale.width / 2 + 300  ,this.scene.scale.height /4 +600, "settingsCross")
-    const text =  this.scene.add.text(this.scene.scale.width / 3 ,this.scene.scale.height /4 , `you wanna download ${this.postal} ?`, {
+    const downloadButton = this.scene.add.image(this.scene.scale.width/2 + 300 , this.scene.scale.height/2 + 230, "downloadButton")
+    const modal = this.scene.add.image(this.scene.scale.width / 2,this.scene.scale.height /4 + 300, "codeModal").setVisible(false)
+    const check = this.scene.add.image(this.scene.scale.width / 2 - 100,this.scene.scale.height /4 + 450, "settingsCheck").setVisible(false)
+    const cross = this.scene.add.image(this.scene.scale.width / 2 + 100  ,this.scene.scale.height /4 +450, "settingsCross").setVisible(false)
+    const text = this.scene.add.text(this.scene.scale.width / 3 - 60, this.scene.scale.height / 4 + 200, `Are you sure you want\nto download this item?`, {
       color: "#00feff",
       stroke: "#00feff",
       align: "center",
       fontFamily: "Arcade",
-      fontSize: 30,
+      fontSize: 60,
       wordWrap: {
       width: this.width * 0.9,
       },
-    })
-    group.push(background, text, downloadImage, check, cross)
+    }).setVisible(false)
+    group.push(background, text, downloadImage, check, cross, downloadButton, modal)
     background.setInteractive()
     background.on("pointerup", () => {
       downloadImage.destroy()
@@ -77,20 +79,30 @@ class Figuritas extends Phaser.GameObjects.Container {
     })
     cross.setInteractive()
     cross.on("pointerup", () => {
-      downloadImage.destroy()
-      group.forEach(item => item.destroy());
+      modal.setVisible(false)
+      check.setVisible(false)
+      cross.setVisible(false)
+      text.setVisible(false)
+      downloadImage.setVisible(true)
     })
     check.setInteractive()
-    check.on("pointerup", () => {
-      downloadImage.destroy()
-      group.forEach(item => item.destroy());
+    check.on("pointerup", ()=>{
       const link = document.createElement('a');
       link.href = this.scene.textures.getBase64(this.postal);
       link.download = `${this.postal}.png`;
       link.click();
+      downloadImage.destroy()
+      group.forEach(item => item.destroy());
     })
- 
-    
+    downloadButton.setInteractive()
+    downloadButton.on("pointerup", () => {
+      modal.setVisible(true)
+      check.setVisible(true)
+      cross.setVisible(true)
+      text.setVisible(true)
+      downloadImage.setVisible(false)
+   
+    })    
   }
 }
 

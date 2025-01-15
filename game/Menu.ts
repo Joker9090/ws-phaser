@@ -106,7 +106,7 @@ class MenuScene extends Phaser.Scene {
                     this.changeContainer(this.containerAlbum, this.containerInitial)
                 }
             }
-        }).setVisible(false)
+        }).setVisible(true)
 
         this.events.removeAllListeners('shutdown')
     }

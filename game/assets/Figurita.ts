@@ -56,7 +56,6 @@ class Figuritas extends Phaser.GameObjects.Container {
     console.log("hol")
     const group:any[] = []
     const background =this.scene.add.rectangle(this.scene.scale.width / 2,this.scene.scale.height /2,this.scene.scale.width,this.scene.scale.height, 0x0000, 0.7)
-    // const modal = this.scene.add.image(this.scene.scale.width / 2,this.scene.scale.height /2, "codeModal")
     const downloadImage = this.scene.add.image(this.scene.scale.width / 2,this.scene.scale.height /4 + 300, this.postal).setScale(0.2)
     const check = this.scene.add.image(this.scene.scale.width / 2 - 300,this.scene.scale.height /4 + 600, "settingsCheck")
     const cross = this.scene.add.image(this.scene.scale.width / 2 + 300  ,this.scene.scale.height /4 +600, "settingsCross")
@@ -85,8 +84,12 @@ class Figuritas extends Phaser.GameObjects.Container {
     check.on("pointerup", () => {
       downloadImage.destroy()
       group.forEach(item => item.destroy());
+      const link = document.createElement('a');
+      link.href = this.scene.textures.getBase64(this.postal);
+      link.download = `${this.postal}.png`;
+      link.click();
     })
-
+ 
     
   }
 }

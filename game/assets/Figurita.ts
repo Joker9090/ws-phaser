@@ -59,8 +59,8 @@ class Figuritas extends Phaser.GameObjects.Container {
     const downloadImage = this.scene.add.image(this.scene.scale.width / 2,this.scene.scale.height /4 + 300, this.postal).setScale(0.2)
     const downloadButton = this.scene.add.image(this.scene.scale.width/2 + 300 , this.scene.scale.height/2 + 230, "downloadButton")
     const modal = this.scene.add.image(this.scene.scale.width / 2,this.scene.scale.height /4 + 300, "codeModal").setVisible(false)
-    const check = this.scene.add.image(this.scene.scale.width / 2 - 100,this.scene.scale.height /4 + 450, "settingsCheck").setVisible(false)
-    const cross = this.scene.add.image(this.scene.scale.width / 2 + 100  ,this.scene.scale.height /4 +450, "settingsCross").setVisible(false)
+    const cross = this.scene.add.image(this.scene.scale.width / 2 - 100,this.scene.scale.height /4 + 450, "settingsCross").setVisible(false)
+    const check = this.scene.add.image(this.scene.scale.width / 2 + 100  ,this.scene.scale.height /4 +450, "settingsCheck").setVisible(false)
     const text = this.scene.add.text(this.scene.scale.width / 3 - 60, this.scene.scale.height / 4 + 200, `Are you sure you want\nto download this item?`, {
       color: "#00feff",
       stroke: "#00feff",
@@ -78,14 +78,33 @@ class Figuritas extends Phaser.GameObjects.Container {
       group.forEach(item => item.destroy());
     })
     cross.setInteractive()
+    cross.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER,()=>{
+      cross.setTexture("settingsCrossHover")
+    })
+    cross.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT,()=>{
+      cross.setTexture("settingsCross")
+    })
+    cross.on("pointerdown",()=>{
+      cross.setTexture("settingsCrossPessed")
+    })
     cross.on("pointerup", () => {
       modal.setVisible(false)
       check.setVisible(false)
       cross.setVisible(false)
       text.setVisible(false)
       downloadImage.setVisible(true)
+      downloadButton.setVisible(true)
     })
     check.setInteractive()
+    check.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER,()=>{
+      check.setTexture("settingsCheckHover")
+    })
+    check.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT,()=>{
+      check.setTexture("settingsCheck")
+    })
+    check.on("pointerdown",()=>{
+      check.setTexture("settingsCheckPressed")
+    })
     check.on("pointerup", ()=>{
       const link = document.createElement('a');
       link.href = this.scene.textures.getBase64(this.postal);
@@ -95,12 +114,22 @@ class Figuritas extends Phaser.GameObjects.Container {
       group.forEach(item => item.destroy());
     })
     downloadButton.setInteractive()
+    downloadButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER,()=>{
+      downloadButton.setTexture("downloadButtonHover")
+    })
+    downloadButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT,()=>{
+      downloadButton.setTexture("downloadButton")
+    })
+    downloadButton.on("pointerdown",()=>{
+      downloadButton.setTexture("downloadButtonClick")
+    })
     downloadButton.on("pointerup", () => {
       modal.setVisible(true)
       check.setVisible(true)
       cross.setVisible(true)
       text.setVisible(true)
       downloadImage.setVisible(false)
+      downloadButton.setVisible(false)
    
     })    
   }

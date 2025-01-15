@@ -32,7 +32,7 @@ class containerAlbum extends Phaser.GameObjects.Container {
         // this.background.setInteractive()
         this.banner = scene.add.image(this.width / 2, this.height / 6, "bannerAlbum")
         let nivel = 1;
-        this.title = this.scene.add.text(this.width / 8, this.height / 8, `Level ${nivel}`, {
+        this.title = this.scene.add.text(100, 120 , `Level ${nivel}`, {
             color: "#00feff",
             stroke: "#00feff",
             align: "center",
@@ -90,13 +90,14 @@ class containerAlbum extends Phaser.GameObjects.Container {
             // console.log(this, "CONTAINER ALBUM ARIEL IN UPDATE")
         };
 
-        const nextButton = this.scene.add.image(this.width - 80, this.height / 1.7, "backButton").setInteractive();
+        const nextButton = this.scene.add.image(this.width - 100, this.height / 1.7, "backButton").setInteractive().setScale(0.8);
         nextButton.on("pointerup", () => {
             if (end < this.masterManager.imagenesAlbum.length) {
                 start += step;
                 end += step;
                 nivel += 1
                 this.title.setText(`Level ${nivel}`)
+                this.scene.sound.play('buttonSound')
                 updateFiguritas();
             }
         });
@@ -116,13 +117,14 @@ class containerAlbum extends Phaser.GameObjects.Container {
 
 
 
-        const prevButton = this.scene.add.image(100, this.height / 1.7, "playBackButton").setInteractive();
+        const prevButton = this.scene.add.image(100, this.height / 1.7, "playBackButton").setInteractive().setScale(0.8);
         prevButton.on("pointerup", () => {
             if (start > 0) {
                 start -= step;
                 end -= step;
                 nivel -= 1
                 this.title.setText(`Level ${nivel}`)
+                this.scene.sound.play('buttonSound')
                 updateFiguritas();
             }
         });

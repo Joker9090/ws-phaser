@@ -92,7 +92,7 @@ class Figuritas extends Phaser.GameObjects.Container {
       check.setVisible(false)
       cross.setVisible(false)
       text.setVisible(false)
-      downloadImage.setVisible(true)
+      // downloadImage.setVisible(true)
       downloadButton.setVisible(true)
     })
     check.setInteractive()
@@ -128,7 +128,7 @@ class Figuritas extends Phaser.GameObjects.Container {
       check.setVisible(true)
       cross.setVisible(true)
       text.setVisible(true)
-      downloadImage.setVisible(false)
+      // downloadImage.setVisible(false)
       downloadButton.setVisible(false)
    
     })    

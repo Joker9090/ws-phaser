@@ -63,8 +63,8 @@ export default class MasterManager extends Phaser.Scene {
         break;
       case "sound":
         this.volumeSound = volume;
-        if (this.sound) {
-          this.sound.setVolume(volume*this.MAX_VOLUME);
+        if (this.sounds) {
+          this.sounds.setVolume(volume*this.MAX_VOLUME);
         }
         break;
     }

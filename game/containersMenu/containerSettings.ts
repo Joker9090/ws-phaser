@@ -14,7 +14,7 @@ class containerSettings extends Phaser.GameObjects.Container {
     quitGame: Phaser.GameObjects.Image;
     cross: Phaser.GameObjects.Image;
     check: Phaser.GameObjects.Image;
-    album: Phaser.GameObjects.Image;
+    // album: Phaser.GameObjects.Image;
     brightness: Phaser.GameObjects.Image;
     brightnessFull: Phaser.GameObjects.Image;
     _sound: Phaser.GameObjects.Image;
@@ -30,7 +30,7 @@ class containerSettings extends Phaser.GameObjects.Container {
     brightnessText: Phaser.GameObjects.Text;
     _soundText: Phaser.GameObjects.Text;
     musicText: Phaser.GameObjects.Text;
-    albumText: Phaser.GameObjects.Text;
+    // albumText: Phaser.GameObjects.Text;
     volume?: number;
     scene: MenuScene | Game | CinematographyModular;
     settingsModal: Phaser.GameObjects.Container;
@@ -163,18 +163,18 @@ class containerSettings extends Phaser.GameObjects.Container {
             destroy()
 
         })
-        this.album = scene.add.image(-this.modal.width / 2 + 120, 150, "settingsAlbum");
-        this.album.setOrigin(0.5);
-        this.albumText = scene.add.text(-this.modal.width / 2 + 150, 130, 'Album', {
-            fontSize: 30,
-            color: "#00feff",
-            stroke: "#00feff",
-            align: "center",
-            fontFamily: "Arcade",
-            wordWrap: {
-                width: this.width * 0.9,
-            },
-        });
+        // this.album = scene.add.image(-this.modal.width / 2 + 120, 150, "settingsAlbum");
+        // this.album.setOrigin(0.5);
+        // this.albumText = scene.add.text(-this.modal.width / 2 + 150, 130, 'Album', {
+        //     fontSize: 30,
+        //     color: "#00feff",
+        //     stroke: "#00feff",
+        //     align: "center",
+        //     fontFamily: "Arcade",
+        //     wordWrap: {
+        //         width: this.width * 0.9,
+        //     },
+        // });
 
         this.brightness = scene.add.image(-this.modal.width / 2 + 120, 30, "settingsBrightness");
         this.brightness.setOrigin(0.5);
@@ -243,7 +243,7 @@ class containerSettings extends Phaser.GameObjects.Container {
             this.quitGame,
             this.cross,
             this.check,
-            this.album,
+            // this.album,
             this.brightness,
             this.brightnessFull,
             this._sound,
@@ -254,7 +254,7 @@ class containerSettings extends Phaser.GameObjects.Container {
             this.brightnessText,
             this._soundText,
             this.musicText,
-            this.albumText,
+            // this.albumText,
         ]
 
         this.settingsModal.add(arr)

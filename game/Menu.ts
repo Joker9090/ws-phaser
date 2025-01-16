@@ -41,11 +41,14 @@ class MenuScene extends Phaser.Scene {
         this.cameras.main.setViewport(-this.width, 0, this.width * 3, this.height)
         this.cameras.main.centerOn(this.centralPointInitial.x, this.centralPointInitial.y)
 
+        this.masterManagerScene = this.game.scene.getScene(
+            "MasterManager"
+        ) as MasterManager;
+        if (!this.masterManagerScene.scene.isActive())
+            this.scene.launch("MasterManager").sendToBack();
+      
 
-
-
-        this.sound.add("menuBgMusic", { loop: true }).play()
-
+        this.masterManagerScene.playMusic("menuBgMusic")
         this.containerInitial = new containerInitial(this, {
             x: 0,
             y: 0,

@@ -52,6 +52,7 @@ class containerSettings extends Phaser.GameObjects.Container {
         control: Phaser.GameObjects.Image,
         fillBar: Phaser.GameObjects.Rectangle
     };
+    settingsButtonUi?: Phaser.GameObjects.Image
 
     constructor(scene: MenuScene | Game | CinematographyModular, config: ContainerMenuConfigType, changeContainer?: ()=>void, settingsButtonUi?: Phaser.GameObjects.Image) {
         super(scene, config.x, config.y)
@@ -59,6 +60,7 @@ class containerSettings extends Phaser.GameObjects.Container {
         this.scene = scene
         this.modal = scene.add.image(0, 0, "settingsModal").setScale(0.9);
         this.modal.setOrigin(0.5);
+        this.settingsButtonUi = settingsButtonUi
 
         let masterManagerScene = scene.game.scene.getScene("MasterManager") as MasterManager;
         if (!masterManagerScene) {
@@ -132,15 +134,7 @@ class containerSettings extends Phaser.GameObjects.Container {
             this.cross.setTexture('settingsCrossPessed')
         })
         this.cross.on('pointerup', () => {
-            this.cross.setTexture('settingsCrossHover')
-            this.masterManager.playSound('buttonSound', false)
-            this.masterManager.changeVolume(this.volumeMusic, 'music');
-            this.masterManager.changeVolume(this.volumeSound, 'sound');
-            this.masterManager.changeBrightness(this.darkness);
-            this.masterManager.resumeGame()
-            settingsButtonUi?.setVisible(true)
-            destroy()
-
+            this.crossPress()
         })
 
         this.check = scene.add.image(10, 350, 'settingsCheck').setScale(0.8);
@@ -156,6 +150,8 @@ class containerSettings extends Phaser.GameObjects.Container {
             this.check.setTexture('settingsCheckPressed')
         })
         this.check.on('pointerup', () => {
+            console.log(this.darkness, "darkness desde check")
+            console.log("scenes", this.scene.game.scene.getScenes(), "cameras:", this.scene.cameras)
             this.check.setTexture('settingsCheckHover')
             this.masterManager.playSound('buttonSound', false)
             settingsButtonUi?.setVisible(true)
@@ -268,7 +264,17 @@ class containerSettings extends Phaser.GameObjects.Container {
         
     }
 
-
+        crossPress(){
+            console.log(this.darkness, "darkness desde cross")
+            this.cross.setTexture('settingsCrossHover')
+            this.masterManager.playSound('buttonSound', false)
+            this.masterManager.changeVolume(this.volumeMusic, 'music');
+            this.masterManager.changeVolume(this.volumeSound, 'sound');
+            this.masterManager.changeBrightness(this.darkness);
+            this.masterManager.resumeGame()
+            this.settingsButtonUi?.setVisible(true)
+            this.destroy()
+        }
 
     createSlider(scene: Phaser.Scene, x: number, y: number, onChange: (value: number) => void, initialValue: number) {
         const slider = scene.add.container(x, y);

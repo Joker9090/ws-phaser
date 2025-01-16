@@ -21,7 +21,7 @@ export default class MasterManager extends Phaser.Scene {
   brightnessScreen?: Phaser.GameObjects.Rectangle;
   volumeMusic: number = 0.2;
   volumeSound: number = 0.2;
-  brightness: number = 0;
+  brightness: number = 0.5;
   MAX_VOLUME: number = 0.6;
   MAX_DARKNESS: number = 0.3;
   imagenesAlbum: string[] = ["planeta1_figu1", "planeta1_figu2","planeta2_figu1","planeta2_figu2","planeta3_figu1","planeta3_figu2"]
@@ -90,8 +90,10 @@ export default class MasterManager extends Phaser.Scene {
   }
 
   changeBrightness(value: number) {
+    console.log(this.cameras.main)
     this.brightness = value
-    this.brightnessScreen?.setAlpha( 0.3 * value);
+    this.cameras.main.setAlpha(1.3 - value)
+    // this.brightnessScreen?.setAlpha( 0.3 * value);
   }
   pauseGame(){
     const gameScene = this.scene.get("Game");

@@ -53,7 +53,7 @@ class containerInitial extends Phaser.GameObjects.Container {
         this.playButton.on('pointerup', () => {
             if(config.panToPlay){
                 this.scene.cameras.main.pan(config.panToPlay.x, config.panToPlay.y, 1000, 'Expo', true)
-                this.scene.sound.play('buttonSound')
+                this.masterManager.playSound('buttonSound', false)
 
             }
             this.playButton.setTexture('playButtonHover')
@@ -74,7 +74,7 @@ class containerInitial extends Phaser.GameObjects.Container {
             this.creditsButton.setTexture('creditsButtonHover')
             if(config.panToCredits){
                 this.scene.cameras.main.pan(config.panToCredits.x, config.panToCredits.y, 1000, 'Expo', true)
-            this.scene.sound.play('buttonSound')
+                this.masterManager.playSound('buttonSound', false)
 
             }
 
@@ -95,7 +95,7 @@ class containerInitial extends Phaser.GameObjects.Container {
         });
         this.albumButton.on('pointerup', () => {
             this.albumButton.setTexture('albumButtonHover')
-            this.scene.sound.play('buttonSound')
+            this.masterManager.playSound('buttonSound', false)
             if(config.changeContainer){
                 config.changeContainer()
             }
@@ -131,7 +131,7 @@ class containerInitial extends Phaser.GameObjects.Container {
         })
         this.scoreButton.on("pointerup", ()=>{
             this.scoreButton.setTexture('scoreButtonHover')
-            this.scene.sound.play('buttonSound')
+            this.masterManager.playSound('buttonSound', false)
 
         })
 
@@ -152,7 +152,7 @@ class containerInitial extends Phaser.GameObjects.Container {
         this.settingsButton.on("pointerup", ()=>{
             console.log(this.settingsVisible, "visible from menu")
             this.toggleSettings()
-            this.scene.sound.play('buttonSound')
+            this.masterManager.playSound('buttonSound', false)
             this.settingsButton.setTexture('settingsButtonHover')
         })
         this.scene.input.keyboard?.on('keydown-ESC', () => {
@@ -188,7 +188,6 @@ class containerInitial extends Phaser.GameObjects.Container {
 
         }else{
           const settingsModal = new containerSettings(this.scene, {x:window.innerWidth/2,y:window.innerHeight/2},undefined, ()=>{this.settingsVisible = !this.settingsVisible},this.settingsButton)
-          this.masterManager.playSound('buttonSound', false)
           this.settingsButton?.setVisible(false)
           this.arr.push(settingsModal)
           this.settingsVisible = true

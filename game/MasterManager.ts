@@ -58,13 +58,14 @@ export default class MasterManager extends Phaser.Scene {
       case "music":
         this.volumeMusic = volume ;
         if (this.music) {
-          this.music.setVolume(volume * this.MAX_VOLUME);
+          this.music.setVolume(volume*this.MAX_VOLUME < 0.1 ? 0 : volume*this.MAX_VOLUME);
         }
         break;
       case "sound":
         this.volumeSound = volume;
         if (this.sounds) {
-          this.sounds.setVolume(volume*this.MAX_VOLUME);
+          this.sounds.setVolume(volume*this.MAX_VOLUME < 0.1 ? 0 : volume*this.MAX_VOLUME);
+          console.log(this.sounds.volume)
         }
         break;
     }
@@ -72,7 +73,7 @@ export default class MasterManager extends Phaser.Scene {
 
   playSound(name: string, loop: boolean = false) {
     this.sounds = this.sound.add(name, {
-      volume: this.volumeSound,
+      volume: this.sounds?.volume,
       loop: loop,
     });
     this.sounds.play();

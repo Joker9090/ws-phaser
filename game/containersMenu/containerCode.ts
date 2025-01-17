@@ -60,7 +60,7 @@ class containerCode extends Phaser.GameObjects.Container {
         this.input.on('pointerup', () => {
           isTyping = true;
           inputText = '';
-          this.scene.sound.play('buttonSound')
+          this.masterManager?.playSound('buttonSound', false)
         });
         scene.input.keyboard?.on('keydown', (event: any) => {
           const key = event.key;
@@ -96,7 +96,7 @@ class containerCode extends Phaser.GameObjects.Container {
            })
            this.backButton.on('pointerup',()=>{
                this.backButton.setTexture('playBackButton')
-               this.scene.sound.play('buttonSound')
+               this.masterManager?.playSound('buttonSound', false)
 
                if(config.changeContainer){
                 config.changeContainer()
@@ -131,7 +131,7 @@ class containerCode extends Phaser.GameObjects.Container {
                if(this.textDisplay.length>=textLength){
                     this.masterManager?.enterCode(this.textDisplay.join(''), this.error);
                     this.confirmButton.setTexture('acceptHover')
-                    this.scene.sound.play('buttonSound')
+                    this.masterManager?.playSound('buttonSound', false)
                     this.scene.sound.stopAll()
                     
                 }
@@ -158,7 +158,7 @@ class containerCode extends Phaser.GameObjects.Container {
                 
                 }, config.changeContainer ? config.changeContainer : undefined)
                 arr.push(settings)
-                this.scene.sound.play('buttonSound')
+                this.masterManager?.playSound('buttonSound', false)
             this.settingsButton.setTexture('settingsButtonHover')
         })
         

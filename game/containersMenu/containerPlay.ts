@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import { ContainerMenuConfigType } from "../Types";
 import MultiScene from "../MultiScene";
 import MenuScene from "../Menu";
+import MasterManager from "../MasterManager";
 
 class containerPlay extends Phaser.GameObjects.Container {
 
@@ -11,17 +12,25 @@ class containerPlay extends Phaser.GameObjects.Container {
     newGameButton: Phaser.GameObjects.Image;
     enterCodeButton: Phaser.GameObjects.Image;
     backButton: Phaser.GameObjects.Image;
+    masterManager: MasterManager
 
     constructor(scene: Phaser.Scene, config: ContainerMenuConfigType) {
         super(scene, config.x, config.y)
-
+        let masterManagerScene = scene.game.scene.getScene("MasterManager") as MasterManager;
+        if (!masterManagerScene) {
+            this.masterManager = new MasterManager();
+            this.scene.scene.add("MasterManager", this.masterManager, true);
+        } else {
+            this.masterManager = masterManagerScene;
+            // this.scene.scene.launch("MasterManager");
+        }
         const offsetY = 100
         this.newGameButton = scene.add.image(this.width/2, this.height/2 + offsetY, "newGameButton")
         this.newGameButton.setInteractive().on('pointerdown', () => {
             this.newGameButton.setTexture('newGameButtonPressed')
         })
         this.newGameButton.on('pointerup',()=>{
-            this.scene.sound.play('buttonSound')
+            this.masterManager.playSound('buttonSound', false)
             this.newGameButton.setTexture('newGameButtonHover')
             const multiScene = new MultiScene("CinematographyMod", { keyname: 'cine_intro_1',  loadKey: ["Cinemato0"] });
             const scene = this.scene.scene.add("MultiScene", multiScene, true);
@@ -44,7 +53,7 @@ class containerPlay extends Phaser.GameObjects.Container {
             this.enterCodeButton.setTexture('enterCodeButtonHover')
             if (config.changeContainer) {
                 config.changeContainer();
-                this.scene.sound.play('buttonSound')
+                this.masterManager.playSound('buttonSound', false)
 
             }
         })
@@ -65,7 +74,7 @@ class containerPlay extends Phaser.GameObjects.Container {
         })
         this.backButton.on('pointerup',()=>{
             this.backButton.setTexture('playBackButton')
-            this.scene.sound.play('buttonSound')
+            this.masterManager.playSound('buttonSound', false)
             if (config.panToInitial) {
                 this.scene.cameras.main.pan(config.panToInitial.x, config.panToInitial.y, 1000, 'Expo', true)
             }

@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import { ContainerMenuConfigType } from "../Types";
+import MasterManager from "../MasterManager";
 
 
 
@@ -17,6 +18,7 @@ class ContainerCredits extends Phaser.GameObjects.Container {
     credits_mai: Phaser.GameObjects.Image;
     credits_nano: Phaser.GameObjects.Image;
     creditsTitle: Phaser.GameObjects.Image;
+    masterManager: MasterManager
 
 
     constructor(scene: Phaser.Scene, config: ContainerMenuConfigType) {
@@ -32,6 +34,15 @@ class ContainerCredits extends Phaser.GameObjects.Container {
         this.credits_mai = scene.add.image(0, 0, "credits_mai").setAlpha(0.5)
         this.credits_nano = scene.add.image(0, 0, "credits_nano").setAlpha(0.5)
         this.creditsTitle = scene.add.image(0, 0, "creditsTitle").setAlpha(1)
+
+          let masterManagerScene = scene.game.scene.getScene("MasterManager") as MasterManager;
+                if (!masterManagerScene) {
+                    this.masterManager = new MasterManager();
+                    this.scene.scene.add("MasterManager", this.masterManager, true);
+                } else {
+                    this.masterManager = masterManagerScene;
+                    // this.scene.scene.launch("MasterManager");
+                }
 
         const creditsArray = [
             this.credits_lu,
@@ -57,7 +68,7 @@ class ContainerCredits extends Phaser.GameObjects.Container {
             this.backButton.setTexture('backButtonHover')
             if (config.panToInitial) {
                 this.scene.cameras.main.pan(config.panToInitial.x, config.panToInitial.y, 1000, 'Expo', true)
-                this.scene.sound.play('buttonSound')
+                this.masterManager.playSound('buttonSound', false)
             }
         })
         this.backButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {

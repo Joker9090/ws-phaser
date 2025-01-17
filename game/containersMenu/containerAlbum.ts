@@ -49,7 +49,7 @@ class containerAlbum extends Phaser.GameObjects.Container {
         })
         this.backButton.on('pointerup', () => {
             this.backButton.setTexture('playBackButton')
-            this.scene.sound.play('buttonSound')
+             this.masterManager.playSound('buttonSound', false)
             if (config.changeContainer) {
                 config.changeContainer()
             }
@@ -97,7 +97,7 @@ class containerAlbum extends Phaser.GameObjects.Container {
                 end += step;
                 nivel += 1
                 this.title.setText(`Level ${nivel}`)
-                this.scene.sound.play('buttonSound')
+                 this.masterManager.playSound('buttonSound', false)
                 updateFiguritas();
             }
         });
@@ -106,7 +106,7 @@ class containerAlbum extends Phaser.GameObjects.Container {
         })
         nextButton.on('pointerup', () => {
             nextButton.setTexture('backButton')
-            this.scene.sound.play('buttonSound')
+             this.masterManager.playSound('buttonSound', false)
         })
         nextButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
             nextButton.setTexture('backButtonHover')
@@ -124,7 +124,7 @@ class containerAlbum extends Phaser.GameObjects.Container {
                 end -= step;
                 nivel -= 1
                 this.title.setText(`Level ${nivel}`)
-                this.scene.sound.play('buttonSound')
+                 this.masterManager.playSound('buttonSound', false)
                 updateFiguritas();
             }
         });
@@ -133,7 +133,7 @@ class containerAlbum extends Phaser.GameObjects.Container {
         })
         prevButton.on('pointerup', () => {
             prevButton.setTexture('playBackButton')
-            this.scene.sound.play('buttonSound')
+             this.masterManager.playSound('buttonSound', false)
         })
         prevButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
             prevButton.setTexture('playBackButtonHover')

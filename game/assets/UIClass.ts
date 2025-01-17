@@ -113,19 +113,33 @@ export default class UIClass {
       this.container.add(bg);
       this.container.add(this.settings);
       this.settings.on('pointerup',()=>{
-        const settingsModal = new containerSettings(this.scene, {x:window.innerWidth/2,y:window.innerHeight/2},undefined, this.settings)
-        this.masterManager.playSound('buttonSound', false)
-        this.masterManager.pauseGame()
-        this.settings?.setVisible(false)
-        this.container.add(settingsModal)
-        if(this.scene instanceof CinematographyModular){
-          this.scene.pauseDialogue()          
-        }
+        this.toggleSettings()
       })
-    }
-    
+    } 
+    this.scene.input.keyboard?.on('keydown-ESC', () => {
+      this.toggleSettings();
+    });
   }
 
+
+
+  toggleSettings(){
+    if(this.settingsVisible){
+      this.container.each((child:any)=>{
+        if(child instanceof containerSettings){
+          child.crossPress()
+        }
+      })
+      this.settingsVisible = false
+    }else{
+      const settingsModal = new containerSettings(this.scene,{x:window.innerWidth/2,y:window.innerHeight/2},undefined, ()=>{this.settingsVisible = !this.settingsVisible} ,this.settings)
+      this.masterManager.playSound('buttonSound', false)
+      this.masterManager.pauseGame()
+      this.settings?.setVisible(false)
+      this.container.add(settingsModal)
+      this.settingsVisible = true
+    }
+  }
   rotateArrow(direction: string) {
     if (direction == "down") {
       this.gravityArrow?.setRotation(0);

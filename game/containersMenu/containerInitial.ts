@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import { ContainerMenuConfigType } from "../Types";
 import MenuScene, { scaleBy } from "../Menu";
 import containerSettings from "./containerSettings";
+import MasterManager from "../MasterManager";
 
 
 class containerInitial extends Phaser.GameObjects.Container {
@@ -15,6 +16,9 @@ class containerInitial extends Phaser.GameObjects.Container {
     scoreButton: Phaser.GameObjects.Image;
     albumButton: Phaser.GameObjects.Image;
     settingsButton: Phaser.GameObjects.Image;
+    settingsVisible = false
+    arr: (Phaser.GameObjects.Image | containerSettings)[];
+    masterManager: MasterManager
 
     scene: MenuScene;
     constructor(scene: MenuScene, config: ContainerMenuConfigType) {
@@ -22,7 +26,15 @@ class containerInitial extends Phaser.GameObjects.Container {
         this.scene = scene
         const offsetY = 100
 
-   
+        let masterManagerScene = scene.game.scene.getScene("MasterManager") as MasterManager;
+        if (!masterManagerScene) {
+            this.masterManager = new MasterManager();
+            this.scene.scene.add("MasterManager", this.masterManager, true);
+        } else {
+            this.masterManager = masterManagerScene;
+            // this.scene.scene.launch("MasterManager");
+        }
+    
 
 
 
@@ -138,27 +150,19 @@ class containerInitial extends Phaser.GameObjects.Container {
             this.settingsButton.setTexture('settingsButtonPressed')
         })
         this.settingsButton.on("pointerup", ()=>{
-            if(config.panToSettings){
-                // (this.scene as MenuScene).containerSettings?.setVisible(!(this.scene as MenuScene).containerSettings?.visible)
-                
-                 const settings = new containerSettings(this.scene, {
-                    x: this.width / 2,
-                    y: this.height / 2,
-                
-                })
-                settings.setScale(scaleBy());
-
-                // this.scene.background?.setScrollFactor(0)
-                // this.scene.cameras.main.pan(config.panToSettings.x, config.panToSettings.y, 1000, 'Expo', true)
-                this.scene.sound.play('buttonSound')
-
-            }
+            console.log(this.settingsVisible, "visible from menu")
+            this.toggleSettings()
+            this.scene.sound.play('buttonSound')
             this.settingsButton.setTexture('settingsButtonHover')
         })
+        this.scene.input.keyboard?.on('keydown-ESC', () => {
+            console.log(this.settingsVisible, "visible from menu")
+            this.toggleSettings();
+        });
         this.logoNoswar = scene.add.image(0, 0, "logoNoswar")
         this.logoNoswar.setPosition(this.width - this.logoNoswar.width, this.height - this.logoNoswar.height)
 
-        const arr = [
+        this.arr = [
             this.creditsButton, 
             this.gameTitle, 
             this.playButton, 
@@ -168,8 +172,27 @@ class containerInitial extends Phaser.GameObjects.Container {
             this.albumButton
         ]
 
-        this.add(arr)
+        this.add(this.arr) 
         scene.add.existing(this)
     }
+
+    toggleSettings(){
+        if(this.settingsVisible){
+          this.settingsVisible = false
+          this.arr.forEach((child:any)=>{
+            if(child instanceof containerSettings){
+              child.crossPress()
+            }
+          })
+          this.settingsButton?.setVisible(true)
+
+        }else{
+          const settingsModal = new containerSettings(this.scene, {x:window.innerWidth/2,y:window.innerHeight/2},undefined, ()=>{this.settingsVisible = !this.settingsVisible},this.settingsButton)
+          this.masterManager.playSound('buttonSound', false)
+          this.settingsButton?.setVisible(false)
+          this.arr.push(settingsModal)
+          this.settingsVisible = true
+        }
+      }
 }
 export default containerInitial;

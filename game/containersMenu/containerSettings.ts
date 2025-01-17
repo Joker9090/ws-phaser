@@ -54,7 +54,7 @@ class containerSettings extends Phaser.GameObjects.Container {
     };
     settingsButtonUi?: Phaser.GameObjects.Image
 
-    constructor(scene: MenuScene | Game | CinematographyModular, config: ContainerMenuConfigType, changeContainer?: ()=>void, settingsButtonUi?: Phaser.GameObjects.Image) {
+    constructor(scene: MenuScene | Game | CinematographyModular, config: ContainerMenuConfigType, changeContainer?: ()=>void,changeVisible?:()=>void,settingsButtonUi?: Phaser.GameObjects.Image) {
         super(scene, config.x, config.y)
         const offsetY = 100
         this.scene = scene
@@ -134,6 +134,9 @@ class containerSettings extends Phaser.GameObjects.Container {
             this.cross.setTexture('settingsCrossPessed')
         })
         this.cross.on('pointerup', () => {
+            if(changeVisible){
+                changeVisible()
+            }
             this.crossPress()
         })
 
@@ -156,6 +159,9 @@ class containerSettings extends Phaser.GameObjects.Container {
             this.masterManager.playSound('buttonSound', false)
             settingsButtonUi?.setVisible(true)
             this.masterManager.resumeGame()
+            if(changeVisible){
+                changeVisible()
+            }
             destroy()
 
         })
@@ -265,8 +271,6 @@ class containerSettings extends Phaser.GameObjects.Container {
     }
 
         crossPress(){
-            console.log(this.darkness, "darkness desde cross")
-            this.cross.setTexture('settingsCrossHover')
             this.masterManager.playSound('buttonSound', false)
             this.masterManager.changeVolume(this.volumeMusic, 'music');
             this.masterManager.changeVolume(this.volumeSound, 'sound');

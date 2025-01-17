@@ -284,7 +284,7 @@ class containerSettings extends Phaser.GameObjects.Container {
         const slider = scene.add.container(x, y);
         const bar = scene.add.image(0, 0, 'settingsSlider').setOrigin(0.5).setScale(0.8);
         const fillBar = scene.add.rectangle(-140, 0, 0, 24, 57055).setOrigin(0, 0.5);
-        const fillBarStart = scene.add.image(-140, 0, 'fillBarStart').setOrigin(0.5).setScale(0.8);
+        const fillBarStart = scene.add.image(-141, 0, 'fillBarStart').setOrigin(0.5).setScale(0.8);
         const control = scene.add.image(-125, 0, 'fillBarEnd').setOrigin(0.5).setScale(0.8);
         const initialX = Phaser.Math.Clamp((initialValue* 280) - 140, -140, 140);
         fillBar.width = initialX + 140
@@ -293,7 +293,7 @@ class containerSettings extends Phaser.GameObjects.Container {
 
         control.x = initialX;
         control.on('drag', (pointer: any, dragX: number) => {
-            control.x = Phaser.Math.Clamp(dragX, -125, 140);
+            control.x = Phaser.Math.Clamp(dragX, -125, 142);
             const value = Phaser.Math.Clamp((control.x + 140) / 280, 0, 1);
             fillBar.width = control.x + 140;
             onChange(value);

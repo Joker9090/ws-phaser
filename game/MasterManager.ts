@@ -92,8 +92,8 @@ export default class MasterManager extends Phaser.Scene {
   changeBrightness(value: number) {
     console.log(this.cameras.main)
     this.brightness = value
-    this.cameras.main.setAlpha(1.3 - value)
-    // this.brightnessScreen?.setAlpha( 0.3 * value);
+    // this.cameras.main.setAlpha(1.3 - value)
+    this.brightnessScreen?.setAlpha( 0.3 * value);
   }
   pauseGame(){
     const gameScene = this.scene.get("Game");

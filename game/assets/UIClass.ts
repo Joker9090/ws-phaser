@@ -55,7 +55,7 @@ export default class UIClass {
          this.scene.scene.add("MasterManager", this.masterManager, true);
       } else {
           this.masterManager = masterManagerScene;
-          this.scene.scene.launch("MasterManager");
+          // this.scene.scene.launch("MasterManager");
       }
     }
 

@@ -48,7 +48,7 @@ class MenuScene extends Phaser.Scene {
             this.scene.launch("MasterManager").sendToBack();
       
 
-        this.masterManagerScene.playMusic("menuBgMusic")
+        this.masterManagerScene.playMusic("menuBgMusic", true)
         this.containerInitial = new containerInitial(this, {
             x: 0,
             y: 0,

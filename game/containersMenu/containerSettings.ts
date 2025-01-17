@@ -68,7 +68,7 @@ class containerSettings extends Phaser.GameObjects.Container {
             this.scene.scene.add("MasterManager", this.masterManager, true);
         } else {
             this.masterManager = masterManagerScene;
-            this.scene.scene.launch("MasterManager");
+            // this.scene.scene.launch("MasterManager");
         }
         this.volumeMusic = this.masterManager.volumeMusic
         this.volumeSound = this.masterManager.volumeSound

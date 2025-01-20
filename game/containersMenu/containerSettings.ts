@@ -98,23 +98,68 @@ class containerSettings extends Phaser.GameObjects.Container {
         })
         this.quitGame.on('pointerup', () => {
             this.quitGame.setTexture('settingQuitGameHover')
-            this.masterManager.changeVolume(this.volumeMusic, 'music');
-            this.masterManager.changeVolume(this.volumeSound, 'sound');
-            this.masterManager.changeBrightness(this.darkness);
-            this.settingsButtonUi?.setVisible(true)
-            if(this.scene.scene.key !== 'MenuScene'){
-                this.scene.sound.stopAll()
-                const multiScene = new MultiScene("MenuScene", undefined);
-                const scene = this.scene.scene.add("MultiScene", multiScene, true);
-                this.scene.scene.start("MultiScene").bringToTop("MultiScene");
-            }else {
-                destroy()
-            }
-            if(changeContainer){
-                changeContainer()
-            }if(changeVisible){
-                changeVisible()
-            }
+            const group:any[] = []
+            const background =this.scene.add.rectangle(this.scene.scale.width / 2,this.scene.scale.height /2,this.scene.scale.width,this.scene.scale.height, 0x0000, 0.7).setInteractive()
+            const modal = this.scene.add.image(this.scene.scale.width / 2,this.scene.scale.height /4 + 300, "codeModal")
+            const cross = this.scene.add.image(this.scene.scale.width / 2 - 100,this.scene.scale.height /4 + 450, "settingsCross")
+            const check = this.scene.add.image(this.scene.scale.width / 2 + 100  ,this.scene.scale.height /4 +450, "settingsCheck")
+            const text = this.scene.add.text(this.scene.scale.width / 3 +130, this.scene.scale.height / 4 + 200, `Quit game?`, {
+                color: "#00feff",
+                stroke: "#00feff",
+                align: "center",
+                fontFamily: "Arcade",
+                fontSize: 60,
+                wordWrap: {
+                width: this.width * 0.9,
+                },
+            })
+            group.push(background, text, check, cross, modal)
+            cross.setInteractive()
+            cross.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER,()=>{
+              cross.setTexture("settingsCrossHover")
+            })
+            cross.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT,()=>{
+              cross.setTexture("settingsCross")
+            })
+            cross.on("pointerdown",()=>{
+              cross.setTexture("settingsCrossPessed")
+            })
+            cross.on("pointerup", () => {
+                group.forEach((child)=>{
+                    child.setVisible(false)
+                })
+            })
+            check.setInteractive()
+            check.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER,()=>{
+              check.setTexture("settingsCheckHover")
+            })
+            check.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT,()=>{
+              check.setTexture("settingsCheck")
+            })
+            check.on("pointerdown",()=>{
+              check.setTexture("settingsCheckPressed")
+            })
+            check.on("pointerup", ()=>{
+                this.masterManager.changeVolume(this.volumeMusic, 'music');
+                this.masterManager.changeVolume(this.volumeSound, 'sound');
+                this.masterManager.changeBrightness(this.darkness);
+                this.settingsButtonUi?.setVisible(true)
+                if(this.scene.scene.key !== 'MenuScene'){
+                    this.scene.sound.stopAll()
+                    const multiScene = new MultiScene("MenuScene", undefined);
+                    const scene = this.scene.scene.add("MultiScene", multiScene, true);
+                    this.scene.scene.start("MultiScene").bringToTop("MultiScene");
+                }else {
+                    destroy()
+                }
+                if(changeContainer){
+                    changeContainer()
+                }if(changeVisible){
+                    changeVisible()
+                }
+                group.forEach(item => item.destroy());
+            })
+            
         })
 
         this.quitGame.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
@@ -162,12 +207,13 @@ class containerSettings extends Phaser.GameObjects.Container {
             this.check.setTexture('settingsCheckHover')
             this.masterManager.playSound('buttonSound', false)
             settingsButtonUi?.setVisible(true)
-            this.masterManager.resumeGame()
-            if(changeVisible){
-                changeVisible()
+            if (this.scene.scene.key !== 'MenuScene') {
+                this.masterManager.resumeGame()
+            }
+            if (changeVisible) {
+            changeVisible()
             }
             destroy()
-
         })
         // this.album = scene.add.image(-this.modal.width / 2 + 120, 150, "settingsAlbum");
         // this.album.setOrigin(0.5);
@@ -279,7 +325,9 @@ class containerSettings extends Phaser.GameObjects.Container {
             this.masterManager.changeVolume(this.volumeMusic, 'music');
             this.masterManager.changeVolume(this.volumeSound, 'sound');
             this.masterManager.changeBrightness(this.darkness);
-            this.masterManager.resumeGame()
+            if(this.scene.scene.key !== 'MenuScene'){
+                this.masterManager.resumeGame()
+            }
             this.settingsButtonUi?.setVisible(true)
             this.destroy()
         }

@@ -100,6 +100,8 @@ class containerSettings extends Phaser.GameObjects.Container {
             this.quitGame.setTexture('settingQuitGameHover')
             this.masterManager.changeVolume(this.volumeMusic, 'music');
             this.masterManager.changeVolume(this.volumeSound, 'sound');
+            this.masterManager.changeBrightness(this.darkness);
+            this.settingsButtonUi?.setVisible(true)
             if(this.scene.scene.key !== 'MenuScene'){
                 this.scene.sound.stopAll()
                 const multiScene = new MultiScene("MenuScene", undefined);
@@ -110,6 +112,8 @@ class containerSettings extends Phaser.GameObjects.Container {
             }
             if(changeContainer){
                 changeContainer()
+            }if(changeVisible){
+                changeVisible()
             }
         })
 

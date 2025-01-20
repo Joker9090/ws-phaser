@@ -286,28 +286,36 @@ class containerSettings extends Phaser.GameObjects.Container {
 
     createSlider(scene: Phaser.Scene, x: number, y: number, onChange: (value: number) => void, initialValue: number) {
         const slider = scene.add.container(x, y);
+
         const bar = scene.add.image(0, 0, 'settingsSlider').setOrigin(0.5).setScale(0.8);
         const fillBar = scene.add.rectangle(-140, 0, 0, 24, 57055).setOrigin(0, 0.5);
         const fillBarStart = scene.add.image(-141, 0, 'fillBarStart').setOrigin(0.5).setScale(0.8);
-        const control = scene.add.image(-125, 0, 'fillBarEnd').setOrigin(0.5).setScale(0.8);
-        const initialX = Phaser.Math.Clamp((initialValue* 280) - 140, -140, 140);
-        fillBar.width = initialX + 140
-        slider.add([bar, fillBarStart, fillBar, control]);
+        const control = scene.add.circle(-125, 0, 12, 0xffffff).setOrigin(0.5);
+
         control.setInteractive({ draggable: true });
+        control.on('pointerover', () => {
+            control.setScale(1.2);
+        });
+        control.on('pointerout', () => {
+            control.setScale(1.0);
+        });
+
+        const initialX = Phaser.Math.Clamp((initialValue * 280) - 140, -140, 140);
+        fillBar.width = initialX + 140;
+        slider.add([bar, fillBarStart, fillBar, control]);
 
         control.x = initialX;
+        scene.input.setDraggable(control);
         control.on('drag', (pointer: any, dragX: number) => {
             control.x = Phaser.Math.Clamp(dragX, -125, 142);
             const value = Phaser.Math.Clamp((control.x + 140) / 280, 0, 1);
             fillBar.width = control.x + 140;
             onChange(value);
         });
-        control.on('pointerdown',()=>{
-            this.masterManager.playSound('buttonSound', false)
-        })
+        control.on('pointerdown', () => {
+            this.masterManager.playSound('buttonSound', false);
+        });
 
-
-        
         control.setDepth(10);
         this.settingsModal.add(slider);
         return { slider, control, fillBar };

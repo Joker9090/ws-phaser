@@ -39,17 +39,17 @@ class containerSettings extends Phaser.GameObjects.Container {
    
     sliderMusic: {
         slider: Phaser.GameObjects.Container,
-        control: Phaser.GameObjects.Image,
+        control: Phaser.GameObjects.Arc,
         fillBar: Phaser.GameObjects.Rectangle
     };
     sliderSound: {
         slider: Phaser.GameObjects.Container,
-        control: Phaser.GameObjects.Image,
+        control: Phaser.GameObjects.Arc,
         fillBar: Phaser.GameObjects.Rectangle
     };
     sliderBrightness: {
         slider: Phaser.GameObjects.Container,
-        control: Phaser.GameObjects.Image,
+        control: Phaser.GameObjects.Arc,
         fillBar: Phaser.GameObjects.Rectangle
     };
     settingsButtonUi?: Phaser.GameObjects.Image

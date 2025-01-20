@@ -31,10 +31,12 @@ class containerPlay extends Phaser.GameObjects.Container {
         })
         this.newGameButton.on('pointerup',()=>{
             this.masterManager.playSound('buttonSound', false)
+            this.masterManager.stopMusic()
             this.newGameButton.setTexture('newGameButtonHover')
             const multiScene = new MultiScene("CinematographyMod", { keyname: 'cine_intro_1',  loadKey: ["Cinemato0"] });
             const scene = this.scene.scene.add("MultiScene", multiScene, true);
             this.scene.scene.start("MultiScene").bringToTop("MultiScene");
+
         })
         this.newGameButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER,()=>{
             this.newGameButton.setTexture('newGameButtonHover')

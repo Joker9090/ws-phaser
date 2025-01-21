@@ -1,4 +1,4 @@
-[
+{ "CODES": [
     {
         "type": "planeta",
         "codigo": "000001",
@@ -113,4 +113,4 @@
         "imagenes": ["planeta1_figu1", "planeta1_figu2","planeta2_figu1","planeta2_figu2","planeta3_figu1","planeta3_figu2"],
         "mapa": 0
     }
-]
+]}

@@ -85,7 +85,7 @@ class Mapa9 {
         },
     ];
     nextScene: string | undefined = undefined;
-    postalCode: string | undefined = 'adjns'
+    postalCode: string | undefined = undefined
 
     background: Phaser.GameObjects.Image;
     background2: Phaser.GameObjects.Image;

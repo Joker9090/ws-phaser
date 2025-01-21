@@ -25,7 +25,7 @@ export default class MasterManager extends Phaser.Scene {
   MAX_VOLUME: number = 0.6;
   MAX_DARKNESS: number = 0.3;
   imagenesAlbum: string[] = ["planeta1_figu1", "planeta1_figu2","planeta2_figu1","planeta2_figu2","planeta3_figu1","planeta3_figu2"]
-  codigos: { codigo: string, mapa:number, imagenes:string[] }[] = []
+  codigos: {type:string, codigo: string,postalKey:string ,mapa:number, imagenes:string[] }[] = []
   constructor() {
     super({ key: "MasterManager" });
     const tickerMS = 100;
@@ -118,13 +118,19 @@ export default class MasterManager extends Phaser.Scene {
   enterCode(code:string, error:Phaser.GameObjects.Text){
     let codeFound = false;
     this.codigos.forEach(c => {
-      if(c.codigo  === code ){
-        this.imagenesAlbum = c.imagenes
+      if(c.codigo  === code && c.type === "planeta"){
+          this.imagenesAlbum = c.imagenes
           const multiScene = new MultiScene("Game", { level: c.mapa, lifes: 3, loadKey: ["GamePlay1", "GamePlay2", "GamePlay3"] });
-          const scene = this.scene.add("MultiScene", multiScene, true);
+          this.scene.add("MultiScene", multiScene, true);
           this.scene.start("MultiScene").bringToTop("MultiScene");
           this.scene.stop("MenuScene");
           codeFound = true;
+      }else if("000000" === code){
+              const multiScene = new MultiScene("CinematographyMod", { keyname: 'postal1_planeta1',  loadKey: ["Postales"], code:code });
+              this.scene.add("MultiScene", multiScene, true);
+              this.scene.start("MultiScene").bringToTop("MultiScene");
+              this.scene.stop("MenuScene");
+              codeFound = true;
       }
       if(!codeFound){
         error.setVisible(true)

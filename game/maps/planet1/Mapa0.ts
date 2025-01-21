@@ -65,7 +65,7 @@ class Mapa0 {
     },
   ];
   nextScene: string | undefined = "postal1_planeta1";
-  postalCode: string | undefined = "adjns";
+  postalCode: string | undefined = "postl1";
 
   background: Phaser.GameObjects.Image;
   background2: Phaser.GameObjects.Image;

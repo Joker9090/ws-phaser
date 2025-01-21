@@ -1,65 +1,114 @@
 [
     {
+        "type": "planeta",
         "codigo": "000001",
         "imagenes": [],
         "mapa": 0
     },
     {
+        "type": "planeta",
         "codigo": "000002",
         "imagenes": ["planeta1_figu1"],
         "mapa": 1
     },
     {
+        "type": "planeta",
         "codigo": "000003",
         "imagenes": ["planeta1_figu1"],
         "mapa": 2
     },
     {
+        "type": "planeta",
         "codigo": "000004",
         "imagenes": ["planeta1_figu1", "planeta1_figu2"],
         "mapa": 3
     },
     {
+        "type": "planeta",
         "codigo": "000005",
         "imagenes": ["planeta1_figu1","planeta1_figu2"],
         "mapa": 4
     },
     {
+        "type": "planeta",
         "codigo": "000006",
         "imagenes": ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1"],
         "mapa": 5
     },
     {
+        "type": "planeta",
         "codigo": "000007",
         "imagenes": ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1"],
         "mapa": 6
     },
     {
+        "type": "planeta",
         "codigo": "000008",
         "imagenes": ["planeta1_figu1","planeta1_figu2","planeta2_figu1","planeta2_figu2"],
         "mapa": 7
     },
     {
+        "type": "planeta",
         "codigo": "000009",
         "imagenes": ["planeta1_figu1","planeta1_figu2","planeta2_figu1","planeta2_figu2"],
         "mapa": 8
     },
     {
+        "type": "planeta",
         "codigo": "000010",
         "imagenes": ["planeta1_figu1","planeta1_figu2","planeta2_figu1","planeta2_figu2","planeta3_figu1"],
         "mapa": 9
     },
     {
+        "type": "planeta",
         "codigo": "000011",
         "imagenes": ["planeta1_figu1","planeta1_figu2","planeta2_figu1","planeta2_figu2","planeta3_figu1"],
         "mapa": 10
     },
     {
+        "type": "planeta",
         "codigo": "000012",
         "imagenes": ["planeta1_figu1","planeta1_figu2","planeta2_figu1","planeta2_figu2","planeta3_figu1","planeta3_figu2"],
         "mapa": 11
     },
     {
+        "type": "postal",
+        "codigo": "postl1",
+        "imagenes": [],
+        "postalKey":"postal1_Planeta1"
+    },
+    {
+        "type": "postal",
+        "codigo": "postl2",
+        "imagenes": [],
+        "postalKey":"postal2_planeta1"
+    },
+    {
+        "type": "postal",
+        "codigo": "postl3",
+        "imagenes": [],
+        "postalKey":"postal1_planeta2"
+    },
+    {
+        "type": "postal",
+        "codigo": "postl4",
+        "imagenes": [],
+        "postalKey":"postal2_planeta2"
+    },
+    {
+        "type": "postal",
+        "codigo": "postl5",
+        "imagenes": [],
+        "postalKey":"postal1_planeta3"
+    },
+    {
+        "type": "postal",
+        "codigo": "postl6",
+        "imagenes": [],
+        "postalKey":"postal2_planeta3"
+    },
+    {
+        "type": "planeta",
         "codigo": "unlkal",
         "imagenes": ["planeta1_figu1", "planeta1_figu2","planeta2_figu1","planeta2_figu2","planeta3_figu1","planeta3_figu2"],
         "mapa": 0

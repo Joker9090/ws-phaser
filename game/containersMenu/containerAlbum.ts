@@ -25,7 +25,6 @@ class containerAlbum extends Phaser.GameObjects.Container {
             this.scene.scene.add("MasterManager", this.masterManager, true);
         } else {
             this.masterManager = masterManagerScene;
-            this.scene.scene.launch("MasterManager");
         }
 
         this.background = scene.add.image(this.width / 2, this.height / 2, "backgroundAlbum").setScale(scaleBy(true))
@@ -49,7 +48,7 @@ class containerAlbum extends Phaser.GameObjects.Container {
         })
         this.backButton.on('pointerup', () => {
             this.backButton.setTexture('playBackButton')
-             this.masterManager.playSound('buttonSound', false)
+            this.masterManager.playSound('buttonSound', false)
             if (config.changeContainer) {
                 config.changeContainer()
             }
@@ -71,23 +70,15 @@ class containerAlbum extends Phaser.GameObjects.Container {
         let step = 2
 
         const updateFiguritas = () => {
-            // Limpiar las figuritas actuales
             this.figuritas.forEach((figurita) => figurita.destroy());
             this.figuritas = [];
             let posX = this.width / 3;
             const showFiguritas = this.masterManager.imagenesAlbum.slice(start, end);
             showFiguritas.forEach((data, index) => {
                 const figurita = new Figuritas(scene, posX * (index +1), this.height / 1.7, data).setScale(0.8).setAlpha(0.8);
-                
                 this.figuritas.push(figurita);
-                // posX += spacing;
             });
             this.add(this.figuritas)
-            // console.log(arr, this.figuritas, "ARR AND FIG ARIEL")
-            // arr.concat([...this.figuritas]);
-            // console.log(arr, "ARR ARIEL")
-            // this.add(arr)
-            // console.log(this, "CONTAINER ALBUM ARIEL IN UPDATE")
         };
 
         const nextButton = this.scene.add.image(this.width - 100, this.height / 1.7, "backButton").setInteractive().setScale(0.8);
@@ -97,17 +88,15 @@ class containerAlbum extends Phaser.GameObjects.Container {
                 end += step;
                 nivel += 1
                 this.title.setText(`Level ${nivel}`)
-                 this.masterManager.playSound('buttonSound', false)
+                this.masterManager.playSound('buttonSound', false)
                 updateFiguritas();
+                nextButton.setTexture('backButton')
             }
         });
         nextButton.setInteractive().on('pointerdown', () => {
             nextButton.setTexture('backButtonPressed')
         })
-        nextButton.on('pointerup', () => {
-            nextButton.setTexture('backButton')
-             this.masterManager.playSound('buttonSound', false)
-        })
+
         nextButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
             nextButton.setTexture('backButtonHover')
         })
@@ -124,16 +113,13 @@ class containerAlbum extends Phaser.GameObjects.Container {
                 end -= step;
                 nivel -= 1
                 this.title.setText(`Level ${nivel}`)
-                 this.masterManager.playSound('buttonSound', false)
+                this.masterManager.playSound('buttonSound', false)
                 updateFiguritas();
+                prevButton.setTexture('playBackButton')
             }
         });
         prevButton.setInteractive().on('pointerdown', () => {
             prevButton.setTexture('playBackButtonPressed')
-        })
-        prevButton.on('pointerup', () => {
-            prevButton.setTexture('playBackButton')
-             this.masterManager.playSound('buttonSound', false)
         })
         prevButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
             prevButton.setTexture('playBackButtonHover')

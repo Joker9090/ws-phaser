@@ -15,6 +15,7 @@ import LargeFloorIsland, {
   LargeFloorIslandConfig,
 } from "@/game/assets/LargeFloorIsland";
 import TextBox from "@/game/assets/TextBox";
+import MasterManager from "@/game/MasterManager";
 
 class Mapa0 {
   isJumping = false;
@@ -86,7 +87,7 @@ class Mapa0 {
 
   mapContainer: Phaser.GameObjects.Container;
   frontContainer: Phaser.GameObjects.Container;
-
+  masterManager: MasterManager;
   textTutorial1?: TextBox;
   textTutorial2?: TextBox;
   tutorialStep: number = 0;
@@ -105,6 +106,15 @@ class Mapa0 {
 
     this.mapContainer = this.scene.add.container();
     this.frontContainer = this.scene.add.container().setDepth(999999999999);
+
+
+    let masterManagerScene = scene.game.scene.getScene("MasterManager") as MasterManager;
+    if (!masterManagerScene) {
+      this.masterManager = new MasterManager();
+      this.scene.scene.add("MasterManager", this.masterManager, true);
+    } else {
+      this.masterManager = masterManagerScene;
+    }
 
     this.background = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "background0P1")
@@ -234,7 +244,7 @@ class Mapa0 {
           this.scene.monchi,
           this.coin,
           () => {
-            if(this.tutorialStep === 2){
+            if (this.tutorialStep === 2) {
               this.tutorialStep = 3;
               this.textTutorial2?.setVisible(true);
             }
@@ -264,7 +274,10 @@ class Mapa0 {
         this.scene.physics.add.overlap(
           this.scene.monchi,
           this.portal,
-          () => this.scene.win(),
+          () => {
+            this.masterManager.imagenesAlbum = ["planeta1_figu1"];
+            this.scene.win()
+          },
           () => true,
           this.scene
         );
@@ -272,6 +285,7 @@ class Mapa0 {
   }
 
   createMap(data: { level: number; lifes: number }) {
+    this.masterManager.imagenesAlbum = ["planeta1_figu1"];
     this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
     this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });
     this.pisos = this.scene.physics.add.group({ allowGravity: false });

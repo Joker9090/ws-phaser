@@ -32,7 +32,7 @@ class containerCode extends Phaser.GameObjects.Container {
             this.scene.scene.add("MasterManager", this.masterManager, true);
         } else {
             this.masterManager = masterManagerScene;
-            this.scene.scene.launch("MasterManager");
+            // this.scene.scene.launch("MasterManager");
         }
         this.error = this.scene.add.text(-400,-400,"Yikes, try that one again?", {
             color: "#00feff",

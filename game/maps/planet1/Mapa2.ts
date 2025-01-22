@@ -14,6 +14,7 @@ import { loseConfigFromMapType } from "@/game/Types";
 import LargeFloorIsland, { LargeFloorIslandConfig } from "@/game/assets/LargeFloorIsland";
 import TextBox from "@/game/assets/TextBox";
 import colors from "@/game/assets/PlatformColors";
+import MasterManager from "@/game/MasterManager";
 
 class Mapa2 {
   isJumping = false;
@@ -78,7 +79,7 @@ class Mapa2 {
   nextScene: string | undefined = 'postal2_planeta1';
   postalCode: string | undefined = 'postl2'
 
-
+  masterManager: MasterManager;
   background: Phaser.GameObjects.Image;
   background2: Phaser.GameObjects.Image;
   background3: Phaser.GameObjects.Image;
@@ -91,7 +92,7 @@ class Mapa2 {
   mountain4: Phaser.GameObjects.Image;
   mountain5: Phaser.GameObjects.Image;
   UIItemToGrab: string = 'cristal2';
-  UIItemScale?: number ;
+  UIItemScale?: number;
 
   cristal?: Floor;
   collected: Boolean = false;
@@ -113,6 +114,14 @@ class Mapa2 {
       this.worldSize.width,
       this.worldSize.height
     );
+
+    let masterManagerScene = scene.game.scene.getScene("MasterManager") as MasterManager;
+    if (!masterManagerScene) {
+      this.masterManager = new MasterManager();
+      this.scene.scene.add("MasterManager", this.masterManager, true);
+    } else {
+      this.masterManager = masterManagerScene;
+    }
 
     this.mapContainer = this.scene.add.container()
     this.frontContainer = this.scene.add.container().setDepth(999999999999)
@@ -205,9 +214,9 @@ class Mapa2 {
           this.scene.monchi,
           this.pisos2,
           () => {
-            if(this.scene.monchi?.body?.touching.up || this.scene.monchi?.body?.touching.down){
+            if (this.scene.monchi?.body?.touching.up || this.scene.monchi?.body?.touching.down) {
             }
-            this.scene.changeGravity(true, 1000, 3)   
+            this.scene.changeGravity(true, 1000, 3)
           },
           () => true,
           this.scene
@@ -228,7 +237,7 @@ class Mapa2 {
           this.scene.monchi,
           this.pisos4,
           () => {
-            if (this.tutorialStep === 0){
+            if (this.tutorialStep === 0) {
               setTimeout(() => {
                 this.monchi?.setVelocity(0)
                 this.scene.stopMov = true
@@ -253,7 +262,10 @@ class Mapa2 {
         this.scene.physics.add.overlap(
           this.scene.monchi,
           this.portal,
-          () => this.scene.win(),
+          () => {
+            this.masterManager.imagenesAlbum = ["planeta1_figu1", "planeta1_figu2"];
+            this.scene.win()
+          },
           () => true,
           this.scene
         );
@@ -270,7 +282,6 @@ class Mapa2 {
 
   createMap(data: { level: number; lifes: number }) {
     this.scene.lateralCameraOffset("right", false, this.cameraBounds.width, 0.8, 2000);
-
     this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
     this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });
     this.pisos = this.scene.physics.add.group({ allowGravity: false });
@@ -296,7 +307,7 @@ class Mapa2 {
     })
 
     this.textTutorial1 = new TextBox(
-      this.scene, 
+      this.scene,
       "That was close... these fireballs are dangerous, I'd better avoid them for now.",
       1900,
       900,
@@ -414,7 +425,7 @@ class Mapa2 {
       large: 20,
       rotated: true
     };
-  
+
     const p7 = new LargeFloorIsland(this.scene, p7Config, this.pisos4);
     //Portal, Coin and Asteroids
     const portalConfig: FloorConfig = {
@@ -521,7 +532,7 @@ class Mapa2 {
     //   this.textTutorial1?.setVisible(false)
     // }
 
-    if(this.tutorialStep === 1 && this.scene.cursors?.space?.isDown){
+    if (this.tutorialStep === 1 && this.scene.cursors?.space?.isDown) {
       this.scene.stopMov = false
       this.textTutorial1?.setVisible(false)
     }

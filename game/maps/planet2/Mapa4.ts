@@ -15,6 +15,7 @@ import LargeFloorIsland, {
   LargeFloorIslandConfig,
 } from "@/game/assets/LargeFloorIsland";
 import colors from "@/game/assets/PlatformColors";
+import MasterManager from "@/game/MasterManager";
 
 class Mapa4 {
   isJumping = false;
@@ -82,7 +83,7 @@ class Mapa4 {
 
   UIItemToGrab: string = "comida";
   UIItemScale?: number ;
-
+  masterManager: MasterManager;
   background: Phaser.GameObjects.Image;
   backgroundStars: Phaser.GameObjects.Image;
   background2: Phaser.GameObjects.Image;
@@ -133,6 +134,14 @@ class Mapa4 {
       this.worldSize.width,
       this.worldSize.height
     );
+
+    let masterManagerScene = scene.game.scene.getScene("MasterManager") as MasterManager;
+    if (!masterManagerScene) {
+      this.masterManager = new MasterManager();
+      this.scene.scene.add("MasterManager", this.masterManager, true);
+    } else {
+      this.masterManager = masterManagerScene;
+    }
 
     this.mapContainer = this.scene.add.container();
     this.frontContainer = this.scene.add.container().setDepth(999999999999);
@@ -448,7 +457,10 @@ class Mapa4 {
         this.scene.physics.add.overlap(
           this.scene.monchi,
           this.portal,
-          () => this.scene.win(),
+          () =>{
+            this.masterManager.imagenesAlbum =  ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1"];
+            this.scene.win()
+          } ,
           () => true,
           this.scene
         );

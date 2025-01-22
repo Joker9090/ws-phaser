@@ -14,6 +14,7 @@ import { loseConfigFromMapType } from "@/game/Types";
 import LargeFloorIsland, { LargeFloorIslandConfig } from "@/game/assets/LargeFloorIsland";
 import TextBox from "@/game/assets/TextBox";
 import colors from "@/game/assets/PlatformColors";
+import MasterManager from "@/game/MasterManager";
 
 class Mapa1 {
   scene: Game;
@@ -74,7 +75,7 @@ class Mapa1 {
   ];
   nextScene: string | undefined = undefined;
   postalCode: string | undefined = undefined;
-  
+  masterManager?: MasterManager;
   background: Phaser.GameObjects.Image;
   background2: Phaser.GameObjects.Image;
   background3: Phaser.GameObjects.Image;

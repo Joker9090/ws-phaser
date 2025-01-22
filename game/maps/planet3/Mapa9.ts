@@ -13,6 +13,7 @@ import { Children } from "react";
 import { loseConfigFromMapType } from "@/game/Types";
 import LargeFloorIsland, { LargeFloorIslandConfig } from "@/game/assets/LargeFloorIsland";
 import colors from "@/game/assets/PlatformColors";
+import MasterManager from "@/game/MasterManager";
 
 class Mapa9 {
     isJumping = false;
@@ -49,7 +50,7 @@ class Mapa9 {
     aura?: Phaser.Physics.Arcade.Group;
     movingFloor?: Phaser.Physics.Arcade.Group;
     movingFloorRot?: Phaser.Physics.Arcade.Group;
-
+    masterManager?:MasterManager;
     t1?:Phaser.Tweens.Tween;
     p3?:Floor;
     p7?:Floor;

@@ -15,6 +15,7 @@ import LargeFloorIsland, {
   LargeFloorIslandConfig,
 } from "@/game/assets/LargeFloorIsland";
 import colors from "@/game/assets/PlatformColors";
+import MasterManager from "@/game/MasterManager";
 
 class Mapa5 {
   isJumping = false;
@@ -81,7 +82,7 @@ class Mapa5 {
   ];
   nextScene: string | undefined = undefined;
   postalCode: string | undefined = undefined
-
+  masterManager?: MasterManager;
   background: Phaser.GameObjects.Image;
   backgroundStars: Phaser.GameObjects.Image;
   background2: Phaser.GameObjects.Image;

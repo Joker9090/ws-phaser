@@ -36,6 +36,7 @@ class postalManager {
 
 
     playCine(this: postalManager) {
+        this.cine.sound.add("introSoundEffect4").setVolume(0.4).play()
         this.cine.time.addEvent({
             delay: this.ticker.ms,
             callback: this.ticker.runTicker,

@@ -74,37 +74,37 @@
     {
         "type": "postal",
         "codigo": "postl1",
-        "imagenes": [],
+        "imagenes": ["planeta1_figu1"],
         "postalKey":"postal1_Planeta1"
     },
     {
         "type": "postal",
         "codigo": "postl2",
-        "imagenes": [],
+        "imagenes": ["planeta1_figu1","planeta1_figu2"],
         "postalKey":"postal2_planeta1"
     },
     {
         "type": "postal",
         "codigo": "postl3",
-        "imagenes": [],
+        "imagenes": ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1"],
         "postalKey":"postal1_planeta2"
     },
     {
         "type": "postal",
         "codigo": "postl4",
-        "imagenes": [],
+        "imagenes": ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2"],
         "postalKey":"postal2_planeta2"
     },
     {
         "type": "postal",
         "codigo": "postl5",
-        "imagenes": [],
+        "imagenes": ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2", "planeta3_figu1"],
         "postalKey":"postal1_planeta3"
     },
     {
         "type": "postal",
         "codigo": "postl6",
-        "imagenes": [],
+        "imagenes": ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2", "planeta3_figu1", "planeta3_figu2"],
         "postalKey":"postal2_planeta3"
     },
     {

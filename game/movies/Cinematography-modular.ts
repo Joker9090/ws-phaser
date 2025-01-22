@@ -78,6 +78,8 @@ class CinematographyModular extends Phaser.Scene {
       },
       isPostal
     ).setDepth(999999999)
+    this.holdableButton.text?.setDepth(999999999);
+    this.holdableButton?.graphics.setDepth(999999999);
 
     /* Audio */
     const getMasterManagerScene = this.game.scene.getScene(

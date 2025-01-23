@@ -13,7 +13,7 @@ import { Children } from "react";
 import { loseConfigFromMapType } from "@/game/Types";
 import LargeFloorIsland, { LargeFloorIslandConfig } from "@/game/assets/LargeFloorIsland";
 import colors from "@/game/assets/PlatformColors";
-import MasterManager from "@/game/MasterManager";
+// import MasterManager from "@/game/MasterManager";
 
 class Mapa7 {
   isJumping = false;
@@ -88,7 +88,7 @@ class Mapa7 {
   ];
   nextScene: string | undefined = 'postal2_planeta2';
   postalCode: string | undefined = 'postl4'
-  masterManager: MasterManager
+  // masterManager: MasterManager
   background: Phaser.GameObjects.Image;
   backgroundStars: Phaser.GameObjects.Image;
   background2: Phaser.GameObjects.Image;
@@ -144,13 +144,13 @@ class Mapa7 {
 
     this.mapContainer = this.scene.add.container()
     this.frontContainer = this.scene.add.container().setDepth(999999999999)
-    let masterManagerScene = scene.game.scene.getScene("MasterManager") as MasterManager;
-    if (!masterManagerScene) {
-      this.masterManager = new MasterManager();
-      this.scene.scene.add("MasterManager", this.masterManager, true);
-    } else {
-      this.masterManager = masterManagerScene;
-    }
+    // let masterManagerScene = scene.game.scene.getScene("MasterManager") as MasterManager;
+    // if (!masterManagerScene) {
+    //   this.masterManager = new MasterManager();
+    //   this.scene.scene.add("MasterManager", this.masterManager, true);
+    // } else {
+    //   this.masterManager = masterManagerScene;
+    // }
     this.background = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "p1backgroundDia")
       .setOrigin(0.5, 0.5);
@@ -468,7 +468,7 @@ class Mapa7 {
           this.scene.monchi,
           this.portal,
           () =>{
-            this.masterManager.imagenesAlbum =  ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2"];
+            // this.masterManager.imagenesAlbum =  ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2"];
             this.scene.win()
           } ,
           () => true,
@@ -584,7 +584,7 @@ class Mapa7 {
   createMap(data: { level: number; lifes: number }) {
     this.scene.lateralCameraOffset("left", false, this.cameraBounds.width, 1, 1000);
     this.scene.monchi?.setFlipX(true)
-    this.masterManager.imagenesAlbum =  ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2"];
+    // this.masterManager.imagenesAlbum =  ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2"];
     this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
     this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });
     this.pisos = this.scene.physics.add.group({ allowGravity: false });

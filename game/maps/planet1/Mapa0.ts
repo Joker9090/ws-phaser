@@ -275,7 +275,6 @@ class Mapa0 {
           this.scene.monchi,
           this.portal,
           () => {
-            this.masterManager.imagenesAlbum = ["planeta1_figu1"];
             this.scene.win()
           },
           () => true,
@@ -285,7 +284,6 @@ class Mapa0 {
   }
 
   createMap(data: { level: number; lifes: number }) {
-    this.masterManager.imagenesAlbum = ["planeta1_figu1"];
     this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
     this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });
     this.pisos = this.scene.physics.add.group({ allowGravity: false });

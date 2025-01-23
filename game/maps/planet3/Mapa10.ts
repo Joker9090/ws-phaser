@@ -13,7 +13,7 @@ import { Children } from "react";
 import { loseConfigFromMapType } from "@/game/Types";
 import LargeFloorIsland, { LargeFloorIslandConfig } from "@/game/assets/LargeFloorIsland";
 import colors from "@/game/assets/PlatformColors";
-import MasterManager from "@/game/MasterManager";
+// import MasterManager from "@/game/MasterManager";
 
 class Mapa10 {
   isJumping = false;
@@ -96,7 +96,7 @@ class Mapa10 {
   ];
   nextScene: string | undefined = 'postal2_Planeta3';
   postalCode: string | undefined = 'postl6'
-  masterManager: MasterManager
+  // masterManager: MasterManager
 
   background: Phaser.GameObjects.Image;
 
@@ -151,13 +151,13 @@ class Mapa10 {
     this.scene = scene;
     this.monchi = monchi;
 
-    let masterManagerScene = scene.game.scene.getScene("MasterManager") as MasterManager;
-    if (!masterManagerScene) {
-      this.masterManager = new MasterManager();
-      this.scene.scene.add("MasterManager", this.masterManager, true);
-    } else {
-      this.masterManager = masterManagerScene;
-    }
+    // let masterManagerScene = scene.game.scene.getScene("MasterManager") as MasterManager;
+    // if (!masterManagerScene) {
+    //   this.masterManager = new MasterManager();
+    //   this.scene.scene.add("MasterManager", this.masterManager, true);
+    // } else {
+    //   this.masterManager = masterManagerScene;
+    // }
 
 
     /* World size*/
@@ -491,7 +491,7 @@ class Mapa10 {
           this.scene.monchi,
           this.portal,
           () =>{
-            this.masterManager.imagenesAlbum = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2", "planeta3_figu1","planeta3_figu2"];
+            // this.masterManager.imagenesAlbum = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2", "planeta3_figu1","planeta3_figu2"];
             this.scene.win()
           } ,
           () => true,

@@ -14,7 +14,7 @@ import { loseConfigFromMapType } from "@/game/Types";
 import LargeFloorIsland, { LargeFloorIslandConfig } from "@/game/assets/LargeFloorIsland";
 import colors from "@/game/assets/PlatformColors";
 import ChangeCameraFloorArea from "@/game/assets/ChangeCameraFloor";
-import MasterManager from "@/game/MasterManager";
+// import MasterManager from "@/game/MasterManager";
 
 class Mapa8 {
   isJumping = false;
@@ -83,7 +83,7 @@ class Mapa8 {
   nextScene: string | undefined = 'postal1_Planeta3';
   postalCode: string | undefined = 'postl5'
   background: Phaser.GameObjects.Image;
-  masterManager: MasterManager
+  // masterManager: MasterManager
   background2: Phaser.GameObjects.Image;
   background3: Phaser.GameObjects.Image;
   background4: Phaser.GameObjects.Image;
@@ -138,13 +138,13 @@ class Mapa8 {
       this.worldSize.height
     );
 
-    let masterManagerScene = scene.game.scene.getScene("MasterManager") as MasterManager;
-    if (!masterManagerScene) {
-      this.masterManager = new MasterManager();
-      this.scene.scene.add("MasterManager", this.masterManager, true);
-    } else {
-      this.masterManager = masterManagerScene;
-    }
+    // let masterManagerScene = scene.game.scene.getScene("MasterManager") as MasterManager;
+    // if (!masterManagerScene) {
+    //   this.masterManager = new MasterManager();
+    //   this.scene.scene.add("MasterManager", this.masterManager, true);
+    // } else {
+    //   this.masterManager = masterManagerScene;
+    // }
     this.mapContainer = this.scene.add.container()
     this.frontContainer = this.scene.add.container().setDepth(999999999999)
 
@@ -448,7 +448,7 @@ class Mapa8 {
           this.scene.monchi,
           this.portal,
           () => {
-            this.masterManager.imagenesAlbum = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2", "planeta3_figu1"];
+            // this.masterManager.imagenesAlbum = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2", "planeta3_figu1"];
             this.scene.win()
           },
           () => true,

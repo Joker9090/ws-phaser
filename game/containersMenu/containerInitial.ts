@@ -34,11 +34,9 @@ class containerInitial extends Phaser.GameObjects.Container {
             this.masterManager = masterManagerScene;
             // this.scene.scene.launch("MasterManager");
         }
-    
 
 
-
-        this.playButton = scene.add.image(this.width / 2, this.height / 2 + offsetY, "playButton");
+        this.playButton = scene.add.image(0, 120, "playButton").setAlpha(0);
         this.playButton.setInteractive();
         this.playButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
             this.playButton.setTexture('playButtonHover');
@@ -48,21 +46,36 @@ class containerInitial extends Phaser.GameObjects.Container {
         });
         this.playButton.on('pointerdown', () => {
             this.playButton.setTexture('playButtonPressed')
-            
+
         })
         this.playButton.on('pointerup', () => {
-            if(config.panToPlay){
+            if (config.panToPlay) {
                 this.scene.cameras.main.pan(config.panToPlay.x, config.panToPlay.y, 1000, 'Expo', true)
                 this.masterManager.playSound('buttonSound', false)
 
             }
             this.playButton.setTexture('playButtonHover')
         })
-
-
+        this.scene.tweens.add({
+            targets: this.playButton,
+            alpha: 1,
+            duration: 1000,
+            delay: 1000,
+            onComplete: () => {
+                this.playButton.setAlpha(1)
+            },
+            ease: 'ease',
+        })
         this.creditsButton = scene.add.image(0, 0, "creditsButton")
-        this.creditsButton.setPosition(this.width/2 -130, this.playButton.y + this.creditsButton.height + this.playButton.height/2 + offsetY)
-
+        const finalYCredits = 330
+        this.creditsButton.setPosition( -this.creditsButton.width/2 - 40, this.height/2 + 300)
+        this.scene.tweens.add({
+            targets: this.creditsButton,
+            y: finalYCredits,
+            duration: 1000 + Math.random() * 300,
+            delay: 1000,
+            ease: 'bounce',
+        })
         this.creditsButton.setInteractive();
         this.creditsButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
             this.creditsButton.setTexture('creditsButtonHover');
@@ -72,10 +85,10 @@ class containerInitial extends Phaser.GameObjects.Container {
         });
         this.creditsButton.on('pointerup', () => {
             this.creditsButton.setTexture('creditsButtonHover')
-            if(config.panToCredits){
+            if (config.panToCredits) {
+                this.scene.time.delayedCall(600, this.scene.createCreditsContainer, [], this.scene)
                 this.scene.cameras.main.pan(config.panToCredits.x, config.panToCredits.y, 1000, 'Expo', true)
                 this.masterManager.playSound('buttonSound', false)
-
             }
 
         })
@@ -84,8 +97,21 @@ class containerInitial extends Phaser.GameObjects.Container {
             this.creditsButton.setTexture('creditsButtonPressed')
         })
         this.albumButton = scene.add.image(0, 0, "albumButton")
-        this.albumButton.setPosition(this.width/2 + this.creditsButton.width - 80, this.playButton.y + this.creditsButton.height + this.playButton.height/2 + offsetY)
-
+        this.albumButton.setPosition(this.albumButton.width/2 + 40, this.height/2  + 300)
+        this.scene.tweens.add({
+            targets: this.albumButton,
+            y: finalYCredits,
+            duration: 1000 + Math.random() * 300,
+            delay: 1000,
+            ease: 'bounce',
+        })
+        // this.scene.tweens.add({
+        //     targets: this.albumButton,
+        //     x: this.width / 2 - 130,
+        //     duration: 1000,
+        //     delay: 1000,
+        //     ease: 'bounce',
+        // })
         this.albumButton.setInteractive();
         this.albumButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
             this.albumButton.setTexture('albumButtonHover');
@@ -96,7 +122,7 @@ class containerInitial extends Phaser.GameObjects.Container {
         this.albumButton.on('pointerup', () => {
             this.albumButton.setTexture('albumButtonHover')
             this.masterManager.playSound('buttonSound', false)
-            if(config.changeContainer){
+            if (config.changeContainer) {
                 config.changeContainer()
             }
 
@@ -104,52 +130,66 @@ class containerInitial extends Phaser.GameObjects.Container {
 
         this.albumButton.on('pointerdown', () => {
             this.albumButton.setTexture('albumButtonPressed')
-            if(config.panToCredits){
+            if (config.panToCredits) {
                 // this.scene.cameras.main.pan(config.panToCredits.x, config.panToCredits.y, 1000, 'Expo', true)
             }
         })
 
         this.gameTitle = scene.add.image(0, 0, "gameTitle")
-        this.gameTitle.setPosition(this.width/2, (this.playButton.y - this.playButton.height/2)/2)
-        if(window.innerWidth < 1400){
+        this.gameTitle.setPosition(0, -this.height / 2 - this.gameTitle.height/2 - 100)
+        if (window.innerWidth < 1400) {
             this.gameTitle.setScale(0.7)
         }
+        this.scene.tweens.add({
+            targets: this.gameTitle,
+            y: -230,
+            duration: 1000,
+            delay: 1000,
+            ease: 'ease',
+        })
 
         this.scoreButton = scene.add.image(0, 0, "scoreButton")
         this.scoreButton.setInteractive()
         this.scoreButton.setPosition(this.scoreButton.width, this.scoreButton.height).setVisible(false)
 
-        this.scoreButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, ()=>{
+        this.scoreButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
             this.scoreButton.setTexture('scoreButtonHover')
         })
-        
-        this.scoreButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, ()=>{
+
+        this.scoreButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => {
             this.scoreButton.setTexture('scoreButton')
         })
-        this.scoreButton.on("pointerdown", ()=>{
+        this.scoreButton.on("pointerdown", () => {
             this.scoreButton.setTexture('scoreButtonPressed')
         })
-        this.scoreButton.on("pointerup", ()=>{
+        this.scoreButton.on("pointerup", () => {
             this.scoreButton.setTexture('scoreButtonHover')
             this.masterManager.playSound('buttonSound', false)
 
         })
 
-        this.settingsButton = scene.add.image(0, 0, "settingsButton")
-        this.settingsButton.setPosition(this.width - this.settingsButton.width, this.settingsButton.height).setScrollFactor(1)
+        this.settingsButton = scene.add.image(0, 0, "settingsButton").setOrigin(1,0)
+        this.settingsButton.setPosition(this.width/2 + 100, -this.height/2 + 20).setScrollFactor(1)
+        this.scene.tweens.add({
+            targets: this.settingsButton,
+            x: this.width/2 - 20,
+            duration: 600,
+            delay: 300*Math.random() + 700,
+            ease: 'ease',
+        })
         this.settingsButton.setInteractive()
-        this.settingsButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, ()=>{
+        this.settingsButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
             this.settingsButton.setTexture('settingsButtonHover')
         })
-        
-        this.settingsButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, ()=>{
+
+        this.settingsButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => {
             this.settingsButton.setTexture('settingsButton')
         })
 
-        this.settingsButton.on("pointerdown", ()=>{
+        this.settingsButton.on("pointerdown", () => {
             this.settingsButton.setTexture('settingsButtonPressed')
         })
-        this.settingsButton.on("pointerup", ()=>{
+        this.settingsButton.on("pointerup", () => {
             console.log(this.settingsVisible, "visible from menu")
             this.toggleSettings()
             this.masterManager.playSound('buttonSound', false)
@@ -159,39 +199,58 @@ class containerInitial extends Phaser.GameObjects.Container {
             console.log(this.settingsVisible, "visible from menu")
             this.toggleSettings();
         });
-        this.logoNoswar = scene.add.image(0, 0, "logoNoswar")
-        this.logoNoswar.setPosition(this.width - this.logoNoswar.width, this.height - this.logoNoswar.height)
-
+        this.logoNoswar = scene.add.image(0, 0, "logoNoswar").setOrigin(1, 1)
+        this.logoNoswar.setPosition(this.width/2 + 100, this.height/2 - 20)
+        console.log(this.logoNoswar, "LOGO NOSWAR")
+        this.scene.tweens.add({
+            targets: this.logoNoswar,
+            x: this.width/2 - 20,
+            duration: 1000,
+            delay: 300*Math.random() + 700,
+            onComplete: () => {
+                this.scene.tweens.add({ 
+                    targets: this.logoNoswar,
+                    y: '-=30',
+                    duration: 600,
+                    delay: 800,
+                    repeat: -1,
+                    hold: 500*Math.random() ,
+                    yoyo: true,
+                    ease: 'bounce'
+                })
+            },
+            ease: 'ease',
+        })
         this.arr = [
-            this.creditsButton, 
-            this.gameTitle, 
-            this.playButton, 
-            this.scoreButton, 
-            this.settingsButton, 
+            this.creditsButton,
+            this.gameTitle,
+            this.playButton,
+            this.scoreButton,
+            this.settingsButton,
             this.logoNoswar,
             this.albumButton
         ]
 
-        this.add(this.arr) 
+        this.add(this.arr)
         scene.add.existing(this)
     }
 
-    toggleSettings(){
-        if(this.settingsVisible){
-          this.settingsVisible = false
-          this.arr.forEach((child:any)=>{
-            if(child instanceof containerSettings){
-              child.crossPress()
-            }
-          })
-          this.settingsButton?.setVisible(true)
+    toggleSettings() {
+        if (this.settingsVisible) {
+            this.settingsVisible = false
+            this.arr.forEach((child: any) => {
+                if (child instanceof containerSettings) {
+                    child.crossPress()
+                }
+            })
+            this.settingsButton?.setVisible(true)
 
-        }else{
-          const settingsModal = new containerSettings(this.scene, {x:window.innerWidth/2,y:window.innerHeight/2},undefined, ()=>{this.settingsVisible = !this.settingsVisible},this.settingsButton)
-          this.settingsButton?.setVisible(false)
-          this.arr.push(settingsModal)
-          this.settingsVisible = true
+        } else {
+            const settingsModal = new containerSettings(this.scene, { x: window.innerWidth / 2, y: window.innerHeight / 2 }, undefined, () => { this.settingsVisible = !this.settingsVisible }, this.settingsButton)
+            this.settingsButton?.setVisible(false)
+            this.arr.push(settingsModal)
+            this.settingsVisible = true
         }
-      }
+    }
 }
 export default containerInitial;

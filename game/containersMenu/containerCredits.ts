@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import { ContainerMenuConfigType } from "../Types";
 import MasterManager from "../MasterManager";
+import MenuScene from "../Menu";
 
 
 
@@ -21,20 +22,21 @@ class ContainerCredits extends Phaser.GameObjects.Container {
     masterManager: MasterManager
 
 
-    constructor(scene: Phaser.Scene, config: ContainerMenuConfigType) {
+    constructor(scene: MenuScene, config: ContainerMenuConfigType) {
         super(scene, config.x, config.y)
         // this.setSize(1920,1080)
         this.backButton = scene.add.image(0, 0, "backButton")
-        this.credits_barto = scene.add.image(0, 0, "credits_barto").setAlpha(0.5)
-        this.credits_clari = scene.add.image(0, 0, "credits_clari").setAlpha(0.5)
-        this.credits_hache = scene.add.image(0, 0, "credits_hache").setAlpha(0.5)
-        this.credits_jeimi = scene.add.image(0, 0, "credits_jeimi").setAlpha(0.5)
-        this.credits_joaco = scene.add.image(0, 0, "credits_joaco").setAlpha(0.5)
-        this.credits_lu = scene.add.image(0, 0, "credits_lu").setAlpha(0.5)
-        this.credits_mai = scene.add.image(0, 0, "credits_mai").setAlpha(0.5)
-        this.credits_nano = scene.add.image(0, 0, "credits_nano").setAlpha(0.5)
-        this.creditsTitle = scene.add.image(0, 0, "creditsTitle").setAlpha(1)
-
+        this.credits_barto = scene.add.image(0, 0, "credits_barto").setAlpha(0.5).setScale(0)
+        this.credits_clari = scene.add.image(0, 0, "credits_clari").setAlpha(0.5).setScale(0)
+        this.credits_hache = scene.add.image(0, 0, "credits_hache").setAlpha(0.5).setScale(0)
+        this.credits_jeimi = scene.add.image(0, 0, "credits_jeimi").setAlpha(0.5).setScale(0)
+        this.credits_joaco = scene.add.image(0, 0, "credits_joaco").setAlpha(0.5).setScale(0)
+        this.credits_lu = scene.add.image(0, 0, "credits_lu").setAlpha(0.5).setScale(0)
+        this.credits_mai = scene.add.image(0, 0, "credits_mai").setAlpha(0.5).setScale(0)
+        this.credits_nano = scene.add.image(0, 0, "credits_nano").setAlpha(0.5).setScale(0)
+        this.creditsTitle = scene.add.image(0, -this.height/2 - 200, "creditsTitle").setAlpha(1)
+       
+        
           let masterManagerScene = scene.game.scene.getScene("MasterManager") as MasterManager;
                 if (!masterManagerScene) {
                     this.masterManager = new MasterManager();
@@ -57,15 +59,37 @@ class ContainerCredits extends Phaser.GameObjects.Container {
         this.setPositionCredits(creditsArray)
         this.handleInteractive(creditsArray)
 
-        const creditsPosY = -this.credits_nano.height - 40 - 40
+        for (let i = 0; i < creditsArray.length; i++) {
+           const delay =  Math.random() * 1000
+           this.scene.tweens.add({
+               targets: creditsArray[i],
+               scale: 1,
+               duration: 700,
+               ease: 'bounce',
+               delay: delay,
+           })
+        }
+        console.log("ARIEL TRANSFORM MATRIX", creditsArray[0].getLocalTransformMatrix())
+
+        const creditsPosY = -this.height/2 + 40
         
-        this.creditsTitle.setPosition(0, creditsPosY).setOrigin(0.5, 1)
+        // this.creditsTitle.setPosition(0, creditsPosY)
+        this.scene.tweens.add({
+            targets: this.creditsTitle,
+            y: creditsPosY,
+            duration: 1000,
+            ease: 'ease',
+            delay: 1000
+        })
         this.backButton.setPosition(this.width/2 - this.backButton.width, this.height/2 - this.backButton.height)
         this.backButton.setInteractive().on('pointerdown', () => {
             this.backButton.setTexture('backButtonPressed')
         })
         this.backButton.setInteractive().on('pointerup', () => {
             this.backButton.setTexture('backButtonHover')
+            this.scene.time.delayedCall(1000, () => {
+                scene.destroyContainer(this)
+            }, [], this.scene)
             if (config.panToInitial) {
                 this.scene.cameras.main.pan(config.panToInitial.x, config.panToInitial.y, 1000, 'Expo', true)
                 this.masterManager.playSound('buttonSound', false)
@@ -86,7 +110,7 @@ class ContainerCredits extends Phaser.GameObjects.Container {
         const width = arr[0].width
         const height = arr[0].height
         const maxPaddingX = 80
-        const maxPaddingY = 80
+        const maxPaddingY = 60
         let firstPosX = -(width + maxPaddingX) * 1.5
         let firstPosY = -(height + maxPaddingY )* .5
         // let paddingX = (this.width - 4 * width) / 5

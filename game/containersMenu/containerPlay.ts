@@ -25,7 +25,7 @@ class containerPlay extends Phaser.GameObjects.Container {
             // this.scene.scene.launch("MasterManager");
         }
         const offsetY = 100
-        this.newGameButton = scene.add.image(this.width/2, this.height/2 + offsetY, "newGameButton")
+        this.newGameButton = scene.add.image(0, offsetY, "newGameButton")
         this.newGameButton.setInteractive().on('pointerdown', () => {
             this.newGameButton.setTexture('newGameButtonPressed')
         })
@@ -46,7 +46,7 @@ class containerPlay extends Phaser.GameObjects.Container {
         })
 
         this.enterCodeButton = scene.add.image(0, 0, "enterCodeButton")
-        this.enterCodeButton.setPosition(this.width/2, this.newGameButton.y + this.enterCodeButton.height + this.newGameButton.height/2)
+        this.enterCodeButton.setPosition(0, this.newGameButton.y + this.enterCodeButton.height + this.newGameButton.height/2)
         this.enterCodeButton.setInteractive().on('pointerdown', () => {
             this.enterCodeButton.setTexture('enterCodeButtonPressed')
          
@@ -67,10 +67,10 @@ class containerPlay extends Phaser.GameObjects.Container {
         })
         
         this.gameTitle = scene.add.image(0, 0, "gameTitle")
-        this.gameTitle.setPosition(this.width/2, (this.newGameButton.y - this.newGameButton.height/2)/2)
+        this.gameTitle.setPosition(0, -200)
 
         this.backButton = scene.add.image(0, 0, "playBackButton")
-        this.backButton.setPosition(this.backButton.width, this.height - this.backButton.height)
+        this.backButton.setPosition(this.backButton.width, this.height/2 - this.backButton.height)
         this.backButton.setInteractive().on('pointerdown', () => {
             this.backButton.setTexture('playBackButtonPressed')
         })
@@ -98,6 +98,7 @@ class containerPlay extends Phaser.GameObjects.Container {
         ]
 
         this.add(arr)
+        // Phaser.Actions.RotateAroundDistance([this], {config}, Math.PI/200, 250);
         scene.add.existing(this)
     }
 }

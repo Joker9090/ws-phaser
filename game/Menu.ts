@@ -46,12 +46,12 @@ class MenuScene extends Phaser.Scene {
         ) as MasterManager;
         if (!this.masterManagerScene.scene.isActive())
             this.scene.launch("MasterManager").sendToBack();
-      
+
 
         this.masterManagerScene.playMusic("menuBgMusic", true)
         this.containerInitial = new containerInitial(this, {
-            x: 0,
-            y: 0,
+            x: this.width / 2,
+            y: this.height / 2,
             panToCredits: this.centralPointCredits,
             panToPlay: this.centralPointPlay,
             panToSettings: this.centralPointSettings,
@@ -61,16 +61,13 @@ class MenuScene extends Phaser.Scene {
                 }
             }
         })
-        this.containerCredits = new ContainerCredits(this, {
-            x: -this.width / 2,
-            y: this.height / 2,
-            panToInitial: this.centralPointInitial
-        })
-        this.containerCredits.setScale(scaleBy());
+
+
+
 
         this.containerPlay = new containerPlay(this, {
-            x: this.width,
-            y: 0,
+            x: this.width + this.width / 2,
+            y: this.height / 2,
             panToInitial: this.centralPointInitial,
             panToCode: this.centralPointCode,
             changeContainer: () => {
@@ -113,6 +110,24 @@ class MenuScene extends Phaser.Scene {
 
         this.events.removeAllListeners('shutdown')
     }
+
+    createCreditsContainer() {
+        if (this.containerCredits) {
+            this.destroyContainer(this.containerCredits)
+        }
+        this.containerCredits = new ContainerCredits(this, {
+            x: -this.width / 2,
+            y: this.height / 2,
+            panToInitial: this.centralPointInitial
+        })
+        this.containerCredits.setScale(scaleBy());
+    }
+
+    destroyContainer(container: Phaser.GameObjects.Container) {
+        container.removeAll(true)
+        container.destroy()
+    }
+
     changeContainer(from: Phaser.GameObjects.Container, to: Phaser.GameObjects.Container) {
         const circle = from.scene.add.circle(window.innerWidth, window.innerHeight, 1, 0x000, 1)
         circle.setInteractive()
@@ -138,6 +153,7 @@ class MenuScene extends Phaser.Scene {
             }
         });
     }
+
     update() {
     }
 }

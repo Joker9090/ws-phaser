@@ -1,0 +1,12 @@
+Review cosmic: 
+
+Menu: 
+1. El primer cambio de brightness parece que flashea un toque, puede ser distintos valores inciales de slider y alpha de pantala
+2. los sliders no se van a 0, por algo?
+3. en creditos veo el titulo cortado, y en la ultima versión de la branch jota-develop no pasaba, algo se rompió entre este pull y el anterior
+4. en album habria que hacer algo para que se entienda cuando tenes 0 estampas para ver, algo estilo "aun no tiene nada disponible"
+5. sacar settings de la pantalla entercode o agregar setting a la pantalla de album, para que sean consistentes entre si.
+5. un poco del botón de settings y del botón de go back, en la pantalla de entercode, quedan por fuera del monitor y se ve cortado.
+6. el botón de quit game en settings en la pantalla de enter code no hace nada.
+7. agregar algo en el input de etner code para que se entienda que estás escribiendo, haría la caja más transparente.
+8. agregar animaciones de los elementos del menu para dar mas vida al juego

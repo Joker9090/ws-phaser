@@ -9,4 +9,4 @@ Menu:
 5. un poco del botón de settings y del botón de go back, en la pantalla de entercode, quedan por fuera del monitor y se ve cortado.
 6. el botón de quit game en settings en la pantalla de enter code no hace nada.
 7. agregar algo en el input de etner code para que se entienda que estás escribiendo, haría la caja más transparente.
-8. agregar animaciones de los elementos del menu para dar mas vida al juego
+8. agregar animaciones de los elementos del menu para dar mas vida al juego.

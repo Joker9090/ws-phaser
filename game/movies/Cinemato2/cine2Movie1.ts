@@ -33,10 +33,9 @@ class cine2Movie1 {
 
   }
 
-  stopDialogue(){
-
-     this.dialogue?.stop();
-      this.dialogue?.destroyContainer();
+  stopDialogue() {
+    this.dialogue?.stop();
+    this.dialogue?.destroyContainer();
     this.dialogue = undefined;
   }
 
@@ -101,8 +100,8 @@ class cine2Movie1 {
     const darkMask = this.cine.add.rectangle(
       0,
       0,
-      window.innerWidth*2,
-      window.innerHeight*2,
+      window.innerWidth * 2,
+      window.innerHeight * 2,
       0,
       0.2
     );

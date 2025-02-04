@@ -15,6 +15,11 @@ class containerAlbum extends Phaser.GameObjects.Container {
     title: Phaser.GameObjects.Text;
     masterManager: MasterManager;
     figuritas: Figuritas[] = [];
+    arr: Phaser.GameObjects.GameObject[] = [...this.figuritas]
+    spacing:number = this.width / 3;
+    start:number = 0;
+    end:number = 2;
+    step:number = 2
 
 
     constructor(scene: Phaser.Scene, config: ContainerMenuConfigType) {
@@ -62,34 +67,16 @@ class containerAlbum extends Phaser.GameObjects.Container {
         })
 
 
-        const arr: Phaser.GameObjects.GameObject[] = [...this.figuritas]
-
-        const spacing = this.width / 3;
-        let start = 0;
-        let end = 2;
-        let step = 2
-
-        const updateFiguritas = () => {
-            this.figuritas.forEach((figurita) => figurita.destroy());
-            this.figuritas = [];
-            let posX = this.width / 3;
-            const showFiguritas = this.masterManager.imagenesAlbum.slice(start, end);
-            showFiguritas.forEach((data, index) => {
-                const figurita = new Figuritas(scene, posX * (index +1), this.height / 1.7, data).setScale(0.8).setAlpha(0.8);
-                this.figuritas.push(figurita);
-            });
-            this.add(this.figuritas)
-        };
-
+        
         const nextButton = this.scene.add.image(this.width - 100, this.height / 1.7, "backButton").setInteractive().setScale(0.8);
         nextButton.on("pointerup", () => {
-            if (end < this.masterManager.imagenesAlbum.length) {
-                start += step;
-                end += step;
+            if (this.end < this.masterManager.imagenesAlbum.length) {
+                this.start += this.step;
+                this.end += this.step;
                 nivel += 1
                 this.title.setText(`Level ${nivel}`)
                 this.masterManager.playSound('buttonSound', false)
-                updateFiguritas();
+                this.updateElements();
                 nextButton.setTexture('backButton')
             }
         });
@@ -108,13 +95,13 @@ class containerAlbum extends Phaser.GameObjects.Container {
 
         const prevButton = this.scene.add.image(100, this.height / 1.7, "playBackButton").setInteractive().setScale(0.8);
         prevButton.on("pointerup", () => {
-            if (start > 0) {
-                start -= step;
-                end -= step;
+            if (this.start > 0) {
+                this.start -= this.step;
+                this.end -= this.step;
                 nivel -= 1
                 this.title.setText(`Level ${nivel}`)
                 this.masterManager.playSound('buttonSound', false)
-                updateFiguritas();
+                this.updateElements();
                 prevButton.setTexture('playBackButton')
             }
         });
@@ -139,12 +126,31 @@ class containerAlbum extends Phaser.GameObjects.Container {
             prevButton
         ])
 
-        updateFiguritas();
+        // this.updateFiguritas();
 
         // this.add(arr)
         scene.add.existing(this)
     }
-
+    updateElements = () => {
+        this.figuritas.forEach((figurita) => figurita.destroy());
+        this.figuritas = [];
+        let posX = this.width / 3;
+        const showFiguritas = this.masterManager.imagenesAlbum.slice(this.start, this.end);
+        showFiguritas.forEach((data, index) => {
+            const figurita = new Figuritas(this.scene, posX * (index +1), this.height / 1.7, data).setScale(0).setAlpha(0.8);
+            this.scene.tweens.add({
+                targets:figurita,
+                scale:0.8,
+                duration:500,
+                // este delay controla la diferencia entre el spawneo de una y la otra
+                delay:400*index,
+                ease:'Bounce.easeOut'
+            })
+            this.figuritas.push(figurita);
+        });
+        
+        this.add(this.figuritas)
+    };
     download(){
         console.log("hola hola")
     }

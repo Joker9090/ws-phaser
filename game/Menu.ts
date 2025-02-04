@@ -27,6 +27,7 @@ class MenuScene extends Phaser.Scene {
     centralPointCode: { x: number, y: number } = { x: this.width / 2 + this.width * 2, y: this.height / 2 }
 
     containerAlbum?: Phaser.GameObjects.Container;
+    containerAlbumRendered: boolean = false;
 
     background?: Phaser.GameObjects.Image;
     masterManagerScene?: MasterManager;
@@ -122,6 +123,23 @@ class MenuScene extends Phaser.Scene {
         })
         this.containerCredits.setScale(scaleBy());
     }
+    // createAlbumContainer() {
+    //     if (this.containerAlbum) {
+    //         this.destroyContainer(this.containerAlbum)
+    //     }
+    //     this.containerAlbum = new containerAlbum(this, {
+    //         x: 0,
+    //         y: 0,
+    //         panToInitial: this.centralPointInitial,
+    //         panToCode: this.centralPointCode,
+    //         changeContainer: () => {
+    //             if (this.containerAlbum && this.containerInitial) {
+    //                 this.changeContainer(this.containerAlbum, this.containerInitial)
+    //             }
+    //         }
+    //     })
+    //     this.containerAlbum.setScale(scaleBy());
+    // }
 
     destroyContainer(container: Phaser.GameObjects.Container) {
         container.removeAll(true)
@@ -141,6 +159,13 @@ class MenuScene extends Phaser.Scene {
             onComplete: () => {
                 from.setVisible(false)
                 to.setVisible(true)
+                if(to instanceof containerAlbum && !this.containerAlbumRendered){
+                    // Este delay controla cuanto tardan en aparecer las figuritas
+                    this.time.delayedCall(900, () => {
+                        to.updateElements()
+                    })
+                    this.containerAlbumRendered = true
+                }
                 from.scene.tweens.add({
                     targets: circle,
                     scale: 0,
@@ -148,6 +173,7 @@ class MenuScene extends Phaser.Scene {
                     ease: 'Power2',
                     onComplete: () => {
                         circle.destroy()
+                       
                     }
                 })
             }

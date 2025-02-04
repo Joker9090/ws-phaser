@@ -38,7 +38,7 @@ export default class MasterManager extends Phaser.Scene {
   brightness: number = 0.5;
   MAX_VOLUME: number = 0.6;
   MAX_DARKNESS: number = 0.3;
-  imagenesAlbum: string[] = []
+  imagenesAlbum: string[] = ["planeta1_figu1", "planeta1_figu2","planeta2_figu1","planeta2_figu2","planeta3_figu1","planeta3_figu2"]
   codigos: { type: string, codigo: string, postalKey: string, mapa: number, imagenes: string[] }[] = []
   constructor() {
     super({ key: "MasterManager" });

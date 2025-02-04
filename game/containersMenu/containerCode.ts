@@ -16,7 +16,9 @@ class containerCode extends Phaser.GameObjects.Container {
     textDisplay: string[] = [];
     displayText: Phaser.GameObjects.Text;
     masterManager?: MasterManager;
-    settingsButton: Phaser.GameObjects.Image;
+    astroFront?:Phaser.GameObjects.Image;
+    astroBack?:Phaser.GameObjects.Image;
+    // settingsButton: Phaser.GameObjects.Image;
     error: Phaser.GameObjects.Text  
     constructor(scene: Phaser.Scene, config: ContainerMenuConfigType) {
         super(scene, config.x, config.y)
@@ -51,10 +53,10 @@ class containerCode extends Phaser.GameObjects.Container {
             wordWrap: {
                 width: this.width * 0.9,
             },
-        }).setFontSize('60px');
-        this.modal = scene.add.image(0, 100, "codeModal").setScale(0.9);
+        }).setFontSize('60px').setScale(0);
+        this.modal = scene.add.image(0, 100, "codeModal").setScale(0);
         this.modal.setOrigin(0.5);
-        this.input = scene.add.rectangle(-260 , 200, this.modal.width * 0.6, 80, 57055).setOrigin(0, 0.5);
+        this.input = scene.add.rectangle(-260 , 200, this.modal.width * 0.6, 80, 57055).setOrigin(0, 0.5).setScale(0);
 
         this.input.setInteractive()
         this.input.on('pointerup', () => {
@@ -75,21 +77,21 @@ class containerCode extends Phaser.GameObjects.Container {
           }
         });
 
-        this.displayText = this.scene.add.text(-230, 160, '', {
-            fontSize: 70,
-            color: "#00feff",
-            stroke: "#00feff",
-            align: "center",
-            fontFamily: "Arcade",
-            fixedWidth: this.input.width - 50,
-            fixedHeight: this.input.height - 10,
-            wordWrap: {
-                width: this.width * 0.9,
-            },
-        });
-        
+            this.displayText = this.scene.add.text(-230, 160, '', {
+                fontSize: 70,
+                color: "#00feff",
+                stroke: "#00feff",
+                align: "center",
+                fontFamily: "Arcade",
+                fixedWidth: this.input.width - 50,
+                fixedHeight: this.input.height - 10,
+                wordWrap: {
+                    width: this.width * 0.9,
+                },
+            });
+            
 
-        this.backButton = scene.add.image(0, 0, "playBackButton")
+            this.backButton = scene.add.image(0, 0, "playBackButton")
            this.backButton.setPosition(-900, 430)
            this.backButton.setInteractive().on('pointerdown', () => {
                this.backButton.setTexture('playBackButtonPressed')
@@ -137,30 +139,30 @@ class containerCode extends Phaser.GameObjects.Container {
                 }
            })
 
-           this.settingsButton = scene.add.image(0, 0, "settingsButton")
-           this.settingsButton.setPosition(900,-430 ).setScrollFactor(1)
-           this.settingsButton.setInteractive()
-           this.settingsButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, ()=>{
-               this.settingsButton.setTexture('settingsButtonHover')
-           })
+        //    this.settingsButton = scene.add.image(0, 0, "settingsButton")
+        //    this.settingsButton.setPosition(900,-430 ).setScrollFactor(1)
+        //    this.settingsButton.setInteractive()
+        //    this.settingsButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, ()=>{
+        //        this.settingsButton.setTexture('settingsButtonHover')
+        //    })
         
-           this.settingsButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, ()=>{
-               this.settingsButton.setTexture('settingsButton')
-           })
+        //    this.settingsButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, ()=>{
+        //        this.settingsButton.setTexture('settingsButton')
+        //    })
 
-           this.settingsButton.on("pointerdown", ()=>{
-               this.settingsButton.setTexture('settingsButtonPressed')
-           })
-           this.settingsButton.on("pointerup", ()=>{
-                 const settings = new containerSettings(this.scene as MenuScene, {
-                    x: this.width * 1.5,
-                    y: this.height / 2,
+        //    this.settingsButton.on("pointerdown", ()=>{
+        //        this.settingsButton.setTexture('settingsButtonPressed')
+        //    })
+        //    this.settingsButton.on("pointerup", ()=>{
+        //          const settings = new containerSettings(this.scene as MenuScene, {
+        //             x: this.width * 1.5,
+        //             y: this.height / 2,
                 
-                }, config.changeContainer ? config.changeContainer : undefined)
-                arr.push(settings)
-                this.masterManager?.playSound('buttonSound', false)
-            this.settingsButton.setTexture('settingsButtonHover')
-        })
+        //         }, config.changeContainer ? config.changeContainer : undefined)
+        //         arr.push(settings)
+        //         this.masterManager?.playSound('buttonSound', false)
+        //     this.settingsButton.setTexture('settingsButtonHover')
+        //     })
         
         // const background = this.scene.add.image(0,0,"NOMBRE DEL ASSET").setInteractive()
         const sky = this.scene.add.image(0,innerHeight/4 -200,'codeSky').setOrigin(0.5, 0.5)
@@ -170,8 +172,8 @@ class containerCode extends Phaser.GameObjects.Container {
         const background2 = this.scene.add.image(0,innerHeight/4 -300, 'codeFondo2').setInteractive().setOrigin(0.5, 0.5)
         const floor = this.scene.add.image(0,innerHeight/4 -150, 'codeFloor').setInteractive().setOrigin(0.5, 0.5)
         const front = this.scene.add.image(0,innerHeight/4 -250, 'codeFront').setInteractive().setOrigin(0.5, 0.5)
-        const astroFront = this.scene.add.image(0,0, 'astroFront').setInteractive().setOrigin(0.5, 0.5)
-        const astroBack = this.scene.add.image(0, 0, 'astroBack').setInteractive().setOrigin(0.5, 0.5)
+        this.astroFront = this.scene.add.image(0,0, 'astroFront').setInteractive().setOrigin(0.5, 0.5).setScale(0)
+        this.astroBack = this.scene.add.image(0, 0, 'astroBack').setInteractive().setOrigin(0.5, 0.5).setScale(0)
 
         const arr = [
             sky,
@@ -181,15 +183,15 @@ class containerCode extends Phaser.GameObjects.Container {
             background0,
             floor,
             front,
-            astroBack,
+            this.astroBack,
             this.modal,
-            astroFront,
+            this.astroFront,
             this.input,
             this.title,
             this.displayText,
             this.backButton,
             this.confirmButton,
-            this.settingsButton,
+            // this.settingsButton,
             this.error
         ]
 
@@ -197,6 +199,13 @@ class containerCode extends Phaser.GameObjects.Container {
         scene.add.existing(this)
     }
     
-
+    animateElements(){
+        this.scene.tweens.add({
+            targets:[this.modal, this.input, this.title, this.displayText, this.confirmButton, this.astroFront, this.astroBack],
+            scale:1,
+            duration:500,
+            ease:'Bounce'
+        })
+    }
 }
 export default containerCode;

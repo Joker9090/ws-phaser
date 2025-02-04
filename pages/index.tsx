@@ -24,6 +24,7 @@ export default function Home() {
        
        import("@/game/movies/Cinematography-modular"),
       import("@/game/Menu"),
+      import("@/game/TestScene"),
 
       import("@/game/Game"),
       import("@/game/BetweenScenes"),

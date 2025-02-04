@@ -45,7 +45,13 @@ export default class UIClass {
 
   constructor(scene: Game | CinematographyModular, level: number, lifes: number, time: number) {
     this.scene = scene
-    this.container = this.scene.add.container(0,0);
+    this.container = this.scene.add.container(-window.innerWidth,0);
+    this.scene.tweens.add({
+      targets: this.container,
+      x: 0,
+      duration: 1300,
+      ease: 'Power2' 
+    })
  
     this.createUIContainer({ level, lifes, time })
 
@@ -73,7 +79,6 @@ export default class UIClass {
             scale: 0.9,
           };
           const coras = new UI(this.scene, lifeConfig, this.lifesGroup)
-         
           this.container.add(coras);
         }
         const uiContainer: UIConfig = {

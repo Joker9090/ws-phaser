@@ -25,6 +25,7 @@ class MenuScene extends Phaser.Scene {
 
     containerCode?: Phaser.GameObjects.Container;
     centralPointCode: { x: number, y: number } = { x: this.width / 2 + this.width * 2, y: this.height / 2 }
+    containerCodeRendered:boolean = false;
 
     containerAlbum?: Phaser.GameObjects.Container;
     containerAlbumRendered: boolean = false;
@@ -165,6 +166,11 @@ class MenuScene extends Phaser.Scene {
                         to.updateElements()
                     })
                     this.containerAlbumRendered = true
+                }else if(to instanceof containerCode && !this.containerCodeRendered){
+                    this.time.delayedCall(700, () => {
+                        to.animateElements()
+                    })
+                    this.containerCodeRendered = true
                 }
                 from.scene.tweens.add({
                     targets: circle,

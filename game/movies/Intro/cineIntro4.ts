@@ -155,7 +155,7 @@ class cineIntro4 {
     // const DialogueScene = this.game.scene.getScene("DialogueManager");
     // this.scene.launch(DialogueScene)
     const camera = this.cine.cameras.main;
-    camera.postFX.addVignette(0.5, 0.5, 0.8);
+    // camera.postFX.addVignette(0.5, 0.5, 0.8);
     // ADD JOBS
 
     const part1 = (job: TickerJob) => {

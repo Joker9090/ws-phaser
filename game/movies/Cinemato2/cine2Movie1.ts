@@ -128,7 +128,7 @@ class cine2Movie1 {
     );
     cameraDialogue.ignore(container);
     const camera = this.cine.cameras.main;
-    camera.postFX.addVignette(0.5, 0.5, 0.8);
+    // camera.postFX.addVignette(0.5, 0.5, 0.8);
     if (this.cine.UIcontainer !== undefined)
       camera.ignore(this.cine.UIcontainer);
 

@@ -58,7 +58,13 @@ class containerSettings extends Phaser.GameObjects.Container {
         super(scene, config.x, config.y)
         const offsetY = 100
         this.scene = scene
-        this.modal = scene.add.image(0, 0, "settingsModal").setScale(0.9);
+        this.modal = scene.add.image(0, 0, "settingsModal").setScale(0);
+        this.scene.tweens.add({
+            targets:this.modal,
+            duration:500,
+            scale:0.9,
+            ease: 'Bounce.easeOut',
+        })
         this.modal.setOrigin(0.5);
         this.settingsButtonUi = settingsButtonUi
 
@@ -86,10 +92,21 @@ class containerSettings extends Phaser.GameObjects.Container {
             wordWrap: {
                 width: this.width * 0.9,
             },
-        }).setFontSize('60px');
-
+        }).setFontSize('60px').setScale(0);
+        this.scene.tweens.add({
+            targets:this.title,
+            duration:500,
+            scale:1,
+            ease: 'Bounce.easeOut',
+        })
 
         this.quitGame = scene.add.image(-40, 250, 'settingsQuitGame');
+        this.scene.tweens.add({
+            targets:this.quitGame,
+            duration:500,
+            scale:1,
+            ease: 'Bounce.easeOut',
+        })
         this.quitGame.setOrigin(0.5);
         this.quitGame.setInteractive()
         this.quitGame.on('pointerdown', () => {
@@ -170,7 +187,7 @@ class containerSettings extends Phaser.GameObjects.Container {
           
         })
 
-        this.cross = scene.add.image(-90, 350, 'settingsCross').setScale(0.8);
+        this.cross = scene.add.image(-90, 350, 'settingsCross').setScale(0);
         this.cross.setOrigin(0.5);
         this.cross.setInteractive();
         this.cross.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
@@ -189,7 +206,15 @@ class containerSettings extends Phaser.GameObjects.Container {
             this.crossPress()
         })
 
-        this.check = scene.add.image(10, 350, 'settingsCheck').setScale(0.8);
+        this.check = scene.add.image(10, 350, 'settingsCheck').setScale(0);
+
+        this.scene.tweens.add({
+            targets:[this.check, this.cross],
+            duration:500,
+            scale:0.8,
+            ease: 'Bounce.easeOut',
+        })
+
         this.check.setOrigin(0.5);
         this.check.setInteractive();
         this.check.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
@@ -228,17 +253,16 @@ class containerSettings extends Phaser.GameObjects.Container {
         //     },
         // });
 
-        this.brightness = scene.add.image(-this.modal.width / 2 + 120, 30, "settingsBrightness");
+        this.brightness = scene.add.image(-this.modal.width / 2 + 120, 30, "settingsBrightness").setScale(0);
         this.brightness.setOrigin(0.5);
-        this.brightnessFull = scene.add.image(this.modal.width / 2 - 180, 30, "settingsBrightnessFull");
+        this.brightnessFull = scene.add.image(this.modal.width / 2 - 180, 30, "settingsBrightnessFull").setScale(0);
         this.brightnessFull.setOrigin(0.5);
 
 
-        this._sound = scene.add.image(-this.modal.width / 2 + 120, -70, "settingsSound");
+        this._sound = scene.add.image(-this.modal.width / 2 + 120, -70, "settingsSound").setScale(0);
         this._sound.setOrigin(0.5);
-        this._soundFull = scene.add.image(this.modal.width / 2 - 180, -70, "settingsSoundFull");
+        this._soundFull = scene.add.image(this.modal.width / 2 - 180, -70, "settingsSoundFull").setScale(0);
         this._soundFull.setOrigin(0.5);
-
 
         this.musicText = scene.add.text(-this.modal.width / 2 + 100, -235, 'Music', {
             fontSize: 30,
@@ -249,10 +273,10 @@ class containerSettings extends Phaser.GameObjects.Container {
             wordWrap: {
                 width: this.width * 0.9,
             },
-        });
-        this.music = scene.add.image(-this.modal.width / 2 + 120, -170, "settingsSound");
+        }).setScale(0);
+        this.music = scene.add.image(-this.modal.width / 2 + 120, -170, "settingsSound").setScale(0);
         this.music.setOrigin(0.5);
-        this.musicFull = scene.add.image(this.modal.width / 2 - 180, -170, "settingsSoundFull");
+        this.musicFull = scene.add.image(this.modal.width / 2 - 180, -170, "settingsSoundFull").setScale(0);
         this.musicFull.setOrigin(0.5);
 
         this._soundText = scene.add.text(-this.modal.width / 2 + 100, -125, 'Sound', {
@@ -264,7 +288,7 @@ class containerSettings extends Phaser.GameObjects.Container {
             wordWrap: {
                 width: this.width * 0.9,
             },
-        });
+        }).setScale(0);
         this.brightnessText = scene.add.text(-this.modal.width / 2 + 100, -35, 'Brightness', {
             fontSize: 30,
             color: "#00feff",
@@ -274,9 +298,17 @@ class containerSettings extends Phaser.GameObjects.Container {
             wordWrap: {
                 width: this.width * 0.9,
             },
-        });
+        }).setScale(0);
 
         scene.add.existing(this)
+
+        this.scene.tweens.add({
+            targets:[this.brightness, this.brightnessText, this.brightnessFull, this._sound, this._soundText, this._soundFull, this.music, this.musicText, this.musicFull],
+            duration:500,
+            scale:1,
+            ease: 'Bounce.easeOut',
+        })
+      
         this.sliderMusic = this.createSlider(scene, -30, -170, (value) => {
             this.masterManager.changeVolume(value, 'music');
         }, this.volumeMusic);
@@ -288,7 +320,7 @@ class containerSettings extends Phaser.GameObjects.Container {
         this.sliderBrightness = this.createSlider(scene, -30, 30, (value) => {
             this.masterManager.changeBrightness(1 - value);
         }, 1 - this.darkness );
-
+      
         const arr = [
             screenBlack,
             this.modal,
@@ -335,10 +367,24 @@ class containerSettings extends Phaser.GameObjects.Container {
     createSlider(scene: Phaser.Scene, x: number, y: number, onChange: (value: number) => void, initialValue: number) {
         const slider = scene.add.container(x, y);
 
-        const bar = scene.add.image(0, 0, 'settingsSlider').setOrigin(0.5).setScale(0.8);
-        const fillBar = scene.add.rectangle(-140, 0, 0, 24, 57055).setOrigin(0, 0.5);
-        const fillBarStart = scene.add.image(-141, 0, 'fillBarStart').setOrigin(0.5).setScale(0.8);
-        const control = scene.add.circle(-125, 0, 12, 0xffffff).setOrigin(0.5);
+        const bar = scene.add.image(0, 0, 'settingsSlider').setOrigin(0.5).setScale(0);
+        const fillBar = scene.add.rectangle(-140, 0, 0, 24, 57055).setOrigin(0, 0.5).setScale(0);
+        const fillBarStart = scene.add.image(-141, 0, 'fillBarStart').setOrigin(0.5).setScale(0);
+        const control = scene.add.circle(-125, 0, 12, 0xffffff).setOrigin(0.5).setScale(0);
+
+
+        this.scene.tweens.add({
+            targets:[bar,  fillBarStart],
+            duration:500,
+            scale:0.8,
+            ease: 'power2',
+        })
+        this.scene.tweens.add({
+            targets:[fillBar, control],
+            duration:500,
+            scale:1,
+            ease: 'power2',
+        })
 
         control.setInteractive({ draggable: true });
         control.on('pointerover', () => {

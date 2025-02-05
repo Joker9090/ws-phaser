@@ -124,23 +124,7 @@ class MenuScene extends Phaser.Scene {
         })
         this.containerCredits.setScale(scaleBy());
     }
-    // createAlbumContainer() {
-    //     if (this.containerAlbum) {
-    //         this.destroyContainer(this.containerAlbum)
-    //     }
-    //     this.containerAlbum = new containerAlbum(this, {
-    //         x: 0,
-    //         y: 0,
-    //         panToInitial: this.centralPointInitial,
-    //         panToCode: this.centralPointCode,
-    //         changeContainer: () => {
-    //             if (this.containerAlbum && this.containerInitial) {
-    //                 this.changeContainer(this.containerAlbum, this.containerInitial)
-    //             }
-    //         }
-    //     })
-    //     this.containerAlbum.setScale(scaleBy());
-    // }
+
 
     destroyContainer(container: Phaser.GameObjects.Container) {
         container.removeAll(true)

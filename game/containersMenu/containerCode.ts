@@ -57,13 +57,23 @@ class containerCode extends Phaser.GameObjects.Container {
         }).setFontSize('60px').setFontSize('60px').setScale(0);
         this.modal = scene.add.image(0, 100, "codeModal").setScale(0);
         this.modal.setOrigin(0.5);
-        this.input = scene.add.rectangle(-260 , 200, this.modal.width * 0.6, 80, 57055).setOrigin(0, 0.5).setScale(0);
+        this.input = scene.add.rectangle(-260 , 200, this.modal.width * 0.6, 80, 57055).setOrigin(0, 0.5).setScale(0).setAlpha(0.5);
         
         this.input.setInteractive()
         this.input.on('pointerup', () => {
           isTyping = true;
           inputText = '';
           this.masterManager?.playSound('buttonSound', false)
+          this.input.setAlpha(0.8);
+        });
+        scene.time.addEvent({
+            delay: 500,
+            callback: () => {
+                if (this.writingIndicator && isTyping && this.textDisplay.length === 0) {
+                    this.writingIndicator.setVisible(!this.writingIndicator.visible);
+                }
+            },
+            loop: true
         });
         scene.input.keyboard?.on('keydown', (event: any) => {
           const key = event.key;
@@ -71,6 +81,7 @@ class containerCode extends Phaser.GameObjects.Container {
               this.textDisplay.push(key);
               inputText = this.textDisplay.join('');
               this.displayText.setText(inputText);
+              this.writingIndicator?.setVisible(false);
           }else if(key === 'Backspace'){
               this.textDisplay.pop();
               inputText = this.textDisplay.join('');
@@ -92,8 +103,8 @@ class containerCode extends Phaser.GameObjects.Container {
                 width: this.width * 0.9,
             },
         });
-        // this.writingIndicator = this.scene.add.rectangle(-230 + this.displayText.width, 160, 10, 70, 0x00feff).setOrigin(0, 0.5);
-        
+        this.writingIndicator = this.scene.add.rectangle(0, 200, 10, 50, 0x00feff).setOrigin(0, 0.5).setVisible(false);
+       
 
         this.backButton = scene.add.image(0, 0, "playBackButton")
            this.backButton.setPosition(-900, 430)
@@ -194,6 +205,7 @@ class containerCode extends Phaser.GameObjects.Container {
             this.displayText,
             this.backButton,
             this.confirmButton,
+            this.writingIndicator,
             // this.settingsButton,
             this.error
         ]

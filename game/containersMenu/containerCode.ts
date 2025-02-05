@@ -16,10 +16,11 @@ class containerCode extends Phaser.GameObjects.Container {
     textDisplay: string[] = [];
     displayText: Phaser.GameObjects.Text;
     masterManager?: MasterManager;
+    // settingsButton: Phaser.GameObjects.Image;
+    error: Phaser.GameObjects.Text;
     astroFront?:Phaser.GameObjects.Image;
     astroBack?:Phaser.GameObjects.Image;
-    // settingsButton: Phaser.GameObjects.Image;
-    error: Phaser.GameObjects.Text  
+    writingIndicator?:Phaser.GameObjects.Rectangle;  
     constructor(scene: Phaser.Scene, config: ContainerMenuConfigType) {
         super(scene, config.x, config.y)
         const offsetY = 100
@@ -53,11 +54,11 @@ class containerCode extends Phaser.GameObjects.Container {
             wordWrap: {
                 width: this.width * 0.9,
             },
-        }).setFontSize('60px').setScale(0);
+        }).setFontSize('60px').setFontSize('60px').setScale(0);
         this.modal = scene.add.image(0, 100, "codeModal").setScale(0);
         this.modal.setOrigin(0.5);
         this.input = scene.add.rectangle(-260 , 200, this.modal.width * 0.6, 80, 57055).setOrigin(0, 0.5).setScale(0);
-
+        
         this.input.setInteractive()
         this.input.on('pointerup', () => {
           isTyping = true;
@@ -77,21 +78,24 @@ class containerCode extends Phaser.GameObjects.Container {
           }
         });
 
-            this.displayText = this.scene.add.text(-230, 160, '', {
-                fontSize: 70,
-                color: "#00feff",
-                stroke: "#00feff",
-                align: "center",
-                fontFamily: "Arcade",
-                fixedWidth: this.input.width - 50,
-                fixedHeight: this.input.height - 10,
-                wordWrap: {
-                    width: this.width * 0.9,
-                },
-            });
-            
 
-            this.backButton = scene.add.image(0, 0, "playBackButton")
+
+        this.displayText = this.scene.add.text(-230, 160, '', {
+            fontSize: 70,
+            color: "#00feff",
+            stroke: "#00feff",
+            align: "center",
+            fontFamily: "Arcade",
+            fixedWidth: this.input.width - 50,
+            fixedHeight: this.input.height - 10,
+            wordWrap: {
+                width: this.width * 0.9,
+            },
+        });
+        // this.writingIndicator = this.scene.add.rectangle(-230 + this.displayText.width, 160, 10, 70, 0x00feff).setOrigin(0, 0.5);
+        
+
+        this.backButton = scene.add.image(0, 0, "playBackButton")
            this.backButton.setPosition(-900, 430)
            this.backButton.setInteractive().on('pointerdown', () => {
                this.backButton.setTexture('playBackButtonPressed')
@@ -162,9 +166,8 @@ class containerCode extends Phaser.GameObjects.Container {
         //         arr.push(settings)
         //         this.masterManager?.playSound('buttonSound', false)
         //     this.settingsButton.setTexture('settingsButtonHover')
-        //     })
-        
-        // const background = this.scene.add.image(0,0,"NOMBRE DEL ASSET").setInteractive()
+        //      })
+
         const sky = this.scene.add.image(0,innerHeight/4 -200,'codeSky').setOrigin(0.5, 0.5)
         const stars = this.scene.add.image(0,innerHeight/4 -350,'codeStars').setOrigin(0.5, 0.5)
         const background0 = this.scene.add.image(0,innerHeight/4 -200, 'codeFondo0').setInteractive().setOrigin(0.5, 0.5)

@@ -375,7 +375,7 @@ class containerSettings extends Phaser.GameObjects.Container {
         this.masterManager.changeVolume(this.volumeMusic, 'music');
         this.masterManager.changeVolume(this.volumeSound, 'sound');
         this.masterManager.changeBrightness(this.darkness);
-        if (this.scene.scene.key !== 'MenuScene') {
+        if (this.scene instanceof Game) {
             this.masterManager.resumeGame()
         }
         this.settingsButtonUi?.setVisible(true)

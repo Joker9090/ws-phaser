@@ -38,7 +38,7 @@ export default class MasterManager extends Phaser.Scene {
   brightness: number = 0.5;
   MAX_VOLUME: number = 0.6;
   MAX_DARKNESS: number = 0.3;
-  imagenesAlbum: string[] = ["planeta1_figu1", "planeta1_figu2","planeta2_figu1","planeta2_figu2","planeta3_figu1","planeta3_figu2"]
+  imagenesAlbum: string[] = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2", "planeta3_figu1", "planeta3_figu2"]
   codigos: { type: string, codigo: string, postalKey: string, mapa: number, imagenes: string[] }[] = []
   constructor() {
     super({ key: "MasterManager" });
@@ -113,19 +113,24 @@ export default class MasterManager extends Phaser.Scene {
   pauseGame() {
     const gameScene = this.scene.get("Game");
     if (gameScene) {
-      gameScene.physics.world.pause();
-      gameScene.tweens.pauseAll();
-      gameScene.input.enabled = true;
-      gameScene.time.paused = true
+      this.time.delayedCall(600, () => {
+        gameScene.physics.world.pause();
+        gameScene.tweens.pauseAll();
+        gameScene.input.enabled = true;
+        gameScene.time.paused = true
+      }, [], this)
     }
   }
   resumeGame() {
     const gameScene = this.scene.get("Game");
     if (gameScene) {
-      gameScene.physics.world.resume();
-      gameScene.tweens.resumeAll();
-      gameScene.input.enabled = true;
-      gameScene.time.paused = false
+      (gameScene as Game).UIClass?.settingsModal?.animationOfModal(false)
+      this.time.delayedCall(600, () => {
+        gameScene.physics.world.resume();
+        gameScene.tweens.resumeAll();
+        gameScene.input.enabled = true;
+        gameScene.time.paused = false
+      }, [], this)
     }
   }
 
@@ -136,7 +141,7 @@ export default class MasterManager extends Phaser.Scene {
     const codeFound: enterCodeType | undefined = (CODES.CODES as enterCodeType[]).find(c => c.codigo === code)
     if (!codeFound) {
       error.setVisible(true)
-    } else {      
+    } else {
       if (codeFound.type === "planeta") {
         this.imagenesAlbum = codeFound.imagenes
         const multiScene1 = new MultiScene("Game", { level: codeFound.mapa, lifes: 3, loadKey: ["GamePlay1", "GamePlay2", "GamePlay3"] });
@@ -151,7 +156,7 @@ export default class MasterManager extends Phaser.Scene {
         this.scene.stop("MenuScene");
       }
     }
-      
+
   }
 
   create() {

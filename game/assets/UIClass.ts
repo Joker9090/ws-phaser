@@ -24,52 +24,52 @@ export default class UIClass {
   minutes: number = 0;
   container: Phaser.GameObjects.Container;
   progressParam: number = 0;
-  settingsVisible:boolean = false;
-  settingsModal?:Phaser.GameObjects.Image
-  quitGame?:Phaser.GameObjects.Image
-  cross?:Phaser.GameObjects.Image
-  check?:Phaser.GameObjects.Image
-  album?:Phaser.GameObjects.Image
-  brightness?:Phaser.GameObjects.Image
-  brightnessFull?:Phaser.GameObjects.Image
-  _sound?:Phaser.GameObjects.Image
-  _soundFull?:Phaser.GameObjects.Image
-  music?:Phaser.GameObjects.Image
-  musicFull?:Phaser.GameObjects.Image
-  title?:Phaser.GameObjects.Text
-  albumText?:Phaser.GameObjects.Text
-  musicSlider:any;
-  soundSlider:any;
-  brigthSlider:any;
+  settingsVisible: boolean = false;
+  settingsModal: containerSettings | undefined = undefined
+  quitGame?: Phaser.GameObjects.Image
+  cross?: Phaser.GameObjects.Image
+  check?: Phaser.GameObjects.Image
+  album?: Phaser.GameObjects.Image
+  brightness?: Phaser.GameObjects.Image
+  brightnessFull?: Phaser.GameObjects.Image
+  _sound?: Phaser.GameObjects.Image
+  _soundFull?: Phaser.GameObjects.Image
+  music?: Phaser.GameObjects.Image
+  musicFull?: Phaser.GameObjects.Image
+  title?: Phaser.GameObjects.Text
+  albumText?: Phaser.GameObjects.Text
+  musicSlider: any;
+  soundSlider: any;
+  brigthSlider: any;
   masterManager: MasterManager;
 
   constructor(scene: Game | CinematographyModular, level: number, lifes: number, time: number) {
     this.scene = scene
-    this.container = this.scene.add.container(-window.innerWidth,0);
+    this.container = this.scene.add.container(-window.innerWidth, 0);
     this.scene.tweens.add({
       targets: this.container,
       x: 0,
       duration: 1300,
-      ease: 'Power2' 
+      ease: 'Power2'
     })
- 
+
     this.createUIContainer({ level, lifes, time })
 
-     let masterManagerScene = scene.game.scene.getScene("MasterManager") as MasterManager;
-     if (!masterManagerScene) {
-          this.masterManager = new MasterManager();
-         this.scene.scene.add("MasterManager", this.masterManager, true);
-      } else {
-          this.masterManager = masterManagerScene;
-          // this.scene.scene.launch("MasterManager");
-      }
+    let masterManagerScene = scene.game.scene.getScene("MasterManager") as MasterManager;
+    if (!masterManagerScene) {
+      this.masterManager = new MasterManager();
+      this.scene.scene.add("MasterManager", this.masterManager, true);
+    } else {
+      this.masterManager = masterManagerScene;
+      // this.scene.scene.launch("MasterManager");
     }
+  }
 
   createUI(lifes: number) {
     let quantityLifes = 0;
     let xpos = 0;
     if (lifes) {
-      if(this.scene instanceof Game){
+      if (this.scene instanceof Game) {
         for (let i = 0; i < lifes; i++) {
           quantityLifes += 1;
           xpos = 205 + i * 50;
@@ -104,23 +104,23 @@ export default class UIClass {
         };
         this.coinUI = new UI(this.scene, coinConf)
           .setTint(Phaser.Display.Color.GetColor(0, 0, 0));
-  
+
         this.container.add(this.coinUI);
       }
       const settingsConf: UIConfig = {
         texture: "settingsButton",
         pos: { x: window.innerWidth - 100, y: 70 },
         scale: 0.9,
-      }; 
+      };
       this.settings = new UI(this.scene, settingsConf);
       this.settings.setInteractive()
-      const bg = this.scene.add.rectangle(0,0,window.innerWidth,window.innerHeight,0x000000, 0.3).setVisible(false).setOrigin(0);
+      const bg = this.scene.add.rectangle(0, 0, window.innerWidth, window.innerHeight, 0x000000, 0.3).setVisible(false).setOrigin(0);
       this.container.add(bg);
       this.container.add(this.settings);
-      this.settings.on('pointerup',()=>{
+      this.settings.on('pointerup', () => {
         this.toggleSettings()
       })
-    } 
+    }
     this.scene.input.keyboard?.on('keydown-ESC', () => {
       this.toggleSettings();
     });
@@ -128,20 +128,21 @@ export default class UIClass {
 
 
 
-  toggleSettings(){
-    if(this.settingsVisible){
-      this.container.each((child:any)=>{
-        if(child instanceof containerSettings){
+  toggleSettings() {
+    if (this.settingsVisible) {
+      this.container.each((child: any) => {
+        if (child instanceof containerSettings) {
           child.crossPress()
+          this.settingsModal = undefined
         }
       })
       this.settingsVisible = false
-    }else{
-      const settingsModal = new containerSettings(this.scene,{x:window.innerWidth/2,y:window.innerHeight/2},undefined, ()=>{this.settingsVisible = !this.settingsVisible} ,this.settings)
+    } else {
+      this.settingsModal = new containerSettings(this.scene, { x: window.innerWidth / 2, y: window.innerHeight / 2 }, undefined, () => { this.settingsVisible = !this.settingsVisible }, this.settings)
       this.masterManager.playSound('buttonSound', false)
       this.masterManager.pauseGame()
       this.settings?.setVisible(false)
-      this.container.add(settingsModal)
+      this.container.add(this.settingsModal)
       this.settingsVisible = true
     }
   }
@@ -195,49 +196,49 @@ export default class UIClass {
     this.createUI(data.lifes);
     this.timeLevel = 0;
     // checkeo si estoy en game o cinemato 
-    if(this.scene instanceof Game){
-        this.minutes = 0,
+    if (this.scene instanceof Game) {
+      this.minutes = 0,
         this.timeLevel = 0
-        this.timerText = this.scene.add
-          .text(300, 50, `0${this.minutes}:0${this.timeLevel}`, { fontSize: "32px" })
-          .setOrigin(0.5, 0.5)
-          .setScrollFactor(0, 0)
-          .setDepth(100)
-          .setSize(50, 50)
-          .setPosition(250, 55);
-        this.timeLevel = 0;
-        this.timerText?.setText(`0${this.minutes}:0${this.timeLevel}`);
-        var timerEvent = this.scene.time.addEvent({
-          delay: 1000,
-          callback: () => {
-            this.timeLevel++;
-            if (this.minutes < 10 && this.timeLevel < 10) {
-              this.timerText?.setText(`0${this.minutes}:0${this.timeLevel}`);
-            } else if (this.minutes >= 10 && this.timeLevel >= 10) {
-              this.timerText?.setText(`${this.minutes}:${this.timeLevel}`);
-            } else if (this.minutes < 10 && this.timeLevel >= 10) {
-              this.timerText?.setText(`0${this.minutes}:${this.timeLevel}`);
-            } else if (this.timeLevel < 10 && this.minutes >= 10) {
-              this.timerText?.setText(`${this.minutes}:0${this.timeLevel}`);
-            }
-            this.timeLevel = this.timeLevel;
-          },
-          callbackScope: this,
-          loop: true,
-        });
-        var timerEvent = this.scene.time.addEvent({
-          delay: 60000,
-          callback: () => {
-            this.minutes++;
-            this.timeLevel = 0
+      this.timerText = this.scene.add
+        .text(300, 50, `0${this.minutes}:0${this.timeLevel}`, { fontSize: "32px" })
+        .setOrigin(0.5, 0.5)
+        .setScrollFactor(0, 0)
+        .setDepth(100)
+        .setSize(50, 50)
+        .setPosition(250, 55);
+      this.timeLevel = 0;
+      this.timerText?.setText(`0${this.minutes}:0${this.timeLevel}`);
+      var timerEvent = this.scene.time.addEvent({
+        delay: 1000,
+        callback: () => {
+          this.timeLevel++;
+          if (this.minutes < 10 && this.timeLevel < 10) {
+            this.timerText?.setText(`0${this.minutes}:0${this.timeLevel}`);
+          } else if (this.minutes >= 10 && this.timeLevel >= 10) {
             this.timerText?.setText(`${this.minutes}:${this.timeLevel}`);
-            this.timeLevel = this.timeLevel;
-          },
-          callbackScope: this,
-          loop: true,
-        });
-    
-        this.container.add([this.timerText]);
+          } else if (this.minutes < 10 && this.timeLevel >= 10) {
+            this.timerText?.setText(`0${this.minutes}:${this.timeLevel}`);
+          } else if (this.timeLevel < 10 && this.minutes >= 10) {
+            this.timerText?.setText(`${this.minutes}:0${this.timeLevel}`);
+          }
+          this.timeLevel = this.timeLevel;
+        },
+        callbackScope: this,
+        loop: true,
+      });
+      var timerEvent = this.scene.time.addEvent({
+        delay: 60000,
+        callback: () => {
+          this.minutes++;
+          this.timeLevel = 0
+          this.timerText?.setText(`${this.minutes}:${this.timeLevel}`);
+          this.timeLevel = this.timeLevel;
+        },
+        callbackScope: this,
+        loop: true,
+      });
+
+      this.container.add([this.timerText]);
     }
     this.scene.cameras.main.ignore(this.container)
   }

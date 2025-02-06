@@ -21,11 +21,11 @@ class containerSettings extends Phaser.GameObjects.Container {
     _soundFull: Phaser.GameObjects.Image;
     music: Phaser.GameObjects.Image;
     musicFull: Phaser.GameObjects.Image;
-    volumeMusic: number = 0.2;
-    volumeSound: number = 0.2;
+    volumeMusic: number = 2;
+    volumeSound: number = 2;
     // originalMusic: number = 0.2;
     // originalSound: number = 0.2;
-    darkness: number = 0.2;
+    darkness: number = 0;
     title: Phaser.GameObjects.Text;
     brightnessText: Phaser.GameObjects.Text;
     _soundText: Phaser.GameObjects.Text;
@@ -371,6 +371,8 @@ class containerSettings extends Phaser.GameObjects.Container {
     }
 
     crossPress() {
+        console.log(this.volumeMusic, "from cross")
+        console.log(this.volumeSound, "JOTA SOUND", this.volumeMusic, "JOTA MUSIC")
         this.masterManager.playSound('buttonSound', false)
         this.masterManager.changeVolume(this.volumeMusic, 'music');
         this.masterManager.changeVolume(this.volumeSound, 'sound');

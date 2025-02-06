@@ -33,8 +33,8 @@ export default class MasterManager extends Phaser.Scene {
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   GameScene?: Game;
   brightnessScreen?: Phaser.GameObjects.Rectangle;
-  volumeMusic: number = 0.2;
-  volumeSound: number = 0.2;
+  volumeMusic: number = this.music?.volume || 0.5;
+  volumeSound: number = this.sounds?.volume || 0.5;
   brightness: number = 0.5;
   MAX_VOLUME: number = 0.6;
   MAX_DARKNESS: number = 0.3;
@@ -44,7 +44,7 @@ export default class MasterManager extends Phaser.Scene {
     super({ key: "MasterManager" });
     const tickerMS = 100;
     this.ticker = new Ticker(tickerMS);
-
+    console.log("JOTA MUSIC",this.volumeMusic, "JOTA SOUND",this.volumeSound, "JOTA SOUND 2", this.sound)
   }
 
   preload() {
@@ -78,8 +78,9 @@ export default class MasterManager extends Phaser.Scene {
       case "sound":
         this.volumeSound = volume;
         if (this.sounds) {
+          console.log(this.sounds.volume, "joaco2", volume * this.MAX_VOLUME < 0.1 ? 0 : volume * this.MAX_VOLUME, volume, this.MAX_VOLUME)
           this.sounds.setVolume(volume * this.MAX_VOLUME < 0.1 ? 0 : volume * this.MAX_VOLUME);
-          console.log(this.sounds.volume)
+          console.log(this.sounds, "joaco1")
         }
         break;
     }
@@ -87,13 +88,16 @@ export default class MasterManager extends Phaser.Scene {
 
   playSound(name: string, loop: boolean = false) {
     this.sounds = this.sound.add(name, {
-      volume: this.sounds?.volume,
+      volume: this.volumeSound,
       loop: loop,
     });
     this.sounds.play();
+    console.log(this.volumeSound, "JOTA SOUNDS FROM FUNCTION")
   }
 
   playMusic(name: string, loop: boolean = false) {
+
+    console.log(this.volumeMusic, "from master")
     if (this.music) {
       this.music.stop();
     }

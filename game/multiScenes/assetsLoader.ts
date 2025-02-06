@@ -121,6 +121,7 @@ const loadAssets = {
       ["image", "planeta2_figu2", "/menu/album/figuritas/Planeta2_figu2.png"],
       ["image", "planeta3_figu1", "/menu/album/figuritas/Planeta3_figu1.png"],
       ["image", "planeta3_figu2", "/menu/album/figuritas/Planeta3_figu2.png"],
+      ["image", "lock", "/menu/album/lock.png"],
 
     ]
 

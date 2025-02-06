@@ -20,6 +20,7 @@ class containerAlbum extends Phaser.GameObjects.Container {
     start:number = 0;
     end:number = 2;
     step:number = 2
+    imagenes: string[] = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2", "planeta3_figu1", "planeta3_figu2"]
 
 
     constructor(scene: Phaser.Scene, config: ContainerMenuConfigType) {
@@ -70,7 +71,7 @@ class containerAlbum extends Phaser.GameObjects.Container {
         
         const nextButton = this.scene.add.image(this.width - 100, this.height / 1.7, "backButton").setInteractive().setScale(0.8);
         nextButton.on("pointerup", () => {
-            if (this.end < this.masterManager.imagenesAlbum.length) {
+            if (this.end < this.imagenes.length) {
                 this.start += this.step;
                 this.end += this.step;
                 nivel += 1
@@ -135,20 +136,19 @@ class containerAlbum extends Phaser.GameObjects.Container {
         this.figuritas.forEach((figurita) => figurita.destroy());
         this.figuritas = [];
         let posX = this.width / 3;
-        const showFiguritas = this.masterManager.imagenesAlbum.slice(this.start, this.end);
-        showFiguritas.forEach((data, index) => {
-            const figurita = new Figuritas(this.scene, posX * (index +1), this.height / 1.7, data).setScale(0).setAlpha(0.8);
+        const showFiguritas = this.imagenes.slice(this.start, this.end);
+        showFiguritas.forEach((child, index) => {
+            const isUnlocked = this.masterManager.imagenesDesbloqueadas.includes(child);
+            const figurita = new Figuritas(this.scene, posX * (index + 1), this.height / 1.7, child, isUnlocked).setScale(0).setAlpha(0.8);
             this.scene.tweens.add({
-                targets:figurita,
-                scale:0.8,
-                duration:500,
-                // este delay controla la diferencia entre el spawneo de una y la otra
-                delay:400*index,
-                ease:'Bounce.easeOut'
-            })
+            targets: figurita,
+            scale: 0.8,
+            duration: 500,
+            delay: 400 * index,
+            ease: 'Bounce.easeOut'
+            });
             this.figuritas.push(figurita);
-        });
-        
+        });      
         this.add(this.figuritas)
     };
     download(){

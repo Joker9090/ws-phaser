@@ -468,7 +468,7 @@ class Mapa7 {
           this.scene.monchi,
           this.portal,
           () =>{
-            // this.masterManager.imagenesAlbum =  ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2"];
+            // this.masterManager.imagenesDesbloqueadas =  ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2"];
             this.scene.win()
           } ,
           () => true,
@@ -584,7 +584,7 @@ class Mapa7 {
   createMap(data: { level: number; lifes: number }) {
     this.scene.lateralCameraOffset("left", false, this.cameraBounds.width, 1, 1000);
     this.scene.monchi?.setFlipX(true)
-    // this.masterManager.imagenesAlbum =  ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2"];
+    // this.masterManager.imagenesDesbloqueadas =  ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2"];
     this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
     this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });
     this.pisos = this.scene.physics.add.group({ allowGravity: false });

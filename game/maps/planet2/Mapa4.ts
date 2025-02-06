@@ -458,7 +458,7 @@ class Mapa4 {
           this.scene.monchi,
           this.portal,
           () =>{
-            // this.masterManager.imagenesAlbum =  ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1"];
+            // this.masterManager.imagenesDesbloqueadas =  ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1"];
             this.scene.win()
           } ,
           () => true,

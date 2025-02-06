@@ -38,7 +38,7 @@ export default class MasterManager extends Phaser.Scene {
   brightness: number = 0.5;
   MAX_VOLUME: number = 0.6;
   MAX_DARKNESS: number = 0.3;
-  imagenesAlbum: string[] = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2", "planeta3_figu1", "planeta3_figu2"]
+  imagenesDesbloqueadas: string[] = ["planeta1_figu1"]
   codigos: { type: string, codigo: string, postalKey: string, mapa: number, imagenes: string[] }[] = []
   constructor() {
     super({ key: "MasterManager" });
@@ -143,13 +143,13 @@ export default class MasterManager extends Phaser.Scene {
       error.setVisible(true)
     } else {
       if (codeFound.type === "planeta") {
-        this.imagenesAlbum = codeFound.imagenes
+        this.imagenesDesbloqueadas = codeFound.imagenes
         const multiScene1 = new MultiScene("Game", { level: codeFound.mapa, lifes: 3, loadKey: ["GamePlay1", "GamePlay2", "GamePlay3"] });
         this.scene.add("MultiScene", multiScene1, true);
         this.scene.start("MultiScene").bringToTop("MultiScene");
         this.scene.stop("MenuScene");
       } else if (codeFound.type === "postal") {
-        this.imagenesAlbum = codeFound.imagenes
+        this.imagenesDesbloqueadas = codeFound.imagenes
         const multiScene2 = new MultiScene("CinematographyMod", { keyname: codeFound.postalKey, loadKey: ["Postales"], code: code });
         this.scene.add("MultiScene", multiScene2, true);
         this.scene.start("MultiScene").bringToTop("MultiScene");

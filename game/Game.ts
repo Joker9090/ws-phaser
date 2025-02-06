@@ -404,76 +404,76 @@ class Game extends Phaser.Scene {
         this.map = new p1Mapa1(this, this.monchi!);
         this.loopMusic = "planet0LoopMusic";
         if(this.masterManagerScene){
-          this.masterManagerScene.imagenesAlbum = ["planeta1_figu1"]
+          this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1"]
         }
         break;
       case 2:
         this.map = new p1Mapa2(this, this.monchi!);
         this.loopMusic = "planet0LoopMusic";
         if(this.masterManagerScene){
-          this.masterManagerScene.imagenesAlbum = ["planeta1_figu1"]
+          this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1"]
         }
         break;
       case 3:
         this.map = new p1Mapa3(this, this.monchi!);
         this.loopMusic = "planet0LoopMusic";
         if(this.masterManagerScene){
-          this.masterManagerScene.imagenesAlbum = ["planeta1_figu1", "planeta1_figu2"]
+          this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1", "planeta1_figu2"]
         }
         break;
       case 4:
         this.map = new p2Mapa1(this, this.monchi!);
         this.loopMusic = "planet1LoopMusic";
         if(this.masterManagerScene){
-          this.masterManagerScene.imagenesAlbum = ["planeta1_figu1", "planeta1_figu2"]
+          this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1", "planeta1_figu2"]
         }
         break;
       case 5:
         this.map = new p2Mapa2(this, this.monchi!);
         this.loopMusic = "planet1LoopMusic";
         if(this.masterManagerScene){
-          this.masterManagerScene.imagenesAlbum = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1"]
+          this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1"]
         }
         break;
       case 6:
         this.map = new p2Mapa4(this, this.monchi!);
         this.loopMusic = "planet1LoopMusic";
         if(this.masterManagerScene){
-          this.masterManagerScene.imagenesAlbum = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1"]
+          this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1"]
         }
         break;
       case 7:
         this.map = new p2Mapa3(this, this.monchi!);
         this.loopMusic = "planet1LoopMusic";
         if(this.masterManagerScene){
-          this.masterManagerScene.imagenesAlbum = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2"]
+          this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2"]
         }
         break;
       case 8:
         this.map = new p3Mapa1(this, this.monchi!);
         this.loopMusic = "planet3LoopMusic";
         if(this.masterManagerScene){
-          this.masterManagerScene.imagenesAlbum = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2"]
+          this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2"]
         }
         break
       case 9:
         this.map = new p3Mapa2(this, this.monchi!);
         this.loopMusic = "planet3LoopMusic";
         if(this.masterManagerScene){
-          this.masterManagerScene.imagenesAlbum = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2", "planeta3_figu1"]
+          this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2", "planeta3_figu1"]
         }
         break
       case 10:
         this.map = new p3Mapa3(this, this.monchi!);
         this.loopMusic = "planet3LoopMusic";
         if(this.masterManagerScene){
-          this.masterManagerScene.imagenesAlbum = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2", "planeta3_figu1"]
+          this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2", "planeta3_figu1"]
         }
         break
       case 11:
         this.map = new p3Mapa4(this, this.monchi!);
         if(this.masterManagerScene){
-          this.masterManagerScene.imagenesAlbum = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2", "planeta3_figu1", "planeta3_figu2"]
+          this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2", "planeta3_figu1", "planeta3_figu2"]
         }
         this.loopMusic = "planet3LoopMusic";
         break

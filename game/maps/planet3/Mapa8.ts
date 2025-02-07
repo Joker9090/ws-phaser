@@ -80,7 +80,7 @@ class Mapa8 {
       gravityDown: false
     },
   ];
-  nextScene: string | undefined = 'postal1_Planeta3';
+  nextScene: string | undefined = 'postal1_planeta3';
   postalCode: string | undefined = 'postl5'
   background: Phaser.GameObjects.Image;
   // masterManager: MasterManager

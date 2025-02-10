@@ -50,7 +50,7 @@ class containerInitial extends Phaser.GameObjects.Container {
             if (config.panToPlay) {
                 this.scene.cameras.main.pan(config.panToPlay.x, config.panToPlay.y, 1000, 'Expo', true)
                 this.masterManager.playSound('buttonSound', false)
-
+                this.scene.containerPlay?.setVisible(true)
             }
             this.playButton.setTexture('playButtonHover')
         })
@@ -196,7 +196,7 @@ class containerInitial extends Phaser.GameObjects.Container {
         })
         this.scene.input.keyboard?.on('keydown-ESC', () => {
             console.log(this.settingsVisible, "visible from menu")
-            if(!this.scene.containerAlbum?.visible && !this.scene.containerCredits?.visible){
+            if(!this.scene.containerAlbum?.visible && !this.scene.containerCredits?.visible && !this.scene.containerPlay?.visible && !this.scene.containerCode?.visible){
                 this.toggleSettings();
             }
         });

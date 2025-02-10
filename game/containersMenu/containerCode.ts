@@ -27,7 +27,6 @@ class containerCode extends Phaser.GameObjects.Container {
         let isTyping = false;
         let inputText = '';
         const textLength = 6
-
         
         let masterManagerScene = scene.game.scene.getScene("MasterManager") as MasterManager;
         if (!masterManagerScene) {
@@ -114,7 +113,6 @@ class containerCode extends Phaser.GameObjects.Container {
            this.backButton.on('pointerup',()=>{
                this.backButton.setTexture('playBackButton')
                this.masterManager?.playSound('buttonSound', false)
-
                if(config.changeContainer){
                 config.changeContainer()
               }
@@ -219,7 +217,8 @@ class containerCode extends Phaser.GameObjects.Container {
             targets:[this.modal, this.input, this.title, this.displayText, this.confirmButton, this.astroFront, this.astroBack],
             scale:1,
             duration:500,
-            ease:'Bounce'
+            ease:'Bounce',
+
         })
     }
 }

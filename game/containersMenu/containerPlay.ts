@@ -77,6 +77,7 @@ class containerPlay extends Phaser.GameObjects.Container {
         this.backButton.on('pointerup',()=>{
             this.backButton.setTexture('playBackButton')
             this.masterManager.playSound('buttonSound', false)
+            this.setVisible(false)
             if (config.panToInitial) {
                 this.scene.cameras.main.pan(config.panToInitial.x, config.panToInitial.y, 1000, 'Expo', true)
             }

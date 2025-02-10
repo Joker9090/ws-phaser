@@ -19,13 +19,11 @@ class containerInitial extends Phaser.GameObjects.Container {
     settingsVisible = false
     arr: (Phaser.GameObjects.Image | containerSettings)[];
     masterManager: MasterManager
-
     scene: MenuScene;
     constructor(scene: MenuScene, config: ContainerMenuConfigType) {
         super(scene, config.x, config.y)
         this.scene = scene
         const offsetY = 100
-
         let masterManagerScene = scene.game.scene.getScene("MasterManager") as MasterManager;
         if (!masterManagerScene) {
             this.masterManager = new MasterManager();
@@ -122,6 +120,7 @@ class containerInitial extends Phaser.GameObjects.Container {
         this.albumButton.on('pointerup', () => {
             this.albumButton.setTexture('albumButtonHover')
             this.masterManager.playSound('buttonSound', false)
+            console.log(this.scene.containerAlbum, "containerAlbum")
             if (config.changeContainer) {
                 config.changeContainer()
             }
@@ -197,7 +196,9 @@ class containerInitial extends Phaser.GameObjects.Container {
         })
         this.scene.input.keyboard?.on('keydown-ESC', () => {
             console.log(this.settingsVisible, "visible from menu")
-            this.toggleSettings();
+            if(!this.scene.containerAlbum?.visible){
+                this.toggleSettings();
+            }
         });
         this.logoNoswar = scene.add.image(0, 0, "logoNoswar").setOrigin(1, 1)
         this.logoNoswar.setPosition(this.width/2 + 100, this.height/2 - 20)

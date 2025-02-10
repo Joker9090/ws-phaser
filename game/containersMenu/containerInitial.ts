@@ -196,7 +196,7 @@ class containerInitial extends Phaser.GameObjects.Container {
         })
         this.scene.input.keyboard?.on('keydown-ESC', () => {
             console.log(this.settingsVisible, "visible from menu")
-            if(!this.scene.containerAlbum?.visible){
+            if(!this.scene.containerAlbum?.visible && !this.scene.containerCredits?.visible){
                 this.toggleSettings();
             }
         });

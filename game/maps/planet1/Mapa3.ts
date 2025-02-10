@@ -320,7 +320,7 @@ class Mapa3 {
         this.coin = this.scene.physics.add.group({ allowGravity: false });
         this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
         this.portal = this.scene.physics.add.group({ allowGravity: false });
-        const aura = this.scene.add.sprite(500, 1580, "auraTuto").setScale(0.6)
+        const aura = this.scene.add.sprite(600, 1200, "auraTuto").setScale(0.6)
         this.aura.add(aura)
 
 
@@ -607,7 +607,7 @@ class Mapa3 {
             direction: 0,
             velocity: 20,
             scale: 1,
-      group: cloudsGroup,
+            group: cloudsGroup,
             depth: 99,
         };
         const c1 = new AsteroidGenerator(this.scene, c1Config);

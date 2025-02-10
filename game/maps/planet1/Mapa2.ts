@@ -309,7 +309,7 @@ class Mapa2 {
     this.textTutorial1 = new TextBox(
       this.scene,
       "That was close... these fireballs are dangerous, I'd better avoid them for now.",
-      1900,
+      2100,
       900,
       400
     ).setVisible(false).setRotation(Math.PI)

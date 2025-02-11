@@ -125,7 +125,6 @@ class Mapa5 {
     constructor(scene: Game, monchi: Player) {
         this.scene = scene;
         this.monchi = monchi;
-
         /* World size*/
         this.scene.physics.world.setBounds(
             0,
@@ -419,6 +418,7 @@ class Mapa5 {
                     this.pisos3,
                     () => {
                         if (this.scene.checkPoint === 0) {
+                            console.log('rotate')
                             this.scene.rotateCam(true, 10);
                             this.scene.checkPoint = 1
                         }

@@ -60,6 +60,7 @@ class Game extends Phaser.Scene {
   canRot: boolean = true;
 
   cameraNormal: boolean = true;
+  isNormal:boolean =true;
   gravityDown: boolean = true;
 
   checkPoint: number = 0;
@@ -214,6 +215,7 @@ class Game extends Phaser.Scene {
   }
 
   rotateCam(isNormal: boolean, time: number) {
+    console.log("rotating camera", isNormal, this.cameraNormal);
     if (this.cameraNormal === !isNormal) return
     if (this.monchi)
       this.monchi.setCameraState(!isNormal ? "NORMAL" : "ROTATED");
@@ -298,11 +300,11 @@ class Game extends Phaser.Scene {
       //@ts-ignore
       this.map.rotate = true
       const config = this.map.loseConfig[this.checkPoint];
-
       if (this.lifes) {
         this.lifes -= 1;
         if (this.lifes === 0) {
-
+          this.cameraNormal = true
+          this.checkPoint === 0
           const multiScene = new MultiScene("Game", { level: this.levelIs, lifes: this.lifes ? this.lifes : 3 });
           const scene = this.scene.add("MultiScene", multiScene, true);
           this.scene.start("MultiScene").bringToTop("MultiScene");
@@ -330,7 +332,7 @@ class Game extends Phaser.Scene {
           this.monchi.x = config.positions.x;
           this.monchi.y = config.positions.y;
         }
-        this.cameraNormal = config.cameraDirection === "NORMAL" ? true : false
+        // this.cameraNormal = config.cameraDirection === "NORMAL" ? true : false
 
       }
     }
@@ -517,6 +519,8 @@ class Game extends Phaser.Scene {
     this.canWin = false;
     /* CREATE MAP */
     this.map.createMap(data);
+    console.log("rotating camera", this.cameraNormal);
+
     const {
       x: boundX,
       y: boundY,

@@ -128,7 +128,7 @@ class Mapa3 {
         this.frontContainer = this.scene.add.container().setDepth(999999999999)
 
         this.background = this.scene.add
-            .image(this.startingPoint.x, this.startingPoint.y, "background0P1")
+            .image(this.startingPoint.x , this.startingPoint.y, "background0P1")
             .setOrigin(0.5, 0.5)
         this.background2 = this.scene.add
             .image(this.startingPoint.x, this.startingPoint.y, "background1P1")
@@ -185,7 +185,7 @@ class Mapa3 {
         const { ajusteBX, ajusteBY } = { ajusteBX: 1.1, ajusteBY: 1.1 }
         const calcDiffBX = (x2 - x) / ajusteBX
         const calcDiffBY = (y2 - y) / ajusteBY;
-        this.background.setPosition(x + calcDiffBX, y + calcDiffBY);
+        this.background.setPosition(x + calcDiffBX * 1.1, y + calcDiffBY);
         this.background2.setPosition(x + calcDiffBX, y + calcDiffBY);
         this.background3.setPosition(x + calcDiffBX, y + calcDiffBY);
         // // animation frontgrounds
@@ -202,8 +202,8 @@ class Mapa3 {
         const { ajusteFMX, ajusteFMY } = { ajusteFMX: 20, ajusteFMY: 30 }
         const calcDiffFMX = -(x2 - x) / ajusteFMX
         const calcDiffFMY = -(y2 - y) / ajusteFMY;
-        this.mountain1.setPosition(this.startingPoint.x + this.background5.width - 85 + calcDiffFMX, y + offsetLevel2 + 320 + calcDiffFMY)
-        this.mountain2.setPosition(this.startingPoint.x - 270 + calcDiffFMX, y + offsetLevel2 + 350 + calcDiffFMY)
+        this.mountain1.setPosition(this.startingPoint.x + this.background5.width - 85 + calcDiffFMX, y + offsetLevel2 + 520 + calcDiffFMY)
+        this.mountain2.setPosition(this.startingPoint.x - 270 + calcDiffFMX, y + offsetLevel2 + 550 + calcDiffFMY)
         this.mountain3.setPosition(1100 + calcDiffFMX, y + offsetLevel2 + 470 + calcDiffFMY)
         this.mountain6.setPosition(x + this.background5.width + this.background6.width - 15 + calcDiffFMX, y +470 + offsetLevel2 + calcDiffFMY)
     }

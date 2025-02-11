@@ -384,7 +384,7 @@ class Game extends Phaser.Scene {
       s: Phaser.Input.Keyboard.KeyCodes.S,
       d: Phaser.Input.Keyboard.KeyCodes.D,
     });
-    this.cameras.main.zoom = 1
+    this.cameras.main.zoom = 0.5;
     // CREATIVE
 
     this.checkPoint = 0;
@@ -529,7 +529,7 @@ class Game extends Phaser.Scene {
     } = this.map.cameraBounds;
     this.cameras.main.setBounds(boundX, boundY, boundWidth, boundHeight);
     /* CAMERAS */
-    //this.cameras.main.zoom = 1;
+    this.cameras.main.zoom = 0.5;
     this.cameraWidth = this.cameras.main.width;
     this.cameraHeight = this.cameras.main.height;
     this.cameras.main.startFollow(

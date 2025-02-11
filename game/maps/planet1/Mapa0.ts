@@ -235,7 +235,16 @@ class Mapa0 {
         this.scene.physics.add.collider(
           this.scene.monchi,
           this.pisos,
-          this.scene.touch,
+          ()=>{
+            this.scene.touch
+            if (this.scene.monchi?.body?.touching.down && this.tutorialStep === 0) {
+              this.tutorialStep = 1;
+              this.textTutorial1?.setVisible(true);
+              // this.scene.scene.pause()
+              this.scene.stopMov = true;
+            }
+          },
+          
           () => true,
           this.scene
         );
@@ -473,12 +482,7 @@ class Mapa0 {
       if (this.textTutorial2?.visible) this.textTutorial2?.setVisible(false);
     }
 
-    if (this.scene.monchi?.body?.touching.down && this.tutorialStep === 0) {
-      this.tutorialStep = 1;
-      this.textTutorial1?.setVisible(true);
-      // this.scene.scene.pause()
-      this.scene.stopMov = true;
-    }
+    
 
     /* Attach background anim */
     // if (this.scene.monchi) this.animateBackground(this.scene.monchi);

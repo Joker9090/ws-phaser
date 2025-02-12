@@ -145,7 +145,7 @@ class Game extends Phaser.Scene {
   moveCameraOffset(position: "up" | "down", instant: boolean = false ) {
     setTimeout(() => {
       console.log("moving camera from move", position, this.cameras.main.followOffset);
-      let newPosition = this.cameraHeight / 2 - 200;
+      let newPosition = this.cameraHeight / 2 - 350;
       if (position === "up") newPosition = -newPosition;
       if (instant) {
         this.cameras.main.followOffset.y = newPosition;
@@ -378,6 +378,7 @@ class Game extends Phaser.Scene {
     // this.time.delayedCall(4000, () => {
     //   this.animCameraPan(2000, 500)
     // })
+    console.log("ARIEL TEST", this.cameras.main)
     this.cursorsAWSD = this.input.keyboard?.addKeys({
       w: Phaser.Input.Keyboard.KeyCodes.W,
       a: Phaser.Input.Keyboard.KeyCodes.A,
@@ -538,7 +539,7 @@ class Game extends Phaser.Scene {
       0.1,
       0.1,
       0,
-      this.cameraHeight / 2 - 200
+      this.cameraHeight / 2 - 350
     );
 
     /* COLLIDERS */

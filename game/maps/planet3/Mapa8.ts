@@ -28,7 +28,7 @@ class Mapa8 {
     x: 0,
     y: -450,
     width: 7000,
-    height: 1800
+    height: 1600
   }
   // normales
   pisos?: Phaser.Physics.Arcade.Group;
@@ -382,7 +382,7 @@ class Mapa8 {
       this.backgroundsMiddle,
       this.scene.cameras.main,
       { x: this.startingPoint.x, y: this.startingPoint.y },
-      { fixX: 2, fixY: 1 }
+      { fixX: 2, fixY: 2 }
     );
     this.updatePositionsRelativeToCamera(
       this.originalPositionsBackgroundsFront,

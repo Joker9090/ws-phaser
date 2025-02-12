@@ -43,10 +43,12 @@ class CinematographyModular extends Phaser.Scene {
   code?: string | undefined;
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   holdableButton?: HoldableButton;
+  keyname?:string;
   UIcontainer?: Phaser.GameObjects.Container;
     UIClass?: UIClass;
     UICamera?: Phaser.Cameras.Scene2D.Camera;
    graphics?: Phaser.GameObjects.Graphics;
+   enabled:boolean = false;
   constructor() {
     super({ key: "CinematographyMod" });
 
@@ -55,9 +57,10 @@ class CinematographyModular extends Phaser.Scene {
   }
 
   create(this: CinematographyModular,{ keyname, lifes,code }: CinematoDataType) {
+    this.time.delayedCall(4000,()=>this.enabled = true)
     const isPostal = keyname.includes("postal");
     this.cursors = this.input.keyboard?.createCursorKeys();
-   
+    this.keyname = keyname
     this.holdableButton = new HoldableButton(
       this,
       50,
@@ -78,7 +81,7 @@ class CinematographyModular extends Phaser.Scene {
       },
       isPostal
     ).setDepth(999999999)
-    this.holdableButton.text?.setDepth(999999999);
+    this.holdableButton.text?.setDepth(999999999).setVisible(false);
     this.holdableButton?.graphics.setDepth(999999999);
 
     /* Audio */
@@ -256,7 +259,12 @@ class CinematographyModular extends Phaser.Scene {
   }
   update(time: number, delta: number) {
     if (this.playingCine.update) this.playingCine.update(this, time, delta);
-    this.holdableButton?.update();
+    if(this.keyname?.includes("cine")){
+      this.holdableButton?.update();
+    }else if (this.enabled){
+      this.holdableButton?.text?.setVisible(true)
+      this.holdableButton?.update();
+    }
   }
 
 }

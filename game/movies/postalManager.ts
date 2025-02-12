@@ -70,7 +70,13 @@ class postalManager {
             0
         );
 
-        this.code = new TextBox(this.cine, "Save this code to keep track of your progress: " + this.codeString, 0, 0, 500)
+        this.code = new TextBox(this.cine, "Save this code to keep track of your progress: " + this.codeString, 0, 0, 500).setScale(0)
+        this.cine.tweens.add({
+            targets:this.code,
+            delay:3000,
+            scale:1,
+            ease:'power2'
+        })
         const midScreen = {
             x: this.code.width / -2,
             y: this.code.height / -2

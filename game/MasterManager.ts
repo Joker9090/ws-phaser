@@ -154,7 +154,7 @@ export default class MasterManager extends Phaser.Scene {
         this.scene.stop("MenuScene");
       } else if (codeFound.type === "postal") {
         this.imagenesDesbloqueadas = codeFound.imagenes
-        const multiScene2 = new MultiScene("CinematographyMod", { keyname: codeFound.postalKey, loadKey: ["Postales"], code: code });
+        const multiScene2 = new MultiScene("CinematographyMod", { keyname: "postal1_planeta1", loadKey: ["Postales"], code: code });
         this.scene.add("MultiScene", multiScene2, true);
         this.scene.start("MultiScene").bringToTop("MultiScene");
         this.scene.stop("MenuScene");

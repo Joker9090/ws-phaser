@@ -75,7 +75,7 @@
         "type": "postal",
         "codigo": "postl1",
         "imagenes": ["planeta1_figu1"],
-        "postalKey":"postal1_Planeta1"
+        "postalKey":"postal1_planeta1"
     },
     {
         "type": "postal",

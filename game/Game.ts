@@ -386,7 +386,7 @@ class Game extends Phaser.Scene {
     });
     this.cameras.main.zoom = 1;
     // CREATIVE
-
+    this.stopMov = false
     this.checkPoint = 0;
     this.levelIs = data.level;
     this.lifes = data.lifes;

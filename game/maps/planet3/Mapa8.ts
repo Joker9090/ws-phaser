@@ -146,11 +146,19 @@ class Mapa8 {
     //   this.masterManager = masterManagerScene;
     // }
     this.mapContainer = this.scene.add.container()
+    const frontBackgroundsContainer = this.scene.add.container(0,-300)
+    const backBackgroundsContainer = this.scene.add.container(0,-300)
+    console.log("front", frontBackgroundsContainer, "back",backBackgroundsContainer)
+    const tstFunction =(x:number, y:number)=>{
+      frontBackgroundsContainer.setPosition(x,y)
+      backBackgroundsContainer.setPosition(x,y)
+    }
+    console.log(tstFunction, "test function")
     this.frontContainer = this.scene.add.container().setDepth(999999999999)
 
     this.background = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "p3Gradiant")
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5, 0.5).setScale(1.5);
 
     this.background2 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y + 400, "p1backgroundNoche")
@@ -307,7 +315,7 @@ class Mapa8 {
     );
     this.background4OriginalPos = { x: this.background4.x, y: this.background4.y };
 
-    this.mapContainer.add([
+    backBackgroundsContainer.add([
       this.background,
       this.background2,
       this.background3,
@@ -317,8 +325,8 @@ class Mapa8 {
       this.mountain4,
       this.mountain5,
     ]);
-
-    this.frontContainer.add([this.frontground1,
+  this.mapContainer.add(backBackgroundsContainer)
+   frontBackgroundsContainer.add([this.frontground1,
     this.background4,
     // this.background5,
     this.frontground1,
@@ -334,6 +342,7 @@ class Mapa8 {
     this.hueso5,
     this.hueso6,
     ]);
+    this.frontContainer.add(frontBackgroundsContainer)
   }
 
   updatePositionsRelativeToCamera = (

@@ -261,6 +261,7 @@ class CinematographyModular extends Phaser.Scene {
     if (this.playingCine.update) this.playingCine.update(this, time, delta);
     if(this.keyname?.includes("cine")){
       this.holdableButton?.update();
+      this.holdableButton?.text?.setVisible(true)
     }else if (this.enabled){
       this.holdableButton?.text?.setVisible(true)
       this.holdableButton?.update();

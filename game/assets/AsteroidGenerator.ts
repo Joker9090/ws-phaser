@@ -1,4 +1,4 @@
-import Phaser from "phaser";
+import Phaser, { GameObjects } from "phaser";
 import Game from "../Game";
 
 export type AsteroidGeneratorConfig = {
@@ -33,7 +33,7 @@ class AsteroidGenerator {
   }
 
   randomProp() {
-    return window.Phaser.Math.Between(6, 9) / 10;
+    return window.Phaser.Math.Between(4, 9) / 10;
   }
 
   randomTime() {
@@ -69,12 +69,13 @@ class AsteroidGenerator {
     if (this.config.tweenScale && this.config.scale > 0 && this.config.scaleTweenDuration) {
       this.scene.tweens.add({
         targets: asteroid,
-        scale: 1,
+        scale: 1  * this.randomProp(),
         delay: 1000 + 1000*Math.random(),
         duration: 1000 + this.config.scaleTweenDuration * Math.random(),
         ease: 'ease'
       })
     }
+    
   }
 
   runCreation() {

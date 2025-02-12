@@ -169,7 +169,7 @@ class Mapa8 {
       .setOrigin(0.5, 0.5)
       .setAlpha(0);
     this.background4 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y + 450, "background3p3")
+      .image(this.startingPoint.x, this.startingPoint.y + 850, "background3p3")
       .setOrigin(0.5, 0.5)
       .setAlpha(1).setScale(2, 1)
 
@@ -382,7 +382,7 @@ class Mapa8 {
       this.backgroundsMiddle,
       this.scene.cameras.main,
       { x: this.startingPoint.x, y: this.startingPoint.y },
-      { fixX: 2, fixY: 4 }
+      { fixX: 2, fixY: 1 }
     );
     this.updatePositionsRelativeToCamera(
       this.originalPositionsBackgroundsFront,
@@ -794,7 +794,7 @@ class Mapa8 {
       frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
     };
     const fireball2 = new Floor(this.scene, fireball2Config, this.fireballGroup).setScale(0.5)
-    const bubblesGroup = this.scene.add.group()
+    const bubblesGroup = this.scene.physics.add.group()
 
     const c1Config: AsteroidGeneratorConfig = {
       texture: "nube1p3",
@@ -835,43 +835,42 @@ class Mapa8 {
 
     const b1Config: AsteroidGeneratorConfig = {
       texture: "burbujap3",
-      x: this.startingPoint.x,
-      y: this.startingPoint.y,
+      x: this.startingPoint.x - 300,
+      y: this.startingPoint.y + 600,
       delayed: 20,
       direction: 1,
-      velocity: 15,
+      velocity:45,
       tweenScale: true,
       scaleTweenDuration: 3000,
-      scale: 1,
+      scale: 1 ,
       group: bubblesGroup,
       upStraigth: true,
-      amount: 40,
+      amount: 20 ,
       spawnRange: {
         x: 4,
         y: 1
-      }
+      },
     };
     const b1 = new AsteroidGenerator(this.scene, b1Config);
     b1.start();
 
     const b2Config: AsteroidGeneratorConfig = {
       texture: "burbujap3",
-      x: this.startingPoint.x + 3300,
-      y: this.startingPoint.y,
+      x: this.startingPoint.x + 3400,
+      y: this.startingPoint.y + 600,
       delayed: 30,
       direction: 1,
-      velocity: 15,
-      depth: -99,
+      velocity: 45,
       scale: 1,
       tweenScale: true,
       scaleTweenDuration: 3000,
       group: bubblesGroup,
       upStraigth: true,
-      amount: 40,
+      amount: 20,
       spawnRange: {
         x: 2,
         y: 1
-      }
+      },
     };
     const b2 = new AsteroidGenerator(this.scene, b2Config);
     b2.start();
@@ -886,8 +885,8 @@ class Mapa8 {
     })
 
     const mapObjects =
-      bubblesGroup.getChildren().concat(
-        this.movingFloor.getChildren(),
+   
+        this.movingFloor.getChildren()
         this.movingFloorRot.getChildren(),
         this.fireballGroup.getChildren(),
         this.pisos.getChildren(),
@@ -899,7 +898,8 @@ class Mapa8 {
         this.coin.getChildren(),
         this.aura.getChildren(),
         this.portal.getChildren(),
-      )
+        bubblesGroup.getChildren()
+      
     this.mapContainer.add(mapObjects)
     this.scene.UICamera?.ignore([this.mapContainer, this.frontContainer])
 

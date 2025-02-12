@@ -106,7 +106,8 @@ class Mapa0 {
 
     this.mapContainer = this.scene.add.container();
     this.frontContainer = this.scene.add.container().setDepth(999999999999);
-
+    const backBackgroundsContainer = this.scene.add.container() 
+    const frontBackgroundsContainer = this.scene.add.container() 
 
     let masterManagerScene = scene.game.scene.getScene("MasterManager") as MasterManager;
     if (!masterManagerScene) {
@@ -168,7 +169,7 @@ class Mapa0 {
       "montaña4"
     );
 
-    this.mapContainer.add([
+    backBackgroundsContainer.add([
       this.background,
       this.background2,
       this.background3,
@@ -179,7 +180,9 @@ class Mapa0 {
       this.background6,
     ]);
 
-    this.frontContainer.add([this.mountain1, this.mountain2, this.mountain3]);
+    frontBackgroundsContainer.add([this.mountain1, this.mountain2, this.mountain3]);
+    this.mapContainer.add(backBackgroundsContainer)
+    this.frontContainer.add(frontBackgroundsContainer)
   }
 
   animateBackground(player: Phaser.GameObjects.Sprite | Phaser.Math.Vector2) {

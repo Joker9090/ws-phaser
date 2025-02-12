@@ -98,7 +98,7 @@ class Mapa11 {
   frontground4: Phaser.GameObjects.Image;
   frontground5: Phaser.GameObjects.Image;
   frontground6: Phaser.GameObjects.Image;
-  hueso1: Phaser.GameObjects.Image;
+  // hueso1: Phaser.GameObjects.Image;
   hueso2: Phaser.GameObjects.Image;
   hueso3: Phaser.GameObjects.Image;
   hueso4: Phaser.GameObjects.Image;
@@ -145,10 +145,11 @@ class Mapa11 {
   
       this.mapContainer = this.scene.add.container()
       this.frontContainer = this.scene.add.container().setDepth(999999999999)
-  
+      const frontBackgroundsContainer = this.scene.add.container(0,0)
+      const backBackgroundsContainer = this.scene.add.container(0,0)
       this.background = this.scene.add
         .image(this.startingPoint.x, this.startingPoint.y, "p3Gradiant")
-        .setOrigin(0.5, 0.5);
+        .setOrigin(0.5, 0.5).setScale(1.5)
   
       this.background2 = this.scene.add
         .image(this.startingPoint.x, this.startingPoint.y, "p1backgroundNoche")
@@ -215,27 +216,26 @@ class Mapa11 {
         )
         .setOrigin(0, 1)
         .setScale(1);
-      this.hueso1 = this.scene.add
-        .image(this.startingPoint.x, this.startingPoint.y + 570, "planta1p3")
-        .setOrigin(0.5, 1)
-        .setScale(0.5);
+      // this.hueso1 = this.scene.add
+      //   .image(this.startingPoint.x, this.startingPoint.y + 570, "planta1p3")
+      //   .setOrigin(0.5, 1)
+      //   .setScale(0.5);
       this.hueso2 = this.scene.add
-        .image(3000, this.startingPoint.y + 550, "planta2p3")
+        .image(1000, this.startingPoint.y + 550, "planta2p3")
         .setOrigin(0.5, 1)
-        .setScale(1)
         .setFlipX(true)
         .setScale(0.4);
       this.hueso3 = this.scene.add
-        .image(4650, this.startingPoint.y + 550, "planta1p3")
+        .image(1450, this.startingPoint.y + 550, "planta1p3")
         .setOrigin(0.5, 1)
-        .setScale(1, 0.7);
+        .setScale(0.3);
   
       this.hueso4 = this.scene.add
-        .image(this.startingPoint.x * 1.6, this.startingPoint.y + 700, "planta3p3")
+        .image(2000, this.startingPoint.y + 540, "planta2p3")
         .setOrigin(0.5, 1)
-        .setScale(0.5);
+        .setScale(0.4);
       this.hueso5 = this.scene.add
-        .image(3000 * 2.1, this.startingPoint.y + 700, "planta2p3")
+        .image(2400, this.startingPoint.y + 540, "planta1p3")
         .setOrigin(0.5, 1)
         .setScale(1)
         .setFlipX(true)
@@ -275,7 +275,7 @@ class Mapa11 {
         this.mountain3,
         this.mountain4,
         this.mountain5,
-        this.hueso1,
+        // this.hueso1,
         this.hueso2,
         this.hueso3,
         this.hueso4,
@@ -314,7 +314,7 @@ class Mapa11 {
       );
       this.background4OriginalPos = { x: this.background4.x, y: this.background4.y };
   
-      this.mapContainer.add([
+      backBackgroundsContainer.add([
         this.background,
         this.background2,
         this.background3,
@@ -324,8 +324,10 @@ class Mapa11 {
         this.mountain4,
         this.mountain5,
       ]);
-      
-      this.frontContainer.add([this.frontground1,
+      this.mapContainer.add([
+       backBackgroundsContainer
+      ])
+      frontBackgroundsContainer.add([this.frontground1,
         this.background4,
         // this.background5,
         this.frontground1,
@@ -334,13 +336,16 @@ class Mapa11 {
         this.frontground4,
         this.frontground5,
         this.frontground6,
-        this.hueso1,
+        // this.hueso1,
         this.hueso2,
         this.hueso3,
         this.hueso4,
         this.hueso5,
         this.hueso6,
       ]);
+      this.frontContainer.add([
+        frontBackgroundsContainer
+      ])
     }
   
     updatePositionsRelativeToCamera = (

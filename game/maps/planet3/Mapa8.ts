@@ -94,7 +94,7 @@ class Mapa8 {
   frontground4: Phaser.GameObjects.Image;
   frontground5: Phaser.GameObjects.Image;
   frontground6: Phaser.GameObjects.Image;
-  hueso1: Phaser.GameObjects.Image;
+  // hueso1: Phaser.GameObjects.Image;
   hueso2: Phaser.GameObjects.Image;
   hueso3: Phaser.GameObjects.Image;
   hueso4: Phaser.GameObjects.Image;
@@ -219,35 +219,34 @@ class Mapa8 {
       )
       .setOrigin(0, 1)
       .setScale(1);
-    this.hueso1 = this.scene.add
-      .image(this.startingPoint.x - 200, this.startingPoint.y + 100 + 400 + 400, "planta1p3")
+    // this.hueso1 = this.scene.add
+    //   .image(this.startingPoint.x - 200, this.startingPoint.y + 100 + 400 + 400, "planta1p3")
+    //   .setOrigin(0.5, 1)
+    //   .setScale(0.5);
+      this.hueso2 = this.scene.add
+      .image(2900, this.startingPoint.y + 850, "planta2p3")
       .setOrigin(0.5, 1)
-      .setScale(0.5);
-    this.hueso2 = this.scene.add
-      .image(3300, this.startingPoint.y + 100 + 400 + 400, "planta2p3")
-      .setOrigin(0.5, 1)
-      .setScale(1)
       .setFlipX(true)
       .setScale(0.4);
     this.hueso3 = this.scene.add
-      .image(4680, this.startingPoint.y + 100 + 400 + 400, "planta1p3")
+      .image(2650, this.startingPoint.y + 850, "planta1p3")
       .setOrigin(0.5, 1)
-      .setScale(0.6);
+      .setScale(0.3);
 
     this.hueso4 = this.scene.add
-      .image(this.startingPoint.x * 1.6, this.startingPoint.y + 100 + 400 + 400, "planta3p3")
+      .image(3600, this.startingPoint.y + 850, "planta2p3")
       .setOrigin(0.5, 1)
-      .setScale(0.5);
+      .setScale(0.4);
     this.hueso5 = this.scene.add
-      .image(3000 * 2.1, this.startingPoint.y + 100 + 400 + 400, "planta2p3")
+      .image(4400, this.startingPoint.y + 850, "planta1p3")
       .setOrigin(0.5, 1)
       .setScale(1)
       .setFlipX(true)
       .setScale(0.4);
     this.hueso6 = this.scene.add
-      .image(4650 * 2.5, this.startingPoint.y + 100 + 400 + 400, "planta3p3")
+      .image(4650, this.startingPoint.y + 860, "planta2p3")
       .setOrigin(0.5, 1)
-      .setScale(0.7);
+      .setScale(0.5);
     this.mountain1 = this.scene.add.image(
       200,
       this.startingPoint.y + 100 + 400 + 300,
@@ -285,7 +284,7 @@ class Mapa8 {
       this.frontground4,
       this.frontground5,
       this.frontground6,
-      this.hueso1,
+      // this.hueso1,
       this.hueso2,
       this.hueso3,
       this.hueso4,
@@ -335,7 +334,7 @@ class Mapa8 {
     this.frontground4,
     this.frontground5,
     this.frontground6,
-    this.hueso1,
+    // this.hueso1,
     this.hueso2,
     this.hueso3,
     this.hueso4,
@@ -514,7 +513,7 @@ class Mapa8 {
 
 
   createMap(data: { level: number; lifes: number }) {
-    this.scene.lateralCameraOffset("right", false, this.cameraBounds.width - 1400, 1, 2000);
+    // this.scene.lateralCameraOffset("right", false, this.cameraBounds.width - 1400, 1, 2000);
     this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
     this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });
     this.pisos = this.scene.physics.add.group({ allowGravity: false });

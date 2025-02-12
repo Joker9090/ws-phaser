@@ -27,7 +27,7 @@ class Mapa10 {
     x: 0,
     y: -200,
     width: 4600,
-    height: 1630,
+    height: 1500,
   };
   // normales
   pisos?: Phaser.Physics.Arcade.Group;
@@ -111,7 +111,7 @@ class Mapa10 {
   frontground4: Phaser.GameObjects.Image;
   frontground5: Phaser.GameObjects.Image;
   frontground6: Phaser.GameObjects.Image;
-  hueso1: Phaser.GameObjects.Image;
+  // hueso1: Phaser.GameObjects.Image;
   hueso2: Phaser.GameObjects.Image;
   hueso3: Phaser.GameObjects.Image;
   hueso4: Phaser.GameObjects.Image;
@@ -170,10 +170,12 @@ class Mapa10 {
 
     this.mapContainer = this.scene.add.container()
     this.frontContainer = this.scene.add.container().setDepth(999999999999)
+    const frontBackgroundsContainer = this.scene.add.container(0,-90)
+    const backBackgroundsContainer = this.scene.add.container(0,-90)
 
     this.background = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "p3Gradiant")
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5, 0.5).setScale(1.5);
 
     this.background2 = this.scene.add
       .image(this.startingPoint.x, this.startingPoint.y, "p1backgroundNoche")
@@ -237,35 +239,34 @@ class Mapa10 {
       )
       .setOrigin(0, 1)
       .setScale(1);
-    this.hueso1 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y + 700, "planta1p3")
+    // this.hueso1 = this.scene.add
+    //   .image(this.startingPoint.x, this.startingPoint.y + 700, "planta1p3")
+    //   .setOrigin(0.5, 1)
+    //   .setScale(0.5);
+      this.hueso2 = this.scene.add
+      .image(1000, this.startingPoint.y + 690, "planta2p3")
       .setOrigin(0.5, 1)
-      .setScale(0.5);
-    this.hueso2 = this.scene.add
-      .image(2930, this.startingPoint.y + 700, "planta2p3")
-      .setOrigin(0.5, 1)
-      .setScale(1)
       .setFlipX(true)
       .setScale(0.4);
     this.hueso3 = this.scene.add
-      .image(4650, this.startingPoint.y + 700, "planta1p3")
+      .image(1450, this.startingPoint.y + 690, "planta1p3")
       .setOrigin(0.5, 1)
-      .setScale(1, 0.7);
+      .setScale(0.3);
 
     this.hueso4 = this.scene.add
-      .image(this.startingPoint.x * 1.6, this.startingPoint.y + 700, "planta3p3")
+      .image(2000, this.startingPoint.y + 680, "planta2p3")
       .setOrigin(0.5, 1)
-      .setScale(0.5);
+      .setScale(0.4);
     this.hueso5 = this.scene.add
-      .image(3000 * 2.1, this.startingPoint.y + 700, "planta2p3")
+      .image(2400, this.startingPoint.y + 680, "planta1p3")
       .setOrigin(0.5, 1)
       .setScale(1)
       .setFlipX(true)
       .setScale(0.4);
     this.hueso6 = this.scene.add
-      .image(4680 * 2.5, this.startingPoint.y + 700, "planta3p3")
+      .image(4650 * 2.5, this.startingPoint.y + 680, "planta3p3")
       .setOrigin(0.5, 1)
-      .setScale(1, 0.7);
+      .setScale(0.5);
     this.mountain1 = this.scene.add.image(
       200,
       this.startingPoint.y + 400,
@@ -303,7 +304,7 @@ class Mapa10 {
       this.frontground4,
       this.frontground5,
       this.frontground6,
-      this.hueso1,
+      // this.hueso1,
       this.hueso2,
       this.hueso3,
       this.hueso4,
@@ -336,7 +337,7 @@ class Mapa10 {
     this.background4OriginalPos = { x: this.background4.x, y: this.background4.y };
 
 
-    this.mapContainer.add([
+    backBackgroundsContainer.add([
       this.background,
       this.background2,
       this.background3,
@@ -346,8 +347,9 @@ class Mapa10 {
       this.mountain4,
       this.mountain5,
     ]);
+    this.mapContainer.add(backBackgroundsContainer)
 
-    this.frontContainer.add([this.frontground1,
+    frontBackgroundsContainer.add([this.frontground1,
     this.background4,
     // this.background5,
     this.frontground1,
@@ -356,13 +358,14 @@ class Mapa10 {
     this.frontground4,
     this.frontground5,
     this.frontground6,
-    this.hueso1,
+    // this.hueso1,
     this.hueso2,
     this.hueso3,
     this.hueso4,
     this.hueso5,
     this.hueso6,
     ]);
+    this.frontContainer.add(frontBackgroundsContainer)
   }
 
   updatePositionsRelativeToCamera = (
@@ -560,7 +563,7 @@ class Mapa10 {
     // inicio rotado
     if (this.scene.monchi) {
       this.scene.changeGravity(true, 1000, 3)
-      this.scene.lateralCameraOffset("right", false, this.cameraBounds.width, 1, 2000);
+      // this.scene.lateralCameraOffset("right", false, this.cameraBounds.width, 1, 2000);
       this.scene.moveCameraOffset("up", true);
       this.scene.monchi.setPlayerState("ROTATED")
     }
@@ -669,7 +672,7 @@ class Mapa10 {
 
     const p8Config: FloorConfig = {
       texture: "pDoblep3",
-      pos: { x: 2850, y: 850 },
+      pos: { x: 2850, y: 650 },
       inverted: true,
       scale: { width: 1.2, height: 0.7 },
       height: 20,
@@ -677,7 +680,7 @@ class Mapa10 {
       rotated: false,
       animation: {
         yAxis: {
-          yDistance: 850,
+          yDistance: 650,
           yVel: 190
         }
       }

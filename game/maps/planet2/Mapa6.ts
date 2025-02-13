@@ -134,6 +134,8 @@ class Mapa5 {
         );
 
         this.mapContainer = this.scene.add.container()
+        const backBackgroundContainer = this.scene.add.container(0,-200)
+        const frontBackgroundContainer = this.scene.add.container(0, -100)
         this.frontContainer = this.scene.add.container().setDepth(999999999999)
 
         this.background = this.scene.add
@@ -323,7 +325,7 @@ class Mapa5 {
         }
       );
   
-      this.mapContainer.add([
+      backBackgroundContainer.add([
         this.background,
         this.background2,
         this.backgroundStars,
@@ -344,8 +346,9 @@ class Mapa5 {
         this.frontground5,
         this.frontground6,
       ]);
-  
-      this.frontContainer.add([this.hueso1, this.hueso2, this.hueso3]);
+      this.mapContainer.add(backBackgroundContainer)
+      frontBackgroundContainer.add([this.hueso1, this.hueso2, this.hueso3]);
+      this.frontContainer.add(frontBackgroundContainer)
     }
   
     updatePositionsRelativeToCamera = (

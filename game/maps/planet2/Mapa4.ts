@@ -29,7 +29,7 @@ class Mapa4 {
     x: 0,
     y: 0,
     width: 4600,
-    height: 1630,
+    height: 1480,
   };
   // normales
   pisos?: Phaser.Physics.Arcade.Group;
@@ -144,6 +144,8 @@ class Mapa4 {
     // }
 
     this.mapContainer = this.scene.add.container();
+    const backBackgroundContainer = this.scene.add.container(0, -200);
+    const frontBackgroundContainer = this.scene.add.container(0,-150);
     this.frontContainer = this.scene.add.container().setDepth(999999999999);
 
     this.background = this.scene.add
@@ -332,7 +334,7 @@ class Mapa4 {
       }
     );
 
-    this.mapContainer.add([
+    backBackgroundContainer.add([
       this.background,
       this.background2,
       this.backgroundStars,
@@ -353,8 +355,10 @@ class Mapa4 {
       this.frontground5,
       this.frontground6,
     ]);
+    this.mapContainer.add(backBackgroundContainer)
 
-    this.frontContainer.add([this.hueso1, this.hueso2, this.hueso3]);
+    frontBackgroundContainer.add([this.hueso1, this.hueso2, this.hueso3]);
+    this.frontContainer.add(frontBackgroundContainer)
   }
 
   updatePositionsRelativeToCamera = (
@@ -518,7 +522,7 @@ class Mapa4 {
   }
 
   createMap(data: { level: number; lifes: number }) {
-    this.scene.lateralCameraOffset("right", false, this.cameraBounds.width, 0.9, 3000, "up");
+    // this.scene.lateralCameraOffset("right", false, this.cameraBounds.width, 0.9, 3000, "up");
     this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
     this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });
     this.pisos = this.scene.physics.add.group({ allowGravity: false });

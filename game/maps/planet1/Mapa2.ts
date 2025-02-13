@@ -238,14 +238,11 @@ class Mapa2 {
           this.pisos4,
           () => {
             if (this.tutorialStep === 0) {
-              setTimeout(() => {
-                // if(this.monchi){
-                //   this.monchi.setVelocity(0)
-                // }
-                this.scene.stopMov = true
-                this.tutorialStep = 1
-                this.textTutorial1?.setVisible(true)
-              }, 500)
+                this.scene.time.delayedCall(500, ()=> {
+                  this.scene.stopMov = true
+                  this.tutorialStep = 1
+                  this.textTutorial1?.setVisible(true)
+                })
             }
           },
           () => true,
@@ -310,8 +307,8 @@ class Mapa2 {
 
     this.textTutorial1 = new TextBox(
       this.scene,
-      "That was close... these fireballs are dangerous, I'd better avoid them for now.",
-      2100,
+      "Woah, are those fireballs?, I'd better avoid them for now.",
+      1650,
       900,
       400
     ).setVisible(false).setRotation(Math.PI)
@@ -409,7 +406,7 @@ class Mapa2 {
       large: 13,
       rotated: true
     };
-    const p6 = new LargeFloorIsland(this.scene, p6Config, this.pisos)
+    const p6 = new LargeFloorIsland(this.scene, p6Config, this.pisos4)
 
 
     const p7Config: LargeFloorIslandConfig = {

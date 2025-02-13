@@ -144,6 +144,8 @@ class Mapa7 {
 
     this.mapContainer = this.scene.add.container()
     this.frontContainer = this.scene.add.container().setDepth(999999999999)
+    const backBackgroundsContainer = this.scene.add.container(0, -150)
+    const frontBackgroundsContainer = this.scene.add.container(0, -150)
     // let masterManagerScene = scene.game.scene.getScene("MasterManager") as MasterManager;
     // if (!masterManagerScene) {
     //   this.masterManager = new MasterManager();
@@ -338,7 +340,7 @@ class Mapa7 {
       }
     );
 
-    this.mapContainer.add([
+    backBackgroundsContainer.add([
       this.background,
       this.background2,
       this.backgroundStars,
@@ -359,8 +361,10 @@ class Mapa7 {
       this.frontground5,
       this.frontground6,
     ]);
+    this.mapContainer.add(backBackgroundsContainer)
 
-    this.frontContainer.add([this.hueso1, this.hueso2, this.hueso3]);
+    frontBackgroundsContainer.add([this.hueso1, this.hueso2, this.hueso3]);
+    this.frontContainer.add(frontBackgroundsContainer)
   }
 
   updatePositionsRelativeToCamera = (

@@ -710,7 +710,7 @@ class Mapa8 {
       large: 10,
       rotated: true,
     };
-    const p14 = new LargeFloorIsland(this.scene, p14Config, this.pisos);
+    const p14 = new LargeFloorIsland(this.scene, p14Config, this.pisos).setDepth(10);
 
     const portalConfig: FloorConfig = {
       texture: "cuevap3",

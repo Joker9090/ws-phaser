@@ -324,6 +324,8 @@ class Mapa9 {
           this.mountain4,
           this.mountain5,
         ]);
+        backBackgroundsContainer.setDepth(-10)
+
         this.mapContainer.add(backBackgroundsContainer)
         frontBackgroundsContainer.add([this.frontground1,
           this.background4,
@@ -341,6 +343,7 @@ class Mapa9 {
           this.hueso5,
           this.hueso6,
         ]);
+        frontBackgroundsContainer.setDepth(-10)
         this.frontContainer.add([frontBackgroundsContainer])
       }
     
@@ -840,7 +843,7 @@ class Mapa9 {
         c2.start();
 
 
-        const bubblesGroup = this.scene.add.group()
+        const bubblesGroup = this.scene.add.group().setDepth(100000)
         const b1Config: AsteroidGeneratorConfig = {
           texture: "burbujap3",
           x: this.startingPoint.x,
@@ -869,7 +872,6 @@ class Mapa9 {
           delayed: 30,
           direction: 1,
           velocity: 15,
-          depth:-99,
           scale: 1,
           tweenScale:true,
           scaleTweenDuration:3000,
@@ -899,8 +901,9 @@ class Mapa9 {
                 this.coin.getChildren(),
                 this.aura.getChildren(),
                 this.portal.getChildren(),
-            )
-        this.mapContainer.add(mapObjects)
+          )
+        this.mapContainer.add(mapObjects).setDepth(-10)
+        window.test = bubblesGroup
         this.scene.UICamera?.ignore(this.mapContainer)
 
     }

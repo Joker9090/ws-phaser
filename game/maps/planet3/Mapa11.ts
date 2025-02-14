@@ -527,7 +527,7 @@ class Mapa11 {
     createMap(data: { level: number; lifes: number }) {
       
       this.scene.monchi?.setFlipX(true)
-      this.scene.lateralCameraOffset("right", false, this.cameraBounds.width, 1, 2000 );
+      // this.scene.lateralCameraOffset("right", false, this.cameraBounds.width, 1, 2000 );
 
 
         this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
@@ -792,7 +792,7 @@ const p13 = new LargeFloorIsland(this.scene, p13Config, this.pisos);
           targets: this.auraImage,
         })
 
-        const bubblesGroup = this.scene.add.group()
+        const bubblesGroup = this.scene.add.group().setDepth(100000)
         const c1Config: AsteroidGeneratorConfig = {
           texture: "nube1p3",
           x: 0,

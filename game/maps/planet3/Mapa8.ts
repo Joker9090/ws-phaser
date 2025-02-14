@@ -404,6 +404,16 @@ class Mapa8 {
           () => true,
           this.scene
         );
+        // if (this.pisos7)
+        //   this.scene.physics.add.collider(
+        //     this.scene.monchi,
+        //     this.pisos7,
+        //     () => {
+        //       this.scene.touch()
+        //     },
+        //     () => true,
+        //     this.scene
+        //   );
       if (this.pisos2)
         this.scene.physics.add.collider(
           this.scene.monchi,
@@ -524,6 +534,7 @@ class Mapa8 {
     this.pisos4 = this.scene.physics.add.group({ allowGravity: false });
     this.pisos5 = this.scene.physics.add.group({ allowGravity: false });
     this.pisos6 = this.scene.physics.add.group({ allowGravity: false });
+    // this.pisos7 = this.scene.physics.add.group({ allowGravity: false });
     this.amountLifes = data.lifes;
     this.coin = this.scene.physics.add.group({ allowGravity: false });
     this.EmptyCoin = this.scene.physics.add.group({ allowGravity: false }).setVisible(false)
@@ -793,7 +804,7 @@ class Mapa8 {
       frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
     };
     const fireball2 = new Floor(this.scene, fireball2Config, this.fireballGroup).setScale(0.5)
-    const bubblesGroup = this.scene.physics.add.group()
+    const bubblesGroup = this.scene.physics.add.group().setDepth(100000)
 
     const c1Config: AsteroidGeneratorConfig = {
       texture: "nube1p3",
@@ -845,6 +856,7 @@ class Mapa8 {
       group: bubblesGroup,
       upStraigth: true,
       amount: 20 ,
+      depth: 0,
       spawnRange: {
         x: 4,
         y: 1
@@ -865,6 +877,7 @@ class Mapa8 {
       scaleTweenDuration: 3000,
       group: bubblesGroup,
       upStraigth: true,
+      depth: 0,
       amount: 20,
       spawnRange: {
         x: 2,
@@ -882,24 +895,24 @@ class Mapa8 {
       ease: 'Sine.easeInOut',
       targets: this.auraImage,
     })
-
+// this.mapContainer.add(bubblesGroup.getChildren())
     const mapObjects =
-   
-        this.movingFloor.getChildren()
-        this.movingFloorRot.getChildren(),
-        this.fireballGroup.getChildren(),
-        this.pisos.getChildren(),
-        this.pisosBack.getChildren(),
-        this.pisos2.getChildren(),
-        this.pisos3.getChildren(),
-        this.pisos4.getChildren(),
-        this.pisos5.getChildren(),
-        this.coin.getChildren(),
-        this.aura.getChildren(),
-        this.portal.getChildren(),
-        bubblesGroup.getChildren()
-      
-    this.mapContainer.add(mapObjects)
+    bubblesGroup.getChildren().concat(
+      this.movingFloorRot.getChildren(),
+      this.fireballGroup.getChildren(),
+      this.pisos.getChildren(),
+      this.pisosBack.getChildren(),
+      this.pisos2.getChildren(),
+      this.pisos3.getChildren(),
+      this.pisos4.getChildren(),
+      this.pisos5.getChildren(),
+      this.pisos6.getChildren(),
+      this.coin.getChildren(),
+      this.aura.getChildren(),
+      this.portal.getChildren(),
+    )
+        this.mapContainer.add(mapObjects)
+        console.log(this.mapContainer.list, "MAPCONTAIner")
     this.scene.UICamera?.ignore([this.mapContainer, this.frontContainer])
 
   }

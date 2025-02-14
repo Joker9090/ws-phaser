@@ -57,6 +57,9 @@ class AsteroidGenerator {
     const asteroid = this.scene.physics.add.sprite(x, y, this.config.texture);
     if (this.config.depth) asteroid.setDepth(this.config.depth);
     if (this.config.group) this.config.group.add(asteroid)
+    console.log(this.scene.map?.mapContainer.list.length,"lngth")
+  // @ts-ignore
+    this.scene.map?.mapContainer.list.sort((a:Phaser.GameObjects,b:Phaser.GameObjects)=>{return (a.texture === this.config.texture)})
     asteroid.setScale( this.config.tweenScale ? 0.001 : this.config.scale * this.randomProp());
 
     this.asteroids.add(asteroid);

@@ -863,7 +863,7 @@ class Mapa10 {
       frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
     };
     const fireball5 = new Floor(this.scene, fireball5Config, this.fireballGroup).setScale(0.5)
-    const bubblesGroup = this.scene.add.group()
+    const bubblesGroup = this.scene.add.group().setDepth(100000)
     const c1Config: AsteroidGeneratorConfig = {
       texture: "nube1p3",
       x: 0,

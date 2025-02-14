@@ -586,7 +586,7 @@ class Mapa7 {
   }
 
   createMap(data: { level: number; lifes: number }) {
-    this.scene.lateralCameraOffset("left", false, this.cameraBounds.width, 1, 1000);
+    // this.scene.lateralCameraOffset("left", false, this.cameraBounds.width, 1, 1000);
     this.scene.monchi?.setFlipX(true)
     // this.masterManager.imagenesDesbloqueadas =  ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2"];
     this.movingFloor = this.scene.physics.add.group({ allowGravity: false });

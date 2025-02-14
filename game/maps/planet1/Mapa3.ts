@@ -307,7 +307,7 @@ class Mapa3 {
     }
 
     createMap(data: { level: number; lifes: number }) {
-        this.scene.lateralCameraOffset("right", false, this.cameraBounds.width, 0.6,0, "up" );
+        // this.scene.lateralCameraOffset("right", false, this.cameraBounds.width, 0.6,0, "up" );
         this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
         this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });
         this.pisos = this.scene.physics.add.group({ allowGravity: false });

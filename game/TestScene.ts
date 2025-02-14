@@ -22,11 +22,11 @@ class TestScene extends Phaser.Scene {
     }
 
     create() {
-        const rect1 = this.add.rectangle(0,0, 1800, 900, 0x6666ff, 0.6);
         const cont = this.add.container(window.innerWidth / 2, window.innerHeight / 2)
         const cont2 = this.add.container(window.innerWidth / 2, window.innerHeight / 2)
-        const rect2 = this.add.rectangle(0, 0, 960, 300, 0x66feac, 0.7).setVisible(true);
-        const rect3 = this.add.rectangle(0, 0, 100, 100, 0x66ffaa, 1).setVisible(true);
+        const rect1 = this.add.rectangle(0,0, 1800, 900, 0x0000ff, 1).setDepth(999)
+        const rect2 = this.add.rectangle(0, 0, 960, 300, 0xff0000, 1).setVisible(true).setDepth(99)
+        const rect3 = this.add.rectangle(0, 0, 100, 100, 0x00ff00, 1).setVisible(true).setDepth(9)
 
 
         // const imagenTest = this.add.image(0, 0, "logo");
@@ -42,13 +42,15 @@ class TestScene extends Phaser.Scene {
         const group2 = this.add.group().add(rect2)
 
         const objects = group1.getChildren().concat(
-            bubblesGroup.getChildren(),
             group2.getChildren(),
+            bubblesGroup.getChildren(),
         )
-
+ 
         cont.add(objects)
         console.log(objects, "objects")
 
+        cont.sort('depth')
+        rect1.setDepth(999)
 
         const bounds = cont.getBounds();
         console.log("BOUNDS", bounds)
@@ -79,36 +81,36 @@ class TestScene extends Phaser.Scene {
         //     repeat: -1
         //   });
 
-        const g = this.add.graphics({
-            lineStyle: { color: 0x00ff00, width: 2 }
-        });
+        // const g = this.add.graphics({
+        //     lineStyle: { color: 0x00ff00, width: 2 }
+        // });
 
-        const setSizeOfContainerForTheWOrkshop = (container: Phaser.GameObjects.Container, width: number = window.innerWidth, height: number = window.innerHeight, scaleBy: 'x' | 'y' = 'x') => {
-            const bounds = container.getBounds()
-            const scaler = {
-                x: width / bounds.width,
-                y: height / bounds.height,
-            }
-            if (scaleBy === 'x') {
-                container.setScale(scaler.x);
-            } else {
-                container.setScale(scaler.y);
-            }
-        }   
+        // const setSizeOfContainerForTheWOrkshop = (container: Phaser.GameObjects.Container, width: number = window.innerWidth, height: number = window.innerHeight, scaleBy: 'x' | 'y' = 'x') => {
+        //     const bounds = container.getBounds()
+        //     const scaler = {
+        //         x: width / bounds.width,
+        //         y: height / bounds.height,
+        //     }
+        //     if (scaleBy === 'x') {
+        //         container.setScale(scaler.x);
+        //     } else {
+        //         container.setScale(scaler.y);
+        //     }
+        // }   
 
-        const bounds2 = cont.getBounds()
-        const bounds3 = cont2.getBounds()
-        console.log("BOUNDS", bounds2)
-        console.log(window.innerWidth / 2, window.innerHeight / 2)
-        const scaladorX = 1800 / bounds2.width
-        const scaladorY = 900 / bounds2.height
-        setSizeOfContainerForTheWOrkshop(cont, 1800, 900, 'x')
-        // cont.setScale(scaladorX);
-        cont2.setScale(scaladorY);
-        cont.x = window.innerWidth / 2
-        cont.y = window.innerHeight / 2
-        g.strokeRectShape(cont.getBounds());
-        g.strokeRectShape(cont2.getBounds());
+        // const bounds2 = cont.getBounds()
+        // const bounds3 = cont2.getBounds()
+        // console.log("BOUNDS", bounds2)
+        // console.log(window.innerWidth / 2, window.innerHeight / 2)
+        // const scaladorX = 1800 / bounds2.width
+        // const scaladorY = 900 / bounds2.height
+        // setSizeOfContainerForTheWOrkshop(cont, 1800, 900, 'x')
+        // // cont.setScale(scaladorX);
+        // cont2.setScale(scaladorY);
+        // cont.x = window.innerWidth / 2
+        // cont.y = window.innerHeight / 2
+        // g.strokeRectShape(cont.getBounds());
+        // g.strokeRectShape(cont2.getBounds());
 
 
         // this.events.once("prerender", () => {

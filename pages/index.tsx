@@ -18,7 +18,7 @@ export default function Home() {
     //Load scenes async when windows is ready
     Promise.all([
       
-      import("@/game/TestScene"),
+      // import("@/game/TestScene"),
       import("@/game/MultiScene"),
 
       import("@/game/MasterManager"),

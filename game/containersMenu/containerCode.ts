@@ -18,16 +18,15 @@ class containerCode extends Phaser.GameObjects.Container {
     masterManager?: MasterManager;
     // settingsButton: Phaser.GameObjects.Image;
     error: Phaser.GameObjects.Text;
-    astroFront?:Phaser.GameObjects.Image;
-    astroBack?:Phaser.GameObjects.Image;
-    writingIndicator?:Phaser.GameObjects.Rectangle;  
+    astroFront?: Phaser.GameObjects.Image;
+    astroBack?: Phaser.GameObjects.Image;
+    writingIndicator?: Phaser.GameObjects.Rectangle;  
     constructor(scene: Phaser.Scene, config: ContainerMenuConfigType) {
         super(scene, config.x, config.y)
         const offsetY = 100
         let isTyping = false;
         let inputText = '';
         const textLength = 6
-        
         let masterManagerScene = scene.game.scene.getScene("MasterManager") as MasterManager;
         if (!masterManagerScene) {
             this.masterManager = new MasterManager();

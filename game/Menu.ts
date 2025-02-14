@@ -85,7 +85,7 @@ class MenuScene extends Phaser.Scene {
         //     panToInitial: this.centralPointInitial
         // }).setVisible(false)
         // this.containerSettings.settingsModal.setScale(scaleBy());
-
+        this.containerCodeRendered = false
         this.containerCode = new containerCode(this, {
             x: this.width * 1.5,
             y: this.height / 2,
@@ -97,7 +97,8 @@ class MenuScene extends Phaser.Scene {
             }
         }).setVisible(false)
         this.containerCode.setScale(scaleBy())
-
+        
+        this.containerAlbumRendered = false
         this.containerAlbum = new containerAlbum(this, {
             x: 0,
             y: 0,
@@ -150,7 +151,7 @@ class MenuScene extends Phaser.Scene {
                         to.updateElements()
                     })
                     this.containerAlbumRendered = true
-                }else if(to instanceof containerCode && !this.containerCodeRendered){
+                    }else if(to instanceof containerCode && !this.containerCodeRendered){
                     this.time.delayedCall(700, () => {
                         to.animateElements()
                     })

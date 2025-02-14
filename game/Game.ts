@@ -392,7 +392,7 @@ class Game extends Phaser.Scene {
     this.levelIs = data.level;
     this.lifes = data.lifes;
     this.cursors = this.input.keyboard?.createCursorKeys();
-
+    this.time.paused = false
     /* CHOSE LEVEL, LIFES AND AUDIO */
     switch (data.level) {
       case 999:
@@ -576,6 +576,7 @@ class Game extends Phaser.Scene {
     //     },
     //     this
     //   );
+
   }
 
 

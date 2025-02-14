@@ -67,7 +67,6 @@ class containerSettings extends Phaser.GameObjects.Container {
         // })
         this.modal.setOrigin(0.5);
         this.settingsButtonUi = settingsButtonUi
-
         let masterManagerScene = scene.game.scene.getScene("MasterManager") as MasterManager;
         if (!masterManagerScene) {
             this.masterManager = new MasterManager();
@@ -161,6 +160,9 @@ class containerSettings extends Phaser.GameObjects.Container {
                 this.masterManager.changeVolume(this.volumeSound, 'sound');
                 this.masterManager.changeBrightness(this.darkness);
                 this.settingsButtonUi?.setVisible(true)
+                const gameScene = this.scene.scene.get("Game") as Game;
+                gameScene.cameraNormal = true
+                gameScene.checkPoint === 0
                 if (this.scene.scene.key !== 'MenuScene') {
                     this.scene.sound.stopAll()
                     const multiScene = new MultiScene("MenuScene", undefined);

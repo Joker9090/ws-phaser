@@ -146,8 +146,8 @@ class Mapa9 {
     );
 
     this.mapContainer = this.scene.add.container()
-    const frontBackgroundsContainer = this.scene.add.container(0, -90).setDepth(-20)
-    const backBackgroundsContainer = this.scene.add.container(0, -90).setDepth(-20)
+    const frontBackgroundsContainer = this.scene.add.container(0, -90)
+    const backBackgroundsContainer = this.scene.add.container(0, -90)
     console.log("front", frontBackgroundsContainer, "back", backBackgroundsContainer)
     this.frontContainer = this.scene.add.container().setDepth(999999999999)
 
@@ -324,7 +324,7 @@ class Mapa9 {
       this.mountain4,
       this.mountain5,
     ]);
-    backBackgroundsContainer.setDepth(-10)
+    backBackgroundsContainer
 
     this.mapContainer.add(backBackgroundsContainer)
     frontBackgroundsContainer.add([this.frontground1,
@@ -343,7 +343,7 @@ class Mapa9 {
     this.hueso5,
     this.hueso6,
     ]);
-    frontBackgroundsContainer.setDepth(-10)
+    frontBackgroundsContainer
     this.frontContainer.add([frontBackgroundsContainer])
   }
 
@@ -546,21 +546,21 @@ class Mapa9 {
 
     this.scene.monchi?.setFlipX(true)
 
-    this.movingFloor = this.scene.physics.add.group({ allowGravity: false }).setDepth(-10);
-    this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false }).setDepth(-10);
-    this.pisos = this.scene.physics.add.group({ allowGravity: false }).setDepth(-10);
-    this.pisosBack = this.scene.physics.add.group({ allowGravity: false }).setDepth(-10);
-    this.pisos2 = this.scene.physics.add.group({ allowGravity: false }).setDepth(-10);
-    this.pisos3 = this.scene.physics.add.group({ allowGravity: false }).setDepth(-10);
-    this.fireballGroup = this.scene.physics.add.group({ allowGravity: false }).setDepth(-10);
-    this.pisos4 = this.scene.physics.add.group({ allowGravity: false }).setDepth(-10);
-    this.pisos5 = this.scene.physics.add.group({ allowGravity: false }).setDepth(-10);
-    this.pisos6 = this.scene.physics.add.group({ allowGravity: false }).setDepth(-10);
+    this.movingFloor = this.scene.physics.add.group({ allowGravity: false }).setDepth(100);
+    this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false }).setDepth(100);
+    this.pisos = this.scene.physics.add.group({ allowGravity: false }).setDepth(100);
+    this.pisosBack = this.scene.physics.add.group({ allowGravity: false }).setDepth(100);
+    this.pisos2 = this.scene.physics.add.group({ allowGravity: false }).setDepth(100);
+    this.pisos3 = this.scene.physics.add.group({ allowGravity: false }).setDepth(100);
+    this.fireballGroup = this.scene.physics.add.group({ allowGravity: false }).setDepth(100);
+    this.pisos4 = this.scene.physics.add.group({ allowGravity: false }).setDepth(100);
+    this.pisos5 = this.scene.physics.add.group({ allowGravity: false }).setDepth(100);
+    this.pisos6 = this.scene.physics.add.group({ allowGravity: false }).setDepth(100);
     this.amountLifes = data.lifes;
-    this.coin = this.scene.physics.add.group({ allowGravity: false }).setDepth(-10);
-    this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
-    this.EmptyCoin = this.scene.physics.add.group({ allowGravity: false }).setVisible(false)
-    this.portal = this.scene.physics.add.group({ allowGravity: false }).setDepth(-10);
+    this.coin = this.scene.physics.add.group({ allowGravity: false }).setDepth(100);
+    this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true }).setDepth(100)
+    this.EmptyCoin = this.scene.physics.add.group({ allowGravity: false }).setDepth(100).setVisible(false)
+    this.portal = this.scene.physics.add.group({ allowGravity: false }).setDepth(100);
 
 
     const p1Config: FloorConfig = {
@@ -713,7 +713,7 @@ class Mapa9 {
       height: 100,
       inverted: true
     };
-    const port = new Floor(this.scene, portalConfig, this.portal).setDepth(99).setScale(0.5)
+    const port = new Floor(this.scene, portalConfig, this.portal).setScale(0.5)
 
     this.endPortal = port
 
@@ -843,15 +843,14 @@ class Mapa9 {
     c2.start();
 
 
-    const bubblesGroup = this.scene.add.group()
+    const bubblesGroup = this.scene.add.group().setDepth(50)
     const b1Config: AsteroidGeneratorConfig = {
       texture: "burbujap3",
       x: this.startingPoint.x,
       y: this.startingPoint.y,
       delayed: 30,
       direction: 1,
-      velocity: 15,
-      depth: -5,
+      velocity: 40,
       tweenScale: true,
       scaleTweenDuration: 3000,
       scale: 1,
@@ -872,8 +871,7 @@ class Mapa9 {
       y: this.startingPoint.y,
       delayed: 30,
       direction: 1,
-      velocity: 15,
-      depth: -5,
+      velocity: 40,
       scale: 1,
       tweenScale: true,
       scaleTweenDuration: 3000,
@@ -890,7 +888,7 @@ class Mapa9 {
 
 
     const mapObjects =
-      bubblesGroup.getChildren().concat(
+        this.portal.getChildren().concat(
         this.movingFloorRot.getChildren(),
         this.fireballGroup.getChildren(),
         this.pisos.getChildren(),
@@ -902,11 +900,11 @@ class Mapa9 {
         this.pisos6.getChildren(),
         this.coin.getChildren(),
         this.aura.getChildren(),
-        this.portal.getChildren(),
       )
-    this.mapContainer.add(mapObjects)
-    this.scene.UICamera?.ignore(this.mapContainer)
-    this.mapContainer.sort('depth')
+
+      this.mapContainer.add(mapObjects)
+      this.mapContainer.sort('depth')
+      this.scene.UICamera?.ignore(this.mapContainer)
   }
   update() {
     if (this.scene.monchi) this.animateBackground();

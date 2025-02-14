@@ -56,10 +56,8 @@ class AsteroidGenerator {
   createAsteroid(x: number, y: number) {
     const asteroid = this.scene.physics.add.sprite(x, y, this.config.texture);
     if (this.config.depth) this.asteroids.setDepth(this.config.depth);
-    if (this.config.group) this.config.group.add(asteroid)
-    console.log(this.scene.map?.mapContainer.list.length,"lngth")
-  // @ts-ignore
-    this.scene.map?.mapContainer.list.sort((a:Phaser.GameObjects,b:Phaser.GameObjects)=>{return (a.texture === this.config.texture)})
+    this.scene.map?.mapContainer.add(asteroid)
+    this.scene.map?.mapContainer.sort('depth')
     asteroid.setScale( this.config.tweenScale ? 0.001 : this.config.scale * this.randomProp());
 
     this.asteroids.add(asteroid);
@@ -78,7 +76,7 @@ class AsteroidGenerator {
         ease: 'ease'
       })
     }
-    
+  
   }
 
   runCreation() {
@@ -88,12 +86,14 @@ class AsteroidGenerator {
           const randomX = this.config.x + (Math.random() - 0.5) * this.config.spawnRange.x * 1000;
           const randomY = this.config.y + (Math.random() - 0.5) * this.config.spawnRange.y * 1000;
           this.createAsteroid(randomX, randomY)
+         
         }
       } else {
         for (let i = 0; i < this.config.amount; i++) {
           const randomX = this.config.x + (Math.random() - 0.5) * 1;
           const randomY = this.config.y + (Math.random() - 0.5) * 1;
           this.createAsteroid(randomX, randomY)
+          this.scene.map?.mapContainer.sort('depth')
         }
       }
 

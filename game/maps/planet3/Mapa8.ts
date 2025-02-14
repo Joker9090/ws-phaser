@@ -718,7 +718,7 @@ class Mapa8 {
       width: 100,
       height: 100,
     };
-    const port = new Floor(this.scene, portalConfig, this.portal).setDepth(99).setScale(0.7).setFlipY(true)
+    const port = new Floor(this.scene, portalConfig, this.portal).setScale(0.7).setFlipY(true)
 
     this.endPortal = port
 
@@ -804,7 +804,7 @@ class Mapa8 {
       frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
     };
     const fireball2 = new Floor(this.scene, fireball2Config, this.fireballGroup).setScale(0.5)
-    const bubblesGroup = this.scene.physics.add.group().setDepth(100000)
+    const bubblesGroup = this.scene.physics.add.group()
 
     const c1Config: AsteroidGeneratorConfig = {
       texture: "nube1p3",

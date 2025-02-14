@@ -749,7 +749,7 @@ const p13 = new LargeFloorIsland(this.scene, p13Config, this.pisos);
             height: 90,
             inverted:true
         };
-        const port = new Floor(this.scene, portalConfig, this.portal).setDepth(99).setScale(0.5)
+        const port = new Floor(this.scene, portalConfig, this.portal).setScale(0.5)
 
         this.endPortal = port
 
@@ -792,7 +792,7 @@ const p13 = new LargeFloorIsland(this.scene, p13Config, this.pisos);
           targets: this.auraImage,
         })
 
-        const bubblesGroup = this.scene.add.group().setDepth(100000)
+        const bubblesGroup = this.scene.add.group()
         const c1Config: AsteroidGeneratorConfig = {
           texture: "nube1p3",
           x: 0,

@@ -452,12 +452,6 @@ class Mapa10 {
           this.pisos3,
           () => {
             this.scene.rotateCam(true, 10);
-            this.p8?.clearTint()
-
-            //if (this.scene.checkPoint === 1) {
-            //  this.scene.canRot = true
-            //  this.scene.checkPoint = 2
-            // }
           },
           () => true,
           this.scene

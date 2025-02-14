@@ -6,6 +6,7 @@ import containerSettings from "./containersMenu/containerSettings";
 import containerCode from "./containersMenu/containerCode";
 import MasterManager from "./MasterManager";
 import containerAlbum from "./containersMenu/containerAlbum";
+import { AsteroidGeneratorConfig } from "./assets/AsteroidGenerator";
 
 
 class TestScene extends Phaser.Scene {
@@ -21,37 +22,49 @@ class TestScene extends Phaser.Scene {
     }
 
     create() {
-        const rect1 = this.add.rectangle(window.innerWidth / 2, window.innerHeight / 2, 1800, 900, 0x6666ff, 0.6);
+        const rect1 = this.add.rectangle(0,0, 1800, 900, 0x6666ff, 0.6);
         const cont = this.add.container(window.innerWidth / 2, window.innerHeight / 2)
         const cont2 = this.add.container(window.innerWidth / 2, window.innerHeight / 2)
-        const rect2 = this.add.rectangle(0, 0, 960, 300, 0x66ffaa, 0.7).setVisible(false);
-        const rect3 = this.add.rectangle(0, 0, 960, 300, 0x66ffaa, 0.7).setVisible(false);
-        const imagenTest = this.add.image(0, 0, "logo");
-        const imagenTest2 = this.add.image(-200, 0, "logo");
-        const imagenTest3 = this.add.image(200, 0, "logo");
-        const imagenTestTitle = this.add.image(0, -100, "titulo").setScale(0.2);
-        const imagenTestButtoncito = this.add.image(window.innerWidth - 100, window.innerHeight - 100, "botoncito").setScale(0.6);
+        const rect2 = this.add.rectangle(0, 0, 960, 300, 0x66feac, 0.7).setVisible(true);
+        const rect3 = this.add.rectangle(0, 0, 100, 100, 0x66ffaa, 1).setVisible(true);
+
+
+        // const imagenTest = this.add.image(0, 0, "logo");
+        // const imagenTest2 = this.add.image(-200, 0, "logo");
+        // const imagenTest3 = this.add.image(200, 0, "logo");
+        // const imagenTestTitle = this.add.image(0, -100, "titulo").setScale(0.2);
+        // const imagenTestButtoncito = this.add.image(window.innerWidth - 100, window.innerHeight - 100, "botoncito").setScale(0.6);
         // const scaladorX = 1500 / 960
         // const scaladorY = 700 / 300
         console.log("tamaño del contenerdor", cont.width, cont.height)
+        const bubblesGroup = this.add.group().add(rect3)
+        const group1 = this.add.group().add(rect1)
+        const group2 = this.add.group().add(rect2)
 
+        const objects = group1.getChildren().concat(
+            bubblesGroup.getChildren(),
+            group2.getChildren(),
+        )
+
+        cont.add(objects)
+        console.log(objects, "objects")
 
 
         const bounds = cont.getBounds();
         console.log("BOUNDS", bounds)
 
-        cont.add([
-            rect2,
-            imagenTest,
-            imagenTest2,
-            imagenTest3,
-            // imagenTestButtoncito
-        ])
+        // cont.add([
+        //     rect2,
+        //     imagenTest,
+        //     imagenTest2,
+        //     imagenTest3,
+        //     // imagenTestButtoncito
+        // ])
 
-        cont2.add([
-            rect3,  
-            imagenTestTitle
-        ])
+        // cont2.add([
+        //     rect3,  
+        //     imagenTestTitle
+        // ])
         // imagenTestButtoncito.setScale(scaladorY);
         // cont.setScale(scaladorX);
         // cont.setScale(scaladorX, scaladorY);    

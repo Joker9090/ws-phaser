@@ -55,7 +55,7 @@ class AsteroidGenerator {
 
   createAsteroid(x: number, y: number) {
     const asteroid = this.scene.physics.add.sprite(x, y, this.config.texture);
-    if (this.config.depth) asteroid.setDepth(this.config.depth);
+    if (this.config.depth) this.asteroids.setDepth(this.config.depth);
     if (this.config.group) this.config.group.add(asteroid)
     console.log(this.scene.map?.mapContainer.list.length,"lngth")
   // @ts-ignore

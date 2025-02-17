@@ -72,7 +72,7 @@ class Mapa10 {
   }
   checkPoint2 = {
     x: 3200, //500
-    y: 1000, //800
+    y: 900, //800
   };
   loseConfig: loseConfigFromMapType = [
     {

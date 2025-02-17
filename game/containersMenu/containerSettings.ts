@@ -115,11 +115,11 @@ class containerSettings extends Phaser.GameObjects.Container {
         this.quitGame.on('pointerup', () => {
             this.quitGame.setTexture('settingQuitGameHover')
             const group: any[] = []
-            const background = this.scene.add.rectangle(this.scene.scale.width / 2, this.scene.scale.height / 2, this.scene.scale.width, this.scene.scale.height, 0x0000, 0.7).setInteractive()
-            const modal = this.scene.add.image(this.scene.scale.width / 2, this.scene.scale.height / 4 + 300, "codeModal")
-            const cross = this.scene.add.image(this.scene.scale.width / 2 - 100, this.scene.scale.height / 4 + 450, "settingsCross")
-            const check = this.scene.add.image(this.scene.scale.width / 2 + 100, this.scene.scale.height / 4 + 450, "settingsCheck")
-            const text = this.scene.add.text(this.scene.scale.width / 3 + 130, this.scene.scale.height / 4 + 200, `Quit game?`, {
+            const background = this.scene.add.rectangle(this.scene.scale.width / 10 - 150, this.scene.scale.height / 8 -100, this.scene.scale.width *2, this.scene.scale.height*2, 0x0000, 0.7).setInteractive()
+            const modal = this.scene.add.image(0,0, "codeModal")
+            const cross = this.scene.add.image(-120, 140, "settingsCross")
+            const check = this.scene.add.image(80, 140, "settingsCheck")
+            const text = this.scene.add.text(-190, -150 , `Quit game?`, {
                 color: "#00feff",
                 stroke: "#00feff",
                 align: "center",
@@ -177,8 +177,9 @@ class containerSettings extends Phaser.GameObjects.Container {
                     changeVisible()
                 }
                 group.forEach(item => item.destroy());
+                this.scene.cameras.main.ignore(this);
             })
-
+            this.settingsModal.add(group)
         })
 
         this.quitGame.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {

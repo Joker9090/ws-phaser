@@ -826,7 +826,7 @@ class Mapa7 {
     const c1Config: AsteroidGeneratorConfig = {
       texture: "nube1p1",
       x: 0,
-      y: 1500,
+      y: 700,
       delayed: 100,
       group: cloudsGroup,
       direction: 0,

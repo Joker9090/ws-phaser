@@ -498,7 +498,7 @@ class Mapa2 {
       tween: {
         duration: 5000,
         repeat: -1,
-        y: "+=2500",
+        y: "+=3000",
       },
       frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
     };

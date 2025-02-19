@@ -836,15 +836,16 @@ class AssetsLoader {
       
       // this.monchi?.moveOnLoader();
       loadingText.setOrigin(0.5, 0.5);
-    
-      setInterval(() => {
-        
+        this.scene.time.delayedCall(120, () => {
         var gameTitle = this.scene.add.image(0, 0, "gameTitle");
         var background = this.scene.add.image(0, 0, "fondoCarga");
         background.setPosition(width / 2, height / 2).setDepth(-1);
         gameTitle.setPosition(width / 2, height / 2 -300).setDepth(999999999).setScale(0.5);
-      }, 10);
-
+        this.monchi = new Player(this.scene, width / 2 - 152, height / 2 + 110, "player", 2);
+        this.scene.physics.world.enable(this.monchi);
+        this.scene.physics.world.gravity.y = 0;
+        this.monchi.moveOnLoader();
+        })
      
       // var percentText = this.scene.make.text({
       //   x: width / 2,
@@ -867,14 +868,6 @@ class AssetsLoader {
       //     color: "#ff0000",
       //   },
       // });
-
-      // assetText.setOrigin(0.5, 0.5);
-      this.scene.time.delayedCall(120, () => {
-        this.monchi = new Player(this.scene, width / 2 - 152, height / 2 + 110, "player", 2);
-        this.scene.physics.world.enable(this.monchi);
-        this.scene.physics.world.gravity.y = 0;
-        this.monchi.moveOnLoader();
-      })
       this.scene.load.on("progress", (value: number) => {
         // percentText.setText(Math.floor(Number(value * 100)) + "%");
         progressBar.clear();
@@ -895,10 +888,10 @@ class AssetsLoader {
       // });
 
       this.scene.load.once("complete", function (this: AssetsLoader) {
-        progressBar.destroy();
-        progressBox.destroy();
-        loadingText.destroy();
-        this.monchi?.destroy();
+        // progressBar.destroy();
+        // progressBox.destroy();
+        // loadingText.destroy();
+        // this.monchi?.destroy();
         // percentText.destroy();
         // assetText.destroy();
         this.finished = true;
@@ -922,7 +915,7 @@ class AssetsLoader {
       }
       const ArcadeFont = this.scene.add.text(0, 0, " .", {
         fontFamily: "Arcade",
-    });
+      });
       
     }
   }

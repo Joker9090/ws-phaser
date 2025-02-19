@@ -887,6 +887,7 @@ class AssetsLoader {
         const segments = Math.floor((300 * value) / segmentWidth);
         this.monchi?.setDepth(999999999);
         for (let i = 0; i < segments; i++) {
+        
           progressBar.fillRoundedRect(width / 2 - 152 + i * segmentWidth, height / 2 + 110,segmentWidth - 2,40,5);
           this.monchi?.setPosition(width / 2 - 152 + i * segmentWidth, height / 2).setVisible(true);
 
@@ -904,9 +905,10 @@ class AssetsLoader {
         // this.monchi?.destroy();
         // percentText.destroy();
         // assetText.destroy();
-        this.monchi?.setPosition(width / 2 - 152, height / 2)
+        this.monchi?.setPosition(width / 2 - 152 + 275, height / 2)
         this.finished = true;
         if (callback) callback()
+        this.monchi?.setPosition(width / 2 - 152, height / 2)
       });
 
 

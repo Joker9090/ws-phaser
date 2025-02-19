@@ -1,5 +1,7 @@
 import Phaser from "phaser";
 import Game from "../Game";
+import MultiScene from "../MultiScene";
+import PreLoadScene from "../PreLoadScene";
 
 // Scene in class
 class Player extends Phaser.Physics.Arcade.Sprite {
@@ -7,11 +9,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   isRotating: boolean = false;
   playerState: "NORMAL" | "ROTATED" = "NORMAL";
   cameraState: "NORMAL" | "ROTATED" = "NORMAL";
-  scene: Game;
+  scene: Game |MultiScene | PreLoadScene;
   gravityAnimSprite?: Phaser.GameObjects.Sprite;
 
   constructor(
-    scene: Game,
+    scene: Game |MultiScene | PreLoadScene,
     x: number,
     y: number,
     texture: string | Phaser.Textures.Texture,
@@ -21,6 +23,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.scene = scene;
     /* Monchi animations */
     this.setOrigin()
+
     const monchiJumpFrames = scene.anims.generateFrameNumbers("player", {
       frames: Array.from({ length: 12 }, (_, i) => i + 36),
     });
@@ -39,6 +42,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       frameRate: 12,
       repeat: 0,
     };
+    const monchiLoaderConfig ={
+      key: "monchiLoader",
+      frames: monchiMoveFrames,
+      frameRate: 12,
+      repeat: 1,
+    }
     const monchiIdleFrames = scene.anims.generateFrameNumbers("player", {
       frames: Array.from({ length: 12 }, (_, i) => i + 24),
     });
@@ -96,6 +105,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     /* Monchi animations */
     scene.anims.create(monchiJumpConfig);
     scene.anims.create(monchiMoveConfig);
+    scene.anims.create(monchiLoaderConfig);
     scene.anims.create(monchiIdleConfig);
     scene.anims.create(monchiRotate1Config);
     scene.anims.create(monchiRotate2Config);
@@ -117,9 +127,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     /* Monchi add to scene */
     scene.add.existing(this);
-    this.scene.UICamera?.ignore(this)
+    if(this.scene instanceof Game) this.scene.UICamera?.ignore(this)
     this.gravityAnimSprite = this.scene.add.sprite(this.x, this.y, "gravityAnim", 0).setVisible(false).setDepth(999);
-    this.scene.UICamera?.ignore(this.gravityAnimSprite)
+    if(this.scene instanceof Game)  this.scene.UICamera?.ignore(this.gravityAnimSprite)
 
     // this.scene.add.rectangle(this.x, this.y, 100, 100, 0xffffff).setVisible(true)
     /* Monchi Collission with end of map */
@@ -198,7 +208,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       }
     }
   }
-
+  moveOnLoader(){
+    this.anims.play("monchiLoader", true)
+  }
   checkSideGravity(
     cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined
   ) {

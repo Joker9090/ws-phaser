@@ -2,6 +2,8 @@ import Phaser from "phaser";
 import MultiScene from "../MultiScene";
 import BetweenScenes, { BetweenScenesStatus } from "../BetweenScenes";
 import PreLoadScene from "../PreLoadScene";
+import Player from "../assets/Player";
+import Game from "../Game";
 
 export type SceneKeys =
   | "BaseLoad"
@@ -44,7 +46,7 @@ const loadAssets = {
       ["image", "creditsButton", "/menu/initial/creditsButton.png"],
       ["image", "creditsButtonHover", "/menu/initial/creeditsButtonHover.png"],
       ["image", "creditsButtonPressed", "/menu/initial/creditsButtonPressed.png"],
-      ["image", "gameTitle", "/menu/initial/gameTitle.png"],
+      // ["image", "gameTitle", "/menu/initial/gameTitle.png"],
       ["image", "logoNoswar", "/menu/initial/logoNoswar.png"],
       ["image", "playButton", "/menu/initial/playButton.png"],
       ["image", "playButtonHover", "/menu/initial/playButtonHover.png"],
@@ -168,12 +170,12 @@ const loadAssets = {
         "/game/player/gravityEffect.png",
         { frameWidth: 140, frameHeight: 280 },
       ],
-      [
-        "spritesheet",
-        "player",
-        "/game/player/playerSpriteSheet.png",
-        { frameWidth: 200, frameHeight: 200 },
-      ],
+      // [
+      //   "spritesheet",
+      //   "player",
+      //   "/game/player/playerSpriteSheet.png",
+      //   { frameWidth: 200, frameHeight: 200 },
+      // ],
       [
         "spritesheet",
         "meteorito",
@@ -803,6 +805,7 @@ class AssetsLoader {
   scene: MultiScene | PreLoadScene;
   finished: boolean = false;
   loadKey: SceneKeys[] = ["BaseLoad"];
+  monchi?: Player;
   constructor(scene: MultiScene | PreLoadScene, loadKey: SceneKeys[] = ["BaseLoad"]) {
     this.scene = scene;
     this.loadKey = loadKey;
@@ -813,9 +816,10 @@ class AssetsLoader {
     if (!this.finished) {
       var width = this.scene.cameras.main.width;
       var height = this.scene.cameras.main.height;
+      
       var loadingText = this.scene.make.text({
         x: width / 2,
-        y: height / 2 - 50,
+        y: height - 200,
         text: "Loading...",
         style: {
           font: "20px monospace",
@@ -824,60 +828,83 @@ class AssetsLoader {
       });
       var progressBar = this.scene.add.graphics();
       var progressBox = this.scene.add.graphics();
-      progressBox.fillStyle(0x222222, 0.8);
-      progressBox.fillRect(width / 2 - 160, height / 2 + 100, 320, 50);
+      progressBox.fillStyle(0x222222, 0);
+      progressBox.fillRoundedRect(width / 2 - 160, height / 2 + 100, 315, 60, 20);
+      progressBox.lineStyle(4, 0x00ffff, 1);
+      progressBox.strokeRoundedRect(width / 2 - 160, height / 2 + 100, 315, 60, 10);
 
+      
+      // this.monchi?.moveOnLoader();
       loadingText.setOrigin(0.5, 0.5);
+    
+      setInterval(() => {
+        
+        var gameTitle = this.scene.add.image(0, 0, "gameTitle");
+        var background = this.scene.add.image(0, 0, "fondoCarga");
+        background.setPosition(width / 2, height / 2).setDepth(-1);
+        gameTitle.setPosition(width / 2, height / 2 -300).setDepth(999999999).setScale(0.5);
+      }, 10);
 
-      var percentText = this.scene.make.text({
-        x: width / 2,
-        y: height / 2 - 5,
-        text: "0%",
-        style: {
-          font: "18px monospace",
-          color: "#ff0000",
-        },
-      });
+     
+      // var percentText = this.scene.make.text({
+      //   x: width / 2,
+      //   y: height / 2 - 5,
+      //   text: "0%",
+      //   style: {
+      //     font: "18px monospace",
+      //     color: "#ff0000",
+      //   },
+      // });
 
-      percentText.setOrigin(0.5, 0.5);
+      // percentText.setOrigin(0.5, 0.5);
 
-      var assetText = this.scene.make.text({
-        x: width / 2,
-        y: height / 2 + 50,
-        text: "",
-        style: {
-          font: "18px monospace",
-          color: "#ff0000",
-        },
-      });
+      // var assetText = this.scene.make.text({
+      //   x: width / 2,
+      //   y: height / 2 + 50,
+      //   text: "",
+      //   style: {
+      //     font: "18px monospace",
+      //     color: "#ff0000",
+      //   },
+      // });
 
-      assetText.setOrigin(0.5, 0.5);
-
-      this.scene.load.on("progress", function (value: number) {
-        percentText.setText(Math.floor(Number(value * 100)) + "%");
+      // assetText.setOrigin(0.5, 0.5);
+      this.scene.time.delayedCall(120, () => {
+        this.monchi = new Player(this.scene, width / 2 - 152, height / 2 + 110, "player", 2);
+        this.scene.physics.world.enable(this.monchi);
+        this.scene.physics.world.gravity.y = 0;
+        this.monchi.moveOnLoader();
+      })
+      this.scene.load.on("progress", (value: number) => {
+        // percentText.setText(Math.floor(Number(value * 100)) + "%");
         progressBar.clear();
         progressBar.fillStyle(0xff0000, 1);
-        progressBar.fillRect(
-          width / 2 - 160,
-          height / 2 + 100,
-          300 * value,
-          30
-        );
+        const segmentWidth = 25;
+        progressBar.fillStyle(0xffffff, 1);
+        const segments = Math.floor((300 * value) / segmentWidth);
+        this.monchi?.setDepth(999999999);
+        for (let i = 0; i < segments; i++) {
+          progressBar.fillRoundedRect(width / 2 - 152 + i * segmentWidth, height / 2 + 110,segmentWidth - 2,40,5);
+          this.monchi?.setPosition(width / 2 - 152 + i * segmentWidth, height / 2);
+
+        }
       });
 
-      this.scene.load.on("fileprogress", function (file: any) {
-        assetText.setText("Loading asset: " + file.key);
-      });
+      // this.scene.load.on("fileprogress", function (file: any) {
+      //   assetText.setText("Loading asset: " + file.key);
+      // });
 
       this.scene.load.once("complete", function (this: AssetsLoader) {
         progressBar.destroy();
         progressBox.destroy();
         loadingText.destroy();
-        percentText.destroy();
-        assetText.destroy();
+        this.monchi?.destroy();
+        // percentText.destroy();
+        // assetText.destroy();
         this.finished = true;
         if (callback) callback()
       });
+
 
       const scenesTitles: Array<SceneKeys> = this.loadKey
       for (let i = 0; i < scenesTitles.length; i++) {
@@ -895,9 +922,12 @@ class AssetsLoader {
       }
       const ArcadeFont = this.scene.add.text(0, 0, " .", {
         fontFamily: "Arcade",
-      });
+    });
+      
     }
   }
+
+
 
   update() {
 

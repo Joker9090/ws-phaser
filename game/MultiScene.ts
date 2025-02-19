@@ -10,6 +10,7 @@ import AssetsLoader, { SceneKeys } from "./multiScenes/assetsLoader";
 import CinematographyModular from "./movies/Cinematography-modular";
 import Game from "./Game";
 import { CinematoDataType, GamePlayDataType } from "./Types";
+import Player from "./assets/Player";
 
 export default class MultiScene extends Phaser.Scene {
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -18,6 +19,7 @@ export default class MultiScene extends Phaser.Scene {
   activeScene?: WonClass | LoseClass | MenuClass | LevelClass | CreditsClass;
   assetLoaderClass?: AssetsLoader;
   sceneData?: GamePlayDataType | CinematoDataType | undefined;
+  monchi?: Player;
 
 
 
@@ -29,6 +31,11 @@ export default class MultiScene extends Phaser.Scene {
 
 
   preload() {
+    this.load.image("gameTitle", "/menu/initial/gameTitle.png");
+    this.load.image("fondoCarga", "/menu/initial/fondoCarga.png");
+    this.load.spritesheet("player",  "/game/player/playerSpriteSheet.png",  { frameWidth: 200, frameHeight: 200 });
+
+ 
     this.assetLoaderClass = new AssetsLoader(this, ["BaseLoad","Cinemato0", "Cinemato1", "Cinemato2", "Cinemato3","GamePlay1", "GamePlay2", "GamePlay3"]);
     this.assetLoaderClass.runPreload(() => {
       if (this.scenekey) {
@@ -37,9 +44,10 @@ export default class MultiScene extends Phaser.Scene {
           this.makeTransition("CinematographyMod", { keyname: "cine_3_movie_1", loadKey: ["Postales","Cinemato0", "Cinemato1", "Cinemato2", "Cinemato3"]});
           // this.makeTransition("Game", { level:10, lifes: 3, loadKey: ["GamePlay1", "GamePlay2", "GamePlay3", "Postales","Cinemato0", "Cinemato1", "Cinemato2", "Cinemato3", "Postales"] });
           //  this.makeTransition("MenuScene", undefined);
-        //  this.makeTransition("TestScene", undefined);
+          //  this.makeTransition("TestScene", undefined);
       }
     });
+
   }
 
   makeTransition(sceneName: string, data: GamePlayDataType | CinematoDataType | undefined) {

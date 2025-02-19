@@ -46,7 +46,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       key: "monchiLoader",
       frames: monchiMoveFrames,
       frameRate: 12,
-      repeat: 1,
+      repeat: -1,
     }
     const monchiIdleFrames = scene.anims.generateFrameNumbers("player", {
       frames: Array.from({ length: 12 }, (_, i) => i + 24),

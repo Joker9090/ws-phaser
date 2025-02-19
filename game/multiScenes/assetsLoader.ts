@@ -806,9 +806,11 @@ class AssetsLoader {
   finished: boolean = false;
   loadKey: SceneKeys[] = ["BaseLoad"];
   monchi?: Player;
-  constructor(scene: MultiScene | PreLoadScene, loadKey: SceneKeys[] = ["BaseLoad"]) {
+  firstLoad: boolean = true;
+    constructor(scene: MultiScene | PreLoadScene, loadKey: SceneKeys[] = ["BaseLoad"], isFirstLoad: boolean = true) {
     this.scene = scene;
     this.loadKey = loadKey;
+    this.firstLoad = isFirstLoad;
   }
 
   runPreload(callback?: Function) {
@@ -816,7 +818,7 @@ class AssetsLoader {
     if (!this.finished) {
       var width = this.scene.cameras.main.width;
       var height = this.scene.cameras.main.height;
-      
+      console.log(this.firstLoad, "FIRST LOAD")
       var loadingText = this.scene.make.text({
         x: width / 2,
         y: height - 200,
@@ -836,7 +838,7 @@ class AssetsLoader {
       
       // this.monchi?.moveOnLoader();
       loadingText.setOrigin(0.5, 0.5);
-        this.scene.time.delayedCall(120, () => {
+        this.scene.time.delayedCall(this.firstLoad ? 120 : 0, () => {
         var gameTitle = this.scene.add.image(0, 0, "gameTitle");
         var background = this.scene.add.image(0, 0, "fondoCarga");
         background.setPosition(width / 2, height / 2).setDepth(-1);

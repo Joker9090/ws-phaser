@@ -17,7 +17,7 @@ export default class PreLoadScene extends Phaser.Scene {
   }
 
   preload(){
-      const assetLoaderClass = new AssetsLoader(this, this.keyLoad)
+      const assetLoaderClass = new AssetsLoader(this, this.keyLoad, false)
       assetLoaderClass.runPreload(() => {
         this.callback()
         this.scene.stop()

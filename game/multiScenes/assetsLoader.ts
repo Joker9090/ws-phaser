@@ -824,10 +824,17 @@ class AssetsLoader {
         y: height - 200,
         text: "Loading...",
         style: {
-          font: "20px monospace",
-          color: "#ff0000",
+          font: "30px monospace",
+          color: "#ffffff",
         },
-      });
+      }).setAlpha(0.1);
+      this.scene.tweens.add({
+        targets: loadingText,
+        alpha: 1,
+        duration: 1000,
+        loop: -1,
+        yoyo: true,
+      })
       var progressBar = this.scene.add.graphics();
       var progressBox = this.scene.add.graphics();
       progressBox.fillStyle(0x222222, 0);
@@ -843,7 +850,7 @@ class AssetsLoader {
         var background = this.scene.add.image(0, 0, "fondoCarga");
         background.setPosition(width / 2, height / 2).setDepth(-1);
         gameTitle.setPosition(width / 2, height / 2 -300).setDepth(999999999).setScale(0.5);
-        this.monchi = new Player(this.scene, width / 2 - 152, height / 2 + 110, "player", 2);
+        this.monchi = new Player(this.scene, width / 2 - 152, height / 2, "player", 2);
         this.scene.physics.world.enable(this.monchi);
         this.scene.physics.world.gravity.y = 0;
         this.monchi.moveOnLoader();
@@ -872,6 +879,7 @@ class AssetsLoader {
       // });
       this.scene.load.on("progress", (value: number) => {
         // percentText.setText(Math.floor(Number(value * 100)) + "%");
+        console.log(value, "VALUE"),
         progressBar.clear();
         progressBar.fillStyle(0xff0000, 1);
         const segmentWidth = 25;
@@ -880,7 +888,7 @@ class AssetsLoader {
         this.monchi?.setDepth(999999999);
         for (let i = 0; i < segments; i++) {
           progressBar.fillRoundedRect(width / 2 - 152 + i * segmentWidth, height / 2 + 110,segmentWidth - 2,40,5);
-          this.monchi?.setPosition(width / 2 - 152 + i * segmentWidth, height / 2);
+          this.monchi?.setPosition(width / 2 - 152 + i * segmentWidth, height / 2).setVisible(true);
 
         }
       });
@@ -896,6 +904,7 @@ class AssetsLoader {
         // this.monchi?.destroy();
         // percentText.destroy();
         // assetText.destroy();
+        this.monchi?.setPosition(width / 2 - 152, height / 2)
         this.finished = true;
         if (callback) callback()
       });

@@ -31,10 +31,10 @@ export default class MultiScene extends Phaser.Scene {
 
 
   preload() {
-    this.load.image("gameTitle", "/menu/initial/gameTitle.png");
-    this.load.image("fondoCarga", "/menu/initial/fondoCarga.png");
+    // this.load.image("gameTitle", "/menu/initial/gameTitle.png");
+    // this.load.image("fondoCarga", "/menu/initial/fondoCarga.png");
     
-    this.load.spritesheet("player",  "/game/player/playerSpriteSheet.png",  { frameWidth: 200, frameHeight: 200 });
+    // this.load.spritesheet("player",  "/game/player/playerSpriteSheet.png",  { frameWidth: 200, frameHeight: 200 });
 
  
     this.assetLoaderClass = new AssetsLoader(this, ["BaseLoad","Cinemato0", "Cinemato1", "Cinemato2", "Cinemato3","GamePlay1", "GamePlay2", "GamePlay3"]);

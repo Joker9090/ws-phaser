@@ -18,7 +18,7 @@ export type SceneKeys =
 
 export type LoadTypes = "image" | "spritesheet" | "audio" | "svg";
 
-const loadAssets = {
+export const loadAssets = {
 
   BaseLoad: {
     assets: [
@@ -805,7 +805,6 @@ class AssetsLoader {
   scene: MultiScene | PreLoadScene;
   finished: boolean = false;
   loadKey: SceneKeys[] = ["BaseLoad"];
-  monchi?: any;
   progressBox?: Phaser.GameObjects.Graphics;
   progressBar?: Phaser.GameObjects.Graphics;
   firstLoad: boolean = true;
@@ -846,18 +845,12 @@ class AssetsLoader {
           this.progressBox.fillRoundedRect(width / 2 - 160, height / 2 + 100, 315, 60, 20);
           this.progressBox.lineStyle(4, 0x00ffff, 1);
           this.progressBox.strokeRoundedRect(width / 2 - 160, height / 2 + 100, 315, 60, 10);
-          var gameTitle = this.scene.add.image(0, 0, "gameTitle");
-          var background = this.scene.add.image(0, 0, "fondoCarga");
-          background.setPosition(width / 2, height / 2).setDepth(-1);
-          gameTitle.setPosition(width / 2, height / 2 -300).setDepth(999999999).setScale(0.5);       
           this.scene.anims.create({
             key: "loading",
             frameRate:16,
             frames: this.scene.anims.generateFrameNumbers("player", {frames: Array.from({ length: 12 }, (_, i) => i + 48)}),
             repeat: -1,
           })   
-          this.monchi = this.scene.add.sprite(width / 2 -152 +275, height / 2, "player", 2).setDepth(999999999).setScale(0.8).setVisible(false);
-          this.monchi.play("loading");
         
           this.scene.load.on("progress", (value: number) => {
             // percentText.setText(Math.floor(Number(value * 100)) + "%");
@@ -867,11 +860,9 @@ class AssetsLoader {
             const segmentWidth = 25;
             this.progressBar?.fillStyle(0xffffff, 1);
             const segments = Math.floor((300 * value) / segmentWidth);
-            this.monchi?.setDepth(999999999);
             for (let i = 0; i < segments; i++) {
             
               this.progressBar?.fillRoundedRect(width / 2 - 152 + i * segmentWidth, height / 2 + 110,segmentWidth - 2,40,5);
-              this.monchi?.setPosition(width / 2 - 152 + i * segmentWidth, height / 2).setVisible(true);
     
             }
         })
@@ -885,7 +876,6 @@ class AssetsLoader {
         // loadingText.destroy();
         // percentText.destroy();
         // assetText.destroy();
-        this.monchi?.destroy();
         this.finished = true;
         if (callback) callback()
       });

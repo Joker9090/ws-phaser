@@ -19,6 +19,7 @@ export default function Home() {
     Promise.all([
       
       // import("@/game/TestScene"),
+      import("@/game/LoaderScene"),
       import("@/game/MultiScene"),
 
       import("@/game/MasterManager"),

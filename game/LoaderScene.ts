@@ -21,6 +21,7 @@ export default class LoaderScene extends Phaser.Scene {
 
     this.load.image("gameTitle", "/menu/initial/gameTitle.png");
     this.load.image("fondoCarga", "/menu/initial/fondoCarga.png");
+    this.load.image("planetaLoader", "/menu/initial/planetaLoader.png");
     
     this.load.spritesheet("player",  "/game/player/playerSpriteSheet.png",  { frameWidth: 200, frameHeight: 200 });
     

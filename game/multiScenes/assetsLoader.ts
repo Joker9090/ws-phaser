@@ -807,75 +807,82 @@ class AssetsLoader {
   loadKey: SceneKeys[] = ["BaseLoad"];
   progressBox?: Phaser.GameObjects.Graphics;
   progressBar?: Phaser.GameObjects.Graphics;
+  planeta?: Phaser.GameObjects.Image;
   firstLoad: boolean = true;
     constructor(scene: MultiScene | PreLoadScene, loadKey: SceneKeys[] = ["BaseLoad"], isFirstLoad: boolean = true) {
     this.scene = scene;
     this.loadKey = loadKey;
     this.firstLoad = isFirstLoad;
+    var width = this.scene.cameras.main.width;
+    var height = this.scene.cameras.main.height;
+    this.planeta = this.scene.add.image(width/2 -200, height/2 - 152, "planetaLoader").setOrigin(0).setVisible(true);
+
   }
 
   runPreload(callback?: Function) {
 
     if (!this.finished) {
-      var width = this.scene.cameras.main.width;
-      var height = this.scene.cameras.main.height;
+ 
       // this.monchi?.moveOnLoader();
-      this.scene.time.delayedCall(this.firstLoad ? 120 : 0, () => {
-        var loadingText = this.scene.make.text({
-          x: width / 2,
-          y: height -200,
-          text: "",
-          style: {
-            font: "30px monospace",
-            color: "#ffffff",
-          },
-        }).setAlpha(0.1);
-        loadingText.setOrigin(0.5, 0.5);
-        this.scene.tweens.add({
-            targets: loadingText,
-            alpha: 1,
-            duration: 1000,
-            loop: -1,
-            yoyo: true,
-          })
+      // this.scene.time.delayedCall(this.firstLoad ? 120 : 0, () => {
+      //   var loadingText = this.scene.make.text({
+      //     x: width / 2,
+      //     y: height -200,
+      //     text: "",
+      //     style: {
+      //       font: "30px monospace",
+      //       color: "#ffffff",
+      //     },
+      //   }).setAlpha(0.1);
+      //   loadingText.setOrigin(0.5, 0.5);
+      //   this.scene.tweens.add({
+      //       targets: loadingText,
+      //       alpha: 1,
+      //       duration: 1000,
+      //       loop: -1,
+      //       yoyo: true,
+      //     })
         
-          this.progressBar = this.scene.add.graphics();
-          this.progressBox = this.scene.add.graphics();
-          this.progressBox.fillStyle(0x222222, 0);
-          this.progressBox.fillRoundedRect(width / 2 - 160, height / 2 + 100, 315, 60, 20);
-          this.progressBox.lineStyle(4, 0x00ffff, 1);
-          this.progressBox.strokeRoundedRect(width / 2 - 160, height / 2 + 100, 315, 60, 10);
-          this.scene.anims.create({
-            key: "loading",
-            frameRate:16,
-            frames: this.scene.anims.generateFrameNumbers("player", {frames: Array.from({ length: 12 }, (_, i) => i + 48)}),
-            repeat: -1,
-          })   
+          
+      //     this.scene.anims.create({
+      //       key: "loading",
+      //       frameRate:16,
+      //       frames: this.scene.anims.generateFrameNumbers("player", {frames: Array.from({ length: 12 }, (_, i) => i + 48)}),
+      //       repeat: -1,
+      //     })   
         
-          this.scene.load.on("progress", (value: number) => {
-            // percentText.setText(Math.floor(Number(value * 100)) + "%");
-            console.log(value, "VALUE"),
-            this.progressBar?.clear();
-            this.progressBar?.fillStyle(0xff0000, 1);
-            const segmentWidth = 25;
-            this.progressBar?.fillStyle(0xffffff, 1);
-            const segments = Math.floor((300 * value) / segmentWidth);
-            for (let i = 0; i < segments; i++) {
+      //     this.scene.load.on("progress", (value: number) => {
+      //       // percentText.setText(Math.floor(Number(value * 100)) + "%");
+      //       console.log(value, "VALUE"),
+      //       this.progressBar?.clear();
+      //       this.progressBar?.fillStyle(0xff0000, 1);
+      //       const segmentWidth = 25;
+      //       this.progressBar?.fillStyle(0xffffff, 1);
+      //       const segments = Math.floor((300 * value) / segmentWidth);
+      //       for (let i = 0; i < segments; i++) {
             
-              this.progressBar?.fillRoundedRect(width / 2 - 152 + i * segmentWidth, height / 2 + 110,segmentWidth - 2,40,5);
+      //         this.progressBar?.fillRoundedRect(width / 2 - 152 + i * segmentWidth, height / 2 + 110,segmentWidth - 2,40,5);
     
-            }
-        })
+      //       }
+      //     })
      
      
-      });
+      // });
 
+      this.scene.tweens.add({
+        targets:this.planeta,
+        alpha: 0.5,
+        yoyo: true,
+        repeat: -1,
+        duration: 700,
+      })
       this.scene.load.once("complete", function (this: AssetsLoader) {
-        this.progressBar?.destroy();
-        this.progressBox?.destroy();
+        // this.progressBar?.destroy();
+        // this.progressBox?.destroy();
         // loadingText.destroy();
         // percentText.destroy();
         // assetText.destroy();
+        this.planeta?.setVisible(false);
         this.finished = true;
         if (callback) callback()
       });

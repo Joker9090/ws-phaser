@@ -153,6 +153,7 @@ export default class BetweenScenesScene extends Phaser.Scene {
 
     const { width, height } = this.cameras.main;
 
+    //@ts-ignore
     this.blocks.getChildren().forEach((child: Phaser.GameObjects.Sprite, i) => {
       child.setOrigin(0.5, 0.5);
       child.displayWidth = Math.ceil(width / 12) ;

@@ -47,8 +47,7 @@ export default class LoaderScene extends Phaser.Scene {
   }
 
   checkAssetLoaded() {
-    this.time.delayedCall(1000, () => {
-      console.log("CHECKING")
+    this.time.delayedCall(100, () => {
      if (this.textures.exists("gameTitle") && this.textures.exists("fondoCarga") && this.textures.exists("player")) {
         this.runPreload(() => {
           this.scene.start("MultiScene");

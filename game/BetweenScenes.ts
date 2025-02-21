@@ -59,9 +59,10 @@ export default class BetweenScenesScene extends Phaser.Scene {
       const child = c as Phaser.GameObjects.GameObject;
       this.tweens.add({
         targets: child,
-        scale: 0,
-        angle: 180,
-        ease: "Power2",
+        // scale: 0,
+        // angle: 180,
+        alpha: 0,
+        ease: "Expo.easeIn",
         duration: 1000,
         delay: i * 50,
         repeat: 0,
@@ -103,9 +104,10 @@ export default class BetweenScenesScene extends Phaser.Scene {
       const scale = Math.max(width / 20, height / 15);
       this.tweens.add({
         targets: child,
-        scale: scale,
-        angle: 180,
-        ease: "Power2",
+        // scale: scale,
+        // angle: 180,
+        alpha: 1,
+        ease: "Expo.easeIn",
         duration: 1000,
         delay: i * 50,
         repeat: 0,
@@ -145,18 +147,29 @@ export default class BetweenScenesScene extends Phaser.Scene {
 
     this.blocks = this.add.group({
       key: "block",
-      repeat: 107,
+      repeat: (12 * 9) - 1,
       setScale: { x: 0, y: 0 },
     });
 
     const { width, height } = this.cameras.main;
+
+    this.blocks.getChildren().forEach((child: Phaser.GameObjects.Sprite, i) => {
+      child.setOrigin(0.5, 0.5);
+      child.displayWidth = Math.ceil(width / 12) ;
+      child.displayHeight = Math.ceil(height / 9);
+      child.setAlpha(0);
+      child.setTint(0x000000);
+    })
+
+    console.log(width, height);
     Phaser.Actions.GridAlign(this.blocks.getChildren(), {
       width: 12,
       height: 9,
-      cellWidth: width / 12,
-      cellHeight: height / 9,
+      cellWidth: Math.ceil(width / 12),
+      cellHeight: Math.ceil(height / 9),
       x: 0,
       y: 0,
+      position: Phaser.Display.Align.CENTER,
     });
 
   }

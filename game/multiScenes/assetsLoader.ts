@@ -824,7 +824,7 @@ class AssetsLoader {
         var loadingText = this.scene.make.text({
           x: width / 2,
           y: height -200,
-          text: "Loading...",
+          text: "",
           style: {
             font: "30px monospace",
             color: "#ffffff",

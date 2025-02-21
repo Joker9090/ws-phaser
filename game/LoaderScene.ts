@@ -90,7 +90,7 @@ export default class LoaderScene extends Phaser.Scene {
        
         });
   
-        this.load.once("complete", function (this: AssetsLoader) {
+        this.load.once("complete", function (this: LoaderScene) {
           this.progressBar?.destroy();
           this.progressBox?.destroy();
           // loadingText.destroy();

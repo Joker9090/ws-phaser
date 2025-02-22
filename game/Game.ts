@@ -46,7 +46,7 @@ class Game extends Phaser.Scene {
 
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   EscKeyboard?: Phaser.Input.Keyboard.Key;
-  monchi?: Player;
+  player?: Player;
   graphics?: Phaser.GameObjects.Graphics;
   map?: PossibleMaps;
 
@@ -84,9 +84,12 @@ class Game extends Phaser.Scene {
   }
 
   touch() {
-    if (this.monchi) {
-      this.monchi.idle();
-      this.monchi.setVelocityX(0);
+    if (this.player) {
+      this.player.idle();
+      this.player.setVelocityX(0);
+      if( this.player.withTank && this.player.body?.velocity.y === 0){
+        this.player.tank.isCharging = this.player.tank.chargeValue;
+      }
     }
   }
 
@@ -115,7 +118,7 @@ class Game extends Phaser.Scene {
     
     //         this.cameras.main.startFollow(
     //           //@ts-ignore
-    //           this.monchi,
+    //           this.player,
     //           true,
     //           0.1,
     //           0.1,
@@ -160,6 +163,7 @@ class Game extends Phaser.Scene {
     
     }, 500);
   }
+
   lateralCameraOffset(position: "left" | "right", instant: boolean = false, levelWidth?: number, zoomOut?:number, duration?:number, directionAfter?: "up" | "down") {
     let newWidth = levelWidth ? levelWidth : this.cameraWidth;
     let newduration = 4000;
@@ -206,19 +210,20 @@ class Game extends Phaser.Scene {
     console.log("moving camera", position, this.cameras.main.followOffset);
     }, 1000);
   }
+
   changeGravity(float: boolean, time: number, speed?: 1 | 2 | 3) {
-    if (this.monchi) {
+    if (this.player) {
       this.physics.world.gravity.y = this.physics.world.gravity.y <= 0 ? 1000 : -1000;
       this.moveCameraOffset(this.physics.world.gravity.y <= 0 ? "up" : "down")
-      this.monchi.rotate(speed)
+      this.player.rotate(speed)
     }
   }
 
   rotateCam(isNormal: boolean, time: number) {
     console.log("rotating camera", isNormal, this.cameraNormal);
     if (this.cameraNormal === !isNormal) return
-    if (this.monchi)
-      this.monchi.setCameraState(!isNormal ? "NORMAL" : "ROTATED");
+    if (this.player)
+      this.player.setCameraState(!isNormal ? "NORMAL" : "ROTATED");
     if (isNormal) {
       this.cameraNormal = false;
     } else {
@@ -245,7 +250,7 @@ class Game extends Phaser.Scene {
   }
 
   win() {
-    if (this.canWin && this.monchi && this.map) {
+    if (this.canWin && this.player && this.map) {
       console.log(this.levelIs, "LEVEL IS JOTITA")
       this.cameraNormal = true;
       if (this.map?.nextScene) {
@@ -308,7 +313,7 @@ class Game extends Phaser.Scene {
           const multiScene = new MultiScene("Game", { level: this.levelIs, lifes: this.lifes ? this.lifes : 3 });
           const scene = this.scene.add("MultiScene", multiScene, true);
           this.scene.start("MultiScene").bringToTop("MultiScene");
-        } else if (this.lifes > 0 && this.monchi) {
+        } else if (this.lifes > 0 && this.player) {
           // UI changes
           this.UIClass?.loseLife(this.lifes);
           this.UIClass?.rotateArrow(this.gravityDown ? "down" : "up");
@@ -316,8 +321,8 @@ class Game extends Phaser.Scene {
 
           // Player changes
           this.cameraNormal = config.cameraDirection === "NORMAL" ? true : false
-          this.monchi.setCameraState(config.cameraDirection);
-          this.monchi.setPlayerState(config.PlayerDirection);
+          this.player.setCameraState(config.cameraDirection);
+          this.player.setPlayerState(config.PlayerDirection);
 
           // Game changes
           if (config.PlayerDirection === "NORMAL") {
@@ -329,8 +334,8 @@ class Game extends Phaser.Scene {
           config.cameraDirection === "NORMAL"
             ? this.cameras.main.setRotation(0)
             : this.cameras.main.setRotation(Math.PI);
-          this.monchi.x = config.positions.x;
-          this.monchi.y = config.positions.y;
+          this.player.x = config.positions.x;
+          this.player.y = config.positions.y;
         }
         // this.cameraNormal = config.cameraDirection === "NORMAL" ? true : false
 
@@ -396,92 +401,92 @@ class Game extends Phaser.Scene {
     /* CHOSE LEVEL, LIFES AND AUDIO */
     switch (data.level) {
       case 999:
-        this.map = new Sandbox(this, this.monchi!);
+        this.map = new Sandbox(this, this.player!);
         // this.loopMusic = "planet0LoopMusic";
         break;
       case 0:
-        this.map = new p1Mapa0(this, this.monchi!);
+        this.map = new p1Mapa0(this, this.player!);
         this.loopMusic = "planet0LoopMusic";
         break;
       case 1:
-        this.map = new p1Mapa1(this, this.monchi!);
+        this.map = new p1Mapa1(this, this.player!);
         this.loopMusic = "planet0LoopMusic";
         if(this.masterManagerScene){
           this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1"]
         }
         break;
       case 2:
-        this.map = new p1Mapa2(this, this.monchi!);
+        this.map = new p1Mapa2(this, this.player!);
         this.loopMusic = "planet0LoopMusic";
         if(this.masterManagerScene){
           this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1"]
         }
         break;
       case 3:
-        this.map = new p1Mapa3(this, this.monchi!);
+        this.map = new p1Mapa3(this, this.player!);
         this.loopMusic = "planet0LoopMusic";
         if(this.masterManagerScene){
           this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1", "planeta1_figu2"]
         }
         break;
       case 4:
-        this.map = new p2Mapa1(this, this.monchi!);
+        this.map = new p2Mapa1(this, this.player!);
         this.loopMusic = "planet1LoopMusic";
         if(this.masterManagerScene){
           this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1", "planeta1_figu2"]
         }
         break;
       case 5:
-        this.map = new p2Mapa2(this, this.monchi!);
+        this.map = new p2Mapa2(this, this.player!);
         this.loopMusic = "planet1LoopMusic";
         if(this.masterManagerScene){
           this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1"]
         }
         break;
       case 6:
-        this.map = new p2Mapa4(this, this.monchi!);
+        this.map = new p2Mapa4(this, this.player!);
         this.loopMusic = "planet1LoopMusic";
         if(this.masterManagerScene){
           this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1"]
         }
         break;
       case 7:
-        this.map = new p2Mapa3(this, this.monchi!);
+        this.map = new p2Mapa3(this, this.player!);
         this.loopMusic = "planet1LoopMusic";
         if(this.masterManagerScene){
           this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2"]
         }
         break;
       case 8:
-        this.map = new p3Mapa1(this, this.monchi!);
+        this.map = new p3Mapa1(this, this.player!);
         this.loopMusic = "planet3LoopMusic";
         if(this.masterManagerScene){
           this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2"]
         }
         break
       case 9:
-        this.map = new p3Mapa2(this, this.monchi!);
+        this.map = new p3Mapa2(this, this.player!);
         this.loopMusic = "planet3LoopMusic";
         if(this.masterManagerScene){
           this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2", "planeta3_figu1"]
         }
         break
       case 10:
-        this.map = new p3Mapa3(this, this.monchi!);
+        this.map = new p3Mapa3(this, this.player!);
         this.loopMusic = "planet3LoopMusic";
         if(this.masterManagerScene){
           this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2", "planeta3_figu1"]
         }
         break
       case 11:
-        this.map = new p3Mapa4(this, this.monchi!);
+        this.map = new p3Mapa4(this, this.player!);
         if(this.masterManagerScene){
           this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2", "planeta3_figu1", "planeta3_figu2"]
         }
         this.loopMusic = "planet3LoopMusic";
         break
       default:
-        this.map = new p1Mapa0(this, this.monchi!);
+        this.map = new p1Mapa0(this, this.player!);
         this.loopMusic = "planet0LoopMusic";
         break;
     }
@@ -516,7 +521,10 @@ class Game extends Phaser.Scene {
 
 
     const { x, y } = this.map.startingPoint;
-    this.monchi = new Player(this, x, y, "character", 2);
+    // FINALIZA EL MAPA
+
+    // ARRANCA EL MAPA
+    this.player = new Player(this, x, y, "character", 2);
     this.canWin = false;
     /* CREATE MAP */
     this.map.createMap(data);
@@ -534,8 +542,8 @@ class Game extends Phaser.Scene {
     this.cameraWidth = this.cameras.main.width;
     this.cameraHeight = this.cameras.main.height;
     this.cameras.main.startFollow(
-      this.monchi,
-      true,
+      this.player,
+      false,
       0.1,
       0.1,
       0,
@@ -564,7 +572,7 @@ class Game extends Phaser.Scene {
     //   this.EscKeyboard.once(
     //     "down",
     //     () => {
-    //       this.monchi?.body?.destroy();
+    //       this.player?.body?.destroy();
     //       this.goingBack = false;
     //       this.canWin = false;
     //       this.canNextLevel = false;
@@ -576,22 +584,32 @@ class Game extends Phaser.Scene {
     //     },
     //     this
     //   );
+ 
 
+    
+ 
   }
 
 
   update(this: Game) {
+
+    if(this.player){
+   
+      
+    }
     if (this.cameras.main.width < this.cameras.main.height) {
       this.cameras.main.zoom =
         this.cameras.main.width / this.cameras.main.height;
     }
-    if (this.monchi && this.map && !this.stopMov) {
+
+    
+    if (this.player && this.map && !this.stopMov) {
       this.map.update();
-      this.monchi.checkMove(this.cursors);
+      this.player.checkMove(this.cursors);
     }else{
-      this.monchi?.setVelocity(0,17);
-      this.monchi?.setAcceleration(0)
-      this.monchi?.setGravityY(0); 
+      this.player?.setVelocity(0,17);
+      this.player?.setAcceleration(0)
+      this.player?.setGravityY(0); 
     }
     // CREATIVE MODE
     this.handleCameraMovement();

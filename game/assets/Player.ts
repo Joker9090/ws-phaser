@@ -11,6 +11,26 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   cameraState: "NORMAL" | "ROTATED" = "NORMAL";
   scene: Game |MultiScene | PreLoadScene;
   gravityAnimSprite?: Phaser.GameObjects.Sprite;
+  isFlying: boolean = true;
+  withTank: boolean = false;
+  tankGraphics?: Phaser.GameObjects.Graphics;
+  tank: {
+    fuel: number,
+    isCharging: number,
+    fuelLimit: number,
+    consume: number,
+    chargeValue: number,
+    fuelConditionToStart: number,
+    extraJumpAt?: number
+  } = {
+    fuel: 400,
+    isCharging: 0,
+    fuelLimit: 300,
+    fuelConditionToStart: 120,
+    chargeValue: 0.4,
+    consume: 70,
+    extraJumpAt: 300
+  }
 
   constructor(
     scene: Game |MultiScene | PreLoadScene,
@@ -21,74 +41,86 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   ) {
     super(scene, x, y, texture);
     this.scene = scene;
-    /* Monchi animations */
+    /* player animations */
     this.setOrigin()
-
-    const monchiJumpFrames = scene.anims.generateFrameNumbers("player", {
+    let frameRate = 20
+    const playerJumpFrames = scene.anims.generateFrameNumbers("player", {
       frames: Array.from({ length: 12 }, (_, i) => i + 36),
     });
-    const monchiJumpConfig = {
-      key: "monchiJump",
-      frames: monchiJumpFrames,
-      frameRate: 12,
+    const playerJumpConfig = {
+      key: "playerJump",
+      frames: playerJumpFrames,
+      frameRate: frameRate,
       repeat: 0,
     };
-    const monchiMoveFrames = scene.anims.generateFrameNumbers("player", {
+
+    const playerFlyingFrames = scene.anims.generateFrameNumbers("player", {
+      frames: Array.from({ length: 5 }, (_, i) => i + 42),
+    });
+    const playerFlyingConfig = {
+      key: "flyingAnimKey",
+      frames: playerFlyingFrames,
+      frameRate: 5,
+      repeat: 0,
+    };
+    
+
+    const playerMoveFrames = scene.anims.generateFrameNumbers("player", {
       frames: Array.from({ length: 12 }, (_, i) => i + 48),
     });
-    const monchiMoveConfig = {
-      key: "monchiMove",
-      frames: monchiMoveFrames,
-      frameRate: 12,
+    const playerMoveConfig = {
+      key: "playerMove",
+      frames: playerMoveFrames,
+      frameRate: frameRate,
       repeat: 0,
     };
-    const monchiLoaderConfig ={
-      key: "monchiLoader",
-      frames: monchiMoveFrames,
-      frameRate: 12,
+    const playerLoaderConfig ={
+      key: "playerLoader",
+      frames: playerMoveFrames,
+      frameRate: frameRate,
       repeat: -1,
     }
-    const monchiIdleFrames = scene.anims.generateFrameNumbers("player", {
+    const playerIdleFrames = scene.anims.generateFrameNumbers("player", {
       frames: Array.from({ length: 12 }, (_, i) => i + 24),
     });
-    const monchiIdleConfig = {
-      key: "monchiIdle",
-      frames: monchiIdleFrames,
-      frameRate: 12,
+    const playerIdleConfig = {
+      key: "playerIdle",
+      frames: playerIdleFrames,
+      frameRate: frameRate,
       repeat: 0,
     }
-    const monchiRotateFrames = scene.anims.generateFrameNumbers("player", {
+    const playerRotateFrames = scene.anims.generateFrameNumbers("player", {
       frames: Array.from({ length: 24 }, (_, i) => i),
     });
-    const monchiRotateReverseFrames = scene.anims.generateFrameNumbers("player", {
+    const playerRotateReverseFrames = scene.anims.generateFrameNumbers("player", {
       frames: (Array.from({ length: 24 }, (_, i) => i)).reverse(),
     });
 
-    const monchiRotate1Config = {
-      key: "monchiRotate1",
-      frames: monchiRotateReverseFrames,
-      frameRate: 12,
+    const playerRotate1Config = {
+      key: "playerRotate1",
+      frames: playerRotateReverseFrames,
+      frameRate: frameRate,
       repeat: 0,
     }
 
-    const monchiRotate2Config = {
-      key: "monchiRotate2",
-      frames: monchiRotateReverseFrames,
-      frameRate: 24,
+    const playerRotate2Config = {
+      key: "playerRotate2",
+      frames: playerRotateReverseFrames,
+      frameRate: frameRate * 2,
       repeat: 0,
     }
 
-    const monchiRotate3Config = {
-      key: "monchiRotate3",
-      frames: monchiRotateReverseFrames,
-      frameRate: 36,
+    const playerRotate3Config = {
+      key: "playerRotate3",
+      frames: playerRotateReverseFrames,
+      frameRate: frameRate * 3,
       repeat: 0,
     }
 
-    const monchiRotateReverseConfig = {
-      key: "monchiRotateReverse",
-      frames: monchiRotateReverseFrames,
-      frameRate: 24,
+    const playerRotateReverseConfig = {
+      key: "playerRotateReverse",
+      frames: playerRotateReverseFrames,
+      frameRate: frameRate * 2,
       repeat: 0,
     }
 
@@ -98,25 +130,35 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     const gravityAnimConfig = {
       key: "gravityAnimKey",
       frames: gravityAnimFrames,
-      frameRate: 10,
+      frameRate: frameRate,
       repeat: 0,
     };
 
-    /* Monchi animations */
-    scene.anims.create(monchiJumpConfig);
-    scene.anims.create(monchiMoveConfig);
-    scene.anims.create(monchiLoaderConfig);
-    scene.anims.create(monchiIdleConfig);
-    scene.anims.create(monchiRotate1Config);
-    scene.anims.create(monchiRotate2Config);
-    scene.anims.create(monchiRotate3Config);
-    scene.anims.create(monchiRotateReverseConfig);
+    /* player animations */
+    scene.anims.create(playerJumpConfig);
+    scene.anims.create(playerFlyingConfig)
+    scene.anims.create(playerMoveConfig);
+    scene.anims.create(playerLoaderConfig);
+    scene.anims.create(playerIdleConfig);
+    scene.anims.create(playerRotate1Config);
+    scene.anims.create(playerRotate2Config);
+    scene.anims.create(playerRotate3Config);
+    scene.anims.create(playerRotateReverseConfig);
     scene.anims.create(gravityAnimConfig);
 
-    /* Monchi add to physic world */
-    scene.physics.add.existing(this);
+    /* player add to physic world */
+    
 
-    /* Monchi change size and bounce */
+    const g = this.scene.physics.add.group({ 
+      allowGravity: this.isFlying ? false : true,
+    });
+    g.add(this);
+    /* player add to scene */
+
+    scene.add.existing(this);
+    //@ts-ignore
+
+    /* player change size and bounce */
     this.body?.setSize(100, 150);
     this.body?.setOffset(50, 40);
 
@@ -125,14 +167,14 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.setDepth(999);
 
 
-    /* Monchi add to scene */
-    scene.add.existing(this);
+   
+
     if(this.scene instanceof Game) this.scene.UICamera?.ignore(this)
     this.gravityAnimSprite = this.scene.add.sprite(this.x, this.y, "gravityAnim", 0).setVisible(false).setDepth(999);
     if(this.scene instanceof Game)  this.scene.UICamera?.ignore(this.gravityAnimSprite)
 
     // this.scene.add.rectangle(this.x, this.y, 100, 100, 0xffffff).setVisible(true)
-    /* Monchi Collission with end of map */
+    /* player Collission with end of map */
     this.setCollideWorldBounds(true);
     if (this.body) {
       const body = this.body as Phaser.Physics.Arcade.Body;
@@ -152,13 +194,68 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.isJumping = false;
     this.isRotating = false
   }
+
+  drawTank(){
+    if(this.tankGraphics) this.tankGraphics.clear()
+    else this.tankGraphics = this.scene.add.graphics()
+    this.tankGraphics.fillStyle(0x000000, 1)
+    this.scene.UICamera.ignore(this.tankGraphics)
+
+    let barSize = 100
+    const limit0 = (this.tank.fuel - this.tank.fuelConditionToStart < 0) ? 0 : this.tank.fuel - this.tank.fuelConditionToStart
+    const equivalent = (limit0 * barSize) / (this.tank.fuelLimit - this.tank.fuelConditionToStart)
+    this.tankGraphics.fillRect(this.x - 50, this.y - 100, barSize, 10)
+    this.tankGraphics.fillStyle(0xff0000, 0.9)
+    if(this.tank.extraJumpAt) {
+      this.tankGraphics.fillStyle(0xffffff, 0.9)
+    }
+    this.tankGraphics.fillRect(this.x - 50, this.y - 100, equivalent , 10)
+  }
+  
   // agregar varable isGrounded
   jump() {
     const condition = this.playerState === 'NORMAL' ? this.body?.touching.down : this.body?.touching.up
-    if (!this.isJumping && condition) {
-      this.isJumping = true;
-      this.anims.play("monchiJump").once('animationcomplete', this.idle);
-      this.setVelocityY(this.playerState === 'NORMAL' ? -630 : 630);
+    console.log("jumping", this.withTank )
+    if(this.withTank){
+      if(this.tank.fuel > this.tank.consume && this.tank.fuel > this.tank.fuelConditionToStart){
+        let jumpForce = 750;
+        // if velocity is 0, start with setVelocity, otherwise increment actual velocity less
+        if (this.body?.velocity.y === 0 || this.tank.extraJumpAt) {
+          if(this.tank.extraJumpAt && this.tank.fuel > this.tank.consume){
+            let value = this.tank.extraJumpAt
+            this.tank.extraJumpAt = 0;
+            //delay call to 300 ms to make the jump more fluid
+            this.scene.time.delayedCall(value, () => {
+              this.tank.extraJumpAt = value;
+            });
+            this.tank.fuel -= this.tank.consume
+            this.tank.isCharging = 0;
+          }
+          this.setVelocityY(this.playerState === 'NORMAL' ? -jumpForce : jumpForce);
+        } else {
+          // this.tank.fuel -= this.tank.consume
+          //@ts-ignore
+          // this.setVelocityY(this.body?.velocity.y * 1.02)
+          
+        }
+
+        // check if is player is jumping
+        if (this.anims.currentAnim?.key !== "playerJump") {
+          this.isJumping = true;
+          this.anims.play("playerJump",true).once('animationcomplete', this.idle);
+        }
+
+      }
+      
+    } else {
+      
+      if (!this.isJumping && condition) {
+        let jumpForce = 500;
+
+        this.isJumping = true;
+        this.anims.play("playerJump",true).once('animationcomplete', this.idle);
+        this.setVelocityY(this.playerState === 'NORMAL' ? -jumpForce : jumpForce);
+      }
     }
   }
 
@@ -168,14 +265,26 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       this.gravityAnimSprite?.setVisible(true)
       this.gravityAnimSprite?.anims.play("gravityAnimKey").once('animationcomplete', () => this.gravityAnimSprite?.setVisible(false))
       this.setPlayerState(this.playerState === 'NORMAL' ? 'ROTATED' : 'NORMAL')
-      this.anims.play(speed === 1 ? 'monchiRotate1' : speed === 2 ? 'monchiRotate2' : 'monchiRotate3').once('animationcomplete', this.idle)
+      this.anims.play(speed === 1 ? 'playerRotate1' : speed === 2 ? 'playerRotate2' : 'playerRotate3').once('animationcomplete', this.idle)
     }
   }
 
 
 
   checkMove(cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined) {
+    let velocity = 300;
     this.gravityAnimSprite?.setPosition(this.x, this.y)
+    if(this.isFlying) {
+      this.checkFly(cursors)
+      return
+    }
+    if(this.withTank){
+      this.drawTank()
+      if(this.tank.isCharging){
+        this.tank.fuel += this.tank.isCharging
+        if(this.tank.fuel > this.tank.fuelLimit) this.tank.fuel = this.tank.fuelLimit
+      }
+    }
     if (this.playerState === "ROTATED") {
       this.body?.setOffset(50,0)
       this.setFlipY(true)
@@ -189,53 +298,100 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       const { left, right, up, space } = cursors;
       /* Left*/
       if (left.isDown) {
-        this.setVelocityX(this.cameraState === 'NORMAL' ? -200 : 200);
+        this.setVelocityX(this.cameraState === 'NORMAL' ? -velocity : velocity);
         this.setFlipX(this.cameraState === 'NORMAL' ? true : false);
-        if (!this.isJumping && !this.isRotating) this.anims.play("monchiMove", true);
+        if (!this.isJumping && !this.isRotating) this.anims.play("playerMove", true);
       } else if (right.isDown) {
         /* Right*/
-        this.setVelocityX(this.cameraState === 'NORMAL' ? 200 : -200);
+        this.setVelocityX(this.cameraState === 'NORMAL' ? velocity : -velocity);
         this.setFlipX(this.cameraState === 'NORMAL' ? false : true);
-        if (!this.isJumping && !this.isRotating) this.anims.play("monchiMove", true);
-      }
-      else {
+        if (!this.isJumping && !this.isRotating) this.anims.play("playerMove", true);
+      } else {
         this.setVelocityX(0);
-        if (!this.isJumping && !this.isRotating) this.anims.play("monchiIdle", true);
+        if (!this.isJumping && !this.isRotating) this.anims.play("playerIdle", true);
       }
       /* Up / Jump */
       if (up.isDown || space.isDown) {
         this.jump()
       }
+
     }
   }
   moveOnLoader(){
-    this.anims.play("monchiLoader", true)
+    this.anims.play("playerLoader", true)
   }
+
+  checkFly(cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined) {
+    let velocity = 500;
+    let limit = 500;
+    /* Keywords press */
+    const checkAcelerationLimit = (axis: 'x' | 'y') => {
+      if(this.body && this.body.velocity){
+        if(this.body.velocity[axis] > 0 && this.body.velocity[axis] > limit) this.body.velocity[axis] = limit
+        if(this.body.velocity[axis] < 0 && this.body.velocity[axis] < -limit) this.body.velocity[axis] = -limit
+      }
+    }
+    if (cursors) {
+      const { left, right, up, down, space } = cursors;
+      /* Left*/
+      this.setMass(1)
+      if (left.isDown) {
+        this.setAccelerationX(-velocity);
+        this.setFlipX(true);
+        if (!this.isJumping && !this.isRotating) this.anims.play("flyingAnimKey", true);
+      } else if (right.isDown) {
+        /* Right*/
+        this.setAccelerationX(velocity);
+        this.setFlipX(false);
+        if (!this.isJumping && !this.isRotating) this.anims.play("flyingAnimKey", true);
+      } else {
+        this.setAccelerationX(0);
+        if (!this.isJumping && !this.isRotating) this.anims.play("flyingAnimKey", true);
+      }
+      if (up.isDown) {
+        console.log("s")
+        this.setAccelerationY(-velocity);
+        // this.setFlipY(true);
+      } else if (down.isDown) {
+        /* Down*/
+        this.setAccelerationY(velocity);
+        // this.setFlipY(false);
+      } else {
+        this.setAccelerationY(0);
+        if (!this.isJumping && !this.isRotating) this.anims.play("flyingAnimKey", true);
+      }
+      checkAcelerationLimit('x')
+      checkAcelerationLimit('y')
+    }
+  }
+  
   checkSideGravity(
     cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined
   ) {
 
     /* Keywords press */
     if (cursors) {
+     
       const { up, down, left, right } = cursors;
       const velocity = 300;
+      const gravity = 1000;
       if (up.isDown) {
         this.setVelocityY(-velocity);
         this.setFlipX(false);
-        if (!this.isJumping && !this.isRotating) this.anims.play("monchiMove", true);
+        if (!this.isJumping && !this.isRotating) this.anims.play("playerMove", true);
       } else if (down.isDown && this.body) {
         this.setVelocityY(velocity);
         this.setFlipX(true);
-        if (!this.isJumping && !this.isRotating) this.anims.play("monchiMove", true);
+        if (!this.isJumping && !this.isRotating) this.anims.play("playerMove", true);
       } else {
         this.setVelocityY(0);
-        if (!this.isJumping && !this.isRotating) this.anims.play("monchiIdle", true);
+        if (!this.isJumping && !this.isRotating) this.anims.play("playerIdle", true);
       }
       if (left.isDown) {
-        this.scene.physics.world.gravity.x = -1000;
+        this.scene.physics.world.gravity.x = -gravity;
         this.setFlipY(true);
       } else if (right.isDown) {
-        this.scene.physics.world.gravity.x = 1000;
+        this.scene.physics.world.gravity.x = gravity;
         this.setFlipY(false);
       }
     }
@@ -244,6 +400,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   checkMoveCreative(
     cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined
   ) {
+   
     /* Keywords press */
     const velo = 400;
     this.scene.physics.world.gravity.y = 0;

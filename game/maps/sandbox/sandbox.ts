@@ -48,7 +48,7 @@ class Sandbox {
   sideGrav: boolean = false;
   goingBack: boolean = false;
   pisoGoBack?: Phaser.GameObjects.Sprite;
-  monchi?: Player;
+  player?: Player;
   startingPoint = {
     x: 500, //500
     y: 800, //800
@@ -86,9 +86,9 @@ class Sandbox {
   mapContainer: Phaser.GameObjects.Container;
   frontContainer: Phaser.GameObjects.Container;
 
-  constructor(scene: Game, monchi: Player) {
+  constructor(scene: Game, player: Player) {
     this.scene = scene;
-    this.monchi = monchi;
+    this.player = player;
 
     /* World size*/
     this.scene.physics.world.setBounds(
@@ -175,10 +175,10 @@ class Sandbox {
   }
 
   addColliders() {
-    if (this.scene.monchi) {
+    if (this.scene.player) {
       if (this.pisos)
         this.scene.physics.add.collider(
-          this.scene.monchi,
+          this.scene.player,
           this.pisos,
           this.scene.touch,
           () => true,
@@ -186,7 +186,7 @@ class Sandbox {
         );
       if (this.coin)
         this.scene.physics.add.overlap(
-          this.scene.monchi,
+          this.scene.player,
           this.coin,
           () => {
             
@@ -196,7 +196,7 @@ class Sandbox {
         );
       if (this.portal)
         this.scene.physics.add.overlap(
-          this.scene.monchi,
+          this.scene.player,
           this.portal,
           () => this.scene.win(),
           () => true,
@@ -231,7 +231,28 @@ class Sandbox {
     })
 
 
+    const pAConfig: LargeFloorIslandConfig = {
+      withTextureToAbove: true,
+      textureA: "plataformaNuevaLargaA",
+      textureB: "plataformaNuevaLargaB",
+      textureC: "plataformaNuevaLargaC",
+      pos: { x: 900, y: 800 },
+      width: {
+        textureA: 90,
+        textureB: 67,
+        textureC: 115,
+      },
+      scale: { width: 0.7, height: 0.7 },
+      height: 127,
+      large: 30,
+      rotated: false
+    };
+    const pA = new LargeFloorIsland(this.scene, pAConfig, this.pisos);
+
+
     const p1Config: LargeFloorIslandConfig = {
+      withTextureToAbove: true,
+
       textureA: "plataformaNuevaLargaA",
       textureB: "plataformaNuevaLargaB",
       textureC: "plataformaNuevaLargaC",
@@ -248,6 +269,7 @@ class Sandbox {
     };
     const p1 = new LargeFloorIsland(this.scene, p1Config, this.pisos);
 
+    
     const p2Config: FloorConfig = {
       texture: "plataformaNuevaA",
       pos: { x: 900, y: 1020 },
@@ -269,20 +291,21 @@ class Sandbox {
     const p2 = new Floor(this.scene, p2Config, this.pisos).setFlipX(true);
 
 
-    const mapObjects =
-    this.movingFloor.getChildren().concat(
-        this.movingFloorRot.getChildren(),
-        this.pisos.getChildren(),
-        this.pisosBack.getChildren(),
-        this.pisos2.getChildren(),
-        this.pisos3.getChildren(),
-        this.pisos4.getChildren(),
-        this.coin.getChildren(),
-        this.aura.getChildren(),
-        this.portal.getChildren(),
-        this.aura.getChildren(),
-      )
-    this.mapContainer.add(mapObjects)
+    // const mapObjects =
+    // this.movingFloor.getChildren().concat(
+    //     this.movingFloorRot.getChildren(),
+    //     this.pisos.getChildren(),
+    //     this.pisosBack.getChildren(),
+    //     this.pisos2.getChildren(),
+    //     this.pisos3.getChildren(),
+    //     this.pisos4.getChildren(),
+    //     this.coin.getChildren(),
+    //     this.aura.getChildren(),
+    //     this.portal.getChildren(),
+    //     this.aura.getChildren(),
+    //   )
+    // this.mapContainer.add(mapObjects)
+    // this.mapContainer.setDepth(10)
 
     this.scene.UICamera?.ignore(this.mapContainer)
     this.scene.UICamera?.ignore(this.frontContainer)
@@ -293,8 +316,8 @@ class Sandbox {
   update() {
     
     /* Attach background anim */
-    // if (this.scene.monchi) this.animateBackground(this.scene.monchi);
-    if (this.scene.monchi) this.animateBackground(this.scene.cameras.main.midPoint);
+    // if (this.scene.player) this.animateBackground(this.scene.player);
+    if (this.scene.player) this.animateBackground(this.scene.cameras.main.midPoint);
 
   }
 }

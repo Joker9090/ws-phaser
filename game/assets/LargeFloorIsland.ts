@@ -2,6 +2,7 @@ import Phaser, { Physics } from "phaser";
 
 export type LargeFloorTween = Phaser.Tweens.Tween | Phaser.Types.Tweens.TweenBuilderConfig | Phaser.Types.Tweens.TweenChainBuilderConfig | Phaser.Tweens.TweenChain
 export type LargeFloorIslandConfig = {
+  withTextureToAbove?: boolean,
   textureA: string,
   textureB: string,
   textureC: string,
@@ -36,6 +37,11 @@ class LargeFloorIsland extends Phaser.GameObjects.Container {
     this.group = group;
     const height = config.height ?? 20;
 
+    const sizeWidth = config.width.textureA + config.width.textureC + config.width.textureB * (config.large - 2)
+
+  
+   
+
 
     for (let index = 0; index < config.large; index++) {
 
@@ -53,7 +59,6 @@ class LargeFloorIsland extends Phaser.GameObjects.Container {
     }
 
 
-    const sizeWidth = config.width.textureA + config.width.textureC + config.width.textureB * (config.large - 2)
 
     this.setSize(sizeWidth - 90, height - 40)
     scene.add.existing(this);
@@ -66,6 +71,33 @@ class LargeFloorIsland extends Phaser.GameObjects.Container {
     if (config.scale) {
       this.setScale(config.scale.width, config.scale.height)
     }
+
+
+    if(config.withTextureToAbove){
+      // new graphics,
+      //draw a black rectangule from the top left of the position of the asset to the bottom.right and add 1000 px on height above
+      const graphics = scene.add.graphics();
+      graphics.fillStyle(0x152226, 1);
+      // put this behind the asset
+      console.log('graphics', graphics)
+      if (config.scale) {
+        graphics.fillRect(config.pos.x + 20, config.pos.y, (sizeWidth * config.scale.width) - 40, 1000);
+      } else {
+        graphics.fillRect(config.pos.x + 20, config.pos.y, (sizeWidth) - 40, 1000);
+
+      }
+      // create a sprite with the same size
+      // const s = scene.add.sprite(
+      //   config.pos.x, config.pos.y, "7")
+      //  s.setDisplaySize(sizeWidth, 1000).setOrigin(0, 0).setAlpha(0.4)
+      this.scene.UICamera.ignore(graphics)
+
+    }
+
+      this.scene.UICamera.ignore(this)
+    
+    
+
 
   }
 }

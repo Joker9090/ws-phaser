@@ -146,13 +146,13 @@ class cine2Movie5 {
         [""],
         [
           {
-            delay: 1500,
+            delay: 2000,
             withTapping: {
               audios: ["key01", "key01", "key02"],
               count: 24,
               delay: 180,
             },
-            keepAlive: 1500,
+            keepAlive: 2000,
             position: {
               width: 750,
             },

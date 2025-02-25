@@ -370,7 +370,7 @@ class cine2Movie4 {
                 [""],
                 [
                     {
-                        delay: 3500,
+                        delay: 3000,
                         withTapping: {
                             audios: ["key01", "key01", "key02"],
                             count: 20,
@@ -382,7 +382,7 @@ class cine2Movie4 {
                         }
                     },
                     {
-                        delay: 1000,
+                        delay: 2000,
                         withTapping: {
                             audios: ["key01", "key01", "key02"],
                             count: 16,

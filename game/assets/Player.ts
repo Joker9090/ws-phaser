@@ -5,7 +5,7 @@ import PreLoadScene from "../PreLoadScene";
 
 // Scene in class
 class Player extends Phaser.Physics.Arcade.Sprite {
-  
+  gravityGroup: Phaser.Physics.Arcade.Group;
   isJumping: boolean = false;
   isRotating: boolean = false;
   playerState: "NORMAL" | "ROTATED" = "NORMAL";
@@ -15,8 +15,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   gravityAnimSprite?: Phaser.GameObjects.Sprite;
 
   isFlying: boolean = false;
-  withTank: boolean = true;
+  withTank: boolean = false;
   tankGraphics?: Phaser.GameObjects.Graphics;
+  gravity: number = 1000;
+  gravityX: number = 0;
   tank: {
     fuel: number,
     isCharging: number,
@@ -153,10 +155,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     /* player add to physic world */
     
 
-    const g = this.scene.physics.add.group({ 
+    this.gravityGroup = this.scene.physics.add.group({ 
       allowGravity: this.isFlying ? false : true,
     });
-    g.add(this);
+    this.gravityGroup.add(this);
     /* player add to scene */
 
     scene.add.existing(this);
@@ -186,6 +188,30 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
+  setPlayerWithTank(value: boolean) {
+    this.withTank = value
+  }
+
+  setGravityOnPlayer(value: number) {
+    this.gravity = value
+    this.gravityGroup.world.gravity.y = value
+  }
+
+  setTintMask(value: number) {
+    this.setTint(value)
+  }
+  clearTintMask() {
+    this.clearTint()
+  }
+  setGravityOnPlayerX(value: number) {
+    this.gravityX = value
+    this.scene.physics.world.gravity.x = value
+  }
+
+  setPlayerFlying(value: boolean) {
+    this.isFlying = value
+    this.gravityGroup.world.gravity.y = value ? 0 : this.gravity
+  }
   setCameraState(state: "NORMAL" | "ROTATED") {
     this.cameraState = state
   }
@@ -203,7 +229,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     if(this.tankGraphics) this.tankGraphics.clear()
     else this.tankGraphics = this.scene.add.graphics()
     this.tankGraphics.fillStyle(0x000000, 1)
-    this.scene.UICamera.ignore(this.tankGraphics)
+    const gameScene = this.scene as Game
+    if(gameScene.UICamera) gameScene.UICamera.ignore(this.tankGraphics)
 
     let barSize = 100
     const limit0 = (this.tank.fuel - this.tank.fuelConditionToStart < 0) ? 0 : this.tank.fuel - this.tank.fuelConditionToStart
@@ -378,7 +405,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
      
       const { up, down, left, right } = cursors;
       const velocity = 300;
-      const gravity = 1000;
+      const gravity = this.gravity;
       if (up.isDown) {
         this.setVelocityY(-velocity);
         this.setFlipX(false);

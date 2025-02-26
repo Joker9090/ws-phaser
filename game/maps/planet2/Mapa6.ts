@@ -53,7 +53,7 @@ class Mapa5 {
     sideGrav: boolean = false;
     goingBack: boolean = false;
     pisoGoBack?: Phaser.GameObjects.Sprite;
-    monchi?: Player;
+    player?: Player;
     startingPoint = {
         x: 2750, //500
         y: 1000, //800
@@ -122,9 +122,9 @@ class Mapa5 {
     mapContainer: Phaser.GameObjects.Container;
     frontContainer: Phaser.GameObjects.Container;
 
-    constructor(scene: Game, monchi: Player) {
+    constructor(scene: Game, player: Player) {
         this.scene = scene;
-        this.monchi = monchi;
+        this.player = player;
         /* World size*/
         this.scene.physics.world.setBounds(
             0,
@@ -393,10 +393,10 @@ class Mapa5 {
     }
 
     addColliders() {
-        if (this.scene.monchi) {
+        if (this.scene.player) {
             if (this.pisos)
                 this.scene.physics.add.collider(
-                    this.scene.monchi,
+                    this.scene.player,
                     this.pisos,
                     this.scene.touch,
                     () => true,
@@ -404,10 +404,10 @@ class Mapa5 {
                 );
             if (this.pisos2)
                 this.scene.physics.add.collider(
-                    this.scene.monchi,
+                    this.scene.player,
                     this.pisos2,
                     () => {
-                      if(this.scene.monchi?.body?.touching.up || this.scene.monchi?.body?.touching.down){
+                      if(this.scene.player?.body?.touching.up || this.scene.player?.body?.touching.down){
                         this.scene.changeGravity(true, 1000, 3)
                       }
                         // this.scene.checkPoint = 1
@@ -417,7 +417,7 @@ class Mapa5 {
                 );
             if (this.pisos3)
                 this.scene.physics.add.collider(
-                    this.scene.monchi,
+                    this.scene.player,
                     this.pisos3,
                     () => {
                         if (this.scene.checkPoint === 0) {
@@ -431,7 +431,7 @@ class Mapa5 {
                 );
             if (this.coin)
                 this.scene.physics.add.overlap(
-                    this.scene.monchi,
+                    this.scene.player,
                     this.coin,
                     () => this.scene.touchItem("coin"),
                     () => true,
@@ -439,18 +439,18 @@ class Mapa5 {
                 );
             if (this.fireballGroup)
                 this.scene.physics.add.overlap(
-                    this.scene.monchi,
+                    this.scene.player,
                     this.fireballGroup,
                     () => {
                         this.scene.touchItem("fireball")
-                        this.scene.monchi?.setVelocity(0)
+                        this.scene.player?.setVelocity(0)
                     },
                     () => true,
                     this.scene
                 );
             if (this.portal)
                 this.scene.physics.add.overlap(
-                    this.scene.monchi,
+                    this.scene.player,
                     this.portal,
                     () => this.scene.win(),
                     () => true,
@@ -458,7 +458,7 @@ class Mapa5 {
                 );
                 if (this.pisos4)
                   this.scene.physics.add.collider(
-                    this.scene.monchi,
+                    this.scene.player,
                     this.pisos4,
                     (player, floor) => {
                       //@ts-ignore
@@ -527,10 +527,10 @@ class Mapa5 {
                   );
             if (this.pisos5)
                 this.scene.physics.add.collider(
-                    this.scene.monchi,
+                    this.scene.player,
                     this.pisos5,
                     () => {
-                      if(this.scene.monchi?.body?.touching.up || this.scene.monchi?.body?.touching.down){
+                      if(this.scene.player?.body?.touching.up || this.scene.player?.body?.touching.down){
                         this.scene.moveCameraOffset("up", false)
                       }
                     },
@@ -539,7 +539,7 @@ class Mapa5 {
                 );
             if (this.movingFloor)
                 this.scene.physics.add.collider(
-                    this.scene.monchi,
+                    this.scene.player,
                     this.movingFloor,
                     () => {
                         this.scene.touch()
@@ -549,7 +549,7 @@ class Mapa5 {
                 );
             if (this.movingFloorRot)
                 this.scene.physics.add.collider(
-                    this.scene.monchi,
+                    this.scene.player,
                     this.movingFloorRot,
                     () => {
                         this.scene.touch()
@@ -562,7 +562,7 @@ class Mapa5 {
 
     createMap(data: { level: number; lifes: number }) {
       // this.scene.lateralCameraOffset("left", false, this.cameraBounds.width - 1400, 1,1000);
-        this.scene.monchi?.setFlipX(true)
+        this.scene.player?.setFlipX(true)
         this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
         this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });
         this.pisos = this.scene.physics.add.group({ allowGravity: false });
@@ -842,7 +842,7 @@ class Mapa5 {
 
     }
     update() {
-        if (this.scene.monchi) this.animateBackground();
+        if (this.scene.player) this.animateBackground();
     }
 }
 export default Mapa5;

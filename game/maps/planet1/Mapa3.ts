@@ -50,7 +50,7 @@ class Mapa3 {
     sideGrav: boolean = false;
     goingBack: boolean = false;
     pisoGoBack?: Phaser.GameObjects.Sprite;
-    monchi?: Player;
+    player?: Player;
     startingPoint = {
         x: 600, //500
         y: 800, //800
@@ -112,9 +112,9 @@ class Mapa3 {
     mapContainer: Phaser.GameObjects.Container;
     frontContainer: Phaser.GameObjects.Container;
 
-    constructor(scene: Game, monchi: Player) {
+    constructor(scene: Game, player: Player) {
         this.scene = scene;
-        this.monchi = monchi;
+        this.player = player;
 
         /* World size*/
         this.scene.physics.world.setBounds(
@@ -209,10 +209,10 @@ class Mapa3 {
     }
 
     addColliders() {
-        if (this.scene.monchi) {
+        if (this.scene.player) {
             if (this.pisos)
                 this.scene.physics.add.collider(
-                    this.scene.monchi,
+                    this.scene.player,
                     this.pisos,
                    ()=>{ 
                      this.scene.touch()
@@ -222,10 +222,10 @@ class Mapa3 {
                 );
             if (this.pisos2)
                 this.scene.physics.add.collider(
-                    this.scene.monchi,
+                    this.scene.player,
                     this.pisos2,
                     () => {
-                        if(this.scene.monchi?.body?.touching.up || this.scene.monchi?.body?.touching.down){
+                        if(this.scene.player?.body?.touching.up || this.scene.player?.body?.touching.down){
                             this.scene.changeGravity(true, 1000, 1)
                             this.scene.checkPoint = 1
                         }
@@ -235,7 +235,7 @@ class Mapa3 {
                 );
             if (this.pisos3)
                 this.scene.physics.add.collider(
-                    this.scene.monchi,
+                    this.scene.player,
                     this.pisos3,
                     () => {
                         this.scene.rotateCam(true, 10);
@@ -246,7 +246,7 @@ class Mapa3 {
                 );
             if (this.coin)
                 this.scene.physics.add.overlap(
-                    this.scene.monchi,
+                    this.scene.player,
                     this.coin,
                     () => this.scene.touchItem("coin"),
                     () => true,
@@ -254,7 +254,7 @@ class Mapa3 {
                 );
             if (this.fireballGroup)
                 this.scene.physics.add.overlap(
-                    this.scene.monchi,
+                    this.scene.player,
                     this.fireballGroup,
                     () => this.scene.touchItem("fireball"),
                     () => true,
@@ -262,7 +262,7 @@ class Mapa3 {
                 );
             if (this.portal)
                 this.scene.physics.add.overlap(
-                    this.scene.monchi,
+                    this.scene.player,
                     this.portal,
                     () => this.scene.win(),
                     () => true,
@@ -270,7 +270,7 @@ class Mapa3 {
                 );
             if (this.pisos4)
                 this.scene.physics.add.collider(
-                    this.scene.monchi,
+                    this.scene.player,
                     this.pisos4,
                     () => {
                         this.scene.canRot = true // medio hack, revisar lógica
@@ -285,7 +285,7 @@ class Mapa3 {
                 );
             if (this.movingFloor)
                 this.scene.physics.add.collider(
-                    this.scene.monchi,
+                    this.scene.player,
                     this.movingFloor,
                     () => {
                         this.scene.touch()
@@ -295,7 +295,7 @@ class Mapa3 {
                 );
             if (this.movingFloorRot)
                 this.scene.physics.add.collider(
-                    this.scene.monchi,
+                    this.scene.player,
                     this.movingFloorRot,
                     () => {
                         this.scene.touch()
@@ -664,7 +664,7 @@ class Mapa3 {
 
     }
     update() {
-        if (this.scene.monchi) this.animateBackground(this.scene.cameras.main.midPoint);
+        if (this.scene.player) this.animateBackground(this.scene.cameras.main.midPoint);
     }
 }
 export default Mapa3;

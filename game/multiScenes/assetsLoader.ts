@@ -823,7 +823,7 @@ class AssetsLoader {
 
     if (!this.finished) {
  
-      // this.monchi?.moveOnLoader();
+      // this.player?.moveOnLoader();
       // this.scene.time.delayedCall(this.firstLoad ? 120 : 0, () => {
       //   var loadingText = this.scene.make.text({
       //     x: width / 2,

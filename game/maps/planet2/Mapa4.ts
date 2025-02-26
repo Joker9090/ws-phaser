@@ -55,7 +55,7 @@ class Mapa4 {
   sideGrav: boolean = false;
   goingBack: boolean = false;
   pisoGoBack?: Phaser.GameObjects.Sprite;
-  monchi?: Player;
+  player?: Player;
   startingPoint = {
     x: 600, //500
     y: 800, //800
@@ -123,9 +123,9 @@ class Mapa4 {
   mapContainer: Phaser.GameObjects.Container;
   frontContainer: Phaser.GameObjects.Container;
 
-  constructor(scene: Game, monchi: Player) {
+  constructor(scene: Game, player: Player) {
     this.scene = scene;
-    this.monchi = monchi;
+    this.player = player;
 
     /* World size*/
     this.scene.physics.world.setBounds(
@@ -403,10 +403,10 @@ class Mapa4 {
   }
 
   addColliders() {
-    if (this.scene.monchi) {
+    if (this.scene.player) {
       if (this.pisos)
         this.scene.physics.add.collider(
-          this.scene.monchi,
+          this.scene.player,
           this.pisos,
           this.scene.touch,
           () => true,
@@ -414,10 +414,10 @@ class Mapa4 {
         );
       if (this.pisos2)
         this.scene.physics.add.collider(
-          this.scene.monchi,
+          this.scene.player,
           this.pisos2,
           () => {
-            if(this.scene.monchi?.body?.touching.up || this.scene.monchi?.body?.touching.down){
+            if(this.scene.player?.body?.touching.up || this.scene.player?.body?.touching.down){
               this.scene.changeGravity(true, 1000, 3)
             }
             // this.scene.checkPoint = 1
@@ -427,7 +427,7 @@ class Mapa4 {
         );
       if (this.pisos3)
         this.scene.physics.add.collider(
-          this.scene.monchi,
+          this.scene.player,
           this.pisos3,
           () => {
             if (this.scene.checkPoint === 0) {
@@ -440,7 +440,7 @@ class Mapa4 {
         );
       if (this.coin)
         this.scene.physics.add.overlap(
-          this.scene.monchi,
+          this.scene.player,
           this.coin,
           () => this.scene.touchItem("coin"),
           () => true,
@@ -448,18 +448,18 @@ class Mapa4 {
         );
       if (this.fireballGroup)
         this.scene.physics.add.overlap(
-          this.scene.monchi,
+          this.scene.player,
           this.fireballGroup,
           () => {
             this.scene.touchItem("fireball");
-            this.scene.monchi?.setVelocity(0);
+            this.scene.player?.setVelocity(0);
           },
           () => true,
           this.scene
         );
       if (this.portal)
         this.scene.physics.add.overlap(
-          this.scene.monchi,
+          this.scene.player,
           this.portal,
           () =>{
             // this.masterManager.imagenesDesbloqueadas =  ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1"];
@@ -470,10 +470,10 @@ class Mapa4 {
         );
       if (this.pisos4)
         this.scene.physics.add.collider(
-          this.scene.monchi,
+          this.scene.player,
           this.pisos4,
           () => {
-            if(this.scene.monchi?.body?.touching.up || this.scene.monchi?.body?.touching.down){            
+            if(this.scene.player?.body?.touching.up || this.scene.player?.body?.touching.down){            
               this.scene.canRot = true; // medio hack, revisar lógica
               this.scene.changeGravity(false, 1000, 3);
             }
@@ -485,10 +485,10 @@ class Mapa4 {
         );
       if (this.pisos5)
         this.scene.physics.add.collider(
-          this.scene.monchi,
+          this.scene.player,
           this.pisos5,
           () => {
-            if(this.scene.monchi?.body?.touching.up || this.scene.monchi?.body?.touching.down){
+            if(this.scene.player?.body?.touching.up || this.scene.player?.body?.touching.down){
               this.scene.canRot = true; // medio hack, revisar lógica
               this.scene.changeGravity(false, 1000, 3);
               this.scene.rotateCam(false, 10);
@@ -500,7 +500,7 @@ class Mapa4 {
         );
       if (this.movingFloor)
         this.scene.physics.add.collider(
-          this.scene.monchi,
+          this.scene.player,
           this.movingFloor,
           () => {
             this.scene.touch();
@@ -510,7 +510,7 @@ class Mapa4 {
         );
       if (this.movingFloorRot)
         this.scene.physics.add.collider(
-          this.scene.monchi,
+          this.scene.player,
           this.movingFloorRot,
           () => {
             this.scene.touch();

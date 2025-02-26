@@ -1,4 +1,5 @@
 import Phaser, { Physics } from "phaser";
+import Game from "../Game";
 
 export type LargeFloorTween = Phaser.Tweens.Tween | Phaser.Types.Tweens.TweenBuilderConfig | Phaser.Types.Tweens.TweenChainBuilderConfig | Phaser.Tweens.TweenChain
 export type LargeFloorIslandConfig = {
@@ -27,10 +28,10 @@ export type LargeFloorIslandConfig = {
 // Scene in class
 class LargeFloorIsland extends Phaser.GameObjects.Container {
   isJumping = false;
-  scene: Phaser.Scene;
+  scene: Game;
   group: Phaser.Physics.Arcade.Group;
   parts: Phaser.Physics.Arcade.Sprite[];
-  constructor(scene: Phaser.Scene, config: LargeFloorIslandConfig, group: Phaser.Physics.Arcade.Group, frame?: string | number | undefined, velocity?: number) {
+  constructor(scene: Game, config: LargeFloorIslandConfig, group: Phaser.Physics.Arcade.Group, frame?: string | number | undefined, velocity?: number) {
     super(scene, config.pos.x, config.pos.y)
     this.parts = [];
     this.scene = scene;
@@ -90,11 +91,11 @@ class LargeFloorIsland extends Phaser.GameObjects.Container {
       // const s = scene.add.sprite(
       //   config.pos.x, config.pos.y, "7")
       //  s.setDisplaySize(sizeWidth, 1000).setOrigin(0, 0).setAlpha(0.4)
-      this.scene.UICamera.ignore(graphics)
+      if(this.scene.UICamera) this.scene.UICamera.ignore(graphics)
 
     }
 
-      this.scene.UICamera.ignore(this)
+      if(this.scene.UICamera) this.scene.UICamera.ignore(this)
     
     
 

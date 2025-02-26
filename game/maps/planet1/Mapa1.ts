@@ -49,7 +49,7 @@ class Mapa1 {
   sideGrav: boolean = false;
   goingBack: boolean = false;
   pisoGoBack?: Phaser.GameObjects.Sprite;
-  monchi?: Player;
+  player?: Player;
   startingPoint = {
     x: 500, //500
     y: 800, //800
@@ -102,9 +102,9 @@ class Mapa1 {
   textTutorial1?: TextBox;
   textTutorial2?: TextBox;
   tutorialStep: number = 0;
-  constructor(scene: Game, monchi: Player) {
+  constructor(scene: Game, player: Player) {
     this.scene = scene;
-    this.monchi = monchi;
+    this.player = player;
 
     /* World size*/
     this.scene.physics.world.setBounds(
@@ -191,10 +191,10 @@ class Mapa1 {
   }
 
   addColliders() {
-    if (this.scene.monchi) {
+    if (this.scene.player) {
       if (this.pisos)
         this.scene.physics.add.collider(
-          this.scene.monchi,
+          this.scene.player,
           this.pisos,
           () => { 
             if (this.tutorialStep === 2) {
@@ -210,7 +210,7 @@ class Mapa1 {
         );
       if (this.pisos2)
         this.scene.physics.add.collider(
-          this.scene.monchi,
+          this.scene.player,
           this.pisos2,
           () => {
             if (this.tutorialStep === 0) {
@@ -220,7 +220,7 @@ class Mapa1 {
                 this.scene.stopMov=true
               }, 300)
             }
-            if(this.scene.monchi?.body?.touching.up || this.scene.monchi?.body?.touching.down){   
+            if(this.scene.player?.body?.touching.up || this.scene.player?.body?.touching.down){   
               this.scene.changeGravity(true, 1000)
               this.isFloating = true
               this.scene.checkPoint = 1
@@ -232,7 +232,7 @@ class Mapa1 {
         );
       if (this.coin)
         this.scene.physics.add.overlap(
-          this.scene.monchi,
+          this.scene.player,
           this.coin,
           () => {
             this.scene.touchItem("coin")
@@ -242,7 +242,7 @@ class Mapa1 {
         );
       if (this.portal)
         this.scene.physics.add.overlap(
-          this.scene.monchi,
+          this.scene.player,
           this.portal,
           () => this.scene.win(),
           () => true,
@@ -251,7 +251,7 @@ class Mapa1 {
 
       if (this.movingFloor)
         this.scene.physics.add.collider(
-          this.scene.monchi,
+          this.scene.player,
           this.movingFloor,
           () => { },
           () => true,
@@ -507,14 +507,14 @@ class Mapa1 {
       if (this.textTutorial2?.visible) this.textTutorial2?.setVisible(false);
     }
 
-    if (this.scene.monchi?.body?.touching.down && this.tutorialStep === 1) {
+    if (this.scene.player?.body?.touching.down && this.tutorialStep === 1) {
       this.tutorialStep = 1;
       this.textTutorial1?.setVisible(true);
       // this.scene.scene.pause()
       this.scene.stopMov = true;
     }
     /* Attach controls to player */
-    if (this.scene.monchi) this.animateBackground(this.scene.cameras.main.midPoint);
+    if (this.scene.player) this.animateBackground(this.scene.cameras.main.midPoint);
   }
 }
 export default Mapa1;

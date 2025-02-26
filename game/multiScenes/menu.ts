@@ -7,7 +7,7 @@ export default class MenuClass {
     buttons: Phaser.GameObjects.Image[] = [];
     selectedButtonIndex: number = 0;
     buttonSelector!: Phaser.GameObjects.Image;
-    monchi?: Phaser.GameObjects.Sprite;
+    player?: Phaser.GameObjects.Sprite;
     progress: number = 0;
     play?: Phaser.GameObjects.Image;
     credits?: Phaser.GameObjects.Image;
@@ -261,7 +261,7 @@ export default class MenuClass {
 
         // this.scene.add.image(900, 500, "planeta2");
 
-        // this.monchi = this.scene.add.sprite(100, 700, "character", 1).setScale(0.5);
+        // this.player = this.scene.add.sprite(100, 700, "character", 1).setScale(0.5);
         let { width, height } = this.scene.scale;
         if (this.scene.game.config.canvas) {
             const size = this.scene.game.config.canvas.getBoundingClientRect();
@@ -405,11 +405,11 @@ export default class MenuClass {
         }
 
         //window.play.setPosition(this.scene.cameras.main.width/2,this.scene.cameras.main.height/2);
-        if (this.monchi) {
+        if (this.player) {
             this.progress = this.progress + 0.0031415;
-            this.monchi.x = this.monchi.x + 0.5;
-            this.monchi.y = this.monchi.y - 0.25;
-            this.monchi.setRotation(this.progress);
+            this.player.x = this.player.x + 0.5;
+            this.player.y = this.player.y - 0.25;
+            this.player.setRotation(this.progress);
         }
         if (this.scene.cursors) {
             const upJustPressed = Phaser.Input.Keyboard.JustDown(this.scene.cursors.up);

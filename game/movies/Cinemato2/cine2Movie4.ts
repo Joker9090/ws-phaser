@@ -400,7 +400,7 @@ class cine2Movie4 {
                             count: 13,
                             delay: 180,
                         },
-                        keepAlive: 1000,
+                        keepAlive: 1700,
                         position: {
                             width: 750
                         }
@@ -600,7 +600,7 @@ class cine2Movie4 {
 
     update(this: cine2Movie4, time: number, delta: number) {
         if (this.dialogue) this.dialogue.update();
-        if (this.nextCine) this.cine.scene.restart({ keyname: "cine_2_movie_5" });
+        if (this.nextCine) this.cine.scene.restart({ keyname: "cine_2_movie_4b" });
     }
 }
 

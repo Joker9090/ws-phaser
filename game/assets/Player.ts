@@ -11,8 +11,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   cameraState: "NORMAL" | "ROTATED" = "NORMAL";
   scene: Game |MultiScene | PreLoadScene;
   gravityAnimSprite?: Phaser.GameObjects.Sprite;
-  isFlying: boolean = true;
-  withTank: boolean = false;
+  isFlying: boolean = false;
+  withTank: boolean = true;
   tankGraphics?: Phaser.GameObjects.Graphics;
   tank: {
     fuel: number,
@@ -27,7 +27,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     isCharging: 0,
     fuelLimit: 300,
     fuelConditionToStart: 120,
-    chargeValue: 0.4,
+    chargeValue: 2,
     consume: 70,
     extraJumpAt: 300
   }

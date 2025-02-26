@@ -35,6 +35,7 @@ import cine3Movie4 from "./Cinemato3/cine3Movie4";
 import cine3Movie5 from "./Cinemato3/cine3Movie5";
 import MultiScene from "../MultiScene";
 import UIClass from "../assets/UIClass";
+import cine2Movie4b from "./Cinemato2/cine2Movie4b";
 
 class CinematographyModular extends Phaser.Scene {
   ticker: Ticker;
@@ -180,6 +181,10 @@ class CinematographyModular extends Phaser.Scene {
         break;
       case "cine_2_movie_4":
         this.playingCine = new cine2Movie4(this);
+        // this.nextLevel = 8
+        break;
+      case "cine_2_movie_4b":
+        this.playingCine = new cine2Movie4b(this);
         // this.nextLevel = 8
         break;
       case "cine_2_movie_5":

@@ -152,8 +152,8 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
         if (this.x >= config.pos.x + config.animation.xAxis.xDistance / 2 && this.animState.x === 'start') {
           this.setVelocityX(-config.animation.xAxis.xVel);
           if (config.animation.yAxis) {
-            if (this.scene.monchi && this.scene.monchi.body?.touching.down){
-              this.scene.monchi.setVelocityY(-config.animation.yAxis.yVel);
+            if (this.scene.player && this.scene.player.body?.touching.down){
+              this.scene.player.setVelocityY(-config.animation.yAxis.yVel);
             }
             this.setVelocityY(-config.animation.yAxis.yVel);
           }
@@ -161,8 +161,8 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
         } else if (this.x <= config.pos.x - config.animation.xAxis.xDistance / 2 && this.animState.x === 'reverse') {
           this.setVelocityX(config.animation.xAxis.xVel);
           if (config.animation.yAxis) {
-            if (this.scene.monchi && this.scene.monchi.body?.touching.down){
-              this.scene.monchi.setVelocityY(config.animation.yAxis.yVel);
+            if (this.scene.player && this.scene.player.body?.touching.down){
+              this.scene.player.setVelocityY(config.animation.yAxis.yVel);
             }
             this.setVelocityY(config.animation.yAxis.yVel);
           }
@@ -173,10 +173,10 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
           this.setVelocityY(-config.animation.yAxis.yVel);
       
           // Aplicar velocidad al personaje solo si está tocando ESTA plataforma
-          if (this.scene.monchi?.body?.touching.down && this.isTouchingMonchi()) {
-            this.scene.monchi.setVelocityY(-config.animation.yAxis.yVel);
-          } else if (this.scene.monchi?.body?.touching.up && this.isTouchingMonchi()) {
-            this.scene.monchi.setVelocityY(-config.animation.yAxis.yVel);
+          if (this.scene.player?.body?.touching.down && this.isTouchingMonchi()) {
+            this.scene.player.setVelocityY(-config.animation.yAxis.yVel);
+          } else if (this.scene.player?.body?.touching.up && this.isTouchingMonchi()) {
+            this.scene.player.setVelocityY(-config.animation.yAxis.yVel);
           }
       
           this.animState.y = 'reverse';
@@ -184,10 +184,10 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
           this.setVelocityY(config.animation.yAxis.yVel);
       
           // Aplicar velocidad al personaje solo si está tocando ESTA plataforma
-          if (this.scene.monchi?.body?.touching.down && this.isTouchingMonchi()) {
-            this.scene.monchi.setVelocityY(config.animation.yAxis.yVel);
-          } else if (this.scene.monchi?.body?.touching.up && this.isTouchingMonchi()) {
-            this.scene.monchi.setVelocityY(config.animation.yAxis.yVel);
+          if (this.scene.player?.body?.touching.down && this.isTouchingMonchi()) {
+            this.scene.player.setVelocityY(config.animation.yAxis.yVel);
+          } else if (this.scene.player?.body?.touching.up && this.isTouchingMonchi()) {
+            this.scene.player.setVelocityY(config.animation.yAxis.yVel);
           }
       
           this.animState.y = 'start';
@@ -199,19 +199,19 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
     }
   }
   isTouchingMonchi() {
-    const monchi = this.scene.monchi;
+    const player = this.scene.player;
   
-    // Verificar si Monchi está en contacto con esta plataforma
-    if (!monchi || !monchi.body) return false;
+    // Verificar si player está en contacto con esta plataforma
+    if (!player || !player.body) return false;
   
-    const monchiBottom = monchi.y + monchi.height / 2;
-    const monchiTop = monchi.y - monchi.height / 2;
+    const playerBottom = player.y + player.height / 2;
+    const playerTop = player.y - player.height / 2;
     const platformTop = this.y - this.height / 2;
     const platformBottom = this.y + this.height / 2;
   
     return (
-      (monchiBottom >= platformTop && monchiTop <= platformBottom) &&
-      Math.abs(monchi.x - this.x) < this.width / 2 // Monchi está alineado horizontalmente con la plataforma
+      (playerBottom >= platformTop && playerTop <= platformBottom) &&
+      Math.abs(player.x - this.x) < this.width / 2 // player está alineado horizontalmente con la plataforma
     );
   }
   // update() {

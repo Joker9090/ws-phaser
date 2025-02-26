@@ -173,9 +173,9 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
           this.setVelocityY(-config.animation.yAxis.yVel);
       
           // Aplicar velocidad al personaje solo si está tocando ESTA plataforma
-          if (this.scene.player?.body?.touching.down && this.isTouchingMonchi()) {
+          if (this.scene.player?.body?.touching.down && this.isTouchingplayer()) {
             this.scene.player.setVelocityY(-config.animation.yAxis.yVel);
-          } else if (this.scene.player?.body?.touching.up && this.isTouchingMonchi()) {
+          } else if (this.scene.player?.body?.touching.up && this.isTouchingplayer()) {
             this.scene.player.setVelocityY(-config.animation.yAxis.yVel);
           }
       
@@ -184,9 +184,9 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
           this.setVelocityY(config.animation.yAxis.yVel);
       
           // Aplicar velocidad al personaje solo si está tocando ESTA plataforma
-          if (this.scene.player?.body?.touching.down && this.isTouchingMonchi()) {
+          if (this.scene.player?.body?.touching.down && this.isTouchingplayer()) {
             this.scene.player.setVelocityY(config.animation.yAxis.yVel);
-          } else if (this.scene.player?.body?.touching.up && this.isTouchingMonchi()) {
+          } else if (this.scene.player?.body?.touching.up && this.isTouchingplayer()) {
             this.scene.player.setVelocityY(config.animation.yAxis.yVel);
           }
       
@@ -198,7 +198,7 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
     
     }
   }
-  isTouchingMonchi() {
+  isTouchingplayer() {
     const player = this.scene.player;
   
     // Verificar si player está en contacto con esta plataforma

@@ -10,10 +10,10 @@ import p2Mapa2 from "./maps/planet2/Mapa5";
 import p2Mapa3 from "./maps/planet2/Mapa6";
 import p2Mapa4 from "./maps/planet2/Mapa7";
 //MAPAS PLANETA 3
-import p3Mapa1 from "./maps/planet3/Mapa8"
-import p3Mapa2 from "./maps/planet3/Mapa9"
-import p3Mapa3 from "./maps/planet3/Mapa10"
-import p3Mapa4 from "./maps/planet3/Mapa11"
+import p3Mapa1 from "./maps/planet3/Mapa8";
+import p3Mapa2 from "./maps/planet3/Mapa9";
+import p3Mapa3 from "./maps/planet3/Mapa10";
+import p3Mapa4 from "./maps/planet3/Mapa11";
 // OTRAS COSAS
 import Player from "./assets/Player";
 import UIClass from "./assets/UIClass";
@@ -29,10 +29,18 @@ interface CodeType {
   imagenes?: string[];
 }
 
-
-
-export type PossibleMaps = p1Mapa0 | p1Mapa1 | p1Mapa2 | p1Mapa3 |
-  p2Mapa1 | p2Mapa2 | p2Mapa3 | p2Mapa4 | p3Mapa1 | p3Mapa2 | Sandbox
+export type PossibleMaps =
+  | p1Mapa0
+  | p1Mapa1
+  | p1Mapa2
+  | p1Mapa3
+  | p2Mapa1
+  | p2Mapa2
+  | p2Mapa3
+  | p2Mapa4
+  | p3Mapa1
+  | p3Mapa2
+  | Sandbox;
 // Scene in class
 export const keyCodesAWSD = {
   w: Phaser.Input.Keyboard.KeyCodes.W,
@@ -60,7 +68,7 @@ class Game extends Phaser.Scene {
   canRot: boolean = true;
 
   cameraNormal: boolean = true;
-  isNormal:boolean =true;
+  isNormal: boolean = true;
   gravityDown: boolean = true;
 
   checkPoint: number = 0;
@@ -87,35 +95,48 @@ class Game extends Phaser.Scene {
     if (this.player) {
       this.player.idle();
       this.player.setVelocityX(0);
-      if( this.player.withTank && this.player.body?.velocity.y === 0){
+      if (this.player.withTank && this.player.body?.velocity.y === 0) {
         this.player.tank.isCharging = this.player.tank.chargeValue;
       }
     }
   }
 
-  animCameraPan(x: number, y: number, duration: number = 10000, hold: number = 1000) {
-    const self = this
+  animCameraPan(
+    x: number,
+    y: number,
+    duration: number = 10000,
+    hold: number = 1000
+  ) {
+    const self = this;
     this.stopMov = true;
-    this.cameras.main.pan(x, y, duration / 2, "Linear", false, (cam, progress) => {
-      if (progress === 1) {
-        this.stopMov = false;
-      }
-    }, self)
+    this.cameras.main.pan(
+      x,
+      y,
+      duration / 2,
+      "Linear",
+      false,
+      (cam, progress) => {
+        if (progress === 1) {
+          this.stopMov = false;
+        }
+      },
+      self
+    );
 
     // const originalOffset = { x: this.cameras.main.followOffset.x, y: this.cameras.main.followOffset.y }
     // this.cameras.main.stopFollow();
     // const originPos = { x: this.cameras.main.midPoint.x, y: this.cameras.main.midPoint.y }
     // this.cameras.main.pan(x, y, duration / 2, "Linear", false, (cam, progress) => {
     // if (progress === 1) {
-    // 
+    //
     //   this.time.delayedCall(hold, () => {
-    //   
+    //
 
     //     this.cameras.main.pan(originPos.x, originPos.y, duration / 2, "Linear", false, (cam, progress) => {
     //
 
     //       if (progress === 1) {
-    
+
     //         this.cameras.main.startFollow(
     //           //@ts-ignore
     //           this.player,
@@ -145,9 +166,13 @@ class Game extends Phaser.Scene {
     // })
   }
 
-  moveCameraOffset(position: "up" | "down", instant: boolean = false ) {
+  moveCameraOffset(position: "up" | "down", instant: boolean = false) {
     setTimeout(() => {
-      console.log("moving camera from move", position, this.cameras.main.followOffset);
+      console.log(
+        "moving camera from move",
+        position,
+        this.cameras.main.followOffset
+      );
       let newPosition = this.cameraHeight / 2 - 350;
       if (position === "up") newPosition = -newPosition;
       if (instant) {
@@ -160,31 +185,37 @@ class Game extends Phaser.Scene {
           ease: "ease",
         });
       }
-    
     }, 500);
   }
 
-  lateralCameraOffset(position: "left" | "right", instant: boolean = false, levelWidth?: number, zoomOut?:number, duration?:number, directionAfter?: "up" | "down") {
+  lateralCameraOffset(
+    position: "left" | "right",
+    instant: boolean = false,
+    levelWidth?: number,
+    zoomOut?: number,
+    duration?: number,
+    directionAfter?: "up" | "down"
+  ) {
     let newWidth = levelWidth ? levelWidth : this.cameraWidth;
     let newduration = 4000;
-    if(duration && duration !== 0) newduration = duration;
- 
+    if (duration && duration !== 0) newduration = duration;
+
     this.time.paused = true;
     setTimeout(() => {
-    if (position === "right") newWidth = -newWidth;
-    if(zoomOut) this.cameras.main.zoom = zoomOut
-    if (instant) {
-      this.cameras.main.followOffset.x = newWidth;
-    } else {
-      this.tweens.add({
-        targets: this.cameras.main.followOffset,
-        x: newWidth,
-        duration:newduration,
-        ease: "ease",
-        onComplete: () => {
-          this.tweens.add({
+      if (position === "right") newWidth = -newWidth;
+      if (zoomOut) this.cameras.main.zoom = zoomOut;
+      if (instant) {
+        this.cameras.main.followOffset.x = newWidth;
+      } else {
+        this.tweens.add({
+          targets: this.cameras.main.followOffset,
+          x: newWidth,
+          duration: newduration,
+          ease: "ease",
+          onComplete: () => {
+            this.tweens.add({
               targets: this.cameras.main.followOffset,
-              x: 0, 
+              x: 0,
               duration: 1000,
               ease: "ease",
               onComplete: () => {
@@ -192,36 +223,37 @@ class Game extends Phaser.Scene {
                   targets: this.cameras.main,
                   zoom: 1,
                   duration: 1000,
-                  ease: 'ease',
+                  ease: "ease",
                   onComplete: () => {
-                    this.time.paused = false
-                    if(directionAfter){
+                    this.time.paused = false;
+                    if (directionAfter) {
                       if (directionAfter) {
                         this.moveCameraOffset(directionAfter, true);
                       }
                     }
-                  }
+                  },
                 });
-              }
-          });
-        }
-      });
-    }
-    console.log("moving camera", position, this.cameras.main.followOffset);
+              },
+            });
+          },
+        });
+      }
+      console.log("moving camera", position, this.cameras.main.followOffset);
     }, 1000);
   }
 
   changeGravity(float: boolean, time: number, speed?: 1 | 2 | 3) {
     if (this.player) {
-      this.physics.world.gravity.y = this.physics.world.gravity.y <= 0 ? 1000 : -1000;
-      this.moveCameraOffset(this.physics.world.gravity.y <= 0 ? "up" : "down")
-      this.player.rotate(speed)
+      this.physics.world.gravity.y =
+        this.physics.world.gravity.y <= 0 ? 1000 : -1000;
+      this.moveCameraOffset(this.physics.world.gravity.y <= 0 ? "up" : "down");
+      this.player.rotate(speed);
     }
   }
 
   rotateCam(isNormal: boolean, time: number) {
     console.log("rotating camera", isNormal, this.cameraNormal);
-    if (this.cameraNormal === !isNormal) return
+    if (this.cameraNormal === !isNormal) return;
     if (this.player)
       this.player.setCameraState(!isNormal ? "NORMAL" : "ROTATED");
     if (isNormal) {
@@ -234,10 +266,8 @@ class Game extends Phaser.Scene {
         this.time.delayedCall(time * i, () =>
           ((rotate) => {
             if (isNormal) {
-              
               this.cameras.main.setRotation(rotate);
             } else {
-              
               this.cameras.main.setRotation(Math.PI - rotate);
             }
           })((Math.PI * i) / 24)
@@ -251,7 +281,7 @@ class Game extends Phaser.Scene {
 
   win() {
     if (this.canWin && this.player && this.map) {
-      console.log(this.levelIs, "LEVEL IS JOTITA")
+      console.log(this.levelIs, "LEVEL IS JOTITA");
       this.cameraNormal = true;
       if (this.map?.nextScene) {
         // if (this.levelIs === 7){
@@ -259,14 +289,22 @@ class Game extends Phaser.Scene {
         //   const scene = this.scene.add("MultiScene", multiScene, true);
         //   this.scene.start("MultiScene").bringToTop("MultiScene");
         // } else {;
-        const multiScene = new MultiScene("CinematographyMod", { keyname: this.map.nextScene, lifes: this.lifes ? this.lifes : 3, loadKey: ["Postales", "Cinemato1", "Cinemato2"], code:this.map.postalCode });
+        const multiScene = new MultiScene("CinematographyMod", {
+          keyname: this.map.nextScene,
+          lifes: this.lifes ? this.lifes : 3,
+          loadKey: ["Postales", "Cinemato1", "Cinemato2"],
+          code: this.map.postalCode,
+        });
         const scene = this.scene.add("MultiScene", multiScene, true);
         this.scene.start("MultiScene").bringToTop("MultiScene");
         this.masterManagerScene?.stopMusic();
       }
       // }
-      else if(this.levelIs !== 11){ 
-        const multiScene = new MultiScene("Game", { level: this.levelIs + 1, lifes: this.lifes ? this.lifes : 3 });
+      else if (this.levelIs !== 11) {
+        const multiScene = new MultiScene("Game", {
+          level: this.levelIs + 1,
+          lifes: this.lifes ? this.lifes : 3,
+        });
         const scene = this.scene.add("MultiScene", multiScene, true);
         this.scene.start("MultiScene").bringToTop("MultiScene");
       } else {
@@ -274,10 +312,9 @@ class Game extends Phaser.Scene {
         const scene = this.scene.add("MultiScene", multiScene, true);
         this.scene.start("MultiScene").bringToTop("MultiScene");
         this.masterManagerScene?.stopMusic();
-
       }
     }
-   
+
     // lógica para pasar a movie dependiendo el nivel
   }
 
@@ -303,14 +340,17 @@ class Game extends Phaser.Scene {
     this.canRot = true;
     if (this.map) {
       //@ts-ignore
-      this.map.rotate = true
+      this.map.rotate = true;
       const config = this.map.loseConfig[this.checkPoint];
       if (this.lifes) {
         this.lifes -= 1;
         if (this.lifes === 0) {
-          this.cameraNormal = true
-          this.checkPoint === 0
-          const multiScene = new MultiScene("Game", { level: this.levelIs, lifes: this.lifes ? this.lifes : 3 });
+          this.cameraNormal = true;
+          this.checkPoint === 0;
+          const multiScene = new MultiScene("Game", {
+            level: this.levelIs,
+            lifes: this.lifes ? this.lifes : 3,
+          });
           const scene = this.scene.add("MultiScene", multiScene, true);
           this.scene.start("MultiScene").bringToTop("MultiScene");
         } else if (this.lifes > 0 && this.player) {
@@ -320,7 +360,8 @@ class Game extends Phaser.Scene {
           //agregar cambio de arrow UI
 
           // Player changes
-          this.cameraNormal = config.cameraDirection === "NORMAL" ? true : false
+          this.cameraNormal =
+            config.cameraDirection === "NORMAL" ? true : false;
           this.player.setCameraState(config.cameraDirection);
           this.player.setPlayerState(config.PlayerDirection);
 
@@ -338,7 +379,6 @@ class Game extends Phaser.Scene {
           this.player.y = config.positions.y;
         }
         // this.cameraNormal = config.cameraDirection === "NORMAL" ? true : false
-
       }
     }
   }
@@ -375,131 +415,198 @@ class Game extends Phaser.Scene {
     // )
   }
 
-  create(
-    this: Game,
-    data: GamePlayDataType
-  ) {
+  create(this: Game, data: GamePlayDataType) {
     // CREATIVE
     // this.time.delayedCall(4000, () => {
     //   this.animCameraPan(2000, 500)
     // })
-    console.log("ARIEL TEST", this.cameras.main)
+    console.log("ARIEL TEST", this.cameras.main);
     this.cursorsAWSD = this.input.keyboard?.addKeys({
       w: Phaser.Input.Keyboard.KeyCodes.W,
       a: Phaser.Input.Keyboard.KeyCodes.A,
       s: Phaser.Input.Keyboard.KeyCodes.S,
       d: Phaser.Input.Keyboard.KeyCodes.D,
     });
-    this.cameras.main.zoom =1;
+    this.cameras.main.zoom = 1;
     // CREATIVE
-    this.stopMov = false
+    this.stopMov = false;
     this.checkPoint = 0;
     this.levelIs = data.level;
     this.lifes = data.lifes;
     this.cursors = this.input.keyboard?.createCursorKeys();
-    this.time.paused = false
+    this.time.paused = false;
     /* CHOSE LEVEL, LIFES AND AUDIO */
     switch (data.level) {
       case 999:
+        this.player = new Player(this, 0, 0, "character", 2);
+
         this.map = new Sandbox(this, this.player!);
         // this.loopMusic = "planet0LoopMusic";
         break;
       case 0:
+        this.player = new Player(this, 0, 0, "character", 2);
+
         this.map = new p1Mapa0(this, this.player!);
         this.loopMusic = "planet0LoopMusic";
         break;
       case 1:
+        this.player = new Player(this, 0, 0, "character", 2);
+
         this.map = new p1Mapa1(this, this.player!);
         this.loopMusic = "planet0LoopMusic";
-        if(this.masterManagerScene){
-          this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1"]
+        if (this.masterManagerScene) {
+          this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1"];
         }
         break;
       case 2:
+        this.player = new Player(this, 0, 0, "character", 2);
+
         this.map = new p1Mapa2(this, this.player!);
         this.loopMusic = "planet0LoopMusic";
-        if(this.masterManagerScene){
-          this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1"]
+        if (this.masterManagerScene) {
+          this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1"];
         }
         break;
       case 3:
+        this.player = new Player(this, 0, 0, "character", 2);
+
         this.map = new p1Mapa3(this, this.player!);
         this.loopMusic = "planet0LoopMusic";
-        if(this.masterManagerScene){
-          this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1", "planeta1_figu2"]
+        if (this.masterManagerScene) {
+          this.masterManagerScene.imagenesDesbloqueadas = [
+            "planeta1_figu1",
+            "planeta1_figu2",
+          ];
         }
         break;
       case 4:
+        this.player = new Player(this, 0, 0, "character", 2);
+
         this.map = new p2Mapa1(this, this.player!);
         this.loopMusic = "planet1LoopMusic";
-        if(this.masterManagerScene){
-          this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1", "planeta1_figu2"]
+        if (this.masterManagerScene) {
+          this.masterManagerScene.imagenesDesbloqueadas = [
+            "planeta1_figu1",
+            "planeta1_figu2",
+          ];
         }
         break;
       case 5:
+        this.player = new Player(this, 0, 0, "character", 2);
+
         this.map = new p2Mapa2(this, this.player!);
         this.loopMusic = "planet1LoopMusic";
-        if(this.masterManagerScene){
-          this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1"]
+        if (this.masterManagerScene) {
+          this.masterManagerScene.imagenesDesbloqueadas = [
+            "planeta1_figu1",
+            "planeta1_figu2",
+            "planeta2_figu1",
+          ];
         }
         break;
       case 6:
+        this.player = new Player(this, 0, 0, "character", 2);
+
         this.map = new p2Mapa4(this, this.player!);
         this.loopMusic = "planet1LoopMusic";
-        if(this.masterManagerScene){
-          this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1"]
+        if (this.masterManagerScene) {
+          this.masterManagerScene.imagenesDesbloqueadas = [
+            "planeta1_figu1",
+            "planeta1_figu2",
+            "planeta2_figu1",
+          ];
         }
         break;
       case 7:
+        this.player = new Player(this, 0, 0, "character", 2);
+
         this.map = new p2Mapa3(this, this.player!);
         this.loopMusic = "planet1LoopMusic";
-        if(this.masterManagerScene){
-          this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2"]
+        if (this.masterManagerScene) {
+          this.masterManagerScene.imagenesDesbloqueadas = [
+            "planeta1_figu1",
+            "planeta1_figu2",
+            "planeta2_figu1",
+            "planeta2_figu2",
+          ];
         }
         break;
       case 8:
+        this.player = new Player(this, 0, 0, "character", 2);
+
         this.map = new p3Mapa1(this, this.player!);
         this.loopMusic = "planet3LoopMusic";
-        if(this.masterManagerScene){
-          this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2"]
+        if (this.masterManagerScene) {
+          this.masterManagerScene.imagenesDesbloqueadas = [
+            "planeta1_figu1",
+            "planeta1_figu2",
+            "planeta2_figu1",
+            "planeta2_figu2",
+          ];
         }
-        break
+        break;
       case 9:
+        this.player = new Player(this, 0, 0, "character", 2);
+
         this.map = new p3Mapa2(this, this.player!);
         this.loopMusic = "planet3LoopMusic";
-        if(this.masterManagerScene){
-          this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2", "planeta3_figu1"]
+        if (this.masterManagerScene) {
+          this.masterManagerScene.imagenesDesbloqueadas = [
+            "planeta1_figu1",
+            "planeta1_figu2",
+            "planeta2_figu1",
+            "planeta2_figu2",
+            "planeta3_figu1",
+          ];
         }
-        break
+        break;
       case 10:
+        this.player = new Player(this, 0, 0, "character", 2);
+
         this.map = new p3Mapa3(this, this.player!);
         this.loopMusic = "planet3LoopMusic";
-        if(this.masterManagerScene){
-          this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2", "planeta3_figu1"]
+        if (this.masterManagerScene) {
+          this.masterManagerScene.imagenesDesbloqueadas = [
+            "planeta1_figu1",
+            "planeta1_figu2",
+            "planeta2_figu1",
+            "planeta2_figu2",
+            "planeta3_figu1",
+          ];
         }
-        break
+        break;
       case 11:
+        this.player = new Player(this, 0, 0, "character", 2);
+
         this.map = new p3Mapa4(this, this.player!);
-        if(this.masterManagerScene){
-          this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2", "planeta3_figu1", "planeta3_figu2"]
+        if (this.masterManagerScene) {
+          this.masterManagerScene.imagenesDesbloqueadas = [
+            "planeta1_figu1",
+            "planeta1_figu2",
+            "planeta2_figu1",
+            "planeta2_figu2",
+            "planeta3_figu1",
+            "planeta3_figu2",
+          ];
         }
         this.loopMusic = "planet3LoopMusic";
-        break
+        break;
       default:
+        this.player = new Player(this, 0, 0, "character", 2);
+        
         this.map = new p1Mapa0(this, this.player!);
         this.loopMusic = "planet0LoopMusic";
         break;
     }
-
-
+    const { x, y } = this.map.startingPoint;
+    this.player.setPosition(x, y);
     /* Audio */
     this.masterManagerScene = this.game.scene.getScene(
       "MasterManager"
     ) as MasterManager;
     if (!this.masterManagerScene.scene.isActive())
       this.scene.launch("MasterManager").sendToBack();
-    if (this.loopMusic)
-      this.masterManagerScene.playMusic(this.loopMusic, true);
+    if (this.loopMusic) this.masterManagerScene.playMusic(this.loopMusic, true);
     else {
       if (this.loopMusic)
         this.masterManagerScene.playMusic(this.loopMusic, true);
@@ -512,6 +619,8 @@ class Game extends Phaser.Scene {
       window.innerWidth,
       window.innerHeight
     );
+    this.UICamera?.ignore(this.player);
+
     this.UIClass = new UIClass(this, this.levelIs, this.lifes, this.timeLevel);
 
     /* CONTROLS */
@@ -519,12 +628,10 @@ class Game extends Phaser.Scene {
       Phaser.Input.Keyboard.KeyCodes.ESC
     );
 
-
-    const { x, y } = this.map.startingPoint;
+    
     // FINALIZA EL MAPA
 
     // ARRANCA EL MAPA
-    this.player = new Player(this, x, y, "character", 2);
     this.canWin = false;
     /* CREATE MAP */
     this.map.createMap(data);
@@ -538,7 +645,7 @@ class Game extends Phaser.Scene {
     } = this.map.cameraBounds;
     this.cameras.main.setBounds(boundX, boundY, boundWidth, boundHeight);
     /* CAMERAS */
-    this.cameras.main.zoom =1;
+    this.cameras.main.zoom = 1;
     this.cameraWidth = this.cameras.main.width;
     this.cameraHeight = this.cameras.main.height;
     this.cameras.main.startFollow(
@@ -584,32 +691,23 @@ class Game extends Phaser.Scene {
     //     },
     //     this
     //   );
- 
-
-    
- 
   }
 
-
   update(this: Game) {
-
-    if(this.player){
-   
-      
+    if (this.player) {
     }
     if (this.cameras.main.width < this.cameras.main.height) {
       this.cameras.main.zoom =
         this.cameras.main.width / this.cameras.main.height;
     }
 
-    
     if (this.player && this.map && !this.stopMov) {
       this.map.update();
       this.player.checkMove(this.cursors);
-    }else{
-      this.player?.setVelocity(0,17);
-      this.player?.setAcceleration(0)
-      this.player?.setGravityY(0); 
+    } else {
+      this.player?.setVelocity(0, 17);
+      this.player?.setAcceleration(0);
+      this.player?.setGravityY(0);
     }
     // CREATIVE MODE
     this.handleCameraMovement();

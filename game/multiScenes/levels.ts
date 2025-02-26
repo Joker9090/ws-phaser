@@ -35,8 +35,8 @@ export default class LevelClass {
   dist3?: number;
   /* progress */
   progress: number = 0;
-  /* monchi */
-  monchi?: Phaser.GameObjects.Sprite;
+  /* player */
+  player?: Phaser.GameObjects.Sprite;
   scene: MultiScene;
   constructor(scene: MultiScene) {
     this.scene = scene
@@ -269,7 +269,7 @@ export default class LevelClass {
       this.planetLevel1,
       this.planetLevel2,
     ]);
-    this.monchi = this.scene.add
+    this.player = this.scene.add
       .sprite(width - 100, 150, "character", 20)
       .setScale(0.5)
       .setDepth(99);
@@ -413,13 +413,13 @@ export default class LevelClass {
 
 
 
-    if (this.monchi) {
+    if (this.player) {
       this.progress = this.progress + 0.0031415;
-      this.monchi.x = this.monchi.x - 8;
-      this.monchi.y = this.monchi.y + 0.3;
-      this.monchi.setRotation(this.progress);
-      if (this.monchi.x == 10) {
-        this.monchi.x = 100
+      this.player.x = this.player.x - 8;
+      this.player.y = this.player.y + 0.3;
+      this.player.setRotation(this.progress);
+      if (this.player.x == 10) {
+        this.player.x = 100
       }
     }
 

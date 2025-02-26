@@ -5,5 +5,5 @@ TO DO
 
 2.background tiembla una banda aveces (de este no tengo ni idea)
 3.meteorito aveces no registra impacto (pasa solo cuando te estas moviendo)
-6.monchi en levelMap no se resetea (las cordenadas si se resetean pero no aparece monchi de nuevo)
+6.player en levelMap no se resetea (las cordenadas si se resetean pero no aparece player de nuevo)
 

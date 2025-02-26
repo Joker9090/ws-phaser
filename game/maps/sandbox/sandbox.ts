@@ -90,6 +90,22 @@ class Sandbox {
     this.scene = scene;
     this.player = player;
 
+    // this.player.setPlayerWithTank(true)
+   
+
+    // add delayed call
+    this.scene.time.delayedCall(4000, () => {
+      this.player!.setGravityOnPlayer(500)
+      this.player!.setTintMask(0x00ff00)
+      this.scene.time.delayedCall(4000, () => {
+        this.player!.setTintMask(0xff0000)
+
+        this.player!.setGravityOnPlayer(1000)
+        this.player!.setGravityOnPlayerX(2000)
+
+      });
+    });
+
     /* World size*/
     this.scene.physics.world.setBounds(
       0,

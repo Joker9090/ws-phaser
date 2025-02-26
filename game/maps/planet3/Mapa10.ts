@@ -62,7 +62,7 @@ class Mapa10 {
   sideGrav: boolean = false;
   goingBack: boolean = false;
   pisoGoBack?: Phaser.GameObjects.Sprite;
-  monchi?: Player;
+  player?: Player;
   startingPoint = {
     x: 1000, //500
     y: 700, //800
@@ -147,9 +147,9 @@ class Mapa10 {
   mapContainer: Phaser.GameObjects.Container;
   frontContainer: Phaser.GameObjects.Container;
 
-  constructor(scene: Game, monchi: Player) {
+  constructor(scene: Game, player: Player) {
     this.scene = scene;
-    this.monchi = monchi;
+    this.player = player;
 
     // let masterManagerScene = scene.game.scene.getScene("MasterManager") as MasterManager;
     // if (!masterManagerScene) {
@@ -421,10 +421,10 @@ class Mapa10 {
 
 
   addColliders() {
-    if (this.scene.monchi) {
+    if (this.scene.player) {
       if (this.pisos)
         this.scene.physics.add.collider(
-          this.scene.monchi,
+          this.scene.player,
           this.pisos,
           this.scene.touch,
           () => true,
@@ -432,10 +432,10 @@ class Mapa10 {
         );
       if (this.pisos2)
         this.scene.physics.add.collider(
-          this.scene.monchi,
+          this.scene.player,
           this.pisos2,
           () => {
-            if (this.scene.monchi?.body?.touching.up || this.scene.monchi?.body?.touching.down) {
+            if (this.scene.player?.body?.touching.up || this.scene.player?.body?.touching.down) {
               this.scene.changeGravity(true, 1000, 3)
               this.scene.canRot = true
             }
@@ -448,7 +448,7 @@ class Mapa10 {
       if (this.pisos3)
         this.scene.physics.add.collider(
 
-          this.scene.monchi,
+          this.scene.player,
           this.pisos3,
           () => {
             this.scene.rotateCam(true, 10);
@@ -458,7 +458,7 @@ class Mapa10 {
         );
       if (this.coin)
         this.scene.physics.add.overlap(
-          this.scene.monchi,
+          this.scene.player,
           this.coin,
           () => {
             this.scene.touchItem("coin")
@@ -474,18 +474,18 @@ class Mapa10 {
         );
       if (this.fireballGroup)
         this.scene.physics.add.overlap(
-          this.scene.monchi,
+          this.scene.player,
           this.fireballGroup,
           () => {
             this.scene.touchItem("fireball")
-            this.scene.monchi?.setVelocity(0)
+            this.scene.player?.setVelocity(0)
           },
           () => true,
           this.scene
         );
       if (this.portal)
         this.scene.physics.add.overlap(
-          this.scene.monchi,
+          this.scene.player,
           this.portal,
           () =>{
             // this.masterManager.imagenesDesbloqueadas = ["planeta1_figu1", "planeta1_figu2", "planeta2_figu1", "planeta2_figu2", "planeta3_figu1","planeta3_figu2"];
@@ -496,10 +496,10 @@ class Mapa10 {
         );
       if (this.pisos4)
         this.scene.physics.add.collider(
-          this.scene.monchi,
+          this.scene.player,
           this.pisos4,
           () => {
-            if (this.scene.monchi && this.scene.monchi.x > 2260 && this.scene.checkPoint === 0)
+            if (this.scene.player && this.scene.player.x > 2260 && this.scene.checkPoint === 0)
               this.scene.checkPoint = 1
           },
           () => true,
@@ -507,7 +507,7 @@ class Mapa10 {
         );
       if (this.pisos5)
         this.scene.physics.add.collider(
-          this.scene.monchi,
+          this.scene.player,
           this.pisos5,
           () => {
             if (this.oldOffset) {
@@ -519,7 +519,7 @@ class Mapa10 {
         );
       if (this.pisos6)
         this.scene.physics.add.collider(
-          this.scene.monchi,
+          this.scene.player,
           this.pisos6,
           () => {
             if (this.moveCamera) {
@@ -532,7 +532,7 @@ class Mapa10 {
         );
       if (this.movingFloor)
         this.scene.physics.add.collider(
-          this.scene.monchi,
+          this.scene.player,
           this.movingFloor,
           () => {
             this.scene.touch()
@@ -542,7 +542,7 @@ class Mapa10 {
         );
       if (this.movingFloorRot)
         this.scene.physics.add.collider(
-          this.scene.monchi,
+          this.scene.player,
           this.movingFloorRot,
           () => {
             this.scene.touch()
@@ -555,11 +555,11 @@ class Mapa10 {
 
   createMap(data: { level: number; lifes: number }) {
     // inicio rotado
-    if (this.scene.monchi) {
+    if (this.scene.player) {
       this.scene.changeGravity(true, 1000, 3)
       // this.scene.lateralCameraOffset("right", false, this.cameraBounds.width, 1, 2000);
       this.scene.moveCameraOffset("up", true);
-      this.scene.monchi.setPlayerState("ROTATED")
+      this.scene.player.setPlayerState("ROTATED")
     }
     // inicio rotado
 
@@ -956,7 +956,7 @@ class Mapa10 {
 
   }
   update() {
-    if (this.scene.monchi) this.animateBackground();
+    if (this.scene.player) this.animateBackground();
   }
 }
 

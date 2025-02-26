@@ -13,6 +13,7 @@ import { Children } from "react";
 import { loseConfigFromMapType } from "@/game/Types";
 import LargeFloorIsland, { LargeFloorIslandConfig } from "@/game/assets/LargeFloorIsland";
 import TextBox from "@/game/assets/TextBox";
+import MagicZone, { ZoneConfig } from "@/game/assets/MagicZone";
 
 class Sandbox {
   isJumping = false;
@@ -94,17 +95,17 @@ class Sandbox {
    
 
     // add delayed call
-    this.scene.time.delayedCall(4000, () => {
-      this.player!.setGravityOnPlayer(500)
-      this.player!.setTintMask(0x00ff00)
-      this.scene.time.delayedCall(4000, () => {
-        this.player!.setTintMask(0xff0000)
+    // this.scene.time.delayedCall(4000, () => {
+    //   this.player!.setGravityOnPlayer(500)
+    //   this.player!.setTintMask(0x00ff00)
+    //   this.scene.time.delayedCall(4000, () => {
+    //     this.player!.setTintMask(0xff0000)
 
-        this.player!.setGravityOnPlayer(1000)
-        this.player!.setGravityOnPlayerX(2000)
+    //     this.player!.setGravityOnPlayer(1000)
+    //     this.player!.setGravityOnPlayerX(2000)
 
-      });
-    });
+    //   });
+    // });
 
     /* World size*/
     this.scene.physics.world.setBounds(
@@ -325,6 +326,38 @@ class Sandbox {
 
     this.scene.UICamera?.ignore(this.mapContainer)
     this.scene.UICamera?.ignore(this.frontContainer)
+
+    const zoneAConfig: ZoneConfig = {
+      x: 800,
+      y: 0,
+      width: 700,
+      height: 10000,
+      color: 0xffffff,
+      alpha: 0.2,
+      detectOnTouch: (player: Player, zone: MagicZone) => {
+        player.setPlayerFlying(true)
+      },
+      detectOnExit: (player: Player, zone: MagicZone) => {
+        player.setPlayerFlying(false)
+      },
+      effect: (zone: MagicZone) => {
+        // add fx to the zone
+
+
+
+        zone.graphics.postFX.addBlur(1,0,0,8,0xffffff,1);
+       // move the zone
+        this.scene.tweens.add({
+          targets: zone.graphics,
+          x: "-=100",
+          duration: 10000,
+          yoyo: true,
+          repeat: -1
+        })
+      
+      }
+    }
+    const zoneA = new MagicZone(this.scene,zoneAConfig)
   }
 
 

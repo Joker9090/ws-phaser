@@ -5,12 +5,15 @@ import PreLoadScene from "../PreLoadScene";
 
 // Scene in class
 class Player extends Phaser.Physics.Arcade.Sprite {
+  
   isJumping: boolean = false;
   isRotating: boolean = false;
   playerState: "NORMAL" | "ROTATED" = "NORMAL";
   cameraState: "NORMAL" | "ROTATED" = "NORMAL";
+
   scene: Game |MultiScene | PreLoadScene;
   gravityAnimSprite?: Phaser.GameObjects.Sprite;
+
   isFlying: boolean = false;
   withTank: boolean = true;
   tankGraphics?: Phaser.GameObjects.Graphics;
@@ -20,6 +23,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     fuelLimit: number,
     consume: number,
     chargeValue: number,
+
     fuelConditionToStart: number,
     extraJumpAt?: number
   } = {

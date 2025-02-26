@@ -60,7 +60,7 @@ export default function Home() {
           default: "arcade",
           arcade: {
             overlapBias: 10,
-            gravity: { y: 1000 },
+            gravity: { y: 1000, x: 0 },
             debug: false
           }
         }

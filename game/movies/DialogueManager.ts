@@ -95,7 +95,7 @@ class DialogueManager {
   }
 
   createContainer(text: string, config?: DialogConfig) {
-    this.container = this.scene.add.container().setAlpha(0);
+    this.container = this.scene.add.container();
 
     this.textDisplayed = this.scene.add.text(0, 8, "", {
       fontSize: 20,

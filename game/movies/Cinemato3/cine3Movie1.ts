@@ -179,6 +179,20 @@ class cine3Movie1 {
         duration: 7000,
         ease: "ease",
       });
+      this.cine.tweens.add({
+        targets: [this.cloud1C3S1],
+        x: '+=600',
+        delay: 0,
+        duration: 40000,
+        ease: "ease",
+      });
+      this.cine.tweens.add({
+        targets: [this.cloud2C3S1],
+        x: '+=600',
+        delay: 0,
+        duration: 40000,
+        ease: "ease",
+      });
 
      
       const dialogueListener = (newState: string, nextText?: string) => {

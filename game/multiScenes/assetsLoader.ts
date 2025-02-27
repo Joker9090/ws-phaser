@@ -749,6 +749,7 @@ export const loadAssets = {
       // SCENE 6
       ["image", "astronautScene6", "/movies/cinemato2/scene6/astronautScene6.png"],
       ["image", "bubblesScene6", "/movies/cinemato2/scene6/bubblesScene6.png"],
+      ["image", "singleBubble", "/movies/cinemato2/scene6/single-bubble.png"],
       ["image", "mountainFrontScene6", "/movies/cinemato2/scene6/mountainFrontScene6.png"],
       ["image", "mountainsBackgroundScene6", "/movies/cinemato2/scene6/mountainsBackgroundScene6.png"],
       ["image", "neblina", "/movies/cinemato2/scene6/neblina.png"],

@@ -256,17 +256,53 @@ class cine2Movie4 {
 
         const latScreenRight1 = this.cine.add
             .image(720, 50, "latScreenRight1")
+            .setAlpha(0.2)
             .setOrigin(0.5);
         const latScreenRight2 = this.cine.add
             .image(790, -250, "latScreenRight2")
             .setOrigin(0.5);
         const latScreenRight3 = this.cine.add
             .image(830, -30, "latScreenRight3")
+            .setAlpha(0.2)
             .setOrigin(0.5);
         const latScreenRight4 = this.cine.add
             .image(830, 120, "latScreenRight4")
+            .setAlpha(0.2)
             .setOrigin(0.5);
 
+        this.cine.tweens.add({
+            targets: [latScreenRight1],
+            alpha: 1,
+            duration: 2000,
+            yoyo: true,
+            loop: -1,
+        })
+        this.cine.tweens.add({
+            targets: [latScreenRight2],
+            rotation: Math.PI * 2,
+            duration: 15000,
+            yoyo: true,
+            loop: -1,
+        })
+        this.cine.tweens.add({
+            targets: [latScreenRight3],
+            alpha: 1,
+            duration: 1500,
+            yoyo: true,
+            loop: -1,
+            ease:"bounce"
+
+        })
+
+        this.cine.tweens.add({
+            targets: [latScreenRight4],
+            alpha: 1,
+            duration: 1700,
+            yoyo: true,
+            loop: -1,
+            ease:"bounce"
+
+        })
         this.backgroundPanel = this.cine.add
             .image(0, 70, "backgroundPanel")
             .setOrigin(0.5);
@@ -436,7 +472,7 @@ class cine2Movie4 {
             this.cine.tweens.add({
                 targets: [this.oxygen2, this.oxygen1],
                 scale: 1,
-                duration: 1500,
+                duration: 1300,
                 delay: 3000,
                 onStart: () => {
                     this.oxygen2?.setVisible(true)

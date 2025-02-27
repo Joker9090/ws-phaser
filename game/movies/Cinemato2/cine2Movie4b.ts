@@ -19,6 +19,10 @@ class cine2Movie4b {
         this.ticker = new Ticker(tickerMS);
         this.playCine();
         // music & music
+        this.cine.time.delayedCall(1000, () => {
+          this.cine.sound.add("landing").setVolume(0.25).play();          
+          this.cine.sound.add("music").setVolume(0.25).play();          
+        })
         
     }
 

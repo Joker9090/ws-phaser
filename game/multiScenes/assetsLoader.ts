@@ -712,6 +712,9 @@ export const loadAssets = {
       ["image", "food", "/movies/cinemato2/scene1/food.png"],
       ["image", "skyDay", "/movies/cinemato2/skyDay.png"],
       ["image", "cloudsDay", "/movies/cinemato2/cloudsDay.png"],
+      ["audio", "steps", "/movies/cinemato2/soundEffects/1.1.mp3"],
+      ["audio", "outside", "/movies/cinemato2/soundEffects/2.1.mp3"],
+
       // SCENE 2
       ["image", "destello1", "/movies/cinemato2/scene2/destello1.png"],
       ["image", "destello2", "/movies/cinemato2/scene2/destello2.png"],
@@ -720,6 +723,9 @@ export const loadAssets = {
       ["image", "mountainsBackgroundScene2", "/movies/cinemato2/scene2/mountainsBackgroundScene2.png"],
       ["image", "nubesScene2", "/movies/cinemato2/scene2/nubesScene2.png"],
       ["image", "shipCrashed", "/movies/cinemato2/scene2/shipCrashed.png"],
+      ["audio", "crashSparks", "/movies/cinemato2/soundEffects/1.2.mp3"],
+
+      
       // SCENE 3
       ["image", "nightSky", "/movies/cinemato2/scene3/nightSky.png"],
       ["image", "nightClouds", "/movies/cinemato2/scene3/nightClouds.png"],
@@ -729,12 +735,24 @@ export const loadAssets = {
       ["image", "welderScreen", "/movies/cinemato2/scene3/welderScreen.png"],
       ["image", "weldingShip", "/movies/cinemato2/scene3/weldingShip.png"],
       ["image", "destelloWelder", "/movies/cinemato2/scene3/destello.png"],
+      ["audio", "welder", "/movies/cinemato2/soundEffects/1.3.mp3"],
+
       // SCENE 4
       ["image", "oxygen1", "/movies/cinemato2/scene4/oxygen1.png"],
       ["image", "oxygen2", "/movies/cinemato2/scene4/oxygen2.png"],
       ["image", "popUpPlanetBubble", "/movies/cinemato2/scene4/popUpPlanetBubble.png"],
       ["image", "foodC2S4", "/movies/cinemato2/scene4/foodC2S4.png"],
       ["image", "planetC2S4", "/movies/cinemato2/scene4/planetC2S4.png"],
+      ["audio", "warning", "/movies/cinemato2/soundEffects/1.4.mp3"],
+      ["audio", "scanner1", "/movies/cinemato2/soundEffects/1.5.mp3"],
+      ["audio", "scanner2", "/movies/cinemato2/soundEffects/3.2.mp3"],
+      ["audio", "scanner3", "/movies/cinemato2/soundEffects/3.3.mp3"],
+      ["audio", "inside", "/movies/cinemato2/soundEffects/2.2.mp3"],
+
+
+      // SCENE 4B
+      ["audio", "landing", "/movies/cinemato2/soundEffects/1.6.mp3"],
+      ["audio", "music", "/movies/cinemato2/soundEffects/2.3.mp3"],
 
       // SCENE 5
       ["image", "BackgroundMountainScene5", "/movies/cinemato2/scene5/BackgroundMountainScene5.png"],

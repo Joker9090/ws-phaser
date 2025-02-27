@@ -49,6 +49,17 @@ class cine2Movie4 {
         // setTimeout(() => {
         //     this.cine.sound.add("C2_7").setVolume(0.25).play()
         // }, 500)
+        this.cine.sound.add("inside").setVolume(0.50).play()
+        this.cine.time.delayedCall(3000, () => {
+            this.cine.sound.add("warning").setVolume(0.50).play()
+            this.cine.time.delayedCall(3000, () => {
+                this.cine.sound.add("scanner1").play()
+                this.cine.sound.add("scanner2").setVolume(0.25).play();
+                this.cine.time.delayedCall(5500, () => {
+                    this.cine.sound.add("scanner3").setVolume(0.25).play()
+                })
+            })
+        })
     }
 
     stopDialogue(){
@@ -86,6 +97,7 @@ class cine2Movie4 {
             .image(100, 0, "oxygen1")
             .setOrigin(0.5)
             .setVisible(false)
+            .setScale(0)
             .setPosition(10, -110);
         this.popUpPlanetBubble = this.cine.add
             .image(100, 0, "popUpPlanetBubble")
@@ -96,7 +108,8 @@ class cine2Movie4 {
             .image(100, 0, "oxygen2")
             .setOrigin(0.5)
             .setVisible(false)
-            .setPosition(10, -110);
+            .setPosition(10, -110)
+            .setScale(0);
 
         this.radarInnerCircle1 = this.cine.add
             .image(100, 0, "innerCircle1")
@@ -243,17 +256,53 @@ class cine2Movie4 {
 
         const latScreenRight1 = this.cine.add
             .image(720, 50, "latScreenRight1")
+            .setAlpha(0.2)
             .setOrigin(0.5);
         const latScreenRight2 = this.cine.add
             .image(790, -250, "latScreenRight2")
             .setOrigin(0.5);
         const latScreenRight3 = this.cine.add
             .image(830, -30, "latScreenRight3")
+            .setAlpha(0.2)
             .setOrigin(0.5);
         const latScreenRight4 = this.cine.add
             .image(830, 120, "latScreenRight4")
+            .setAlpha(0.2)
             .setOrigin(0.5);
 
+        this.cine.tweens.add({
+            targets: [latScreenRight1],
+            alpha: 1,
+            duration: 2000,
+            yoyo: true,
+            loop: -1,
+        })
+        this.cine.tweens.add({
+            targets: [latScreenRight2],
+            rotation: Math.PI * 2,
+            duration: 15000,
+            yoyo: true,
+            loop: -1,
+        })
+        this.cine.tweens.add({
+            targets: [latScreenRight3],
+            alpha: 1,
+            duration: 1500,
+            yoyo: true,
+            loop: -1,
+            ease:"bounce"
+
+        })
+
+        this.cine.tweens.add({
+            targets: [latScreenRight4],
+            alpha: 1,
+            duration: 1700,
+            yoyo: true,
+            loop: -1,
+            ease:"bounce"
+
+        })
         this.backgroundPanel = this.cine.add
             .image(0, 70, "backgroundPanel")
             .setOrigin(0.5);
@@ -421,24 +470,25 @@ class cine2Movie4 {
             });
 
             this.cine.tweens.add({
-                targets: [this.oxygen2],
+                targets: [this.oxygen2, this.oxygen1],
                 scale: 1,
-                duration: 1500,
+                duration: 1300,
                 delay: 3000,
-                yoyo: true,
                 onStart: () => {
                     this.oxygen2?.setVisible(true)
                     this.oxygen1?.setVisible(true)
                 },
                 onComplete: () => {
-                    this.oxygen2?.setVisible(false)
-                    this.oxygen1?.setVisible(false)
-                    this.foodC2S4?.setVisible(false)
-                    this.planetC2S4?.setVisible(false)
-                    this.radarInnerCircle1?.setVisible(true)
-                    this.radarInnerCircle2?.setVisible(true)
-                    this.radarInnerCircle3?.setVisible(true)
-                    this.radarSearcher?.setVisible(true)
+                    this.cine.time.delayedCall(2000, () => {
+                        this.oxygen2?.setVisible(false)
+                        this.oxygen1?.setVisible(false)
+                        this.foodC2S4?.setVisible(false)
+                        this.planetC2S4?.setVisible(false)
+                        this.radarInnerCircle1?.setVisible(true)
+                        this.radarInnerCircle2?.setVisible(true)
+                        this.radarInnerCircle3?.setVisible(true)
+                        this.radarSearcher?.setVisible(true)
+                    })
                 },
                 ease: "ease",
             });

@@ -28,7 +28,7 @@ class cine2Movie3 {
     this.ticker = new Ticker(tickerMS);
     this.playCine();
     // music & sound
-    // this.cine.sound.add("C2_4").setVolume(0.25).play();
+    this.cine.sound.add("welder").setVolume(0.25).play();
 
   }
  stopDialogue(){

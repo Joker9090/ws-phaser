@@ -15,6 +15,7 @@ class cine2Movie6 {
   nubesScene6?: Phaser.GameObjects.Image;
   mountainsBackgroundScene6?: Phaser.GameObjects.Image;
   bubblesScene6?: Phaser.GameObjects.Image;
+  singleBubble?: Phaser.GameObjects.Image;
   neblina?: Phaser.GameObjects.Image;
   mountainFrontScene6?: Phaser.GameObjects.Image;
   shipScene6?: Phaser.GameObjects.Image;
@@ -72,7 +73,10 @@ class cine2Movie6 {
       .image(0, 0, "mountainsBackgroundScene6")
       .setOrigin(0.5);
     this.bubblesScene6 = this.cine.add
-      .image(0, 0, "bubblesScene6")
+      .image(0, 100, "bubblesScene6")
+      .setOrigin(0.5);
+    this.singleBubble = this.cine.add
+      .image(window.innerWidth/4, 0, "singleBubble").setScale(1.5)
       .setOrigin(0.5);
     this.neblina = this.cine.add
       .image(0, 0, "neblina")
@@ -104,10 +108,11 @@ class cine2Movie6 {
       this.nubesScene6,
       this.starsScene5,
       this.mountainsBackgroundScene6,
-      this.bubblesScene6,
       this.neblina,
       this.mountainFrontScene6,
       this.shipScene6,
+      this.bubblesScene6,
+      this.singleBubble,
       this.astronautScene6,
       this.opacityScene6,
     ];
@@ -180,7 +185,7 @@ class cine2Movie6 {
       });
 
       this.cine.tweens.add({
-        targets: [this.bubblesScene6],
+        targets: [this.bubblesScene6, this.singleBubble],
         x: '+=10',
         delay: 0,
         yoyo: true,
@@ -188,7 +193,7 @@ class cine2Movie6 {
         ease: "ease",
       });
       this.cine.tweens.add({
-        targets: [this.bubblesScene6],
+        targets: [this.bubblesScene6, this.singleBubble],
         y: '-=400',
         delay: 0,
         duration: 40000,

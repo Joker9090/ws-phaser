@@ -63,8 +63,8 @@ class cine2Movie5 {
       .image(0, 0, "backgroundScene5")
       .setOrigin(0.5);
     this.cloudScene5 = this.cine.add
-      .image(-600, 0, "cloudScene5")
-      .setOrigin(0.5)
+      .image(0, 0, "cloudScene5")
+      .setOrigin(0.5, 1)
       .setScale(1.5, 1.3);
     this.starsScene5 = this.cine.add
       .image(-0, 0, "starsScene5")

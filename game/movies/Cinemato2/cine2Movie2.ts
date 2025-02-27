@@ -28,7 +28,7 @@ class cine2Movie2 {
     this.ticker = new Ticker(tickerMS);
     this.playCine();
     // music & sound
-    // this.cine.sound.add("C2_4").setVolume(0.25).play();
+    this.cine.sound.add("crashSparks").setVolume(0.25).play();
 
   }
 

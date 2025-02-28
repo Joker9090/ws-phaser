@@ -168,7 +168,7 @@ class cine2Movie5 {
         duration: 17000,
         ease: "ease",
       });
-
+      
       this.cine.tweens.add({
         targets: [this.cloudScene5],
         x: '+=600',

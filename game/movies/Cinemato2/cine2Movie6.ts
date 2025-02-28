@@ -149,7 +149,7 @@ class cine2Movie6 {
     const part1 = (job: TickerJob) => {
       this.dialogue = new DialogueManager(
         this.cine,
-        ["Let's get some oxygen"],
+        ["Let's get some oxygen!"],
         [""],
         [
           {

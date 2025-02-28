@@ -28,7 +28,7 @@ class Mapa0 {
   cameraBounds = {
     x: 0,
     y: 0,
-    width: 2700,
+    width: 5700,
     height: 1300,
   };
   // normales
@@ -95,6 +95,9 @@ class Mapa0 {
   constructor(scene: Game, player: Player) {
     this.scene = scene;
     this.player = player;
+
+    //GravityTest RAMA
+    this.player.setGravityOnPlayer(700);
 
     /* World size*/
     this.scene.physics.world.setBounds(
@@ -303,7 +306,7 @@ class Mapa0 {
       immovable: true,
     });
     this.portal = this.scene.physics.add.group({ allowGravity: false });
-    const aura = this.scene.add.sprite(1500, 600, "auraTuto").setScale(0.6);
+    const aura = this.scene.add.sprite(1700, 600, "auraTuto").setScale(0.6);
     this.aura.add(aura);
 
     this.textTutorial1 = new TextBox(
@@ -318,7 +321,7 @@ class Mapa0 {
       this.scene,
       "A source of energy! Now I can continue my journey across the planet.",
       1700,
-      400,
+      700,
       400
     ).setVisible(false);
 
@@ -346,22 +349,39 @@ class Mapa0 {
       },
       scale: { width: 0.7, height: 0.7 },
       height: 127,
-      large: 50,
+      large: 45,
       rotated: false,
     };
     const p1 = new LargeFloorIsland(this.scene, p1Config, this.pisos);
-
-    const p2Config: FloorConfig = {
+    //PlatformsRama
+    const p2Config: LargeFloorIslandConfig = {
+      textureA: "plataformaNuevaLargaA",
+      textureB: "plataformaNuevaLargaB",
+      textureC: "plataformaNuevaLargaC",
+      pos: { x: 2600, y: 1200 },
+      width: {
+        textureA: 90,
+        textureB: 67,
+        textureC: 115,
+      },
+      scale: { width: 0.7, height: 0.7 },
+      height: 127,
+      large: 20,
+      rotated: false,
+    };
+    const p2 = new LargeFloorIsland(this.scene, p2Config, this.pisos);
+    
+    const p3Config: FloorConfig = {
       texture: "plataformaNuevaA",
-      pos: { x: 900, y: 1020 },
+      pos: { x: 900, y: 1030 },
       fix: 25,
       scale: { width: 0.7, height: 0.7 },
       width: 140,
       height: 50,
     };
-    const p2 = new Floor(this.scene, p2Config, this.pisos).setFlipX(true);
-
-    const p3Config: FloorConfig = {
+    const p3 = new Floor(this.scene, p3Config, this.pisos).setFlipX(true);
+    
+    const p4Config: FloorConfig = {
       pos: { x: 1100, y: 920 },
       texture: "plataformaNuevaA",
       fix: 25,
@@ -369,21 +389,41 @@ class Mapa0 {
       width: 140,
       height: 50,
     };
-    const p3 = new Floor(this.scene, p3Config, this.pisos);
+    const p4 = new Floor(this.scene, p4Config, this.pisos);
 
-    const p4Config: FloorConfig = {
+    const p5Config: FloorConfig = {
       texture: "plataformaNuevaA",
-      pos: { x: 1300, y: 820 },
+      pos: { x: 1800, y: 1030 },
       fix: 25,
       scale: { width: 0.7, height: 0.7 },
       width: 140,
       height: 50,
     };
-    const p4 = new Floor(this.scene, p4Config, this.pisos2).setFlipX(true);
+    const p5 = new Floor(this.scene, p5Config, this.pisos).setFlipX(true);
+    
+    const p6Config: FloorConfig = {
+      pos: { x: 2100, y: 920 },
+      texture: "plataformaNuevaA",
+      fix: 25,
+      scale: { width: 0.7, height: 0.7 },
+      width: 140,
+      height: 50,
+    };
+    const p6 = new Floor(this.scene, p6Config, this.pisos);
+    
+    const p7Config: FloorConfig = {
+      texture: "plataformaNuevaA",
+      pos: { x: 1900, y: 740 },
+      fix: 25,
+      scale: { width: 0.7, height: 0.7 },
+      width: 140,
+      height: 50,
+    };
+    const p7 = new Floor(this.scene, p7Config, this.pisos2).setFlipX(true);
 
     //Portal, Coin and Asteroids
     const portalConfig: FloorConfig = {
-      pos: { x: 2400, y: 1090 }, // x: 2400
+      pos: { x: 3500, y: 1090 }, // x: 2400
       texture: "plataformaFinalP1",
       // scale: {width: 0.7, height: 0.7},
       width: 100,
@@ -394,7 +434,7 @@ class Mapa0 {
 
     const coinConfig: FloorConfig = {
       texture: "cristal3",
-      pos: { x: 1500, y: 600 },
+      pos: { x: 1700, y: 600 },
       scale: { width: 0.7, height: 0.7 },
       width: 40,
       height: 18,
@@ -405,6 +445,7 @@ class Mapa0 {
       180
     );
 
+    
     const cloudsGroup = this.scene.add.group();
 
     const c1Config: AsteroidGeneratorConfig = {

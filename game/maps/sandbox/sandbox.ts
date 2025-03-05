@@ -10,7 +10,7 @@ import Game from "../../Game";
 import Player from "../../assets/Player";
 import portal, { portalConfig } from "../../assets/portal";
 import { Children } from "react";
-import { loseConfigFromMapType } from "@/game/Types";
+import { GamePlayDataType, loseConfigFromMapType } from "@/game/Types";
 import LargeFloorIsland, { LargeFloorIslandConfig } from "@/game/assets/LargeFloorIsland";
 import TextBox from "@/game/assets/TextBox";
 import MagicZone, { ZoneConfig } from "@/game/assets/MagicZone";
@@ -87,10 +87,10 @@ class Sandbox {
   mapContainer: Phaser.GameObjects.Container;
   frontContainer: Phaser.GameObjects.Container;
 
-  constructor(scene: Game, player: Player) {
+  constructor(scene: Game, player: Player, data?: GamePlayDataType) {
     this.scene = scene;
     this.player = player;
-
+     
     // this.player.setPlayerWithTank(true)
    
 

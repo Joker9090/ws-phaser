@@ -10,7 +10,7 @@ import Game from "../../Game";
 import Player from "../../assets/Player";
 import portal, { portalConfig } from "../../assets/portal";
 import { Children } from "react";
-import { loseConfigFromMapType } from "@/game/Types";
+import { GamePlayDataType, loseConfigFromMapType } from "@/game/Types";
 import LargeFloorIsland, { LargeFloorIslandConfig } from "@/game/assets/LargeFloorIsland";
 import colors from "@/game/assets/PlatformColors";
 // import MasterManager from "@/game/MasterManager";
@@ -147,10 +147,10 @@ class Mapa10 {
   mapContainer: Phaser.GameObjects.Container;
   frontContainer: Phaser.GameObjects.Container;
 
-  constructor(scene: Game, player: Player) {
+  constructor(scene: Game, player: Player, data?: GamePlayDataType) {
     this.scene = scene;
     this.player = player;
-
+  
     // let masterManagerScene = scene.game.scene.getScene("MasterManager") as MasterManager;
     // if (!masterManagerScene) {
     //   this.masterManager = new MasterManager();

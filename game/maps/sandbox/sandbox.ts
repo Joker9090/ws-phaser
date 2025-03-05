@@ -49,6 +49,7 @@ class Sandbox {
   sideGrav: boolean = false;
   goingBack: boolean = false;
   pisoGoBack?: Phaser.GameObjects.Sprite;
+  firegroup?: Phaser.Physics.Arcade.Group;
   player?: Player;
   startingPoint = {
     x: 500, //500
@@ -219,6 +220,20 @@ class Sandbox {
           () => true,
           this.scene
         );
+      if(this.firegroup){
+        this.scene.physics.add.overlap(
+          this.scene.player,
+          this.firegroup,
+          () => {
+            if(!this.player?.invincible ){
+              this.scene.touchItem("fireball")
+              this.scene.player?.setVelocity(0)
+            }
+          }, 
+          () => true,
+          this.scene
+        )
+      }  
     }
   }
 
@@ -230,6 +245,7 @@ class Sandbox {
     this.pisos2 = this.scene.physics.add.group({ allowGravity: false });
     this.pisos3 = this.scene.physics.add.group({ allowGravity: false });
     this.pisos4 = this.scene.physics.add.group({ allowGravity: false });
+    this.firegroup = this.scene.physics.add.group({ allowGravity: false });
     this.amountLifes = data.lifes;
     this.coin = this.scene.physics.add.group({ allowGravity: false });
     this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
@@ -330,21 +346,26 @@ class Sandbox {
     const zoneAConfig: ZoneConfig = {
       x: 800,
       y: 0,
-      width: 700,
+      width: 200,
       height: 10000,
       color: 0xffffff,
       alpha: 0.2,
       detectOnTouch: (player: Player, zone: MagicZone) => {
-        player.setPlayerFlying(true)
+        // player.setPlayerFlying(true)
+
+        // se setea un state invincible true con esta funcion que a su vez setea el color del efecto 
+        // luego en el collider se checkea que valor tiene esa property
+        player.setPlayerInvicinible(true)
       },
       detectOnExit: (player: Player, zone: MagicZone) => {
-        player.setPlayerFlying(false)
+        // player.setPlayerFlying(false)
+        //le puse un delay para que tengas un tiempo fuera del glow donde aun tenes el efecto, esto se setea por zona y no es necesario 
+        this.scene.time.delayedCall(2000, () => {
+          player.setPlayerInvicinible(false)
+        })
       },
       effect: (zone: MagicZone) => {
         // add fx to the zone
-
-
-
         zone.graphics.postFX.addBlur(1,0,0,8,0xffffff,1);
        // move the zone
         this.scene.tweens.add({
@@ -358,12 +379,27 @@ class Sandbox {
       }
     }
     const zoneA = new MagicZone(this.scene,zoneAConfig)
+
+    const fireballConfig: FloorConfig = {
+      spriteSheet: "meteoritop3",
+      texture: "meteorito",
+      pos: { x: 1000, y: 0 }, // 500 1580
+      width: 100,
+      height: 100,
+      tween: {
+        duration: 4000,
+        repeat: -1,
+        delay: Math.random() * 1000,
+        y: "+=2500",
+      },
+      frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+    };
+    const fireball = new Floor(this.scene, fireballConfig, this.firegroup).setScale(0.5)
   }
 
 
 
   update() {
-    
     /* Attach background anim */
     // if (this.scene.player) this.animateBackground(this.scene.player);
     if (this.scene.player) this.animateBackground(this.scene.cameras.main.midPoint);

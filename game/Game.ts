@@ -92,7 +92,9 @@ class Game extends Phaser.Scene {
   }
 
   touch() {
+    console.log("scene touch");
     if (this.player) {
+      console.log("scene touch inside Player");
       this.player.idle();
       this.player.setVelocityX(0);
       if (this.player.withTank && this.player.body?.velocity.y === 0) {
@@ -445,7 +447,7 @@ class Game extends Phaser.Scene {
         break;
       case 0:
         this.player = new Player(this, 0, 0, "character", 2);
-
+        
         this.map = new p1Mapa0(this, this.player!);
         this.loopMusic = "planet0LoopMusic";
         break;

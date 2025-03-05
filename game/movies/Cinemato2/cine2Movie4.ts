@@ -472,7 +472,7 @@ class cine2Movie4 {
             this.cine.tweens.add({
                 targets: [this.oxygen2, this.oxygen1],
                 scale: 1,
-                duration: 1300,
+                duration: 400,
                 delay: 3000,
                 onStart: () => {
                     this.oxygen2?.setVisible(true)

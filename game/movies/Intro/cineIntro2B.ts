@@ -282,7 +282,7 @@ class cineIntro2B {
       .setOrigin(0.5)
       .setFlipX(true);
     this.backgroundPanel = this.cine.add
-      .image(-10, 70, "backgroundPanel")
+      .image(0, 0, "backgroundPanel") 
       .setOrigin(0.5);
     let marker = 0;
     setInterval(() => {

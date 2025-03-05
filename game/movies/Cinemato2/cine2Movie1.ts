@@ -30,7 +30,6 @@ class cine2Movie1 {
     this.playCine();
     // music & sound
     // this.cine.sound.add("C2_4").setVolume(0.25).play();
-    this.cine.sound.add("steps").setVolume(0.30).play()
     this.cine.sound.add("outside").setVolume(0.7).play()
   }
 
@@ -171,6 +170,12 @@ class cine2Movie1 {
         yoyo: true,
         loop: -1,
         ease: "ease",
+        onStart: () => {
+          this.cine.sound.add("steps").setVolume(0.30).play({ loop: true });
+        },
+        onUpdate: () => {
+          if (this.nextCine) this.cine.sound.get("steps").destroy();
+        }
       });
 
       this.cine.tweens.add({

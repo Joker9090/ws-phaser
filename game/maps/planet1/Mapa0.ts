@@ -28,7 +28,7 @@ class Mapa0 {
   cameraBounds = {
     x: 0,
     y: 0,
-    width: 5700,
+    width: 8000,
     height: 1300,
   };
   // normales
@@ -96,10 +96,8 @@ class Mapa0 {
     this.scene = scene;
     this.player = player;
 
-     
-
-    //GravityTest RAMA
-    this.player.setGravityOnPlayer(700);
+    //Tank
+    this.player.setPlayerWithTank(true);
 
     /* World size*/
     this.scene.physics.world.setBounds(
@@ -361,7 +359,7 @@ class Mapa0 {
       },
       scale: { width: 0.7, height: 0.7 },
       height: 127,
-      large: 45,
+      large: 50,
       rotated: false,
     };
     const p1 = new LargeFloorIsland(this.scene, p1Config, this.pisos);
@@ -370,7 +368,7 @@ class Mapa0 {
       textureA: "plataformaNuevaLargaA",
       textureB: "plataformaNuevaLargaB",
       textureC: "plataformaNuevaLargaC",
-      pos: { x: 2600, y: 1200 },
+      pos: { x: 2940, y: 1200 },
       width: {
         textureA: 90,
         textureB: 67,
@@ -378,64 +376,82 @@ class Mapa0 {
       },
       scale: { width: 0.7, height: 0.7 },
       height: 127,
-      large: 20,
+      large: 40,
       rotated: false,
     };
     const p2 = new LargeFloorIsland(this.scene, p2Config, this.pisos);
-    
-    const p3Config: FloorConfig = {
-      texture: "plataformaNuevaA",
-      pos: { x: 900, y: 1030 },
-      fix: 25,
+
+    const p3Config: LargeFloorIslandConfig = {
+      textureA: "plataformaNuevaLargaA",
+      textureB: "plataformaNuevaLargaB",
+      textureC: "plataformaNuevaLargaC",
+      pos: { x: 5140, y: 1200 },
+      width: {
+        textureA: 90,
+        textureB: 67,
+        textureC: 115,
+      },
       scale: { width: 0.7, height: 0.7 },
-      width: 140,
-      height: 50,
+      height: 127,
+      large: 57,
+      rotated: false,
     };
-    const p3 = new Floor(this.scene, p3Config, this.pisos).setFlipX(true);
+    const p3 = new LargeFloorIsland(this.scene, p3Config,this.pisos);
     
     const p4Config: FloorConfig = {
-      pos: { x: 1100, y: 920 },
-      texture: "plataformaNuevaA",
-      fix: 25,
-      scale: { width: 0.7, height: 0.7 },
-      width: 140,
-      height: 50,
+    texture: "plataformaNuevaA",
+    pos: { x: 900, y: 1030 },
+    fix: 25,
+    scale: { width: 0.7, height: 0.7 },
+    width: 140,
+    height: 50,
     };
-    const p4 = new Floor(this.scene, p4Config, this.pisos);
-
+    const p4 = new Floor(this.scene, p4Config, this.pisos).setFlipX(true);
+      
+     
     const p5Config: FloorConfig = {
-      texture: "plataformaNuevaA",
-      pos: { x: 1800, y: 1030 },
-      fix: 25,
-      scale: { width: 0.7, height: 0.7 },
-      width: 140,
-      height: 50,
+    pos: { x: 1100, y: 920 },
+    texture: "plataformaNuevaA",
+    fix: 25,
+    scale: { width: 0.7, height: 0.7 },
+    width: 140,
+    height: 50,
     };
-    const p5 = new Floor(this.scene, p5Config, this.pisos).setFlipX(true);
-    
-    const p6Config: FloorConfig = {
-      pos: { x: 2100, y: 920 },
-      texture: "plataformaNuevaA",
-      fix: 25,
-      scale: { width: 0.7, height: 0.7 },
-      width: 140,
-      height: 50,
-    };
-    const p6 = new Floor(this.scene, p6Config, this.pisos);
-    
-    const p7Config: FloorConfig = {
-      texture: "plataformaNuevaA",
-      pos: { x: 1900, y: 740 },
-      fix: 25,
-      scale: { width: 0.7, height: 0.7 },
-      width: 140,
-      height: 50,
-    };
-    const p7 = new Floor(this.scene, p7Config, this.pisos2).setFlipX(true);
+    const p5 = new Floor(this.scene, p5Config, this.pisos);
+
+  const p6Config: FloorConfig = {
+    texture: "plataformaNuevaA",
+    pos: { x: 1800, y: 1030 },
+    fix: 25,
+    scale: { width: 0.7, height: 0.7 },
+    width: 140,
+    height: 50,
+  };
+  const p6 = new Floor(this.scene, p6Config, this.pisos).setFlipX(true);
+  
+  const p7Config: FloorConfig = {
+    pos: { x: 2100, y: 920 },
+    texture: "plataformaNuevaA",
+    fix: 25,
+    scale: { width: 0.7, height: 0.7 },
+    width: 140,
+    height: 50,
+  };
+  const p7 = new Floor(this.scene, p7Config, this.pisos);
+  
+  const p8Config: FloorConfig = {
+    texture: "plataformaNuevaA",
+    pos: { x: 1900, y: 740 },
+    fix: 25,
+    scale: { width: 0.7, height: 0.7 },
+    width: 140,
+    height: 50,
+  };
+  const p8 = new Floor(this.scene, p8Config, this.pisos).setFlipX(true);
 
     //Portal, Coin and Asteroids
     const portalConfig: FloorConfig = {
-      pos: { x: 3500, y: 1090 }, // x: 2400
+      pos: { x: 7700, y: 1090 }, // x: 2400
       texture: "plataformaFinalP1",
       // scale: {width: 0.7, height: 0.7},
       width: 100,
@@ -446,7 +462,7 @@ class Mapa0 {
 
     const coinConfig: FloorConfig = {
       texture: "cristal3",
-      pos: { x: 1700, y: 600 },
+      pos: { x: 3700, y: 600 },
       scale: { width: 0.7, height: 0.7 },
       width: 40,
       height: 18,

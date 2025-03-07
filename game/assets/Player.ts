@@ -211,6 +211,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   setPlayerFlying(value: boolean) {
     this.isFlying = value
     this.gravityGroup.world.gravity.y = value ? 0 : this.gravity
+    this.setAcceleration(0, 0)
   }
   setCameraState(state: "NORMAL" | "ROTATED") {
     this.cameraState = state

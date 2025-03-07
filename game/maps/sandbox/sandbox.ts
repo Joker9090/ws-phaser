@@ -343,6 +343,8 @@ class Sandbox {
       }
     };
     const p2 = new Floor(this.scene, p2Config, this.pisos).setFlipX(true);
+        
+
 
     const invencibleConfig: FloorConfig = {
       texture: "cristal2",
@@ -356,7 +358,7 @@ class Sandbox {
     const invencible = new Floor(this.scene, p2Config, this.pisos).setFlipX(true);
 
 
-    const mapObjects =
+    // const mapObjects =
     // this.movingFloor.getChildren().concat(
     //     this.movingFloorRot.getChildren(),
     //     // this.invencible.getChildren(),
@@ -372,18 +374,9 @@ class Sandbox {
     //     this.firegroup.getChildren(),
     //   )
     // this.mapContainer.add(mapObjects)
-    // this.mapContainer.setDepth(10)
+    // this.mapContainer.setDepth(10);
 
-    this.scene.UICamera?.ignore(this.pisos)
-    this.scene.UICamera?.ignore(this.pisos2)
-    this.scene.UICamera?.ignore(this.pisos3)
-    this.scene.UICamera?.ignore(this.pisos4)
-    this.scene.UICamera?.ignore(this.pisosBack)
-    this.scene.UICamera?.ignore(this.firegroup)
-    this.scene.UICamera?.ignore(this.aura)
-    this.scene.UICamera?.ignore(this.invencible)
-    this.scene.UICamera?.ignore(this.mapContainer)
-    this.scene.UICamera?.ignore(this.frontContainer)
+    
     
     const zoneAConfig: ZoneConfig = {
       x: 1300,
@@ -395,10 +388,18 @@ class Sandbox {
       detectOnTouch: (player: Player, zone: MagicZone) => {
         this.player?.setPlayerWithTank(false)
         this.player?.setPlayerFlying(true)
+        if(!this.player?.invincible){
+          this.player?.setTint(0x00ff00)
+        } 
+        this.player?.tankGraphics?.clear()
       },
       detectOnExit: (player: Player, zone: MagicZone) => {
         this.player?.setPlayerFlying(false)
         this.player?.setPlayerWithTank(true)
+        if(!this.player?.invincible){
+          this.player?.clearTint()
+        } 
+        this.player?.drawTank()
       },
       effect: (zone: MagicZone) => {
         // add fx to the zone
@@ -415,6 +416,41 @@ class Sandbox {
       }
     }
     const zoneA = new MagicZone(this.scene,zoneAConfig)
+
+    const zoneBConfig: ZoneConfig = {
+      x: 1700,
+      y: 0,
+      width: 800,
+      height: 10000,
+      color: 0xffffff,
+      alpha: 0.2,
+      detectOnTouch: (player: Player, zone: MagicZone) => {
+        if(this.player){
+          this.player.setGravityOnPlayerX(10000)
+          // this.player.setGravityOnPlayer(0)
+        }
+      },
+      detectOnExit: (player: Player, zone: MagicZone) => {
+        if(this.player){
+          this.player.setGravityOnPlayerX(0)
+          // this.player.setGravityOnPlayer(1000)  
+        }
+      },
+      effect: (zone: MagicZone) => {
+        // add fx to the zone
+        zone.graphics.postFX.addBlur(1,0,0,8,0xffffff,1);
+        // move the zone
+        // this.scene.tweens.add({
+        //   targets: zone.graphics,
+        //   x: "-=100",
+        //   duration: 10000,
+        //   yoyo: true,
+        //   repeat: -1
+        // })
+        
+      }
+    }
+    const zoneB = new MagicZone(this.scene,zoneBConfig)
     this.scene.UICamera?.ignore(zoneA)
     
     const fireballConfig: FloorConfig = {
@@ -432,6 +468,17 @@ class Sandbox {
       frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
     };
     const fireball = new Floor(this.scene, fireballConfig, this.firegroup).setScale(0.5)
+
+    this.scene.UICamera?.ignore(this.pisos)
+    this.scene.UICamera?.ignore(this.pisos2)
+    this.scene.UICamera?.ignore(this.pisos3)
+    this.scene.UICamera?.ignore(this.pisos4)
+    this.scene.UICamera?.ignore(this.pisosBack)
+    this.scene.UICamera?.ignore(this.firegroup)
+    this.scene.UICamera?.ignore(this.aura)
+    this.scene.UICamera?.ignore(this.invencible)
+    this.scene.UICamera?.ignore(this.mapContainer)
+    this.scene.UICamera?.ignore(this.frontContainer)
   }
 
 

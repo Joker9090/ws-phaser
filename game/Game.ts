@@ -281,6 +281,13 @@ class Game extends Phaser.Scene {
     }
   }
 
+  changeScene(obj: GamePlayDataType){
+    
+    const multiScene = new MultiScene("Game",obj);
+    const scene = this.scene.add("MultiScene", multiScene, true);
+    this.scene.start("MultiScene").bringToTop("MultiScene");
+    this.masterManagerScene?.stopMusic();
+  }
   win() {
     if (this.canWin && this.player && this.map) {
       console.log(this.levelIs, "LEVEL IS JOTITA");
@@ -596,11 +603,16 @@ class Game extends Phaser.Scene {
       default:
         this.player = new Player(this, 0, 0, "character", 2);
         
-        this.map = new p1Mapa0(this, this.player!);
+        this.map = new p1Mapa0(this, this.player!, data);
         this.loopMusic = "planet0LoopMusic";
         break;
     }
-    const { x, y } = this.map.startingPoint;
+    
+    let { x, y } = this.map.startingPoint;
+    if(data.startingPositionFromOtherScene){
+      x = data.startingPositionFromOtherScene.x;
+      y = data.startingPositionFromOtherScene.y;
+    }
     this.player.setPosition(x, y);
     /* Audio */
     this.masterManagerScene = this.game.scene.getScene(

@@ -281,7 +281,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     } else {
       
       if (!this.isJumping && condition) {
-        let jumpForce = 500;
+        let jumpForce = 700;
 
         this.isJumping = true;
         this.anims.play("playerJump",true).once('animationcomplete', this.idle);

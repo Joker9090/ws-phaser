@@ -324,6 +324,7 @@ class Game extends Phaser.Scene {
         if (this.map?.coin && this.map.endPortal) {
           this.canNextLevel = true;
           this.canWin = true;
+          this.map.endPortal.setTint(0x00ff00);
           this.map.coin.setVisible(false);
           this.map.aura?.setVisible(false);
           this.map.coin.clear(true);

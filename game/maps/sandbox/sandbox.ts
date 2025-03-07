@@ -44,6 +44,7 @@ class Sandbox {
   aura?: Phaser.Physics.Arcade.Group;
   movingFloor?: Phaser.Physics.Arcade.Group;
   movingFloorRot?: Phaser.Physics.Arcade.Group;
+  flyingPiso?: Phaser.Physics.Arcade.Group;
   p13!: Phaser.GameObjects.Sprite;
   amountLifes: number = 0;
   sideGrav: boolean = false;
@@ -250,6 +251,7 @@ class Sandbox {
     this.coin = this.scene.physics.add.group({ allowGravity: false });
     this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
     this.portal = this.scene.physics.add.group({ allowGravity: false });
+    this.flyingPiso = this.scene.physics.add.group({allowGravity:false, immovable: true});
     const aura = this.scene.add.sprite(1500, 600, "auraTuto").setScale(0.6)
     this.aura.add(aura)
 
@@ -341,6 +343,7 @@ class Sandbox {
     // this.mapContainer.setDepth(10)
 
     this.scene.UICamera?.ignore(this.mapContainer)
+    this.scene.UICamera?.ignore(this.pisos)
     this.scene.UICamera?.ignore(this.frontContainer)
 
     const zoneAConfig: ZoneConfig = {

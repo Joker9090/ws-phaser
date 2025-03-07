@@ -40,6 +40,7 @@ class Sandbox {
   //  no float
   pisos4?: Phaser.Physics.Arcade.Group;
   coin?: Phaser.Physics.Arcade.Group;
+  invencible?: Phaser.Physics.Arcade.Group;
   portal?: Phaser.Physics.Arcade.Group;
   aura?: Phaser.Physics.Arcade.Group;
   movingFloor?: Phaser.Physics.Arcade.Group;
@@ -213,6 +214,24 @@ class Sandbox {
           () => true,
           this.scene
         );
+      if(this.invencible){
+        this.scene.physics.add.overlap(
+          this.scene.player,
+          this.invencible,
+          () => {
+            if(!this.player?.invincible ){
+              this.player?.setPlayerInvicinible(true)
+              this.invencible?.setVisible(false)
+              this.scene.time.delayedCall(5000, () => {
+                this.player?.setPlayerInvicinible(false)
+                this.invencible?.setVisible(true)
+              })
+            }
+          },
+          () => true,
+          this.scene
+        )
+      }  
       if (this.portal)
         this.scene.physics.add.overlap(
           this.scene.player,
@@ -249,6 +268,7 @@ class Sandbox {
     this.firegroup = this.scene.physics.add.group({ allowGravity: false });
     this.amountLifes = data.lifes;
     this.coin = this.scene.physics.add.group({ allowGravity: false });
+    this.invencible = this.scene.physics.add.group({ allowGravity: false });
     this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
     this.portal = this.scene.physics.add.group({ allowGravity: false });
     this.flyingPiso = this.scene.physics.add.group({allowGravity:false, immovable: true});
@@ -287,7 +307,6 @@ class Sandbox {
 
     const p1Config: LargeFloorIslandConfig = {
       withTextureToAbove: true,
-
       textureA: "plataformaNuevaLargaA",
       textureB: "plataformaNuevaLargaB",
       textureC: "plataformaNuevaLargaC",
@@ -325,64 +344,79 @@ class Sandbox {
     };
     const p2 = new Floor(this.scene, p2Config, this.pisos).setFlipX(true);
 
+    const invencibleConfig: FloorConfig = {
+      texture: "cristal2",
+      pos: { x: 1100, y: 1000 },
+      scale: { width: 0.7, height: 0.7 },
+      width: 40,
+      height: 18,
+      fix: 10,
+    };
+    this.cristal = new Floor(this.scene, invencibleConfig, this.invencible).setBodySize(140, 180).setTint(0xff0000).setDepth(10);
+    const invencible = new Floor(this.scene, p2Config, this.pisos).setFlipX(true);
 
-    // const mapObjects =
+
+    const mapObjects =
     // this.movingFloor.getChildren().concat(
     //     this.movingFloorRot.getChildren(),
-    //     this.pisos.getChildren(),
+    //     // this.invencible.getChildren(),
     //     this.pisosBack.getChildren(),
-    //     this.pisos2.getChildren(),
-    //     this.pisos3.getChildren(),
-    //     this.pisos4.getChildren(),
+    //     // this.pisos2.getChildren(),
+    //     // this.pisos3.getChildren(),
+    //     // this.pisos4.getChildren(),
+    //     // this.pisos.getChildren(),
     //     this.coin.getChildren(),
     //     this.aura.getChildren(),
     //     this.portal.getChildren(),
     //     this.aura.getChildren(),
+    //     this.firegroup.getChildren(),
     //   )
     // this.mapContainer.add(mapObjects)
     // this.mapContainer.setDepth(10)
 
-    this.scene.UICamera?.ignore(this.mapContainer)
     this.scene.UICamera?.ignore(this.pisos)
+    this.scene.UICamera?.ignore(this.pisos2)
+    this.scene.UICamera?.ignore(this.pisos3)
+    this.scene.UICamera?.ignore(this.pisos4)
+    this.scene.UICamera?.ignore(this.pisosBack)
+    this.scene.UICamera?.ignore(this.firegroup)
+    this.scene.UICamera?.ignore(this.aura)
+    this.scene.UICamera?.ignore(this.invencible)
+    this.scene.UICamera?.ignore(this.mapContainer)
     this.scene.UICamera?.ignore(this.frontContainer)
-
+    
     const zoneAConfig: ZoneConfig = {
-      x: 800,
+      x: 1300,
       y: 0,
       width: 200,
       height: 10000,
       color: 0xffffff,
       alpha: 0.2,
       detectOnTouch: (player: Player, zone: MagicZone) => {
-        // player.setPlayerFlying(true)
-
-        // se setea un state invincible true con esta funcion que a su vez setea el color del efecto 
-        // luego en el collider se checkea que valor tiene esa property
-        player.setPlayerInvicinible(true)
+        this.player?.setPlayerWithTank(false)
+        this.player?.setPlayerFlying(true)
       },
       detectOnExit: (player: Player, zone: MagicZone) => {
-        // player.setPlayerFlying(false)
-        //le puse un delay para que tengas un tiempo fuera del glow donde aun tenes el efecto, esto se setea por zona y no es necesario 
-        this.scene.time.delayedCall(2000, () => {
-          player.setPlayerInvicinible(false)
-        })
+        this.player?.setPlayerFlying(false)
+        this.player?.setPlayerWithTank(true)
       },
       effect: (zone: MagicZone) => {
         // add fx to the zone
         zone.graphics.postFX.addBlur(1,0,0,8,0xffffff,1);
-       // move the zone
-        this.scene.tweens.add({
-          targets: zone.graphics,
-          x: "-=100",
-          duration: 10000,
-          yoyo: true,
-          repeat: -1
-        })
-      
+        // move the zone
+        // this.scene.tweens.add({
+        //   targets: zone.graphics,
+        //   x: "-=100",
+        //   duration: 10000,
+        //   yoyo: true,
+        //   repeat: -1
+        // })
+        
       }
     }
     const zoneA = new MagicZone(this.scene,zoneAConfig)
-
+    this.scene.UICamera?.ignore(zoneA)
+    
     const fireballConfig: FloorConfig = {
       spriteSheet: "meteoritop3",
       texture: "meteorito",

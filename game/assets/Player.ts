@@ -13,7 +13,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
   scene: Game |MultiScene | PreLoadScene;
   gravityAnimSprite?: Phaser.GameObjects.Sprite;
-
+  invincible: boolean = false;
   isFlying: boolean = false;
   withTank: boolean = false;
   tankGraphics?: Phaser.GameObjects.Graphics;
@@ -218,6 +218,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
   setPlayerState(state: "NORMAL" | "ROTATED") {
     this.playerState = state
+  }
+
+  setPlayerInvicinible(value: boolean) {
+    this.invincible = value
+    this.setTint(value ? 0xffd700 : 0xffffff)
   }
 
   idle() {

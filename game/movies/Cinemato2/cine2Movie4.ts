@@ -50,13 +50,14 @@ class cine2Movie4 {
         //     this.cine.sound.add("C2_7").setVolume(0.25).play()
         // }, 500)
         this.cine.sound.add("inside").setVolume(0.50).play()
+        this.cine.sound.get("outside").destroy();
         this.cine.time.delayedCall(3000, () => {
             this.cine.sound.add("warning").setVolume(0.50).play()
             this.cine.time.delayedCall(3000, () => {
                 this.cine.sound.add("scanner1").play()
                 this.cine.sound.add("scanner2").setVolume(0.25).play();
                 this.cine.time.delayedCall(5500, () => {
-                    this.cine.sound.add("scanner3").setVolume(0.25).play()
+                    this.cine.sound.add("scanner3").setVolume(0.15).play()
                 })
             })
         })

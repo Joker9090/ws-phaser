@@ -171,10 +171,16 @@ class cine2Movie1 {
         loop: -1,
         ease: "ease",
         onStart: () => {
-          this.cine.sound.add("steps").setVolume(0.30).play({ loop: true });
+          const stepsSound = this.cine.sound.get("steps");
+          if (!stepsSound) {
+            this.cine.sound.add("steps").setVolume(0.30).play({ loop: true });
+          }
         },
         onUpdate: () => {
-          if (this.nextCine) this.cine.sound.get("steps").destroy();
+          if (this.nextCine) {
+            const stepsSound = this.cine.sound.get("steps");
+            if (stepsSound) stepsSound.destroy();
+          }
         }
       });
 

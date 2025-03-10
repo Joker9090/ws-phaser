@@ -491,6 +491,24 @@ class Sandbox {
     };
     const fireball = new Floor(this.scene, fireballConfig, this.firegroup).setScale(0.5)
 
+    const fireball2Config: FloorConfig = {
+      spriteSheet: "meteoritop3",
+      texture: "meteorito",
+      pos: { x: -0, y: 800 }, // 500 1580
+      width: 100,
+      rotated:true,
+      height: 100,
+      tween: {
+        duration: 3000,
+        repeat: -1,
+        delay: Math.random() * 1000,
+        x: "+=4000",
+      },
+      frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+    };
+    const fireball2 = new Floor(this.scene, fireball2Config, this.firegroup).setScale(0.5).setFlipY(true)
+    
+
     this.scene.UICamera?.ignore(this.pisos)
     this.scene.UICamera?.ignore(this.pisos2)
     this.scene.UICamera?.ignore(this.pisos3)

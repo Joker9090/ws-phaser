@@ -21,7 +21,7 @@ class Sandbox {
   scene: Game;
   worldSize = {
     width: 10000,
-    height: 1300,
+    height: 2000,
   };
   cameraBounds = {
     x: 0,
@@ -93,7 +93,7 @@ class Sandbox {
   constructor(scene: Game, player: Player, data?: GamePlayDataType) {
     this.scene = scene;
     this.player = player;
-
+    this.player.setPlayerWithTank(true)
     // this.player.setPlayerWithTank(true)
    
 
@@ -403,7 +403,7 @@ class Sandbox {
     const zoneAConfig: ZoneConfig = {
       x: 1300,
       y: 0,
-      width: 200,
+      width: 900,
       height: 10000,
       color: 0xffffff,
       alpha: 0.2,
@@ -439,53 +439,53 @@ class Sandbox {
     }
     const zoneA = new MagicZone(this.scene,zoneAConfig)
 
-    const zoneBConfig: ZoneConfig = {
-      x: 1700,
-      y: 0,
-      width: 800,
-      height: 10000,
-      color: 0xffffff,
-      alpha: 0.2,
-      detectOnTouch: (player: Player, zone: MagicZone) => {
-        if(this.player){
-          this.player.setGravityOnPlayerX(10000)
-          // this.player.setGravityOnPlayer(0)
-        }
-      },
-      detectOnExit: (player: Player, zone: MagicZone) => {
-        if(this.player){
-          this.player.setGravityOnPlayerX(0)
-          // this.player.setGravityOnPlayer(1000)  
-        }
-      },
-      effect: (zone: MagicZone) => {
-        // add fx to the zone
-        zone.graphics.postFX.addBlur(1,0,0,8,0xffffff,1);
-        // move the zone
-        // this.scene.tweens.add({
-        //   targets: zone.graphics,
-        //   x: "-=100",
-        //   duration: 10000,
-        //   yoyo: true,
-        //   repeat: -1
-        // })
+    // const zoneBConfig: ZoneConfig = {
+    //   x: 1700,
+    //   y: 0,
+    //   width: 800,
+    //   height: 10000,
+    //   color: 0xffffff,
+    //   alpha: 0.2,
+    //   detectOnTouch: (player: Player, zone: MagicZone) => {
+    //     if(this.player){
+    //       this.player.setGravityOnPlayerX(10000)
+    //       // this.player.setGravityOnPlayer(0)
+    //     }
+    //   },
+    //   detectOnExit: (player: Player, zone: MagicZone) => {
+    //     if(this.player){
+    //       this.player.setGravityOnPlayerX(0)
+    //       // this.player.setGravityOnPlayer(1000)  
+    //     }
+    //   },
+    //   effect: (zone: MagicZone) => {
+    //     // add fx to the zone
+    //     zone.graphics.postFX.addBlur(1,0,0,8,0xffffff,1);
+    //     // move the zone
+    //     // this.scene.tweens.add({
+    //     //   targets: zone.graphics,
+    //     //   x: "-=100",
+    //     //   duration: 10000,
+    //     //   yoyo: true,
+    //     //   repeat: -1
+    //     // })
         
-      }
-    }
-    const zoneB = new MagicZone(this.scene,zoneBConfig)
+    //   }
+    // }
+    // const zoneB = new MagicZone(this.scene,zoneBConfig)
     this.scene.UICamera?.ignore(zoneA)
     
     const fireballConfig: FloorConfig = {
       spriteSheet: "meteoritop3",
       texture: "meteorito",
-      pos: { x: 1000, y: 0 }, // 500 1580
+      pos: { x: 1000, y: -200 }, // 500 1580
       width: 100,
       height: 100,
       tween: {
-        duration: 4000,
+        duration: 3000,
         repeat: -1,
         delay: Math.random() * 1000,
-        y: "+=2500",
+        y: "+=4000",
       },
       frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
     };

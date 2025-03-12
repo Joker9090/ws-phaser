@@ -22,6 +22,10 @@ export default class UIClass {
   timeLevel: number = 0;
   timerText?: Phaser.GameObjects.Text;
   minutes: number = 0;
+  //TEST COLLECTABLES
+  collText?: Phaser.GameObjects.Text;
+  collected: number=0;
+
   container: Phaser.GameObjects.Container;
   progressParam: number = 0;
   settingsVisible: boolean = false;
@@ -239,8 +243,20 @@ export default class UIClass {
       });
 
       this.container.add([this.timerText]);
+
+      this.collText = this.scene.add
+        .text(150, 150, `${this.collected}`, { fontSize: "32px" })
+        .setOrigin(0.5, 0.5)
+        .setScrollFactor(0, 0)
+        .setDepth(100)
+        .setSize(50, 50);
+      this.container.add([this.collText]);
     }
     this.scene.cameras.main.ignore(this.container)
+  }
+  sumCollectable(){
+    this.collected++;
+    this.collText?.setText(`${this.collected}`);
   }
 
   update() {

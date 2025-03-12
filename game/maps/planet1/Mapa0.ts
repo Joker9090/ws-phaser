@@ -16,6 +16,7 @@ import LargeFloorIsland, {
 } from "@/game/assets/LargeFloorIsland";
 import TextBox from "@/game/assets/TextBox";
 import MasterManager from "@/game/MasterManager";
+import { TURBO_TRACE_DEFAULT_MEMORY_LIMIT } from "next/dist/shared/lib/constants";
 
 class Mapa0 {
   isJumping = false;
@@ -23,13 +24,13 @@ class Mapa0 {
   scene: Game;
   worldSize = {
     width: 6000,
-    height: 1800,
+    height: 2000,
   };
   cameraBounds = {
     x: 0,
     y: 0,
     width: 6000,
-    height: 1300,
+    height: 2000,
   };
   // normales
   pisos?: Phaser.Physics.Arcade.Group;
@@ -45,6 +46,9 @@ class Mapa0 {
   fireballGroup?: Phaser.Physics.Arcade.Group;
 
   coin?: Phaser.Physics.Arcade.Group;
+  //TEST COLLECTABLES
+  collectables?: Phaser.Physics.Arcade.Group;
+
   portal?: Phaser.Physics.Arcade.Group;
   aura?: Phaser.Physics.Arcade.Group;
   movingFloor?: Phaser.Physics.Arcade.Group;
@@ -139,23 +143,23 @@ class Mapa0 {
       this.masterManager = masterManagerScene;
     }
     
-    this.background = this.scene.add.image(-200, 0, "background0P1").setOrigin(0,0);
-    this.background2 = this.scene.add.image(-200, 310, "background1P1").setOrigin(0,0);
-    this.background3 = this.scene.add.image(-200, 0, "backgroundStars").setOrigin(0,0);
+    this.background = this.scene.add.image(-400, 0, "background0P1").setOrigin(0,0);
+    this.background2 = this.scene.add.image(-400, 310, "background1P1").setOrigin(0,0);
+    this.background3 = this.scene.add.image(-400, 0, "backgroundStars").setOrigin(0,0);
     this.background4 = this.scene.add.image(this.background.width, 0, "background0P1").setOrigin(0,0);
     this.background5 =  this.scene.add.image(this.background.x + this.background.width, 490, "background1P1").setOrigin(0,0);
     this.background6 =  this.scene.add.image(this.background.width, 0, "backgroundStars").setOrigin(0,0);
 
-    this.background7 = this.scene.add.image(-250, 700, "frontGround1").setOrigin(0,0);
-    this.background8 = this.scene.add.image(this.background7.x + this.background7.width, 819, "frontGround2").setOrigin(0,0);
-    this.background9 = this.scene.add.image(this.background8.x + this.background8.width-50, 700, "frontGround1").setOrigin(0,0);
-    this.background10 = this.scene.add.image(this.background9.x + this.background9.width-20, 819, "frontGround2").setOrigin(0,0);
+    this.background7 = this.scene.add.image(-250, 1300, "frontGround1").setOrigin(0,0);
+    this.background8 = this.scene.add.image(this.background7.x + this.background7.width, 1419, "frontGround2").setOrigin(0,0);
+    this.background9 = this.scene.add.image(this.background8.x + this.background8.width-50, 1300, "frontGround1").setOrigin(0,0);
+    this.background10 = this.scene.add.image(this.background9.x + this.background9.width-20, 1419, "frontGround2").setOrigin(0,0);
 
-    this.mountain1 = this.scene.add.image( 1000, 900, "montaña3").setOrigin(0,0);
-    this.mountain2 = this.scene.add.image( 3400, 900, "montaña5").setOrigin(0,0);
-    this.mountain3 = this.scene.add.image( 4800, 1100, "montaña2").setOrigin(0,0);
-    this.mountain4 = this.scene.add.image( 1300, 500, "montaña3").setOrigin(0,0);
-    this.mountain5 = this.scene.add.image( 4000, 500, "montaña4").setOrigin(0,0);
+    this.mountain1 = this.scene.add.image( 1000, 1700, "montaña3").setOrigin(0,0);
+    this.mountain2 = this.scene.add.image( 3400, 1700, "montaña5").setOrigin(0,0);
+    this.mountain3 = this.scene.add.image( 4800, 1700, "montaña2").setOrigin(0,0);
+    this.mountain4 = this.scene.add.image( 1300, 1100, "montaña3").setOrigin(0,0);
+    this.mountain5 = this.scene.add.image( 4000, 1100, "montaña4").setOrigin(0,0);
     
     this.backgroundsBack = [
       this.background,
@@ -352,6 +356,18 @@ class Mapa0 {
           () => true,
           this.scene
         );
+      if(this.collectables){
+        this.scene.physics.add.overlap(
+          this.scene.player,
+          this.collectables,
+          (player, collectable) => {
+            this.scene.touchItem("collectable");
+            collectable.destroy();
+          },
+          () => true,
+          this.scene
+        );
+      };
       if (this.pisos2) {
         this.scene.physics.add.collider(
           this.scene.player,
@@ -413,6 +429,8 @@ class Mapa0 {
     this.fireballGroup = this.scene.physics.add.group({ allowGravity: false });
     this.amountLifes = data.lifes;
     this.coin = this.scene.physics.add.group({ allowGravity: false });
+    //TEST COLLECTABLES
+    this.collectables= this.scene.physics.add.group({allowGravity:false});
     this.aura = this.scene.physics.add.group({
       allowGravity: false,
       immovable: true,
@@ -453,7 +471,7 @@ class Mapa0 {
       textureA: "plataformaNuevaLargaA",
       textureB: "plataformaNuevaLargaB",
       textureC: "plataformaNuevaLargaC",
-      pos: { x: 300, y: 1200 },
+      pos: { x: 200, y: 1800 },
       width: {
         textureA: 90,
         textureB: 67,
@@ -502,7 +520,7 @@ class Mapa0 {
     
     const p4Config: FloorConfig = {
     texture: "plataformaNuevaA",
-    pos: { x: 900, y: 1030 },
+    pos: { x: 900, y: 1630 },
     fix: 25,
     scale: { width: 0.7, height: 0.7 },
     width: 140,
@@ -511,7 +529,7 @@ class Mapa0 {
     const p4 = new Floor(this.scene, p4Config, this.pisos).setFlipX(true);
     
     const p5Config: FloorConfig = {
-    pos: { x: 1100, y: 920 },
+    pos: { x: 1100, y: 1520 },
     texture: "plataformaNuevaA",
     fix: 25,
     scale: { width: 0.7, height: 0.7 },
@@ -522,7 +540,7 @@ class Mapa0 {
 
   const p6Config: FloorConfig = {
     texture: "plataformaNuevaA",
-    pos: { x: 1800, y: 1030 },
+    pos: { x: 1800, y: 1630 },
     fix: 25,
     scale: { width: 0.7, height: 0.7 },
     width: 140,
@@ -531,7 +549,7 @@ class Mapa0 {
   const p6 = new Floor(this.scene, p6Config, this.pisos).setFlipX(true);
   
   const p7Config: FloorConfig = {
-    pos: { x: 2100, y: 920 },
+    pos: { x: 2100, y: 1520 },
     texture: "plataformaNuevaA",
     fix: 25,
     scale: { width: 0.7, height: 0.7 },
@@ -542,7 +560,7 @@ class Mapa0 {
   
   const p8Config: FloorConfig = {
     texture: "plataformaNuevaA",
-    pos: { x: 1900, y: 740 },
+    pos: { x: 1900, y: 1340 },
     fix: 25,
     scale: { width: 0.7, height: 0.7 },
     width: 140,
@@ -582,7 +600,7 @@ class Mapa0 {
 
   const p12Config: FloorConfig = {
   texture: "plataformaNuevaA",
-    pos: { x: 2700, y: 600 },
+    pos: { x: 2700, y: 1200 },
     fix: 25,
     scale: { width: 0.7, height: 0.7 },
     width: 140,
@@ -612,6 +630,85 @@ class Mapa0 {
       140,
       180
     );
+    //TEST COLLECTABLES
+    this.scene.canWin=true;//Portal is constantly ON
+
+    const coll1Config: FloorConfig = {
+      texture: "cristal3",
+      pos: { x: 900, y: 1500 },
+      scale: { width: 0.7, height: 0.7 },
+      width: 40,
+      height: 18,
+      fix: 25,
+    }
+    const coll1 = new Floor(this.scene, coll1Config, this.collectables).setBodySize(140,180);
+    coll1.setTint(0xffff00);
+
+    const coll2Config: FloorConfig = {
+      texture: "cristal3",
+      pos: { x: 1100, y: 1400 },
+      scale: { width: 0.7, height: 0.7 },
+      width: 40,
+      height: 18,
+      fix: 25,
+    }
+    const coll2 = new Floor(this.scene, coll2Config, this.collectables).setBodySize(140,180);
+    coll2.setTint(0xffff00);
+
+    const coll3Config: FloorConfig = {
+      texture: "cristal3",
+      pos: { x:1300, y: 1300 },
+      scale: { width: 0.7, height: 0.7 },
+      width: 40,
+      height: 18,
+      fix: 25,
+    }
+    const coll3 = new Floor(this.scene, coll3Config, this.collectables).setBodySize(140,180);
+    coll3.setTint(0xffff00);
+
+    const coll4Config: FloorConfig = {
+      texture: "cristal3",
+      pos: { x: 1800, y: 1500 },
+      scale: { width: 0.7, height: 0.7 },
+      width: 40,
+      height: 18,
+      fix: 25,
+    }
+    const coll4 = new Floor(this.scene, coll4Config, this.collectables).setBodySize(140,180);
+    coll4.setTint(0xffff00);
+
+    const coll5Config: FloorConfig = {
+      texture: "cristal3",
+      pos: { x: 2100, y: 1400 },
+      scale: { width: 0.7, height: 0.7 },
+      width: 40,
+      height: 18,
+      fix: 25,
+    }
+    const coll5 = new Floor(this.scene, coll5Config, this.collectables).setBodySize(140,180);
+    coll5.setTint(0xffff00);
+
+    const coll6Config: FloorConfig = {
+      texture: "cristal3",
+      pos: { x: 1900, y: 1140 },
+      scale: { width: 0.7, height: 0.7 },
+      width: 40,
+      height: 18,
+      fix: 25,
+    }
+    const coll6 = new Floor(this.scene, coll6Config, this.collectables).setBodySize(140,180);
+    coll6.setTint(0xffff00);
+
+    const coll7Config: FloorConfig = {
+      texture: "cristal3",
+      pos: { x: 2500, y: 950 },
+      scale: { width: 0.7, height: 0.7 },
+      width: 40,
+      height: 18,
+      fix: 25,
+    }
+    const coll7 = new Floor(this.scene, coll7Config, this.collectables).setBodySize(140,180);
+    coll7.setTint(0xffff00);
 
     const fireball1Config: FloorConfig = {
       spriteSheet: "meteoritop1",
@@ -700,7 +797,8 @@ class Mapa0 {
         this.fireballGroup.getChildren(),
         this.coin.getChildren(),
         this.portal.getChildren(),
-        this.aura.getChildren()
+        this.aura.getChildren(),
+        this.collectables?.getChildren(),
       );
     this.mapContainer.add(mapObjects);
 

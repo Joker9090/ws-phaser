@@ -30,7 +30,7 @@ class Mapa0 {
     x: 0,
     y: 0,
     width: 6000,
-    height: 2000,
+    height: 1850,
   };
   // normales
   pisos?: Phaser.Physics.Arcade.Group;
@@ -44,6 +44,7 @@ class Mapa0 {
   pisos4?: Phaser.Physics.Arcade.Group;
 //Fireball
   fireballGroup?: Phaser.Physics.Arcade.Group;
+
 
   coin?: Phaser.Physics.Arcade.Group;
   //TEST COLLECTABLES
@@ -443,7 +444,7 @@ class Mapa0 {
       this.scene,
       "It doesn't seem like a dangerous planet. I hope to find a source of energy to continue my journey.",
       600,
-      700,
+      1300,
       300
     ).setVisible(false);
 
@@ -451,7 +452,7 @@ class Mapa0 {
       this.scene,
       "A source of energy! Now I can continue my journey across the planet.",
       3800,
-      200,
+      500,
       400
     ).setVisible(false);
 
@@ -488,7 +489,7 @@ class Mapa0 {
       textureA: "plataformaNuevaLargaA",
       textureB: "plataformaNuevaLargaB",
       textureC: "plataformaNuevaLargaC",
-      pos: { x: 2940, y: 1200 },
+      pos: { x: 2940, y: 1500 },
       width: {
         textureA: 90,
         textureB: 67,
@@ -570,7 +571,7 @@ class Mapa0 {
 
   const p9Config: FloorConfig = {
   texture: "plataformaNuevaA",
-    pos: { x: 3200, y: 1030 },
+    pos: { x: 3200, y: 1330 },
     fix: 25,
     scale: { width: 0.7, height: 0.7 },
     width: 140,
@@ -580,7 +581,7 @@ class Mapa0 {
 
   const p10Config: FloorConfig = {
   texture: "plataformaNuevaA",
-    pos: { x: 3600, y: 800 },
+    pos: { x: 3600, y: 1100 },
     fix: 25,
     scale: { width: 0.7, height: 0.7 },
     width: 140,
@@ -590,7 +591,7 @@ class Mapa0 {
 
   const p11Config: FloorConfig = {
   texture: "plataformaNuevaA",
-    pos: { x: 4200, y: 460 },
+    pos: { x: 4200, y: 760 },
     fix: 25,
     scale: { width: 0.7, height: 0.7 },
     width: 140,
@@ -600,16 +601,27 @@ class Mapa0 {
 
   const p12Config: FloorConfig = {
   texture: "plataformaNuevaA",
-    pos: { x: 2700, y: 1200 },
+    pos: { x: 2700, y: 1500 },
     fix: 25,
     scale: { width: 0.7, height: 0.7 },
     width: 140,
     height: 50,
   }
   const p12 = new Floor(this.scene, p12Config, this.pisos).setFlipX(true);
+
+  const boxConfig: FloorConfig = {
+  texture: "plataformaNuevaA",
+    pos: {x: 1500, y: 1740 },
+    fix: 25,
+    scale: { width: 0.7, height: 0.7 },
+    width: 140,
+    height: 50,
+  }
+  const box = new Floor(this.scene, boxConfig, this.pisos).setFlipX(true);
+  box.setTint(0x999999);
     //Portal, Coin and Asteroids
     const portalConfig: FloorConfig = {
-      pos: { x: 4640, y: 1090 }, // x: 2400
+      pos: { x: 4640, y: 1390 }, // x: 2400
       texture: "plataformaFinalP1",
       // scale: {width: 0.7, height: 0.7},
       width: 100,
@@ -719,7 +731,7 @@ class Mapa0 {
       tween: {
         duration: 3000,
         repeat: -1,
-        y: "+=1750",
+        y: "+=2000",
       },
       frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
     };
@@ -734,7 +746,7 @@ class Mapa0 {
       tween: {
         duration: 5000,
         repeat: -1,
-        y: "+=1800",
+        y: "+=2000",
       },
       frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
     };

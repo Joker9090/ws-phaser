@@ -14,6 +14,7 @@ import { GamePlayDataType, loseConfigFromMapType } from "@/game/Types";
 import LargeFloorIsland, { LargeFloorIslandConfig } from "@/game/assets/LargeFloorIsland";
 import TextBox from "@/game/assets/TextBox";
 import MagicZone, { ZoneConfig } from "@/game/assets/MagicZone";
+import Teleport from "@/game/assets/Teleport";
 
 class Sandbox {
   isJumping = false;
@@ -42,6 +43,7 @@ class Sandbox {
   coin?: Phaser.Physics.Arcade.Group;
   invencible?: Phaser.Physics.Arcade.Group;
   portal?: Phaser.Physics.Arcade.Group;
+  teleport?: Phaser.Physics.Arcade.Group;
   aura?: Phaser.Physics.Arcade.Group;
   movingFloor?: Phaser.Physics.Arcade.Group;
   movingFloorRot?: Phaser.Physics.Arcade.Group;
@@ -237,17 +239,17 @@ class Sandbox {
           this.scene.player,
           this.portal,
           () => {
-            const obj: GamePlayDataType =  {
-              level: 999,
-              lifes: this.scene.lifes ? this.scene.lifes : 3,
-              loadKey: ["Postales", "Cinemato1", "Cinemato2"],
-              startingPositionFromOtherScene: {
-                x: this.player!.x,
-                y: this.player!.y,
-              },
-            }
-            this.scene.changeScene(obj) // data
-            // this.scene.win()
+            // const obj: GamePlayDataType =  {
+            //   level: 999,
+            //   lifes: this.scene.lifes ? this.scene.lifes : 3,
+            //   loadKey: ["Postales", "Cinemato1", "Cinemato2"],
+            //   startingPositionFromOtherScene: {
+            //     x: this.player!.x,
+            //     y: this.player!.y,
+            //   },
+            // }
+            // this.scene.changeScene(obj) // data
+            this.scene.win()
           },
           () => true,
           this.scene
@@ -266,6 +268,17 @@ class Sandbox {
           this.scene
         )
       }  
+      if (this.teleport)
+        this.scene.physics.add.collider(
+          this.scene.player,
+          this.teleport,
+          (a, b) => {
+            const tp = b as Teleport
+            tp.trigger()
+          },
+          () => true,
+          this.scene
+        );
     }
   }
 
@@ -283,6 +296,7 @@ class Sandbox {
     this.invencible = this.scene.physics.add.group({ allowGravity: false });
     this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
     this.portal = this.scene.physics.add.group({ allowGravity: false });
+    this.teleport = this.scene.physics.add.group({ allowGravity: false });
     this.flyingPiso = this.scene.physics.add.group({allowGravity:false, immovable: true});
     const aura = this.scene.add.sprite(1500, 600, "auraTuto").setScale(0.6)
     this.aura.add(aura)
@@ -307,6 +321,18 @@ class Sandbox {
     const port = new Floor(this.scene, portalConfig, this.portal).setDepth(99);
     this.endPortal = port;
 
+    const otherSceneConf: GamePlayDataType =  {
+        level: 7,
+        lifes: this.scene.lifes ? this.scene.lifes : 3,
+        loadKey: ["Postales", "Cinemato1", "Cinemato2"],
+        startingPositionFromOtherScene: {
+          x: 2750,
+          y: 1000,
+        },
+      }
+
+    const teleport_1 = new Teleport(this.scene, { x: 500, y: 800, version: 1, sameScene: false, group: this.teleport, otherSceneConf: otherSceneConf })
+    // const teleport_2 = new Teleport(this.scene, { x: 1000, y: 1000, version: 1, sameScene: true, group: this.teleport })
 
     const pAConfig: LargeFloorIslandConfig = {
       withTextureToAbove: true,
@@ -501,6 +527,7 @@ class Sandbox {
     this.scene.UICamera?.ignore(this.invencible)
     this.scene.UICamera?.ignore(this.mapContainer)
     this.scene.UICamera?.ignore(this.frontContainer)
+    this.scene.UICamera?.ignore(this.teleport)
   }
 
 

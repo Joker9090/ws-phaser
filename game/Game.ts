@@ -289,7 +289,7 @@ class Game extends Phaser.Scene {
   }
 
   win() {
-    if (this.canWin && this.player && this.map) {
+    if (this.player && this.map) {
       console.log(this.levelIs, "LEVEL IS JOTITA");
       this.cameraNormal = true;
       if (this.map?.nextScene) {

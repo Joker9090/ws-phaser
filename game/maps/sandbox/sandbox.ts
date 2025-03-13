@@ -15,6 +15,7 @@ import LargeFloorIsland, { LargeFloorIslandConfig } from "@/game/assets/LargeFlo
 import TextBox from "@/game/assets/TextBox";
 import MagicZone, { ZoneConfig } from "@/game/assets/MagicZone";
 import Teleport from "@/game/assets/Teleport";
+import colors from "@/game/assets/PlatformColors";
 
 class Sandbox {
   isJumping = false;
@@ -22,12 +23,12 @@ class Sandbox {
   scene: Game;
   worldSize = {
     width: 10000,
-    height: 1300,
+    height: 2000,
   };
   cameraBounds = {
     x: 0,
     y: 0,
-    width: 2700,
+    width: 10000,
     height: 1300
   }
   // normales
@@ -84,20 +85,20 @@ class Sandbox {
   mountain4: Phaser.GameObjects.Image;
   mountain5: Phaser.GameObjects.Image;
   UIItemToGrab: string = 'cristal3';
-  UIItemScale?: number ;
+  UIItemScale?: number;
   cristal?: Floor;
   collected: Boolean = false;
   endPortal?: Floor;
-
+  rotate?: boolean = true
   mapContainer: Phaser.GameObjects.Container;
   frontContainer: Phaser.GameObjects.Container;
 
   constructor(scene: Game, player: Player, data?: GamePlayDataType) {
     this.scene = scene;
     this.player = player;
+    this.player.setPlayerWithTank(true)
 
-    // this.player.setPlayerWithTank(true)
-   
+
 
     // add delayed call
     // this.scene.time.delayedCall(4000, () => {
@@ -167,7 +168,7 @@ class Sandbox {
     ])
   }
 
-  animateBackground(player: Phaser.GameObjects.Sprite | Phaser.Math.Vector2 ) {
+  animateBackground(player: Phaser.GameObjects.Sprite | Phaser.Math.Vector2) {
     const { x, y } = this.startingPoint;
     const { x: x2, y: y2 } = player;
 
@@ -196,6 +197,12 @@ class Sandbox {
     this.mountain3.setPosition(1100 + calcDiffFMX, this.startingPoint.y + 470 + calcDiffFMY)
   }
 
+
+  // if (this.scene.player?.body?.touching.up || this.scene.player?.body?.touching.down) {
+  //   this.scene.changeGravity(true, 1000, 3);
+  // }
+
+
   addColliders() {
     if (this.scene.player) {
       if (this.pisos)
@@ -206,25 +213,63 @@ class Sandbox {
           () => true,
           this.scene
         );
+      if (this.pisos2)
+        this.scene.physics.add.collider(
+          this.scene.player,
+          this.pisos2,
+          () => {
+            if (this.scene.player?.body?.touching.up || this.scene.player?.body?.touching.down) {
+              this.scene.changeGravity(true, 1000, 3);
+            }
+            //this.background2.setPosition(this.startingPoint.x, this.startingPoint.y + 320)
+            //this.background4.setPosition(this.startingPoint.x, this.startingPoint.y + 320)
+          },
+          () => true,
+          this.scene
+        );
+      if (this.pisos3)
+        this.scene.physics.add.collider(
+          this.scene.player,
+          this.pisos3,
+          () => {
+            this.scene.rotateCam(true, 10);
+          },
+          () => true,
+          this.scene
+        );
+      if (this.pisos4)
+        this.scene.physics.add.collider(
+          this.scene.player,
+          this.pisos4,
+          () => {
+            if (this.rotate === true) {
+              this.scene.rotateCam(false, 10);
+              this.rotate = false
+            }
+            // this.scene.checkPoint = 0
+          },
+          () => true,
+          this.scene
+        );
       if (this.coin)
         this.scene.physics.add.overlap(
           this.scene.player,
           this.coin,
           () => {
-            
+
           },
           () => true,
           this.scene
         );
-      if(this.invencible){
+      if (this.invencible) {
         this.scene.physics.add.overlap(
           this.scene.player,
           this.invencible,
           () => {
-            if(!this.player?.invincible ){
+            if (!this.player?.invincible) {
               this.player?.setPlayerInvicinible(true)
               this.invencible?.setVisible(false)
-              this.scene.time.delayedCall(5000, () => {
+              this.scene.time.delayedCall(20000, () => {
                 this.player?.setPlayerInvicinible(false)
                 this.invencible?.setVisible(true)
               })
@@ -233,7 +278,7 @@ class Sandbox {
           () => true,
           this.scene
         )
-      }  
+      }
       if (this.portal)
         this.scene.physics.add.overlap(
           this.scene.player,
@@ -254,16 +299,16 @@ class Sandbox {
           () => true,
           this.scene
         );
-      if(this.firegroup){
+      if (this.firegroup) {
         this.scene.physics.add.overlap(
           this.scene.player,
           this.firegroup,
           () => {
-            if(!this.player?.invincible ){
+            if (!this.player?.invincible) {
               this.scene.touchItem("fireball")
               this.scene.player?.setVelocity(0)
             }
-          }, 
+          },
           () => true,
           this.scene
         )
@@ -297,7 +342,7 @@ class Sandbox {
     this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
     this.portal = this.scene.physics.add.group({ allowGravity: false });
     this.teleport = this.scene.physics.add.group({ allowGravity: false });
-    this.flyingPiso = this.scene.physics.add.group({allowGravity:false, immovable: true});
+    this.flyingPiso = this.scene.physics.add.group({ allowGravity: false, immovable: true });
     const aura = this.scene.add.sprite(1500, 600, "auraTuto").setScale(0.6)
     this.aura.add(aura)
 
@@ -312,7 +357,7 @@ class Sandbox {
     })
 
     const portalConfig: FloorConfig = {
-      pos: { x: 2400, y: 1090 }, // x: 2400
+      pos: { x: 6400, y: 1090 }, // x: 2400
       texture: "plataformaFinalP1",
       // scale: {width: 0.7, height: 0.7},
       width: 100,
@@ -366,46 +411,88 @@ class Sandbox {
       },
       scale: { width: 0.7, height: 0.7 },
       height: 127,
-      large: 50,
+      large: 200,
       rotated: false
     };
     const p1 = new LargeFloorIsland(this.scene, p1Config, this.pisos);
 
-    
     const p2Config: FloorConfig = {
-      texture: "plataformaNuevaA",
-      pos: { x: 900, y: 1020 },
-      fix: 25,
+      pos: { x: 1000, y: 900 },
+      texture: "pSimple1p3",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
-      height: 50,
-      animation: {
-        xAxis: {
-          xDistance: 200,
-          xVel: 100
-        },
-        yAxis: {
-          yDistance: 200,
-          yVel: -100
-        }
-      }
-    };
-    const p2 = new Floor(this.scene, p2Config, this.pisos).setFlipX(true);
-        
+      height: 20,
+    }
+    const p2 = new Floor(this.scene, p2Config, this.pisos2).setTint(colors.gravity)
+
+    const p3config: FloorConfig = {
+      pos: { x: 1000, y: 400 },
+      texture: "pSimple1p3",
+      scale: { width: 0.7, height: 0.7 },
+      width: 140,
+      height: 20,
+    }
+    const p3 = new Floor(this.scene, p3config, this.pisos).setFlipY(true)
+
+    const p4config: FloorConfig = {
+      pos: { x: 1400, y: 400 },
+      texture: "pSimple1p3",
+      scale: { width: 0.7, height: 0.7 },
+      width: 140,
+      height: 20,
+    }
+
+    const p4 = new Floor(this.scene, p4config, this.pisos2).setFlipY(true).setTint(colors.gravity)
+
+    const p5config: FloorConfig = {
+      pos: { x: 1400, y: 900 },
+      texture: "pSimple1p3",
+      scale: { width: 0.7, height: 0.7 },
+      width: 140,
+      height: 20,
+    }
+
+    const p5 = new Floor(this.scene, p5config, this.pisos)
+
+
+    const p6config: FloorConfig = {
+      pos: { x: 2000, y: 900 },
+      texture: "pSimple1p3",
+      scale: { width: 0.7, height: 0.7 },
+      width: 140,
+      height: 20
+    }
+
+    const p6 = new Floor(this.scene, p6config, this.pisos3).setTint(colors.rotate)
+
+    const p7config: FloorConfig = {
+      pos: { x: 2300, y: 900 },
+      texture: "pSimple1p3",
+      scale: { width: 0.7, height: 0.7 },
+      width: 140,
+      height: 20
+    }
+
+    const p7 = new Floor(this.scene, p7config, this.pisos4).setTint(colors.rotate)
 
 
     const invencibleConfig: FloorConfig = {
       texture: "cristal2",
-      pos: { x: 1100, y: 1000 },
+      pos: { x: 3900, y: 1000 },
       scale: { width: 0.7, height: 0.7 },
-      width: 40,
+      width: 10,
       height: 18,
       fix: 10,
     };
-    this.cristal = new Floor(this.scene, invencibleConfig, this.invencible).setBodySize(140, 180).setTint(0xff0000).setDepth(10);
-    const invencible = new Floor(this.scene, p2Config, this.pisos).setFlipX(true);
+    // this.cristal = new Floor(this.scene, invencibleConfig, this.invencible);
+    const invencible = new Floor(this.scene, invencibleConfig, this.invencible).setFlipX(true).setTint(0xff0000);
 
-
+    const line1 = this.scene.add.rectangle(4000, 1000, 10, 1000, 0xff0000).setOrigin(0.5, 0.5);
+    const line2 = this.scene.add.rectangle(5000, 1000, 10, 1000, 0xff0000).setOrigin(0.5, 0.5);
+    const text = this.scene.add.text(4250, 500, "testeo cristal invencible", {
+      fontSize: "32px",
+      color: "#ff0000",
+    }).setOrigin(0.5, 0.5);
     // const mapObjects =
     // this.movingFloor.getChildren().concat(
     //     this.movingFloorRot.getChildren(),
@@ -424,34 +511,34 @@ class Sandbox {
     // this.mapContainer.add(mapObjects)
     // this.mapContainer.setDepth(10);
 
-    
-    
+
+
     const zoneAConfig: ZoneConfig = {
-      x: 1300,
+      x: 2700,
       y: 0,
-      width: 200,
+      width: 1000,
       height: 10000,
       color: 0xffffff,
       alpha: 0.2,
       detectOnTouch: (player: Player, zone: MagicZone) => {
         this.player?.setPlayerWithTank(false)
         this.player?.setPlayerFlying(true)
-        if(!this.player?.invincible){
+        if (!this.player?.invincible) {
           this.player?.setTint(0x00ff00)
-        } 
+        }
         this.player?.tankGraphics?.clear()
       },
       detectOnExit: (player: Player, zone: MagicZone) => {
         this.player?.setPlayerFlying(false)
         this.player?.setPlayerWithTank(true)
-        if(!this.player?.invincible){
+        if (!this.player?.invincible) {
           this.player?.clearTint()
-        } 
+        }
         this.player?.drawTank()
       },
       effect: (zone: MagicZone) => {
         // add fx to the zone
-        zone.graphics.postFX.addBlur(1,0,0,8,0xffffff,1);
+        zone.graphics.postFX.addBlur(1, 0, 0, 8, 0xffffff, 1);
         // move the zone
         // this.scene.tweens.add({
         //   targets: zone.graphics,
@@ -460,62 +547,114 @@ class Sandbox {
         //   yoyo: true,
         //   repeat: -1
         // })
-        
-      }
-    }
-    const zoneA = new MagicZone(this.scene,zoneAConfig)
 
-    const zoneBConfig: ZoneConfig = {
-      x: 1700,
-      y: 0,
-      width: 800,
-      height: 10000,
-      color: 0xffffff,
-      alpha: 0.2,
-      detectOnTouch: (player: Player, zone: MagicZone) => {
-        if(this.player){
-          this.player.setGravityOnPlayerX(10000)
-          // this.player.setGravityOnPlayer(0)
-        }
-      },
-      detectOnExit: (player: Player, zone: MagicZone) => {
-        if(this.player){
-          this.player.setGravityOnPlayerX(0)
-          // this.player.setGravityOnPlayer(1000)  
-        }
-      },
-      effect: (zone: MagicZone) => {
-        // add fx to the zone
-        zone.graphics.postFX.addBlur(1,0,0,8,0xffffff,1);
-        // move the zone
-        // this.scene.tweens.add({
-        //   targets: zone.graphics,
-        //   x: "-=100",
-        //   duration: 10000,
-        //   yoyo: true,
-        //   repeat: -1
-        // })
-        
       }
     }
-    const zoneB = new MagicZone(this.scene,zoneBConfig)
-    this.scene.UICamera?.ignore(zoneA)
-    
-    const fireballConfig: FloorConfig = {
+    const zoneA = new MagicZone(this.scene, zoneAConfig)
+
+    // const zoneBConfig: ZoneConfig = {
+    //   x: 1700,
+    //   y: 0,
+    //   width: 800,
+    //   height: 10000,
+    //   color: 0xffffff,
+    //   alpha: 0.2,
+    //   detectOnTouch: (player: Player, zone: MagicZone) => {
+    //     if(this.player){
+    //       this.player.setGravityOnPlayerX(10000)
+    //       // this.player.setGravityOnPlayer(0)
+    //     }
+    //   },
+    //   detectOnExit: (player: Player, zone: MagicZone) => {
+    //     if(this.player){
+    //       this.player.setGravityOnPlayerX(0)
+    //       // this.player.setGravityOnPlayer(1000)  
+    //     }
+    //   },
+    //   effect: (zone: MagicZone) => {
+    //     // add fx to the zone
+    //     zone.graphics.postFX.addBlur(1,0,0,8,0xffffff,1);
+    //     // move the zone
+    //     // this.scene.tweens.add({
+    //     //   targets: zone.graphics,
+    //     //   x: "-=100",
+    //     //   duration: 10000,
+    //     //   yoyo: true,
+    //     //   repeat: -1
+    //     // })
+
+    //   }
+    // }
+    // const zoneB = new MagicZone(this.scene,zoneBConfig)
+    // this.scene.UICamera?.ignore(zoneA)
+
+    for (let i = 0; i < 100; i++) {
+      const fireballConfig: FloorConfig = {
       spriteSheet: "meteoritop3",
       texture: "meteorito",
-      pos: { x: 1000, y: 0 }, // 500 1580
+      pos: { x: 4000 + i * 10, y: -200 }, // 500 1580
       width: 100,
       height: 100,
       tween: {
-        duration: 4000,
+        duration: 3000,
         repeat: -1,
         delay: Math.random() * 1000,
-        y: "+=2500",
+        y: "+=4000",
+      },
+      frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+      };
+      const fireball = new Floor(this.scene, fireballConfig, this.firegroup).setScale(0.5)
+    }
+    const p8config: FloorConfig = {
+      pos: { x: 5200, y: 900 },
+      texture: "pSimple1p3",
+      scale: { width: 0.7, height: 0.7 },
+      width: 140,
+      height: 20,
+      animation:{
+        xAxis:{
+          xDistance:200,
+          xVel:100
+        }
+      }
+    }
+
+    const p8 = new Floor(this.scene, p8config, this.pisos)
+
+    const p9config: FloorConfig = {
+      pos: { x: 5800, y: 900 },
+      texture: "pSimple1p3",
+      scale: { width: 0.7, height: 0.7 },
+      width: 140,
+      height: 20,
+      animation:{
+        yAxis:{
+          yDistance:200,
+          yVel:100
+        }
+      }
+    }
+
+    const p9 = new Floor(this.scene, p9config, this.pisos)
+
+
+    const fireball2Config: FloorConfig = {
+      spriteSheet: "meteoritop3",
+      texture: "meteorito",
+      pos: { x: -0, y: 800 }, // 500 1580
+      width: 100,
+      rotated: true,
+      height: 100,
+      tween: {
+        duration: 3000,
+        repeat: -1,
+        delay: Math.random() * 1000,
+        x: "+=4000",
       },
       frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
     };
-    const fireball = new Floor(this.scene, fireballConfig, this.firegroup).setScale(0.5)
+    // const fireball2 = new Floor(this.scene, fireball2Config, this.firegroup).setScale(0.5).setFlipY(true)
+
 
     this.scene.UICamera?.ignore(this.pisos)
     this.scene.UICamera?.ignore(this.pisos2)

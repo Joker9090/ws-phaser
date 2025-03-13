@@ -56,8 +56,11 @@ class Teleport extends Phaser.GameObjects.Sprite {
 
     trigger() {
         if (this.config.sameScene) {
-            const otherTp = this.scene.children.list.find((child) => (child.objType === 'teleport' && child.config.sameScene && (child.body.position.x !== this.body.position.x || child.body.position.y !== this.body.position.y))) as Teleport;
-            if (otherTp) this.scene.player.setPosition(otherTp.body.position.x, otherTp.body.position.y)
+            const otherTp = this.scene.children.list.find((child) => {
+                const tp = child as Teleport;
+                return tp.objType === 'teleport' && tp.config.sameScene && tp.body && this.body && (tp.body.position.x !== this.body.position.x || tp.body.position.y !== this.body.position.y);
+            }) as Teleport;
+            if (otherTp?.body && this.scene.player) this.scene.player.setPosition(otherTp.body.position.x, otherTp.body.position.y)
         } else if (this.config.otherSceneConf) {
             this.scene.changeScene(this.config.otherSceneConf) // data
         }

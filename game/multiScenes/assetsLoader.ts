@@ -182,6 +182,18 @@ export const loadAssets = {
         "/game/planeta1/meteoritoSpriteVerde.png",
         { frameWidth: 140, frameHeight: 300 },
       ],
+      //TELEPORT
+      [
+        "image",
+        "teleport",
+        "/game/portal.png"
+      ],
+      [
+        "spritesheet",
+        "teleport_1",
+        "/game/portal1.png",
+        { frameWidth: 100, frameHeight: 150 },
+      ],
       // IMAGES
       ["image", "plataformaNuevaA", "/game/planeta1/platforms/plataformaNuevaA.png"],
       ["image", "plataformaNuevaLargaA", "/game/planeta1/platforms/newPlatA.png"],

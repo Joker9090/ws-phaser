@@ -10,10 +10,11 @@ import Game from "../../Game";
 import Player from "../../assets/Player";
 import portal, { portalConfig } from "../../assets/portal";
 import { Children } from "react";
-import { loseConfigFromMapType } from "@/game/Types";
+import { GamePlayDataType, loseConfigFromMapType } from "@/game/Types";
 import LargeFloorIsland, { LargeFloorIslandConfig } from "@/game/assets/LargeFloorIsland";
 import colors from "@/game/assets/PlatformColors";
 import MasterManager from "@/game/MasterManager";
+import Teleport from "@/game/assets/Teleport";
 
 class Mapa5 {
     isJumping = false;
@@ -41,6 +42,7 @@ class Mapa5 {
     pisos4?: Phaser.Physics.Arcade.Group;
     // no float + rotate cam
     pisos5?: Phaser.Physics.Arcade.Group;
+    teleport?: Phaser.Physics.Arcade.Group;
 
     fireballGroup?: Phaser.Physics.Arcade.Group;
     coin?: Phaser.Physics.Arcade.Group;
@@ -557,6 +559,17 @@ class Mapa5 {
                     () => true,
                     this.scene
                 );
+            if (this.teleport)
+              this.scene.physics.add.collider(
+                this.scene.player,
+                this.teleport,
+                (a, b) => {
+                  const tp = b as Teleport
+                  tp.trigger()
+                },
+                () => true,
+                this.scene
+              );
         }
     }
 
@@ -572,11 +585,23 @@ class Mapa5 {
         this.fireballGroup = this.scene.physics.add.group({ allowGravity: false });
         this.pisos4 = this.scene.physics.add.group({ allowGravity: false });
         this.pisos5 = this.scene.physics.add.group({ allowGravity: false });
+        this.teleport = this.scene.physics.add.group({ allowGravity: false });
         this.amountLifes = data.lifes;
         this.coin = this.scene.physics.add.group({ allowGravity: false });
         this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
         this.portal = this.scene.physics.add.group({ allowGravity: false });
 
+        const otherSceneConf: GamePlayDataType =  {
+          level: 999,
+          lifes: this.scene.lifes ? this.scene.lifes : 3,
+          loadKey: ["Postales", "Cinemato1", "Cinemato2"],
+          startingPositionFromOtherScene: {
+            x: 500,
+            y: 800,
+          },
+        }
+        const teleport_1 = new Teleport(this.scene, { x: 2750, y: 1000, version: 1, sameScene: false, group: this.teleport, otherSceneConf: otherSceneConf })
+        console.log("otherSceneConf", otherSceneConf, teleport_1);
 
         const p1Config: FloorConfig = {
             pos: { x: 2750, y: 1350 },
@@ -839,7 +864,7 @@ class Mapa5 {
             )
         this.mapContainer.add(mapObjects)
         this.scene.UICamera?.ignore(this.mapContainer)
-
+        this.scene.UICamera?.ignore(this.teleport)
     }
     update() {
         if (this.scene.player) this.animateBackground();

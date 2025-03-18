@@ -422,6 +422,7 @@ class Mapa5 {
                     this.scene.player,
                     this.pisos3,
                     () => {
+                        this.scene.touch()
                         if (this.scene.checkPoint === 0) {
                             console.log('rotate')
                             this.scene.rotateCam(true, 10);

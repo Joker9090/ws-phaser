@@ -228,6 +228,7 @@ class Mapa2 {
           () => {
             this.scene.rotateCam(true, 10);
             this.scene.checkPoint = 1
+            this.scene.touch()
           },
           () => true,
           this.scene

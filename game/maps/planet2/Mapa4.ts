@@ -430,6 +430,7 @@ class Mapa4 {
           this.scene.player,
           this.pisos3,
           () => {
+            this.scene.touch()
             if (this.scene.checkPoint === 0) {
               this.scene.rotateCam(true, 10);
               this.scene.checkPoint = 1;
@@ -488,10 +489,12 @@ class Mapa4 {
           this.scene.player,
           this.pisos5,
           () => {
+            this.scene.rotateCam(false, 10);
             if(this.scene.player?.body?.touching.up || this.scene.player?.body?.touching.down){
               this.scene.canRot = true; // medio hack, revisar lógica
               this.scene.changeGravity(false, 1000, 3);
-              this.scene.rotateCam(false, 10);
+              this.scene.touch()
+
             }
             // this.scene.checkPoint = 0
           },

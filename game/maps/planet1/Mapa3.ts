@@ -240,6 +240,7 @@ class Mapa3 {
                     () => {
                         this.scene.rotateCam(true, 10);
                         this.scene.checkPoint = 2
+                        this.scene.touch
                     },
                     () => true,
                     this.scene
@@ -276,6 +277,7 @@ class Mapa3 {
                         this.scene.canRot = true // medio hack, revisar lógica
                         this.scene.changeGravity(false, 1000, 2)
                         this.scene.rotateCam(false, 10)
+                        this.scene.touch()
                         if (this.cristal?.visible) {
                             this.scene.checkPoint = 0
                         }

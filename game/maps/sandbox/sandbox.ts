@@ -63,7 +63,7 @@ class Sandbox {
 
   loseConfig: loseConfigFromMapType = [
     {
-      positions: { x: 1500, y: 800 },
+      positions: { x: 500, y:1800 },
       cameraDirection: "NORMAL",
       PlayerDirection: "NORMAL",
       gravityDown: true
@@ -233,6 +233,8 @@ class Sandbox {
           this.pisos3,
           () => {
             this.scene.rotateCam(true, 10);
+            this.scene.touch()
+          
           },
           () => true,
           this.scene
@@ -244,6 +246,7 @@ class Sandbox {
           () => {
             if (this.rotate === true) {
               this.scene.rotateCam(false, 10);
+              this.scene.touch()
               this.rotate = false
             }
             // this.scene.checkPoint = 0

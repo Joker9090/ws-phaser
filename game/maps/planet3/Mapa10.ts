@@ -451,6 +451,8 @@ class Mapa10 {
           this.scene.player,
           this.pisos3,
           () => {
+            this.scene.touch()
+
             this.scene.rotateCam(true, 10);
           },
           () => true,

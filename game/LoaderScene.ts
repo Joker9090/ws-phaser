@@ -10,6 +10,8 @@ export default class LoaderScene extends Phaser.Scene {
   player: Phaser.GameObjects.Sprite | undefined;
   loadKey: SceneKeys[] = ["BaseLoad", "Cinemato0", "Cinemato1", "Cinemato2", "Cinemato3", "GamePlay1", "GamePlay2", "GamePlay3"];
   alreadyLoaded: boolean = false;
+  background:  Phaser.GameObjects.Image | undefined;
+  scaledContainer: Phaser.GameObjects.Container | undefined;
 
   constructor() {
     super({ key: "LoaderScene" });
@@ -22,6 +24,7 @@ export default class LoaderScene extends Phaser.Scene {
 
     this.load.spritesheet("player", "/game/player/playerSpriteSheet.png", { frameWidth: 200, frameHeight: 200 });
 
+   
     // Load additional assets
     const scenesTitles: Array<SceneKeys> = this.loadKey;
     for (let i = 0; i < scenesTitles.length; i++) {
@@ -58,11 +61,16 @@ export default class LoaderScene extends Phaser.Scene {
       const width = this.cameras.main.width;
       const height = this.cameras.main.height;
 
+      const midPoint = {
+        x: width / 2,
+        y: height / 2,
+      }
+
       this.time.delayedCall(this.firstLoad ? 120 : 0, () => {
         // Create the loading elements
         let loadingText = this.make.text({
-          x: width / 2,
-          y: height - 200,
+          x: 0,
+          y: 200,
           text: "Loading...",
           style: {
             font: "30px monospace",
@@ -80,7 +88,7 @@ export default class LoaderScene extends Phaser.Scene {
           yoyo: true,
         });
 
-        const progressContainer = this.add.container(0, 0); // Create a container
+        const progressContainer = this.add.container(0,0); // Create a container
         this.progressBar = this.add.graphics();
         this.progressBox = this.add.graphics();
         this.progressBox.fillStyle(0x222222, 0);
@@ -89,12 +97,30 @@ export default class LoaderScene extends Phaser.Scene {
         this.progressBox.strokeRoundedRect(-160, 100, 315, 60, 10); // Adjusted to be relative to the container
 
         progressContainer.add([this.progressBox, this.progressBar]); // Add graphics to the container
-        progressContainer.setPosition(width / 2, height / 2); // Position the container
 
-        this.gameTitle = this.add.image(0, 0, "gameTitle");
-        var background = this.add.image(0, 0, "fondoCarga");
-        background.setPosition(width / 2, height / 2).setDepth(-1);
-        this.gameTitle.setPosition(width / 2, height / 2 - 300).setDepth(999999999).setScale(0.5);
+        this.background = this.add.image(0, 0, "fondoCarga");
+        this.background.setPosition(midPoint.x, midPoint.y).setDepth(-1);
+
+
+        
+
+        this.gameTitle = this.add.image(0, -midPoint.y, "gameTitle").setScale(0.4).setOrigin(0.5,-0.1)
+
+       
+
+        this.scaledContainer = this.add.container(midPoint.x, midPoint.y).setSize(window.innerWidth, window.innerHeight);
+        this.scaledContainer.add(this.gameTitle);
+        this.scaledContainer.add(progressContainer);
+        this.scaledContainer.add(loadingText)
+
+
+        // add black background to container
+    
+        // this.scaledContainer.add(this.add.image(midPoint.x, midPoint.y, "planetaLoader").setOrigin(0.5, 0.5));
+    
+
+
+        // this.gameTitle.setPosition(midPoint.x, midpoint.y - 300).setDepth(999999999);
 
         this.anims.create({
           key: "loading",
@@ -103,7 +129,9 @@ export default class LoaderScene extends Phaser.Scene {
           repeat: -1,
         });
 
-        this.player = this.add.sprite(width / 2 - 152 + 275, height / 2, "player", 2).setDepth(999999999).setScale(0.8).setVisible(false);
+        this.player = this.add.sprite(-152, 0, "player", 2).setDepth(999999999).setScale(0.8).setVisible(false);
+        this.scaledContainer?.add(this.player!)
+
         this.player.play("loading");
 
         this.load.on("progress", (value: number) => {
@@ -113,7 +141,7 @@ export default class LoaderScene extends Phaser.Scene {
           const segments = Math.floor((300 * value) / segmentWidth);
           for (let i = 0; i < segments; i++) {
             this.progressBar?.fillRoundedRect(-152 + i * segmentWidth, 110, segmentWidth - 2, 40, 5); // Adjusted to be relative to the container
-            this.player?.setPosition(progressContainer.x - 152 + segments * segmentWidth, progressContainer.y).setVisible(true); // Adjusted to account for container position
+            this.player?.setPosition(-152 + (segments * segmentWidth),0).setVisible(true); // Adjusted to account for container position
           }
         });
       });
@@ -128,37 +156,47 @@ export default class LoaderScene extends Phaser.Scene {
 
       // Automatically adjust elements on resize
       this.scale.on("resize", this.resizeElements, this);
+      this.resizeElements.bind(this)()
     }
+    // this.cameras.main.setZoom(0.)
+    
   }
 
   resizeElements() {
     const width = window.innerWidth;
     const height = window.innerHeight;
 
-    if (this.gameTitle) {
-      this.gameTitle.setPosition(width / 2, height / 2 - 300).setScale(0.5);
+    const midPoint = {
+      x: width / 2,
+      y: height / 2,
     }
+    
+    const proportionWidth = 1024
+    const proportionHeight = 768
 
-    const background = this.children.getByName("fondoCarga") as Phaser.GameObjects.Image;
-    const progressContainer = this.children.getByName("progressContainer") as Phaser.GameObjects.Container;
+    // scale scaledContainer to fit in width and height. scale proportional
 
-    if (progressContainer) {
-      progressContainer.setPosition(width / 2, height / 2);
-    }
+    let newScaleX = width / proportionWidth
+    let newScaleY = height / proportionHeight
+    if(!this.scaledContainer) return
+    let finalScale = (newScaleX > newScaleY) ? newScaleY : newScaleX
+    this.scaledContainer!.setScale(finalScale).setPosition(midPoint.x,midPoint.y)
 
-    if (background) {
-      background.setPosition(width / 2, height / 2).setDisplaySize(width, height);
-    }
+    this.background?.setPosition(midPoint.x, midPoint.y).setScale(finalScale)
+    // re pos scaledContainer in the middle
+    
 
-    if (this.player) {
-      this.player.setPosition(width / 2 - 152 + 275, height / 2);
-    }
+
+    
+
+   
   }
 
   create() {
     console.log("LoaderScene created");
 
     // Resize elements when the scene is created
+  
     this.resizeElements();
   }
 }

@@ -42,6 +42,7 @@ class Sandbox {
   //  no float
   pisos4?: Phaser.Physics.Arcade.Group;
   coin?: Phaser.Physics.Arcade.Group;
+  coinAura?: Phaser.GameObjects.Sprite;
   invencible?: Phaser.Physics.Arcade.Group;
   portal?: Phaser.Physics.Arcade.Group;
   teleport?: Phaser.Physics.Arcade.Group;
@@ -242,11 +243,7 @@ class Sandbox {
           this.scene.player,
           this.pisos4,
           () => {
-            if (this.rotate === true) {
-              this.scene.rotateCam(false, 10);
-              this.rotate = false
-            }
-            // this.scene.checkPoint = 0
+            this.scene.rotateCam(false, 10);
           },
           () => true,
           this.scene
@@ -255,8 +252,9 @@ class Sandbox {
         this.scene.physics.add.overlap(
           this.scene.player,
           this.coin,
-          () => {
-
+          (a, b) => {
+            b.destroy();
+            this.coinAura?.destroy()
           },
           () => true,
           this.scene
@@ -343,13 +341,25 @@ class Sandbox {
     this.portal = this.scene.physics.add.group({ allowGravity: false });
     this.teleport = this.scene.physics.add.group({ allowGravity: false });
     this.flyingPiso = this.scene.physics.add.group({ allowGravity: false, immovable: true });
-    const aura = this.scene.add.sprite(1500, 600, "auraTuto").setScale(0.6)
-    this.aura.add(aura)
+    this.coinAura = this.scene.add.sprite(1500, 600, "auraTuto").setScale(0.6)
 
+    const coinConfig: FloorConfig = {
+      texture: "cristal3",
+      pos: { x: 1500, y: 600 },
+      scale: { width: 0.7, height: 0.7 },
+      width: 40,
+      height: 18,
+      fix: 10,
+    };
+    const cristal = new Floor(this.scene, coinConfig, this.coin).setBodySize(
+      140,
+      180
+    );
+    this.coin.add(cristal)
 
 
     this.scene.tweens.add({
-      targets: aura,
+      targets: this.coinAura,
       alpha: 0.4,
       duration: 1000,
       yoyo: true,
@@ -395,7 +405,7 @@ class Sandbox {
       large: 30,
       rotated: false
     };
-    const pA = new LargeFloorIsland(this.scene, pAConfig, this.pisos);
+    // const pA = new LargeFloorIsland(this.scene, pAConfig, this.pisos);
 
 
     const p1Config: LargeFloorIslandConfig = {
@@ -667,6 +677,8 @@ class Sandbox {
     this.scene.UICamera?.ignore(this.mapContainer)
     this.scene.UICamera?.ignore(this.frontContainer)
     this.scene.UICamera?.ignore(this.teleport)
+    this.scene.UICamera?.ignore(this.coin)
+    this.scene.UICamera?.ignore(this.coinAura)
   }
 
 

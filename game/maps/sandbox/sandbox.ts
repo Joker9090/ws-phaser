@@ -379,23 +379,23 @@ class Sandbox {
     const teleport_1 = new Teleport(this.scene, { x: 500, y: 800, version: 1, sameScene: false, group: this.teleport, otherSceneConf: otherSceneConf })
     // const teleport_2 = new Teleport(this.scene, { x: 1000, y: 1000, version: 1, sameScene: true, group: this.teleport })
 
-    const pAConfig: LargeFloorIslandConfig = {
-      withTextureToAbove: true,
-      textureA: "plataformaNuevaLargaA",
-      textureB: "plataformaNuevaLargaB",
-      textureC: "plataformaNuevaLargaC",
-      pos: { x: 900, y: 800 },
-      width: {
-        textureA: 90,
-        textureB: 67,
-        textureC: 115,
-      },
-      scale: { width: 0.7, height: 0.7 },
-      height: 127,
-      large: 30,
-      rotated: false
-    };
-    const pA = new LargeFloorIsland(this.scene, pAConfig, this.pisos);
+    // const pAConfig: LargeFloorIslandConfig = {
+    //   withTextureToAbove: true,
+    //   textureA: "plataformaNuevaLargaA",
+    //   textureB: "plataformaNuevaLargaB",
+    //   textureC: "plataformaNuevaLargaC",
+    //   pos: { x: 900, y: 800 },
+    //   width: {
+    //     textureA: 90,
+    //     textureB: 67,
+    //     textureC: 115,
+    //   },
+    //   scale: { width: 0.7, height: 0.7 },
+    //   height: 127,
+    //   large: 30,
+    //   rotated: false
+    // };
+    // const pA = new LargeFloorIsland(this.scene, pAConfig, this.pisos);
 
 
     const p1Config: LargeFloorIslandConfig = {
@@ -418,7 +418,7 @@ class Sandbox {
 
     const p2Config: FloorConfig = {
       pos: { x: 1000, y: 900 },
-      texture: "pSimple1p3",
+      texture: "plataformaNuevaA",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
       height: 20,
@@ -427,7 +427,7 @@ class Sandbox {
 
     const p3config: FloorConfig = {
       pos: { x: 1000, y: 400 },
-      texture: "pSimple1p3",
+      texture: "plataformaNuevaA",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
       height: 20,
@@ -436,7 +436,7 @@ class Sandbox {
 
     const p4config: FloorConfig = {
       pos: { x: 1400, y: 400 },
-      texture: "pSimple1p3",
+      texture: "plataformaNuevaA",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
       height: 20,
@@ -446,7 +446,7 @@ class Sandbox {
 
     const p5config: FloorConfig = {
       pos: { x: 1400, y: 900 },
-      texture: "pSimple1p3",
+      texture: "plataformaNuevaA",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
       height: 20,
@@ -457,7 +457,7 @@ class Sandbox {
 
     const p6config: FloorConfig = {
       pos: { x: 2000, y: 900 },
-      texture: "pSimple1p3",
+      texture: "plataformaNuevaA",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
       height: 20
@@ -467,7 +467,7 @@ class Sandbox {
 
     const p7config: FloorConfig = {
       pos: { x: 2300, y: 900 },
-      texture: "pSimple1p3",
+      texture: "plataformaNuevaA",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
       height: 20
@@ -607,7 +607,7 @@ class Sandbox {
     }
     const p8config: FloorConfig = {
       pos: { x: 5200, y: 900 },
-      texture: "pSimple1p3",
+      texture: "plataformaNuevaA",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
       height: 20,
@@ -623,7 +623,7 @@ class Sandbox {
 
     const p9config: FloorConfig = {
       pos: { x: 5800, y: 900 },
-      texture: "pSimple1p3",
+      texture: "plataformaNuevaA",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
       height: 20,

@@ -23,13 +23,13 @@ class Sandbox {
   scene: Game;
   worldSize = {
     width: 10000,
-    height: 2000,
+    height: 10000,
   };
   cameraBounds = {
     x: 0,
     y: 0,
     width: 10000,
-    height: 1300
+    height: 8000
   }
   // normales
   pisos?: Phaser.Physics.Arcade.Group;
@@ -58,12 +58,12 @@ class Sandbox {
   player?: Player;
   startingPoint = {
     x: 500, //500
-    y: 800, //800
+    y: 1800, //800
   };
 
   loseConfig: loseConfigFromMapType = [
     {
-      positions: { x: 500, y: 800 },
+      positions: { x: 1500, y: 800 },
       cameraDirection: "NORMAL",
       PlayerDirection: "NORMAL",
       gravityDown: true
@@ -146,7 +146,7 @@ class Sandbox {
     this.mountain1 = this.scene.add.image(this.startingPoint.x + this.background5.width - 15, this.startingPoint.y - 370, "montaña3")
     this.mountain2 = this.scene.add.image(this.startingPoint.x - 70, this.startingPoint.y + 350, "montaña5")
     this.mountain3 = this.scene.add.image(1200, this.startingPoint.y + 470, "montaña3")
-    this.mountain4 = this.scene.add.image(200, this.startingPoint.y, "montaña2")
+    this.mountain4 = this.scene.add.image(200, this.startingPoint.y + 450, "montaña2")
     this.mountain5 = this.scene.add.image(1100, this.startingPoint.y, "montaña4")
 
     this.mapContainer.add([
@@ -348,16 +348,16 @@ class Sandbox {
 
 
 
-    this.scene.tweens.add({
-      targets: aura,
-      alpha: 0.4,
-      duration: 1000,
-      yoyo: true,
-      repeat: -1
-    })
+    // this.scene.tweens.add({
+    //   targets: aura,
+    //   alpha: 0.4,
+    //   duration: 1000,
+    //   yoyo: true,
+    //   repeat: -1
+    // })
 
     const portalConfig: FloorConfig = {
-      pos: { x: 6400, y: 1090 }, // x: 2400
+      pos: { x: 6400, y: 2090 }, // x: 2400
       texture: "plataformaFinalP1",
       // scale: {width: 0.7, height: 0.7},
       width: 100,
@@ -379,23 +379,7 @@ class Sandbox {
     const teleport_1 = new Teleport(this.scene, { x: 500, y: 800, version: 1, sameScene: false, group: this.teleport, otherSceneConf: otherSceneConf })
     // const teleport_2 = new Teleport(this.scene, { x: 1000, y: 1000, version: 1, sameScene: true, group: this.teleport })
 
-    // const pAConfig: LargeFloorIslandConfig = {
-    //   withTextureToAbove: true,
-    //   textureA: "plataformaNuevaLargaA",
-    //   textureB: "plataformaNuevaLargaB",
-    //   textureC: "plataformaNuevaLargaC",
-    //   pos: { x: 900, y: 800 },
-    //   width: {
-    //     textureA: 90,
-    //     textureB: 67,
-    //     textureC: 115,
-    //   },
-    //   scale: { width: 0.7, height: 0.7 },
-    //   height: 127,
-    //   large: 30,
-    //   rotated: false
-    // };
-    // const pA = new LargeFloorIsland(this.scene, pAConfig, this.pisos);
+
 
 
     const p1Config: LargeFloorIslandConfig = {
@@ -403,7 +387,7 @@ class Sandbox {
       textureA: "plataformaNuevaLargaA",
       textureB: "plataformaNuevaLargaB",
       textureC: "plataformaNuevaLargaC",
-      pos: { x: 300, y: 1200 },
+      pos: { x: 300, y: 2200 },
       width: {
         textureA: 90,
         textureB: 67,
@@ -417,7 +401,7 @@ class Sandbox {
     const p1 = new LargeFloorIsland(this.scene, p1Config, this.pisos);
 
     const p2Config: FloorConfig = {
-      pos: { x: 1000, y: 900 },
+      pos: { x: 1000, y: 1900 },
       texture: "plataformaNuevaA",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
@@ -426,7 +410,7 @@ class Sandbox {
     const p2 = new Floor(this.scene, p2Config, this.pisos2).setTint(colors.gravity)
 
     const p3config: FloorConfig = {
-      pos: { x: 1000, y: 400 },
+      pos: { x: 1000, y: 1400 },
       texture: "plataformaNuevaA",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
@@ -435,7 +419,7 @@ class Sandbox {
     const p3 = new Floor(this.scene, p3config, this.pisos).setFlipY(true)
 
     const p4config: FloorConfig = {
-      pos: { x: 1400, y: 400 },
+      pos: { x: 1400, y: 1400 },
       texture: "plataformaNuevaA",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
@@ -445,7 +429,7 @@ class Sandbox {
     const p4 = new Floor(this.scene, p4config, this.pisos2).setFlipY(true).setTint(colors.gravity)
 
     const p5config: FloorConfig = {
-      pos: { x: 1400, y: 900 },
+      pos: { x: 1400, y: 1900 },
       texture: "plataformaNuevaA",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
@@ -456,7 +440,7 @@ class Sandbox {
 
 
     const p6config: FloorConfig = {
-      pos: { x: 2000, y: 900 },
+      pos: { x: 2000, y: 1900 },
       texture: "plataformaNuevaA",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
@@ -466,7 +450,7 @@ class Sandbox {
     const p6 = new Floor(this.scene, p6config, this.pisos3).setTint(colors.rotate)
 
     const p7config: FloorConfig = {
-      pos: { x: 2300, y: 900 },
+      pos: { x: 2300, y: 1900 },
       texture: "plataformaNuevaA",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
@@ -478,7 +462,7 @@ class Sandbox {
 
     const invencibleConfig: FloorConfig = {
       texture: "cristal2",
-      pos: { x: 3900, y: 1000 },
+      pos: { x: 3900, y: 2000 },
       scale: { width: 0.7, height: 0.7 },
       width: 10,
       height: 18,
@@ -487,9 +471,9 @@ class Sandbox {
     // this.cristal = new Floor(this.scene, invencibleConfig, this.invencible);
     const invencible = new Floor(this.scene, invencibleConfig, this.invencible).setFlipX(true).setTint(0xff0000);
 
-    const line1 = this.scene.add.rectangle(4000, 1000, 10, 1000, 0xff0000).setOrigin(0.5, 0.5);
-    const line2 = this.scene.add.rectangle(5000, 1000, 10, 1000, 0xff0000).setOrigin(0.5, 0.5);
-    const text = this.scene.add.text(4250, 500, "testeo cristal invencible", {
+    const line1 = this.scene.add.rectangle(4000, 2000, 10, 1000, 0xff0000).setOrigin(0.5, 0.5);
+    const line2 = this.scene.add.rectangle(5000, 2000, 10, 1000, 0xff0000).setOrigin(0.5, 0.5);
+    const text = this.scene.add.text(4250, 1500, "testeo cristal invencible", {
       fontSize: "32px",
       color: "#ff0000",
     }).setOrigin(0.5, 0.5);
@@ -551,6 +535,24 @@ class Sandbox {
       }
     }
     const zoneA = new MagicZone(this.scene, zoneAConfig)
+    
+    const pAConfig: LargeFloorIslandConfig = {
+      withTextureToAbove: true,
+      textureA: "plataformaNuevaLargaA",
+      textureB: "plataformaNuevaLargaB",
+      textureC: "plataformaNuevaLargaC",
+      pos: { x: 6000, y: 1500 },
+      width: {
+        textureA: 90,
+        textureB: 67,
+        textureC: 115,
+      },
+      scale: { width: 0.7, height: 0.7 },
+      height: 127,
+      large: 30,
+      rotated: false
+    };
+    const pA = new LargeFloorIsland(this.scene, pAConfig, this.pisos);
 
     // const zoneBConfig: ZoneConfig = {
     //   x: 1700,
@@ -590,23 +592,23 @@ class Sandbox {
 
     for (let i = 0; i < 100; i++) {
       const fireballConfig: FloorConfig = {
-      spriteSheet: "meteoritop3",
+      spriteSheet: "meteorito",
       texture: "meteorito",
-      pos: { x: 4000 + i * 10, y: -200 }, // 500 1580
+      pos: { x: 4030 + (Math.random()*1000)  , y: -200 }, 
       width: 100,
       height: 100,
       tween: {
         duration: 3000,
         repeat: -1,
-        delay: Math.random() * 1000,
+        delay: i * 200, 
         y: "+=4000",
       },
       frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
       };
-      const fireball = new Floor(this.scene, fireballConfig, this.firegroup).setScale(0.5)
+      const fireball = new Floor(this.scene, fireballConfig, this.firegroup).setScale(0.5);
     }
     const p8config: FloorConfig = {
-      pos: { x: 5200, y: 900 },
+      pos: { x: 5200, y: 1900 },
       texture: "plataformaNuevaA",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
@@ -622,15 +624,15 @@ class Sandbox {
     const p8 = new Floor(this.scene, p8config, this.pisos)
 
     const p9config: FloorConfig = {
-      pos: { x: 5800, y: 900 },
+      pos: { x: 5800, y: 1900 },
       texture: "plataformaNuevaA",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
       height: 20,
       animation:{
         yAxis:{
-          yDistance:200,
-          yVel:100
+          yDistance:800,
+          yVel:400
         }
       }
     }
@@ -639,9 +641,9 @@ class Sandbox {
 
 
     const fireball2Config: FloorConfig = {
-      spriteSheet: "meteoritop3",
+      spriteSheet: "meteorito",
       texture: "meteorito",
-      pos: { x: -0, y: 800 }, // 500 1580
+      pos: { x: -0, y: 600 }, // 500 1580
       width: 100,
       rotated: true,
       height: 100,
@@ -655,7 +657,23 @@ class Sandbox {
     };
     // const fireball2 = new Floor(this.scene, fireball2Config, this.firegroup).setScale(0.5).setFlipY(true)
 
-
+    const fireballConfig: FloorConfig = {
+      spriteSheet: "meteorito",
+      texture: "meteorito",
+      pos: { x: 13000, y: 1200 }, // 500 1580
+      width: 100,
+      height: 100,
+      rotated:true, //rotated define si esta en vertical o horizontal
+      tween: {
+        duration: 3000,
+        repeat: -1,
+        delay: Math.random() * 1000,
+        x: "-=10000", // esto define en que eje se desplaza y cuando, + o - definen la direccion de dicho eje 
+      },
+      frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+      };
+      const fireball = new Floor(this.scene, fireballConfig, this.firegroup).setScale(0.5)
+      // fireball.setFlipY(true) con el setflip correpondiente se define a que direccion del eje apunta el meteorito visualmente
     this.scene.UICamera?.ignore(this.pisos)
     this.scene.UICamera?.ignore(this.pisos2)
     this.scene.UICamera?.ignore(this.pisos3)

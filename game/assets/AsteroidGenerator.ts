@@ -44,7 +44,7 @@ class AsteroidGenerator {
 
   randomVelocity() {
     let value = Math.ceil(this.config.velocity * this.randomProp());
-    if (this.config.direction) value = value * -1;
+    if (this.config.direction==0) value = value * -1;
     return value;
   }
 

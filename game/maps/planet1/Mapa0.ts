@@ -144,23 +144,23 @@ class Mapa0 {
       this.masterManager = masterManagerScene;
     }
     
-    this.background = this.scene.add.image(-400, 0, "background0P1").setOrigin(0,0);
-    this.background2 = this.scene.add.image(-400, 310, "background1P1").setOrigin(0,0);
-    this.background3 = this.scene.add.image(-400, 0, "backgroundStars").setOrigin(0,0);
-    this.background4 = this.scene.add.image(this.background.width, 0, "background0P1").setOrigin(0,0);
-    this.background5 =  this.scene.add.image(this.background.x + this.background.width, 490, "background1P1").setOrigin(0,0);
-    this.background6 =  this.scene.add.image(this.background.width, 0, "backgroundStars").setOrigin(0,0);
+    this.background = this.scene.add.image(1248, 832, "background0P1").setScale(1.3);
+    this.background2 = this.scene.add.image(1831, 310, "background1P1").setScale(1.3);
+    this.background3 = this.scene.add.image(1307, 688, "backgroundStars").setScale(1.3);
+    this.background4 = this.scene.add.image(this.background.x + this.background.width, 832, "background0P1").setScale(1.3);
+    this.background5 =  this.scene.add.image(this.background2.x + this.background2.width, 310, "background1P1").setScale(1.3);
+    this.background6 =  this.scene.add.image(this.background3.x + this.background3.width, 688, "backgroundStars").setScale(1.3);
 
-    this.background7 = this.scene.add.image(-250, 1300, "frontGround1").setOrigin(0,0);
-    this.background8 = this.scene.add.image(this.background7.x + this.background7.width, 1419, "frontGround2").setOrigin(0,0);
-    this.background9 = this.scene.add.image(this.background8.x + this.background8.width-50, 1300, "frontGround1").setOrigin(0,0);
-    this.background10 = this.scene.add.image(this.background9.x + this.background9.width-20, 1419, "frontGround2").setOrigin(0,0);
+    this.background7 = this.scene.add.image(620, 1076, "frontGround1").setScale(1.3);
+    this.background8 = this.scene.add.image(this.background7.width*1.3 + 605 , 1155, "frontGround2").setScale(1.3);
+    this.background9 = this.scene.add.image(this.background8.x + this.background8.width-50, 1274, "frontGround1").setScale(1.3);
+    this.background10 = this.scene.add.image(this.background9.x + this.background9.width-20, 1274, "frontGround2").setScale(1.3);
 
-    this.mountain1 = this.scene.add.image( 1000, 1700, "montaña3").setOrigin(0,0);
-    this.mountain2 = this.scene.add.image( 3400, 1700, "montaña5").setOrigin(0,0);
-    this.mountain3 = this.scene.add.image( 4800, 1700, "montaña2").setOrigin(0,0);
-    this.mountain4 = this.scene.add.image( 1300, 1100, "montaña3").setOrigin(0,0);
-    this.mountain5 = this.scene.add.image( 4000, 1100, "montaña4").setOrigin(0,0);
+    this.mountain1 = this.scene.add.image( 1000, 1700, "montaña3").setScale(1.3);
+    this.mountain2 = this.scene.add.image( 3400, 1700, "montaña5").setScale(1.3);
+    this.mountain3 = this.scene.add.image( 4800, 1800, "montaña2").setScale(1.3);
+    this.mountain4 = this.scene.add.image( 1300, 1100, "montaña3").setScale(1.3);
+    this.mountain5 = this.scene.add.image( 4000, 1100, "montaña4").setScale(1.3);
     
     this.backgroundsBack = [
       this.background,
@@ -240,21 +240,21 @@ class Mapa0 {
       this.originalPositionsBackgroundsBack,
       this.backgroundsBack,
       this.scene.cameras.main,
-      { x: this.startingPoint.x, y: this.startingPoint.y },
+      { x: 0, y: 0 },//{ x: this.startingPoint.x, y: this.startingPoint.y },
       { fixX: 1.1, fixY: 1.1 }
     );
     this.updatePositionsRelativeToCamera(
       this.originalPositionsBackgroundsMiddle,
       this.backgroundsMiddle,
       this.scene.cameras.main,
-      { x: this.startingPoint.x, y: this.startingPoint.y },
+      { x: 0, y: 0 },//{ x: this.startingPoint.x, y: this.startingPoint.y },
       { fixX: 2, fixY: 4 }
     );
     this.updatePositionsRelativeToCamera(
       this.originalPositionsBackgroundsFront,
       this.backgroundsFront,
       this.scene.cameras.main,
-      { x: this.startingPoint.x, y: this.startingPoint.y },
+      { x: 0, y: 0 },//{ x: this.startingPoint.x, y: this.startingPoint.y },
       { fixX: -20, fixY: -30 }
     );
     /*
@@ -383,6 +383,17 @@ class Mapa0 {
 
           () => true,
           this.scene
+        );
+      }if (this.pisos4) {
+        this.scene.physics.add.collider(
+          this.scene.player,
+          this.pisos4,
+          () => {
+          this.scene.touchItem("fireball");
+          this.scene.player?.setVelocity(0);
+        },
+        () => true,
+        this.scene
         );
       }
       if (this.fireballGroup)
@@ -617,8 +628,8 @@ class Mapa0 {
     width: 140,
     height: 50,
   }
-  const box = new Floor(this.scene, boxConfig, this.pisos).setFlipX(true);
-  box.setTint(0x999999);
+  const box = new Floor(this.scene, boxConfig, this.pisos4).setFlipX(true);
+  box.setTint(0xff0000);
     //Portal, Coin and Asteroids
     const portalConfig: FloorConfig = {
       pos: { x: 4640, y: 1390 }, // x: 2400
@@ -638,10 +649,11 @@ class Mapa0 {
       height: 18,
       fix: 10,
     };
-    this.cristal = new Floor(this.scene, coinConfig, this.coin).setBodySize(
+    this.cristal = new Floor(this.scene, coinConfig, this.collectables).setBodySize(
       140,
       180
     );
+    this.cristal.setTint(0xffff00);
     //TEST COLLECTABLES
     this.scene.canWin=true;//Portal is constantly ON
 
@@ -757,9 +769,9 @@ class Mapa0 {
 
     const c1Config: AsteroidGeneratorConfig = {
       texture: "nube1",
-      x: 0,
-      y: 500,
-      delayed: 100,
+      x: 400,
+      y: 800,
+      delayed: 50,
       direction: 0,
       velocity: 20,
       scale: 1,
@@ -772,8 +784,8 @@ class Mapa0 {
     const c2Config: AsteroidGeneratorConfig = {
       texture: "nube3",
       x: 3000,
-      y: 600,
-      delayed: 100,
+      y: 1200,
+      delayed: 50,
       direction: 1,
       velocity: 30,
       scale: 1,
@@ -785,9 +797,9 @@ class Mapa0 {
 
     const c3Config: AsteroidGeneratorConfig = {
       texture: "nube5",
-      x: -1000,
-      y: 300,
-      delayed: 1600,
+      x: 0,
+      y: 500,
+      delayed: 100,
       direction: 0,
       velocity: 10,
       scale: 1.2,

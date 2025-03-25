@@ -600,7 +600,7 @@ class Mapa5 {
             y: 800,
           },
         }
-        const teleport_1 = new Teleport(this.scene, { x: 2750, y: 1000, version: 1, sameScene: false, group: this.teleport, otherSceneConf: otherSceneConf })
+        const teleport_1 = new Teleport(this.scene, { x: 2450, y: 1000, version: 1, sameScene: false, group: this.teleport, otherSceneConf: otherSceneConf })
         console.log("otherSceneConf", otherSceneConf, teleport_1);
 
         const p1Config: FloorConfig = {

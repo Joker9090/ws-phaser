@@ -312,18 +312,23 @@ class containerSettings extends Phaser.GameObjects.Container {
         //     ease: 'Bounce.easeOut',
         // })
 
-        this.sliderMusic = this.createSlider(scene, -30, -170, (value) => {
+        const scaleFactor = scene.cameras.main.width / 1920; // Assuming 1920 is the base width
+
+
+        this.sliderMusic = this.createSlider(scene, -30  * scaleFactor, -170 * scaleFactor, (value) => {
             this.masterManager.changeVolume(value, 'music');
         }, this.volumeMusic);
 
-        this.sliderSound = this.createSlider(scene, -30, -70, (value) => {
+        this.sliderSound = this.createSlider(scene, -30 *scaleFactor, -70 *scaleFactor, (value) => {
             this.masterManager.changeVolume(value, 'sound');
         }, this.volumeSound);
 
-        this.sliderBrightness = this.createSlider(scene, -30, 30, (value) => {
+        this.sliderBrightness = this.createSlider(scene, -30 *scaleFactor, 30 *scaleFactor, (value) => {
             this.masterManager.changeBrightness(1 - value);
         }, 1 - this.darkness);
 
+      
+    
         const arr = [
             screenBlack,
             this.modal,
@@ -341,11 +346,20 @@ class containerSettings extends Phaser.GameObjects.Container {
             this.brightnessText,
             this._soundText,
             this.musicText,
+     
+
             // this.albumText,
         ]
 
-        this.settingsModal.add(arr)
-        this.add([screenBlack, this.settingsModal])
+        arr.forEach((element) => {
+            if (element instanceof Phaser.GameObjects.Image || element instanceof Phaser.GameObjects.Text) {
+            element.setScale(element.scaleX * scaleFactor, element.scaleY * scaleFactor);
+            element.setPosition(element.x * scaleFactor, element.y * scaleFactor);
+            }
+        });
+
+        this.settingsModal.add(arr);
+        this.add([screenBlack, this.settingsModal]);
         scene.add.existing(this);
 
         const destroy = () => {
@@ -389,13 +403,16 @@ class containerSettings extends Phaser.GameObjects.Container {
 
     createSlider(scene: Phaser.Scene, x: number, y: number, onChange: (value: number) => void, initialValue: number) {
         const slider = scene.add.container(x, y);
+        const scaleFactor = scene.cameras.main.width / 1920; // Assuming 1920 is the base width
 
-        const bar = scene.add.image(0, 0, 'settingsSlider').setOrigin(0.5).setScale(.8);
-        const fillBar = scene.add.rectangle(-140, 0, 0, 24, 57055).setOrigin(0, 0.5).setScale(1);
-        const fillBarStart = scene.add.image(-141, 0, 'fillBarStart').setOrigin(0.5).setScale(.8);
-        const control = scene.add.circle(-125, 0, 13, 0xffffff).setOrigin(0.5).setScale(1);
+        const bar = scene.add.image(0* scaleFactor, 0* scaleFactor, 'settingsSlider').setOrigin(0.5).setScale(.8 * scaleFactor);
+        const fillBar = scene.add.rectangle(-140* scaleFactor, 0 * scaleFactor, 0, 24, 57055).setOrigin(0, 0.5).setScale(1 * scaleFactor);
+        const fillBarStart = scene.add.image(-141 * scaleFactor, 0 * scaleFactor, 'fillBarStart').setOrigin(0.5).setScale(.8 * scaleFactor);
+        const control = scene.add.circle(-125 * scaleFactor, 0 * scaleFactor, 13, 0xffffff).setOrigin(0.5).setScale(1 * scaleFactor);
 
+     
 
+      
         // this.scene.tweens.add({
         //     targets: [bar, fillBarStart],
         //     duration: 500,

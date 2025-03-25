@@ -43,12 +43,18 @@ export default function Home() {
         width: window.innerWidth,
         height: window.innerHeight,
         parent: "game-container",
-        scale: {
-          mode: window.Phaser.Scale.RESIZE,
-          autoCenter: window.Phaser.Scale.CENTER_BOTH,
+      min: {
+          width: 480,
+          height: 720,
+      },
+      max: {
           width: window.innerWidth,
-          height: window.innerHeight
-        },
+          height: window.innerHeight,
+      },
+      scale: {
+          mode: Phaser.Scale.FIT,
+          autoCenter: Phaser.Scale.CENTER_BOTH
+      },
         scene: scenes,
         physics: {
           default: "arcade",

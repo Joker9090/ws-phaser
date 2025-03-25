@@ -653,7 +653,7 @@ class Sandbox {
       height: 20,
       animation:{
         yAxis:{
-          yDistance:800,
+          yDistance:600,
           yVel:400
         }
       }

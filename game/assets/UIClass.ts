@@ -138,7 +138,7 @@ export default class UIClass {
       })
       this.settingsVisible = false
     } else {
-      this.settingsModal = new containerSettings(this.scene, { x: window.innerWidth / 2, y: window.innerHeight / 2 }, undefined, () => { this.settingsVisible = !this.settingsVisible }, this.settings)
+      this.settingsModal = new containerSettings(this.scene, { x: window.innerWidth / 2, y: window.innerHeight / 2, dinamicPosition:true }, undefined, () => { this.settingsVisible = !this.settingsVisible }, this.settings)
       this.masterManager.playSound('buttonSound', false)
       this.masterManager.pauseGame()
       this.settings?.setVisible(false)

@@ -247,7 +247,7 @@ class containerInitial extends Phaser.GameObjects.Container {
             this.settingsButton?.setVisible(true)
 
         } else {
-            const settingsModal = new containerSettings(this.scene, { x: window.innerWidth / 2, y: window.innerHeight / 2 }, undefined, () => { this.settingsVisible = !this.settingsVisible }, this.settingsButton)
+            const settingsModal = new containerSettings(this.scene, { x: window.innerWidth / 2, y: window.innerHeight / 2,dinamicPosition:true }, undefined, () => { this.settingsVisible = !this.settingsVisible }, this.settingsButton)
             this.settingsButton?.setVisible(false)
             this.arr.push(settingsModal)
             this.settingsVisible = true

@@ -30,6 +30,7 @@ export type CinematoDataType = {
 export type ContainerMenuConfigType = {
   x: number,
   y: number,
+  dinamicPosition?: boolean,
   panToCredits?: {
     x: number,
     y:number

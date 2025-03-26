@@ -3,6 +3,8 @@ import AsteroidGenerator, {
   AsteroidGeneratorConfig,
 } from "../../assets/AsteroidGenerator";
 import Floor, { FloorConfig } from "../../assets/Floor";
+//Collectable
+import Collectable, { CollectableConfig } from "../../assets/Collectable";
 
 import LargeFloor, { LargeFloorConfig } from "../../assets/LargeFloor";
 import Game from "../../Game";
@@ -159,7 +161,7 @@ class Mapa0 {
     this.mountain1 = this.scene.add.image( 1000, 1700, "montaña3").setScale(1.3);
     this.mountain2 = this.scene.add.image( 3400, 1700, "montaña5").setScale(1.3);
     this.mountain3 = this.scene.add.image( 4800, 1800, "montaña2").setScale(1.3);
-    this.mountain4 = this.scene.add.image( 1300, 1100, "montaña3").setScale(1.3);
+    this.mountain4 = this.scene.add.image( 1300, 3000, "montaña3").setScale(1.3);
     this.mountain5 = this.scene.add.image( 4000, 1100, "montaña4").setScale(1.3);
     
     this.backgroundsBack = [
@@ -448,8 +450,8 @@ class Mapa0 {
       immovable: true,
     });
     this.portal = this.scene.physics.add.group({ allowGravity: false });
-    const aura = this.scene.add.sprite(3700, 300, "auraTuto").setScale(0.6);
-    this.aura.add(aura);
+    //const aura = this.scene.add.sprite(3700, 300, "auraTuto").setScale(0.6);
+    //this.aura.add(aura);
 
     this.textTutorial1 = new TextBox(
       this.scene,
@@ -470,14 +472,14 @@ class Mapa0 {
     this.frontContainer.add([this.textTutorial1, this.textTutorial2]);
 
     this.scene.UICamera?.ignore(this.textTutorial1);
-
-    this.scene.tweens.add({
+    //aura Tween
+    /*this.scene.tweens.add({
       targets: aura,
       alpha: 0.4,
       duration: 1000,
       yoyo: true,
       repeat: -1,
-    });
+    });*/
 
     const p1Config: LargeFloorIslandConfig = {
       textureA: "plataformaNuevaLargaA",
@@ -640,103 +642,102 @@ class Mapa0 {
     };
     const port = new Floor(this.scene, portalConfig, this.portal).setDepth(99);
     this.endPortal = port;
+    //TEST COLLECTABLES
 
-    const coinConfig: FloorConfig = {
+    const coinConfig: CollectableConfig = {
       texture: "cristal3",
       pos: { x: 3700, y: 300 },
       scale: { width: 0.7, height: 0.7 },
       width: 40,
       height: 18,
       fix: 10,
+      aura:"auraTuto",
     };
-    this.cristal = new Floor(this.scene, coinConfig, this.collectables).setBodySize(
+    this.cristal = new Collectable(this.scene, coinConfig, this.collectables).setBodySize(
       140,
       180
     );
-    this.cristal.setTint(0xffff00);
-    //TEST COLLECTABLES
     this.scene.canWin=true;//Portal is constantly ON
-
-    const coll1Config: FloorConfig = {
+    const coll1Config: CollectableConfig = {
       texture: "cristal3",
       pos: { x: 900, y: 1500 },
       scale: { width: 0.7, height: 0.7 },
       width: 40,
       height: 18,
       fix: 25,
+      aura:"auraTuto",
     }
-    const coll1 = new Floor(this.scene, coll1Config, this.collectables).setBodySize(140,180);
-    coll1.setTint(0xffff00);
+    const coll1 = new Collectable(this.scene, coll1Config, this.collectables).setBodySize(140,180);
 
-    const coll2Config: FloorConfig = {
+    const coll2Config: CollectableConfig = {
       texture: "cristal3",
       pos: { x: 1100, y: 1400 },
       scale: { width: 0.7, height: 0.7 },
       width: 40,
       height: 18,
       fix: 25,
+      aura:"auraTuto",
     }
-    const coll2 = new Floor(this.scene, coll2Config, this.collectables).setBodySize(140,180);
-    coll2.setTint(0xffff00);
+    const coll2 = new Collectable(this.scene, coll2Config, this.collectables).setBodySize(140,180);
 
-    const coll3Config: FloorConfig = {
+    const coll3Config: CollectableConfig = {
       texture: "cristal3",
       pos: { x:1300, y: 1300 },
       scale: { width: 0.7, height: 0.7 },
       width: 40,
       height: 18,
       fix: 25,
+      aura:"auraTuto",
     }
-    const coll3 = new Floor(this.scene, coll3Config, this.collectables).setBodySize(140,180);
-    coll3.setTint(0xffff00);
+    const coll3 = new Collectable(this.scene, coll3Config, this.collectables).setBodySize(140,180);
 
-    const coll4Config: FloorConfig = {
+    const coll4Config: CollectableConfig = {
       texture: "cristal3",
       pos: { x: 1800, y: 1500 },
       scale: { width: 0.7, height: 0.7 },
       width: 40,
       height: 18,
       fix: 25,
+      aura:"auraTuto",
     }
-    const coll4 = new Floor(this.scene, coll4Config, this.collectables).setBodySize(140,180);
-    coll4.setTint(0xffff00);
+    const coll4 = new Collectable(this.scene, coll4Config, this.collectables).setBodySize(140,180);
 
-    const coll5Config: FloorConfig = {
+    const coll5Config: CollectableConfig = {
       texture: "cristal3",
       pos: { x: 2100, y: 1400 },
       scale: { width: 0.7, height: 0.7 },
       width: 40,
       height: 18,
       fix: 25,
+      aura:"auraTuto",
     }
-    const coll5 = new Floor(this.scene, coll5Config, this.collectables).setBodySize(140,180);
-    coll5.setTint(0xffff00);
+    const coll5 = new Collectable(this.scene, coll5Config, this.collectables).setBodySize(140,180);
 
-    const coll6Config: FloorConfig = {
+    const coll6Config: CollectableConfig = {
       texture: "cristal3",
       pos: { x: 1900, y: 1140 },
       scale: { width: 0.7, height: 0.7 },
       width: 40,
       height: 18,
       fix: 25,
+      aura:"auraTuto",
     }
-    const coll6 = new Floor(this.scene, coll6Config, this.collectables).setBodySize(140,180);
-    coll6.setTint(0xffff00);
+    const coll6 = new Collectable(this.scene, coll6Config, this.collectables).setBodySize(140,180);
 
-    const coll7Config: FloorConfig = {
+    const coll7Config: CollectableConfig = {
       texture: "cristal3",
       pos: { x: 2500, y: 950 },
       scale: { width: 0.7, height: 0.7 },
       width: 40,
       height: 18,
       fix: 25,
+      aura:"auraTuto",
     }
-    const coll7 = new Floor(this.scene, coll7Config, this.collectables).setBodySize(140,180);
-    coll7.setTint(0xffff00);
-
+    const coll7 = new Collectable(this.scene, coll7Config, this.collectables).setBodySize(140,180);
+//Fireballs
     const fireball1Config: FloorConfig = {
-      spriteSheet: "meteoritop1",
-      texture: "meteoritop1",
+      spriteSheet: "meteorito",
+      texture: "meteorito",
       pos: { x: 2000, y: 0 }, // 500 1580
       width: 100,
       height: 100,
@@ -750,8 +751,8 @@ class Mapa0 {
     const fireball1 = new Floor( this.scene, fireball1Config, this.fireballGroup).setScale(0.5);
 
     const fireball2Config: FloorConfig = {
-      spriteSheet: "meteoritop1",
-      texture: "meteoritop1",
+      spriteSheet: "meteorito",
+      texture: "meteorito",
       pos: { x: 2900, y: 0 }, // 500 1580
       width: 100,
       height: 100,
@@ -769,10 +770,10 @@ class Mapa0 {
 
     const c1Config: AsteroidGeneratorConfig = {
       texture: "nube1",
-      x: 400,
+      x: -400,
       y: 800,
-      delayed: 50,
-      direction: 0,
+      delayed: 70,
+      direction: 1,
       velocity: 20,
       scale: 1,
       depth: 99,
@@ -783,9 +784,9 @@ class Mapa0 {
 
     const c2Config: AsteroidGeneratorConfig = {
       texture: "nube3",
-      x: 3000,
+      x: -400,
       y: 1200,
-      delayed: 50,
+      delayed: 70,
       direction: 1,
       velocity: 30,
       scale: 1,
@@ -797,10 +798,10 @@ class Mapa0 {
 
     const c3Config: AsteroidGeneratorConfig = {
       texture: "nube5",
-      x: 0,
+      x: -400,
       y: 500,
       delayed: 100,
-      direction: 0,
+      direction: 1,
       velocity: 10,
       scale: 1.2,
       group: cloudsGroup,

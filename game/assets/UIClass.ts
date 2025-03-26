@@ -202,15 +202,17 @@ export default class UIClass {
     // checkeo si estoy en game o cinemato 
     if (this.scene instanceof Game) {
       this.minutes = 0,
-        this.timeLevel = 0
-      this.timerText = this.scene.add
+      this.timeLevel = 0
+      //HIDE TIMER
+      /*this.timerText = this.scene.add
         .text(300, 50, `0${this.minutes}:0${this.timeLevel}`, { fontSize: "32px" })
         .setOrigin(0.5, 0.5)
         .setScrollFactor(0, 0)
         .setDepth(100)
         .setSize(50, 50)
-        .setPosition(250, 55);
-      this.timeLevel = 0;
+        .setPosition(250, 55);*/
+      
+        this.timeLevel = 0;
       this.timerText?.setText(`0${this.minutes}:0${this.timeLevel}`);
       var timerEvent = this.scene.time.addEvent({
         delay: 1000,
@@ -241,11 +243,11 @@ export default class UIClass {
         callbackScope: this,
         loop: true,
       });
-
-      this.container.add([this.timerText]);
+      //HIDE TIMER
+      //this.container.add([this.timerText]);
 
       this.collText = this.scene.add
-        .text(150, 150, `${this.collected}`, { fontSize: "32px" })
+        .text(250, 50, `${this.collected}`, { fontSize: "32px" })//.text(150, 150, `${this.collected}`, { fontSize: "32px" })
         .setOrigin(0.5, 0.5)
         .setScrollFactor(0, 0)
         .setDepth(100)

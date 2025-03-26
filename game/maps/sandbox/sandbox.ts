@@ -180,6 +180,11 @@ class Sandbox {
           this.scene.player,
           this.pisos,
           this.scene.touch,
+          // () => {
+          //   if (this.scene.player?.withTank) {
+          //     this.scene.player.tank.isCharging = this.scene.player.tank.chargeValue;
+          //   }
+          // },
           () => true,
           this.scene
         );
@@ -188,6 +193,7 @@ class Sandbox {
           this.scene.player,
           this.pisos2,
           () => {
+            this.scene.touch()
             if (
               this.scene.player?.body?.touching.up ||
               this.scene.player?.body?.touching.down
@@ -205,6 +211,7 @@ class Sandbox {
           this.scene.player,
           this.pisos3,
           () => {
+            this.scene.touch()
             this.scene.rotateCam(true, 10);
           },
           () => true,
@@ -215,6 +222,7 @@ class Sandbox {
           this.scene.player,
           this.pisos4,
           () => {
+            this.scene.touch()
             this.scene.rotateCam(false, 10);
           },
           () => true,
@@ -526,13 +534,14 @@ class Sandbox {
     })
 
     const portalConfig: FloorConfig = {
-      pos: { x: 5400, y: 1090 }, // x: 2400
+      pos: { x: 6600, y: 1090 }, // x: 2400
       texture: "plataformaFinalP1",
       // scale: {width: 0.7, height: 0.7},
       width: 100,
       height: 100,
     };
-    // const port = new Floor(this.scene, portalConfig, this.portal).setDepth(99);
+    const port = new Floor(this.scene, portalConfig, this.portal);
+    console.log(port, "portal");
     // this.endPortal = port;
 
     const invencibleConfig: FloorConfig = {
@@ -646,7 +655,7 @@ class Sandbox {
     const p8 = new Floor(this.scene, p8config, this.pisos)
 
     const p9config: FloorConfig = {
-      pos: { x: 5800, y: 800 },
+      pos: { x: 5800, y: 750 },
       texture: "plataformaNuevaA",
       scale: { width: 0.7, height: 0.7 },
       width: 140,
@@ -654,7 +663,7 @@ class Sandbox {
       animation:{
         yAxis:{
           yDistance:600,
-          yVel:400
+          yVel:200
         }
       }
     }
@@ -690,6 +699,7 @@ class Sandbox {
       }
       
     this.scene.UICamera?.ignore(this.pisos);
+    this.scene.UICamera?.ignore(this.portal);
     this.scene.UICamera?.ignore(this.pisos2)
     this.scene.UICamera?.ignore(this.pisos3)
     this.scene.UICamera?.ignore(this.pisos4)

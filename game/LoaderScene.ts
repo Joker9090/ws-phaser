@@ -184,12 +184,6 @@ export default class LoaderScene extends Phaser.Scene {
 
     this.background?.setPosition(midPoint.x, midPoint.y).setScale(finalScale)
     // re pos scaledContainer in the middle
-    
-
-
-    
-
-   
   }
 
   create() {

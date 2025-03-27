@@ -95,7 +95,7 @@ class Game extends Phaser.Scene {
     if (this.player) {
       this.player.idle();
       this.player.setVelocityX(0);
-      if (this.player.withTank && this.player.body?.velocity.y === 0) {
+      if (this.player.withTank) {
         this.player.tank.isCharging = this.player.tank.chargeValue;
       }
     }

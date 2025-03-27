@@ -117,6 +117,7 @@ export default class UIClass {
       const bg = this.scene.add.rectangle(0, 0, window.innerWidth, window.innerHeight, 0x000000, 0.3).setVisible(false).setOrigin(0);
       this.container.add(bg);
       this.container.add(this.settings);
+
       this.settings.on('pointerup', () => {
         this.toggleSettings()
       })
@@ -132,10 +133,8 @@ export default class UIClass {
 
   resizeElements(){
     if(window.innerWidth < 768){
-      this.container.setScale(0.8)
-      this.settings?.setPosition(window.innerWidth + 50, 70)
+      this.settings?.setPosition(window.innerWidth - 50, 70)
     }else{
-      this.container.setScale(1)
       this.settings?.setPosition(window.innerWidth - 70, 70)
     }
   }

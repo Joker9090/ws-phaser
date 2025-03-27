@@ -820,7 +820,7 @@ class Mapa5 {
         textureC: 122,
       },
       scale: { width: 0.7, height: 0.7 },
-      height: 89,
+      height: 110,
       large: 25,
       rotated: false,
     };

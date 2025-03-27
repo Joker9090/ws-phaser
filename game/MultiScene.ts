@@ -56,6 +56,7 @@ export default class MultiScene extends Phaser.Scene {
   }
 
   makeTransition(sceneName: string, data: GamePlayDataType | CinematoDataType | undefined) {
+    console.log("makeTransition", sceneName, data);
     const getBetweenScenesScene = this.game.scene.getScene(
       "BetweenScenes"
     ) as BetweenScenes;

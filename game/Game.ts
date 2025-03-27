@@ -282,14 +282,16 @@ class Game extends Phaser.Scene {
   }
 
   changeScene(obj: GamePlayDataType){
-    
-    const multiScene = new MultiScene("Game",obj);
-    const scene = this.scene.add("MultiScene", multiScene, true);
-    this.scene.start("MultiScene").bringToTop("MultiScene");
-    this.masterManagerScene?.stopMusic();
+    if (!this.scene.get("MultiScene")) {
+      const multiScene = new MultiScene("Game",obj);
+      const scene = this.scene.add("MultiScene", multiScene, true);
+      this.scene.start("MultiScene").bringToTop("MultiScene");
+      this.masterManagerScene?.stopMusic();
+    }
   }
+
   win() {
-    if (this.canWin && this.player && this.map) {
+    if (this.player && this.map) {
       console.log(this.levelIs, "LEVEL IS JOTITA");
       this.cameraNormal = true;
       if (this.map?.nextScene) {
@@ -338,6 +340,7 @@ class Game extends Phaser.Scene {
         if (this.map?.coin && this.map.endPortal) {
           this.canNextLevel = true;
           this.canWin = true;
+          this.map.endPortal.setTint(0x00ff00);
           this.map.coin.setVisible(false);
           this.map.aura?.setVisible(false);
           this.map.coin.clear(true);
@@ -434,7 +437,7 @@ class Game extends Phaser.Scene {
     // this.time.delayedCall(4000, () => {
     //   this.animCameraPan(2000, 500)
     // })
-    console.log("ARIEL TEST", this.cameras.main);
+    console.log("ARIEL TEST", data);
     this.cursorsAWSD = this.input.keyboard?.addKeys({
       w: Phaser.Input.Keyboard.KeyCodes.W,
       a: Phaser.Input.Keyboard.KeyCodes.A,
@@ -520,7 +523,6 @@ class Game extends Phaser.Scene {
         break;
       case 6:
         this.player = new Player(this, 0, 0, "character", 2);
-
         this.map = new p2Mapa4(this, this.player!);
         this.loopMusic = "planet1LoopMusic";
         if (this.masterManagerScene) {
@@ -612,7 +614,6 @@ class Game extends Phaser.Scene {
         this.loopMusic = "planet0LoopMusic";
         break;
     }
-    
     let { x, y } = this.map.startingPoint;
     if(data.startingPositionFromOtherScene){
       x = data.startingPositionFromOtherScene.x;

@@ -10,6 +10,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   isRotating: boolean = false;
   playerState: "NORMAL" | "ROTATED" = "NORMAL";
   cameraState: "NORMAL" | "ROTATED" = "NORMAL";
+  canTp: boolean = true;
 
   scene: Game |MultiScene | PreLoadScene;
   gravityAnimSprite?: Phaser.GameObjects.Sprite;
@@ -165,8 +166,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     //@ts-ignore
 
     /* player change size and bounce */
-    this.body?.setSize(100, 150);
-    this.body?.setOffset(50, 40);
+    this.body?.setSize(50, 150);
+    this.body?.setOffset(-5, 40);
 
     this.setScale(.7)
     this.setBounce(0);
@@ -211,6 +212,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   setPlayerFlying(value: boolean) {
     this.isFlying = value
     this.gravityGroup.world.gravity.y = value ? 0 : this.gravity
+    this.setAcceleration(0, 0)
   }
   setCameraState(state: "NORMAL" | "ROTATED") {
     this.cameraState = state
@@ -286,7 +288,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     } else {
       
       if (!this.isJumping && condition) {
-        let jumpForce = 500;
+        let jumpForce = 700;
 
         this.isJumping = true;
         this.anims.play("playerJump",true).once('animationcomplete', this.idle);
@@ -322,11 +324,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       }
     }
     if (this.playerState === "ROTATED") {
-      this.body?.setOffset(50,0)
+      this.body?.setOffset(75,10)
       this.setFlipY(true)
     }
     else if (this.playerState === "NORMAL") {
-      this.body?.setOffset(50,40)
+      this.body?.setOffset(75,40)
       this.setFlipY(false)
     }
     /* Keywords press */

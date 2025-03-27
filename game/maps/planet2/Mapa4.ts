@@ -765,7 +765,7 @@ class Mapa4 {
         textureC: 122,
       },
       scale: { width: 0.7, height: 0.7 },
-      height: 59,
+      height: 80,
       large: 15,
       rotated: true,
     };
@@ -793,7 +793,7 @@ class Mapa4 {
         textureC: 122,
       },
       scale: { width: 0.7, height: 0.7 },
-      height: 89,
+      height: 110,
       large: 20,
       rotated: false,
     };

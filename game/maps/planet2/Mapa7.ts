@@ -615,7 +615,7 @@ class Mapa7 {
         textureC: 122,
       },
       scale: { width: 0.7, height: 0.7 },
-      height: 89,
+      height: 110,
       large: 20,
       rotated: false,
     };
@@ -746,7 +746,7 @@ class Mapa7 {
         textureC: 122,
       },
       scale: { width: 0.7, height: 0.7 },
-      height: 89,
+      height: 110,
       large: 15,
       rotated: false,
     };

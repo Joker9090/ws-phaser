@@ -109,7 +109,7 @@ export default class UIClass {
       }
       const settingsConf: UIConfig = {
         texture: "settingsButton",
-        pos: { x: window.innerWidth - 100, y: 70 },
+        pos: { x: window.innerWidth - 70, y: 70 },
         scale: 0.9,
       };
       this.settings = new UI(this.scene, settingsConf);
@@ -124,9 +124,21 @@ export default class UIClass {
     this.scene.input.keyboard?.on('keydown-ESC', () => {
       this.toggleSettings();
     });
+
+    this.scene.scale.on("resize", ()=>{
+      this.resizeElements()
+    })
   }
 
-
+  resizeElements(){
+    if(window.innerWidth < 768){
+      this.container.setScale(0.8)
+      this.settings?.setPosition(window.innerWidth + 50, 70)
+    }else{
+      this.container.setScale(1)
+      this.settings?.setPosition(window.innerWidth - 70, 70)
+    }
+  }
 
   toggleSettings() {
     if (this.settingsVisible) {

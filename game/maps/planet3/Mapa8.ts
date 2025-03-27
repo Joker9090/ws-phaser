@@ -434,6 +434,7 @@ class Mapa8 {
           this.pisos3,
           () => {
             this.scene.rotateCam(true, 10);
+            this.scene.touch()
           },
           () => true,
           this.scene

@@ -427,6 +427,8 @@ class Mapa11 {
                     this.scene.player,
                     this.pisos3,
                     () => {
+              this.scene.touch()
+
                         this.scene.rotateCam(true, 10);
                         //if (this.scene.checkPoint === 1) {
                         //  this.scene.canRot = true
@@ -486,6 +488,8 @@ class Mapa11 {
                     this.pisos5,
                     () => {
                       this.scene.rotateCam(false, 10);
+              this.scene.touch()
+
                         // this.scene.checkPoint = 0
                     },
                     () => true,

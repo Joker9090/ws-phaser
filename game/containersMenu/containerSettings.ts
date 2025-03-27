@@ -36,7 +36,7 @@ class containerSettings extends Phaser.GameObjects.Container {
     settingsModal: Phaser.GameObjects.Container;
     // settingsButton: Phaser.GameObjects.Image;
     masterManager: MasterManager;
-
+    screenBlack: Phaser.GameObjects.Rectangle;
     sliderMusic: {
         slider: Phaser.GameObjects.Container,
         control: Phaser.GameObjects.Arc,
@@ -53,9 +53,13 @@ class containerSettings extends Phaser.GameObjects.Container {
         fillBar: Phaser.GameObjects.Rectangle
     };
     settingsButtonUi?: Phaser.GameObjects.Image
-
+    scaledContainer?: Phaser.GameObjects.Container;
+    dinamicPosition:boolean = false;
     constructor(scene: MenuScene | Game | CinematographyModular, config: ContainerMenuConfigType, changeContainer?: () => void, changeVisible?: () => void, settingsButtonUi?: Phaser.GameObjects.Image) {
         super(scene, config.x, config.y)
+        if(config.dinamicPosition){
+            this.dinamicPosition = true
+        }
         const offsetY = 100
         this.scene = scene
         this.modal = scene.add.image(0, 0, "settingsModal").setScale(.9);
@@ -65,7 +69,7 @@ class containerSettings extends Phaser.GameObjects.Container {
         //     scale: 0.9,
         //     ease: 'Bounce.easeOut',
         // })
-        this.modal.setOrigin(0.5);
+        // this.modal.setOrigin(0.5);
         this.settingsButtonUi = settingsButtonUi
         let masterManagerScene = scene.game.scene.getScene("MasterManager") as MasterManager;
         if (!masterManagerScene) {
@@ -79,8 +83,8 @@ class containerSettings extends Phaser.GameObjects.Container {
         this.volumeSound = this.masterManager.volumeSound
         this.darkness = this.masterManager.brightness
 
-        const screenBlack = scene.add.rectangle(0, 0, window.innerWidth + 200, window.innerHeight + 200, 0x000000, 0.5).setInteractive();
-        this.settingsModal = this.scene.add.container()
+        this.screenBlack = scene.add.rectangle(0, 0, window.innerWidth + 200, window.innerHeight + 200, 0x000000, 0.5).setInteractive();
+        this.settingsModal = this.scene.add.container(0,0);
 
         this.title = this.scene.add.text(-70, -420, 'Settings', {
             fontSize: 17,
@@ -115,11 +119,11 @@ class containerSettings extends Phaser.GameObjects.Container {
         this.quitGame.on('pointerup', () => {
             this.quitGame.setTexture('settingQuitGameHover')
             const group: any[] = []
-            const background = this.scene.add.rectangle(this.scene.scale.width / 10 - 150, this.scene.scale.height / 8 -100, this.scene.scale.width *2, this.scene.scale.height*2, 0x0000, 0.7).setInteractive()
-            const modal = this.scene.add.image(0,0, "codeModal")
+            const background = this.scene.add.rectangle(this.scene.scale.width / 10 - 150, this.scene.scale.height / 8 - 100, this.scene.scale.width * 2, this.scene.scale.height * 2, 0x0000, 0.7).setInteractive()
+            const modal = this.scene.add.image(0, 0, "codeModal")
             const cross = this.scene.add.image(-120, 140, "settingsCross")
             const check = this.scene.add.image(80, 140, "settingsCheck")
-            const text = this.scene.add.text(-190, -150 , `Quit game?`, {
+            const text = this.scene.add.text(-190, -150, `Quit game?`, {
                 color: "#00feff",
                 stroke: "#00feff",
                 align: "center",
@@ -312,25 +316,29 @@ class containerSettings extends Phaser.GameObjects.Container {
         //     ease: 'Bounce.easeOut',
         // })
 
-        this.sliderMusic = this.createSlider(scene, -30, -170, (value) => {
+      
+
+
+        this.sliderMusic = this.createSlider(scene, -30 , -170 , (value) => {
             this.masterManager.changeVolume(value, 'music');
         }, this.volumeMusic);
 
-        this.sliderSound = this.createSlider(scene, -30, -70, (value) => {
+        this.sliderSound = this.createSlider(scene, -30 , -70 , (value) => {
             this.masterManager.changeVolume(value, 'sound');
         }, this.volumeSound);
 
-        this.sliderBrightness = this.createSlider(scene, -30, 30, (value) => {
+        this.sliderBrightness = this.createSlider(scene, -30 , 30 , (value) => {
             this.masterManager.changeBrightness(1 - value);
         }, 1 - this.darkness);
 
+
+
         const arr = [
-            screenBlack,
+            // this.screenBlack,
             this.modal,
             this.quitGame,
             this.cross,
             this.check,
-            // this.album,
             this.brightness,
             this.brightnessFull,
             this._sound,
@@ -341,19 +349,57 @@ class containerSettings extends Phaser.GameObjects.Container {
             this.brightnessText,
             this._soundText,
             this.musicText,
-            // this.albumText,
         ]
 
-        this.settingsModal.add(arr)
-        this.add([screenBlack, this.settingsModal])
+        // arr.forEach((element) => {
+        //     if (element instanceof Phaser.GameObjects.Image || element instanceof Phaser.GameObjects.Text) {
+        //         element.setScale(element.scaleX * scaleFactor, element.scaleY * scaleFactor);
+        //         element.setPosition(element.x * scaleFactor, element.y * scaleFactor);
+        //     }
+        // });
+        
+  
+        this.settingsModal.add(arr);
+        this.add([this.screenBlack,this.settingsModal]);
         scene.add.existing(this);
-
+        this.scene.scale.on("resize", this.resizeElements, this);
+        this.resizeElements.bind(this)()
         const destroy = () => {
             this.removeAll(true)
             this.destroy()
         }
 
         this.animationOfModal()
+    }
+ 
+
+    resizeElements() {
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        const midPoint = {
+            x: width / 2,
+            y: height / 2,
+        }
+        
+        if(this.dinamicPosition){
+            this.setPosition(midPoint.x, midPoint.y)
+            this.screenBlack.setSize(width,height)
+
+        }
+        const proportionWidth = 1920
+        const proportionHeight = 1080
+
+        // scale scaledContainer to fit in width and height. scale proportional
+
+        let newScaleX = width / proportionWidth
+        let newScaleY = height / proportionHeight
+        if (!this.settingsModal) return
+        let finalScale = (newScaleX > newScaleY) ? newScaleY : newScaleX
+        this.settingsModal!.setScale(finalScale).setPosition(0,0)
+        console.log(midPoint, "MIDPOINT")
+        // this.background?.setPosition(midPoint.x, midPoint.y).setScale(finalScale)
+        // re pos scaledContainer in the middle
+
     }
 
     animationOfModal(open: boolean = true) {
@@ -389,11 +435,12 @@ class containerSettings extends Phaser.GameObjects.Container {
 
     createSlider(scene: Phaser.Scene, x: number, y: number, onChange: (value: number) => void, initialValue: number) {
         const slider = scene.add.container(x, y);
-
         const bar = scene.add.image(0, 0, 'settingsSlider').setOrigin(0.5).setScale(.8);
         const fillBar = scene.add.rectangle(-140, 0, 0, 24, 57055).setOrigin(0, 0.5).setScale(1);
         const fillBarStart = scene.add.image(-141, 0, 'fillBarStart').setOrigin(0.5).setScale(.8);
         const control = scene.add.circle(-125, 0, 13, 0xffffff).setOrigin(0.5).setScale(1);
+
+
 
 
         // this.scene.tweens.add({

@@ -11,30 +11,22 @@ export default function Home() {
       game.destroy(true)
       setGame(undefined)
     }
-    // CLEAN OLD GAME IN DEVELOPMENT
 
-    //Load phaser async when windows is ready
     import("phaser").then(setPhaser)
-    //Load scenes async when windows is ready
+
     Promise.all([
-      
-      // import("@/game/TestScene"),
       import("@/game/LoaderScene"),
       import("@/game/MultiScene"),
-
       import("@/game/MasterManager"),
       import("@/game/movies/startMovie"),
-       
-       import("@/game/movies/Cinematography-modular"),
+      import("@/game/movies/Cinematography-modular"),
       import("@/game/Menu"),
-
       import("@/game/Game"),
       import("@/game/BetweenScenes"),
     ]).then((scenes) => {
       setScenes(scenes.map(s => s.default))
     })
 
-    // get query parameter level
     const urlParams = new URLSearchParams(window.location.search);
     const level = urlParams.get('level');
     if (level) {
@@ -45,16 +37,30 @@ export default function Home() {
   }, [])
 
   React.useEffect(() => {
-    // wait until phaser and scenes is ready and check for CLEAN OLD GAME IN DEVELOPMENT
     if (phaser && scenes.length && !game) {
       const config: Phaser.Types.Core.GameConfig = {
         type: Phaser.AUTO,
-        width: "100%",
-        height: "100%",
+        width: window.innerWidth,
+        height: window.innerHeight,
         parent: "game-container",
-        scale: {
-          mode: window.Phaser.Scale.NONE
-        },
+      // min: {
+      //     width: 480,
+      //     height: 720,
+      // },
+      // max: {
+      //     width: window.innerWidth,
+      //     height: window.innerHeight,
+      // },
+      // scale: {
+      //     mode: Phaser.Scale.FIT,
+      //     autoCenter: Phaser.Scale.CENTER_BOTH
+      // },
+      scale: {
+        mode: window.Phaser.Scale.RESIZE,
+        autoCenter: window.Phaser.Scale.CENTER_BOTH,
+        width: window.innerWidth,
+        height: window.innerHeight
+      },
         scene: scenes,
         physics: {
           default: "arcade",
@@ -65,29 +71,25 @@ export default function Home() {
           }
         }
       }
+
       const game = new phaser.Game(config)
       setGame(game);
-      /* ola */
 
-      /* CONTROLS THE RESIZE AND RESTART OF SCENE */
-
-      window.addEventListener("resize", () => {
+      const handleResize = () => {
         setTimeout(() => {
-          var gameWidth = window.innerWidth
-          var gameHeight = window.innerHeight
-          var ratio = gameWidth / gameHeight
-          var scaleX = window.innerWidth / gameWidth;
-          var scaleY = window.innerHeight / gameHeight;
-          game.scene.getScenes(true).map((s) => {
-            s.scale.resize(gameWidth, gameHeight);
-            s.renderer.onResize
-          })
-        }, 100);
-      })
+          // game.scale.resize(window.innerWidth, window.innerHeight);
+        }, 10);
+      };
+
+      window.addEventListener("resize", handleResize);
+
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      }
     }
   }, [phaser, scenes])
 
   return (
-    <div id="game-container" style={{ overflow: "hidden" }} />
+    <div id="game-container" style={{ width: "100vw", height: "100vh", overflow: "hidden" }} />
   )
 }

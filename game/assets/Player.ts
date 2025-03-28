@@ -248,6 +248,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       this.tankGraphics.fillStyle(0xffffff, 0.9)
     }
     this.tankGraphics.fillRect(this.x - 50, this.y - 100, equivalent , 10)
+    this.tankGraphics.setDepth(99)
   }
   
   // agregar varable isGrounded

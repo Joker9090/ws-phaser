@@ -1,4 +1,4 @@
-import Phaser, { Physics } from "phaser";
+import Phaser, { Physics, Time } from "phaser";
 import AsteroidGenerator, {
   AsteroidGeneratorConfig,
 } from "../../assets/AsteroidGenerator";
@@ -43,7 +43,7 @@ class Sandbox {
   pisos4?: Phaser.Physics.Arcade.Group;
   coin?: Phaser.Physics.Arcade.Group;
   coinAura?: Phaser.GameObjects.Sprite;
-  invencible?: Phaser.Physics.Arcade.Group;
+  invincible?: Phaser.Physics.Arcade.Group;
   portal?: Phaser.Physics.Arcade.Group;
   teleport?: Phaser.Physics.Arcade.Group;
   aura?: Phaser.Physics.Arcade.Group;
@@ -92,7 +92,7 @@ class Sandbox {
   rotate?: boolean = true;
   mapContainer?: Phaser.GameObjects.Container;
   frontContainer?: Phaser.GameObjects.Container;
-
+  invincibilityTimer?: Time.TimerEvent
   constructor(scene: Game, player: Player, data?: GamePlayDataType) {
     this.scene = scene;
     this.player = player;
@@ -239,17 +239,17 @@ class Sandbox {
           () => true,
           this.scene
         );
-      if (this.invencible) {
+      if (this.invincible) {
         this.scene.physics.add.overlap(
           this.scene.player,
-          this.invencible,
+          this.invincible,
           () => {
             if (!this.player?.invincible) {
               this.player?.setPlayerInvicinible(true);
-              this.invencible?.setVisible(false);
-              this.scene.time.delayedCall(20000, () => {
+              this.invincible?.setVisible(false);
+              this.invincibilityTimer = this.scene.time.delayedCall(5000, () => {
                 this.player?.setPlayerInvicinible(false);
-                this.invencible?.setVisible(true);
+                this.invincible?.setVisible(true);
               });
             }
           },
@@ -320,7 +320,7 @@ class Sandbox {
     this.firegroup = this.scene.physics.add.group({ allowGravity: false });
     this.amountLifes = data.lifes;
     this.coin = this.scene.physics.add.group({ allowGravity: false });
-    this.invencible = this.scene.physics.add.group({ allowGravity: false });
+    this.invincible = this.scene.physics.add.group({ allowGravity: false });
     this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
     this.portal = this.scene.physics.add.group({ allowGravity: false });
     this.flyingPiso = this.scene.physics.add.group({ allowGravity: false, immovable: true });
@@ -544,7 +544,18 @@ class Sandbox {
     console.log(port, "portal");
     // this.endPortal = port;
 
-    const invencibleConfig: FloorConfig = {
+    const invincibleConfig: FloorConfig = {
+      texture: "cristal2",
+      pos: { x: this.startingPoint.x + 50, y: 1000 },
+      scale: { width: 0.7, height: 0.7 },
+      width: 10,
+      height: 18,
+      fix: 10,
+    };
+    // this.cristal = new Floor(this.scene, invincibleConfig, this.invincible);
+    const invincible = new Floor(this.scene, invincibleConfig, this.invincible).setFlipX(true).setTint(0xff0000);
+
+    const invincible2Config: FloorConfig = {
       texture: "cristal2",
       pos: { x: 3900, y: 1000 },
       scale: { width: 0.7, height: 0.7 },
@@ -552,8 +563,8 @@ class Sandbox {
       height: 18,
       fix: 10,
     };
-    // this.cristal = new Floor(this.scene, invencibleConfig, this.invencible);
-    const invencible = new Floor(this.scene, invencibleConfig, this.invencible).setFlipX(true).setTint(0xff0000);
+    // this.cristal = new Floor(this.scene, invincibleConfig, this.invincible);
+    const invincible2 = new Floor(this.scene, invincible2Config, this.invincible).setFlipX(true).setTint(0xff0000);
 
     const zoneAConfig: ZoneConfig = {
       x: 2700,
@@ -615,7 +626,7 @@ class Sandbox {
 
     const line1 = this.scene.add.rectangle(4000, 1000, 10, 1000, 0xff0000).setOrigin(0.5, 0.5);
     const line2 = this.scene.add.rectangle(5000, 1000, 10, 1000, 0xff0000).setOrigin(0.5, 0.5);
-    const text = this.scene.add.text(4250, 500, "testeo cristal invencible", {
+    const text = this.scene.add.text(4250, 500, "testeo cristal invincible", {
       fontSize: "32px",
       color: "#ff0000",
     }).setOrigin(0.5, 0.5);
@@ -706,7 +717,7 @@ class Sandbox {
     this.scene.UICamera?.ignore(this.pisosBack)
     this.scene.UICamera?.ignore(this.firegroup)
     this.scene.UICamera?.ignore(this.aura)
-    this.scene.UICamera?.ignore(this.invencible)
+    this.scene.UICamera?.ignore(this.invincible)
     this.scene.UICamera?.ignore(this.mapContainer)
     this.scene.UICamera?.ignore(this.frontContainer)
     this.scene.UICamera?.ignore(this.teleport)

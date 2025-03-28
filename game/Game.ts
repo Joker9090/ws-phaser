@@ -388,6 +388,11 @@ class Game extends Phaser.Scene {
           this.player.x = config.positions.x;
           this.player.y = config.positions.y;
         }
+        this.player?.setPlayerInvicinible(false)
+        this.map.invincible?.setVisible(true)
+        if (this.map.invincibilityTimer) {
+          this.time.removeEvent(this.map.invincibilityTimer);
+        }
         // this.cameraNormal = config.cameraDirection === "NORMAL" ? true : false
       }
     }

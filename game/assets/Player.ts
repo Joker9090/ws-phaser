@@ -373,63 +373,35 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       const { left, right, up, down, space } = cursors;
       /* Left*/
       this.setMass(1)
-      if(this.cameraState === "NORMAL"){
-        if (left.isDown) {
-          this.setAccelerationX(-velocity);
-          this.setFlipX(true);
-          if (!this.isJumping && !this.isRotating) this.anims.play("flyingAnimKey", true);
-        } else if (right.isDown) {
-          /* Right*/
-          this.setAccelerationX(velocity);
-          this.setFlipX(false);
-          if (!this.isJumping && !this.isRotating) this.anims.play("flyingAnimKey", true);
-        } else {
-          this.setAccelerationX(0);
-          if (!this.isJumping && !this.isRotating) this.anims.play("flyingAnimKey", true);
-        }
-        if (up.isDown) {
-          console.log("s")
-          this.setAccelerationY(-velocity);
-          // this.setFlipY(true);
-        } else if (down.isDown) {
-          /* Down*/
-          this.setAccelerationY(velocity);
-          // this.setFlipY(false);
-        } else {
-          this.setAccelerationY(0);
-          if (!this.isJumping && !this.isRotating) this.anims.play("flyingAnimKey", true);
-        }
-        checkAcelerationLimit('x')
-        checkAcelerationLimit('y')
-      }else{
-        if (left.isDown) {
-          this.setAccelerationX(velocity);
-          this.setFlipX(false);
-          if (!this.isJumping && !this.isRotating) this.anims.play("flyingAnimKey", true);
-        } else if (right.isDown) {
-          /* Right*/
-          this.setAccelerationX(-velocity);
-          this.setFlipX(true);
-          if (!this.isJumping && !this.isRotating) this.anims.play("flyingAnimKey", true);
-        } else {
-          this.setAccelerationX(0);
-          if (!this.isJumping && !this.isRotating) this.anims.play("flyingAnimKey", true);
-        }
-        if (up.isDown) {
-          console.log("s")
-          this.setAccelerationY(-velocity);
-          // this.setFlipY(true);
-        } else if (down.isDown) {
-          /* Down*/
-          this.setAccelerationY(velocity);
-          // this.setFlipY(false);
-        } else {
-          this.setAccelerationY(0);
-          if (!this.isJumping && !this.isRotating) this.anims.play("flyingAnimKey", true);
-        }
-        checkAcelerationLimit('x')
-        checkAcelerationLimit('y')
+      const flip = this.cameraState === "NORMAL" ? 1 : -1;
+      const setAnim = () => {
+        if (!this.isJumping && !this.isRotating) this.anims.play("flyingAnimKey", true);
+      };
+
+      if (left.isDown) {
+        this.setAccelerationX(-velocity * flip);
+        this.setFlipX(flip === 1);
+        setAnim();
+      } else if (right.isDown) {
+        this.setAccelerationX(velocity * flip);
+        this.setFlipX(flip !== 1);
+        setAnim();
+      } else {
+        this.setAccelerationX(0);
+        setAnim();
       }
+
+      if (up.isDown) {
+        this.setAccelerationY(-velocity);
+      } else if (down.isDown) {
+        this.setAccelerationY(velocity);
+      } else {
+        this.setAccelerationY(0);
+        setAnim();
+      }
+
+      checkAcelerationLimit('x');
+      checkAcelerationLimit('y');
       
     }
   }

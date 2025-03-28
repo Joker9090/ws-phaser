@@ -247,7 +247,7 @@ class Sandbox {
             if (!this.player?.invincible) {
               this.player?.setPlayerInvicinible(true);
               this.invincible?.setVisible(false);
-              this.invincibilityTimer = this.scene.time.delayedCall(5000, () => {
+              this.invincibilityTimer = this.scene.time.delayedCall(30000, () => {
                 this.player?.setPlayerInvicinible(false);
                 this.invincible?.setVisible(true);
               });

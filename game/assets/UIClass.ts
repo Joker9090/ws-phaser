@@ -247,7 +247,7 @@ export default class UIClass {
       //this.container.add([this.timerText]);
 
       this.collText = this.scene.add
-        .text(250, 50, `${this.collected}`, { fontSize: "32px" })//.text(150, 150, `${this.collected}`, { fontSize: "32px" })
+        .text(250, 57.5, `${this.collected}`, { fontSize: "32px" })//.text(150, 150, `${this.collected}`, { fontSize: "32px" })
         .setOrigin(0.5, 0.5)
         .setScrollFactor(0, 0)
         .setDepth(100)

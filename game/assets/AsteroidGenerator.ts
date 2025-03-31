@@ -76,7 +76,14 @@ class AsteroidGenerator {
         ease: 'ease'
       })
     }
-  
+    //ALPHA TWEEN
+    this.scene.tweens.add({
+      targets: asteroid,
+      alpha: 1,
+      duration: 3000,
+      ease: 'ease',
+      delay: 1000 + 1000*Math.random(),
+    });
   }
 
   runCreation() {

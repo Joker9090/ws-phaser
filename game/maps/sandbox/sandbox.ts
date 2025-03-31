@@ -717,7 +717,7 @@ class Sandbox {
           this.scene.tweens.add({
             targets: fireball3,
             rotation: fireball3.rotation + Math.PI, // Rota 180 grados
-            duration: 500, // Duración de la rotación en milisegundos
+            duration: 200, // Duración de la rotación en milisegundos
             ease: "Linear",
           });
         },
@@ -725,7 +725,7 @@ class Sandbox {
           this.scene.tweens.add({
             targets: fireball3,
             rotation: fireball3.rotation + Math.PI, // Rota 180 grados
-            duration: 500, // Duración de la rotación en milisegundos
+            duration: 200, // Duración de la rotación en milisegundos
             ease: "Linear",
           });
         },

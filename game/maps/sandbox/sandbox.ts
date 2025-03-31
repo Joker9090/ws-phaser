@@ -693,11 +693,46 @@ class Sandbox {
         duration: 10000,
         repeat: -1,
         delay: Math.random() * 1000,
-        x: "-=10000", // esto define en que eje se desplaza y cuando, + o - definen la direccion de dicho eje 
+        x: "-=10000", // esto define en que eje se desplaza y cuanto, + o - definen la direccion de dicho eje 
       },
       frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-      };
-      const fireball = new Floor(this.scene, fireballConfig, this.firegroup).setScale(0.5)
+    };
+    const fireball = new Floor(this.scene, fireballConfig, this.firegroup).setScale(0.5)
+
+
+    const fireball3Config: FloorConfig = {
+      spriteSheet: "meteorito",
+      texture: "meteorito",
+      pos: { x: this.startingPoint.x + 200, y: this.startingPoint.y - 100 }, // 500 1580
+      width: 100,
+      height: 100,
+      rotated: true, // rotated define si esta en vertical o horizontal
+      tween: {
+        yoyo: true,
+        duration: 1500,
+        repeat: -1,
+        delay: Math.random() * 1000,
+        x: "-=500", // esto define en que eje se desplaza y cuanto, + o - definen la direccion de dicho eje
+        onYoyo: () => {
+          this.scene.tweens.add({
+            targets: fireball3,
+            rotation: fireball3.rotation + Math.PI, // Rota 180 grados
+            duration: 500, // Duración de la rotación en milisegundos
+            ease: "Linear",
+          });
+        },
+        onRepeat: () => {
+          this.scene.tweens.add({
+            targets: fireball3,
+            rotation: fireball3.rotation + Math.PI, // Rota 180 grados
+            duration: 500, // Duración de la rotación en milisegundos
+            ease: "Linear",
+          });
+        },
+      },
+      frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+    };
+      const fireball3 = new Floor(this.scene, fireball3Config, this.firegroup).setScale(0.5)
 
       // for (let index = 0; index < intermitentFloorArray.length; index++) {
       //   const element = intermitentFloorArray[index];

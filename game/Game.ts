@@ -456,7 +456,7 @@ class Game extends Phaser.Scene {
         this.player = new Player(this, 0, 0, "character", 2);
 
         this.map = new Sandbox(this, this.player!);
-        // this.loopMusic = "planet0LoopMusic";
+        this.loopMusic = "planet0LoopMusic";
         break;
       case 0:
         this.player = new Player(this, 0, 0, "character", 2);

@@ -124,10 +124,11 @@ class Mapa5 {
     mapContainer: Phaser.GameObjects.Container;
     frontContainer: Phaser.GameObjects.Container;
 
-    constructor(scene: Game, player: Player) {
+    constructor(scene: Game, player: Player, data?: GamePlayDataType) {
         this.scene = scene;
         this.player = player;
-        /* World size*/
+        /* World size*/ 
+         
         this.scene.physics.world.setBounds(
             0,
             0,

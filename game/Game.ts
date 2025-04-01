@@ -638,6 +638,7 @@ class Game extends Phaser.Scene {
       window.innerHeight
     );
     this.UICamera?.ignore(this.player);
+    this.player.gravityAnimSprite && this.UICamera?.ignore(this.player.gravityAnimSprite);
 
     this.UIClass = new UIClass(this, this.levelIs, this.lifes, this.timeLevel);
 

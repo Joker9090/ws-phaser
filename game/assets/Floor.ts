@@ -50,9 +50,10 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
     x: 'start',
     y: 'start'
   }
+  rotate: boolean = false;
   constructor(
     scene: Game,
-    config: FloorConfig,
+    config: any,
     group: Phaser.Physics.Arcade.Group,
     frame?: string | number | undefined
 
@@ -60,6 +61,7 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
     super(scene, config.pos.x, config.pos.y, config.texture);
     this.scene = scene;
     this.group = group;
+    this.rotate = config.rotate;
     const width = config.width ?? 120;
     const height = config.height ?? 108;
     const fix = config.fix ?? 20;

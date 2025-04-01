@@ -16,31 +16,11 @@ import TextBox from "@/game/assets/TextBox";
 import MagicZone, { ZoneConfig } from "@/game/assets/MagicZone";
 import Teleport from "@/game/assets/Teleport";
 import colors from "@/game/assets/PlatformColors";
+import MapCreator from "./MapCreator";
+import { group } from "console";
 
-class Sandbox {
-  isJumping = false;
-  // debugGraphics: Phaser.GameObjects.Graphics;
-  scene: Game;
-  worldSize = {
-    width: 10000,
-    height: 2000,
-  };
-  cameraBounds = {
-    x: 0,
-    y: 0,
-    width: 10000,
-    height: 1300,
-  };
-  // normales
-  pisos?: Phaser.Physics.Arcade.Group;
-  // de vuelta al inicio
+class Sandbox extends MapCreator {
   pisosBack?: Phaser.Physics.Arcade.Group;
-  // float
-  pisos2?: Phaser.Physics.Arcade.Group;
-  // rotyate cam
-  pisos3?: Phaser.Physics.Arcade.Group;
-  //  no float
-  pisos4?: Phaser.Physics.Arcade.Group;
   coin?: Phaser.Physics.Arcade.Group;
   coinAura?: Phaser.GameObjects.Sprite;
   invencible?: Phaser.Physics.Arcade.Group;
@@ -56,23 +36,8 @@ class Sandbox {
   goingBack: boolean = false;
   pisoGoBack?: Phaser.GameObjects.Sprite;
   firegroup?: Phaser.Physics.Arcade.Group;
-  player?: Player;
-  startingPoint = {
-    x: 500, //500
-    y: 800, //800
-  };
-
-  loseConfig: loseConfigFromMapType = [
-    {
-      positions: { x: 500, y: 800 },
-      cameraDirection: "NORMAL",
-      PlayerDirection: "NORMAL",
-      gravityDown: true,
-    },
-  ];
   nextScene: string | undefined = "postal1_planeta1";
   postalCode: string | undefined = "adjns";
-
   background?: Phaser.GameObjects.Image;
   background2?: Phaser.GameObjects.Image;
   background3?: Phaser.GameObjects.Image;
@@ -94,6 +59,7 @@ class Sandbox {
   frontContainer?: Phaser.GameObjects.Container;
 
   constructor(scene: Game, player: Player, data?: GamePlayDataType) {
+    super(scene, player, data);
     this.scene = scene;
     this.player = player;
 
@@ -173,138 +139,7 @@ class Sandbox {
   //   this.scene.changeGravity(true, 1000, 3);
   // }
 
-  addColliders() {
-    if (this.scene.player) {
-      if (this.pisos)
-        this.scene.physics.add.collider(
-          this.scene.player,
-          this.pisos,
-          this.scene.touch,
-          // () => {
-          //   if (this.scene.player?.withTank) {
-          //     this.scene.player.tank.isCharging = this.scene.player.tank.chargeValue;
-          //   }
-          // },
-          () => true,
-          this.scene
-        );
-      if (this.pisos2)
-        this.scene.physics.add.collider(
-          this.scene.player,
-          this.pisos2,
-          () => {
-            this.scene.touch()
-            if (
-              this.scene.player?.body?.touching.up ||
-              this.scene.player?.body?.touching.down
-            ) {
-              this.scene.changeGravity(true, 1000, 3);
-            }
-            //this.background2.setPosition(this.startingPoint.x, this.startingPoint.y + 320)
-            //this.background4.setPosition(this.startingPoint.x, this.startingPoint.y + 320)
-          },
-          () => true,
-          this.scene
-        );
-      if (this.pisos3)
-        this.scene.physics.add.collider(
-          this.scene.player,
-          this.pisos3,
-          () => {
-            this.scene.touch()
-            this.scene.rotateCam(true, 10);
-          },
-          () => true,
-          this.scene
-        );
-      if (this.pisos4)
-        this.scene.physics.add.collider(
-          this.scene.player,
-          this.pisos4,
-          () => {
-            this.scene.touch()
-            this.scene.rotateCam(false, 10);
-          },
-          () => true,
-          this.scene
-        );
-      if (this.coin)
-        this.scene.physics.add.overlap(
-          this.scene.player,
-          this.coin,
-          (a, b) => {
-            b.destroy();
-            this.coinAura?.destroy();
-          },
-          () => true,
-          this.scene
-        );
-      if (this.invencible) {
-        this.scene.physics.add.overlap(
-          this.scene.player,
-          this.invencible,
-          () => {
-            if (!this.player?.invincible) {
-              this.player?.setPlayerInvicinible(true);
-              this.invencible?.setVisible(false);
-              this.scene.time.delayedCall(20000, () => {
-                this.player?.setPlayerInvicinible(false);
-                this.invencible?.setVisible(true);
-              });
-            }
-          },
-          () => true,
-          this.scene
-        );
-      }
-      if (this.portal)
-        this.scene.physics.add.overlap(
-          this.scene.player,
-          this.portal,
-          () => {
-            // const obj: GamePlayDataType =  {
-            //   level: 999,
-            //   lifes: this.scene.lifes ? this.scene.lifes : 3,
-            //   loadKey: ["Postales", "Cinemato1", "Cinemato2"],
-            //   startingPositionFromOtherScene: {
-            //     x: this.player!.x,
-            //     y: this.player!.y,
-            //   },
-            // }
-            // this.scene.changeScene(obj) // data
-            this.scene.win();
-          },
-          () => true,
-          this.scene
-        );
-      if (this.firegroup) {
-        this.scene.physics.add.overlap(
-          this.scene.player,
-          this.firegroup,
-          () => {
-            if (!this.player?.invincible) {
-              this.scene.touchItem("fireball");
-              this.scene.player?.setVelocity(0);
-            }
-          },
-          () => true,
-          this.scene
-        );
-      }
-      if (this.teleport)
-        this.scene.physics.add.collider(
-          this.scene.player,
-          this.teleport,
-          (a, b) => {
-            console.log("teleport");
-            const tp = b as Teleport;
-            tp.trigger();
-          },
-          () => true,
-          this.scene
-        );
-    }
-  }
+
 
   createMap(data: { level: number; lifes: number }) {
     this.mapContainer = this.scene.add.container();
@@ -312,11 +147,7 @@ class Sandbox {
     this.teleport = this.scene.physics.add.group({ allowGravity: false });
     this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
     this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });
-    this.pisos = this.scene.physics.add.group({ allowGravity: false });
     this.pisosBack = this.scene.physics.add.group({ allowGravity: false });
-    this.pisos2 = this.scene.physics.add.group({ allowGravity: false });
-    this.pisos3 = this.scene.physics.add.group({ allowGravity: false });
-    this.pisos4 = this.scene.physics.add.group({ allowGravity: false });
     this.firegroup = this.scene.physics.add.group({ allowGravity: false });
     this.amountLifes = data.lifes;
     this.coin = this.scene.physics.add.group({ allowGravity: false });
@@ -396,6 +227,7 @@ class Sandbox {
 
     const globalPlatformsConfig = {
       withTextureToAbove: true,
+      texture: "plataformaNuevaA",
       textureA: "plataformaNuevaLargaA",
       textureB: "plataformaNuevaLargaB",
       textureC: "plataformaNuevaLargaC",
@@ -403,25 +235,39 @@ class Sandbox {
       rotated: false,
     };
 
-    const intermitentFloor = {
-      ...globalPlatformsConfig,
-      pos: { x: 700, y: 1000 },
-      width: {
-        textureA: 90,
-        textureB: 67,
-        textureC: 115,
+    // const intermitentFloorArray = new Array(3).fill(globalPlatformsConfig).map((element, index) => {
+    //   return {
+    //     ...element,
+    //     pos: { x: element.pos.x + (index * 300), y: 800 },
+    //   }
+    // })
+
+    const platforms = [
+      {
+        pos: { x: 1000, y: 1000 }, colors: colors.gravity, group: this.gravityTile
       },
-      height: 127,
-      large: 5,
-    }
-
-
-    const intermitentFloorArray = new Array(3).fill(intermitentFloor).map((element, index) => {
-      return {
-        ...element,
-        pos: { x: element.pos.x + (index * 300), y: 800 },
+      { pos: { x: 1000, y: 600 }, flipY: true },
+      { pos: { x: 1400, y: 600 }, group: this.gravityTile, colors: colors.gravity, flipY: true },
+      { pos: { x: 1400, y: 1000 } },
+      { pos: { x: 2200, y: 1000 }, rotate: true, group: this.rotationTile, colors: colors.rotate },
+      { pos: { x: 2500, y: 1000 }, rotate: false, group: this.rotationTile, colors: colors.rotate },
+      {
+        pos: { x: 5200, y: 800 }, animation: {
+          xAxis: {
+            xDistance: 200,
+            xVel: 100
+          }
+        }
+      },
+      {
+        pos: { x: 5800, y: 750 }, animation: {
+          yAxis: {
+            yDistance: 600,
+            yVel: 200
+          }
+        }
       }
-    })
+    ]
     
     const largePlatforms = [
       {
@@ -434,80 +280,62 @@ class Sandbox {
         },
         height: 127,
         large: 150,
-      },]
+        group: this.floor
+      },
+      {
+        ...globalPlatformsConfig,
+        pos: { x: 6000, y: 500 },
+        width: {
+          textureA: 90,
+          textureB: 67,
+          textureC: 115,
+        },
+        height: 127,
+        large: 30,
+        group: this.floor
+      }
+    ]
     // ].concat(intermitentFloorArray)
 
-    const p2Config: FloorConfig = {
-      pos: { x: 1000, y: 1000 },
-      texture: "plataformaNuevaA",
-      scale: { width: 0.7, height: 0.7 },
-      width: 140,
-      height: 20,
+    platforms.forEach((element) => {
+      const config: any = {
+        ...element,
+        ...globalPlatformsConfig
+      };
+      const floor = new Floor(this.scene, config, element.group ?? this.floor!);
+      if (element.flipY) floor.setFlipY(true)
+      if (element.colors) floor.setTint(element.colors)
+      floor.setBodySize(140, 20)
+      floor.setFlipY(element.flipY ?? false)
+      // this.floor?.add(floor);
+    });
+
+    largePlatforms.forEach((element) => {
+      const config: any = {
+        ...element,
+        ...globalPlatformsConfig,
+      };
+
+      const largeFloor = new LargeFloorIsland(this.scene,config,element.group ?? this.floor!
+      );
+    });
+    
+    
+    
+    // for (let index = 0; index < largePlatforms.length; index++) {
+    //   const element = largePlatforms[index];
+    //   new LargeFloorIsland(this.scene, element, this.floor!);
+    // }
+    
+    const otherSceneConf: GamePlayDataType = {
+      level: 7,
+      lifes: this.scene.lifes ? this.scene.lifes : 3,
+      loadKey: ["Postales", "Cinemato1", "Cinemato2"],
+      startingPositionFromOtherScene: {
+        x: 2750,
+        y: 1000,
+      },
     }
-    const p2 = new Floor(this.scene, p2Config, this.pisos2).setTint(colors.gravity)
-
-    const p3config: FloorConfig = {
-      pos: { x: 1000, y: 600 },
-      texture: "plataformaNuevaA",
-      scale: { width: 0.7, height: 0.7 },
-      width: 140,
-      height: 20,
-    }
-    const p3 = new Floor(this.scene, p3config, this.pisos).setFlipY(true)
-
-    const p4config: FloorConfig = {
-      pos: { x: 1400, y: 600 },
-      texture: "plataformaNuevaA",
-      scale: { width: 0.7, height: 0.7 },
-      width: 140,
-      height: 20,
-    }
-
-    const p4 = new Floor(this.scene, p4config, this.pisos2).setFlipY(true).setTint(colors.gravity)
-
-    const p5config: FloorConfig = {
-      pos: { x: 1400, y: 1000 },
-      texture: "plataformaNuevaA",
-      scale: { width: 0.7, height: 0.7 },
-      width: 140,
-      height: 20,
-    }
-
-    const p5 = new Floor(this.scene, p5config, this.pisos)
-
-
-    const p6config: FloorConfig = {
-      pos: { x: 2200, y: 1000 },
-      texture: "plataformaNuevaA",
-      scale: { width: 0.7, height: 0.7 },
-      width: 140,
-      height: 20
-    }
-
-    const p6 = new Floor(this.scene, p6config, this.pisos3).setTint(colors.rotate)
-
-    const p7config: FloorConfig = {
-      pos: { x: 2500, y: 1000 },
-      texture: "plataformaNuevaA",
-      scale: { width: 0.7, height: 0.7 },
-      width: 140,
-      height: 20
-    }
-
-    const p7 = new Floor(this.scene, p7config, this.pisos4).setTint(colors.rotate)
-
-
-
-   const otherSceneConf: GamePlayDataType =  {
-        level: 7,
-        lifes: this.scene.lifes ? this.scene.lifes : 3,
-        loadKey: ["Postales", "Cinemato1", "Cinemato2"],
-        startingPositionFromOtherScene: {
-          x: 2750,
-          y: 1000,
-        },
-      }
-
     const teleport_1 = new Teleport(this.scene, { x: 2000, y: 800, version: 1, sameScene: false, group: this.teleport, otherSceneConf: otherSceneConf })
     // const teleport_2 = new Teleport(this.scene, { x: 1000, y: 1000, version: 1, sameScene: true, group: this.teleport })
 
@@ -593,25 +421,6 @@ class Sandbox {
       }
     }
     const zoneA = new MagicZone(this.scene, zoneAConfig)
-    
-    const pAConfig: LargeFloorIslandConfig = {
-      withTextureToAbove: true,
-      textureA: "plataformaNuevaLargaA",
-      textureB: "plataformaNuevaLargaB",
-      textureC: "plataformaNuevaLargaC",
-      pos: { x: 6000, y: 500 },
-      width: {
-        textureA: 90,
-        textureB: 67,
-        textureC: 115,
-      },
-      scale: { width: 0.7, height: 0.7 },
-      height: 127,
-      large: 30,
-      rotated: false
-    };
-    const pA = new LargeFloorIsland(this.scene, pAConfig, this.pisos);
-
 
     const line1 = this.scene.add.rectangle(4000, 1000, 10, 1000, 0xff0000).setOrigin(0.5, 0.5);
     const line2 = this.scene.add.rectangle(5000, 1000, 10, 1000, 0xff0000).setOrigin(0.5, 0.5);
@@ -622,54 +431,21 @@ class Sandbox {
 
     for (let i = 0; i < 100; i++) {
       const fireballConfig: FloorConfig = {
-      spriteSheet: "meteorito",
-      texture: "meteorito",
-      pos: { x: 4030 + (Math.random()*1000)  , y: -200 }, 
-      width: 100,
-      height: 100,
-      tween: {
-        duration: 3000,
-        repeat: -1,
-        delay: i * 200, 
-        y: "+=4000",
-      },
-      frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+        spriteSheet: "meteorito",
+        texture: "meteorito",
+        pos: { x: 4030 + (Math.random() * 1000), y: -200 },
+        width: 100,
+        height: 100,
+        tween: {
+          duration: 3000,
+          repeat: -1,
+          delay: i * 200,
+          y: "+=4000",
+        },
+        frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
       };
       const fireball = new Floor(this.scene, fireballConfig, this.firegroup).setScale(0.5);
     }
-
-    const p8config: FloorConfig = {
-      pos: { x: 5200, y: 800 },
-      texture: "plataformaNuevaA",
-      scale: { width: 0.7, height: 0.7 },
-      width: 140,
-      height: 20,
-      animation:{
-        xAxis:{
-          xDistance:200,
-          xVel:100
-        }
-      }
-    }
-
-    const p8 = new Floor(this.scene, p8config, this.pisos)
-
-    const p9config: FloorConfig = {
-      pos: { x: 5800, y: 750 },
-      texture: "plataformaNuevaA",
-      scale: { width: 0.7, height: 0.7 },
-      width: 140,
-      height: 20,
-      animation:{
-        yAxis:{
-          yDistance:600,
-          yVel:200
-        }
-      }
-    }
-
-    const p9 = new Floor(this.scene, p9config, this.pisos)
-
 
     const fireballConfig: FloorConfig = {
       spriteSheet: "meteorito",
@@ -677,7 +453,7 @@ class Sandbox {
       pos: { x: 13000, y: 400 }, // 500 1580
       width: 100,
       height: 100,
-      rotated:true, //rotated define si esta en vertical o horizontal
+      rotated: true, //rotated define si esta en vertical o horizontal
       tween: {
         duration: 10000,
         repeat: -1,
@@ -685,24 +461,16 @@ class Sandbox {
         x: "-=10000", // esto define en que eje se desplaza y cuando, + o - definen la direccion de dicho eje 
       },
       frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-      };
-      const fireball = new Floor(this.scene, fireballConfig, this.firegroup).setScale(0.5)
+    };
+    const fireball = new Floor(this.scene, fireballConfig, this.firegroup).setScale(0.5)
 
-      // for (let index = 0; index < intermitentFloorArray.length; index++) {
-      //   const element = intermitentFloorArray[index];
-      //   new LargeFloorIsland(this.scene, element, this.pisos);
-      // }
-      
-      for (let index = 0; index < largePlatforms.length; index++) {
-        const element = largePlatforms[index];
-        new LargeFloorIsland(this.scene, element, this.pisos);
-      }
-      
-    this.scene.UICamera?.ignore(this.pisos);
+    // for (let index = 0; index < intermitentFloorArray.length; index++) {
+    //   const element = intermitentFloorArray[index];
+    //   new LargeFloorIsland(this.scene, element, this.pisos);
+    // }
+
+    this.scene.UICamera?.ignore(this.floor!);
     this.scene.UICamera?.ignore(this.portal);
-    this.scene.UICamera?.ignore(this.pisos2)
-    this.scene.UICamera?.ignore(this.pisos3)
-    this.scene.UICamera?.ignore(this.pisos4)
     this.scene.UICamera?.ignore(this.pisosBack)
     this.scene.UICamera?.ignore(this.firegroup)
     this.scene.UICamera?.ignore(this.aura)
@@ -712,8 +480,8 @@ class Sandbox {
     this.scene.UICamera?.ignore(this.teleport)
     this.scene.UICamera?.ignore(this.coin)
     this.scene.UICamera?.ignore(this.coinAura)
-
     this.scene.UICamera?.ignore(this.scene.physics.world.debugGraphic);
+
   }
 
   update() {

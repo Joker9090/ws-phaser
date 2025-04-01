@@ -299,6 +299,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
   rotate(speed: 1 | 2 | 3 = 2) {
     if (!this.isRotating) {
+      console.log("rotating", this.isRotating)
       this.isRotating = true
       this.gravityAnimSprite?.setVisible(true)
       this.gravityAnimSprite?.anims.play("gravityAnimKey").once('animationcomplete', () => this.gravityAnimSprite?.setVisible(false))
@@ -307,7 +308,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
-
+  touchingFeet(collidingWthith: Phaser.Physics.Arcade.Sprite) {
+    return (this.body?.touching.down && !collidingWthith.flipY && this.playerState === "NORMAL") ||
+    (this.body?.touching.up && collidingWthith.flipY && this.playerState === "ROTATED")
+  }
 
   checkMove(cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined) {
     let velocity = 300;

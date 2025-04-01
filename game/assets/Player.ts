@@ -18,6 +18,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   isFlying: boolean = false;
   withTank: boolean = false;
   tankGraphics?: Phaser.GameObjects.Graphics;
+  //tank smoke
+  tankAnimSprite?: Phaser.GameObjects.Sprite;
   gravity: number = 1000;
   gravityX: number = 0;
   tank: {
@@ -51,6 +53,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     /* player animations */
     this.setOrigin()
     let frameRate = 20
+
+    //tank smoke
+    this.tankAnimSprite = this.scene.add.sprite(this.x, this.y, "tankActivate1").setSize(0.8,0.8);
+    this.tankAnimSprite.setVisible(false).setDepth(1000);
+
     const playerJumpFrames = scene.anims.generateFrameNumbers("player", {
       frames: Array.from({ length: 12 }, (_, i) => i + 36),
     });
@@ -141,6 +148,18 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       repeat: 0,
     };
 
+    //TANK SMOKE
+    const tankActivateFrames = scene.anims.generateFrameNumbers("tankActivate1", {
+      frames: Array.from({ length: 7 }, (_, i) => i),
+    });
+
+    const tankActivateConfig = {
+      key: "tankActivateAnim",
+      frames: tankActivateFrames,
+      frameRate: frameRate*1.5,
+      repeat: 0,
+    };
+
     /* player animations */
     scene.anims.create(playerJumpConfig);
     scene.anims.create(playerFlyingConfig)
@@ -152,7 +171,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     scene.anims.create(playerRotate3Config);
     scene.anims.create(playerRotateReverseConfig);
     scene.anims.create(gravityAnimConfig);
-
+    //TANK SMOKE
+    scene.anims.create(tankActivateConfig);
     /* player add to physic world */
     
 
@@ -172,14 +192,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.setScale(.7)
     this.setBounce(0);
     this.setDepth(999);
-
-
    
 
     if(this.scene instanceof Game) this.scene.UICamera?.ignore(this)
     this.gravityAnimSprite = this.scene.add.sprite(this.x, this.y, "gravityAnim", 0).setVisible(false).setDepth(999);
     if(this.scene instanceof Game)  this.scene.UICamera?.ignore(this.gravityAnimSprite)
-
+    if (this.scene instanceof Game) this.scene.UICamera?.ignore(this.tankAnimSprite)
     // this.scene.add.rectangle(this.x, this.y, 100, 100, 0xffffff).setVisible(true)
     /* player Collission with end of map */
     this.setCollideWorldBounds(true);
@@ -249,7 +267,24 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
     this.tankGraphics.fillRect(this.x - 50, this.y - 100, equivalent , 10)
   }
-  
+  //TANK SMOKE
+  activateTankAnimation() {
+  if (!this.tankAnimSprite) return;
+
+  // Update the position of the sprite based on the player's position
+  let xF = this.x - 10;
+  if (this.flipX) xF = this.x + 10;
+  this.tankAnimSprite.setPosition(xF, this.y + 10);
+
+  // Make the sprite visible and play the animation
+  this.tankAnimSprite.setVisible(true);
+  this.tankAnimSprite.anims.play("tankActivateAnim");
+
+  // Hide the sprite after the animation completes
+  this.tankAnimSprite.on("animationcomplete", () => {
+    this.tankAnimSprite?.setVisible(false);
+  });
+}
   // agregar varable isGrounded
   jump() {
     const condition = this.playerState === 'NORMAL' ? this.body?.touching.down : this.body?.touching.up
@@ -260,6 +295,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         // if velocity is 0, start with setVelocity, otherwise increment actual velocity less
         if (this.body?.velocity.y === 0 || this.tank.extraJumpAt) {
           if(this.tank.extraJumpAt && this.tank.fuel > this.tank.consume){
+             //Tank smoke
+            this.activateTankAnimation();
             let value = this.tank.extraJumpAt
             this.tank.extraJumpAt = 0;
             //delay call to 300 ms to make the jump more fluid
@@ -282,7 +319,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
           this.isJumping = true;
           this.anims.play("playerJump",true).once('animationcomplete', this.idle);
         }
-
+       
       }
       
     } else {

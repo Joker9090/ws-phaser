@@ -1,4 +1,4 @@
-import Phaser, { GameObjects, Physics } from "phaser";
+import Phaser, { GameObjects, Physics, Time } from "phaser";
 import AsteroidGenerator, {
   AsteroidGeneratorConfig,
 } from "../../assets/AsteroidGenerator";
@@ -115,7 +115,9 @@ class Mapa8 {
   background4OriginalPos: { x: number, y: number };
   UIItemToGrab: string = 'uiItemp3';
   UIItemScale?: number = 0.3;
-
+  invincibilityTimer?: Time.TimerEvent
+    invincible?: Phaser.Physics.Arcade.Group;
+  
   cristal?: Floor;
   collected: Boolean = false;
   endPortal?: Floor;

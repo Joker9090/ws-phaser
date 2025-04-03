@@ -1,4 +1,4 @@
-import Phaser, { Physics } from "phaser";
+import Phaser, { Physics, Time } from "phaser";
 import AsteroidGenerator, {
     AsteroidGeneratorConfig,
 } from "../../assets/AsteroidGenerator";
@@ -86,6 +86,8 @@ class Mapa3 {
     ];
     nextScene: string | undefined = 'cine_movie_1';
     postalCode: string | undefined = undefined
+    invincibilityTimer?: Time.TimerEvent
+    invincible?: Phaser.Physics.Arcade.Group;
 
     background: Phaser.GameObjects.Image;
     background2: Phaser.GameObjects.Image;

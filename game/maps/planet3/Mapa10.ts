@@ -1,4 +1,4 @@
-import Phaser, { GameObjects, Physics } from "phaser";
+import Phaser, { GameObjects, Physics, Time } from "phaser";
 import AsteroidGenerator, {
   AsteroidGeneratorConfig,
 } from "../../assets/AsteroidGenerator";
@@ -130,7 +130,9 @@ class Mapa10 {
   originalPositionsBackgroundsMiddle: { x: number, y: number }[]
   originalPositionsBackgroundsFront: { x: number, y: number }[]
   background4OriginalPos: { x: number, y: number }
-
+  invincibilityTimer?: Time.TimerEvent
+    invincible?: Phaser.Physics.Arcade.Group;
+  
   moveCamera?: boolean = true;
   oldOffset?: number
   p8?: Floor

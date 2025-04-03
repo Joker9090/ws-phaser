@@ -248,6 +248,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       this.tankGraphics.fillStyle(0xffffff, 0.9)
     }
     this.tankGraphics.fillRect(this.x - 50, this.y - 100, equivalent , 10)
+    this.tankGraphics.setDepth(99)
   }
   
   // agregar varable isGrounded
@@ -377,33 +378,36 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       const { left, right, up, down, space } = cursors;
       /* Left*/
       this.setMass(1)
+      const flip = this.cameraState === "NORMAL" ? 1 : -1;
+      const setAnim = () => {
+        if (!this.isJumping && !this.isRotating) this.anims.play("flyingAnimKey", true);
+      };
+
       if (left.isDown) {
-        this.setAccelerationX(-velocity);
-        this.setFlipX(true);
-        if (!this.isJumping && !this.isRotating) this.anims.play("flyingAnimKey", true);
+        this.setAccelerationX(-velocity * flip);
+        this.setFlipX(flip === 1);
+        setAnim();
       } else if (right.isDown) {
-        /* Right*/
-        this.setAccelerationX(velocity);
-        this.setFlipX(false);
-        if (!this.isJumping && !this.isRotating) this.anims.play("flyingAnimKey", true);
+        this.setAccelerationX(velocity * flip);
+        this.setFlipX(flip !== 1);
+        setAnim();
       } else {
         this.setAccelerationX(0);
-        if (!this.isJumping && !this.isRotating) this.anims.play("flyingAnimKey", true);
+        setAnim();
       }
+
       if (up.isDown) {
-        console.log("s")
         this.setAccelerationY(-velocity);
-        // this.setFlipY(true);
       } else if (down.isDown) {
-        /* Down*/
         this.setAccelerationY(velocity);
-        // this.setFlipY(false);
       } else {
         this.setAccelerationY(0);
-        if (!this.isJumping && !this.isRotating) this.anims.play("flyingAnimKey", true);
+        setAnim();
       }
-      checkAcelerationLimit('x')
-      checkAcelerationLimit('y')
+
+      checkAcelerationLimit('x');
+      checkAcelerationLimit('y');
+      
     }
   }
   

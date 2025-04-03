@@ -1,4 +1,4 @@
-import Phaser, { Physics } from "phaser";
+import Phaser, { Physics, Time } from "phaser";
 import AsteroidGenerator, {
   AsteroidGeneratorConfig,
 } from "../../assets/AsteroidGenerator";
@@ -47,6 +47,8 @@ class Mapa2 {
   movingFloor?: Phaser.Physics.Arcade.Group;
   movingFloorRot?: Phaser.Physics.Arcade.Group;
   p13!: Phaser.GameObjects.Sprite;
+  invincibilityTimer?: Time.TimerEvent
+  invincible?: Phaser.Physics.Arcade.Group;
 
   amountLifes: number = 0;
   sideGrav: boolean = false;

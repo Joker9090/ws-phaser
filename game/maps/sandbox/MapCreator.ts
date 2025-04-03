@@ -2,6 +2,7 @@ import Player from "@/game/assets/Player";
 import { GamePlayDataType, loseConfigFromMapType } from "@/game/Types";
 import Game from "@/game/Game";
 import Teleport from "@/game/assets/Teleport";
+import { Time } from "phaser";
 
 export default class MapCreator {
   mapGroup: Phaser.Physics.Arcade.Group;
@@ -58,7 +59,7 @@ export default class MapCreator {
   rotationTile?: Phaser.Physics.Arcade.Group;
   coin?: Phaser.Physics.Arcade.Group;
   coinAura?: Phaser.GameObjects.Sprite;
-  invencible?: Phaser.Physics.Arcade.Group;
+  invincible?: Phaser.Physics.Arcade.Group;
   portal?: Phaser.Physics.Arcade.Group;
   teleport?: Phaser.Physics.Arcade.Group;
   aura?: Phaser.Physics.Arcade.Group;
@@ -66,6 +67,7 @@ export default class MapCreator {
   movingFloorRot?: Phaser.Physics.Arcade.Group;
   flyingPiso?: Phaser.Physics.Arcade.Group;
   firegroup?: Phaser.Physics.Arcade.Group;
+  invincibilityTimer?: Time.TimerEvent
 
   constructor(scene: Game, player: Player, data?: GamePlayDataType) {
     this.scene = scene;
@@ -224,24 +226,24 @@ export default class MapCreator {
           () => true,
           this.scene
         );
-      if (this.invencible) {
-        this.scene.physics.add.overlap(
-          this.scene.player,
-          this.invencible,
-          () => {
-            if (!this.player?.invincible) {
-              this.player?.setPlayerInvicinible(true);
-              this.invencible?.setVisible(false);
-              this.scene.time.delayedCall(20000, () => {
-                this.player?.setPlayerInvicinible(false);
-                this.invencible?.setVisible(true);
-              });
-            }
-          },
-          () => true,
-          this.scene
-        );
-      }
+        if (this.invincible) {
+          this.scene.physics.add.overlap(
+            this.scene.player,
+            this.invincible,
+            () => {
+              if (!this.player?.invincible) {
+                this.player?.setPlayerInvicinible(true);
+                this.invincible?.setVisible(false);
+                this.invincibilityTimer = this.scene.time.delayedCall(30000, () => {
+                  this.player?.setPlayerInvicinible(false);
+                  this.invincible?.setVisible(true);
+                });
+              }
+            },
+            () => true,
+            this.scene
+          );
+        }
       if (this.portal)
         this.scene.physics.add.overlap(
           this.scene.player,

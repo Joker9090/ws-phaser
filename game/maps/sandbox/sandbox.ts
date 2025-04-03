@@ -1,4 +1,4 @@
-import Phaser, { Physics } from "phaser";
+import Phaser, { Physics, Time } from "phaser";
 import AsteroidGenerator, {
   AsteroidGeneratorConfig,
 } from "../../assets/AsteroidGenerator";
@@ -18,7 +18,7 @@ class Sandbox extends MapCreator {
   pisosBack?: Phaser.Physics.Arcade.Group;
   coin?: Phaser.Physics.Arcade.Group;
   coinAura?: Phaser.GameObjects.Sprite;
-  invencible?: Phaser.Physics.Arcade.Group;
+  invincible?: Phaser.Physics.Arcade.Group;
   portal?: Phaser.Physics.Arcade.Group;
   teleport?: Phaser.Physics.Arcade.Group;
   aura?: Phaser.Physics.Arcade.Group;
@@ -39,7 +39,6 @@ class Sandbox extends MapCreator {
   collected: Boolean = false;
   endPortal?: Floor;
   rotate?: boolean = true;
-
   constructor(scene: Game, player: Player, data?: GamePlayDataType) {
     super(scene, player, data);
     this.scene = scene;
@@ -65,7 +64,7 @@ class Sandbox extends MapCreator {
     this.firegroup = this.scene.physics.add.group({ allowGravity: false });
     this.amountLifes = data.lifes;
     this.coin = this.scene.physics.add.group({ allowGravity: false });
-    this.invencible = this.scene.physics.add.group({ allowGravity: false });
+    this.invincible = this.scene.physics.add.group({ allowGravity: false });
     this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
     this.portal = this.scene.physics.add.group({ allowGravity: false });
     this.flyingPiso = this.scene.physics.add.group({ allowGravity: false, immovable: true });
@@ -255,7 +254,18 @@ class Sandbox extends MapCreator {
     const port = new Floor(this.scene, portalConfig, this.portal);
     // this.endPortal = port;
 
-    const invencibleConfig: FloorConfig = {
+    const invincibleConfig: FloorConfig = {
+      texture: "cristal2",
+      pos: { x: this.startingPoint.x + 50, y: 1000 },
+      scale: { width: 0.7, height: 0.7 },
+      width: 10,
+      height: 18,
+      fix: 10,
+    };
+    // this.cristal = new Floor(this.scene, invincibleConfig, this.invincible);
+    const invincible = new Floor(this.scene, invincibleConfig, this.invincible).setFlipX(true).setTint(0xff0000);
+
+    const invincible2Config: FloorConfig = {
       texture: "cristal2",
       pos: { x: 3900, y: 1000 },
       scale: { width: 0.7, height: 0.7 },
@@ -263,8 +273,8 @@ class Sandbox extends MapCreator {
       height: 18,
       fix: 10,
     };
-    // this.cristal = new Floor(this.scene, invencibleConfig, this.invencible);
-    const invencible = new Floor(this.scene, invencibleConfig, this.invencible).setFlipX(true).setTint(0xff0000);
+    // this.cristal = new Floor(this.scene, invincibleConfig, this.invincible);
+    const invincible2 = new Floor(this.scene, invincible2Config, this.invincible).setFlipX(true).setTint(0xff0000);
 
     const zoneAConfig: ZoneConfig = {
       x: 2700,
@@ -307,7 +317,7 @@ class Sandbox extends MapCreator {
 
     const line1 = this.scene.add.rectangle(4000, 1000, 10, 1000, 0xff0000).setOrigin(0.5, 0.5);
     const line2 = this.scene.add.rectangle(5000, 1000, 10, 1000, 0xff0000).setOrigin(0.5, 0.5);
-    const text = this.scene.add.text(4250, 500, "testeo cristal invencible", {
+    const text = this.scene.add.text(4250, 500, "testeo cristal invincible", {
       fontSize: "32px",
       color: "#ff0000",
     }).setOrigin(0.5, 0.5);
@@ -330,29 +340,46 @@ class Sandbox extends MapCreator {
       const fireball = new Floor(this.scene, fireballConfig, this.firegroup).setScale(0.5);
     }
 
-    const fireballConfig: FloorConfig = {
+    const fireball3Config: FloorConfig = {
       spriteSheet: "meteorito",
       texture: "meteorito",
-      pos: { x: 13000, y: 400 }, // 500 1580
+      pos: { x: this.startingPoint.x + 200, y: this.startingPoint.y - 100 }, // 500 1580
       width: 100,
       height: 100,
-      rotated: true, //rotated define si esta en vertical o horizontal
+      rotated: true, // rotated define si esta en vertical o horizontal
       tween: {
-        duration: 10000,
+        yoyo: true,
+        duration: 1500,
         repeat: -1,
         delay: Math.random() * 1000,
-        x: "-=10000", // esto define en que eje se desplaza y cuando, + o - definen la direccion de dicho eje 
+        x: "-=500", // esto define en que eje se desplaza y cuanto, + o - definen la direccion de dicho eje
+        onYoyo: () => {
+          this.scene.tweens.add({
+            targets: fireball3,
+            rotation: fireball3.rotation + Math.PI, // Rota 180 grados
+            duration: 200, // Duración de la rotación en milisegundos
+            ease: "Linear",
+          });
+        },
+        onRepeat: () => {
+          this.scene.tweens.add({
+            targets: fireball3,
+            rotation: fireball3.rotation + Math.PI, // Rota 180 grados
+            duration: 200, // Duración de la rotación en milisegundos
+            ease: "Linear",
+          });
+        },
       },
       frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
     };
-    const fireball = new Floor(this.scene, fireballConfig, this.firegroup).setScale(0.5)
+      const fireball3 = new Floor(this.scene, fireball3Config, this.firegroup).setScale(0.5)
 
     this.scene.UICamera?.ignore(this.floor!);
     this.scene.UICamera?.ignore(this.portal);
     this.scene.UICamera?.ignore(this.pisosBack)
     this.scene.UICamera?.ignore(this.firegroup)
     this.scene.UICamera?.ignore(this.aura)
-    this.scene.UICamera?.ignore(this.invencible)
+    this.scene.UICamera?.ignore(this.invincible)
     this.scene.UICamera?.ignore(this.mapContainer)
     this.scene.UICamera?.ignore(this.frontContainer)
     this.scene.UICamera?.ignore(this.teleport)

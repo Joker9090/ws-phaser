@@ -5,6 +5,7 @@ import PreLoadScene from "../PreLoadScene";
 
 // Scene in class
 class Player extends Phaser.Physics.Arcade.Sprite {
+
   gravityGroup: Phaser.Physics.Arcade.Group;
   isJumping: boolean = false;
   isRotating: boolean = false;
@@ -55,8 +56,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     let frameRate = 20
 
     //tank smoke
-    this.tankAnimSprite = this.scene.add.sprite(this.x, this.y, "tankActivate1").setSize(0.8,0.8);
-    this.tankAnimSprite.setVisible(false).setDepth(1000);
+    this.tankAnimSprite = this.scene.add.sprite(this.x, this.y, "tankActivate").setSize(0.8,0.8);
+    this.tankAnimSprite.setVisible(false).setDepth(900);
 
     const playerJumpFrames = scene.anims.generateFrameNumbers("player", {
       frames: Array.from({ length: 12 }, (_, i) => i + 36),
@@ -149,14 +150,14 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     };
 
     //TANK SMOKE
-    const tankActivateFrames = scene.anims.generateFrameNumbers("tankActivate1", {
-      frames: Array.from({ length: 7 }, (_, i) => i),
+    const tankActivateFrames = scene.anims.generateFrameNumbers("tankActivate", {
+      frames: Array.from({ length: 6 }, (_, i) => i),
     });
 
     const tankActivateConfig = {
       key: "tankActivateAnim",
       frames: tankActivateFrames,
-      frameRate: frameRate*1.5,
+      frameRate: frameRate*1.2,
       repeat: 0,
     };
 
@@ -271,15 +272,21 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   activateTankAnimation() {
   if (!this.tankAnimSprite) return;
 
-  // Update the position of the sprite based on the player's position
-  let xF = this.x - 10;
-  if (this.flipX) xF = this.x + 10;
-  this.tankAnimSprite.setPosition(xF, this.y + 10);
+  /*let xF = this.x - 10;
+    if (this.flipX) xF = this.x + 10;
+    this.tankAnimSprite.setPosition(xF, this.y + 10);*/
 
   // Make the sprite visible and play the animation
   this.tankAnimSprite.setVisible(true);
   this.tankAnimSprite.anims.play("tankActivateAnim");
-
+  // Update the position of the sprite based on the player's position
+  
+  this.tankAnimSprite.on("animationupdate", () => {
+    let xF = this.x - 15;
+    if (this.flipX) xF = this.x + 15;
+    this.tankAnimSprite?.setPosition(xF, this.y + 60);
+  });
+  
   // Hide the sprite after the animation completes
   this.tankAnimSprite.on("animationcomplete", () => {
     this.tankAnimSprite?.setVisible(false);

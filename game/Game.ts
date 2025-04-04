@@ -450,6 +450,21 @@ class Game extends Phaser.Scene {
     this.lifes = data.lifes;
     this.cursors = this.input.keyboard?.createCursorKeys();
     this.time.paused = false;
+    this.events.addListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") {
+        this.masterManagerScene?.pauseGame();
+      } else {
+        this.masterManagerScene?.resumeGame();
+      }
+    })
+
+    window.addEventListener("blur", () => {
+      this.masterManagerScene?.pauseGame();
+    });
+  
+    window.addEventListener("focus", () => {
+        this.masterManagerScene?.resumeGame();
+    });
     /* CHOSE LEVEL, LIFES AND AUDIO */
     switch (data.level) {
       case 999:

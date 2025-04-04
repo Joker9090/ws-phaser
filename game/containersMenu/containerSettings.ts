@@ -55,7 +55,7 @@ class containerSettings extends Phaser.GameObjects.Container {
     settingsButtonUi?: Phaser.GameObjects.Image
     scaledContainer?: Phaser.GameObjects.Container;
     dinamicPosition:boolean = false;
-    scaleFactor:number =( window.innerWidth/1920 )*0.9
+    scaleFactor:number =1
     constructor(scene: MenuScene | Game | CinematographyModular, config: ContainerMenuConfigType, changeContainer?: () => void, changeVisible?: () => void, settingsButtonUi?: Phaser.GameObjects.Image) {
         super(scene, config.x, config.y)
         if(config.dinamicPosition){
@@ -84,7 +84,8 @@ class containerSettings extends Phaser.GameObjects.Container {
         this.volumeSound = this.masterManager.volumeSound
         this.darkness = this.masterManager.brightness
 
-        this.screenBlack = scene.add.rectangle(0, 0, window.innerWidth, window.innerHeight + 200, 0x000000, 0.5).setInteractive();
+        // this.screenBlack = scene.add.rectangle( 0,0, window.innerWidth, window.innerHeight + 200, 0x000000, 0.5).setInteractive();
+        this.screenBlack = scene.add.rectangle( 0,0, 2400, 2000, 0x000000, 0.5).setInteractive();
         this.settingsModal = this.scene.add.container(0,0);
 
         this.title = this.scene.add.text(-70, -420, 'Settings', {
@@ -318,7 +319,7 @@ class containerSettings extends Phaser.GameObjects.Container {
         // })
 
       
-
+        console.log(window.innerWidth, window.innerHeight, "cameras main dimensions from settings");
 
         this.sliderMusic = this.createSlider(scene, -30 *this.scaleFactor , -170 *this.scaleFactor , (value) => {
             this.masterManager.changeVolume(value, 'music');
@@ -362,8 +363,9 @@ class containerSettings extends Phaser.GameObjects.Container {
         this.settingsModal.add(arr);
         this.add([this.screenBlack,this.settingsModal]);
         scene.add.existing(this);
-        this.scene.scale.on("resize", this.resizeElements, this);
-        this.resizeElements.bind(this)()
+        // this.scene.scale.on("resize", ()=>{(this.scene as Game).UICamera?.setViewport(0,0,window.innerWidth, window.innerHeight)}, this);
+        // this.resizeElements.bind(this)()
+
         const destroy = () => {
             this.removeAll(true)
             this.destroy()
@@ -373,35 +375,35 @@ class containerSettings extends Phaser.GameObjects.Container {
     }
  
 
-    resizeElements() {
-        const width = window.innerWidth;
-        const height = window.innerHeight;
-        const midPoint = {
-            x: width / 2,
-            y: height / 2,
-        }
+    // resizeElements() {
+    //     const width = window.innerWidth;
+    //     const height = window.innerHeight;
+    //     const midPoint = {
+    //         x: width / 2,
+    //         y: height / 2,
+    //     }
         
-        if(this.dinamicPosition){
-            this.setPosition(midPoint.x, midPoint.y) 
-        }
-        const proportionWidth = 1920
-        const proportionHeight = 1080
+    //     if(this.dinamicPosition){
+    //         this.setPosition(midPoint.x, midPoint.y) 
+    //     }
+    //     const proportionWidth = 1920
+    //     const proportionHeight = 1080
 
-        // scale scaledContainer to fit in width and height. scale proportional
+    //     // scale scaledContainer to fit in width and height. scale proportional
 
-        let newScaleX = width / proportionWidth
-        let newScaleY = height / proportionHeight
-        if (!this.settingsModal) return
-        let finalScale = (newScaleX > newScaleY) ? newScaleX : newScaleY
-        this.settingsModal!.setScale(finalScale *1.2).setPosition(0,0)
-        if(this.screenBlack){
-            this.screenBlack.setScale(width, height)   
-        }
-        console.log(midPoint, "MIDPOINT")
-        // this.background?.setPosition(midPoint.x, midPoint.y).setScale(finalScale)
-        // re pos scaledContainer in the middle
+    //     let newScaleX = width / proportionWidth
+    //     let newScaleY = height / proportionHeight
+    //     if (!this.settingsModal) return
+    //     let finalScale = (newScaleX > newScaleY) ? newScaleX : newScaleY
+    //     this.settingsModal!.setScale(finalScale *1.2).setPosition(0,0)
+    //     if(this.screenBlack){
+    //         this.screenBlack.setScale(width, height)   
+    //     }
+    //     console.log(midPoint, "MIDPOINT")
+    //     // this.background?.setPosition(midPoint.x, midPoint.y).setScale(finalScale)
+    //     // re pos scaledContainer in the middle
 
-    }
+    // }
 
     animationOfModal(open: boolean = true) {
         this.settingsModal.setScale(open ? 0 : 1)

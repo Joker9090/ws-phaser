@@ -126,18 +126,18 @@ export default class UIClass {
       this.toggleSettings();
     });
 
-    this.scene.scale.on("resize", ()=>{
-      this.resizeElements()
-    })
+    // this.scene.scale.on("resize", ()=>{
+    //   this.resizeElements()
+    // })
   }
 
-  resizeElements(){
-    if(window.innerWidth < 768){
-      this.settings?.setPosition(window.innerWidth - 50, 70)
-    }else{
-      this.settings?.setPosition(window.innerWidth - 70, 70)
-    }
-  }
+  // resizeElements(){
+  //   if(window.innerWidth < 768){
+  //     this.settings?.setPosition(window.innerWidth - 50, 70)
+  //   }else{
+  //     this.settings?.setPosition(window.innerWidth - 70, 70)
+  //   }
+  // }
 
   toggleSettings() {
     if (this.settingsVisible) {
@@ -149,7 +149,7 @@ export default class UIClass {
       })
       this.settingsVisible = false
     } else {
-      this.settingsModal = new containerSettings(this.scene, { x: window.innerWidth / 2, y: window.innerHeight / 2, dinamicPosition:true }, undefined, () => { this.settingsVisible = !this.settingsVisible }, this.settings)
+      this.settingsModal = new containerSettings(this.scene, { x: 1920 / 2, y: 1080 /2, dinamicPosition:true }, undefined, () => { this.settingsVisible = !this.settingsVisible }, this.settings)
       this.masterManager.playSound('buttonSound', false)
       this.masterManager.pauseGame()
       this.settings?.setVisible(false)

@@ -3,7 +3,59 @@ import { GamePlayDataType, loseConfigFromMapType } from "@/game/Types";
 import Game from "@/game/Game";
 import Teleport from "@/game/assets/Teleport";
 import { Time } from "phaser";
+import Floor, { FloorConfig } from "@/game/assets/Floor";
+import LargeFloorIsland from "@/game/assets/LargeFloorIsland";
 
+export type mapFloorConfig = {
+  pos: { x: number; y: number };
+  rotate?: boolean;
+  flipY?: boolean;
+  group?: Phaser.Physics.Arcade.Group;
+  colors?: number[];
+  width?: number;
+  height?: number;
+  scale?: { width: number; height: number };
+  
+  animation?: {
+    xAxis?: {
+      xDistance: number;
+      xVel: number;
+    };
+    yAxis?: {
+      yDistance: number;
+      yVel: number;
+    };
+  };
+
+}
+
+export type mapLargeFloorConfig = {
+  pos: { x: number; y: number };
+  rotate?: boolean;
+  flipY?: boolean;
+  group?: Phaser.Physics.Arcade.Group;
+  colors?: number[];
+  width?: {
+    textureA: number;
+    textureB: number; 
+    textureC: number;
+  }
+  height?: number;
+  scale?: { width: number; height: number };
+  textureA?: string | Phaser.Textures.Texture;
+  textureB?: string | Phaser.Textures.Texture;
+  textureC?: string | Phaser.Textures.Texture;
+  animation?: {
+    xAxis?: {
+      xDistance: number;
+      xVel: number;
+    };
+    yAxis?: {
+      yDistance: number;
+      yVel: number;
+    };
+  };
+}
 export default class MapCreator {
   mapGroup: Phaser.Physics.Arcade.Group;
   isJumping = false;
@@ -112,6 +164,45 @@ export default class MapCreator {
     this.scene.UICamera?.ignore(this.gravityTile)
     this.scene.UICamera?.ignore(this.rotationTile)
     this.scene.UICamera?.ignore(this.scene.physics.world.debugGraphic);
+  }
+  createPlatforms(floors:mapFloorConfig[], largeFloors:mapLargeFloorConfig[]) {
+
+    const globalPlatformsConfig = {
+      withTextureToAbove: true,
+      texture: "plataformaNuevaA",
+      textureA: "plataformaNuevaLargaA",
+      textureB: "plataformaNuevaLargaB",
+      textureC: "plataformaNuevaLargaC",
+      scale: { width: 0.7, height: 0.7 },
+      rotated: false,
+    };
+
+
+    floors.forEach((element) => {
+      const config: any = {
+        ...element,
+        ...globalPlatformsConfig
+      };
+      const floor = new Floor(this.scene, config, element.group ?? this.floor!);
+      if (element.flipY) floor.setFlipY(true)
+      if (element.colors) floor.setTint(element.colors[0], element.colors[1], element.colors[2], element.colors[3])
+      floor.setBodySize(140, 20)
+      floor.setFlipY(element.flipY ?? false)
+      // this.floor?.add(floor);
+    });
+
+    largeFloors.forEach((element) => {
+      const config: any = {
+        ...element,
+        ...globalPlatformsConfig,
+      };
+
+      const largeFloor = new LargeFloorIsland(this.scene,config,element.group ?? this.floor!
+      );
+    });
+
+
+
   }
 
   createBackgrounds(backgroundsBack: Phaser.GameObjects.Image[], backgroundsMiddle: Phaser.GameObjects.Image[], backgroundsFront: Phaser.GameObjects.Image[]) {

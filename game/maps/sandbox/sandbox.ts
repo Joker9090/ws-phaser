@@ -14,6 +14,8 @@ import Teleport from "@/game/assets/Teleport";
 import colors from "@/game/assets/PlatformColors";
 import MapCreator from "./MapCreator";
 
+
+
 class Sandbox extends MapCreator {
   pisosBack?: Phaser.Physics.Arcade.Group;
   coin?: Phaser.Physics.Arcade.Group;
@@ -110,15 +112,15 @@ class Sandbox extends MapCreator {
 
     this.scene.player?.setDepth(9999999999999);
     
-    const globalPlatformsConfig = {
-      withTextureToAbove: true,
-      texture: "plataformaNuevaA",
-      textureA: "plataformaNuevaLargaA",
-      textureB: "plataformaNuevaLargaB",
-      textureC: "plataformaNuevaLargaC",
-      scale: { width: 0.7, height: 0.7 },
-      rotated: false,
-    };
+    // const globalPlatformsConfig = {
+    //   withTextureToAbove: true,
+    //   texture: "plataformaNuevaA",
+    //   textureA: "plataformaNuevaLargaA",
+    //   textureB: "plataformaNuevaLargaB",
+    //   textureC: "plataformaNuevaLargaC",
+    //   scale: { width: 0.7, height: 0.7 },
+    //   rotated: false,
+    // };
 
     // const intermitentFloorArray = new Array(3).fill(globalPlatformsConfig).map((element, index) => {
     //   return {
@@ -126,84 +128,145 @@ class Sandbox extends MapCreator {
     //     pos: { x: element.pos.x + (index * 300), y: 800 },
     //   }
     // })
+    const mapPlatforms = [ 
+      // platforms
+      [
+        {
+          pos: { x: 1000, y: 1000 }, colors: [colors.gravity], group: this.gravityTile
+        },
+        { pos: { x: 1000, y: 600 }, flipY: true },
+        { pos: { x: 1400, y: 600 }, group: this.gravityTile, colors: [colors.gravity], flipY: true },
+        { pos: { x: 1400, y: 1000 } },
+        { pos: { x: 2200, y: 1000 }, rotate: true, group: this.rotationTile, colors: [colors.rotate] },
+        { pos: { x: 2500, y: 1000 }, rotate: false, group: this.rotationTile, colors: [colors.rotate] },
+        {
+          pos: { x: 5200, y: 800 }, animation: {
+            xAxis: {
+              xDistance: 200,
+              xVel: 100
+            }
+          }
+        },
+        {
+          pos: { x: 5800, y: 750 }, animation: {
+            yAxis: {
+              yDistance: 600,
+              yVel: 200
+            }
+          }
+        }
+      ],
+      // largePlatforms
+      [
+        {
+          // ...globalPlatformsConfig,
+          pos: { x: 300, y: 1200 },
+          width: {
+            textureA: 90,
+            textureB: 67,
+            textureC: 115,
+          }, // Adjusted to match the expected type in mapFloorConfig
+          height: 127,
+          large: 150,
+          group: this.floor
+        },
+        {
+          // ...globalPlatformsConfig,
+          pos: { x: 6000, y: 500 },
+          width: {
+            textureA: 90,
+            textureB: 67,
+            textureC: 115,
+          }, // Adjusted to match the expected type in mapFloorConfig
+          height: 127,
+          large: 30,
+          group: this.floor
+        }
+      ],
+      // cristals
+      [
+       
+      ]
+    ]
 
-    const platforms = [
-      {
-        pos: { x: 1000, y: 1000 }, colors: colors.gravity, group: this.gravityTile
-      },
-      { pos: { x: 1000, y: 600 }, flipY: true },
-      { pos: { x: 1400, y: 600 }, group: this.gravityTile, colors: colors.gravity, flipY: true },
-      { pos: { x: 1400, y: 1000 } },
-      { pos: { x: 2200, y: 1000 }, rotate: true, group: this.rotationTile, colors: colors.rotate },
-      { pos: { x: 2500, y: 1000 }, rotate: false, group: this.rotationTile, colors: colors.rotate },
-      {
-        pos: { x: 5200, y: 800 }, animation: {
-          xAxis: {
-            xDistance: 200,
-            xVel: 100
-          }
-        }
-      },
-      {
-        pos: { x: 5800, y: 750 }, animation: {
-          yAxis: {
-            yDistance: 600,
-            yVel: 200
-          }
-        }
-      }
-    ]
+    this.createPlatforms(mapPlatforms[0] as FloorConfig[], mapPlatforms[1] as LargeFloorIslandConfig[])
+    // const platforms = [
+    //   {
+    //     pos: { x: 1000, y: 1000 }, colors: colors.gravity, group: this.gravityTile
+    //   },
+    //   { pos: { x: 1000, y: 600 }, flipY: true },
+    //   { pos: { x: 1400, y: 600 }, group: this.gravityTile, colors: colors.gravity, flipY: true },
+    //   { pos: { x: 1400, y: 1000 } },
+    //   { pos: { x: 2200, y: 1000 }, rotate: true, group: this.rotationTile, colors: colors.rotate },
+    //   { pos: { x: 2500, y: 1000 }, rotate: false, group: this.rotationTile, colors: colors.rotate },
+    //   {
+    //     pos: { x: 5200, y: 800 }, animation: {
+    //       xAxis: {
+    //         xDistance: 200,
+    //         xVel: 100
+    //       }
+    //     }
+    //   },
+    //   {
+    //     pos: { x: 5800, y: 750 }, animation: {
+    //       yAxis: {
+    //         yDistance: 600,
+    //         yVel: 200
+    //       }
+    //     }
+    //   }
+    // ]
     
-    const largePlatforms = [
-      {
-        ...globalPlatformsConfig,
-        pos: { x: 300, y: 1200 },
-        width: {
-          textureA: 90,
-          textureB: 67,
-          textureC: 115,
-        },
-        height: 127,
-        large: 150,
-        group: this.floor
-      },
-      {
-        ...globalPlatformsConfig,
-        pos: { x: 6000, y: 500 },
-        width: {
-          textureA: 90,
-          textureB: 67,
-          textureC: 115,
-        },
-        height: 127,
-        large: 30,
-        group: this.floor
-      }
-    ]
+    // const largePlatforms = [
+    //   {
+    //     ...globalPlatformsConfig,
+    //     pos: { x: 300, y: 1200 },
+    //     width: {
+    //       textureA: 90,
+    //       textureB: 67,
+    //       textureC: 115,
+    //     },
+    //     height: 127,
+    //     large: 150,
+    //     group: this.floor
+    //   },
+    //   {
+    //     ...globalPlatformsConfig,
+    //     pos: { x: 6000, y: 500 },
+    //     width: {
+    //       textureA: 90,
+    //       textureB: 67,
+    //       textureC: 115,
+    //     },
+    //     height: 127,
+    //     large: 30,
+    //     group: this.floor
+    //   }
+    // ]
     // ].concat(intermitentFloorArray)
 
-    platforms.forEach((element) => {
-      const config: any = {
-        ...element,
-        ...globalPlatformsConfig
-      };
-      const floor = new Floor(this.scene, config, element.group ?? this.floor!);
-      if (element.flipY) floor.setFlipY(true)
-      if (element.colors) floor.setTint(element.colors)
-      floor.setBodySize(140, 20)
-      floor.setFlipY(element.flipY ?? false)
-      // this.floor?.add(floor);
-    });
+    // platforms.forEach((element) => {
+    //   const config: any = {
+    //     ...element,
+    //     ...globalPlatformsConfig
+    //   };
+    //   const floor = new Floor(this.scene, config, element.group ?? this.floor!);
+    //   if (element.flipY) floor.setFlipY(true)
+    //   if (element.colors) floor.setTint(element.colors)
+    //   floor.setBodySize(140, 20)
+    //   floor.setFlipY(element.flipY ?? false)
+    //   // this.floor?.add(floor);
+    // });
 
-    largePlatforms.forEach((element) => {
-      const config: any = {
-        ...element,
-        ...globalPlatformsConfig,
-      };
+    // largePlatforms.forEach((element) => {
+    //   const config: any = {
+    //     ...element,
+    //     ...globalPlatformsConfig,
+    //   };
 
-      const largeFloor = new LargeFloorIsland(this.scene,config,element.group ?? this.floor!
-      );
-    });
+    //   const largeFloor = new LargeFloorIsland(this.scene,config,element.group ?? this.floor!
+    //   );
+    // });
     
     // for (let index = 0; index < largePlatforms.length; index++) {
     //   const element = largePlatforms[index];

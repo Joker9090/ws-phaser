@@ -170,6 +170,19 @@ export const loadAssets = {
         "/game/player/gravityEffect.png",
         { frameWidth: 140, frameHeight: 280 },
       ],
+      //TANK SMOKE
+      [
+        "spritesheet",
+        "tankActivate",
+        "/game/player/tankActivate.png",
+        { frameWidth: 121, frameHeight: 121 },
+      ],
+      [
+        "spritesheet",
+        "tankActivate1",
+        "/game/player/tankActivate1.png",
+        { frameWidth: 72, frameHeight: 170 },
+      ],
       // [
       //   "spritesheet",
       //   "player",

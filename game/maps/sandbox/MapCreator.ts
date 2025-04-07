@@ -3,7 +3,72 @@ import { GamePlayDataType, loseConfigFromMapType } from "@/game/Types";
 import Game from "@/game/Game";
 import Teleport from "@/game/assets/Teleport";
 import { Time } from "phaser";
+import Floor, { FloorConfig } from "@/game/assets/Floor";
+import LargeFloorIsland from "@/game/assets/LargeFloorIsland";
+import Factory from "@/game/assets/Factory";
 
+
+export type globalPlatformsConfigType = {
+  withTextureToAbove?: boolean;
+  texture?: string | Phaser.Textures.Texture;
+  textureA?: string | Phaser.Textures.Texture;
+  textureB?: string | Phaser.Textures.Texture;
+  textureC?: string | Phaser.Textures.Texture;
+  scale?: { width: number; height: number };
+  rotated?: boolean;
+};
+
+export type mapFloorConfig = {
+  pos: { x: number; y: number };
+  rotate?: boolean;
+  flipY?: boolean;
+  group?: Phaser.Physics.Arcade.Group;
+  colors?: number[];
+  width?: number | { textureA: number; textureB: number; textureC: number };
+  height?: number;
+  scale?: { width: number; height: number };
+  
+  animation?: {
+    xAxis?: {
+      xDistance: number;
+      xVel: number;
+    };
+    yAxis?: {
+      yDistance: number;
+      yVel: number;
+    };
+  };
+
+
+}
+
+export type mapLargeFloorConfig = {
+  pos: { x: number; y: number };
+  rotate?: boolean;
+  flipY?: boolean;
+  group?: Phaser.Physics.Arcade.Group;
+  colors?: number[];
+  width?: {
+    textureA: number;
+    textureB: number; 
+    textureC: number;
+  }
+  height?: number;
+  scale?: { width: number; height: number };
+  textureA?: string | Phaser.Textures.Texture;
+  textureB?: string | Phaser.Textures.Texture;
+  textureC?: string | Phaser.Textures.Texture;
+  animation?: {
+    xAxis?: {
+      xDistance: number;
+      xVel: number;
+    };
+    yAxis?: {
+      yDistance: number;
+      yVel: number;
+    };
+  };
+}
 export default class MapCreator {
   mapGroup: Phaser.Physics.Arcade.Group;
   isJumping = false;
@@ -115,7 +180,8 @@ export default class MapCreator {
       this.scene.UICamera?.ignore(this.scene.physics.world.debugGraphic);
     }
   }
-createBackgrounds(_backgroundsBack: Phaser.GameObjects.Image[], _backgroundsMiddle: Phaser.GameObjects.Image[], _backgroundsFront: Phaser.GameObjects.Image[]) {
+  
+  createBackgrounds(_backgroundsBack: Phaser.GameObjects.Image[], _backgroundsMiddle: Phaser.GameObjects.Image[], _backgroundsFront: Phaser.GameObjects.Image[]) {
     console.log("createBackgrounds", _backgroundsBack, _backgroundsMiddle, _backgroundsFront);
     this.backgroundsBack = _backgroundsBack;
     this.backgroundsMiddle = _backgroundsMiddle;
@@ -138,6 +204,12 @@ createBackgrounds(_backgroundsBack: Phaser.GameObjects.Image[], _backgroundsMidd
     this.scene.UICamera?.ignore(this.backContainer);
     this.scene.UICamera?.ignore(this.middleContainer);
     this.scene.UICamera?.ignore(this.frontContainer);
+  }
+
+  createPlatforms(gameObjects: mapFloorConfig[]) {
+    gameObjects.forEach((element) => {
+      const tile: any = Factory(this.scene, element, this.floor!);
+    })
   }
 
   animateBackground(player: Phaser.GameObjects.Sprite | Phaser.Math.Vector2) {

@@ -14,10 +14,11 @@ import Teleport from "@/game/assets/Teleport";
 import colors from "@/game/assets/PlatformColors";
 import MapCreator from "./MapCreator";
 
+
+
 class Sandbox extends MapCreator {
   pisosBack?: Phaser.Physics.Arcade.Group;
-  coin?: Phaser.Physics.Arcade.Group;
-  coinAura?: Phaser.GameObjects.Sprite;
+  // coinAura?: Phaser.GameObjects.Sprite;
   invincible?: Phaser.Physics.Arcade.Group;
   portal?: Phaser.Physics.Arcade.Group;
   teleport?: Phaser.Physics.Arcade.Group;
@@ -110,7 +111,18 @@ class Sandbox extends MapCreator {
 
     this.scene.player?.setDepth(9999999999999);
     
-    const globalPlatformsConfig = {
+
+    const basePlatformsConfig = {
+      withTextureToAbove: true,
+      texture: "plataformaNuevaA",
+      scale: { width: 0.7, height: 0.7 },
+      rotated: false,
+      type: "floor",
+      width: 140,
+      height: 40
+    }
+
+    const baseLargePlatformsConf = {
       withTextureToAbove: true,
       texture: "plataformaNuevaA",
       textureA: "plataformaNuevaLargaA",
@@ -118,7 +130,17 @@ class Sandbox extends MapCreator {
       textureC: "plataformaNuevaLargaC",
       scale: { width: 0.7, height: 0.7 },
       rotated: false,
+      type: "largeFloor",
     };
+
+    const baseCristalConf = {
+      type: "cristal",
+      texture: "cristal2",
+      scale: { width: 0.7, height: 0.7 },
+      width: 10,
+      height: 18,
+      fix: 10,
+    }
 
     // const intermitentFloorArray = new Array(3).fill(globalPlatformsConfig).map((element, index) => {
     //   return {
@@ -126,18 +148,19 @@ class Sandbox extends MapCreator {
     //     pos: { x: element.pos.x + (index * 300), y: 800 },
     //   }
     // })
+    const mapPlatforms = [
+      // platforms
 
-    const platforms = [
       {
-        pos: { x: 1000, y: 1000 }, colors: colors.gravity, group: this.gravityTile
+        ...basePlatformsConfig, pos: { x: 1000, y: 1000 }, colors: [colors.gravity], group: this.gravityTile
       },
-      { pos: { x: 1000, y: 600 }, flipY: true },
-      { pos: { x: 1400, y: 600 }, group: this.gravityTile, colors: colors.gravity, flipY: true },
-      { pos: { x: 1400, y: 1000 } },
-      { pos: { x: 2200, y: 1000 }, rotate: true, group: this.rotationTile, colors: colors.rotate },
-      { pos: { x: 2500, y: 1000 }, rotate: false, group: this.rotationTile, colors: colors.rotate },
+      { ...basePlatformsConfig, pos: { x: 1000, y: 600 }, flipY: true },
+      { ...basePlatformsConfig, pos: { x: 1400, y: 600 }, group: this.gravityTile, colors: [colors.gravity], flipY: true },
+      { ...basePlatformsConfig, pos: { x: 1400, y: 1000 } },
+      { ...basePlatformsConfig, pos: { x: 2200, y: 1000 }, rotate: true, group: this.rotationTile, colors: [colors.rotate] },
+      { ...basePlatformsConfig, pos: { x: 2500, y: 1000 }, rotate: false, group: this.rotationTile, colors: [colors.rotate] },
       {
-        pos: { x: 5200, y: 800 }, animation: {
+        ...basePlatformsConfig, pos: { x: 5200, y: 800 }, animation: {
           xAxis: {
             xDistance: 200,
             xVel: 100
@@ -145,70 +168,47 @@ class Sandbox extends MapCreator {
         }
       },
       {
-        pos: { x: 5800, y: 750 }, animation: {
+        ...basePlatformsConfig, pos: { x: 5800, y: 750 }, animation: {
           yAxis: {
             yDistance: 600,
             yVel: 200
           }
         }
-      }
-    ]
-    
-    const largePlatforms = [
+      },
+      // largePlatforms
       {
-        ...globalPlatformsConfig,
+        ...baseLargePlatformsConf,
         pos: { x: 300, y: 1200 },
         width: {
           textureA: 90,
           textureB: 67,
           textureC: 115,
-        },
+        }, // Adjusted to match the expected type in mapFloorConfig
         height: 127,
         large: 150,
         group: this.floor
       },
       {
-        ...globalPlatformsConfig,
+        // ...globalPlatformsConfig,
+        ...baseLargePlatformsConf,
         pos: { x: 6000, y: 500 },
         width: {
           textureA: 90,
           textureB: 67,
           textureC: 115,
-        },
+        }, // Adjusted to match the expected type in mapFloorConfig
         height: 127,
         large: 30,
         group: this.floor
-      }
+      },
+
+      // cristals
+      {...baseCristalConf, pos: { x: this.startingPoint.x + 50, y: 1000 }, group: this.invincible, flipX: true, colors: [0xff0000]},
+      {...baseCristalConf, pos: { x: 3900, y: 1000 }, group: this.invincible, flipX: true, colors: [0xff0000]},
+      {...baseCristalConf, pos: { x: 1700, y: 800 }, group: this.coin, texture: "cristal3", width: 140, height: 180},
     ]
-    // ].concat(intermitentFloorArray)
 
-    platforms.forEach((element) => {
-      const config: any = {
-        ...element,
-        ...globalPlatformsConfig
-      };
-      const floor = new Floor(this.scene, config, element.group ?? this.floor!);
-      if (element.flipY) floor.setFlipY(true)
-      if (element.colors) floor.setTint(element.colors)
-      floor.setBodySize(140, 20)
-      floor.setFlipY(element.flipY ?? false)
-      // this.floor?.add(floor);
-    });
-
-    largePlatforms.forEach((element) => {
-      const config: any = {
-        ...element,
-        ...globalPlatformsConfig,
-      };
-
-      const largeFloor = new LargeFloorIsland(this.scene,config,element.group ?? this.floor!
-      );
-    });
-    
-    // for (let index = 0; index < largePlatforms.length; index++) {
-    //   const element = largePlatforms[index];
-    //   new LargeFloorIsland(this.scene, element, this.floor!);
-    // }
+    this.createPlatforms(mapPlatforms)
     
     const otherSceneConf: GamePlayDataType = {
       level: 7,
@@ -220,22 +220,7 @@ class Sandbox extends MapCreator {
       },
     }
     const teleport_1 = new Teleport(this.scene, { x: 2000, y: 800, version: 1, sameScene: false, group: this.teleport, otherSceneConf: otherSceneConf })
-    // const teleport_2 = new Teleport(this.scene, { x: 1000, y: 1000, version: 1, sameScene: true, group: this.teleport })
-
-    const coinConfig: FloorConfig = {
-      texture: "cristal3",
-      pos: { x: 1700, y: 800 },
-      scale: { width: 0.7, height: 0.7 },
-      width: 40,
-      height: 18,
-      fix: 10,
-    };
-    const cristal = new Floor(this.scene, coinConfig, this.coin).setBodySize(
-      140,
-      180
-    );
-    this.coin.add(cristal)
-
+ 
     this.scene.tweens.add({
       targets: this.coinAura,
       alpha: 0.4,
@@ -252,30 +237,7 @@ class Sandbox extends MapCreator {
       height: 100,
     };
     const port = new Floor(this.scene, portalConfig, this.portal);
-    // this.endPortal = port;
-
-    const invincibleConfig: FloorConfig = {
-      texture: "cristal2",
-      pos: { x: this.startingPoint.x + 50, y: 1000 },
-      scale: { width: 0.7, height: 0.7 },
-      width: 10,
-      height: 18,
-      fix: 10,
-    };
-    // this.cristal = new Floor(this.scene, invincibleConfig, this.invincible);
-    const invincible = new Floor(this.scene, invincibleConfig, this.invincible).setFlipX(true).setTint(0xff0000);
-
-    const invincible2Config: FloorConfig = {
-      texture: "cristal2",
-      pos: { x: 3900, y: 1000 },
-      scale: { width: 0.7, height: 0.7 },
-      width: 10,
-      height: 18,
-      fix: 10,
-    };
-    // this.cristal = new Floor(this.scene, invincibleConfig, this.invincible);
-    const invincible2 = new Floor(this.scene, invincible2Config, this.invincible).setFlipX(true).setTint(0xff0000);
-
+   
     const zoneAConfig: ZoneConfig = {
       x: 2700,
       y: 0,
@@ -384,7 +346,7 @@ class Sandbox extends MapCreator {
     this.scene.UICamera?.ignore(this.frontContainer)
     this.scene.UICamera?.ignore(this.teleport)
     this.scene.UICamera?.ignore(this.coin)
-    this.scene.UICamera?.ignore(this.coinAura)
+    this.scene.UICamera?.ignore(this.coinAura!)
     this.scene.UICamera?.ignore(this.gravityTile!)
     this.scene.UICamera?.ignore(this.backContainer)
     this.scene.UICamera?.ignore(this.middleContainer)

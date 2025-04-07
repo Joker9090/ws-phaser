@@ -113,22 +113,29 @@ export default class MapCreator {
     this.scene.UICamera?.ignore(this.rotationTile)
     this.scene.UICamera?.ignore(this.scene.physics.world.debugGraphic);
   }
-
-  createBackgrounds(backgroundsBack: Phaser.GameObjects.Image[], backgroundsMiddle: Phaser.GameObjects.Image[], backgroundsFront: Phaser.GameObjects.Image[]) {
-    console.log("createBackgrounds", backgroundsBack, backgroundsMiddle, backgroundsFront);
-    this.backgroundsBack = backgroundsBack;
-    this.backgroundsMiddle = backgroundsMiddle;
-    this.backgroundsFront = backgroundsFront;
+createBackgrounds(_backgroundsBack: Phaser.GameObjects.Image[], _backgroundsMiddle: Phaser.GameObjects.Image[], _backgroundsFront: Phaser.GameObjects.Image[]) {
+    console.log("createBackgrounds", _backgroundsBack, _backgroundsMiddle, _backgroundsFront);
+    this.backgroundsBack = _backgroundsBack;
+    this.backgroundsMiddle = _backgroundsMiddle;
+    this.backgroundsFront = _backgroundsFront;
     
-    this.backContainer.list = backgroundsBack;
+    /*this.backContainer.list = backgroundsBack;
     this.middleContainer.list = backgroundsMiddle;
-    this.frontContainer.list = backgroundsFront;
+    this.frontContainer.list = backgroundsFront;*/
     
-    console.log("createBackgrounds-container", this.backContainer, this.middleContainer, this.frontContainer);
-    // Add mapContainer and frontContainer to the scene
+    //console.log("createBackgrounds-container", this.backContainer, this.middleContainer, this.frontContainer);
+    
+    this.backContainer.add(this.backgroundsBack);
+    this.middleContainer.add(this.backgroundsMiddle);
+    this.frontContainer.add(this.backgroundsFront);
+
     this.scene.add.existing(this.backContainer);
     this.scene.add.existing(this.middleContainer);
     this.scene.add.existing(this.frontContainer);
+
+    this.scene.UICamera?.ignore(this.backContainer);
+    this.scene.UICamera?.ignore(this.middleContainer);
+    this.scene.UICamera?.ignore(this.frontContainer);
   }
 
   animateBackground(player: Phaser.GameObjects.Sprite | Phaser.Math.Vector2) {

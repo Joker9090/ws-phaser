@@ -1,4 +1,4 @@
-import Phaser, { Physics } from "phaser";
+import Phaser, { Physics, Time } from "phaser";
 import AsteroidGenerator, {
   AsteroidGeneratorConfig,
 } from "../../assets/AsteroidGenerator";
@@ -10,7 +10,7 @@ import Game from "../../Game";
 import Player from "../../assets/Player";
 import portal, { portalConfig } from "../../assets/portal";
 import { Children } from "react";
-import { loseConfigFromMapType } from "@/game/Types";
+import { GamePlayDataType, loseConfigFromMapType } from "@/game/Types";
 import LargeFloorIsland, { LargeFloorIslandConfig } from "@/game/assets/LargeFloorIsland";
 import TextBox from "@/game/assets/TextBox";
 import colors from "@/game/assets/PlatformColors";
@@ -44,6 +44,8 @@ class Mapa1 {
   movingFloor?: Phaser.Physics.Arcade.Group;
   movingFloorRot?: Phaser.Physics.Arcade.Group;
   p13!: Phaser.GameObjects.Sprite;
+  invincibilityTimer?: Time.TimerEvent
+  invincible?: Phaser.Physics.Arcade.Group;
 
   amountLifes: number = 0;
   sideGrav: boolean = false;
@@ -102,10 +104,10 @@ class Mapa1 {
   textTutorial1?: TextBox;
   textTutorial2?: TextBox;
   tutorialStep: number = 0;
-  constructor(scene: Game, player: Player) {
+  constructor(scene: Game, player: Player, data?: GamePlayDataType) {
     this.scene = scene;
     this.player = player;
-
+  
     /* World size*/
     this.scene.physics.world.setBounds(
       0,
@@ -244,7 +246,19 @@ class Mapa1 {
         this.scene.physics.add.overlap(
           this.scene.player,
           this.portal,
-          () => this.scene.win(),
+          () => {
+            const obj: GamePlayDataType =  {
+              level: 0,
+              lifes: this.scene.lifes ? this.scene.lifes : 3,
+              loadKey: ["Postales", "Cinemato1", "Cinemato2"],
+              startingPositionFromOtherScene: {
+                x: this.player!.x,
+                y: this.player!.y,
+              },
+            }
+            this.scene.changeScene(obj)
+            // this.scene.win()
+          },
           () => true,
           this.scene
         );

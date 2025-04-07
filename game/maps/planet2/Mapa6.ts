@@ -1,4 +1,4 @@
-import Phaser, { GameObjects, Physics } from "phaser";
+import Phaser, { GameObjects, Physics, Time } from "phaser";
 import AsteroidGenerator, {
     AsteroidGeneratorConfig,
 } from "../../assets/AsteroidGenerator";
@@ -104,7 +104,9 @@ class Mapa5 {
     mountain3: Phaser.GameObjects.Image;
     mountain4: Phaser.GameObjects.Image;
     mountain5: Phaser.GameObjects.Image;
-  
+    invincibilityTimer?: Time.TimerEvent
+      invincible?: Phaser.Physics.Arcade.Group;
+    
     backgroundsBack: Phaser.GameObjects.Image[];
     backgroundsMiddle: Phaser.GameObjects.Image[];
     backgroundsFront: Phaser.GameObjects.Image[];
@@ -124,10 +126,11 @@ class Mapa5 {
     mapContainer: Phaser.GameObjects.Container;
     frontContainer: Phaser.GameObjects.Container;
 
-    constructor(scene: Game, player: Player) {
+    constructor(scene: Game, player: Player, data?: GamePlayDataType) {
         this.scene = scene;
         this.player = player;
-        /* World size*/
+        /* World size*/ 
+         
         this.scene.physics.world.setBounds(
             0,
             0,

@@ -92,10 +92,12 @@ class Game extends Phaser.Scene {
   }
 
   touch() {
+    //nsole.log("scene touch");
     if (this.player) {
+      //nsole.log("scene touch inside Player");
       this.player.idle();
       this.player.setVelocityX(0);
-      if (this.player.withTank && this.player.body?.velocity.y === 0) {
+      if (this.player.withTank) {
         this.player.tank.isCharging = this.player.tank.chargeValue;
       }
     }
@@ -329,6 +331,11 @@ class Game extends Phaser.Scene {
 
   touchItem(item: string) {
     switch (item) {
+      //TEST COLLECTABLES
+      case "collectable":
+        console.log("Collectable Picked");
+        this.UIClass?.sumCollectable();
+        break;
       case "coin":
         if (this.map?.coin && this.map.endPortal) {
           this.canNextLevel = true;
@@ -388,6 +395,11 @@ class Game extends Phaser.Scene {
           this.player.x = config.positions.x;
           this.player.y = config.positions.y;
         }
+        this.player?.setPlayerInvicinible(false)
+        this.map.invincible?.setVisible(true)
+        if (this.map.invincibilityTimer) {
+          this.time.removeEvent(this.map.invincibilityTimer);
+        }
         // this.cameraNormal = config.cameraDirection === "NORMAL" ? true : false
       }
     }
@@ -437,7 +449,7 @@ class Game extends Phaser.Scene {
       s: Phaser.Input.Keyboard.KeyCodes.S,
       d: Phaser.Input.Keyboard.KeyCodes.D,
     });
-    this.cameras.main.zoom = 1;
+    this.cameras.main.zoom = 0.8;
     // CREATIVE
     this.stopMov = false;
     this.checkPoint = 0;
@@ -451,11 +463,11 @@ class Game extends Phaser.Scene {
         this.player = new Player(this, 0, 0, "character", 2);
 
         this.map = new Sandbox(this, this.player!);
-        // this.loopMusic = "planet0LoopMusic";
+        this.loopMusic = "planet0LoopMusic";
         break;
       case 0:
         this.player = new Player(this, 0, 0, "character", 2);
-
+        
         this.map = new p1Mapa0(this, this.player!);
         this.loopMusic = "planet0LoopMusic";
         break;
@@ -603,7 +615,7 @@ class Game extends Phaser.Scene {
       default:
         this.player = new Player(this, 0, 0, "character", 2);
         
-        this.map = new p1Mapa0(this, this.player!);
+        this.map = new p1Mapa0(this, this.player!, data);
         this.loopMusic = "planet0LoopMusic";
         break;
     }
@@ -633,6 +645,7 @@ class Game extends Phaser.Scene {
       window.innerHeight
     );
     this.UICamera?.ignore(this.player);
+    this.player.gravityAnimSprite && this.UICamera?.ignore(this.player.gravityAnimSprite);
 
     this.UIClass = new UIClass(this, this.levelIs, this.lifes, this.timeLevel);
 
@@ -658,7 +671,7 @@ class Game extends Phaser.Scene {
     } = this.map.cameraBounds;
     this.cameras.main.setBounds(boundX, boundY, boundWidth, boundHeight);
     /* CAMERAS */
-    this.cameras.main.zoom = 1;
+    this.cameras.main.zoom = 0.8;
     this.cameraWidth = this.cameras.main.width;
     this.cameraHeight = this.cameras.main.height;
     this.cameras.main.startFollow(
@@ -710,8 +723,9 @@ class Game extends Phaser.Scene {
     if (this.player) {
     }
     if (this.cameras.main.width < this.cameras.main.height) {
+      console.log("ENTRA EN EL UPDATE CAMERAZOOM");
       this.cameras.main.zoom =
-        this.cameras.main.width / this.cameras.main.height;
+        (this.cameras.main.width / this.cameras.main.height);
     }
 
     if (this.player && this.map && !this.stopMov) {

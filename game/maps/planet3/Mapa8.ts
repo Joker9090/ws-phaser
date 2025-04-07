@@ -1,4 +1,4 @@
-import Phaser, { GameObjects, Physics } from "phaser";
+import Phaser, { GameObjects, Physics, Time } from "phaser";
 import AsteroidGenerator, {
   AsteroidGeneratorConfig,
 } from "../../assets/AsteroidGenerator";
@@ -10,7 +10,7 @@ import Game from "../../Game";
 import Player from "../../assets/Player";
 import portal, { portalConfig } from "../../assets/portal";
 import { Children } from "react";
-import { loseConfigFromMapType } from "@/game/Types";
+import { GamePlayDataType, loseConfigFromMapType } from "@/game/Types";
 import LargeFloorIsland, { LargeFloorIslandConfig } from "@/game/assets/LargeFloorIsland";
 import colors from "@/game/assets/PlatformColors";
 import ChangeCameraFloorArea from "@/game/assets/ChangeCameraFloor";
@@ -115,7 +115,9 @@ class Mapa8 {
   background4OriginalPos: { x: number, y: number };
   UIItemToGrab: string = 'uiItemp3';
   UIItemScale?: number = 0.3;
-
+  invincibilityTimer?: Time.TimerEvent
+    invincible?: Phaser.Physics.Arcade.Group;
+  
   cristal?: Floor;
   collected: Boolean = false;
   endPortal?: Floor;
@@ -125,10 +127,10 @@ class Mapa8 {
   mapContainer: Phaser.GameObjects.Container;
   frontContainer: Phaser.GameObjects.Container;
 
-  constructor(scene: Game, player: Player) {
+  constructor(scene: Game, player: Player, data?: GamePlayDataType) {
     this.scene = scene;
     this.player = player;
-
+  
 
     /* World size*/
     this.scene.physics.world.setBounds(

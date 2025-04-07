@@ -22,6 +22,10 @@ export default class UIClass {
   timeLevel: number = 0;
   timerText?: Phaser.GameObjects.Text;
   minutes: number = 0;
+  //TEST COLLECTABLES
+  collText?: Phaser.GameObjects.Text;
+  collected: number=0;
+
   container: Phaser.GameObjects.Container;
   progressParam: number = 0;
   settingsVisible: boolean = false;
@@ -109,7 +113,7 @@ export default class UIClass {
       }
       const settingsConf: UIConfig = {
         texture: "settingsButton",
-        pos: { x: window.innerWidth - 100, y: 70 },
+        pos: { x: window.innerWidth - 70, y: 70 },
         scale: 0.9,
       };
       this.settings = new UI(this.scene, settingsConf);
@@ -117,6 +121,7 @@ export default class UIClass {
       const bg = this.scene.add.rectangle(0, 0, window.innerWidth, window.innerHeight, 0x000000, 0.3).setVisible(false).setOrigin(0);
       this.container.add(bg);
       this.container.add(this.settings);
+
       this.settings.on('pointerup', () => {
         this.toggleSettings()
       })
@@ -124,9 +129,19 @@ export default class UIClass {
     this.scene.input.keyboard?.on('keydown-ESC', () => {
       this.toggleSettings();
     });
+
+    this.scene.scale.on("resize", ()=>{
+      this.resizeElements()
+    })
   }
 
-
+  resizeElements(){
+    if(window.innerWidth < 768){
+      this.settings?.setPosition(window.innerWidth - 50, 70)
+    }else{
+      this.settings?.setPosition(window.innerWidth - 70, 70)
+    }
+  }
 
   toggleSettings() {
     if (this.settingsVisible) {
@@ -198,15 +213,17 @@ export default class UIClass {
     // checkeo si estoy en game o cinemato 
     if (this.scene instanceof Game) {
       this.minutes = 0,
-        this.timeLevel = 0
-      this.timerText = this.scene.add
+      this.timeLevel = 0
+      //HIDE TIMER
+      /*this.timerText = this.scene.add
         .text(300, 50, `0${this.minutes}:0${this.timeLevel}`, { fontSize: "32px" })
         .setOrigin(0.5, 0.5)
         .setScrollFactor(0, 0)
         .setDepth(100)
         .setSize(50, 50)
-        .setPosition(250, 55);
-      this.timeLevel = 0;
+        .setPosition(250, 55);*/
+      
+        this.timeLevel = 0;
       this.timerText?.setText(`0${this.minutes}:0${this.timeLevel}`);
       var timerEvent = this.scene.time.addEvent({
         delay: 1000,
@@ -237,10 +254,22 @@ export default class UIClass {
         callbackScope: this,
         loop: true,
       });
+      //HIDE TIMER
+      //this.container.add([this.timerText]);
 
-      this.container.add([this.timerText]);
+      this.collText = this.scene.add
+        .text(250, 57.5, `${this.collected}`, { fontSize: "32px" })//.text(150, 150, `${this.collected}`, { fontSize: "32px" })
+        .setOrigin(0.5, 0.5)
+        .setScrollFactor(0, 0)
+        .setDepth(100)
+        .setSize(50, 50);
+      this.container.add([this.collText]);
     }
     this.scene.cameras.main.ignore(this.container)
+  }
+  sumCollectable(){
+    this.collected++;
+    this.collText?.setText(`${this.collected}`);
   }
 
   update() {

@@ -1,4 +1,4 @@
-import Phaser, { Physics } from "phaser";
+import Phaser, { Physics, Time } from "phaser";
 import AsteroidGenerator, {
   AsteroidGeneratorConfig,
 } from "../../assets/AsteroidGenerator";
@@ -10,7 +10,7 @@ import Game from "../../Game";
 import Player from "../../assets/Player";
 import portal, { portalConfig } from "../../assets/portal";
 import { Children } from "react";
-import { loseConfigFromMapType } from "@/game/Types";
+import { GamePlayDataType, loseConfigFromMapType } from "@/game/Types";
 import LargeFloorIsland, {
   LargeFloorIslandConfig,
 } from "@/game/assets/LargeFloorIsland";
@@ -105,6 +105,8 @@ class Mapa5 {
   mountain3: Phaser.GameObjects.Image;
   mountain4: Phaser.GameObjects.Image;
   mountain5: Phaser.GameObjects.Image;
+  invincibilityTimer?: Time.TimerEvent
+  invincible?: Phaser.Physics.Arcade.Group;
 
   backgroundsBack: Phaser.GameObjects.Image[];
   backgroundsMiddle: Phaser.GameObjects.Image[];
@@ -122,10 +124,10 @@ class Mapa5 {
   mapContainer: Phaser.GameObjects.Container;
   frontContainer: Phaser.GameObjects.Container;
 
-  constructor(scene: Game, player: Player) {
+  constructor(scene: Game, player: Player, data?: GamePlayDataType) {
     this.scene = scene;
     this.player = player;
-
+  
     /* World size*/
     this.scene.physics.world.setBounds(
       0,

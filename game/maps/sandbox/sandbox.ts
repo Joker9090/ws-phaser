@@ -87,13 +87,13 @@ class Sandbox extends MapCreator {
     this.middleSize = { width: middleImage.width, height: middleImage.height }
 
     this.backgroundsMiddle = [
-      this.scene.add.image(-this.startingPoint.x, this.startingPoint.y + 550, "frontGround1").setOrigin(0, 1).setScale(1),
-      this.scene.add.image(-50 -this.startingPoint.x + this.middleSize.width, this.startingPoint.y + 550, "frontGround1").setOrigin(0, 1).setScale(1),
-      this.scene.add.image(-100 -this.startingPoint.x + (this.middleSize.width * 2), this.startingPoint.y + 550, "frontGround1").setOrigin(0, 1).setScale(1),
-      this.scene.add.image(-150 -this.startingPoint.x + (this.middleSize.width * 3), this.startingPoint.y + 550, "frontGround1").setOrigin(0, 1).setScale(1),
-      this.scene.add.image(-200 -this.startingPoint.x + (this.middleSize.width * 4), this.startingPoint.y + 550, "frontGround1").setOrigin(0, 1).setScale(1),
-      this.scene.add.image(200, this.worldSize.height - 700, "montaña2"),
-      this.scene.add.image(1100, this.worldSize.height - 700, "montaña4")
+      this.scene.add.image(-this.startingPoint.x, this.startingPoint.y + 850, "frontGround1").setOrigin(0, 1).setScale(1),
+      this.scene.add.image(-50 -this.startingPoint.x + this.middleSize.width, this.startingPoint.y + 850, "frontGround1").setOrigin(0, 1).setScale(1),
+      this.scene.add.image(-100 -this.startingPoint.x + (this.middleSize.width * 2), this.startingPoint.y + 850, "frontGround1").setOrigin(0, 1).setScale(1),
+      this.scene.add.image(-150 -this.startingPoint.x + (this.middleSize.width * 3), this.startingPoint.y + 850, "frontGround1").setOrigin(0, 1).setScale(1),
+      this.scene.add.image(-200 -this.startingPoint.x + (this.middleSize.width * 4), this.startingPoint.y + 850, "frontGround1").setOrigin(0, 1).setScale(1),
+      this.scene.add.image(200, this.worldSize.height - 500, "montaña2"),
+      this.scene.add.image(1100, this.worldSize.height - 500, "montaña4")
     ]
 
     this.backgroundsFront = [

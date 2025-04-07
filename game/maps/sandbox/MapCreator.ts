@@ -111,7 +111,9 @@ export default class MapCreator {
     this.scene.UICamera?.ignore(this.floor)
     this.scene.UICamera?.ignore(this.gravityTile)
     this.scene.UICamera?.ignore(this.rotationTile)
-    this.scene.UICamera?.ignore(this.scene.physics.world.debugGraphic);
+    if (this.scene.physics.world.debugGraphic) {
+      this.scene.UICamera?.ignore(this.scene.physics.world.debugGraphic);
+    }
   }
 createBackgrounds(_backgroundsBack: Phaser.GameObjects.Image[], _backgroundsMiddle: Phaser.GameObjects.Image[], _backgroundsFront: Phaser.GameObjects.Image[]) {
     console.log("createBackgrounds", _backgroundsBack, _backgroundsMiddle, _backgroundsFront);

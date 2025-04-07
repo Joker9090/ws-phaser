@@ -1,4 +1,4 @@
-import Phaser, { GameObjects, Physics } from "phaser";
+import Phaser, { GameObjects, Physics, Time } from "phaser";
 import AsteroidGenerator, {
     AsteroidGeneratorConfig,
 } from "../../assets/AsteroidGenerator";
@@ -104,7 +104,9 @@ class Mapa5 {
     mountain3: Phaser.GameObjects.Image;
     mountain4: Phaser.GameObjects.Image;
     mountain5: Phaser.GameObjects.Image;
-  
+    invincibilityTimer?: Time.TimerEvent
+      invincible?: Phaser.Physics.Arcade.Group;
+    
     backgroundsBack: Phaser.GameObjects.Image[];
     backgroundsMiddle: Phaser.GameObjects.Image[];
     backgroundsFront: Phaser.GameObjects.Image[];
@@ -423,6 +425,7 @@ class Mapa5 {
                     this.scene.player,
                     this.pisos3,
                     () => {
+                        this.scene.touch()
                         if (this.scene.checkPoint === 0) {
                             console.log('rotate')
                             this.scene.rotateCam(true, 10);
@@ -601,7 +604,7 @@ class Mapa5 {
             y: 800,
           },
         }
-        const teleport_1 = new Teleport(this.scene, { x: 2750, y: 1000, version: 1, sameScene: false, group: this.teleport, otherSceneConf: otherSceneConf })
+        const teleport_1 = new Teleport(this.scene, { x: 2450, y: 1000, version: 1, sameScene: false, group: this.teleport, otherSceneConf: otherSceneConf })
         console.log("otherSceneConf", otherSceneConf, teleport_1);
 
         const p1Config: FloorConfig = {

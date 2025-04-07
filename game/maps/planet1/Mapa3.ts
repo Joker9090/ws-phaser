@@ -1,4 +1,4 @@
-import Phaser, { Physics } from "phaser";
+import Phaser, { Physics, Time } from "phaser";
 import AsteroidGenerator, {
     AsteroidGeneratorConfig,
 } from "../../assets/AsteroidGenerator";
@@ -86,6 +86,8 @@ class Mapa3 {
     ];
     nextScene: string | undefined = 'cine_movie_1';
     postalCode: string | undefined = undefined
+    invincibilityTimer?: Time.TimerEvent
+    invincible?: Phaser.Physics.Arcade.Group;
 
     background: Phaser.GameObjects.Image;
     background2: Phaser.GameObjects.Image;
@@ -240,6 +242,7 @@ class Mapa3 {
                     () => {
                         this.scene.rotateCam(true, 10);
                         this.scene.checkPoint = 2
+                        this.scene.touch
                     },
                     () => true,
                     this.scene
@@ -276,6 +279,7 @@ class Mapa3 {
                         this.scene.canRot = true // medio hack, revisar lógica
                         this.scene.changeGravity(false, 1000, 2)
                         this.scene.rotateCam(false, 10)
+                        this.scene.touch()
                         if (this.cristal?.visible) {
                             this.scene.checkPoint = 0
                         }

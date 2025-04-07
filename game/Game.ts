@@ -97,7 +97,7 @@ class Game extends Phaser.Scene {
       //nsole.log("scene touch inside Player");
       this.player.idle();
       this.player.setVelocityX(0);
-      if (this.player.withTank && this.player.body?.velocity.y === 0) {
+      if (this.player.withTank) {
         this.player.tank.isCharging = this.player.tank.chargeValue;
       }
     }
@@ -395,6 +395,11 @@ class Game extends Phaser.Scene {
           this.player.x = config.positions.x;
           this.player.y = config.positions.y;
         }
+        this.player?.setPlayerInvicinible(false)
+        this.map.invincible?.setVisible(true)
+        if (this.map.invincibilityTimer) {
+          this.time.removeEvent(this.map.invincibilityTimer);
+        }
         // this.cameraNormal = config.cameraDirection === "NORMAL" ? true : false
       }
     }
@@ -458,7 +463,7 @@ class Game extends Phaser.Scene {
         this.player = new Player(this, 0, 0, "character", 2);
 
         this.map = new Sandbox(this, this.player!);
-        // this.loopMusic = "planet0LoopMusic";
+        this.loopMusic = "planet0LoopMusic";
         break;
       case 0:
         this.player = new Player(this, 0, 0, "character", 2);
@@ -640,6 +645,7 @@ class Game extends Phaser.Scene {
       window.innerHeight
     );
     this.UICamera?.ignore(this.player);
+    this.player.gravityAnimSprite && this.UICamera?.ignore(this.player.gravityAnimSprite);
 
     this.UIClass = new UIClass(this, this.levelIs, this.lifes, this.timeLevel);
 

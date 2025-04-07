@@ -1,4 +1,4 @@
-import Phaser, { GameObjects, Physics } from "phaser";
+import Phaser, { GameObjects, Physics, Time } from "phaser";
 import AsteroidGenerator, {
     AsteroidGeneratorConfig,
 } from "../../assets/AsteroidGenerator";
@@ -116,6 +116,9 @@ class Mapa11 {
   originalPositionsBackgroundsBack: {x: number, y:number}[]
   originalPositionsBackgroundsMiddle: {x: number, y:number}[]
   originalPositionsBackgroundsFront: {x: number, y:number}[]
+  invincibilityTimer?: Time.TimerEvent
+  invincible?: Phaser.Physics.Arcade.Group;
+    
   background4OriginalPos: {x: number, y:number}
 
     UIItemToGrab: string = 'uiItemp3';
@@ -427,6 +430,8 @@ class Mapa11 {
                     this.scene.player,
                     this.pisos3,
                     () => {
+              this.scene.touch()
+
                         this.scene.rotateCam(true, 10);
                         //if (this.scene.checkPoint === 1) {
                         //  this.scene.canRot = true
@@ -486,6 +491,8 @@ class Mapa11 {
                     this.pisos5,
                     () => {
                       this.scene.rotateCam(false, 10);
+              this.scene.touch()
+
                         // this.scene.checkPoint = 0
                     },
                     () => true,

@@ -1,4 +1,4 @@
-import Phaser, { Physics } from "phaser";
+import Phaser, { Physics, Time } from "phaser";
 import AsteroidGenerator, {
   AsteroidGeneratorConfig,
 } from "../../assets/AsteroidGenerator";
@@ -106,6 +106,8 @@ class Mapa4 {
   mountain3: Phaser.GameObjects.Image;
   mountain4: Phaser.GameObjects.Image;
   mountain5: Phaser.GameObjects.Image;
+  invincibilityTimer?: Time.TimerEvent
+  invincible?: Phaser.Physics.Arcade.Group;
 
   backgroundsBack: Phaser.GameObjects.Image[];
   backgroundsMiddle: Phaser.GameObjects.Image[];
@@ -430,6 +432,7 @@ class Mapa4 {
           this.scene.player,
           this.pisos3,
           () => {
+            this.scene.touch()
             if (this.scene.checkPoint === 0) {
               this.scene.rotateCam(true, 10);
               this.scene.checkPoint = 1;
@@ -488,10 +491,12 @@ class Mapa4 {
           this.scene.player,
           this.pisos5,
           () => {
+            this.scene.rotateCam(false, 10);
             if(this.scene.player?.body?.touching.up || this.scene.player?.body?.touching.down){
               this.scene.canRot = true; // medio hack, revisar lógica
               this.scene.changeGravity(false, 1000, 3);
-              this.scene.rotateCam(false, 10);
+              this.scene.touch()
+
             }
             // this.scene.checkPoint = 0
           },

@@ -1,12 +1,12 @@
 import Phaser from "phaser";
 import Game from "../Game";
 
-export type FloorTween =
+export type CollectableTween =
   | Phaser.Tweens.Tween
   | Phaser.Types.Tweens.TweenBuilderConfig
   | Phaser.Types.Tweens.TweenChainBuilderConfig
   | Phaser.Tweens.TweenChain;
-export type FloorConfig = {
+export type CollectableConfig = {
   texture: string | Phaser.Textures.Texture;
   width?: number;
   height?: number;
@@ -29,7 +29,8 @@ export type FloorConfig = {
     width: number;
     height: number;
   };
-  tween?: Partial<FloorTween>;
+  aura?: string | Phaser.Textures.Texture;
+  tween?: Partial<CollectableTween>;
   friction?: number;
   rotated?: boolean;
   inverted?: boolean;
@@ -38,7 +39,7 @@ export type FloorConfig = {
 };
 
 // Scene in class
-class Floor extends Phaser.Physics.Arcade.Sprite {
+class Collectable extends Phaser.Physics.Arcade.Sprite {
   isJumping = false;
   scene: Game;
   hasEvent?: string;
@@ -49,19 +50,17 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
   } = {
     x: 'start',
     y: 'start'
-  }
-  rotate: boolean = false;
+  };
+  aura?: Phaser.GameObjects.Sprite;
   constructor(
     scene: Game,
-    config: any,
+    config: CollectableConfig,
     group: Phaser.Physics.Arcade.Group,
-    frame?: string | number | undefined
-
+    frame?: string | number | undefined,
   ) {
     super(scene, config.pos.x, config.pos.y, config.texture);
     this.scene = scene;
     this.group = group;
-    this.rotate = config.rotate;
     const width = config.width ?? 120;
     const height = config.height ?? 108;
     const fix = config.fix ?? 20;
@@ -82,6 +81,7 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
     this.group.add(this);
     this.setImmovable(true);
     this.setCollideWorldBounds(true);
+    if(config.aura) this.aura = scene.add.sprite(config.pos.x, config.pos.y, config.aura).setScale(0.6);
 
     if (friction) this.setFriction(friction)
     if (config.tween) {
@@ -146,9 +146,23 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
         scene.events.off("update");
       })
     }
+    this.scene.tweens.add({
+      targets: this.aura,
+      alpha: 0.4,
+      duration: 1000,
+      yoyo: true,
+      repeat: -1,
+    });
   }
+  // Override the destroy method
+  destroy(fromScene?: boolean): void {
+    // Call the OnDestroy method for cleanup
+    this.aura?.destroy();
 
-  animation = (config: FloorConfig) => {
+    // Call the parent class's destroy method
+    super.destroy(fromScene);
+  }
+  animation = (config: CollectableConfig) => {
     if (config.animation) {
       if (config.animation.xAxis) {
         if (this.x >= config.pos.x + config.animation.xAxis.xDistance / 2 && this.animState.x === 'start') {
@@ -221,4 +235,4 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
   // }
 
 }
-export default Floor;
+export default Collectable;

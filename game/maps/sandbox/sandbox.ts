@@ -3,44 +3,19 @@ import AsteroidGenerator, {
   AsteroidGeneratorConfig,
 } from "../../assets/AsteroidGenerator";
 import Floor, { FloorConfig } from "../../assets/Floor";
-import LargeFloor, { LargeFloorConfig } from "../../assets/LargeFloor";
 import Game from "../../Game";
 import Player from "../../assets/Player";
-import portal, { portalConfig } from "../../assets/portal";
-import { Children } from "react";
 import { GamePlayDataType, loseConfigFromMapType } from "@/game/Types";
 import LargeFloorIsland, {
   LargeFloorIslandConfig,
 } from "@/game/assets/LargeFloorIsland";
-import TextBox from "@/game/assets/TextBox";
 import MagicZone, { ZoneConfig } from "@/game/assets/MagicZone";
 import Teleport from "@/game/assets/Teleport";
 import colors from "@/game/assets/PlatformColors";
+import MapCreator from "./MapCreator";
 
-class Sandbox {
-  isJumping = false;
-  // debugGraphics: Phaser.GameObjects.Graphics;
-  scene: Game;
-  worldSize = {
-    width: 10000,
-    height: 2000,
-  };
-  cameraBounds = {
-    x: 0,
-    y: 0,
-    width: 10000,
-    height: 1300,
-  };
-  // normales
-  pisos?: Phaser.Physics.Arcade.Group;
-  // de vuelta al inicio
+class Sandbox extends MapCreator {
   pisosBack?: Phaser.Physics.Arcade.Group;
-  // float
-  pisos2?: Phaser.Physics.Arcade.Group;
-  // rotyate cam
-  pisos3?: Phaser.Physics.Arcade.Group;
-  //  no float
-  pisos4?: Phaser.Physics.Arcade.Group;
   coin?: Phaser.Physics.Arcade.Group;
   coinAura?: Phaser.GameObjects.Sprite;
   invincible?: Phaser.Physics.Arcade.Group;
@@ -56,44 +31,16 @@ class Sandbox {
   goingBack: boolean = false;
   pisoGoBack?: Phaser.GameObjects.Sprite;
   firegroup?: Phaser.Physics.Arcade.Group;
-  player?: Player;
-  startingPoint = {
-    x: 500, //500
-    y: 800, //800
-  };
-
-  loseConfig: loseConfigFromMapType = [
-    {
-      positions: { x: 500, y: 800 },
-      cameraDirection: "NORMAL",
-      PlayerDirection: "NORMAL",
-      gravityDown: true,
-    },
-  ];
   nextScene: string | undefined = "postal1_planeta1";
   postalCode: string | undefined = "adjns";
-
-  background?: Phaser.GameObjects.Image;
-  background2?: Phaser.GameObjects.Image;
-  background3?: Phaser.GameObjects.Image;
-  background4?: Phaser.GameObjects.Image;
-  background5?: Phaser.GameObjects.Image;
-  background6?: Phaser.GameObjects.Image;
-  mountain1?: Phaser.GameObjects.Image;
-  mountain2?: Phaser.GameObjects.Image;
-  mountain3?: Phaser.GameObjects.Image;
-  mountain4?: Phaser.GameObjects.Image;
-  mountain5?: Phaser.GameObjects.Image;
   UIItemToGrab: string = "cristal3";
   UIItemScale?: number;
   cristal?: Floor;
   collected: Boolean = false;
   endPortal?: Floor;
   rotate?: boolean = true;
-  mapContainer?: Phaser.GameObjects.Container;
-  frontContainer?: Phaser.GameObjects.Container;
-  invincibilityTimer?: Time.TimerEvent
   constructor(scene: Game, player: Player, data?: GamePlayDataType) {
+    super(scene, player, data);
     this.scene = scene;
     this.player = player;
 
@@ -105,218 +52,15 @@ class Sandbox {
     );
 
     this.player.setPlayerWithTank(true);
-
-    // add delayed call
-    // this.scene.time.delayedCall(4000, () => {
-    //   this.player!.setGravityOnPlayer(500)
-    //   this.player!.setTintMask(0x00ff00)
-    //   this.scene.time.delayedCall(4000, () => {
-    //     this.player!.setTintMask(0xff0000)
-
-    //     this.player!.setGravityOnPlayer(1000)
-    //     this.player!.setGravityOnPlayerX(2000)
-
-    //   });
-    // });
-
-    /* World size*/
-  }
-
-  animateBackground(player: Phaser.GameObjects.Sprite | Phaser.Math.Vector2) {
-    const { x, y } = this.startingPoint;
-    const { x: x2, y: y2 } = player;
-
-    // animation backgrounds statics
-    const { ajusteBX, ajusteBY } = { ajusteBX: 1.1, ajusteBY: 1.1 };
-    const calcDiffBX = (x2 - x) / ajusteBX;
-    const calcDiffBY = (y2 - y) / ajusteBY;
-    this.background?.setPosition(x + calcDiffBX, y + calcDiffBY);
-    this.background2?.setPosition(x + calcDiffBX, y + calcDiffBY);
-    this.background3?.setPosition(x + calcDiffBX, y + calcDiffBY);
-    // // animation frontgrounds
-    const { ajusteFX, ajusteFY } = { ajusteFX: 4, ajusteFY: 2 };
-    const calcDiffFX = (x2 - x) / ajusteFX;
-    const calcDiffFY = (y2 - y) / ajusteFY;
-    this.background4?.setPosition(x + calcDiffFX, y + 570 + calcDiffFY);
-    this.background5?.setPosition(x + calcDiffFX, y + 570 + calcDiffFY);
-    this.background6?.setPosition(
-      x + this.background5!.width - 15 + calcDiffFX,
-      y + 570 + calcDiffFY
-    );
-    this.mountain4?.setPosition(
-      -200 + calcDiffFX,
-      this.startingPoint.y + calcDiffFY
-    );
-    this.mountain5?.setPosition(
-      1100 + calcDiffFX,
-      this.startingPoint.y + calcDiffFY
-    );
-    // // animation front mountains
-    const { ajusteFMX, ajusteFMY } = { ajusteFMX: 20, ajusteFMY: 30 };
-    const calcDiffFMX = -(x2 - x) / ajusteFMX;
-    const calcDiffFMY = -(y2 - y) / ajusteFMY;
-    this.mountain1?.setPosition(
-      this.startingPoint.x + this.background5!.width - 85 + calcDiffFMX,
-      this.startingPoint.y + 320 + calcDiffFMY
-    );
-    this.mountain2?.setPosition(
-      this.startingPoint.x - 270 + calcDiffFMX,
-      this.startingPoint.y + 350 + calcDiffFMY
-    );
-    this.mountain3?.setPosition(
-      1100 + calcDiffFMX,
-      this.startingPoint.y + 470 + calcDiffFMY
-    );
-  }
-
-  // if (this.scene.player?.body?.touching.up || this.scene.player?.body?.touching.down) {
-  //   this.scene.changeGravity(true, 1000, 3);
-  // }
-
-  addColliders() {
-    if (this.scene.player) {
-      if (this.pisos)
-        this.scene.physics.add.collider(
-          this.scene.player,
-          this.pisos,
-          this.scene.touch,
-          // () => {
-          //   if (this.scene.player?.withTank) {
-          //     this.scene.player.tank.isCharging = this.scene.player.tank.chargeValue;
-          //   }
-          // },
-          () => true,
-          this.scene
-        );
-      if (this.pisos2)
-        this.scene.physics.add.collider(
-          this.scene.player,
-          this.pisos2,
-          () => {
-            this.scene.touch()
-            if (
-              this.scene.player?.body?.touching.up ||
-              this.scene.player?.body?.touching.down
-            ) {
-              this.scene.changeGravity(true, 1000, 3);
-            }
-            //this.background2.setPosition(this.startingPoint.x, this.startingPoint.y + 320)
-            //this.background4.setPosition(this.startingPoint.x, this.startingPoint.y + 320)
-          },
-          () => true,
-          this.scene
-        );
-      if (this.pisos3)
-        this.scene.physics.add.collider(
-          this.scene.player,
-          this.pisos3,
-          () => {
-            this.scene.touch()
-            this.scene.rotateCam(true, 10);
-          },
-          () => true,
-          this.scene
-        );
-      if (this.pisos4)
-        this.scene.physics.add.collider(
-          this.scene.player,
-          this.pisos4,
-          () => {
-            this.scene.touch()
-            this.scene.rotateCam(false, 10);
-          },
-          () => true,
-          this.scene
-        );
-      if (this.coin)
-        this.scene.physics.add.overlap(
-          this.scene.player,
-          this.coin,
-          (a, b) => {
-            b.destroy();
-            this.coinAura?.destroy();
-          },
-          () => true,
-          this.scene
-        );
-      if (this.invincible) {
-        this.scene.physics.add.overlap(
-          this.scene.player,
-          this.invincible,
-          () => {
-            if (!this.player?.invincible) {
-              this.player?.setPlayerInvicinible(true);
-              this.invincible?.setVisible(false);
-              this.invincibilityTimer = this.scene.time.delayedCall(30000, () => {
-                this.player?.setPlayerInvicinible(false);
-                this.invincible?.setVisible(true);
-              });
-            }
-          },
-          () => true,
-          this.scene
-        );
-      }
-      if (this.portal)
-        this.scene.physics.add.overlap(
-          this.scene.player,
-          this.portal,
-          () => {
-            // const obj: GamePlayDataType =  {
-            //   level: 999,
-            //   lifes: this.scene.lifes ? this.scene.lifes : 3,
-            //   loadKey: ["Postales", "Cinemato1", "Cinemato2"],
-            //   startingPositionFromOtherScene: {
-            //     x: this.player!.x,
-            //     y: this.player!.y,
-            //   },
-            // }
-            // this.scene.changeScene(obj) // data
-            this.scene.win();
-          },
-          () => true,
-          this.scene
-        );
-      if (this.firegroup) {
-        this.scene.physics.add.overlap(
-          this.scene.player,
-          this.firegroup,
-          () => {
-            if (!this.player?.invincible) {
-              this.scene.touchItem("fireball");
-              this.scene.player?.setVelocity(0);
-            }
-          },
-          () => true,
-          this.scene
-        );
-      }
-      if (this.teleport)
-        this.scene.physics.add.collider(
-          this.scene.player,
-          this.teleport,
-          (a, b) => {
-            console.log("teleport");
-            const tp = b as Teleport;
-            tp.trigger();
-          },
-          () => true,
-          this.scene
-        );
-    }
   }
 
   createMap(data: { level: number; lifes: number }) {
     this.mapContainer = this.scene.add.container();
-    this.frontContainer = this.scene.add.container().setDepth(999999999999);
+    // this.frontContainer = this.scene.add.container().setDepth(999999999999);
     this.teleport = this.scene.physics.add.group({ allowGravity: false });
     this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
     this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });
-    this.pisos = this.scene.physics.add.group({ allowGravity: false });
     this.pisosBack = this.scene.physics.add.group({ allowGravity: false });
-    this.pisos2 = this.scene.physics.add.group({ allowGravity: false });
-    this.pisos3 = this.scene.physics.add.group({ allowGravity: false });
-    this.pisos4 = this.scene.physics.add.group({ allowGravity: false });
     this.firegroup = this.scene.physics.add.group({ allowGravity: false });
     this.amountLifes = data.lifes;
     this.coin = this.scene.physics.add.group({ allowGravity: false });
@@ -326,76 +70,49 @@ class Sandbox {
     this.flyingPiso = this.scene.physics.add.group({ allowGravity: false, immovable: true });
     this.coinAura = this.scene.add.sprite(1700, 800, "auraTuto").setScale(0.6)
 
-    this.background = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "background0P1")
-      .setOrigin(0.5, 0.5);
-    this.background2 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "background1P1")
-      .setOrigin(0.5, 0.5);
-    this.background3 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y, "backgroundStars")
-      .setOrigin(0.5, 0.5);
-    this.background4 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y + 470, "frontGround1")
-      .setOrigin(1, 1)
-      .setScale(1);
-    this.background5 = this.scene.add
-      .image(this.startingPoint.x, this.startingPoint.y + 470, "frontGround2")
-      .setOrigin(0, 1)
-      .setScale(1);
-    this.background6 = this.scene.add
-      .image(
-        this.startingPoint.x + this.background5.width - 15,
-        this.startingPoint.y + 470,
-        "frontGround1"
-      )
-      .setOrigin(0, 1)
-      .setScale(1);
+    const backImage = this.scene.textures.get("background0P1").getSourceImage()
+    this.backSize = { width: backImage.width, height: backImage.height }
 
-    this.mountain1 = this.scene.add.image(
-      this.startingPoint.x + this.background5.width - 15,
-      this.startingPoint.y - 370,
-      "montaña3"
-    );
-    this.mountain2 = this.scene.add.image(
-      this.startingPoint.x - 70,
-      this.startingPoint.y + 350,
-      "montaña5"
-    );
-    this.mountain3 = this.scene.add.image(
-      1200,
-      this.startingPoint.y + 470,
-      "montaña3"
-    );
-    this.mountain4 = this.scene.add.image(
-      200,
-      this.startingPoint.y,
-      "montaña2"
-    );
-    this.mountain5 = this.scene.add.image(
-      1100,
-      this.startingPoint.y,
-      "montaña4"
-    );
+    this.backgroundsBack = [
+      this.scene.add.image(0, this.worldSize.height, "background0P1").setOrigin(0, 1).setScale(1.3),
+      this.scene.add.image(0, this.worldSize.height, "backgroundStars").setOrigin(0, 1).setScale(1.3),
+      this.scene.add.image(0 + backImage.width, this.worldSize.height, "background0P1").setOrigin(0, 1),
+      this.scene.add.image(0 + backImage.width, this.worldSize.height, "backgroundStars").setOrigin(0, 1),
+      this.scene.add.image(0 + (backImage.width * 2), this.worldSize.height, "background0P1").setOrigin(0, 1),
+      this.scene.add.image(0 + (backImage.width * 2), this.worldSize.height, "backgroundStars").setOrigin(0, 1),
+    ]
 
-    this.mapContainer.add([
-      this.background,
-      this.background2,
-      this.background3,
-      this.mountain4,
-      this.mountain5,
-      this.background4,
-      this.background5,
-      this.background6,
-    ]);
+    const middleImage= this.scene.textures.get("frontGround1").getSourceImage()
+    this.middleSize = { width: middleImage.width, height: middleImage.height }
 
-    this.frontContainer.add([this.mountain1, this.mountain2, this.mountain3]);
+    this.backgroundsMiddle = [
+      this.scene.add.image(-this.startingPoint.x, this.startingPoint.y + 550, "frontGround1").setOrigin(0, 1).setScale(1),
+      this.scene.add.image(-50 -this.startingPoint.x + this.middleSize.width, this.startingPoint.y + 550, "frontGround1").setOrigin(0, 1).setScale(1),
+      this.scene.add.image(-100 -this.startingPoint.x + (this.middleSize.width * 2), this.startingPoint.y + 550, "frontGround1").setOrigin(0, 1).setScale(1),
+      this.scene.add.image(-150 -this.startingPoint.x + (this.middleSize.width * 3), this.startingPoint.y + 550, "frontGround1").setOrigin(0, 1).setScale(1),
+      this.scene.add.image(-200 -this.startingPoint.x + (this.middleSize.width * 4), this.startingPoint.y + 550, "frontGround1").setOrigin(0, 1).setScale(1),
+      this.scene.add.image(200, this.worldSize.height - 700, "montaña2"),
+      this.scene.add.image(1100, this.worldSize.height - 700, "montaña4")
+    ]
 
+    this.backgroundsFront = [
+      this.scene.add.image(this.startingPoint.x + this.backSize.width - 15, this.worldSize.height - 700,"montaña3"),
+      this.scene.add.image(this.startingPoint.x - 70, this.worldSize.height - 700, "montaña5"),
+      this.scene.add.image(1200, this.worldSize.height - 700, "montaña3")
+    ]
+
+    this.createBackgrounds(this.backgroundsBack, this.backgroundsMiddle, this.backgroundsFront);
+    
+    // this.frontContainer.add(this.backgroundsFront);
+    this.mapContainer.add(this.backgroundsBack.concat(this.backgroundsMiddle).concat(this.backgroundsFront));
     this.scene.UICamera?.ignore(this.mapContainer);
     this.scene.UICamera?.ignore(this.frontContainer);
 
+    this.scene.player?.setDepth(9999999999999);
+    
     const globalPlatformsConfig = {
       withTextureToAbove: true,
+      texture: "plataformaNuevaA",
       textureA: "plataformaNuevaLargaA",
       textureB: "plataformaNuevaLargaB",
       textureC: "plataformaNuevaLargaC",
@@ -403,25 +120,39 @@ class Sandbox {
       rotated: false,
     };
 
-    const intermitentFloor = {
-      ...globalPlatformsConfig,
-      pos: { x: 700, y: 1000 },
-      width: {
-        textureA: 90,
-        textureB: 67,
-        textureC: 115,
+    // const intermitentFloorArray = new Array(3).fill(globalPlatformsConfig).map((element, index) => {
+    //   return {
+    //     ...element,
+    //     pos: { x: element.pos.x + (index * 300), y: 800 },
+    //   }
+    // })
+
+    const platforms = [
+      {
+        pos: { x: 1000, y: 1000 }, colors: colors.gravity, group: this.gravityTile
       },
-      height: 127,
-      large: 5,
-    }
-
-
-    const intermitentFloorArray = new Array(3).fill(intermitentFloor).map((element, index) => {
-      return {
-        ...element,
-        pos: { x: element.pos.x + (index * 300), y: 800 },
+      { pos: { x: 1000, y: 600 }, flipY: true },
+      { pos: { x: 1400, y: 600 }, group: this.gravityTile, colors: colors.gravity, flipY: true },
+      { pos: { x: 1400, y: 1000 } },
+      { pos: { x: 2200, y: 1000 }, rotate: true, group: this.rotationTile, colors: colors.rotate },
+      { pos: { x: 2500, y: 1000 }, rotate: false, group: this.rotationTile, colors: colors.rotate },
+      {
+        pos: { x: 5200, y: 800 }, animation: {
+          xAxis: {
+            xDistance: 200,
+            xVel: 100
+          }
+        }
+      },
+      {
+        pos: { x: 5800, y: 750 }, animation: {
+          yAxis: {
+            yDistance: 600,
+            yVel: 200
+          }
+        }
       }
-    })
+    ]
     
     const largePlatforms = [
       {
@@ -434,80 +165,60 @@ class Sandbox {
         },
         height: 127,
         large: 150,
-      },]
+        group: this.floor
+      },
+      {
+        ...globalPlatformsConfig,
+        pos: { x: 6000, y: 500 },
+        width: {
+          textureA: 90,
+          textureB: 67,
+          textureC: 115,
+        },
+        height: 127,
+        large: 30,
+        group: this.floor
+      }
+    ]
     // ].concat(intermitentFloorArray)
 
-    const p2Config: FloorConfig = {
-      pos: { x: 1000, y: 1000 },
-      texture: "plataformaNuevaA",
-      scale: { width: 0.7, height: 0.7 },
-      width: 140,
-      height: 20,
+    platforms.forEach((element) => {
+      const config: any = {
+        ...element,
+        ...globalPlatformsConfig
+      };
+      const floor = new Floor(this.scene, config, element.group ?? this.floor!);
+      if (element.flipY) floor.setFlipY(true)
+      if (element.colors) floor.setTint(element.colors)
+      floor.setBodySize(140, 20)
+      floor.setFlipY(element.flipY ?? false)
+      // this.floor?.add(floor);
+    });
+
+    largePlatforms.forEach((element) => {
+      const config: any = {
+        ...element,
+        ...globalPlatformsConfig,
+      };
+
+      const largeFloor = new LargeFloorIsland(this.scene,config,element.group ?? this.floor!
+      );
+    });
+    
+    // for (let index = 0; index < largePlatforms.length; index++) {
+    //   const element = largePlatforms[index];
+    //   new LargeFloorIsland(this.scene, element, this.floor!);
+    // }
+    
+    const otherSceneConf: GamePlayDataType = {
+      level: 7,
+      lifes: this.scene.lifes ? this.scene.lifes : 3,
+      loadKey: ["Postales", "Cinemato1", "Cinemato2"],
+      startingPositionFromOtherScene: {
+        x: 2750,
+        y: 1000,
+      },
     }
-    const p2 = new Floor(this.scene, p2Config, this.pisos2).setTint(colors.gravity)
-
-    const p3config: FloorConfig = {
-      pos: { x: 1000, y: 600 },
-      texture: "plataformaNuevaA",
-      scale: { width: 0.7, height: 0.7 },
-      width: 140,
-      height: 20,
-    }
-    const p3 = new Floor(this.scene, p3config, this.pisos).setFlipY(true)
-
-    const p4config: FloorConfig = {
-      pos: { x: 1400, y: 600 },
-      texture: "plataformaNuevaA",
-      scale: { width: 0.7, height: 0.7 },
-      width: 140,
-      height: 20,
-    }
-
-    const p4 = new Floor(this.scene, p4config, this.pisos2).setFlipY(true).setTint(colors.gravity)
-
-    const p5config: FloorConfig = {
-      pos: { x: 1400, y: 1000 },
-      texture: "plataformaNuevaA",
-      scale: { width: 0.7, height: 0.7 },
-      width: 140,
-      height: 20,
-    }
-
-    const p5 = new Floor(this.scene, p5config, this.pisos)
-
-
-    const p6config: FloorConfig = {
-      pos: { x: 2200, y: 1000 },
-      texture: "plataformaNuevaA",
-      scale: { width: 0.7, height: 0.7 },
-      width: 140,
-      height: 20
-    }
-
-    const p6 = new Floor(this.scene, p6config, this.pisos3).setTint(colors.rotate)
-
-    const p7config: FloorConfig = {
-      pos: { x: 2500, y: 1000 },
-      texture: "plataformaNuevaA",
-      scale: { width: 0.7, height: 0.7 },
-      width: 140,
-      height: 20
-    }
-
-    const p7 = new Floor(this.scene, p7config, this.pisos4).setTint(colors.rotate)
-
-
-
-   const otherSceneConf: GamePlayDataType =  {
-        level: 7,
-        lifes: this.scene.lifes ? this.scene.lifes : 3,
-        loadKey: ["Postales", "Cinemato1", "Cinemato2"],
-        startingPositionFromOtherScene: {
-          x: 2750,
-          y: 1000,
-        },
-      }
-
     const teleport_1 = new Teleport(this.scene, { x: 2000, y: 800, version: 1, sameScene: false, group: this.teleport, otherSceneConf: otherSceneConf })
     // const teleport_2 = new Teleport(this.scene, { x: 1000, y: 1000, version: 1, sameScene: true, group: this.teleport })
 
@@ -541,7 +252,6 @@ class Sandbox {
       height: 100,
     };
     const port = new Floor(this.scene, portalConfig, this.portal);
-    console.log(port, "portal");
     // this.endPortal = port;
 
     const invincibleConfig: FloorConfig = {
@@ -604,25 +314,6 @@ class Sandbox {
       }
     }
     const zoneA = new MagicZone(this.scene, zoneAConfig)
-    
-    const pAConfig: LargeFloorIslandConfig = {
-      withTextureToAbove: true,
-      textureA: "plataformaNuevaLargaA",
-      textureB: "plataformaNuevaLargaB",
-      textureC: "plataformaNuevaLargaC",
-      pos: { x: 6000, y: 500 },
-      width: {
-        textureA: 90,
-        textureB: 67,
-        textureC: 115,
-      },
-      scale: { width: 0.7, height: 0.7 },
-      height: 127,
-      large: 30,
-      rotated: false
-    };
-    const pA = new LargeFloorIsland(this.scene, pAConfig, this.pisos);
-
 
     const line1 = this.scene.add.rectangle(4000, 1000, 10, 1000, 0xff0000).setOrigin(0.5, 0.5);
     const line2 = this.scene.add.rectangle(5000, 1000, 10, 1000, 0xff0000).setOrigin(0.5, 0.5);
@@ -633,72 +324,21 @@ class Sandbox {
 
     for (let i = 0; i < 100; i++) {
       const fireballConfig: FloorConfig = {
-      spriteSheet: "meteorito",
-      texture: "meteorito",
-      pos: { x: 4030 + (Math.random()*1000)  , y: -200 }, 
-      width: 100,
-      height: 100,
-      tween: {
-        duration: 3000,
-        repeat: -1,
-        delay: i * 200, 
-        y: "+=4000",
-      },
-      frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+        spriteSheet: "meteorito",
+        texture: "meteorito",
+        pos: { x: 4030 + (Math.random() * 1000), y: -200 },
+        width: 100,
+        height: 100,
+        tween: {
+          duration: 3000,
+          repeat: -1,
+          delay: i * 200,
+          y: "+=4000",
+        },
+        frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
       };
       const fireball = new Floor(this.scene, fireballConfig, this.firegroup).setScale(0.5);
     }
-
-    const p8config: FloorConfig = {
-      pos: { x: 5200, y: 800 },
-      texture: "plataformaNuevaA",
-      scale: { width: 0.7, height: 0.7 },
-      width: 140,
-      height: 20,
-      animation:{
-        xAxis:{
-          xDistance:200,
-          xVel:100
-        }
-      }
-    }
-
-    const p8 = new Floor(this.scene, p8config, this.pisos)
-
-    const p9config: FloorConfig = {
-      pos: { x: 5800, y: 750 },
-      texture: "plataformaNuevaA",
-      scale: { width: 0.7, height: 0.7 },
-      width: 140,
-      height: 20,
-      animation:{
-        yAxis:{
-          yDistance:600,
-          yVel:200
-        }
-      }
-    }
-
-    const p9 = new Floor(this.scene, p9config, this.pisos)
-
-
-    const fireballConfig: FloorConfig = {
-      spriteSheet: "meteorito",
-      texture: "meteorito",
-      pos: { x: 13000, y: 400 }, // 500 1580
-      width: 100,
-      height: 100,
-      rotated:true, //rotated define si esta en vertical o horizontal
-      tween: {
-        duration: 10000,
-        repeat: -1,
-        delay: Math.random() * 1000,
-        x: "-=10000", // esto define en que eje se desplaza y cuanto, + o - definen la direccion de dicho eje 
-      },
-      frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-    };
-    const fireball = new Floor(this.scene, fireballConfig, this.firegroup).setScale(0.5)
-
 
     const fireball3Config: FloorConfig = {
       spriteSheet: "meteorito",
@@ -734,21 +374,8 @@ class Sandbox {
     };
       const fireball3 = new Floor(this.scene, fireball3Config, this.firegroup).setScale(0.5)
 
-      // for (let index = 0; index < intermitentFloorArray.length; index++) {
-      //   const element = intermitentFloorArray[index];
-      //   new LargeFloorIsland(this.scene, element, this.pisos);
-      // }
-      
-      for (let index = 0; index < largePlatforms.length; index++) {
-        const element = largePlatforms[index];
-        new LargeFloorIsland(this.scene, element, this.pisos);
-      }
-      
-    this.scene.UICamera?.ignore(this.pisos);
+    this.scene.UICamera?.ignore(this.floor!);
     this.scene.UICamera?.ignore(this.portal);
-    this.scene.UICamera?.ignore(this.pisos2)
-    this.scene.UICamera?.ignore(this.pisos3)
-    this.scene.UICamera?.ignore(this.pisos4)
     this.scene.UICamera?.ignore(this.pisosBack)
     this.scene.UICamera?.ignore(this.firegroup)
     this.scene.UICamera?.ignore(this.aura)
@@ -758,8 +385,16 @@ class Sandbox {
     this.scene.UICamera?.ignore(this.teleport)
     this.scene.UICamera?.ignore(this.coin)
     this.scene.UICamera?.ignore(this.coinAura)
+    this.scene.UICamera?.ignore(this.gravityTile!)
+    this.scene.UICamera?.ignore(this.backContainer)
+    this.scene.UICamera?.ignore(this.middleContainer)
+    this.scene.UICamera?.ignore(this.frontContainer)
 
-    this.scene.UICamera?.ignore(this.scene.physics.world.debugGraphic);
+
+    if (this.scene.physics.world.debugGraphic) {
+      this.scene.UICamera?.ignore(this.scene.physics.world.debugGraphic);
+    }
+
   }
 
   update() {

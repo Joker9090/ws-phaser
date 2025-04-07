@@ -10,7 +10,7 @@ import Game from "../../Game";
 import Player from "../../assets/Player";
 import portal, { portalConfig } from "../../assets/portal";
 import { Children } from "react";
-import { loseConfigFromMapType } from "@/game/Types";
+import { GamePlayDataType, loseConfigFromMapType } from "@/game/Types";
 import LargeFloorIsland, {
   LargeFloorIslandConfig,
 } from "@/game/assets/LargeFloorIsland";
@@ -124,10 +124,10 @@ class Mapa5 {
   mapContainer: Phaser.GameObjects.Container;
   frontContainer: Phaser.GameObjects.Container;
 
-  constructor(scene: Game, player: Player) {
+  constructor(scene: Game, player: Player, data?: GamePlayDataType) {
     this.scene = scene;
     this.player = player;
-
+  
     /* World size*/
     this.scene.physics.world.setBounds(
       0,

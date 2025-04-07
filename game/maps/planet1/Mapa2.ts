@@ -10,7 +10,7 @@ import Game from "../../Game";
 import Player from "../../assets/Player";
 import portal, { portalConfig } from "../../assets/portal";
 import { Children } from "react";
-import { loseConfigFromMapType } from "@/game/Types";
+import { GamePlayDataType, loseConfigFromMapType } from "@/game/Types";
 import LargeFloorIsland, { LargeFloorIslandConfig } from "@/game/assets/LargeFloorIsland";
 import TextBox from "@/game/assets/TextBox";
 import colors from "@/game/assets/PlatformColors";
@@ -105,10 +105,10 @@ class Mapa2 {
 
   textTutorial1?: TextBox;
   tutorialStep: number = 0;
-  constructor(scene: Game, player: Player) {
+  constructor(scene: Game, player: Player, data?: GamePlayDataType) {
     this.scene = scene;
     this.player = player;
-
+  
     /* World size*/
     this.scene.physics.world.setBounds(
       0,

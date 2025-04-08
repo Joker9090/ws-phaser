@@ -1,6 +1,7 @@
 import Floor from "./Floor";
 import LargeFloorIsland from "./LargeFloorIsland";
 import Game from "../Game";
+import Collectable from "./Collectable";
 
 export default function Factory(scene: Game, config: any, floorGroup: Phaser.Physics.Arcade.Group) {
   let { type, ...rest } = config;
@@ -15,11 +16,11 @@ export default function Factory(scene: Game, config: any, floorGroup: Phaser.Phy
             // floor.setBodySize(140, 20)
             floor.setFlipY(rest.flipY ?? false)
       return floor;
-    case "cristal":
-        let cristal = new Floor(scene, rest, rest.group);
-        if (rest.flipX) cristal.setFlipX(true)
-        if (rest.colors) cristal.setTint(rest.colors[0]);
-      return cristal
+    case "collectable":
+        let collectable = new Collectable(scene, rest, rest.group);
+        if (rest.flipX) collectable.setFlipX(true)
+        if (rest.colors) collectable.setTint(rest.colors[0]);
+      return collectable
     // case "SmallFloorIslandConfig":
     //   return new SmallFloorIslandConfig(scene, rest);
     default:

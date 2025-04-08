@@ -635,13 +635,14 @@ this.updateContainerPositionRelativeToCamera(
     );
     this.scene.canWin=true;//Portal is constantly ON
     const coll1Config: CollectableConfig = {
-      texture: "cristal3",
+      texture: "shield",
       pos: { x: 900, y: 1500 },
       scale: { width: 0.7, height: 0.7 },
       width: 40,
       height: 18,
       fix: 25,
       aura:"auraTuto",
+      shield:"auraAnim"
     }
     const coll1 = new Collectable(this.scene, coll1Config, this.collectables).setBodySize(140,180);
 

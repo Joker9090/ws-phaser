@@ -48,9 +48,6 @@ class subSandbox extends MapCreator {
           this.scene.add.image(0 + (backImage.width * 2), this.worldSize.height, "backgroundStars").setOrigin(0, 1),
         ]
     
-        const middleImage= this.scene.textures.get("frontGround1").getSourceImage()
-        this.middleSize = { width: middleImage.width, height: middleImage.height }
-    
         this.backgroundsMiddle = [
           this.scene.add.image(-this.startingPoint.x, this.startingPoint.y, "middleCombo").setOrigin(0, 1).setScale(0.7),
           this.scene.add.image(-this.startingPoint.x + downScaledMiddleWidth, this.startingPoint.y, "middleCombo2").setOrigin(0, 1).setScale(0.7),

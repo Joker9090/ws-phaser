@@ -109,7 +109,6 @@ export default class MapCreator {
   middleContainer: Phaser.GameObjects.Container;
   frontContainer: Phaser.GameObjects.Container;
   backSize: { width: number; height: number } = { width: 0, height: 0 };
-  middleSize: { width: number; height: number } = { width: 0, height: 0 };
   frontSize: { width: number; height: number } = { width: 0, height: 0 };
   middleWidth: { width: number; height: number } = { width: 0, height: 0 };
   nextScene: string | undefined = "postal1_planeta1";
@@ -318,10 +317,10 @@ export default class MapCreator {
             (a, b: any) => {
               if (!this.player?.invincible) {
                 this.player?.setPlayerInvicinible(true);
-                b?.setVisible(false);
+                b?.turnTo(false);
                 this.invincibilityTimer = this.scene.time.delayedCall(30000, () => {
                   this.player?.setPlayerInvicinible(false);
-                  b?.setVisible(true);
+                  b?.turnTo(true);
                 });
               }
             },

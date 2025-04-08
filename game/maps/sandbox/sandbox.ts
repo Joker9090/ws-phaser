@@ -3,6 +3,7 @@ import AsteroidGenerator, {
   AsteroidGeneratorConfig,
 } from "../../assets/AsteroidGenerator";
 import Floor, { FloorConfig } from "../../assets/Floor";
+import Collectable, { CollectableConfig } from "../../assets/Collectable";
 import Game from "../../Game";
 import Player from "../../assets/Player";
 import { GamePlayDataType, loseConfigFromMapType } from "@/game/Types";
@@ -73,6 +74,10 @@ class Sandbox extends MapCreator {
     const backImage = this.scene.textures.get("background0P1").getSourceImage()
     this.backSize = { width: backImage.width, height: backImage.height }
 
+    const { width, height } = this.ratioReference;
+    const downScaledMiddleWidth = width * 0.7;
+    const downScaledFrontWidth = width * 0.5;
+
     this.backgroundsBack = [
       this.scene.add.image(0, this.worldSize.height, "background0P1").setOrigin(0, 1).setScale(1.3),
       this.scene.add.image(0, this.worldSize.height, "backgroundStars").setOrigin(0, 1).setScale(1.3),
@@ -82,17 +87,13 @@ class Sandbox extends MapCreator {
       this.scene.add.image(0 + (backImage.width * 2), this.worldSize.height, "backgroundStars").setOrigin(0, 1),
     ]
 
-    const middleImage= this.scene.textures.get("frontGround1").getSourceImage()
-    this.middleSize = { width: middleImage.width, height: middleImage.height }
-
     this.backgroundsMiddle = [
-      this.scene.add.image(-this.startingPoint.x, this.startingPoint.y + 850, "frontGround1").setOrigin(0, 1).setScale(1),
-      this.scene.add.image(-50 -this.startingPoint.x + this.middleSize.width, this.startingPoint.y + 850, "frontGround1").setOrigin(0, 1).setScale(1),
-      this.scene.add.image(-100 -this.startingPoint.x + (this.middleSize.width * 2), this.startingPoint.y + 850, "frontGround1").setOrigin(0, 1).setScale(1),
-      this.scene.add.image(-150 -this.startingPoint.x + (this.middleSize.width * 3), this.startingPoint.y + 850, "frontGround1").setOrigin(0, 1).setScale(1),
-      this.scene.add.image(-200 -this.startingPoint.x + (this.middleSize.width * 4), this.startingPoint.y + 850, "frontGround1").setOrigin(0, 1).setScale(1),
-      this.scene.add.image(200, this.worldSize.height - 500, "montaña2"),
-      this.scene.add.image(1100, this.worldSize.height - 500, "montaña4")
+      this.scene.add.image(-this.startingPoint.x, this.startingPoint.y, "middleCombo").setOrigin(0, 1).setScale(0.7),
+      this.scene.add.image(-this.startingPoint.x + downScaledMiddleWidth, this.startingPoint.y, "middleCombo2").setOrigin(0, 1).setScale(0.7),
+      this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 2), this.startingPoint.y, "middleCombo3").setOrigin(0, 1).setScale(0.7),
+      this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 3), this.startingPoint.y, "middleCombo4").setOrigin(0, 1).setScale(0.7),
+      this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 4), this.startingPoint.y, "middleCombo2").setOrigin(0, 1).setScale(0.7),
+      this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 5), this.startingPoint.y, "middleCombo2").setOrigin(0, 1).setScale(0.7),
     ]
 
     this.backgroundsFront = [
@@ -108,7 +109,7 @@ class Sandbox extends MapCreator {
     this.scene.UICamera?.ignore(this.mapContainer);
     this.scene.UICamera?.ignore(this.frontContainer);
 
-    this.scene.player?.setDepth(9999999999999);
+    this.scene.player?.setDepth(999);
     
 
     const basePlatformsConfig = {
@@ -133,8 +134,8 @@ class Sandbox extends MapCreator {
     };
 
     const baseCristalConf = {
-      type: "cristal",
-      texture: "cristal2",
+      type: "collectable",
+      texture: "shield",
       scale: { width: 0.7, height: 0.7 },
       width: 10,
       height: 18,
@@ -201,10 +202,10 @@ class Sandbox extends MapCreator {
         group: this.floor
       },
 
-      // cristals
-      {...baseCristalConf, pos: { x: this.startingPoint.x + 50, y: 1000 }, group: this.invincible, flipX: true, colors: [0xff0000]},
-      {...baseCristalConf, pos: { x: 3900, y: 1000 }, group: this.invincible, flipX: true, colors: [0xff0000]},
-      {...baseCristalConf, pos: { x: 1700, y: 800 }, group: this.coin, texture: "cristal3", width: 140, height: 180},
+      // collectables
+      {...baseCristalConf, pos: { x: this.startingPoint.x + 50, y: 1000 }, group: this.invincible, flipX: true, shield: 'auraAnim'},
+      {...baseCristalConf, pos: { x: 3900, y: 1000 }, group: this.invincible, flipX: true, shield: 'auraAnim'},
+      {...baseCristalConf, pos: { x: 1700, y: 800 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto'},
     ]
 
     this.createPlatforms(mapPlatforms)

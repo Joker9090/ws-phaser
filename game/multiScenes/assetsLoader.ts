@@ -194,6 +194,12 @@ export const loadAssets = {
         "/game/player/tankActivate1.png",
         { frameWidth: 72, frameHeight: 170 },
       ],
+      [
+        "spritesheet",
+        "auraAnim",
+        "/game/player/auraAnim.png",
+        { frameWidth: 201, frameHeight: 201 },
+      ],
       // [
       //   "spritesheet",
       //   "player",
@@ -298,6 +304,7 @@ export const loadAssets = {
       ["image", "piedra1", "/game/lvl1/plataformas/plataformaMedio.png"],
       ["image", "piedra2", "/game/lvl1/plataformas/plataformaMedio.png"],
       ["image", "piedra3", "/game/lvl1/plataformas/plataformaMedio.png"],
+      ["image", "shield", "game/logo proteccion.png"],
     ],
   },
   GamePlay2: {

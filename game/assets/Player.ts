@@ -21,6 +21,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   tankGraphics?: Phaser.GameObjects.Graphics;
   //tank smoke
   tankAnimSprite?: Phaser.GameObjects.Sprite;
+
+  auraAnimSprite?:Phaser.GameObjects.Sprite;
   gravity: number = 1000;
   gravityX: number = 0;
   tank: {
@@ -58,6 +60,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     //tank smoke
     this.tankAnimSprite = this.scene.add.sprite(this.x, this.y, "tankActivate").setSize(0.8,0.8);
     this.tankAnimSprite.setVisible(false).setDepth(900);
+
+    this.auraAnimSprite = this.scene.add.sprite(this.x, this.y, "invincibleAura");
+    this.auraAnimSprite.setVisible(false);
 
     const playerJumpFrames = scene.anims.generateFrameNumbers("player", {
       frames: Array.from({ length: 12 }, (_, i) => i + 36),
@@ -161,6 +166,17 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       repeat: 0,
     };
 
+    const invincibleAuraFrames = scene.anims.generateFrameNumbers("auraAnim", {
+      frames: Array.from({ length: 16 }, (_, i) => i),
+    });
+
+    const invincibleAuraConfig = {
+      key: "auraAnim",
+      frames: invincibleAuraFrames,
+      frameRate: frameRate,
+      repeat: 0,
+    };
+
     /* player animations */
     scene.anims.create(playerJumpConfig);
     scene.anims.create(playerFlyingConfig)
@@ -174,6 +190,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     scene.anims.create(gravityAnimConfig);
     //TANK SMOKE
     scene.anims.create(tankActivateConfig);
+    scene.anims.create(invincibleAuraConfig);
+
     /* player add to physic world */
     
 
@@ -199,6 +217,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.gravityAnimSprite = this.scene.add.sprite(this.x, this.y, "gravityAnim", 0).setVisible(false).setDepth(999);
     if(this.scene instanceof Game)  this.scene.UICamera?.ignore(this.gravityAnimSprite)
     if (this.scene instanceof Game) this.scene.UICamera?.ignore(this.tankAnimSprite)
+
+    if (this.scene instanceof Game) this.scene.UICamera?.ignore(this.auraAnimSprite)
     // this.scene.add.rectangle(this.x, this.y, 100, 100, 0xffffff).setVisible(true)
     /* player Collission with end of map */
     this.setCollideWorldBounds(true);
@@ -243,7 +263,17 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
   setPlayerInvicinible(value: boolean) {
     this.invincible = value
-    this.setTint(value ? 0xffd700 : 0xffffff)
+    if(this.invincible==true){
+      console.log("[Player] Invincible")
+      this.auraAnimSprite?.setVisible(true).setDepth(1000);
+      this.auraAnimSprite?.anims.play("auraAnim");
+      this.auraAnimSprite?.anims.setRepeat(-1);
+      this.auraAnimSprite?.on("animationupdate", () => {
+        this.auraAnimSprite?.setPosition(this.x, this.y);
+      });
+    }else{
+      this.auraAnimSprite?.setVisible(false);
+    }
   }
 
   idle() {

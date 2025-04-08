@@ -3,6 +3,7 @@ import { GamePlayDataType, loseConfigFromMapType } from "@/game/Types";
 import Game from "@/game/Game";
 import Teleport from "@/game/assets/Teleport";
 import { Time } from "phaser";
+import Collectable from "@/game/assets/Collectable";
 
 export default class MapCreator {
   mapGroup: Phaser.Physics.Arcade.Group;
@@ -240,10 +241,21 @@ createBackgrounds(_backgroundsBack: Phaser.GameObjects.Image[], _backgroundsMidd
             () => {
               if (!this.player?.invincible) {
                 this.player?.setPlayerInvicinible(true);
-                this.invincible?.setVisible(false);
+                this.invincible?.children.each((child) => {
+                  if (child instanceof Collectable) {
+                    child?.turnTo(false);
+                  }
+                  return true; // Ensure the callback returns a value
+                });
                 this.invincibilityTimer = this.scene.time.delayedCall(30000, () => {
                   this.player?.setPlayerInvicinible(false);
-                  this.invincible?.setVisible(true);
+                  //this.invincible?.turnTo(true);
+                  this.invincible?.children.each((child) => {
+                  if (child instanceof Collectable) {
+                    child?.turnTo(true);
+                  }
+                  return true; // Ensure the callback returns a value
+                });
                 });
               }
             },

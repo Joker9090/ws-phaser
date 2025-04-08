@@ -354,6 +354,7 @@ class Game extends Phaser.Scene {
   }
 
   lose() {
+    console.log("[Game] lose()");
     this.canRot = true;
     if (this.map) {
       //@ts-ignore
@@ -368,6 +369,7 @@ class Game extends Phaser.Scene {
             level: this.levelIs,
             lifes: this.lifes ? this.lifes : 3,
           });
+          console.log("[Game] lose(): "+ this.levelIs+" , new lifes"+multiScene.sceneData?.lifes);
           const scene = this.scene.add("MultiScene", multiScene, true);
           this.scene.start("MultiScene").bringToTop("MultiScene");
         } else if (this.lifes > 0 && this.player) {

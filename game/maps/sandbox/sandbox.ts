@@ -3,6 +3,7 @@ import AsteroidGenerator, {
   AsteroidGeneratorConfig,
 } from "../../assets/AsteroidGenerator";
 import Floor, { FloorConfig } from "../../assets/Floor";
+import Collectable, { CollectableConfig } from "../../assets/Collectable";
 import Game from "../../Game";
 import Player from "../../assets/Player";
 import { GamePlayDataType, loseConfigFromMapType } from "@/game/Types";
@@ -108,7 +109,7 @@ class Sandbox extends MapCreator {
     this.scene.UICamera?.ignore(this.mapContainer);
     this.scene.UICamera?.ignore(this.frontContainer);
 
-    this.scene.player?.setDepth(9999999999999);
+    this.scene.player?.setDepth(999);
     
     const globalPlatformsConfig = {
       withTextureToAbove: true,
@@ -254,8 +255,8 @@ class Sandbox extends MapCreator {
     const port = new Floor(this.scene, portalConfig, this.portal);
     // this.endPortal = port;
 
-    const invincibleConfig: FloorConfig = {
-      texture: "cristal2",
+    /*const invincibleConfig: FloorConfig = {
+      texture: "shield",
       pos: { x: this.startingPoint.x + 50, y: 1000 },
       scale: { width: 0.7, height: 0.7 },
       width: 10,
@@ -263,10 +264,22 @@ class Sandbox extends MapCreator {
       fix: 10,
     };
     // this.cristal = new Floor(this.scene, invincibleConfig, this.invincible);
-    const invincible = new Floor(this.scene, invincibleConfig, this.invincible).setFlipX(true).setTint(0xff0000);
+    const invincible = new Floor(this.scene, invincibleConfig, this.invincible);
+*/
+    const invincibleConfig: CollectableConfig = {
+      texture: "shield",
+      pos: { x: this.startingPoint.x + 50, y: 1000 },
+      scale: { width: 0.7, height: 0.7 },
+      width: 40,
+      height: 18,
+      fix: 25,
+      shield:"auraAnim"
+    }
+    const coll1 = new Collectable(this.scene, invincibleConfig, this.invincible);
+
 
     const invincible2Config: FloorConfig = {
-      texture: "cristal2",
+      texture: "shield",
       pos: { x: 3900, y: 1000 },
       scale: { width: 0.7, height: 0.7 },
       width: 10,
@@ -274,7 +287,7 @@ class Sandbox extends MapCreator {
       fix: 10,
     };
     // this.cristal = new Floor(this.scene, invincibleConfig, this.invincible);
-    const invincible2 = new Floor(this.scene, invincible2Config, this.invincible).setFlipX(true).setTint(0xff0000);
+    const invincible2 = new Floor(this.scene, invincible2Config, this.invincible);
 
     const zoneAConfig: ZoneConfig = {
       x: 2700,

@@ -2,10 +2,11 @@ import Player from "@/game/assets/Player";
 import { GamePlayDataType, loseConfigFromMapType } from "@/game/Types";
 import Game from "@/game/Game";
 import Teleport from "@/game/assets/Teleport";
-import { Time } from "phaser";
+import { GameObjects, Time } from "phaser";
 import Floor, { FloorConfig } from "@/game/assets/Floor";
 import LargeFloorIsland from "@/game/assets/LargeFloorIsland";
 import Factory from "@/game/assets/Factory";
+import Collectable from "@/game/assets/Collectable";
 
 
 export type globalPlatformsConfigType = {
@@ -133,6 +134,8 @@ export default class MapCreator {
   flyingPiso?: Phaser.Physics.Arcade.Group;
   firegroup?: Phaser.Physics.Arcade.Group;
   invincibilityTimer?: Time.TimerEvent
+  endPortal?: Phaser.Physics.Arcade.Group;
+  ratioReference: { width: number; height: number } = { width: 1920, height: 1080 };
 
   constructor(scene: Game, player: Player, data?: GamePlayDataType) {
     this.scene = scene;
@@ -195,7 +198,7 @@ export default class MapCreator {
     
     this.backContainer.add(this.backgroundsBack);
     this.middleContainer.add(this.backgroundsMiddle);
-    this.frontContainer.add(this.backgroundsFront);
+    this.frontContainer.add(this.backgroundsFront).setDepth(9999999999999);
 
     this.scene.add.existing(this.backContainer);
     this.scene.add.existing(this.middleContainer);
@@ -220,10 +223,11 @@ export default class MapCreator {
       { x: -this.backSize.width * 2, y: -this.backSize.height * 2 },
       { fixX: 1.1, fixY: 1.1 }
     );
+    
     this.updateContainerPositionRelativeToCamera(
       this.middleContainer,
       this.scene.cameras.main,
-      { x: -this.middleSize.width * 0.5, y: -this.middleSize.height * 1.75 },
+      { x: (this.middleContainer.first as Phaser.GameObjects.Sprite)?.x, y: (this.middleContainer.first as Phaser.GameObjects.Sprite).y },
       { fixX: 2, fixY: 2 }
     );
 
@@ -311,13 +315,13 @@ export default class MapCreator {
           this.scene.physics.add.overlap(
             this.scene.player,
             this.invincible,
-            () => {
+            (a, b: any) => {
               if (!this.player?.invincible) {
                 this.player?.setPlayerInvicinible(true);
-                this.invincible?.setVisible(false);
+                b?.setVisible(false);
                 this.invincibilityTimer = this.scene.time.delayedCall(30000, () => {
                   this.player?.setPlayerInvicinible(false);
-                  this.invincible?.setVisible(true);
+                  b?.setVisible(true);
                 });
               }
             },

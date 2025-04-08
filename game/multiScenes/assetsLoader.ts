@@ -133,6 +133,17 @@ export const loadAssets = {
     assets: [
       // AUDIOS
       ["audio", "planet0LoopMusic", "/game/planeta1/loopMusic.mp3"],
+      //BACKGROUNDS
+      //MIDDLE
+      ["image", "middleCombo", "/game/planeta1/backgrounds/middle/middleCombo.svg"],
+      ["image", "middleCombo2", "/game/planeta1/backgrounds/middle/middleCombo2.svg"],
+      ["image", "middleCombo3", "/game/planeta1/backgrounds/middle/middleCombo3.svg"],
+      ["image", "middleCombo4", "/game/planeta1/backgrounds/middle/middleCombo4.svg"],
+      //FRONT
+      ["image", "frontCombo", "/game/planeta1/backgrounds/front/frontCombo.svg"],
+      ["image", "frontCombo2", "/game/planeta1/backgrounds/front/frontCombo2.svg"],
+      ["image", "frontCombo3", "/game/planeta1/backgrounds/front/frontCombo3.svg"],
+      ["image", "frontCombo4", "/game/planeta1/backgrounds/front/frontCombo4.svg"],
       // SVGs
       [
         "svg",

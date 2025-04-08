@@ -22,6 +22,7 @@ import BetweenScenes, { BetweenScenesStatus } from "./BetweenScenes";
 import { GamePlayDataType } from "./Types";
 import MultiScene from "./MultiScene";
 import Sandbox from "./maps/sandbox/sandbox";
+import subSandbox from "./maps/subLevels/subSandbox";
 import CODES from "../public/game/codigos.json";
 
 interface CodeType {
@@ -40,7 +41,8 @@ export type PossibleMaps =
   | p2Mapa4
   | p3Mapa1
   | p3Mapa2
-  | Sandbox;
+  | Sandbox
+  | subSandbox
 // Scene in class
 export const keyCodesAWSD = {
   w: Phaser.Input.Keyboard.KeyCodes.W,
@@ -478,6 +480,12 @@ class Game extends Phaser.Scene {
         this.player = new Player(this, 0, 0, "character", 2);
 
         this.map = new Sandbox(this, this.player!);
+        this.loopMusic = "planet0LoopMusic";
+        break;
+      case 666:
+        this.player = new Player(this, 0, 0, "character", 2);
+
+        this.map = new subSandbox(this, this.player!);
         this.loopMusic = "planet0LoopMusic";
         break;
       case 0:

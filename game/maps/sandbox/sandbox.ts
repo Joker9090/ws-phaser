@@ -38,7 +38,6 @@ class Sandbox extends MapCreator {
   UIItemScale?: number;
   cristal?: Floor;
   collected: Boolean = false;
-  endPortal?: Floor;
   rotate?: boolean = true;
   constructor(scene: Game, player: Player, data?: GamePlayDataType) {
     super(scene, player, data);

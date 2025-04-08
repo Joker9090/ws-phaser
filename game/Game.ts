@@ -24,6 +24,7 @@ import MultiScene from "./MultiScene";
 import Sandbox from "./maps/sandbox/sandbox";
 import subSandbox from "./maps/subLevels/subSandbox";
 import CODES from "../public/game/codigos.json";
+import Collectable from "./assets/Collectable";
 
 interface CodeType {
   mapa?: number;
@@ -339,7 +340,7 @@ class Game extends Phaser.Scene {
         this.UIClass?.sumCollectable();
         break;
       case "coin":
-        if (this.map?.coin && this.map.endPortal) {
+        /*if (this.map?.coin && this.map.endPortal) {
           this.canNextLevel = true;
           this.canWin = true;
           this.map.endPortal.setTint(0x00ff00);
@@ -347,7 +348,8 @@ class Game extends Phaser.Scene {
           this.map.aura?.setVisible(false);
           this.map.coin.clear(true);
           this.UIClass?.coinCollected();
-        }
+        }*/
+        this.UIClass?.sumCollectable();
         break;
       case "fireball":
         this.lose();
@@ -403,6 +405,14 @@ class Game extends Phaser.Scene {
         this.map.invincible?.setVisible(true)
         if (this.map.invincibilityTimer) {
           this.time.removeEvent(this.map.invincibilityTimer);
+        }
+        if (this.map.invincible) {
+          this.map.invincible.children.each((child) => {
+            if (child instanceof Collectable) {
+              child.turnTo(true);
+            }
+            return true;
+          });
         }
         // this.cameraNormal = config.cameraDirection === "NORMAL" ? true : false
       }

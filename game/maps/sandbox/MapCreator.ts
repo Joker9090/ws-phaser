@@ -304,6 +304,7 @@ export default class MapCreator {
           this.scene.player,
           this.coin,
           (a, b) => {
+            this.scene.touchItem("coin");
             b.destroy();
             this.coinAura?.destroy();
           },

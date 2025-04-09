@@ -5,7 +5,7 @@ import AsteroidGenerator, {
 import Floor, { FloorConfig } from "../../assets/Floor";
 //Collectable
 import Collectable, { CollectableConfig } from "../../assets/Collectable";
-
+import Danger,{DangerConfig} from "../../assets/Danger";
 import LargeFloor, { LargeFloorConfig } from "../../assets/LargeFloor";
 import Game from "../../Game";
 
@@ -460,17 +460,22 @@ this.updateContainerPositionRelativeToCamera(
     const p1 = new LargeFloorIsland(this.scene, p1Config, this.floor);
     //PlatformsRama
     const p2Config: LargeFloorIslandConfig = {
-      textureA: "plataformaNuevaLargaA",
-      textureB: "plataformaNuevaLargaB",
-      textureC: "plataformaNuevaLargaC",
+      //textureA: "plataformaNuevaLargaA",
+      //textureB: "plataformaNuevaLargaB",
+      //textureC: "plataformaNuevaLargaC",
+
+      textureA: "platform_izq",
+      textureB: "platform_center",
+      textureC: "platform_der",
+
       pos: { x: 2940, y: 1500 },
       width: {
-        textureA: 90,
-        textureB: 67,
-        textureC: 115,
+        textureA: 96,
+        textureB: 96,
+        textureC: 96,
       },
-      scale: { width: 0.7, height: 0.7 },
-      height: 127,
+      scale: { width: 1, height: 1 },
+      height: 327,
       large: 40,
       rotated: false,
     };
@@ -583,15 +588,16 @@ this.updateContainerPositionRelativeToCamera(
   }
   const p12 = new Floor(this.scene, p12Config, this.floor).setFlipX(true);
 
-  const boxConfig: FloorConfig = {
-  texture: "Enemy",
+  const boxConfig: DangerConfig = {
+    texture: "Enemy",
     pos: {x: 1500, y: 1740 },
-    fix: 25,
-    scale: { width: 0.7, height: 0.7 },
-    width: 140,
-    height: 50,
+    scale: { width: 1, height: 1 },
+    width: 170,
+    height: 170,
+    attackSpriteSheet: "EnemyAttack",
+    particleSpriteSheet: "EnemyParticles",
   }
-  const box = new Floor(this.scene, boxConfig, this.obstacle).setFlipX(true);
+  const box = new Danger(this.scene, boxConfig, this.obstacle);
   //box.setTint(0xff0000);
     //Portal, Coin and Asteroids
     const portalConfig: FloorConfig = {

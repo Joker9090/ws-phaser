@@ -224,6 +224,18 @@ export const loadAssets = {
         "/game/portal1.png",
         { frameWidth: 100, frameHeight: 150 },
       ],
+      //DANGER
+      ["spritesheet",
+        "EnemyAttack",
+        "/game/planeta1/EnemyAttack.png",
+        { frameWidth: 170, frameHeight: 170 },
+      ],
+      ["spritesheet",
+        "EnemyParticles",
+        "/game/planeta1/EnemyParticles.png",
+        { frameWidth: 170, frameHeight: 170 },
+      ],
+      
       // IMAGES
       ["image", "plataformaNuevaA", "/game/planeta1/platforms/plataformaNuevaA.png"],
       ["image", "plataformaNuevaLargaA", "/game/planeta1/platforms/newPlatA.png"],
@@ -307,6 +319,9 @@ export const loadAssets = {
       ["image", "shield", "game/logo proteccion.png"],
       ["image", "Enemy","game/Enemy.png"],
       ["image", "Enemy2","game/Enemy2.png"],
+      ["image", "platform_center","/game/planeta1/platforms/plataform_center.png"],
+      ["image", "platform_der","/game/planeta1/platforms/plataform_der.png"],
+      ["image", "platform_izq","/game/planeta1/platforms/plataform_izq.png"],
     ],
   },
   GamePlay2: {

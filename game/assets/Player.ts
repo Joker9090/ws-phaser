@@ -12,6 +12,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   playerState: "NORMAL" | "ROTATED" = "NORMAL";
   cameraState: "NORMAL" | "ROTATED" = "NORMAL";
   canTp: boolean = true;
+  isDead: boolean = false;
 
   scene: Game |MultiScene | PreLoadScene;
   gravityAnimSprite?: Phaser.GameObjects.Sprite;

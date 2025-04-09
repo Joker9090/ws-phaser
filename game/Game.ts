@@ -176,15 +176,15 @@ class Game extends Phaser.Scene {
       console.log(
         "moving camera from move",
         position,
-        this.cameras.main.followOffset
+        this.cameras.main?.followOffset
       );
       let newPosition = this.cameraHeight / 2 - 350;
       if (position === "up") newPosition = -newPosition;
-      if (instant) {
+      if (instant && this.cameras.main) {
         this.cameras.main.followOffset.y = newPosition;
       } else {
         this.tweens.add({
-          targets: this.cameras.main.followOffset,
+          targets: this.cameras.main?.followOffset,
           y: newPosition,
           duration: 1000,
           ease: "ease",

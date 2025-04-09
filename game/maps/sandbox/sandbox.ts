@@ -14,6 +14,7 @@ import MagicZone, { ZoneConfig } from "@/game/assets/MagicZone";
 import Teleport from "@/game/assets/Teleport";
 import colors from "@/game/assets/PlatformColors";
 import MapCreator from "./MapCreator";
+import { group } from "console";
 
 
 
@@ -148,6 +149,15 @@ class Sandbox extends MapCreator {
     //     pos: { x: element.pos.x + (index * 300), y: 800 },
     //   }
     // })
+    const otherSceneConf: GamePlayDataType = {
+      level: 7,
+      lifes: this.scene.lifes ? this.scene.lifes : 3,
+      loadKey: ["Postales", "Cinemato1", "Cinemato2"],
+      startingPositionFromOtherScene: {
+        x: 2750,
+        y: 1000,
+      },
+    }
     const mapPlatforms = [
       // platforms
 
@@ -206,20 +216,17 @@ class Sandbox extends MapCreator {
       {...baseCristalConf, pos: { x: this.startingPoint.x + 50, y: 1000 }, group: this.invincible, flipX: true, shield: 'auraAnim'},
       {...baseCristalConf, pos: { x: 3900, y: 1000 }, group: this.invincible, flipX: true, shield: 'auraAnim'},
       {...baseCristalConf, pos: { x: 1700, y: 800 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto'},
+    
+      //portales
+      { type: "subPortal",  x: 2000, y: 800, version: 1, sameScene: false, group: this.teleport, otherSceneConf: otherSceneConf },
+      { type: "finalPortal", pos: { x: 6600, y: 1090 }, texture: "plataformaFinalP1", width: 100, height: 100, group: this.portal }
+    
     ]
 
     this.createPlatforms(mapPlatforms)
     
-    const otherSceneConf: GamePlayDataType = {
-      level: 7,
-      lifes: this.scene.lifes ? this.scene.lifes : 3,
-      loadKey: ["Postales", "Cinemato1", "Cinemato2"],
-      startingPositionFromOtherScene: {
-        x: 2750,
-        y: 1000,
-      },
-    }
-    const teleport_1 = new Teleport(this.scene, { x: 2000, y: 800, version: 1, sameScene: false, group: this.teleport, otherSceneConf: otherSceneConf })
+   
+    // const teleport_1 = new Teleport(this.scene, { x: 2000, y: 800, version: 1, sameScene: false, group: this.teleport, otherSceneConf: otherSceneConf })
  
     this.scene.tweens.add({
       targets: this.coinAura,
@@ -229,14 +236,14 @@ class Sandbox extends MapCreator {
       repeat: -1
     })
 
-    const portalConfig: FloorConfig = {
-      pos: { x: 6600, y: 1090 }, // x: 2400
-      texture: "plataformaFinalP1",
-      // scale: {width: 0.7, height: 0.7},
-      width: 100,
-      height: 100,
-    };
-    const port = new Floor(this.scene, portalConfig, this.portal);
+    // const portalConfig: FloorConfig = {
+    //   pos: { x: 6600, y: 1090 }, // x: 2400
+    //   texture: "plataformaFinalP1",
+    //   // scale: {width: 0.7, height: 0.7},
+    //   width: 100,
+    //   height: 100,
+    // };
+    // const port = new Floor(this.scene, portalConfig, this.portal);
    
     const zoneAConfig: ZoneConfig = {
       x: 2700,

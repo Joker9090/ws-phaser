@@ -174,7 +174,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       key: "auraAnim",
       frames: invincibleAuraFrames,
       frameRate: frameRate,
-      repeat: 0,
+      repeat: -1,
     };
 
     /* player animations */
@@ -267,7 +267,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       console.log("[Player] Invincible")
       this.auraAnimSprite?.setVisible(true).setDepth(1000);
       this.auraAnimSprite?.anims.play("auraAnim");
-      this.auraAnimSprite?.anims.setRepeat(-1);
       this.auraAnimSprite?.on("animationupdate", () => {
         this.auraAnimSprite?.setPosition(this.x, this.y);
       });

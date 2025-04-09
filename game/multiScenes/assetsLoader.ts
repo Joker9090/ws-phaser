@@ -305,6 +305,8 @@ export const loadAssets = {
       ["image", "piedra2", "/game/lvl1/plataformas/plataformaMedio.png"],
       ["image", "piedra3", "/game/lvl1/plataformas/plataformaMedio.png"],
       ["image", "shield", "game/logo proteccion.png"],
+      ["image", "Enemy","game/Enemy.png"],
+      ["image", "Enemy2","game/Enemy2.png"],
     ],
   },
   GamePlay2: {

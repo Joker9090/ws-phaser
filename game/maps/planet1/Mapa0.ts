@@ -36,7 +36,8 @@ class Mapa0 extends MapCreator {
   // normales
   floor?: Phaser.Physics.Arcade.Group;
 //Fireball
-  fireGroup?: Phaser.Physics.Arcade.Group;
+  firegroup?: Phaser.Physics.Arcade.Group;
+  obstacle?: Phaser.Physics.Arcade.Group;
 
 
   coin?: Phaser.Physics.Arcade.Group;
@@ -362,10 +363,10 @@ this.updateContainerPositionRelativeToCamera(
         this.scene
         );
       }
-      if (this.fireGroup)
+      if (this.firegroup)
       this.scene.physics.add.overlap(
         this.scene.player,
-        this.fireGroup,
+        this.firegroup,
         () => {
           this.scene.touchItem("fireball");
           this.scene.player?.setVelocity(0);
@@ -396,12 +397,13 @@ this.updateContainerPositionRelativeToCamera(
     }
   }*/
 
-  createMap(data: { level: number; lifes: number }) {
+ createMap(data: { level: number; lifes: number }) {
+   this.amountLifes = data.lifes;
+    this.obstacle = this.scene.physics.add.group({ allowGravity: false });
     this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
     this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });
     this.floor = this.scene.physics.add.group({ allowGravity: false });
-    this.fireGroup = this.scene.physics.add.group({ allowGravity: false });
-    this.amountLifes = data.lifes;
+    this.firegroup = this.scene.physics.add.group({ allowGravity: false });
     this.coin = this.scene.physics.add.group({ allowGravity: false });
     this.invincible = this.scene.physics.add.group({ allowGravity: false });
     this.aura = this.scene.physics.add.group({
@@ -582,15 +584,15 @@ this.updateContainerPositionRelativeToCamera(
   const p12 = new Floor(this.scene, p12Config, this.floor).setFlipX(true);
 
   const boxConfig: FloorConfig = {
-  texture: "plataformaNuevaA",
+  texture: "Enemy",
     pos: {x: 1500, y: 1740 },
     fix: 25,
     scale: { width: 0.7, height: 0.7 },
     width: 140,
     height: 50,
   }
-  const box = new Floor(this.scene, boxConfig, this.floor).setFlipX(true);
-  box.setTint(0xff0000);
+  const box = new Floor(this.scene, boxConfig, this.obstacle).setFlipX(true);
+  //box.setTint(0xff0000);
     //Portal, Coin and Asteroids
     const portalConfig: FloorConfig = {
       pos: { x: 4640, y: 1390 }, // x: 2400
@@ -708,7 +710,7 @@ this.updateContainerPositionRelativeToCamera(
       },
       frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
     };
-    const fireball1 = new Floor( this.scene, fireball1Config, this.fireGroup).setScale(0.5);
+    const fireball1 = new Floor( this.scene, fireball1Config, this.firegroup).setScale(0.5);
 
     const fireball2Config: FloorConfig = {
       spriteSheet: "meteorito",
@@ -723,7 +725,7 @@ this.updateContainerPositionRelativeToCamera(
       },
       frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
     };
-    const fireball2 = new Floor( this.scene, fireball2Config, this.fireGroup).setScale(0.5);
+    const fireball2 = new Floor( this.scene, fireball2Config, this.firegroup).setScale(0.5);
 
 
     const cloudsGroup = this.scene.add.group();
@@ -775,7 +777,8 @@ this.updateContainerPositionRelativeToCamera(
         this.movingFloor.getChildren(),
         this.movingFloorRot.getChildren(),
         this.floor.getChildren(),
-        this.fireGroup.getChildren(),
+        this.firegroup.getChildren(),
+        this.obstacle.getChildren(),
         this.coin.getChildren(),
         this.portal.getChildren(),
         this.aura.getChildren(),

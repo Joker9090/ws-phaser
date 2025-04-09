@@ -132,6 +132,7 @@ export default class MapCreator {
   movingFloorRot?: Phaser.Physics.Arcade.Group;
   flyingPiso?: Phaser.Physics.Arcade.Group;
   firegroup?: Phaser.Physics.Arcade.Group;
+  obstacle?: Phaser.Physics.Arcade.Group;
   invincibilityTimer?: Time.TimerEvent
   endPortal?: Phaser.Physics.Arcade.Group;
   ratioReference: { width: number; height: number } = { width: 1920, height: 1080 };
@@ -348,6 +349,18 @@ export default class MapCreator {
               this.scene.touchItem("fireball");
               this.scene.player?.setVelocity(0);
             }
+          },
+          () => true,
+          this.scene
+        );
+      }
+      if (this.obstacle) {
+        this.scene.physics.add.overlap(
+          this.scene.player,
+          this.obstacle,
+          () => {
+            this.scene.touchItem("fireball");
+            this.scene.player?.setVelocity(0);
           },
           () => true,
           this.scene

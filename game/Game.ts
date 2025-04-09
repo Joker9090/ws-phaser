@@ -369,10 +369,13 @@ class Game extends Phaser.Scene {
         if (this.lifes === 0) {
           this.cameraNormal = true;
           this.checkPoint === 0;
-          const multiScene = new MultiScene("Game", {
-            level: this.levelIs,
-            lifes: this.lifes ? this.lifes : 3,
-          });
+          var multiScene= new MultiScene();
+          if(this.levelIs != 0){
+            multiScene = new MultiScene("Game", {
+              level: this.levelIs,
+              lifes: this.lifes ? this.lifes : 3,
+            });
+          }
           console.log("[Game] lose(): "+ this.levelIs+" , new lifes"+multiScene.sceneData?.lifes);
           const scene = this.scene.add("MultiScene", multiScene, true);
           this.scene.start("MultiScene").bringToTop("MultiScene");

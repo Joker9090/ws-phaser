@@ -134,6 +134,11 @@ export const loadAssets = {
       // AUDIOS
       ["audio", "planet0LoopMusic", "/game/planeta1/loopMusic.mp3"],
       //BACKGROUNDS
+      //FAR
+      ["image", "gradient", "/game/planeta1/backgrounds/far/gradient.svg"],
+      ["image", "stars", "/game/planeta1/backgrounds/far/stars.svg"],
+      ["image", "curvedVector", "/game/planeta1/backgrounds/far/curvedVector.svg"],
+      ["image", "curvedVector2", "/game/planeta1/backgrounds/far/curvedVector2.svg"],
       //MIDDLE
       ["image", "middleCombo", "/game/planeta1/backgrounds/middle/middleCombo.svg"],
       ["image", "middleCombo2", "/game/planeta1/backgrounds/middle/middleCombo2.svg"],

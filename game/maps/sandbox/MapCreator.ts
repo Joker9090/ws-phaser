@@ -135,6 +135,7 @@ export default class MapCreator {
   invincibilityTimer?: Time.TimerEvent
   endPortal?: Phaser.Physics.Arcade.Group;
   ratioReference: { width: number; height: number } = { width: 1920, height: 1080 };
+  farBackgroundReference: { width: number; height: number } = { width: 3840, height: 2160 };
 
   constructor(scene: Game, player: Player, data?: GamePlayDataType) {
     this.scene = scene;

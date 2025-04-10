@@ -33,6 +33,7 @@ class subSandbox extends MapCreator {
       createMap(data: { level: number; lifes: number }) {
         this.mapContainer = this.scene.add.container();
         const { width, height } = this.ratioReference;
+        const { width: farWidth, height: farHeight } = this.farBackgroundReference;
         const downScaledMiddleWidth = width * 0.7;
         const downScaledFrontWidth = width * 0.5;
     
@@ -40,12 +41,12 @@ class subSandbox extends MapCreator {
         this.backSize = { width: backImage.width, height: backImage.height }
     
         this.backgroundsBack = [
-          this.scene.add.image(0, this.worldSize.height, "background0P1").setOrigin(0, 1).setScale(1.3),
-          this.scene.add.image(0, this.worldSize.height, "backgroundStars").setOrigin(0, 1).setScale(1.3),
-          this.scene.add.image(0 + backImage.width, this.worldSize.height, "background0P1").setOrigin(0, 1),
-          this.scene.add.image(0 + backImage.width, this.worldSize.height, "backgroundStars").setOrigin(0, 1),
-          this.scene.add.image(0 + (backImage.width * 2), this.worldSize.height, "background0P1").setOrigin(0, 1),
-          this.scene.add.image(0 + (backImage.width * 2), this.worldSize.height, "backgroundStars").setOrigin(0, 1),
+          this.scene.add.image(-this.startingPoint.x, this.worldSize.height, "gradient").setOrigin(0, 1),
+          this.scene.add.image(-this.startingPoint.x + farWidth, this.worldSize.height, "gradient").setOrigin(0, 1),
+          this.scene.add.image(-this.startingPoint.x, this.worldSize.height, "stars").setOrigin(0, 1),
+          this.scene.add.image(-this.startingPoint.x + farWidth, this.worldSize.height, "stars").setOrigin(0, 1),
+          this.scene.add.image(-this.startingPoint.x, this.worldSize.height - 200, "curvedVector").setOrigin(0, 1),
+          this.scene.add.image(-this.startingPoint.x + farWidth, this.worldSize.height - 200, "curvedVector2").setOrigin(0, 1),
         ]
     
         this.backgroundsMiddle = [
@@ -58,12 +59,12 @@ class subSandbox extends MapCreator {
         ]
     
         this.backgroundsFront = [
-            this.scene.add.image(-this.startingPoint.x, this.startingPoint.y + 550, "frontCombo").setOrigin(0, 1).setScale(0.5),
-            this.scene.add.image(-this.startingPoint.x + downScaledFrontWidth, this.startingPoint.y + 550, "frontCombo2").setOrigin(0, 1).setScale(0.5),
-            this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 2), this.startingPoint.y + 550, "frontCombo3").setOrigin(0, 1).setScale(0.5),
-            this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 3), this.startingPoint.y + 550, "frontCombo4").setOrigin(0, 1).setScale(0.5),
-            this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 4), this.startingPoint.y + 550, "frontCombo2").setOrigin(0, 1).setScale(0.5),
-            this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 5), this.startingPoint.y + 550, "frontCombo2").setOrigin(0, 1).setScale(0.5),
+            this.scene.add.image(-this.startingPoint.x, this.startingPoint.y + 500, "frontCombo").setOrigin(0, 1).setScale(0.5),
+            this.scene.add.image(-this.startingPoint.x + downScaledFrontWidth, this.startingPoint.y + 500, "frontCombo2").setOrigin(0, 1).setScale(0.5),
+            this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 2), this.startingPoint.y + 500, "frontCombo3").setOrigin(0, 1).setScale(0.5),
+            this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 3), this.startingPoint.y + 500, "frontCombo4").setOrigin(0, 1).setScale(0.5),
+            this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 4), this.startingPoint.y + 500, "frontCombo2").setOrigin(0, 1).setScale(0.5),
+            this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 5), this.startingPoint.y + 500, "frontCombo2").setOrigin(0, 1).setScale(0.5),
         ]
     
         this.createBackgrounds(this.backgroundsBack, this.backgroundsMiddle, this.backgroundsFront);
@@ -74,7 +75,6 @@ class subSandbox extends MapCreator {
         this.scene.UICamera?.ignore(this.frontContainer);
     
         this.scene.player?.setDepth(9999999999999);
-        
     
         const basePlatformsConfig = {
           withTextureToAbove: true,

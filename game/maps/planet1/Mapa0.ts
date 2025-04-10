@@ -443,10 +443,27 @@ this.updateContainerPositionRelativeToCamera(
     });*/
 
     const p1Config: LargeFloorIslandConfig = {
+      textureA: "platform_izq",
+      textureB: "platform_center",
+      textureC: "platform_der",
+      pos: { x: 200, y: 1900 },
+      width: {
+        textureA: 96,
+        textureB: 96,
+        textureC: 96,
+      },
+      //scale: { width: 0.7, height: 0.7 },
+      height: 327,
+      large: 21,
+      rotated: false,
+    };
+    const p1 = new LargeFloorIsland(this.scene, p1Config, this.floor);
+    //PlatformsRama
+    const p2Config: LargeFloorIslandConfig = {
       textureA: "plataformaNuevaLargaA",
       textureB: "plataformaNuevaLargaB",
       textureC: "plataformaNuevaLargaC",
-      pos: { x: 200, y: 1800 },
+      pos: { x: 2940, y: 1500 },
       width: {
         textureA: 90,
         textureB: 67,
@@ -454,28 +471,6 @@ this.updateContainerPositionRelativeToCamera(
       },
       scale: { width: 0.7, height: 0.7 },
       height: 127,
-      large: 45,
-      rotated: false,
-    };
-    const p1 = new LargeFloorIsland(this.scene, p1Config, this.floor);
-    //PlatformsRama
-    const p2Config: LargeFloorIslandConfig = {
-      //textureA: "plataformaNuevaLargaA",
-      //textureB: "plataformaNuevaLargaB",
-      //textureC: "plataformaNuevaLargaC",
-
-      textureA: "platform_izq",
-      textureB: "platform_center",
-      textureC: "platform_der",
-
-      pos: { x: 2940, y: 1500 },
-      width: {
-        textureA: 96,
-        textureB: 96,
-        textureC: 96,
-      },
-      scale: { width: 1, height: 1 },
-      height: 327,
       large: 40,
       rotated: false,
     };
@@ -596,6 +591,12 @@ this.updateContainerPositionRelativeToCamera(
     height: 170,
     attackSpriteSheet: "EnemyAttack",
     particleSpriteSheet: "EnemyParticles",
+    animation:{
+      xAxis:{
+        xDistance:100,
+        xVel:20,
+      }
+    }
   }
   const box = new Danger(this.scene, boxConfig, this.obstacle);
   //box.setTint(0xff0000);

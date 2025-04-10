@@ -36,7 +36,13 @@ export type DangerConfig = {
 class Danger extends Phaser.Physics.Arcade.Sprite {
     scene: Game;
     group: Phaser.Physics.Arcade.Group;
-    animState: "Idle"|"Attack" ="Idle";
+    animState: {
+      x: 'start' | 'reverse'
+      y: 'start' | 'reverse'
+    } = {
+      x: 'start',
+      y: 'start'
+    }
     particleSprite?: Phaser.GameObjects.Sprite;
     config: DangerConfig;
     constructor( scene: Game, config: DangerConfig, group: Phaser.Physics.Arcade.Group){
@@ -69,6 +75,14 @@ class Danger extends Phaser.Physics.Arcade.Sprite {
             this.anims.create(portAnimConfig);
             this.setTexture(config.attackSpriteSheet);
             this.setFrame(0);
+
+            this.on("animationcomplete", () => {
+                console.log("[Danger] Attack animation complete");
+                this.scene.player!.isDead = false;
+                this.scene.touchItem("fireball");
+                this.setTexture(this.config.attackSpriteSheet!);
+                this.setFrame(0);
+            });
         }
         if (config.particleSpriteSheet) {
             this.particleSprite = scene.add.sprite(config.pos.x, config.pos.y, config.particleSpriteSheet);
@@ -86,18 +100,67 @@ class Danger extends Phaser.Physics.Arcade.Sprite {
             }
             this.particleSprite.anims.create(partAnimConfig);
             this.particleSprite.anims.play("particleSpriteSheet");
+            this.particleSprite.on("animationupdate",() => {
+                this.particleSprite!.setPosition(this.x, this.y);
+            })
+        }
+        if (config.animation) {
+          if (config.animation.xAxis) {
+            this.setVelocityX(config.animation.xAxis.xVel);
+          }
+          if (config.animation.yAxis) {
+            this.setVelocityY(config.animation.yAxis.yVel);
+          }
+          
+          // on scene update run animation with config
+          scene.events.on("update", () => {
+            this.IdleAnimation(config)
+          })
+          // remove listener if scene is stop
+          scene.events.on("shutdown", () => {
+            scene.events.off("update");
+          })
         }
     }
     Attack(){
         if(this.config.attackSpriteSheet && this.scene.player?.isDead===false){
-            this.scene.player!.isDead=true;
+            console.log("[Danger] Attack animation started");
+            this.scene.player!.isDead = true;
             this.anims.play("Attack",true);
-            this.on("animationcomplete", () => {
+            /*this.on("animationcomplete", () => {
+                console.log("[Danger] Attack animation complete");
+                this.scene.player!.isDead = false;
                 this.scene.touchItem("fireball");
                 this.setTexture(this.config.attackSpriteSheet!);
                 this.setFrame(0);
-                this.scene.player!.isDead=false;
-            });
+            });*/
+        }
+    }
+    IdleAnimation = (config: DangerConfig) => {
+        if (config.animation) {
+          if (config.animation.xAxis) {
+            if (this.x >= config.pos.x + config.animation.xAxis.xDistance / 2 && this.animState.x === 'start') {
+              this.setVelocityX(-config.animation.xAxis.xVel);
+              if (config.animation.yAxis) {
+                this.setVelocityY(-config.animation.yAxis.yVel);
+              }
+              this.animState.x = 'reverse'
+            } else if (this.x <= config.pos.x - config.animation.xAxis.xDistance / 2 && this.animState.x === 'reverse') {
+              this.setVelocityX(config.animation.xAxis.xVel);
+              if (config.animation.yAxis) {
+                this.setVelocityY(config.animation.yAxis.yVel);
+              }
+              this.animState.x = 'start'
+            } 
+          } else if (config.animation.yAxis) {
+            if (this.y >= config.pos.y + config.animation.yAxis.yDistance / 2 && this.animState.y === 'start') {
+              this.setVelocityY(-config.animation.yAxis.yVel);
+              this.animState.y = 'reverse';
+            } else if (this.y <= config.pos.y - config.animation.yAxis.yDistance / 2 && this.animState.y === 'reverse') {
+              this.setVelocityY(config.animation.yAxis.yVel);
+              this.animState.y = 'start';
+            }
+          }
         }
     }
 }

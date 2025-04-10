@@ -106,6 +106,15 @@ class subSandbox extends MapCreator {
           fix: 10,
         }
 
+        const baseDangerConf = {
+          type: "danger",
+          texture: "Enemy",
+          width: 170,
+          height: 170,
+          attackSpriteSheet: "EnemyAttack",
+          particleSpriteSheet: "EnemyParticles",
+        }
+
         const otherSceneConf: GamePlayDataType =  {
           level: 999,
           lifes: this.scene.lifes ? this.scene.lifes : 3,
@@ -151,9 +160,13 @@ class subSandbox extends MapCreator {
           //portal
           { type: "subPortal",  x: 3600, y: 200, version: 1, sameScene: false, group: this.teleport, otherSceneConf: otherSceneConf },
 
-          //meteorites
-
-    
+          //danger
+          { ...baseDangerConf, pos: { x: 1800, y: 600 }, group: this.obstacle, animation:{
+            yAxis:{
+              yDistance: 200,
+              yVel: 50,
+            }
+          }},
           // collectables
           // {...baseCristalConf, pos: { x: 500, y: 300 }, group: this.invincible, flipX: true, colors: [0xff0000]},
           //  {...baseCristalConf, pos: { x: 3900, y: 1000 }, group: this.invincible, flipX: true, colors: [0xff0000]},

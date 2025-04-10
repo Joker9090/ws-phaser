@@ -95,6 +95,10 @@ class DialogueManager {
   }
 
   createContainer(text: string, config?: DialogConfig) {
+    // Destroy the previous container if it exists
+    if (this.container) {
+      this.container.destroy();
+    }
     this.container = this.scene.add.container();
 
     this.textDisplayed = this.scene.add.text(0, 8, "", {
@@ -274,8 +278,26 @@ class DialogueManager {
   }
 
   stop() {
+    console.log("resume", this.state, this.activeAudio);
+
     this.state = "STOP";
-    this.stopAudio();
+    // this.stopAudio();
+    this.activeAudio?.pause();
+    this.activeAudio?.stop();
+    // this.activeAudio?.destroy();
+    // this.textDisplayed?.setText(""); // Reset the displayed text
+  }
+  resume() {
+      console.log("resume", this.state);
+
+      if (this.state === "STOP") {
+          this.resumeAudio(); // Resume the audio if paused
+          this.state = "PLAY";
+
+          const currentText = this.textDisplayed?.text || ""; // Get the current displayed text
+          const remainingText = this.texts[this.textCounter]?.slice(currentText.length); // Calculate remaining text
+          this.textBuilder(remainingText ?? '', this.timeBetweenLetters); // Continue building the text
+      }
   }
 
   destroyContainer() {
@@ -428,9 +450,16 @@ class DialogueManager {
   stopAudio() {
     if (this.activeAudio) {
       this.activeAudio.stop();
-      this.activeAudio.destroy;
+      // this.activeAudio.destroy;
     }
   }
+
+  resumeAudio() {
+      if (this.activeAudio) {
+        this.activeAudio.resume();
+        // this.activeAudio.destroy;
+      }
+    }
 
   playAudio(name?: string, customVolume: number = 1) {
     if (name) {

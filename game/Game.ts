@@ -23,6 +23,7 @@ import { GamePlayDataType } from "./Types";
 import MultiScene from "./MultiScene";
 import Sandbox from "./maps/sandbox/sandbox";
 import subSandbox from "./maps/subLevels/subSandbox";
+import p1Map1 from "./maps/planet1/Map1";
 import CODES from "../public/game/codigos.json";
 import Collectable from "./assets/Collectable";
 
@@ -43,7 +44,7 @@ export type PossibleMaps =
   | p3Mapa1
   | p3Mapa2
   | Sandbox
-  | subSandbox
+  | p1Map1;
 // Scene in class
 export const keyCodesAWSD = {
   w: Phaser.Input.Keyboard.KeyCodes.W,
@@ -512,7 +513,7 @@ class Game extends Phaser.Scene {
       case 1:
         this.player = new Player(this, 0, 0, "character", 2);
 
-        this.map = new p1Mapa1(this, this.player!);
+        this.map = new p1Map1(this, this.player!);
         this.loopMusic = "planet0LoopMusic";
         if (this.masterManagerScene) {
           this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1"];
@@ -684,7 +685,9 @@ class Game extends Phaser.Scene {
     );
     this.UICamera?.ignore(this.player);
     this.player.gravityAnimSprite && this.UICamera?.ignore(this.player.gravityAnimSprite);
-
+    this.player.tankAnimSprite && this.UICamera?.ignore(this.player.tankAnimSprite);
+    this.player.auraAnimSprite && this.UICamera?.ignore(this.player.auraAnimSprite);
+      
     this.UIClass = new UIClass(this, this.levelIs, this.lifes, this.timeLevel);
 
     /* CONTROLS */

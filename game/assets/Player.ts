@@ -214,12 +214,14 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.setDepth(999);
    
 
-    if(this.scene instanceof Game) this.scene.UICamera?.ignore(this)
-    this.gravityAnimSprite = this.scene.add.sprite(this.x, this.y, "gravityAnim", 0).setVisible(false).setDepth(999);
-    if(this.scene instanceof Game)  this.scene.UICamera?.ignore(this.gravityAnimSprite)
-      
-    if (this.scene instanceof Game) this.scene.UICamera?.ignore(this.tankAnimSprite)
-    if (this.scene instanceof Game) this.scene.UICamera?.ignore(this.auraAnimSprite)
+    if(this.scene instanceof Game) {
+      this.scene.UICamera?.ignore(this)
+      this.gravityAnimSprite = this.scene.add.sprite(this.x, this.y, "gravityAnim", 0).setVisible(false).setDepth(999);
+      this.scene.UICamera?.ignore(this.gravityAnimSprite)
+      this.scene.UICamera?.ignore(this.tankAnimSprite)
+      this.scene.UICamera?.ignore(this.auraAnimSprite)
+    }
+   
     // this.scene.add.rectangle(this.x, this.y, 100, 100, 0xffffff).setVisible(true)
     /* player Collission with end of map */
     this.setCollideWorldBounds(true);

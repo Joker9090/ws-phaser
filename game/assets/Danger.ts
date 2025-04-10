@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import Game from "../Game";
+import { TURBO_TRACE_DEFAULT_MEMORY_LIMIT } from "next/dist/shared/lib/constants";
 
 export type DangerTween =
   | Phaser.Tweens.Tween
@@ -28,8 +29,17 @@ export type DangerConfig = {
     width: number;
     height: number;
   };
+  attackBurst?:{
+    xAxis?: {
+      xDistance: number;
+      xVel: number
+    }
+    yAxis?: {
+      yDistance: number;
+      yVel: number
+    }
+  };
   attackSpriteSheet?: string;
-
   particleSpriteSheet?: string;
   particleFrames?: number[]
 };
@@ -37,7 +47,7 @@ class Danger extends Phaser.Physics.Arcade.Sprite {
     scene: Game;
     group: Phaser.Physics.Arcade.Group;
     animState: {
-      x: 'start' | 'reverse'
+      x: 'start' | 'reverse',
       y: 'start' | 'reverse'
     } = {
       x: 'start',
@@ -45,6 +55,14 @@ class Danger extends Phaser.Physics.Arcade.Sprite {
     }
     particleSprite?: Phaser.GameObjects.Sprite;
     config: DangerConfig;
+    isIdle:boolean=true;
+    burstAnimState: {
+      x: 'start' | 'reverse',
+      y: 'start' | 'reverse'
+    } = {
+      x: 'start',
+      y: 'start'
+    }
     constructor( scene: Game, config: DangerConfig, group: Phaser.Physics.Arcade.Group){
         super(scene, config.pos.x, config.pos.y, config.texture, 0);
         this.scene = scene;
@@ -104,6 +122,7 @@ class Danger extends Phaser.Physics.Arcade.Sprite {
                 this.particleSprite!.setPosition(this.x, this.y);
             })
         }
+        
         if (config.animation) {
           if (config.animation.xAxis) {
             this.setVelocityX(config.animation.xAxis.xVel);
@@ -112,28 +131,66 @@ class Danger extends Phaser.Physics.Arcade.Sprite {
             this.setVelocityY(config.animation.yAxis.yVel);
           }
           
-          // on scene update run animation with config
           scene.events.on("update", () => {
-            this.IdleAnimation(config)
+            if(this.isIdle){
+              this.IdleAnimation(config)
+            }
           })
-          // remove listener if scene is stop
           scene.events.on("shutdown", () => {
             scene.events.off("update");
           })
+
+          if(config.attackBurst){
+            scene.events.on("update", () => {
+              if(!this.isIdle){
+                this.AttackBurstAnimation(config)
+              }
+            })
+            scene.events.on("shutdown", () => {
+              scene.events.off("update");
+            })
+            this.startInterruption();
+          }
         }
     }
+    startInterruption() {
+      const randomTime1 = Phaser.Math.Between(2000, 5000); 
+      this.scene.time.delayedCall(randomTime1, () => {
+        this.interruptIdleAnimation();
+      });
+    }
+    interruptIdleAnimation() {
+      if (this.isIdle) {
+        this.isIdle = false;
+        if (this.config.attackBurst?.xAxis) {
+            this.setVelocityX(this.config.attackBurst.xAxis.xVel);
+          }
+        if (this.config.attackBurst?.yAxis) {
+          this.setVelocityY(this.config.attackBurst.yAxis.yVel);
+        }
+        console.log("[Danger] Interrupting IdleAnimation");
+        const randomTime2 = Phaser.Math.Between(2000, 5000);
+        this.scene.time.delayedCall(randomTime2, () => {
+          this.resumeIdleAnimation();
+        });
+    } 
+  }
+  resumeIdleAnimation() {
+    console.log("[Danger] Resuming IdleAnimation");
+    this.isIdle = true;
+    if (this.config.animation?.xAxis) {
+      this.setVelocityX(this.config.animation.xAxis.xVel);
+    }
+    if (this.config.animation?.yAxis) {
+      this.setVelocityY(this.config.animation.yAxis.yVel);
+    }
+    this.startInterruption();
+  }
     Attack(){
         if(this.config.attackSpriteSheet && this.scene.player?.isDead===false){
-            console.log("[Danger] Attack animation started");
-            this.scene.player!.isDead = true;
-            this.anims.play("Attack",true);
-            /*this.on("animationcomplete", () => {
-                console.log("[Danger] Attack animation complete");
-                this.scene.player!.isDead = false;
-                this.scene.touchItem("fireball");
-                this.setTexture(this.config.attackSpriteSheet!);
-                this.setFrame(0);
-            });*/
+          console.log("[Danger] Attack animation started");
+          this.scene.player!.isDead = true;
+          this.anims.play("Attack",true);
         }
     }
     IdleAnimation = (config: DangerConfig) => {
@@ -159,6 +216,33 @@ class Danger extends Phaser.Physics.Arcade.Sprite {
             } else if (this.y <= config.pos.y - config.animation.yAxis.yDistance / 2 && this.animState.y === 'reverse') {
               this.setVelocityY(config.animation.yAxis.yVel);
               this.animState.y = 'start';
+            }
+          }
+        }
+    }
+    AttackBurstAnimation = (config: DangerConfig) => {
+        if (config.attackBurst) {
+          if (config.attackBurst.xAxis) {
+            if (this.x >= config.pos.x + config.attackBurst.xAxis.xDistance / 2 && this.burstAnimState.x === 'start') {
+              this.setVelocityX(-config.attackBurst.xAxis.xVel);
+              if (config.attackBurst.yAxis) {
+                this.setVelocityY(-config.attackBurst.yAxis.yVel);
+              }
+              this.burstAnimState.x = 'reverse'
+            } else if (this.x <= config.pos.x - config.attackBurst.xAxis.xDistance / 2 && this.burstAnimState.x === 'reverse') {
+              this.setVelocityX(config.attackBurst.xAxis.xVel);
+              if (config.attackBurst.yAxis) {
+                this.setVelocityY(config.attackBurst.yAxis.yVel);
+              }
+              this.burstAnimState.x = 'start'
+            } 
+          } else if (config.attackBurst.yAxis) {
+            if (this.y >= config.pos.y + config.attackBurst.yAxis.yDistance / 2 && this.burstAnimState.y === 'start') {
+              this.setVelocityY(-config.attackBurst.yAxis.yVel);
+              this.burstAnimState.y = 'reverse';
+            } else if (this.y <= config.pos.y - config.attackBurst.yAxis.yDistance / 2 && this.burstAnimState.y === 'reverse') {
+              this.setVelocityY(config.attackBurst.yAxis.yVel);
+              this.burstAnimState.y = 'start';
             }
           }
         }

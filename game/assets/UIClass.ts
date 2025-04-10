@@ -138,8 +138,10 @@ export default class UIClass {
   resizeElements(){
     if(window.innerWidth < 768){
       this.settings?.setPosition(window.innerWidth - 50, 70)
-    }else{
+    }
+    else{
       this.settings?.setPosition(window.innerWidth - 70, 70)
+      
     }
   }
 
@@ -149,14 +151,24 @@ export default class UIClass {
         if (child instanceof containerSettings) {
           child.crossPress()
           this.settingsModal = undefined
+        }else if(child instanceof UI){
+          child.setVisible(true)
         }
       })
+      this.collText?.setVisible(true)
       this.settingsVisible = false
     } else {
       this.settingsModal = new containerSettings(this.scene, { x: window.innerWidth / 2, y: window.innerHeight / 2, dinamicPosition:true }, undefined, () => { this.settingsVisible = !this.settingsVisible }, this.settings)
       this.masterManager.playSound('buttonSound', false)
       this.masterManager.pauseGame()
       this.settings?.setVisible(false)
+      this.container.each((child: any) => {
+        if(child  instanceof UI){ {
+            child.setVisible(false)
+          }
+        } 
+      })
+      this.collText?.setVisible(false)
       this.container.add(this.settingsModal)
       this.settingsVisible = true
     }

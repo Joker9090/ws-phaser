@@ -596,7 +596,8 @@ this.updateContainerPositionRelativeToCamera(
         xDistance:100,
         xVel:20,
       }
-    }
+    },
+    
   }
   const box = new Danger(this.scene, boxConfig, this.obstacle);
   //box.setTint(0xff0000);
@@ -610,7 +611,6 @@ this.updateContainerPositionRelativeToCamera(
     };
     const port = new Floor(this.scene, portalConfig, this.portal).setDepth(99);
    
-   //TEST COLLECTABLES
 
     const coinConfig: CollectableConfig = {
       texture: "cristal3",

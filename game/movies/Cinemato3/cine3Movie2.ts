@@ -96,19 +96,17 @@ class cine3Movie2 {
     const part1 = (job: TickerJob) => {
       this.dialogue = new DialogueManager(
         this.cine,
-        [""],
-        // ["oh no... you have to be kidding me..."],
+        ["oh no... you have to be kidding me..."],
         [""],
         [
           {
             delay: 1500,
-            // withTapping: {
-            //   audios: ["key01", "key01", "key02"],
-            //   count: 18,
-            //   delay: 180,
-            // },
-            // keepAlive: 1500,
-            keepAlive: 4000,
+            withTapping: {
+              audios: ["key01", "key01", "key02"],
+              count: 18,
+              delay: 180,
+            },
+            keepAlive: 1500,
             position: {
               width: 700,
             },

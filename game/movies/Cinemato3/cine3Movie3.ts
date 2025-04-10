@@ -127,8 +127,8 @@ class cine3Movie3 {
     const part1 = (job: TickerJob) => {
       this.dialogue = new DialogueManager(
         this.cine,
-        [""],
-        // ["I can't wait to leave this planet..."],
+        
+        ["I can't wait to leave this planet..."],
         [""],
         [
           {
@@ -138,7 +138,7 @@ class cine3Movie3 {
               count: 18,
               delay: 180,
             },
-            keepAlive: 4500,
+            keepAlive: 1500,
             position: {
               width: 700,
             },

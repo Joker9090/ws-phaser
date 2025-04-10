@@ -155,14 +155,14 @@ class DialogueManager {
     );
     graphics.setAlpha(0);
     //tween to show the text
-    this.scene.tweens.add({
-      targets: graphics,
-      alpha: 1,
-      duration: 350,
-      ease: "Linear",
-      repeat: 0,
-      yoyo: false,
-    });
+    // this.scene.tweens.add({
+    //   targets: graphics,
+    //   alpha: 1,
+    //   duration: 350,
+    //   ease: "Linear",
+    //   repeat: 0,
+    //   yoyo: false,
+    // });
 
     // Use the rounded rectangle as a mask for the text
 

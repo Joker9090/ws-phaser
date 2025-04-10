@@ -102,17 +102,18 @@ class cine3Movie5 {
     const part1 = (job: TickerJob) => {
       this.dialogue = new DialogueManager(
         this.cine,
-        ["I've never seen something like this..."],
+        [""],
+        // ["I've never seen something like this..."],
         [""],
         [
           {
             delay: 1500,
-            withTapping: {
-              audios: ["key01", "key01", "key02"],
-              count: 24,
-              delay: 180,
-            },
-            keepAlive: 1500,
+            // withTapping: {
+            //   audios: ["key01", "key01", "key02"],
+            //   count: 24,
+            //   delay: 180,
+            // },
+            keepAlive: 4500,
             position: {
               width: 750,
             },

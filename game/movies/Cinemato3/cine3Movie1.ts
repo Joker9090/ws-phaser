@@ -134,7 +134,8 @@ class cine3Movie1 {
     const part1 = (job: TickerJob) => {
       this.dialogue = new DialogueManager(
         this.cine,
-        ["well, this should be enough for now"],
+        [""],
+        // ["well, this should be enough for now"],
         [""],
         [
           {
@@ -144,7 +145,8 @@ class cine3Movie1 {
               count: 14,
               delay: 180,
             },
-            keepAlive: 1500,
+            keepAlive: 4000,
+            // keepAlive: 1500,
             position: {
               width: 700,
             },

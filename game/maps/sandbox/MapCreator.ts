@@ -20,7 +20,9 @@ export type globalPlatformsConfigType = {
 };
 
 export type mapFloorConfig = {
-  pos: { x: number; y: number };
+  pos?: { x: number; y: number };
+  x?:number,
+  y?:number,
   rotate?: boolean;
   flipY?: boolean;
   group?: Phaser.Physics.Arcade.Group;

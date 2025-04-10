@@ -109,6 +109,25 @@ class CinematographyModular extends Phaser.Scene {
     } else {
     }
 
+
+
+      this.events.addListener("visibilitychange", () => {
+        if (document.visibilityState === "hidden") {
+          getMasterManagerScene.pauseCinemato(this.playingCine, this.playingCine.timeEvent)
+        } else {
+          // this.masterManagerScene?.resumeGame();
+        }
+      })
+
+      window.addEventListener("blur", () => {
+        // this.masterManagerScene?.pauseGame();
+      });
+    
+      window.addEventListener("focus", () => {
+          // this.masterManagerScene?.resumeGame();
+      });
+      
+
     switch (keyname) {
       case "cine_intro_1":
         this.playingCine = new cineIntro1(this);

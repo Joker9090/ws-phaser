@@ -223,7 +223,7 @@ class Sandbox extends MapCreator {
     
       //portales
       { type: "subPortal",  x: 2000, y: 800, version: 1, sameScene: false, group: this.teleport, otherSceneConf: otherSceneConf },
-      { type: "finalPortal", pos: { x: 6600, y: 1090 }, texture: "plataformaFinalP1", width: 100, height: 100, group: this.portal }
+      { type: "finalPortal", pos: { x: 5500, y: 1090 }, texture: "plataformaFinalP1", width: 100, height: 100, group: this.portal }
     
     ]
 

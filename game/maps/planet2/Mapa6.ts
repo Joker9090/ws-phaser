@@ -595,17 +595,7 @@ class Mapa5 {
         this.aura = this.scene.physics.add.group({ allowGravity: false, immovable: true })
         this.portal = this.scene.physics.add.group({ allowGravity: false });
 
-        const otherSceneConf: GamePlayDataType =  {
-          level: 999,
-          lifes: this.scene.lifes ? this.scene.lifes : 3,
-          loadKey: ["Postales", "Cinemato1", "Cinemato2"],
-          startingPositionFromOtherScene: {
-            x: 500,
-            y: 800,
-          },
-        }
-        const teleport_1 = new Teleport(this.scene, { x: 2450, y: 1000, version: 1, sameScene: false, group: this.teleport, otherSceneConf: otherSceneConf })
-        console.log("otherSceneConf", otherSceneConf, teleport_1);
+
 
         const p1Config: FloorConfig = {
             pos: { x: 2750, y: 1350 },

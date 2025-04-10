@@ -50,21 +50,21 @@ class subSandbox extends MapCreator {
         ]
     
         this.backgroundsMiddle = [
-          this.scene.add.image(-this.startingPoint.x, this.startingPoint.y, "middleCombo").setOrigin(0, 1).setScale(0.7),
-          this.scene.add.image(-this.startingPoint.x + downScaledMiddleWidth, this.startingPoint.y, "middleCombo2").setOrigin(0, 1).setScale(0.7),
-          this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 2), this.startingPoint.y, "middleCombo3").setOrigin(0, 1).setScale(0.7),
-          this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 3), this.startingPoint.y, "middleCombo4").setOrigin(0, 1).setScale(0.7),
-          this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 4), this.startingPoint.y, "middleCombo2").setOrigin(0, 1).setScale(0.7),
-          this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 5), this.startingPoint.y, "middleCombo2").setOrigin(0, 1).setScale(0.7),
+          this.scene.add.image(-this.startingPoint.x, this.startingPoint.y - 50, "middleCombo").setOrigin(0, 1).setScale(0.7),
+          this.scene.add.image(-this.startingPoint.x + downScaledMiddleWidth, this.startingPoint.y - 50, "middleCombo2").setOrigin(0, 1).setScale(0.7),
+          this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 2), this.startingPoint.y - 50, "middleCombo3").setOrigin(0, 1).setScale(0.7),
+          this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 3), this.startingPoint.y - 50, "middleCombo4").setOrigin(0, 1).setScale(0.7),
+          this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 4), this.startingPoint.y - 50, "middleCombo2").setOrigin(0, 1).setScale(0.7),
+          this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 5), this.startingPoint.y - 50, "middleCombo2").setOrigin(0, 1).setScale(0.7),
         ]
     
         this.backgroundsFront = [
-            this.scene.add.image(-this.startingPoint.x, this.startingPoint.y + 500, "frontCombo").setOrigin(0, 1).setScale(0.5),
-            this.scene.add.image(-this.startingPoint.x + downScaledFrontWidth, this.startingPoint.y + 500, "frontCombo2").setOrigin(0, 1).setScale(0.5),
-            this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 2), this.startingPoint.y + 500, "frontCombo3").setOrigin(0, 1).setScale(0.5),
-            this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 3), this.startingPoint.y + 500, "frontCombo4").setOrigin(0, 1).setScale(0.5),
-            this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 4), this.startingPoint.y + 500, "frontCombo2").setOrigin(0, 1).setScale(0.5),
-            this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 5), this.startingPoint.y + 500, "frontCombo2").setOrigin(0, 1).setScale(0.5),
+            this.scene.add.image(-this.startingPoint.x, this.startingPoint.y + 550, "frontCombo").setOrigin(0, 1).setScale(0.5),
+            this.scene.add.image(-this.startingPoint.x + downScaledFrontWidth, this.startingPoint.y + 550, "frontCombo2").setOrigin(0, 1).setScale(0.5),
+            this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 2), this.startingPoint.y + 550, "frontCombo3").setOrigin(0, 1).setScale(0.5),
+            this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 3), this.startingPoint.y + 550, "frontCombo4").setOrigin(0, 1).setScale(0.5),
+            this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 4), this.startingPoint.y + 550, "frontCombo2").setOrigin(0, 1).setScale(0.5),
+            this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 5), this.startingPoint.y + 550, "frontCombo2").setOrigin(0, 1).setScale(0.5),
         ]
     
         this.createBackgrounds(this.backgroundsBack, this.backgroundsMiddle, this.backgroundsFront);
@@ -98,12 +98,22 @@ class subSandbox extends MapCreator {
         };
     
         const baseCristalConf = {
-          type: "cristal",
+          type: "collectable",
           texture: "cristal2",
           scale: { width: 0.7, height: 0.7 },
           width: 10,
           height: 18,
           fix: 10,
+        }
+
+        const otherSceneConf: GamePlayDataType =  {
+          level: 999,
+          lifes: this.scene.lifes ? this.scene.lifes : 3,
+          loadKey: ["Postales", "Cinemato1", "Cinemato2"],
+          startingPositionFromOtherScene: {
+            x: 1800,
+            y: 1000,
+          },
         }
 
         const mapPlatforms = [
@@ -128,26 +138,36 @@ class subSandbox extends MapCreator {
           },
           {
             ...baseLargePlatformsConf,
-            pos: { x: -0, y: 800 },
+            pos: { x: 600, y: 800 },
             width: {
               textureA: 90,
               textureB: 67,
               textureC: 115,
             }, // Adjusted to match the expected type in mapFloorConfig
             height: 127,
-            large: 40,
+            large: 20,
             group: this.floor
           },
+          //portal
+          { type: "subPortal",  x: 3600, y: 200, version: 1, sameScene: false, group: this.teleport, otherSceneConf: otherSceneConf },
+
           //meteorites
 
     
           // collectables
-        //   {...baseCristalConf, pos: { x: this.startingPoint.x + 50, y: 1000 }, group: this.invincible, flipX: true, colors: [0xff0000]},
-        //   {...baseCristalConf, pos: { x: 3900, y: 1000 }, group: this.invincible, flipX: true, colors: [0xff0000]},
-        //   {...baseCristalConf, pos: { x: 1700, y: 800 }, group: this.coin, texture: "cristal3", width: 140, height: 180},
+          // {...baseCristalConf, pos: { x: 500, y: 300 }, group: this.invincible, flipX: true, colors: [0xff0000]},
+          //  {...baseCristalConf, pos: { x: 3900, y: 1000 }, group: this.invincible, flipX: true, colors: [0xff0000]},
+          // {...baseCristalConf, pos: { x: 500, y: 600 }, group: this.coin, texture: "cristal3", width: 140, height: 180},
         ]
-    
-        this.createPlatforms(mapPlatforms)
+
+        const platformsRow = new Array(5).fill(0).map((_, i) => {
+          return {
+            ...basePlatformsConfig,
+            pos: { x: 2200 + i * 200, y: 500 },
+          };
+        });
+
+        this.createPlatforms(mapPlatforms.concat(platformsRow as any[]));
         
         this.scene.UICamera?.ignore(this.floor!);
         this.scene.UICamera?.ignore(this.mapContainer)

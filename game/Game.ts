@@ -24,6 +24,7 @@ import MultiScene from "./MultiScene";
 import Sandbox from "./maps/sandbox/sandbox";
 import subSandbox from "./maps/subLevels/subSandbox";
 import CODES from "../public/game/codigos.json";
+import Collectable from "./assets/Collectable";
 
 interface CodeType {
   mapa?: number;
@@ -175,15 +176,15 @@ class Game extends Phaser.Scene {
       console.log(
         "moving camera from move",
         position,
-        this.cameras.main.followOffset
+        this.cameras.main?.followOffset
       );
       let newPosition = this.cameraHeight / 2 - 350;
       if (position === "up") newPosition = -newPosition;
-      if (instant) {
+      if (instant && this.cameras.main) {
         this.cameras.main.followOffset.y = newPosition;
       } else {
         this.tweens.add({
-          targets: this.cameras.main.followOffset,
+          targets: this.cameras.main?.followOffset,
           y: newPosition,
           duration: 1000,
           ease: "ease",
@@ -339,7 +340,7 @@ class Game extends Phaser.Scene {
         this.UIClass?.sumCollectable();
         break;
       case "coin":
-        if (this.map?.coin && this.map.endPortal) {
+        /*if (this.map?.coin && this.map.endPortal) {
           this.canNextLevel = true;
           this.canWin = true;
           this.map.endPortal.setTint(0x00ff00);
@@ -347,7 +348,8 @@ class Game extends Phaser.Scene {
           this.map.aura?.setVisible(false);
           this.map.coin.clear(true);
           this.UIClass?.coinCollected();
-        }
+        }*/
+        this.UIClass?.sumCollectable();
         break;
       case "fireball":
         this.lose();
@@ -367,10 +369,13 @@ class Game extends Phaser.Scene {
         if (this.lifes === 0) {
           this.cameraNormal = true;
           this.checkPoint === 0;
-          const multiScene = new MultiScene("Game", {
-            level: this.levelIs,
-            lifes: this.lifes ? this.lifes : 3,
-          });
+          var multiScene= new MultiScene();
+          if(this.levelIs != 0){
+            multiScene = new MultiScene("Game", {
+              level: this.levelIs,
+              lifes: this.lifes ? this.lifes : 3,
+            });
+          }
           console.log("[Game] lose(): "+ this.levelIs+" , new lifes"+multiScene.sceneData?.lifes);
           const scene = this.scene.add("MultiScene", multiScene, true);
           this.scene.start("MultiScene").bringToTop("MultiScene");
@@ -403,6 +408,14 @@ class Game extends Phaser.Scene {
         this.map.invincible?.setVisible(true)
         if (this.map.invincibilityTimer) {
           this.time.removeEvent(this.map.invincibilityTimer);
+        }
+        if (this.map.invincible) {
+          this.map.invincible.children.each((child) => {
+            if (child instanceof Collectable) {
+              child.turnTo(true);
+            }
+            return true;
+          });
         }
         // this.cameraNormal = config.cameraDirection === "NORMAL" ? true : false
       }

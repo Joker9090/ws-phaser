@@ -12,6 +12,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   playerState: "NORMAL" | "ROTATED" = "NORMAL";
   cameraState: "NORMAL" | "ROTATED" = "NORMAL";
   canTp: boolean = true;
+  isDead: boolean = false;
 
   scene: Game |MultiScene | PreLoadScene;
   gravityAnimSprite?: Phaser.GameObjects.Sprite;
@@ -174,7 +175,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       key: "auraAnim",
       frames: invincibleAuraFrames,
       frameRate: frameRate,
-      repeat: 0,
+      repeat: -1,
     };
 
     /* player animations */
@@ -216,8 +217,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     if(this.scene instanceof Game) this.scene.UICamera?.ignore(this)
     this.gravityAnimSprite = this.scene.add.sprite(this.x, this.y, "gravityAnim", 0).setVisible(false).setDepth(999);
     if(this.scene instanceof Game)  this.scene.UICamera?.ignore(this.gravityAnimSprite)
+      
     if (this.scene instanceof Game) this.scene.UICamera?.ignore(this.tankAnimSprite)
-
     if (this.scene instanceof Game) this.scene.UICamera?.ignore(this.auraAnimSprite)
     // this.scene.add.rectangle(this.x, this.y, 100, 100, 0xffffff).setVisible(true)
     /* player Collission with end of map */
@@ -267,7 +268,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       console.log("[Player] Invincible")
       this.auraAnimSprite?.setVisible(true).setDepth(1000);
       this.auraAnimSprite?.anims.play("auraAnim");
-      this.auraAnimSprite?.anims.setRepeat(-1);
       this.auraAnimSprite?.on("animationupdate", () => {
         this.auraAnimSprite?.setPosition(this.x, this.y);
       });

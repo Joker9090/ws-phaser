@@ -7,6 +7,7 @@ import Floor, { FloorConfig } from "@/game/assets/Floor";
 import LargeFloorIsland from "@/game/assets/LargeFloorIsland";
 import Factory from "@/game/assets/Factory";
 import Collectable from "@/game/assets/Collectable";
+import Danger from "@/game/assets/Danger";
 
 
 export type globalPlatformsConfigType = {
@@ -134,6 +135,7 @@ export default class MapCreator {
   movingFloorRot?: Phaser.Physics.Arcade.Group;
   flyingPiso?: Phaser.Physics.Arcade.Group;
   firegroup?: Phaser.Physics.Arcade.Group;
+  obstacle?: Phaser.Physics.Arcade.Group;
   invincibilityTimer?: Time.TimerEvent
   endPortal?: Phaser.Physics.Arcade.Group;
   ratioReference: { width: number; height: number } = { width: 1920, height: 1080 };
@@ -308,6 +310,7 @@ export default class MapCreator {
           this.scene.player,
           this.coin,
           (a, b) => {
+            this.scene.touchItem("coin");
             b.destroy();
             this.coinAura?.destroy();
           },
@@ -351,6 +354,20 @@ export default class MapCreator {
               this.scene.touchItem("fireball");
               this.scene.player?.setVelocity(0);
             }
+          },
+          () => true,
+          this.scene
+        );
+      }
+      if (this.obstacle) {
+        this.scene.physics.add.overlap(
+          this.scene.player,
+          this.obstacle,
+          (a,b) => {
+            //this.scene.touchItem("fireball");
+            //this.scene.player?.setVelocity(0);
+            const danger = b as Danger;
+            danger.Attack();
           },
           () => true,
           this.scene

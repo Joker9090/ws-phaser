@@ -70,6 +70,7 @@ class Collectable extends Phaser.Physics.Arcade.Sprite {
     const rota = config.rotated ?? false;
     const invrt = config.inverted ?? false
     const friction = config.friction ?? 1;
+    
     if (config.scale) {
       this.setScale(config.scale.width, config.scale.height);
     }
@@ -93,6 +94,7 @@ class Collectable extends Phaser.Physics.Arcade.Sprite {
     });
 
     if (config.shield) {
+      console.log("[Collectable] shield");
       this.shield = scene.add.sprite(config.pos.x, config.pos.y, config.shield);
       this.shield.setDepth(999);
       this.shield.setVisible(true);
@@ -115,6 +117,10 @@ class Collectable extends Phaser.Physics.Arcade.Sprite {
     this.setVisible(value),
     this.aura?.setVisible(value),
     this.shield?.setVisible(value)
+    if(this.shield && value){
+      this.shield?.anims.play("auraAnim")
+      this.shield?.anims.setRepeat(-1);
+    }
   }
   // Override the destroy method
   destroy(fromScene?: boolean): void {

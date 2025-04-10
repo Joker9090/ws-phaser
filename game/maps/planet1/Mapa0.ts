@@ -5,7 +5,7 @@ import AsteroidGenerator, {
 import Floor, { FloorConfig } from "../../assets/Floor";
 //Collectable
 import Collectable, { CollectableConfig } from "../../assets/Collectable";
-
+import Danger,{DangerConfig} from "../../assets/Danger";
 import LargeFloor, { LargeFloorConfig } from "../../assets/LargeFloor";
 import Game from "../../Game";
 
@@ -18,10 +18,8 @@ import LargeFloorIsland, {
 } from "@/game/assets/LargeFloorIsland";
 import TextBox from "@/game/assets/TextBox";
 import MasterManager from "@/game/MasterManager";
-import { TURBO_TRACE_DEFAULT_MEMORY_LIMIT } from "next/dist/shared/lib/constants";
-import { cp } from "fs";
-
-class Mapa0 {
+import MapCreator from "@/game/maps/sandbox/MapCreator";
+class Mapa0 extends MapCreator {
   isJumping = false;
   // debugGraphics: Phaser.GameObjects.Graphics;
   scene: Game;
@@ -36,24 +34,16 @@ class Mapa0 {
     height: 1850,
   };
   // normales
-  pisos?: Phaser.Physics.Arcade.Group;
-  // de vuelta al inicio
-  pisosBack?: Phaser.Physics.Arcade.Group;
-  // float
-  pisos2?: Phaser.Physics.Arcade.Group;
-  // rotyate cam
-  pisos3?: Phaser.Physics.Arcade.Group;
-  //  no float
-  pisos4?: Phaser.Physics.Arcade.Group;
+  floor?: Phaser.Physics.Arcade.Group;
 //Fireball
-  fireballGroup?: Phaser.Physics.Arcade.Group;
+  firegroup?: Phaser.Physics.Arcade.Group;
+  obstacle?: Phaser.Physics.Arcade.Group;
 
 
   coin?: Phaser.Physics.Arcade.Group;
   //TEST COLLECTABLES
-  collectables?: Phaser.Physics.Arcade.Group;
-
-  portal?: Phaser.Physics.Arcade.Group;
+  //coin?: Phaser.Physics.Arcade.Group;
+  invincible?: Phaser.Physics.Arcade.Group;
   aura?: Phaser.Physics.Arcade.Group;
   movingFloor?: Phaser.Physics.Arcade.Group;
   movingFloorRot?: Phaser.Physics.Arcade.Group;
@@ -79,7 +69,6 @@ class Mapa0 {
   nextScene: string | undefined = "postal1_planeta1";
   postalCode: string | undefined = "postl1";
   invincibilityTimer?: Time.TimerEvent
-  invincible?: Phaser.Physics.Arcade.Group;
 
   background: Phaser.GameObjects.Image;
   background2: Phaser.GameObjects.Image;
@@ -111,7 +100,7 @@ class Mapa0 {
   UIItemScale?: number;
   cristal?: Collectable;
   collected: Boolean = false;
-  endPortal?: Floor;
+  portal?: Phaser.Physics.Arcade.Group;
 
   backContainer: Phaser.GameObjects.Container;
   middleContainer: Phaser.GameObjects.Container;
@@ -123,9 +112,9 @@ class Mapa0 {
   tutorialStep: number = 0;
 
   constructor(scene: Game, player: Player, data?: GamePlayDataType) {
+    super(scene,player, data);
     this.scene = scene;
     this.player = player;
-
     //Tank
     this.player.setPlayerWithTank(true);
 
@@ -307,12 +296,12 @@ this.updateContainerPositionRelativeToCamera(
     */
   }
 
-  addColliders() {
+  /*addColliders() {
     if (this.scene.player) {
-      if (this.pisos)
+      if (this.floor)
         this.scene.physics.add.collider(
           this.scene.player,
-          this.pisos,
+          this.floor,
           ()=>{
             this.scene.touch()
           },
@@ -334,10 +323,10 @@ this.updateContainerPositionRelativeToCamera(
           () => true,
           this.scene
         );
-      if(this.collectables){
+      if(this.coin){
         this.scene.physics.add.overlap(
           this.scene.player,
-          this.collectables,
+          this.coin,
           (player, collectable) => {
             this.scene.touchItem("collectable");
             collectable.destroy();
@@ -346,10 +335,10 @@ this.updateContainerPositionRelativeToCamera(
           this.scene
         );
       };
-      if (this.pisos2) {
+      if (this.floor2) {
         this.scene.physics.add.collider(
           this.scene.player,
-          this.pisos2,
+          this.floor2,
           () => {
             this.scene.touch();
             if (this.tutorialStep === 2) {
@@ -362,10 +351,10 @@ this.updateContainerPositionRelativeToCamera(
           () => true,
           this.scene
         );
-      }if (this.pisos4) {
+      }if (this.floor4) {
         this.scene.physics.add.collider(
           this.scene.player,
-          this.pisos4,
+          this.floor4,
           () => {
           this.scene.touchItem("fireball");
           this.scene.player?.setVelocity(0);
@@ -374,10 +363,10 @@ this.updateContainerPositionRelativeToCamera(
         this.scene
         );
       }
-      if (this.fireballGroup)
+      if (this.firegroup)
       this.scene.physics.add.overlap(
         this.scene.player,
-        this.fireballGroup,
+        this.firegroup,
         () => {
           this.scene.touchItem("fireball");
           this.scene.player?.setVelocity(0);
@@ -406,21 +395,17 @@ this.updateContainerPositionRelativeToCamera(
           this.scene
         );
     }
-  }
+  }*/
 
-  createMap(data: { level: number; lifes: number }) {
+ createMap(data: { level: number; lifes: number }) {
+   this.amountLifes = data.lifes;
+    this.obstacle = this.scene.physics.add.group({ allowGravity: false });
     this.movingFloor = this.scene.physics.add.group({ allowGravity: false });
     this.movingFloorRot = this.scene.physics.add.group({ allowGravity: false });
-    this.pisos = this.scene.physics.add.group({ allowGravity: false });
-    this.pisosBack = this.scene.physics.add.group({ allowGravity: false });
-    this.pisos2 = this.scene.physics.add.group({ allowGravity: false });
-    this.pisos3 = this.scene.physics.add.group({ allowGravity: false });
-    this.pisos4 = this.scene.physics.add.group({ allowGravity: false });
-    this.fireballGroup = this.scene.physics.add.group({ allowGravity: false });
-    this.amountLifes = data.lifes;
+    this.floor = this.scene.physics.add.group({ allowGravity: false });
+    this.firegroup = this.scene.physics.add.group({ allowGravity: false });
     this.coin = this.scene.physics.add.group({ allowGravity: false });
-    //TEST COLLECTABLES
-    this.collectables= this.scene.physics.add.group({allowGravity:false});
+    this.invincible = this.scene.physics.add.group({ allowGravity: false });
     this.aura = this.scene.physics.add.group({
       allowGravity: false,
       immovable: true,
@@ -458,21 +443,21 @@ this.updateContainerPositionRelativeToCamera(
     });*/
 
     const p1Config: LargeFloorIslandConfig = {
-      textureA: "plataformaNuevaLargaA",
-      textureB: "plataformaNuevaLargaB",
-      textureC: "plataformaNuevaLargaC",
-      pos: { x: 200, y: 1800 },
+      textureA: "platform_izq",
+      textureB: "platform_center",
+      textureC: "platform_der",
+      pos: { x: 200, y: 1900 },
       width: {
-        textureA: 90,
-        textureB: 67,
-        textureC: 115,
+        textureA: 96,
+        textureB: 96,
+        textureC: 96,
       },
-      scale: { width: 0.7, height: 0.7 },
-      height: 127,
-      large: 45,
+      //scale: { width: 0.7, height: 0.7 },
+      height: 327,
+      large: 21,
       rotated: false,
     };
-    const p1 = new LargeFloorIsland(this.scene, p1Config, this.pisos);
+    const p1 = new LargeFloorIsland(this.scene, p1Config, this.floor);
     //PlatformsRama
     const p2Config: LargeFloorIslandConfig = {
       textureA: "plataformaNuevaLargaA",
@@ -489,7 +474,7 @@ this.updateContainerPositionRelativeToCamera(
       large: 40,
       rotated: false,
     };
-    const p2 = new LargeFloorIsland(this.scene, p2Config, this.pisos);
+    const p2 = new LargeFloorIsland(this.scene, p2Config, this.floor);
 
     const p3Config: LargeFloorIslandConfig = {
       textureA: "plataformaNuevaLargaA",
@@ -506,7 +491,7 @@ this.updateContainerPositionRelativeToCamera(
       large: 10,
       rotated: false,
     };
-    const p3 = new LargeFloorIsland(this.scene, p3Config,this.pisos2);
+    const p3 = new LargeFloorIsland(this.scene, p3Config,this.floor);
     
     const p4Config: FloorConfig = {
     texture: "plataformaNuevaA",
@@ -516,7 +501,7 @@ this.updateContainerPositionRelativeToCamera(
     width: 140,
     height: 50,
     };
-    const p4 = new Floor(this.scene, p4Config, this.pisos).setFlipX(true);
+    const p4 = new Floor(this.scene, p4Config, this.floor).setFlipX(true);
     
     const p5Config: FloorConfig = {
     pos: { x: 1100, y: 1520 },
@@ -526,7 +511,7 @@ this.updateContainerPositionRelativeToCamera(
     width: 140,
     height: 50,
     };
-    const p5 = new Floor(this.scene, p5Config, this.pisos);
+    const p5 = new Floor(this.scene, p5Config, this.floor);
 
   const p6Config: FloorConfig = {
     texture: "plataformaNuevaA",
@@ -536,7 +521,7 @@ this.updateContainerPositionRelativeToCamera(
     width: 140,
     height: 50,
   };
-  const p6 = new Floor(this.scene, p6Config, this.pisos).setFlipX(true);
+  const p6 = new Floor(this.scene, p6Config, this.floor).setFlipX(true);
   
   const p7Config: FloorConfig = {
     pos: { x: 2100, y: 1520 },
@@ -546,7 +531,7 @@ this.updateContainerPositionRelativeToCamera(
     width: 140,
     height: 50,
   };
-  const p7 = new Floor(this.scene, p7Config, this.pisos);
+  const p7 = new Floor(this.scene, p7Config, this.floor);
   
   const p8Config: FloorConfig = {
     texture: "plataformaNuevaA",
@@ -556,7 +541,7 @@ this.updateContainerPositionRelativeToCamera(
     width: 140,
     height: 50,
   };
-  const p8 = new Floor(this.scene, p8Config, this.pisos).setFlipX(true);
+  const p8 = new Floor(this.scene, p8Config, this.floor).setFlipX(true);
 
   const p9Config: FloorConfig = {
   texture: "plataformaNuevaA",
@@ -566,7 +551,7 @@ this.updateContainerPositionRelativeToCamera(
     width: 140,
     height: 50,
   }
-  const p9 = new Floor(this.scene, p9Config, this.pisos);
+  const p9 = new Floor(this.scene, p9Config, this.floor);
 
   const p10Config: FloorConfig = {
   texture: "plataformaNuevaA",
@@ -576,7 +561,7 @@ this.updateContainerPositionRelativeToCamera(
     width: 140,
     height: 50,
   }
-  const p10 = new Floor(this.scene, p10Config, this.pisos).setFlipX(true);
+  const p10 = new Floor(this.scene, p10Config, this.floor).setFlipX(true);
 
   const p11Config: FloorConfig = {
   texture: "plataformaNuevaA",
@@ -586,7 +571,7 @@ this.updateContainerPositionRelativeToCamera(
     width: 140,
     height: 50,
   }
-  const p11 = new Floor(this.scene, p11Config, this.pisos);
+  const p11 = new Floor(this.scene, p11Config, this.floor);
 
   const p12Config: FloorConfig = {
   texture: "plataformaNuevaA",
@@ -596,18 +581,25 @@ this.updateContainerPositionRelativeToCamera(
     width: 140,
     height: 50,
   }
-  const p12 = new Floor(this.scene, p12Config, this.pisos).setFlipX(true);
+  const p12 = new Floor(this.scene, p12Config, this.floor).setFlipX(true);
 
-  const boxConfig: FloorConfig = {
-  texture: "plataformaNuevaA",
+  const boxConfig: DangerConfig = {
+    texture: "Enemy",
     pos: {x: 1500, y: 1740 },
-    fix: 25,
-    scale: { width: 0.7, height: 0.7 },
-    width: 140,
-    height: 50,
+    scale: { width: 1, height: 1 },
+    width: 170,
+    height: 170,
+    attackSpriteSheet: "EnemyAttack",
+    particleSpriteSheet: "EnemyParticles",
+    animation:{
+      xAxis:{
+        xDistance:100,
+        xVel:20,
+      }
+    }
   }
-  const box = new Floor(this.scene, boxConfig, this.pisos4).setFlipX(true);
-  box.setTint(0xff0000);
+  const box = new Danger(this.scene, boxConfig, this.obstacle);
+  //box.setTint(0xff0000);
     //Portal, Coin and Asteroids
     const portalConfig: FloorConfig = {
       pos: { x: 4640, y: 1390 }, // x: 2400
@@ -617,8 +609,8 @@ this.updateContainerPositionRelativeToCamera(
       height: 100,
     };
     const port = new Floor(this.scene, portalConfig, this.portal).setDepth(99);
-    this.endPortal = port;
-    //TEST COLLECTABLES
+   
+   //TEST COLLECTABLES
 
     const coinConfig: CollectableConfig = {
       texture: "cristal3",
@@ -629,7 +621,7 @@ this.updateContainerPositionRelativeToCamera(
       fix: 10,
       aura:"auraTuto",
     };
-    this.cristal = new Collectable(this.scene, coinConfig, this.collectables).setBodySize(
+    this.cristal = new Collectable(this.scene, coinConfig, this.coin).setBodySize(
       140,
       180
     );
@@ -644,7 +636,7 @@ this.updateContainerPositionRelativeToCamera(
       aura:"auraTuto",
       shield:"auraAnim"
     }
-    const coll1 = new Collectable(this.scene, coll1Config, this.collectables).setBodySize(140,180);
+    const coll1 = new Collectable(this.scene, coll1Config, this.invincible).setBodySize(140,180);
 
     const coll2Config: CollectableConfig = {
       texture: "cristal3",
@@ -655,7 +647,7 @@ this.updateContainerPositionRelativeToCamera(
       fix: 25,
       aura:"auraTuto",
     }
-    const coll2 = new Collectable(this.scene, coll2Config, this.collectables).setBodySize(140,180);
+    const coll2 = new Collectable(this.scene, coll2Config, this.coin).setBodySize(140,180);
 
     const coll3Config: CollectableConfig = {
       texture: "cristal3",
@@ -666,7 +658,7 @@ this.updateContainerPositionRelativeToCamera(
       fix: 25,
       aura:"auraTuto",
     }
-    const coll3 = new Collectable(this.scene, coll3Config, this.collectables).setBodySize(140,180);
+    const coll3 = new Collectable(this.scene, coll3Config, this.coin).setBodySize(140,180);
 
     const coll4Config: CollectableConfig = {
       texture: "cristal3",
@@ -677,7 +669,7 @@ this.updateContainerPositionRelativeToCamera(
       fix: 25,
       aura:"auraTuto",
     }
-    const coll4 = new Collectable(this.scene, coll4Config, this.collectables).setBodySize(140,180);
+    const coll4 = new Collectable(this.scene, coll4Config, this.coin).setBodySize(140,180);
 
     const coll5Config: CollectableConfig = {
       texture: "cristal3",
@@ -688,7 +680,7 @@ this.updateContainerPositionRelativeToCamera(
       fix: 25,
       aura:"auraTuto",
     }
-    const coll5 = new Collectable(this.scene, coll5Config, this.collectables).setBodySize(140,180);
+    const coll5 = new Collectable(this.scene, coll5Config, this.coin).setBodySize(140,180);
 
     const coll6Config: CollectableConfig = {
       texture: "cristal3",
@@ -699,7 +691,7 @@ this.updateContainerPositionRelativeToCamera(
       fix: 25,
       aura:"auraTuto",
     }
-    const coll6 = new Collectable(this.scene, coll6Config, this.collectables).setBodySize(140,180);
+    const coll6 = new Collectable(this.scene, coll6Config, this.coin).setBodySize(140,180);
 
     const coll7Config: CollectableConfig = {
       texture: "cristal3",
@@ -710,7 +702,7 @@ this.updateContainerPositionRelativeToCamera(
       fix: 25,
       aura:"auraTuto",
     }
-    const coll7 = new Collectable(this.scene, coll7Config, this.collectables).setBodySize(140,180);
+    const coll7 = new Collectable(this.scene, coll7Config, this.coin).setBodySize(140,180);
 //Fireballs
     const fireball1Config: FloorConfig = {
       spriteSheet: "meteorito",
@@ -725,7 +717,7 @@ this.updateContainerPositionRelativeToCamera(
       },
       frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
     };
-    const fireball1 = new Floor( this.scene, fireball1Config, this.fireballGroup).setScale(0.5);
+    const fireball1 = new Floor( this.scene, fireball1Config, this.firegroup).setScale(0.5);
 
     const fireball2Config: FloorConfig = {
       spriteSheet: "meteorito",
@@ -740,7 +732,7 @@ this.updateContainerPositionRelativeToCamera(
       },
       frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
     };
-    const fireball2 = new Floor( this.scene, fireball2Config, this.fireballGroup).setScale(0.5);
+    const fireball2 = new Floor( this.scene, fireball2Config, this.firegroup).setScale(0.5);
 
 
     const cloudsGroup = this.scene.add.group();
@@ -791,16 +783,13 @@ this.updateContainerPositionRelativeToCamera(
       .concat(
         this.movingFloor.getChildren(),
         this.movingFloorRot.getChildren(),
-        this.pisos.getChildren(),
-        this.pisosBack.getChildren(),
-        this.pisos2.getChildren(),
-        this.pisos3.getChildren(),
-        this.pisos4.getChildren(),
-        this.fireballGroup.getChildren(),
+        this.floor.getChildren(),
+        this.firegroup.getChildren(),
+        this.obstacle.getChildren(),
         this.coin.getChildren(),
         this.portal.getChildren(),
         this.aura.getChildren(),
-        this.collectables?.getChildren(),
+        this.invincible.getChildren(),
       );
     //this.mapContainer.add(mapObjects);
     this.scene.UICamera?.ignore(mapObjects);

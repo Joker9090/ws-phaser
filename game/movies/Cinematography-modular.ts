@@ -57,8 +57,23 @@ class CinematographyModular extends Phaser.Scene {
     this.ticker = new Ticker(tickerMS);
   }
 
+  onGameBlur() {
+    console.log(this.playingCine, "playingCine")
+    this.scene.pause()
+    this.pauseDialogue()
+  }
+
+  onGameResume() {
+    console.log(this.playingCine, "playingCine", 'focus')
+    this.scene.resume()
+    this.resumeDialogue()
+  }
+
   create(this: CinematographyModular,{ keyname, lifes,code }: CinematoDataType) {
     this.time.delayedCall(4000,()=>this.enabled = true)
+    this.game.events.on("blur", this.onGameBlur, this);
+    this.game.events.on("focus", this.onGameResume, this);
+
     const isPostal = keyname.includes("postal");
     this.cursors = this.input.keyboard?.createCursorKeys();
     this.keyname = keyname
@@ -93,6 +108,25 @@ class CinematographyModular extends Phaser.Scene {
       this.scene.launch("MasterManager").sendToBack();
     } else {
     }
+
+
+
+      this.events.addListener("visibilitychange", () => {
+        if (document.visibilityState === "hidden") {
+          getMasterManagerScene.pauseCinemato(this.playingCine, this.playingCine.timeEvent)
+        } else {
+          // this.masterManagerScene?.resumeGame();
+        }
+      })
+
+      window.addEventListener("blur", () => {
+        // this.masterManagerScene?.pauseGame();
+      });
+    
+      window.addEventListener("focus", () => {
+          // this.masterManagerScene?.resumeGame();
+      });
+      
 
     switch (keyname) {
       case "cine_intro_1":
@@ -255,12 +289,12 @@ class CinematographyModular extends Phaser.Scene {
   }
   pauseDialogue(){
     this.playingCine.dialogue.stop();
-    this.playingCine.dialogue.stopAudio();
+    // this.playingCine.dialogue.stopAudio();
   }
 
   resumeDialogue(){
     this.playingCine.dialogue.resume();
-    this.playingCine.dialogue.resumeAudio();
+    // this.playingCine.dialogue.resumeAudio();
   }
   update(time: number, delta: number) {
     if (this.playingCine.update) this.playingCine.update(this, time, delta);

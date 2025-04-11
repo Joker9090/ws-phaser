@@ -79,7 +79,7 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
     this.setDepth(10);
     this.body?.setSize(width, height).setOffset(fix, 0);
     this.setBounce(0);
-    this.group.add(this);
+    this.group?.add(this);
     this.setImmovable(true);
     this.setCollideWorldBounds(true);
 

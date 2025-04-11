@@ -133,6 +133,22 @@ export const loadAssets = {
     assets: [
       // AUDIOS
       ["audio", "planet0LoopMusic", "/game/planeta1/loopMusic.mp3"],
+      //BACKGROUNDS
+      //FAR
+      ["image", "gradient", "/game/planeta1/backgrounds/far/gradient.svg"],
+      ["image", "stars", "/game/planeta1/backgrounds/far/stars.svg"],
+      ["image", "curvedVector", "/game/planeta1/backgrounds/far/curvedVector.svg"],
+      ["image", "curvedVector2", "/game/planeta1/backgrounds/far/curvedVector2.svg"],
+      //MIDDLE
+      ["image", "middleCombo", "/game/planeta1/backgrounds/middle/middleCombo.svg"],
+      ["image", "middleCombo2", "/game/planeta1/backgrounds/middle/middleCombo2.svg"],
+      ["image", "middleCombo3", "/game/planeta1/backgrounds/middle/middleCombo3.svg"],
+      ["image", "middleCombo4", "/game/planeta1/backgrounds/middle/middleCombo4.svg"],
+      //FRONT
+      ["image", "frontCombo", "/game/planeta1/backgrounds/front/frontCombo.svg"],
+      ["image", "frontCombo2", "/game/planeta1/backgrounds/front/frontCombo2.svg"],
+      ["image", "frontCombo3", "/game/planeta1/backgrounds/front/frontCombo3.svg"],
+      ["image", "frontCombo4", "/game/planeta1/backgrounds/front/frontCombo4.svg"],
       // SVGs
       [
         "svg",
@@ -170,6 +186,25 @@ export const loadAssets = {
         "/game/player/gravityEffect.png",
         { frameWidth: 140, frameHeight: 280 },
       ],
+      //TANK SMOKE
+      [
+        "spritesheet",
+        "tankActivate",
+        "/game/player/tankActivate.png",
+        { frameWidth: 121, frameHeight: 121 },
+      ],
+      [
+        "spritesheet",
+        "tankActivate1",
+        "/game/player/tankActivate1.png",
+        { frameWidth: 72, frameHeight: 170 },
+      ],
+      [
+        "spritesheet",
+        "auraAnim",
+        "/game/player/auraAnim.png",
+        { frameWidth: 201, frameHeight: 201 },
+      ],
       // [
       //   "spritesheet",
       //   "player",
@@ -194,6 +229,18 @@ export const loadAssets = {
         "/game/portal1.png",
         { frameWidth: 100, frameHeight: 150 },
       ],
+      //DANGER
+      ["spritesheet",
+        "EnemyAttack",
+        "/game/planeta1/EnemyAttack.png",
+        { frameWidth: 170, frameHeight: 170 },
+      ],
+      ["spritesheet",
+        "EnemyParticles",
+        "/game/planeta1/EnemyParticles.png",
+        { frameWidth: 170, frameHeight: 170 },
+      ],
+      
       // IMAGES
       ["image", "plataformaNuevaA", "/game/planeta1/platforms/plataformaNuevaA.png"],
       ["image", "plataformaNuevaLargaA", "/game/planeta1/platforms/newPlatA.png"],
@@ -274,6 +321,12 @@ export const loadAssets = {
       ["image", "piedra1", "/game/lvl1/plataformas/plataformaMedio.png"],
       ["image", "piedra2", "/game/lvl1/plataformas/plataformaMedio.png"],
       ["image", "piedra3", "/game/lvl1/plataformas/plataformaMedio.png"],
+      ["image", "shield", "game/logo proteccion.png"],
+      ["image", "Enemy","game/Enemy.png"],
+      ["image", "Enemy2","game/Enemy2.png"],
+      ["image", "platform_center","/game/planeta1/platforms/plataform_center.png"],
+      ["image", "platform_der","/game/planeta1/platforms/plataform_der.png"],
+      ["image", "platform_izq","/game/planeta1/platforms/plataform_izq.png"],
     ],
   },
   GamePlay2: {

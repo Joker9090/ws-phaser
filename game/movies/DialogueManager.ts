@@ -95,6 +95,10 @@ class DialogueManager {
   }
 
   createContainer(text: string, config?: DialogConfig) {
+    // Destroy the previous container if it exists
+    if (this.container) {
+      this.container.destroy();
+    }
     this.container = this.scene.add.container();
 
     this.textDisplayed = this.scene.add.text(0, 8, "", {
@@ -244,7 +248,28 @@ class DialogueManager {
     const config = this.config[this.textCounter];
     this.createContainer(texts, config);
     if (config && config.delay) {
-      setTimeout(() => {
+      // setTimeout(() => {
+      //   this.state = "PLAY";
+      //   this.container?.setVisible(true);
+      //   this.textBuilder(texts, this.timeBetweenLetters);
+      //   //   this.textBuilder(texts, this.timeBetweenLetters);
+      //   if (config.withTapping) {
+      //     const { count, delay, audios } = config.withTapping;
+      //     let left = count || 1;
+      //     const randomAudio = Math.floor(Math.random() * audios.length);
+      //     this.playAudio(audios[randomAudio]);
+      //     left -= 1;
+      //     const audioInterval = setInterval(() => {
+      //       left -= 1;
+      //       if (left <= 0) clearInterval(audioInterval);
+      //       if (config.withTapping && audios) {
+      //         const randomAudio = Math.floor(Math.random() * audios.length);
+      //         this.playAudio(audios[randomAudio], 0.55);
+      //       }
+      //     }, delay);
+      //   }
+      // }, config.delay);
+      this.scene.time.delayedCall(config.delay, () => {
         this.state = "PLAY";
         this.container?.setVisible(true);
         this.textBuilder(texts, this.timeBetweenLetters);
@@ -255,16 +280,25 @@ class DialogueManager {
           const randomAudio = Math.floor(Math.random() * audios.length);
           this.playAudio(audios[randomAudio]);
           left -= 1;
-          const audioInterval = setInterval(() => {
+          // const audioInterval = setInterval(() => {
+          //   left -= 1;
+          //   if (left <= 0) clearInterval(audioInterval);
+          //   if (config.withTapping && audios) {
+          //     const randomAudio = Math.floor(Math.random() * audios.length);
+          //     this.playAudio(audios[randomAudio], 0.55);
+          //   }
+          // }, delay);
+
+          const audioInterval = this.scene.time.addEvent({delay:delay, loop:true, callback:()=>{
             left -= 1;
-            if (left <= 0) clearInterval(audioInterval);
+            if (left <= 0) audioInterval.destroy();
             if (config.withTapping && audios) {
               const randomAudio = Math.floor(Math.random() * audios.length);
               this.playAudio(audios[randomAudio], 0.55);
             }
-          }, delay);
+          }})
         }
-      }, config.delay);
+      },[],this)
     } else {
       this.state = "PLAY";
       this.container?.setVisible(true);
@@ -276,6 +310,11 @@ class DialogueManager {
   stop() {
     this.state = "STOP";
     this.stopAudio();
+  }
+
+  resume() {
+    this.state = "PLAY";
+    this.resumeAudio();
   }
 
   destroyContainer() {
@@ -295,7 +334,7 @@ class DialogueManager {
           // this.continueText?.setVisible(false);
           // hide text container
           this.container?.setVisible(false);
-          setTimeout(() => {
+          this.scene.time.delayedCall(config.delay, () => {
             this.container?.setVisible(true);
             this.textDisplayed?.setText("");
             this.textBuilder(texts, this.timeBetweenLetters);
@@ -314,7 +353,28 @@ class DialogueManager {
                 }
               }, delay);
             }
-          }, config.delay);
+          },[],this)
+          
+          // setTimeout(() => {
+          //   this.container?.setVisible(true);
+          //   this.textDisplayed?.setText("");
+          //   this.textBuilder(texts, this.timeBetweenLetters);
+          //   if (config.withTapping) {
+          //     const { count, delay, audios } = config.withTapping;
+          //     let left = count || 1;
+          //     const randomAudio = Math.floor(Math.random() * audios.length);
+          //     this.playAudio(audios[randomAudio]);
+          //     left -= 1;
+          //     const audioInterval = setInterval(() => {
+          //       left -= 1;
+          //       if (left <= 0) clearInterval(audioInterval);
+          //       if (config.withTapping && audios) {
+          //         const randomAudio = Math.floor(Math.random() * audios.length);
+          //         this.playAudio(audios[randomAudio], 0.55);
+          //       }
+          //     }, delay);
+          //   }
+          // }, config.delay);
         } else {
           this.destroyContainer();
           this.createContainer(texts, config);
@@ -324,12 +384,19 @@ class DialogueManager {
         }
       } else {
         if (config && config.delay) {
-          setTimeout(() => {
+
+          this.scene.time.delayedCall(config.delay, () => {
             this.stateFunctions.forEach((fn) => {
               fn("FINISHED");
             });
             this.container?.destroy();
-          }, config.delay);
+          },[],this)
+          // setTimeout(() => {
+          //   this.stateFunctions.forEach((fn) => {
+          //     fn("FINISHED");
+          //   });
+          //   this.container?.destroy();
+          // }, config.delay);
         } else {
           this.stateFunctions.forEach((fn) => {
             fn("FINISHED");
@@ -360,14 +427,24 @@ class DialogueManager {
       this.config[this.textCounter].keepAlive
     ) {
       // change text afget keepalive config time
-      setTimeout(() => {
-        this.textCounter += 1;
+      this.scene.time.delayedCall(
+        this.config[this.textCounter].keepAlive,
+        () => {
+          this.textCounter += 1;
         this.textDisplayed?.setText("");
         this.stateFunctions.forEach((fn) => {
           fn("CONTINUE", this.texts[this.textCounter]);
         });
         this.continueWithNextText();
-      }, this.config[this.textCounter].keepAlive);
+        }, [],this)
+      // setTimeout(() => {
+      //   this.textCounter += 1;
+      //   this.textDisplayed?.setText("");
+      //   this.stateFunctions.forEach((fn) => {
+      //     fn("CONTINUE", this.texts[this.textCounter]);
+      //   });
+      //   this.continueWithNextText();
+      // }, this.config[this.textCounter].keepAlive);
       return;
     }
 
@@ -404,33 +481,54 @@ class DialogueManager {
     callBack: Function,
     onFinish: Function
   ) {
-    if (this.state === "STOP") return;
-    if (index === 0) this.playAudio(this.audios[this.textCounter]);
-    if (index < message.length) {
-      const self = this;
-      target.setText((target.text + message[index]).toUpperCase());
-      setTimeout(() => {
-        index++;
-        callBack.bind(self)(
-          target,
-          message,
-          index,
+    if (this.state !== "STOP") {
+
+      if (index === 0) this.playAudio(this.audios[this.textCounter]);
+      if (index < message.length) {
+        const self = this;
+        target.setText((target.text + message[index]).toUpperCase());
+        this.scene.time.delayedCall(
           interval,
-          callBack,
-          onFinish
-        );
-      }, interval);
-    } else {
-      onFinish();
+          () => {
+            index++;
+            callBack.bind(self)(
+              target,
+              message,
+              index,
+              interval,
+              callBack,
+              onFinish
+            );
+          },[],this)
+        
+        // setTimeout(() => {
+        //   index++;
+        //   callBack.bind(self)(
+        //     target,
+        //     message,
+        //     index,
+        //     interval,
+        //     callBack,
+        //     onFinish
+        //   );
+        // }, interval);
+      } else {
+        onFinish();
+      }
     }
   }
 
   stopAudio() {
     if (this.activeAudio) {
-      this.activeAudio.stop();
-      this.activeAudio.destroy;
+      this.activeAudio.pause();
     }
   }
+
+  resumeAudio() {
+      if (this.activeAudio) {
+        this.activeAudio.resume();
+      }
+    }
 
   playAudio(name?: string, customVolume: number = 1) {
     if (name) {

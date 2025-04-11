@@ -30,6 +30,8 @@ export type CollectableConfig = {
     height: number;
   };
   aura?: string | Phaser.Textures.Texture;
+  shield?: string | Phaser.Textures.Texture;
+
   tween?: Partial<CollectableTween>;
   friction?: number;
   rotated?: boolean;
@@ -52,6 +54,7 @@ class Collectable extends Phaser.Physics.Arcade.Sprite {
     y: 'start'
   };
   aura?: Phaser.GameObjects.Sprite;
+  shield?: Phaser.GameObjects.Sprite;
   constructor(
     scene: Game,
     config: CollectableConfig,
@@ -67,12 +70,11 @@ class Collectable extends Phaser.Physics.Arcade.Sprite {
     const rota = config.rotated ?? false;
     const invrt = config.inverted ?? false
     const friction = config.friction ?? 1;
+    
     if (config.scale) {
       this.setScale(config.scale.width, config.scale.height);
     }
-    /* Floor add to physic world */
     scene.physics.add.existing(this);
-    /* Floor add to scene */
     scene.add.existing(this);
 
     this.setDepth(10);
@@ -82,70 +84,7 @@ class Collectable extends Phaser.Physics.Arcade.Sprite {
     this.setImmovable(true);
     this.setCollideWorldBounds(true);
     if(config.aura) this.aura = scene.add.sprite(config.pos.x, config.pos.y, config.aura).setScale(0.6);
-
-    if (friction) this.setFriction(friction)
-    if (config.tween) {
-      const tween = this.scene.tweens.add({
-        ...config.tween,
-        targets: this,
-      });
-    }
-    if (config.spriteSheet) {
-      const portFrames = this.scene.anims.generateFrameNumbers(config.spriteSheet, {
-        frames: config.frames
-      })
-      const portAnimConfig = {
-        key: config.spriteSheet,
-        frames: portFrames,
-        frameRate: 24,
-        repeat: -1
-      }
-      this.anims.create(portAnimConfig);
-      this.anims.play(config.spriteSheet, true)
-    }
-
-    if (this.body) {
-      const body = this.body as Phaser.Physics.Arcade.Body;
-      body.setImmovable(true);
-      // hitboxes largefloors
-      if (rota) {
-        body.setOffset(-50, -200);
-      } else {
-        body.setOffset(-200, -50);
-      }
-
-      if (rota && body) {
-        body.setSize(height + fix, width);
-        this.setRotation(Math.PI / 2);
-      } else {
-        body.setSize(width + fix, height + fix);
-      }
-
-      if (invrt && body) {
-        // body.setSize(height, width);
-        this.setRotation(Math.PI);
-      } else {
-        body.setSize(width + fix, height + fix);
-      }
-    }
-
-    if (config.animation) {
-      if (config.animation.xAxis) {
-        this.setVelocityX(config.animation.xAxis.xVel);
-      }
-      if (config.animation.yAxis) {
-        this.setVelocityY(config.animation.yAxis.yVel);
-      }
-      
-      // on scene update run animation with config
-      scene.events.on("update", () => {
-        this.animation(config)
-      })
-      // remove listener if scene is stop
-      scene.events.on("shutdown", () => {
-        scene.events.off("update");
-      })
-    }
+   
     this.scene.tweens.add({
       targets: this.aura,
       alpha: 0.4,
@@ -153,86 +92,43 @@ class Collectable extends Phaser.Physics.Arcade.Sprite {
       yoyo: true,
       repeat: -1,
     });
+
+    if (config.shield) {
+      console.log("[Collectable] shield");
+      this.shield = scene.add.sprite(config.pos.x, config.pos.y, config.shield);
+      this.shield.setDepth(999);
+      this.shield.setVisible(true);
+      const invincibleAuraFrames = scene.anims.generateFrameNumbers("auraAnim", {
+      frames: Array.from({ length: 16 }, (_, i) => i),
+      });
+
+      const invincibleAuraConfig = {
+        key: "auraAnim",
+        frames: invincibleAuraFrames,
+        frameRate: 24,
+        repeat: -1,
+      };
+      scene.anims.create(invincibleAuraConfig);
+      this.shield?.anims.play("auraAnim");
+      this.shield?.anims.setRepeat(-1);
+    }
+  }
+  turnTo(value:boolean):void{
+    this.setVisible(value),
+    this.aura?.setVisible(value),
+    this.shield?.setVisible(value)
+    if(this.shield && value){
+      this.shield?.anims.play("auraAnim")
+      this.shield?.anims.setRepeat(-1);
+    }
   }
   // Override the destroy method
   destroy(fromScene?: boolean): void {
     // Call the OnDestroy method for cleanup
     this.aura?.destroy();
-
+    this.shield?.destroy();
     // Call the parent class's destroy method
     super.destroy(fromScene);
   }
-  animation = (config: CollectableConfig) => {
-    if (config.animation) {
-      if (config.animation.xAxis) {
-        if (this.x >= config.pos.x + config.animation.xAxis.xDistance / 2 && this.animState.x === 'start') {
-          this.setVelocityX(-config.animation.xAxis.xVel);
-          if (config.animation.yAxis) {
-            if (this.scene.player && this.scene.player.body?.touching.down){
-              this.scene.player.setVelocityY(-config.animation.yAxis.yVel);
-            }
-            this.setVelocityY(-config.animation.yAxis.yVel);
-          }
-          this.animState.x = 'reverse'
-        } else if (this.x <= config.pos.x - config.animation.xAxis.xDistance / 2 && this.animState.x === 'reverse') {
-          this.setVelocityX(config.animation.xAxis.xVel);
-          if (config.animation.yAxis) {
-            if (this.scene.player && this.scene.player.body?.touching.down){
-              this.scene.player.setVelocityY(config.animation.yAxis.yVel);
-            }
-            this.setVelocityY(config.animation.yAxis.yVel);
-          }
-          this.animState.x = 'start'
-        } 
-      } else if (config.animation.yAxis) {
-        if (this.y >= config.pos.y + config.animation.yAxis.yDistance / 2 && this.animState.y === 'start') {
-          this.setVelocityY(-config.animation.yAxis.yVel);
-      
-          // Aplicar velocidad al personaje solo si está tocando ESTA plataforma
-          if (this.scene.player?.body?.touching.down && this.isTouchingplayer()) {
-            this.scene.player.setVelocityY(-config.animation.yAxis.yVel);
-          } else if (this.scene.player?.body?.touching.up && this.isTouchingplayer()) {
-            this.scene.player.setVelocityY(-config.animation.yAxis.yVel);
-          }
-      
-          this.animState.y = 'reverse';
-        } else if (this.y <= config.pos.y - config.animation.yAxis.yDistance / 2 && this.animState.y === 'reverse') {
-          this.setVelocityY(config.animation.yAxis.yVel);
-      
-          // Aplicar velocidad al personaje solo si está tocando ESTA plataforma
-          if (this.scene.player?.body?.touching.down && this.isTouchingplayer()) {
-            this.scene.player.setVelocityY(config.animation.yAxis.yVel);
-          } else if (this.scene.player?.body?.touching.up && this.isTouchingplayer()) {
-            this.scene.player.setVelocityY(config.animation.yAxis.yVel);
-          }
-      
-          this.animState.y = 'start';
-        }
-      }
-      
-
-    
-    }
-  }
-  isTouchingplayer() {
-    const player = this.scene.player;
-  
-    // Verificar si player está en contacto con esta plataforma
-    if (!player || !player.body) return false;
-  
-    const playerBottom = player.y + player.height / 2;
-    const playerTop = player.y - player.height / 2;
-    const platformTop = this.y - this.height / 2;
-    const platformBottom = this.y + this.height / 2;
-  
-    return (
-      (playerBottom >= platformTop && playerTop <= platformBottom) &&
-      Math.abs(player.x - this.x) < this.width / 2 // player está alineado horizontalmente con la plataforma
-    );
-  }
-  // update() {
-  //   this.animation()
-  // }
-
 }
 export default Collectable;

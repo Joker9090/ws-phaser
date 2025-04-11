@@ -22,7 +22,9 @@ import BetweenScenes, { BetweenScenesStatus } from "./BetweenScenes";
 import { GamePlayDataType } from "./Types";
 import MultiScene from "./MultiScene";
 import Sandbox from "./maps/sandbox/sandbox";
+import subSandbox from "./maps/subLevels/subSandbox";
 import CODES from "../public/game/codigos.json";
+import Collectable from "./assets/Collectable";
 
 interface CodeType {
   mapa?: number;
@@ -40,7 +42,8 @@ export type PossibleMaps =
   | p2Mapa4
   | p3Mapa1
   | p3Mapa2
-  | Sandbox;
+  | Sandbox
+  | subSandbox
 // Scene in class
 export const keyCodesAWSD = {
   w: Phaser.Input.Keyboard.KeyCodes.W,
@@ -173,15 +176,15 @@ class Game extends Phaser.Scene {
       console.log(
         "moving camera from move",
         position,
-        this.cameras.main.followOffset
+        this.cameras.main?.followOffset
       );
       let newPosition = this.cameraHeight / 2 - 350;
       if (position === "up") newPosition = -newPosition;
-      if (instant) {
+      if (instant && this.cameras.main) {
         this.cameras.main.followOffset.y = newPosition;
       } else {
         this.tweens.add({
-          targets: this.cameras.main.followOffset,
+          targets: this.cameras.main?.followOffset,
           y: newPosition,
           duration: 1000,
           ease: "ease",
@@ -294,7 +297,15 @@ class Game extends Phaser.Scene {
     if (this.player && this.map) {
       console.log(this.levelIs, "LEVEL IS JOTITA");
       this.cameraNormal = true;
-      if (this.map?.nextScene) {
+      if (this.levelIs === 999) {
+        const multiScene = new MultiScene("Game", {
+          level: 0,
+          lifes: this.lifes ? this.lifes : 3,
+        });
+        const scene = this.scene.add("MultiScene", multiScene, true);
+        this.scene.start("MultiScene").bringToTop("MultiScene");
+      }
+      else if (this.map?.nextScene) {
         // if (this.levelIs === 7){
         //   const multiScene = new MultiScene("Game", { level: 4, lifes: 3 });
         //   const scene = this.scene.add("MultiScene", multiScene, true);
@@ -337,7 +348,7 @@ class Game extends Phaser.Scene {
         this.UIClass?.sumCollectable();
         break;
       case "coin":
-        if (this.map?.coin && this.map.endPortal) {
+        /*if (this.map?.coin && this.map.endPortal) {
           this.canNextLevel = true;
           this.canWin = true;
           this.map.endPortal.setTint(0x00ff00);
@@ -345,7 +356,8 @@ class Game extends Phaser.Scene {
           this.map.aura?.setVisible(false);
           this.map.coin.clear(true);
           this.UIClass?.coinCollected();
-        }
+        }*/
+        this.UIClass?.sumCollectable();
         break;
       case "fireball":
         this.lose();
@@ -354,6 +366,7 @@ class Game extends Phaser.Scene {
   }
 
   lose() {
+    console.log("[Game] lose()");
     this.canRot = true;
     if (this.map) {
       //@ts-ignore
@@ -364,10 +377,14 @@ class Game extends Phaser.Scene {
         if (this.lifes === 0) {
           this.cameraNormal = true;
           this.checkPoint === 0;
-          const multiScene = new MultiScene("Game", {
-            level: this.levelIs,
-            lifes: this.lifes ? this.lifes : 3,
-          });
+          var multiScene= new MultiScene();
+          if(this.levelIs != 0){
+            multiScene = new MultiScene("Game", {
+              level: this.levelIs,
+              lifes: this.lifes ? this.lifes : 3,
+            });
+          }
+          console.log("[Game] lose(): "+ this.levelIs+" , new lifes"+multiScene.sceneData?.lifes);
           const scene = this.scene.add("MultiScene", multiScene, true);
           this.scene.start("MultiScene").bringToTop("MultiScene");
         } else if (this.lifes > 0 && this.player) {
@@ -399,6 +416,14 @@ class Game extends Phaser.Scene {
         this.map.invincible?.setVisible(true)
         if (this.map.invincibilityTimer) {
           this.time.removeEvent(this.map.invincibilityTimer);
+        }
+        if (this.map.invincible) {
+          this.map.invincible.children.each((child) => {
+            if (child instanceof Collectable) {
+              child.turnTo(true);
+            }
+            return true;
+          });
         }
         // this.cameraNormal = config.cameraDirection === "NORMAL" ? true : false
       }
@@ -457,12 +482,33 @@ class Game extends Phaser.Scene {
     this.lifes = data.lifes;
     this.cursors = this.input.keyboard?.createCursorKeys();
     this.time.paused = false;
+    this.events.addListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") {
+        this.masterManagerScene?.pauseGame();
+      } else {
+        this.masterManagerScene?.resumeGame();
+      }
+    })
+
+    window.addEventListener("blur", () => {
+      this.masterManagerScene?.pauseGame();
+    });
+  
+    window.addEventListener("focus", () => {
+        this.masterManagerScene?.resumeGame();
+    });
     /* CHOSE LEVEL, LIFES AND AUDIO */
     switch (data.level) {
       case 999:
         this.player = new Player(this, 0, 0, "character", 2);
 
         this.map = new Sandbox(this, this.player!);
+        this.loopMusic = "planet0LoopMusic";
+        break;
+      case 666:
+        this.player = new Player(this, 0, 0, "character", 2);
+
+        this.map = new subSandbox(this, this.player!);
         this.loopMusic = "planet0LoopMusic";
         break;
       case 0:
@@ -646,6 +692,7 @@ class Game extends Phaser.Scene {
     );
     this.UICamera?.ignore(this.player);
     this.player.gravityAnimSprite && this.UICamera?.ignore(this.player.gravityAnimSprite);
+    
 
     this.UIClass = new UIClass(this, this.levelIs, this.lifes, this.timeLevel);
 

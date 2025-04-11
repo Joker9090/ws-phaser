@@ -3,6 +3,7 @@ import AsteroidGenerator, {
   AsteroidGeneratorConfig,
 } from "../../assets/AsteroidGenerator";
 import Floor, { FloorConfig } from "../../assets/Floor";
+import Collectable, { CollectableConfig } from "../../assets/Collectable";
 import Game from "../../Game";
 import Player from "../../assets/Player";
 import { GamePlayDataType, loseConfigFromMapType } from "@/game/Types";
@@ -13,11 +14,13 @@ import MagicZone, { ZoneConfig } from "@/game/assets/MagicZone";
 import Teleport from "@/game/assets/Teleport";
 import colors from "@/game/assets/PlatformColors";
 import MapCreator from "./MapCreator";
+import { group } from "console";
+
+
 
 class Sandbox extends MapCreator {
   pisosBack?: Phaser.Physics.Arcade.Group;
-  coin?: Phaser.Physics.Arcade.Group;
-  coinAura?: Phaser.GameObjects.Sprite;
+  // coinAura?: Phaser.GameObjects.Sprite;
   invincible?: Phaser.Physics.Arcade.Group;
   portal?: Phaser.Physics.Arcade.Group;
   teleport?: Phaser.Physics.Arcade.Group;
@@ -37,7 +40,6 @@ class Sandbox extends MapCreator {
   UIItemScale?: number;
   cristal?: Floor;
   collected: Boolean = false;
-  endPortal?: Floor;
   rotate?: boolean = true;
   constructor(scene: Game, player: Player, data?: GamePlayDataType) {
     super(scene, player, data);
@@ -73,44 +75,59 @@ class Sandbox extends MapCreator {
     const backImage = this.scene.textures.get("background0P1").getSourceImage()
     this.backSize = { width: backImage.width, height: backImage.height }
 
+    const { width, height } = this.ratioReference;
+    const { width: farWidth, height: farHeight } = this.farBackgroundReference;
+    const downScaledMiddleWidth = width * 0.7;
+    const downScaledFrontWidth = width * 0.5;
+
     this.backgroundsBack = [
-      this.scene.add.image(0, this.worldSize.height, "background0P1").setOrigin(0, 1).setScale(1.3),
-      this.scene.add.image(0, this.worldSize.height, "backgroundStars").setOrigin(0, 1).setScale(1.3),
-      this.scene.add.image(0 + backImage.width, this.worldSize.height, "background0P1").setOrigin(0, 1),
-      this.scene.add.image(0 + backImage.width, this.worldSize.height, "backgroundStars").setOrigin(0, 1),
-      this.scene.add.image(0 + (backImage.width * 2), this.worldSize.height, "background0P1").setOrigin(0, 1),
-      this.scene.add.image(0 + (backImage.width * 2), this.worldSize.height, "backgroundStars").setOrigin(0, 1),
+      this.scene.add.image(-this.startingPoint.x, this.worldSize.height, "gradient").setOrigin(0, 1),
+      this.scene.add.image(-this.startingPoint.x + farWidth, this.worldSize.height, "gradient").setOrigin(0, 1),
+      this.scene.add.image(-this.startingPoint.x, this.worldSize.height, "stars").setOrigin(0, 1),
+      this.scene.add.image(-this.startingPoint.x + farWidth, this.worldSize.height, "stars").setOrigin(0, 1),
+      this.scene.add.image(-this.startingPoint.x, this.worldSize.height - 200, "curvedVector").setOrigin(0, 1),
+      this.scene.add.image(-this.startingPoint.x + farWidth, this.worldSize.height - 200, "curvedVector2").setOrigin(0, 1),
     ]
 
-    const middleImage= this.scene.textures.get("frontGround1").getSourceImage()
-    this.middleSize = { width: middleImage.width, height: middleImage.height }
-
     this.backgroundsMiddle = [
-      this.scene.add.image(-this.startingPoint.x, this.startingPoint.y + 550, "frontGround1").setOrigin(0, 1).setScale(1),
-      this.scene.add.image(-50 -this.startingPoint.x + this.middleSize.width, this.startingPoint.y + 550, "frontGround1").setOrigin(0, 1).setScale(1),
-      this.scene.add.image(-100 -this.startingPoint.x + (this.middleSize.width * 2), this.startingPoint.y + 550, "frontGround1").setOrigin(0, 1).setScale(1),
-      this.scene.add.image(-150 -this.startingPoint.x + (this.middleSize.width * 3), this.startingPoint.y + 550, "frontGround1").setOrigin(0, 1).setScale(1),
-      this.scene.add.image(-200 -this.startingPoint.x + (this.middleSize.width * 4), this.startingPoint.y + 550, "frontGround1").setOrigin(0, 1).setScale(1),
-      this.scene.add.image(200, this.worldSize.height - 700, "montaña2"),
-      this.scene.add.image(1100, this.worldSize.height - 700, "montaña4")
+      this.scene.add.image(-this.startingPoint.x, this.startingPoint.y - 50, "middleCombo").setOrigin(0, 1).setScale(0.7),
+      this.scene.add.image(-this.startingPoint.x + downScaledMiddleWidth, this.startingPoint.y - 50, "middleCombo2").setOrigin(0, 1).setScale(0.7),
+      this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 2), this.startingPoint.y - 50, "middleCombo3").setOrigin(0, 1).setScale(0.7),
+      this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 3), this.startingPoint.y - 50, "middleCombo4").setOrigin(0, 1).setScale(0.7),
+      this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 4), this.startingPoint.y - 50, "middleCombo2").setOrigin(0, 1).setScale(0.7),
+      this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 5), this.startingPoint.y - 50, "middleCombo2").setOrigin(0, 1).setScale(0.7),
     ]
 
     this.backgroundsFront = [
-      this.scene.add.image(this.startingPoint.x + this.backSize.width - 15, this.worldSize.height - 700,"montaña3"),
-      this.scene.add.image(this.startingPoint.x - 70, this.worldSize.height - 700, "montaña5"),
-      this.scene.add.image(1200, this.worldSize.height - 700, "montaña3")
+        this.scene.add.image(-this.startingPoint.x, this.startingPoint.y + 550, "frontCombo").setOrigin(0, 1).setScale(0.5),
+        this.scene.add.image(-this.startingPoint.x + downScaledFrontWidth, this.startingPoint.y + 550, "frontCombo2").setOrigin(0, 1).setScale(0.5),
+        this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 2), this.startingPoint.y + 550, "frontCombo3").setOrigin(0, 1).setScale(0.5),
+        this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 3), this.startingPoint.y + 550, "frontCombo4").setOrigin(0, 1).setScale(0.5),
+        this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 4), this.startingPoint.y + 550, "frontCombo2").setOrigin(0, 1).setScale(0.5),
+        this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 5), this.startingPoint.y + 550, "frontCombo2").setOrigin(0, 1).setScale(0.5),
     ]
 
     this.createBackgrounds(this.backgroundsBack, this.backgroundsMiddle, this.backgroundsFront);
     
     // this.frontContainer.add(this.backgroundsFront);
-    this.mapContainer.add(this.backgroundsBack.concat(this.backgroundsMiddle).concat(this.backgroundsFront));
+    //this.mapContainer.add(this.backgroundsBack.concat(this.backgroundsMiddle).concat(this.backgroundsFront));
     this.scene.UICamera?.ignore(this.mapContainer);
     this.scene.UICamera?.ignore(this.frontContainer);
 
-    this.scene.player?.setDepth(9999999999999);
+    this.scene.player?.setDepth(999);
     
-    const globalPlatformsConfig = {
+
+    const basePlatformsConfig = {
+      withTextureToAbove: true,
+      texture: "plataformaNuevaA",
+      scale: { width: 0.7, height: 0.7 },
+      rotated: false,
+      type: "floor",
+      width: 140,
+      height: 40
+    }
+
+    const baseLargePlatformsConf = {
       withTextureToAbove: true,
       texture: "plataformaNuevaA",
       textureA: "plataformaNuevaLargaA",
@@ -118,7 +135,17 @@ class Sandbox extends MapCreator {
       textureC: "plataformaNuevaLargaC",
       scale: { width: 0.7, height: 0.7 },
       rotated: false,
+      type: "largeFloor",
     };
+
+    const baseCristalConf = {
+      type: "collectable",
+      texture: "shield",
+      scale: { width: 0.7, height: 0.7 },
+      width: 10,
+      height: 18,
+      fix: 10,
+    }
 
     // const intermitentFloorArray = new Array(3).fill(globalPlatformsConfig).map((element, index) => {
     //   return {
@@ -126,18 +153,28 @@ class Sandbox extends MapCreator {
     //     pos: { x: element.pos.x + (index * 300), y: 800 },
     //   }
     // })
-
-    const platforms = [
-      {
-        pos: { x: 1000, y: 1000 }, colors: colors.gravity, group: this.gravityTile
+    const otherSceneConf: GamePlayDataType = {
+      level: 666,
+      lifes: this.scene.lifes ? this.scene.lifes : 3,
+      loadKey: ["Postales", "Cinemato1", "Cinemato2"],
+      startingPositionFromOtherScene: {
+        x: 2000,
+        y: 800,
       },
-      { pos: { x: 1000, y: 600 }, flipY: true },
-      { pos: { x: 1400, y: 600 }, group: this.gravityTile, colors: colors.gravity, flipY: true },
-      { pos: { x: 1400, y: 1000 } },
-      { pos: { x: 2200, y: 1000 }, rotate: true, group: this.rotationTile, colors: colors.rotate },
-      { pos: { x: 2500, y: 1000 }, rotate: false, group: this.rotationTile, colors: colors.rotate },
+    }
+    const mapPlatforms = [
+      // platforms
+
       {
-        pos: { x: 5200, y: 800 }, animation: {
+        ...basePlatformsConfig, pos: { x: 1000, y: 1000 }, colors: [colors.gravity], group: this.gravityTile
+      },
+      { ...basePlatformsConfig, pos: { x: 1000, y: 600 }, flipY: true },
+      { ...basePlatformsConfig, pos: { x: 1400, y: 600 }, group: this.gravityTile, colors: [colors.gravity], flipY: true },
+      { ...basePlatformsConfig, pos: { x: 1400, y: 1000 } },
+      { ...basePlatformsConfig, pos: { x: 2200, y: 1000 }, rotate: true, group: this.rotationTile, colors: [colors.rotate] },
+      { ...basePlatformsConfig, pos: { x: 2500, y: 1000 }, rotate: false, group: this.rotationTile, colors: [colors.rotate] },
+      {
+        ...basePlatformsConfig, pos: { x: 5200, y: 800 }, animation: {
           xAxis: {
             xDistance: 200,
             xVel: 100
@@ -145,97 +182,56 @@ class Sandbox extends MapCreator {
         }
       },
       {
-        pos: { x: 5800, y: 750 }, animation: {
+        ...basePlatformsConfig, pos: { x: 5800, y: 750 }, animation: {
           yAxis: {
             yDistance: 600,
             yVel: 200
           }
         }
-      }
-    ]
-    
-    const largePlatforms = [
+      },
+      // largePlatforms
       {
-        ...globalPlatformsConfig,
+        ...baseLargePlatformsConf,
         pos: { x: 300, y: 1200 },
         width: {
           textureA: 90,
           textureB: 67,
           textureC: 115,
-        },
+        }, // Adjusted to match the expected type in mapFloorConfig
         height: 127,
         large: 150,
         group: this.floor
       },
       {
-        ...globalPlatformsConfig,
+        // ...globalPlatformsConfig,
+        ...baseLargePlatformsConf,
         pos: { x: 6000, y: 500 },
         width: {
           textureA: 90,
           textureB: 67,
           textureC: 115,
-        },
+        }, // Adjusted to match the expected type in mapFloorConfig
         height: 127,
         large: 30,
         group: this.floor
-      }
-    ]
-    // ].concat(intermitentFloorArray)
-
-    platforms.forEach((element) => {
-      const config: any = {
-        ...element,
-        ...globalPlatformsConfig
-      };
-      const floor = new Floor(this.scene, config, element.group ?? this.floor!);
-      if (element.flipY) floor.setFlipY(true)
-      if (element.colors) floor.setTint(element.colors)
-      floor.setBodySize(140, 20)
-      floor.setFlipY(element.flipY ?? false)
-      // this.floor?.add(floor);
-    });
-
-    largePlatforms.forEach((element) => {
-      const config: any = {
-        ...element,
-        ...globalPlatformsConfig,
-      };
-
-      const largeFloor = new LargeFloorIsland(this.scene,config,element.group ?? this.floor!
-      );
-    });
-    
-    // for (let index = 0; index < largePlatforms.length; index++) {
-    //   const element = largePlatforms[index];
-    //   new LargeFloorIsland(this.scene, element, this.floor!);
-    // }
-    
-    const otherSceneConf: GamePlayDataType = {
-      level: 7,
-      lifes: this.scene.lifes ? this.scene.lifes : 3,
-      loadKey: ["Postales", "Cinemato1", "Cinemato2"],
-      startingPositionFromOtherScene: {
-        x: 2750,
-        y: 1000,
       },
-    }
-    const teleport_1 = new Teleport(this.scene, { x: 2000, y: 800, version: 1, sameScene: false, group: this.teleport, otherSceneConf: otherSceneConf })
-    // const teleport_2 = new Teleport(this.scene, { x: 1000, y: 1000, version: 1, sameScene: true, group: this.teleport })
 
-    const coinConfig: FloorConfig = {
-      texture: "cristal3",
-      pos: { x: 1700, y: 800 },
-      scale: { width: 0.7, height: 0.7 },
-      width: 40,
-      height: 18,
-      fix: 10,
-    };
-    const cristal = new Floor(this.scene, coinConfig, this.coin).setBodySize(
-      140,
-      180
-    );
-    this.coin.add(cristal)
+      // collectables
+      {...baseCristalConf, pos: { x: this.startingPoint.x + 50, y: 1000 }, group: this.invincible, flipX: true, shield: 'auraAnim'},
+      {...baseCristalConf, pos: { x: 3900, y: 1000 }, group: this.invincible, flipX: true, shield: 'auraAnim'},
+      {...baseCristalConf, pos: { x: 1700, y: 800 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto'},
+    
+      //portales
+      { type: "subPortal",  x: 2000, y: 800, version: 1, sameScene: false, group: this.teleport, otherSceneConf: otherSceneConf },
+      { type: "finalPortal", pos: { x: 5500, y: 1090 }, texture: "plataformaFinalP1", width: 100, height: 100, group: this.portal }
+    
+    ]
 
+    this.createPlatforms(mapPlatforms)
+    
+   
+    // const teleport_1 = new Teleport(this.scene, { x: 2000, y: 800, version: 1, sameScene: false, group: this.teleport, otherSceneConf: otherSceneConf })
+ 
     this.scene.tweens.add({
       targets: this.coinAura,
       alpha: 0.4,
@@ -244,38 +240,15 @@ class Sandbox extends MapCreator {
       repeat: -1
     })
 
-    const portalConfig: FloorConfig = {
-      pos: { x: 6600, y: 1090 }, // x: 2400
-      texture: "plataformaFinalP1",
-      // scale: {width: 0.7, height: 0.7},
-      width: 100,
-      height: 100,
-    };
-    const port = new Floor(this.scene, portalConfig, this.portal);
-    // this.endPortal = port;
-
-    const invincibleConfig: FloorConfig = {
-      texture: "cristal2",
-      pos: { x: this.startingPoint.x + 50, y: 1000 },
-      scale: { width: 0.7, height: 0.7 },
-      width: 10,
-      height: 18,
-      fix: 10,
-    };
-    // this.cristal = new Floor(this.scene, invincibleConfig, this.invincible);
-    const invincible = new Floor(this.scene, invincibleConfig, this.invincible).setFlipX(true).setTint(0xff0000);
-
-    const invincible2Config: FloorConfig = {
-      texture: "cristal2",
-      pos: { x: 3900, y: 1000 },
-      scale: { width: 0.7, height: 0.7 },
-      width: 10,
-      height: 18,
-      fix: 10,
-    };
-    // this.cristal = new Floor(this.scene, invincibleConfig, this.invincible);
-    const invincible2 = new Floor(this.scene, invincible2Config, this.invincible).setFlipX(true).setTint(0xff0000);
-
+    // const portalConfig: FloorConfig = {
+    //   pos: { x: 6600, y: 1090 }, // x: 2400
+    //   texture: "plataformaFinalP1",
+    //   // scale: {width: 0.7, height: 0.7},
+    //   width: 100,
+    //   height: 100,
+    // };
+    // const port = new Floor(this.scene, portalConfig, this.portal);
+   
     const zoneAConfig: ZoneConfig = {
       x: 2700,
       y: 0,
@@ -384,7 +357,7 @@ class Sandbox extends MapCreator {
     this.scene.UICamera?.ignore(this.frontContainer)
     this.scene.UICamera?.ignore(this.teleport)
     this.scene.UICamera?.ignore(this.coin)
-    this.scene.UICamera?.ignore(this.coinAura)
+    this.scene.UICamera?.ignore(this.coinAura!)
     this.scene.UICamera?.ignore(this.gravityTile!)
     this.scene.UICamera?.ignore(this.backContainer)
     this.scene.UICamera?.ignore(this.middleContainer)

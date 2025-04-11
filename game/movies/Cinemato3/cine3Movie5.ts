@@ -102,6 +102,7 @@ class cine3Movie5 {
     const part1 = (job: TickerJob) => {
       this.dialogue = new DialogueManager(
         this.cine,
+        // [""],
         ["I've never seen something like this..."],
         [""],
         [

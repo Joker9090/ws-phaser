@@ -17,6 +17,7 @@ class cine3Movie1 {
   shipLightsC3S1?: Phaser.GameObjects.Image;
   starsC3S1?: Phaser.GameObjects.Image;
   treeFrontC3S1?: Phaser.GameObjects.Image;
+  timeEvent?: Phaser.Time.TimerEvent
 
   // controllers
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -31,19 +32,28 @@ class cine3Movie1 {
 
   }
 
-   stopDialogue(){
-     this.dialogue?.stop();
-      this.dialogue?.destroyContainer();
+  stopDialogue() {
+    this.dialogue?.stop();
+    this.dialogue?.destroyContainer();
     this.dialogue = undefined;
   }
 
   playCine(this: cine3Movie1) {
-    this.cine.time.addEvent({
+   this.timeEvent = this.cine.time.addEvent({
       delay: this.ticker.ms,
       callback: this.ticker.runTicker,
       loop: true,
     });
-
+    // this.cine.time.delayedCall(1000, () => {
+    //   timeEvent.paused = true;
+    //   this.cine.scene.pause();
+    //   console.log("entro timeout", timeEvent)
+    // }, [], this)
+    // this.cine.time.delayedCall(3000, () => {
+    //   timeEvent.paused = false;
+    //   this.cine.scene.resume();
+    //   console.log("entro timeout 2", timeEvent)
+    // }, [], this)
     this.cursors = this.cine.input.keyboard?.createCursorKeys();
 
     const middlePoint = {
@@ -65,11 +75,11 @@ class cine3Movie1 {
     this.cloud1C3S1 = this.cine.add
       .image(300, -300, "cloud1C3S1")
       .setOrigin(0.5)
-      .setScale(1.5,1.2);
+      .setScale(1.5, 1.2);
     this.cloud2C3S1 = this.cine.add
       .image(-300, -150, "cloud2C3S1")
       .setOrigin(0.5)
-      .setScale(1.5,1.2);
+      .setScale(1.5, 1.2);
     this.shipAndAstro = this.cine.add
       .image(0, 0, "shipAndAstro")
       .setOrigin(0.5);
@@ -99,8 +109,8 @@ class cine3Movie1 {
     const darkMask = this.cine.add.rectangle(
       0,
       0,
-      window.innerWidth*2,
-      window.innerHeight*2,
+      window.innerWidth * 2,
+      window.innerHeight * 2,
       0,
       0.2
     );
@@ -144,6 +154,7 @@ class cine3Movie1 {
               count: 14,
               delay: 180,
             },
+
             keepAlive: 1500,
             position: {
               width: 700,
@@ -194,7 +205,7 @@ class cine3Movie1 {
         ease: "ease",
       });
 
-     
+
       const dialogueListener = (newState: string, nextText?: string) => {
         if (newState === "CONTINUE") {
         } else if (newState === "FINISHED") {

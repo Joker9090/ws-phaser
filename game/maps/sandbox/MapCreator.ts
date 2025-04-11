@@ -2,8 +2,77 @@ import Player from "@/game/assets/Player";
 import { GamePlayDataType, loseConfigFromMapType } from "@/game/Types";
 import Game from "@/game/Game";
 import Teleport from "@/game/assets/Teleport";
-import { Time } from "phaser";
+import { GameObjects, Time } from "phaser";
+import Floor, { FloorConfig } from "@/game/assets/Floor";
+import LargeFloorIsland from "@/game/assets/LargeFloorIsland";
+import Factory from "@/game/assets/Factory";
+import Collectable from "@/game/assets/Collectable";
+import Danger from "@/game/assets/Danger";
 
+
+export type globalPlatformsConfigType = {
+  withTextureToAbove?: boolean;
+  texture?: string | Phaser.Textures.Texture;
+  textureA?: string | Phaser.Textures.Texture;
+  textureB?: string | Phaser.Textures.Texture;
+  textureC?: string | Phaser.Textures.Texture;
+  scale?: { width: number; height: number };
+  rotated?: boolean;
+};
+
+export type mapFloorConfig = {
+  pos?: { x: number; y: number };
+  x?:number,
+  y?:number,
+  rotate?: boolean;
+  flipY?: boolean;
+  group?: Phaser.Physics.Arcade.Group;
+  colors?: number[];
+  width?: number | { textureA: number; textureB: number; textureC: number };
+  height?: number;
+  scale?: { width: number; height: number };
+  
+  animation?: {
+    xAxis?: {
+      xDistance: number;
+      xVel: number;
+    };
+    yAxis?: {
+      yDistance: number;
+      yVel: number;
+    };
+  };
+
+
+}
+
+export type mapLargeFloorConfig = {
+  pos: { x: number; y: number };
+  rotate?: boolean;
+  flipY?: boolean;
+  group?: Phaser.Physics.Arcade.Group;
+  colors?: number[];
+  width?: {
+    textureA: number;
+    textureB: number; 
+    textureC: number;
+  }
+  height?: number;
+  scale?: { width: number; height: number };
+  textureA?: string | Phaser.Textures.Texture;
+  textureB?: string | Phaser.Textures.Texture;
+  textureC?: string | Phaser.Textures.Texture;
+  animation?: {
+    xAxis?: {
+      xDistance: number;
+      xVel: number;
+    };
+    yAxis?: {
+      yDistance: number;
+      yVel: number;
+    };
+  };
+}
 export default class MapCreator {
   mapGroup: Phaser.Physics.Arcade.Group;
   isJumping = false;
@@ -43,7 +112,6 @@ export default class MapCreator {
   middleContainer: Phaser.GameObjects.Container;
   frontContainer: Phaser.GameObjects.Container;
   backSize: { width: number; height: number } = { width: 0, height: 0 };
-  middleSize: { width: number; height: number } = { width: 0, height: 0 };
   frontSize: { width: number; height: number } = { width: 0, height: 0 };
   middleWidth: { width: number; height: number } = { width: 0, height: 0 };
   nextScene: string | undefined = "postal1_planeta1";
@@ -67,7 +135,11 @@ export default class MapCreator {
   movingFloorRot?: Phaser.Physics.Arcade.Group;
   flyingPiso?: Phaser.Physics.Arcade.Group;
   firegroup?: Phaser.Physics.Arcade.Group;
+  obstacle?: Phaser.Physics.Arcade.Group;
   invincibilityTimer?: Time.TimerEvent
+  endPortal?: Phaser.Physics.Arcade.Group;
+  ratioReference: { width: number; height: number } = { width: 1920, height: 1080 };
+  farBackgroundReference: { width: number; height: number } = { width: 3840, height: 2160 };
 
   constructor(scene: Game, player: Player, data?: GamePlayDataType) {
     this.scene = scene;
@@ -107,28 +179,47 @@ export default class MapCreator {
     this.floor = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.gravityTile = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.rotationTile = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
-
+    this.teleport = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
+    this.obstacle = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.scene.UICamera?.ignore(this.floor)
     this.scene.UICamera?.ignore(this.gravityTile)
     this.scene.UICamera?.ignore(this.rotationTile)
-    this.scene.UICamera?.ignore(this.scene.physics.world.debugGraphic);
+    this.scene.UICamera?.ignore(this.teleport)
+    this.scene.UICamera?.ignore(this.obstacle)
+    if (this.scene.physics.world.debugGraphic) {
+      this.scene.UICamera?.ignore(this.scene.physics.world.debugGraphic);
+    }
   }
-
-  createBackgrounds(backgroundsBack: Phaser.GameObjects.Image[], backgroundsMiddle: Phaser.GameObjects.Image[], backgroundsFront: Phaser.GameObjects.Image[]) {
-    console.log("createBackgrounds", backgroundsBack, backgroundsMiddle, backgroundsFront);
-    this.backgroundsBack = backgroundsBack;
-    this.backgroundsMiddle = backgroundsMiddle;
-    this.backgroundsFront = backgroundsFront;
+  
+  createBackgrounds(_backgroundsBack: Phaser.GameObjects.Image[], _backgroundsMiddle: Phaser.GameObjects.Image[], _backgroundsFront: Phaser.GameObjects.Image[]) {
+    console.log("createBackgrounds", _backgroundsBack, _backgroundsMiddle, _backgroundsFront);
+    this.backgroundsBack = _backgroundsBack;
+    this.backgroundsMiddle = _backgroundsMiddle;
+    this.backgroundsFront = _backgroundsFront;
     
-    this.backContainer.list = backgroundsBack;
+    /*this.backContainer.list = backgroundsBack;
     this.middleContainer.list = backgroundsMiddle;
-    this.frontContainer.list = backgroundsFront;
+    this.frontContainer.list = backgroundsFront;*/
     
-    console.log("createBackgrounds-container", this.backContainer, this.middleContainer, this.frontContainer);
-    // Add mapContainer and frontContainer to the scene
+    //console.log("createBackgrounds-container", this.backContainer, this.middleContainer, this.frontContainer);
+    
+    this.backContainer.add(this.backgroundsBack);
+    this.middleContainer.add(this.backgroundsMiddle);
+    this.frontContainer.add(this.backgroundsFront).setDepth(9999999999999);
+
     this.scene.add.existing(this.backContainer);
     this.scene.add.existing(this.middleContainer);
     this.scene.add.existing(this.frontContainer);
+
+    this.scene.UICamera?.ignore(this.backContainer);
+    this.scene.UICamera?.ignore(this.middleContainer);
+    this.scene.UICamera?.ignore(this.frontContainer);
+  }
+
+  createPlatforms(gameObjects: mapFloorConfig[]) {
+    gameObjects.forEach((element) => {
+      const tile: any = Factory(this.scene, element, this.floor!);
+    })
   }
 
   animateBackground(player: Phaser.GameObjects.Sprite | Phaser.Math.Vector2) {
@@ -139,10 +230,11 @@ export default class MapCreator {
       { x: -this.backSize.width * 2, y: -this.backSize.height * 2 },
       { fixX: 1.1, fixY: 1.1 }
     );
+    
     this.updateContainerPositionRelativeToCamera(
       this.middleContainer,
       this.scene.cameras.main,
-      { x: -this.middleSize.width * 0.5, y: -this.middleSize.height * 1.75 },
+      { x: (this.middleContainer.first as Phaser.GameObjects.Sprite)?.x, y: (this.middleContainer.first as Phaser.GameObjects.Sprite).y },
       { fixX: 2, fixY: 2 }
     );
 
@@ -220,6 +312,7 @@ export default class MapCreator {
           this.scene.player,
           this.coin,
           (a, b) => {
+            this.scene.touchItem("coin");
             b.destroy();
             this.coinAura?.destroy();
           },
@@ -230,13 +323,13 @@ export default class MapCreator {
           this.scene.physics.add.overlap(
             this.scene.player,
             this.invincible,
-            () => {
+            (a, b: any) => {
               if (!this.player?.invincible) {
                 this.player?.setPlayerInvicinible(true);
-                this.invincible?.setVisible(false);
+                b?.turnTo(false);
                 this.invincibilityTimer = this.scene.time.delayedCall(30000, () => {
                   this.player?.setPlayerInvicinible(false);
-                  this.invincible?.setVisible(true);
+                  b?.turnTo(true);
                 });
               }
             },
@@ -263,6 +356,20 @@ export default class MapCreator {
               this.scene.touchItem("fireball");
               this.scene.player?.setVelocity(0);
             }
+          },
+          () => true,
+          this.scene
+        );
+      }
+      if (this.obstacle) {
+        this.scene.physics.add.overlap(
+          this.scene.player,
+          this.obstacle,
+          (a,b) => {
+            //this.scene.touchItem("fireball");
+            //this.scene.player?.setVelocity(0);
+            const danger = b as Danger;
+            danger.Attack();
           },
           () => true,
           this.scene

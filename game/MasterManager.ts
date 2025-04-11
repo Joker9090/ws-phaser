@@ -3,6 +3,7 @@ import MultiScene from "./MultiScene";
 import Ticker from "./movies/Ticker";
 import Game from "./Game";
 import CODES from "../public/game/codigos.json"
+import CinematographyModular from "./movies/Cinematography-modular";
 
 
 export type enterCodeType = {
@@ -138,7 +139,10 @@ export default class MasterManager extends Phaser.Scene {
     }
   }
 
-
+  pauseCinemato(cine:CinematographyModular, timeEvent:Phaser.Time.TimerEvent) {
+    // timeEvent.paused = true;
+    // cine.scene.pause(); 
+  }
 
   enterCode(code: string, error: Phaser.GameObjects.Text) {
     console.log("ARIEL ENTRO ACA 00000", code)

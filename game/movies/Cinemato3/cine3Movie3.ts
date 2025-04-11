@@ -127,6 +127,7 @@ class cine3Movie3 {
     const part1 = (job: TickerJob) => {
       this.dialogue = new DialogueManager(
         this.cine,
+        
         ["I can't wait to leave this planet..."],
         [""],
         [

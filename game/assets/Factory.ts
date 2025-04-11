@@ -2,6 +2,8 @@ import Floor from "./Floor";
 import LargeFloorIsland from "./LargeFloorIsland";
 import Game from "../Game";
 import Collectable from "./Collectable";
+import Teleport from "./Teleport";
+import Danger from "./Danger";
 
 export default function Factory(scene: Game, config: any, floorGroup: Phaser.Physics.Arcade.Group) {
   let { type, ...rest } = config;
@@ -21,8 +23,20 @@ export default function Factory(scene: Game, config: any, floorGroup: Phaser.Phy
         if (rest.flipX) collectable.setFlipX(true)
         if (rest.colors) collectable.setTint(rest.colors[0]);
       return collectable
-    // case "SmallFloorIslandConfig":
-    //   return new SmallFloorIslandConfig(scene, rest);
+    case "subPortal":
+      let portal = new Teleport(scene, rest);
+      console.log(rest, "rest")
+      return portal
+    case "danger":
+        let danger = new Danger(scene, rest, rest.group);
+        return danger
+    case "finalPortal":
+        let finalPortal = new Floor(scene, rest, rest.group);
+        if (rest.flipY) finalPortal.setFlipY(true)
+            if (rest.colors) finalPortal.setTint(rest.colors[0], rest.colors[1], rest.colors[2], rest.colors[3])
+            // finalPortal.setBodySize(140, 20)
+            finalPortal.setFlipY(rest.flipY ?? false)
+      return finalPortal;  
     default:
         break;
   }

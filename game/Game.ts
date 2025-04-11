@@ -298,7 +298,15 @@ class Game extends Phaser.Scene {
     if (this.player && this.map) {
       console.log(this.levelIs, "LEVEL IS JOTITA");
       this.cameraNormal = true;
-      if (this.map?.nextScene) {
+      if (this.levelIs === 999) {
+        const multiScene = new MultiScene("Game", {
+          level: 0,
+          lifes: this.lifes ? this.lifes : 3,
+        });
+        const scene = this.scene.add("MultiScene", multiScene, true);
+        this.scene.start("MultiScene").bringToTop("MultiScene");
+      }
+      else if (this.map?.nextScene) {
         // if (this.levelIs === 7){
         //   const multiScene = new MultiScene("Game", { level: 4, lifes: 3 });
         //   const scene = this.scene.add("MultiScene", multiScene, true);

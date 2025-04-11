@@ -21,7 +21,9 @@ export type globalPlatformsConfigType = {
 };
 
 export type mapFloorConfig = {
-  pos: { x: number; y: number };
+  pos?: { x: number; y: number };
+  x?:number,
+  y?:number,
   rotate?: boolean;
   flipY?: boolean;
   group?: Phaser.Physics.Arcade.Group;
@@ -137,6 +139,7 @@ export default class MapCreator {
   invincibilityTimer?: Time.TimerEvent
   endPortal?: Phaser.Physics.Arcade.Group;
   ratioReference: { width: number; height: number } = { width: 1920, height: 1080 };
+  farBackgroundReference: { width: number; height: number } = { width: 3840, height: 2160 };
 
   constructor(scene: Game, player: Player, data?: GamePlayDataType) {
     this.scene = scene;
@@ -176,10 +179,13 @@ export default class MapCreator {
     this.floor = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.gravityTile = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.rotationTile = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
-
+    this.teleport = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
+    this.obstacle = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.scene.UICamera?.ignore(this.floor)
     this.scene.UICamera?.ignore(this.gravityTile)
     this.scene.UICamera?.ignore(this.rotationTile)
+    this.scene.UICamera?.ignore(this.teleport)
+    this.scene.UICamera?.ignore(this.obstacle)
     if (this.scene.physics.world.debugGraphic) {
       this.scene.UICamera?.ignore(this.scene.physics.world.debugGraphic);
     }

@@ -4,6 +4,9 @@ import p1Mapa0 from "./maps/planet1/Mapa0";
 import p1Mapa1 from "./maps/planet1/Mapa1";
 import p1Mapa2 from "./maps/planet1/Mapa2";
 import p1Mapa3 from "./maps/planet1/Mapa3";
+
+import p1Map1 from "./maps/planet1/Map1";
+import p1Map2 from "./maps/planet1/Map2";
 // MAPAS PLANETA 2
 import p2Mapa1 from "./maps/planet2/Mapa4";
 import p2Mapa2 from "./maps/planet2/Mapa5";
@@ -23,7 +26,6 @@ import { GamePlayDataType } from "./Types";
 import MultiScene from "./MultiScene";
 import Sandbox from "./maps/sandbox/sandbox";
 import subSandbox from "./maps/subLevels/subSandbox";
-import p1Map1 from "./maps/planet1/Map1";
 import CODES from "../public/game/codigos.json";
 import Collectable from "./assets/Collectable";
 
@@ -44,7 +46,8 @@ export type PossibleMaps =
   | p3Mapa1
   | p3Mapa2
   | Sandbox
-  | p1Map1;
+  | p1Map1
+  | p1Map2;
 // Scene in class
 export const keyCodesAWSD = {
   w: Phaser.Input.Keyboard.KeyCodes.W,
@@ -530,7 +533,7 @@ class Game extends Phaser.Scene {
       case 2:
         this.player = new Player(this, 0, 0, "character", 2);
 
-        this.map = new p1Mapa2(this, this.player!);
+        this.map = new p1Map2(this, this.player!);
         this.loopMusic = "planet0LoopMusic";
         if (this.masterManagerScene) {
           this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1"];

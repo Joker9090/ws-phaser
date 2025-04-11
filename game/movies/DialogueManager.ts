@@ -308,26 +308,13 @@ class DialogueManager {
   }
 
   stop() {
-    console.log("resume", this.state, this.activeAudio);
-
     this.state = "STOP";
-    // this.stopAudio();
-    this.activeAudio?.pause();
-    this.activeAudio?.stop();
-    // this.activeAudio?.destroy();
-    // this.textDisplayed?.setText(""); // Reset the displayed text
+    this.stopAudio();
   }
+
   resume() {
-      console.log("resume", this.state);
-
-      if (this.state === "STOP") {
-          this.resumeAudio(); // Resume the audio if paused
-          this.state = "PLAY";
-
-          const currentText = this.textDisplayed?.text || ""; // Get the current displayed text
-          const remainingText = this.texts[this.textCounter]?.slice(currentText.length); // Calculate remaining text
-          this.textBuilder(remainingText ?? '', this.timeBetweenLetters); // Continue building the text
-      }
+    this.state = "PLAY";
+    this.resumeAudio();
   }
 
   destroyContainer() {
@@ -494,52 +481,52 @@ class DialogueManager {
     callBack: Function,
     onFinish: Function
   ) {
-    if (this.state === "STOP") return;
-    if (index === 0) this.playAudio(this.audios[this.textCounter]);
-    if (index < message.length) {
-      const self = this;
-      target.setText((target.text + message[index]).toUpperCase());
-      this.scene.time.delayedCall(
-        interval,
-        () => {
-          index++;
-          callBack.bind(self)(
-            target,
-            message,
-            index,
-            interval,
-            callBack,
-            onFinish
-          );
-        },[],this)
-      
-      // setTimeout(() => {
-      //   index++;
-      //   callBack.bind(self)(
-      //     target,
-      //     message,
-      //     index,
-      //     interval,
-      //     callBack,
-      //     onFinish
-      //   );
-      // }, interval);
-    } else {
-      onFinish();
+    if (this.state !== "STOP") {
+
+      if (index === 0) this.playAudio(this.audios[this.textCounter]);
+      if (index < message.length) {
+        const self = this;
+        target.setText((target.text + message[index]).toUpperCase());
+        this.scene.time.delayedCall(
+          interval,
+          () => {
+            index++;
+            callBack.bind(self)(
+              target,
+              message,
+              index,
+              interval,
+              callBack,
+              onFinish
+            );
+          },[],this)
+        
+        // setTimeout(() => {
+        //   index++;
+        //   callBack.bind(self)(
+        //     target,
+        //     message,
+        //     index,
+        //     interval,
+        //     callBack,
+        //     onFinish
+        //   );
+        // }, interval);
+      } else {
+        onFinish();
+      }
     }
   }
 
   stopAudio() {
     if (this.activeAudio) {
-      this.activeAudio.stop();
-      // this.activeAudio.destroy;
+      this.activeAudio.pause();
     }
   }
 
   resumeAudio() {
       if (this.activeAudio) {
         this.activeAudio.resume();
-        // this.activeAudio.destroy;
       }
     }
 

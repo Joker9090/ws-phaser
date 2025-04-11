@@ -3,6 +3,7 @@ import MapCreator from "../sandbox/MapCreator";
 import Player from "@/game/assets/Player";
 import { GamePlayDataType } from "@/game/Types";
 import colors from "@/game/assets/PlatformColors";
+import { group } from "console";
 
 class Map1 extends MapCreator {
     constructor(scene: Game, player: Player, data?: GamePlayDataType) {
@@ -25,7 +26,7 @@ class Map1 extends MapCreator {
         this.coin = this.scene.physics.add.group({ allowGravity: false });
         this.pisosBack = this.scene.physics.add.group({ allowGravity: false });
         this.flyingPiso = this.scene.physics.add.group({ allowGravity: false, immovable: true });
-
+        this.portal = this.scene.physics.add.group({ allowGravity: false });
 
         const backImage = this.scene.textures.get("background0P1").getSourceImage()
         this.backSize = { width: backImage.width, height: backImage.height }
@@ -95,6 +96,21 @@ class Map1 extends MapCreator {
             fix: 10,
         }
 
+        const baseDangerConf = {
+            type: "danger",
+            texture: "Enemy",
+            scale: { width: 1, height: 1 },
+            attackSpriteSheet: "EnemyAttack",
+            particleSpriteSheet: "EnemyParticles",
+            group: this.obstacle,
+            // animation:{
+            //     xAxis:{
+            //       xDistance:100,
+            //       xVel:20,
+            //     }
+            //   },
+        }
+
         const mapPlatforms = [
             {
                 ...baseLargePlatformsConf,
@@ -108,6 +124,7 @@ class Map1 extends MapCreator {
                 large: 25,
                 group: this.floor
             },
+            { ...baseDangerConf, pos: { x: 800, y: 1150 }, width: 170, height: 170 },
             { ...basePlatformsConfig, pos: { x: 800, y: 1000 } },
             { ...basePlatformsConfig, pos: { x: 1100, y: 850 } },
             { ...baseCristalConf, pos: { x: 1100, y: 750 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
@@ -125,9 +142,8 @@ class Map1 extends MapCreator {
                 group: this.floor
             },
             { ...basePlatformsConfig, pos: { x: 1850, y: 1000 } },
-            { ...baseCristalConf, pos: { x: 2025, y: 800 }, group: this.coin, texture: "cristal3", width: 140, height: 180 },
+            { ...baseCristalConf, pos: { x: 2025, y: 800 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
             { ...basePlatformsConfig, pos: { x: 2200, y: 1000 } },
-            { ...basePlatformsConfig, pos: { x: 2600, y: 1000 } },
             {
                 ...baseLargePlatformsConf,
                 pos: { x: 2700, y: 1000 },
@@ -140,10 +156,12 @@ class Map1 extends MapCreator {
                 large: 15,
                 group: this.floor
             },
-            { ...basePlatformsConfig, pos: { x: 3400, y: 600 } },
+            { ...baseDangerConf, pos: { x: 2800, y: 950 }, width: 170, height: 170, animation:{ xAxis:{ xDistance:100, xVel:20 } }, },
+            { ...baseDangerConf, pos: { x: 3200, y: 950 }, width: 170, height: 170, animation:{ xAxis:{ xDistance:100, xVel:20 } }, },
+            { ...basePlatformsConfig, pos: { x: 3400, y: 500 } },
             {
                 ...baseLargePlatformsConf,
-                pos: { x: 3900, y: 600 },
+                pos: { x: 3900, y: 700 },
                 width: {
                     textureA: 90,
                     textureB: 67,
@@ -153,10 +171,12 @@ class Map1 extends MapCreator {
                 large: 15,
                 group: this.floor
             },
-            { ...basePlatformsConfig, pos: { x: 4100, y: 400 } },
-            { ...baseCristalConf, pos: { x: 4100, y: 300 }, group: this.coin, texture: "cristal3", width: 140, height: 180 },
-            { ...basePlatformsConfig, pos: { x: 4500, y: 400 } },
-            { ...baseCristalConf, pos: { x: 4500, y: 300 }, group: this.coin, texture: "cristal3", width: 140, height: 180 },
+            { ...basePlatformsConfig, pos: { x: 4100, y: 500 } },
+            { ...baseCristalConf, pos: { x: 4100, y: 400 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
+            { ...baseDangerConf, pos: { x: 4300, y: 650 }, width: 170, height: 170, animation:{ xAxis:{ xDistance:100, xVel:30 } }, },
+            { ...basePlatformsConfig, pos: { x: 4500, y: 500 } },
+            { ...baseCristalConf, pos: { x: 4500, y: 400 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
+
             { ...basePlatformsConfig, pos: { x: 5200, y: 600 } },
             {
                 ...baseLargePlatformsConf,
@@ -170,7 +190,7 @@ class Map1 extends MapCreator {
                 large: 15,
                 group: this.floor
             },
-            { ...baseCristalConf, pos: { x: 5750, y: 500 }, group: this.coin, texture: "cristal3", width: 140, height: 180 },
+            { ...baseCristalConf, pos: { x: 5750, y: 500 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
 
             {
                 ...baseLargePlatformsConf,
@@ -184,24 +204,36 @@ class Map1 extends MapCreator {
                 large: 15,
                 group: this.floor
             },
+            { ...baseDangerConf, pos: { x: 6900, y: 350 }, width: 170, height: 170, animation:{ xAxis:{ xDistance:400, xVel:200 } }, },
+            { ...baseCristalConf, pos: { x: 6900, y: 200 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
+
             { ...basePlatformsConfig, pos: { x: 6600, y: 1000 } },
-            { ...baseCristalConf, pos: { x: 6800, y: 700 }, group: this.coin, texture: "cristal3", width: 140, height: 180 },
+            { ...baseCristalConf, pos: { x: 6800, y: 700 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
             { ...basePlatformsConfig, pos: { x: 7000, y: 1000 } },
-            { ...baseCristalConf, pos: { x: 7200, y: 700 }, group: this.coin, texture: "cristal3", width: 140, height: 180 },
+            { ...baseCristalConf, pos: { x: 7200, y: 700 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
             { ...basePlatformsConfig, pos: { x: 7400, y: 1000 } },
 
-            { ...baseCristalConf, pos: { x: 7600, y: 200 }, group: this.coin, texture: "cristal3", width: 140, height: 180 },
+            { ...baseCristalConf, pos: { x: 7600, y: 200 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
             { ...basePlatformsConfig, pos: { x: 8000, y: 400 } },
             { ...basePlatformsConfig, pos: { x: 8300, y: 700 } },
-            { ...baseCristalConf, pos: { x: 8300, y: 600 }, group: this.coin, texture: "cristal3", width: 140, height: 180 },
+            { ...baseCristalConf, pos: { x: 8300, y: 600 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
 
             { ...basePlatformsConfig, pos: { x: 8000, y: 1000 } },
             { ...basePlatformsConfig, pos: { x: 8600, y: 1000 } },
-
-
-
-
-
+            {
+                ...baseLargePlatformsConf,
+                pos: { x: 9300, y: 1000 },
+                width: {
+                    textureA: 90,
+                    textureB: 67,
+                    textureC: 115,
+                },
+                height: 127,
+                large: 25,
+                group: this.floor
+            },
+            { ...baseDangerConf, pos: { x: 9350, y: 950 }, width: 170, height: 170, animation:{ xAxis:{ xDistance:350, xVel:150 } }, },
+            { type: "finalPortal", pos: { x: 9900, y: 900 }, texture: "plataformaFinalP1", width: 100, height: 100, group: this.portal }
 
         ]
         this.createPlatforms(mapPlatforms)

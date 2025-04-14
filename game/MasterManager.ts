@@ -169,8 +169,6 @@ export default class MasterManager extends Phaser.Scene {
 
   create() {
     this.brightnessScreen = this.add.rectangle(window.innerWidth / 2, window.innerHeight / 2, window.innerWidth * 4, window.innerHeight * 4, 0x000000, 1).setAlpha(0);
-    // this.codigos = this.cache.json.get('codigos');
-    // this.registry.set('codigos', this.codigos)
   }
 
   update() {

@@ -22,6 +22,10 @@ export default function Factory(scene: Game, config: any, floorGroup: Phaser.Phy
         let collectable = new Collectable(scene, rest, rest.group);
         if (rest.flipX) collectable.setFlipX(true)
         if (rest.colors) collectable.setTint(rest.colors[0]);
+
+        if(rest.shield){
+          scene.UICamera?.ignore(rest.shield)
+        }
       return collectable
     case "subPortal":
       let portal = new Teleport(scene, rest);

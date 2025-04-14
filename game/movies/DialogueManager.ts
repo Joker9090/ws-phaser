@@ -323,7 +323,6 @@ class DialogueManager {
       if (this.state === "STOP") {
           this.resumeAudio(); // Resume the audio if paused
           this.state = "PLAY";
-
           const currentText = this.textDisplayed?.text || ""; // Get the current displayed text
           const remainingText = this.texts[this.textCounter]?.slice(currentText.length); // Calculate remaining text
           this.textBuilder(remainingText ?? '', this.timeBetweenLetters); // Continue building the text

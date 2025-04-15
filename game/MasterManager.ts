@@ -140,8 +140,8 @@ export default class MasterManager extends Phaser.Scene {
   }
 
   pauseCinemato(cine:CinematographyModular, timeEvent:Phaser.Time.TimerEvent) {
-    timeEvent.paused = true;
-    cine.scene.pause(); 
+    // timeEvent.paused = true;
+    // cine.scene.pause(); 
   }
 
   enterCode(code: string, error: Phaser.GameObjects.Text) {

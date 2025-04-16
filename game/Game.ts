@@ -79,6 +79,8 @@ class Game extends Phaser.Scene {
   cameraWidth: number = 0;
   cameraHeight: number = 0;
 
+  initialScroll:  { x: number; y: number } = { x: 0, y: 0 };
+
   mapShown: boolean = false;
 
   loopMusic?: string;
@@ -98,6 +100,7 @@ class Game extends Phaser.Scene {
     //nsole.log("scene touch");
     if (this.player) {
       //nsole.log("scene touch inside Player");
+      // this.initialScroll = { x: 0, y: 0 };
       this.player.idle();
       this.player.setVelocityX(0);
       if (this.player.withTank) {
@@ -285,6 +288,7 @@ class Game extends Phaser.Scene {
   }
 
   changeScene(obj: GamePlayDataType){
+
     if (!this.scene.get("MultiScene")) {
       const multiScene = new MultiScene("Game",obj);
       const scene = this.scene.add("MultiScene", multiScene, true);
@@ -294,6 +298,8 @@ class Game extends Phaser.Scene {
   }
 
   win() {
+    this.initialScroll = { x: 0, y: 0 };
+
     if (this.player && this.map) {
       console.log(this.levelIs, "LEVEL IS JOTITA");
       this.cameraNormal = true;
@@ -367,6 +373,7 @@ class Game extends Phaser.Scene {
 
   lose() {
     console.log("[Game] lose()");
+    this.initialScroll = { x: 0, y: 0 };
     this.canRot = true;
     if (this.map) {
       //@ts-ignore
@@ -468,6 +475,7 @@ class Game extends Phaser.Scene {
     //   this.animCameraPan(2000, 500)
     // })
     console.log("ARIEL TEST", data);
+
     this.cursorsAWSD = this.input.keyboard?.addKeys({
       w: Phaser.Input.Keyboard.KeyCodes.W,
       a: Phaser.Input.Keyboard.KeyCodes.A,
@@ -665,6 +673,7 @@ class Game extends Phaser.Scene {
         this.loopMusic = "planet0LoopMusic";
         break;
     }
+    
     let { x, y } = this.map.startingPoint;
     if(data.startingPositionFromOtherScene){
       x = data.startingPositionFromOtherScene.x;
@@ -683,7 +692,7 @@ class Game extends Phaser.Scene {
         this.masterManagerScene.playMusic(this.loopMusic, true);
     }
     /* UI SCENE  */
-
+    
     this.UICamera = this.cameras.add(
       0,
       0,
@@ -693,23 +702,23 @@ class Game extends Phaser.Scene {
     this.UICamera?.ignore(this.player);
     this.player.gravityAnimSprite && this.UICamera?.ignore(this.player.gravityAnimSprite);
     
-
+    
     this.UIClass = new UIClass(this, this.levelIs, this.lifes, this.timeLevel);
-
+    
     /* CONTROLS */
     this.EscKeyboard = this.input.keyboard?.addKey(
       Phaser.Input.Keyboard.KeyCodes.ESC
     );
-
+    
     
     // FINALIZA EL MAPA
-
+    
     // ARRANCA EL MAPA
     this.canWin = false;
     /* CREATE MAP */
     this.map.createMap(data);
     console.log("rotating camera", this.cameraNormal);
-
+    
     const {
       x: boundX,
       y: boundY,
@@ -729,7 +738,6 @@ class Game extends Phaser.Scene {
       0,
       this.cameraHeight / 2 - 350
     );
-
     /* COLLIDERS */
     //@ts-ignore
     this.map.addColliders();

@@ -85,7 +85,7 @@ export default class MapCreator {
     x: 0,
     y: 0,
     width: 10000,
-    height: 1300,
+    height: 2000,
   };
   floorConf?: Phaser.Physics.Arcade.Group;
   backgroundConf?: Phaser.Physics.Arcade.Group;
@@ -140,6 +140,8 @@ export default class MapCreator {
   endPortal?: Phaser.Physics.Arcade.Group;
   ratioReference: { width: number; height: number } = { width: 1920, height: 1080 };
   farBackgroundReference: { width: number; height: number } = { width: 3840, height: 2160 };
+  savePoint?: {x: number; y: number};
+  initialScroll:  { x: number; y: number } = { x: 0, y: 0 };
 
   constructor(scene: Game, player: Player, data?: GamePlayDataType) {
     this.scene = scene;
@@ -149,26 +151,40 @@ export default class MapCreator {
       immovable: true,
       collideWorldBounds: true,
     });
+    this.startingPoint = {
+      x: 500, //500
+      y: this.worldSize.height-600, //800
+    };
     this.scene.physics.world.setBounds(
       0,
       0,
       this.worldSize.width,
       this.worldSize.height
     );
-
     this.player.setPlayerWithTank(true);
 
+    // this.scene.cameras.main.setPosition(
+    //   0,
+    //   0
+    // );
     this.backContainer = this.scene.add.container();
     this.middleContainer = this.scene.add.container();
     // this.mapContainer = this.middleContainer;
     this.frontContainer = this.scene.add.container();
-
+    console.log(this.scene.cameras.main.midPoint);
+    // this.scene.cameras.main.midPoint.setTo(
+    //   0,
+    //   this.worldSize.height
+    // );
+    // this.scene.cameras.main.scrollX = 0;
+    // this.scene.cameras.main.scrollY = 0;
+    this.setInitialScroll(0, 0);
     const originPoint = { x: 0, y: 0 };//{ x: 0, y: this.worldSize.height };
-    this.backContainer.setPosition(originPoint.x, originPoint.y);
-    this.middleContainer.setPosition(originPoint.x, originPoint.y);
-    this.frontContainer.setPosition(originPoint.x, originPoint.y);
-
+    this.backContainer.setPosition(originPoint.x, originPoint.y).setSize(this.worldSize.width, this.worldSize.height)
+    this.middleContainer.setPosition(originPoint.x, originPoint.y).setSize(this.worldSize.width, this.worldSize.height)
+    this.frontContainer.setPosition(originPoint.x, originPoint.y).setSize(this.worldSize.width, this.worldSize.height);
     this.createMapGroups();
+
   }
 
   // createMap() {
@@ -214,6 +230,7 @@ export default class MapCreator {
     this.scene.UICamera?.ignore(this.backContainer);
     this.scene.UICamera?.ignore(this.middleContainer);
     this.scene.UICamera?.ignore(this.frontContainer);
+    this.scene.cameras.main.setScroll(0, 0);
   }
 
   createPlatforms(gameObjects: mapFloorConfig[]) {
@@ -222,19 +239,26 @@ export default class MapCreator {
     })
   }
 
+  setInitialScroll(scrollX: number, scrollY: number) {
+    this.scene.initialScroll = { x: scrollX, y: scrollY };
+    console.log("setInitialScroll", scrollX, scrollY);
+    // this.initialScroll = { x: scrollX, y: scrollY };
+  }
+
   animateBackground(player: Phaser.GameObjects.Sprite | Phaser.Math.Vector2) {
+
     // console.log("animateBackground");
     this.updateContainerPositionRelativeToCamera(
       this.backContainer,
       this.scene.cameras.main,
-      { x: -this.backSize.width * 2, y: -this.backSize.height * 2 },
+      { x: 0, y: 0 },
       { fixX: 1.1, fixY: 1.1 }
     );
     
     this.updateContainerPositionRelativeToCamera(
       this.middleContainer,
       this.scene.cameras.main,
-      { x: (this.middleContainer.first as Phaser.GameObjects.Sprite)?.x, y: (this.middleContainer.first as Phaser.GameObjects.Sprite).y },
+      { x: 0, y: 0 },
       { fixX: 2, fixY: 2 }
     );
 
@@ -242,7 +266,7 @@ export default class MapCreator {
       this.frontContainer,
       this.scene.cameras.main,
       { x: 0, y: 0 },
-      { fixX: -20, fixY: -30 }
+      { fixX: 20, fixY: 30 }
     );
 
   }
@@ -252,10 +276,10 @@ export default class MapCreator {
     fixedPoint: { x: number; y: number },
     ponderation: { fixX: number; fixY: number }
   ) {
-    // console.log("updateContainerPositionRelativeToCamera", container, camera, fixedPoint, ponderation);
-    const offsetX = (camera.scrollX - fixedPoint.x) / ponderation.fixX;
-    const offsetY = (camera.scrollY - fixedPoint.y) / ponderation.fixY;
+    const offsetX = ((camera.scrollX - this.scene.initialScroll.x) - fixedPoint.x) / ponderation.fixX;
+    const offsetY = ((camera.scrollY - this.scene.initialScroll.y) - fixedPoint.y) / ponderation.fixY;
     // Update the container's position
+    // console.log("updateContainerPositionRelativeToCamera", camera.scrollX, camera.scrollY);
     container?.setPosition(fixedPoint.x + offsetX, fixedPoint.y + offsetY, 0, 0);
   }
 

@@ -17,7 +17,6 @@ import MapCreator from "./MapCreator";
 import { group } from "console";
 
 
-
 class Sandbox extends MapCreator {
   pisosBack?: Phaser.Physics.Arcade.Group;
   // coinAura?: Phaser.GameObjects.Sprite;
@@ -85,26 +84,26 @@ class Sandbox extends MapCreator {
       this.scene.add.image(-this.startingPoint.x + farWidth, this.worldSize.height, "gradient").setOrigin(0, 1),
       this.scene.add.image(-this.startingPoint.x, this.worldSize.height, "stars").setOrigin(0, 1),
       this.scene.add.image(-this.startingPoint.x + farWidth, this.worldSize.height, "stars").setOrigin(0, 1),
-      this.scene.add.image(-this.startingPoint.x, this.worldSize.height - 200, "curvedVector").setOrigin(0, 1),
-      this.scene.add.image(-this.startingPoint.x + farWidth, this.worldSize.height - 200, "curvedVector2").setOrigin(0, 1),
+      this.scene.add.image(-this.startingPoint.x, this.worldSize.height, "curvedVector").setOrigin(0, 1),
+      this.scene.add.image(-this.startingPoint.x + farWidth, this.worldSize.height, "curvedVector2").setOrigin(0, 1),
     ]
 
     this.backgroundsMiddle = [
-      this.scene.add.image(-this.startingPoint.x, this.startingPoint.y - 50, "middleCombo").setOrigin(0, 1).setScale(0.7),
-      this.scene.add.image(-this.startingPoint.x + downScaledMiddleWidth, this.startingPoint.y - 50, "middleCombo2").setOrigin(0, 1).setScale(0.7),
-      this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 2), this.startingPoint.y - 50, "middleCombo3").setOrigin(0, 1).setScale(0.7),
-      this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 3), this.startingPoint.y - 50, "middleCombo4").setOrigin(0, 1).setScale(0.7),
-      this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 4), this.startingPoint.y - 50, "middleCombo2").setOrigin(0, 1).setScale(0.7),
-      this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 5), this.startingPoint.y - 50, "middleCombo2").setOrigin(0, 1).setScale(0.7),
+      this.scene.add.image(-this.startingPoint.x, this.worldSize.height, "middleCombo").setOrigin(0, 1).setScale(0.7),
+      this.scene.add.image(-this.startingPoint.x + downScaledMiddleWidth, this.worldSize.height, "middleCombo2").setOrigin(0, 1).setScale(0.7),
+      this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 2), this.worldSize.height, "middleCombo3").setOrigin(0, 1).setScale(0.7),
+      this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 3), this.worldSize.height, "middleCombo4").setOrigin(0, 1).setScale(0.7),
+      this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 4), this.worldSize.height, "middleCombo2").setOrigin(0, 1).setScale(0.7),
+      this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 5), this.worldSize.height, "middleCombo2").setOrigin(0, 1).setScale(0.7),
     ]
 
     this.backgroundsFront = [
-        this.scene.add.image(-this.startingPoint.x, this.startingPoint.y + 550, "frontCombo").setOrigin(0, 1).setScale(0.5),
-        this.scene.add.image(-this.startingPoint.x + downScaledFrontWidth, this.startingPoint.y + 550, "frontCombo2").setOrigin(0, 1).setScale(0.5),
-        this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 2), this.startingPoint.y + 550, "frontCombo3").setOrigin(0, 1).setScale(0.5),
-        this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 3), this.startingPoint.y + 550, "frontCombo4").setOrigin(0, 1).setScale(0.5),
-        this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 4), this.startingPoint.y + 550, "frontCombo2").setOrigin(0, 1).setScale(0.5),
-        this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 5), this.startingPoint.y + 550, "frontCombo2").setOrigin(0, 1).setScale(0.5),
+        this.scene.add.image(-this.startingPoint.x, this.worldSize.height, "frontCombo").setOrigin(0, 1).setScale(0.5),
+        this.scene.add.image(-this.startingPoint.x + downScaledFrontWidth, this.worldSize.height, "frontCombo2").setOrigin(0, 1).setScale(0.5),
+        this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 2), this.worldSize.height, "frontCombo3").setOrigin(0, 1).setScale(0.5),
+        this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 3), this.worldSize.height, "frontCombo4").setOrigin(0, 1).setScale(0.5),
+        this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 4), this.worldSize.height, "frontCombo2").setOrigin(0, 1).setScale(0.5),
+        this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 5), this.worldSize.height, "frontCombo2").setOrigin(0, 1).setScale(0.5),
     ]
 
     this.createBackgrounds(this.backgroundsBack, this.backgroundsMiddle, this.backgroundsFront);
@@ -113,7 +112,6 @@ class Sandbox extends MapCreator {
     //this.mapContainer.add(this.backgroundsBack.concat(this.backgroundsMiddle).concat(this.backgroundsFront));
     this.scene.UICamera?.ignore(this.mapContainer);
     this.scene.UICamera?.ignore(this.frontContainer);
-
     this.scene.player?.setDepth(999);
     
 
@@ -130,10 +128,17 @@ class Sandbox extends MapCreator {
     const baseLargePlatformsConf = {
       withTextureToAbove: true,
       texture: "plataformaNuevaA",
-      textureA: "plataformaNuevaLargaA",
-      textureB: "plataformaNuevaLargaB",
-      textureC: "plataformaNuevaLargaC",
-      scale: { width: 0.7, height: 0.7 },
+      textureA: "platform_izq",
+      textureB: "platform_center",
+      textureC: "platform_der",
+      textureFill: ["fill_texture", "fill_texture2", "fill_texture3", "fill_texture4"],
+      width: {
+        textureA: 96,
+        textureB: 96,
+        textureC: 96,
+      },
+      height: 96,
+      scale: { width: 1, height: 1 },
       rotated: false,
       type: "largeFloor",
     };
@@ -192,26 +197,14 @@ class Sandbox extends MapCreator {
       // largePlatforms
       {
         ...baseLargePlatformsConf,
-        pos: { x: 300, y: 1200 },
-        width: {
-          textureA: 90,
-          textureB: 67,
-          textureC: 115,
-        }, // Adjusted to match the expected type in mapFloorConfig
-        height: 127,
-        large: 150,
+        pos: { x: 300, y: this.worldSize.height-400 },
+        large: 10,
         group: this.floor
       },
       {
         // ...globalPlatformsConfig,
         ...baseLargePlatformsConf,
         pos: { x: 6000, y: 500 },
-        width: {
-          textureA: 90,
-          textureB: 67,
-          textureC: 115,
-        }, // Adjusted to match the expected type in mapFloorConfig
-        height: 127,
         large: 30,
         group: this.floor
       },
@@ -226,9 +219,23 @@ class Sandbox extends MapCreator {
       { type: "finalPortal", pos: { x: 5500, y: 1090 }, texture: "plataformaFinalP1", width: 100, height: 100, group: this.portal }
     
     ]
-
-    this.createPlatforms(mapPlatforms)
     
+    this.createPlatforms(mapPlatforms)
+    const getAllTilemapsAndLargeFloors = () => {
+      const tileSprites = this.scene.children.list.filter(
+        (child: any) => child
+      );
+
+      const largeFloors = this.floor?.getChildren().filter(
+      (child) => child instanceof LargeFloorIsland
+      );
+
+      return { tileSprites, largeFloors };
+    };
+
+    const { tileSprites, largeFloors } = getAllTilemapsAndLargeFloors();
+    console.log("Tilemaps:", tileSprites);
+    console.log("Large Floors:", largeFloors);
    
     // const teleport_1 = new Teleport(this.scene, { x: 2000, y: 800, version: 1, sameScene: false, group: this.teleport, otherSceneConf: otherSceneConf })
  
@@ -374,6 +381,7 @@ class Sandbox extends MapCreator {
     /* Attach background anim */
     // if (this.scene.player) this.animateBackground(this.scene.player);
     if (this.scene.player)
+      if (this.scene.initialScroll.x === 0 && this.scene.initialScroll.y === 0) this.setInitialScroll(this.scene.cameras.main.scrollX, this.scene.cameras.main.scrollY);
       this.animateBackground(this.scene.cameras.main.midPoint);
   }
 }

@@ -92,10 +92,6 @@ class Mapa0 extends MapCreator {
   backgroundsMiddle: Phaser.GameObjects.Image[];
   backgroundsFront: Phaser.GameObjects.Image[];
 
-  originalPositionsBackgroundsBack: {x: number, y:number}[]
-  originalPositionsBackgroundsMiddle: {x: number, y:number}[]
-  originalPositionsBackgroundsFront: {x: number, y:number}[]
-
   UIItemToGrab: string = "cristal3";
   UIItemScale?: number;
   cristal?: Collectable;
@@ -131,10 +127,10 @@ const backBackgroundsContainer = this.scene.add.container()
 const frontBackgroundsContainer = this.scene.add.container() 
 */
 
-this.backContainer = this.scene.add.container();
-this.middleContainer = this.scene.add.container();
-this.mapContainer = this.middleContainer;
-this.frontContainer = this.scene.add.container().setDepth(999999999999);
+  this.backContainer = this.scene.add.container();
+  this.middleContainer = this.scene.add.container();
+  this.mapContainer = this.middleContainer;
+  this.frontContainer = this.scene.add.container().setDepth(999999999999);
 
   // Set the origin point of the containers to { x: 0, y: worldSize.height }
   const originPoint ={x: 0, y:0};//{ x: 0, y: this.worldSize.height };
@@ -191,22 +187,6 @@ this.frontContainer = this.scene.add.container().setDepth(999999999999);
       this.mountain4,
       this.mountain5,
       ];
-    this.originalPositionsBackgroundsBack = this.backgroundsBack.map(
-            (img: Phaser.GameObjects.Image) => {
-              return { x: img.x, y: img.y };
-            }
-          );
-    this.originalPositionsBackgroundsMiddle = this.backgroundsMiddle.map(
-            (img: Phaser.GameObjects.Image) => {
-              return { x: img.x, y: img.y };
-            }
-          );
-    this.originalPositionsBackgroundsFront = this.backgroundsFront.map(
-            (img: Phaser.GameObjects.Image) => {
-              return { x: img.x, y: img.y };
-            }
-          );
-
     //frontBackgroundsContainer.add([this.mountain1, this.mountain2, this.mountain3]);
     //this.mapContainer.add(backBackgroundsContainer)
     //this.frontContainer.add(frontBackgroundsContainer)
@@ -232,7 +212,7 @@ this.frontContainer = this.scene.add.container().setDepth(999999999999);
     // Update the container's position
     container?.setPosition(fixedPoint.x+offsetX, fixedPoint.y+offsetY,0,0);
   }
-
+/*
   updatePositionsRelativeToCamera = (
       originalPos: { x: number; y: number }[],
       images: Phaser.GameObjects.Image[],
@@ -256,7 +236,7 @@ this.frontContainer = this.scene.add.container().setDepth(999999999999);
       { x: -this.background.width*2, y: -this.background.height*2 },
       { fixX:1.1, fixY: 1.1 }
     );
-this.updateContainerPositionRelativeToCamera(
+  this.updateContainerPositionRelativeToCamera(
     this.middleContainer,
     this.scene.cameras.main,
     { x: -this.background7.width*0.5, y: -this.background7.height*1.75 },
@@ -270,32 +250,8 @@ this.updateContainerPositionRelativeToCamera(
     { fixX: -20, fixY: -30 }
   );
 
-
-    /*
-      this.updatePositionsRelativeToCamera(
-      this.originalPositionsBackgroundsBack,
-      this.backgroundsBack,
-      this.scene.cameras.main,
-      { x: 0, y: 0 },//{ x: this.startingPoint.x, y: this.startingPoint.y },
-      { fixX: 1.1, fixY: 1.1 }
-    );
-    this.updatePositionsRelativeToCamera(
-      this.originalPositionsBackgroundsMiddle,
-      this.backgroundsMiddle,
-      this.scene.cameras.main,
-      { x: 0, y: 0 },//{ x: this.startingPoint.x, y: this.startingPoint.y },
-      { fixX: 2, fixY: 4 }
-    );
-    this.updatePositionsRelativeToCamera(
-      this.originalPositionsBackgroundsFront,
-      this.backgroundsFront,
-      this.scene.cameras.main,
-      { x: 0, y: 0 },//{ x: this.startingPoint.x, y: this.startingPoint.y },
-      { fixX: -20, fixY: -30 }
-    );
-    */
   }
-
+*/
   /*addColliders() {
     if (this.scene.player) {
       if (this.floor)
@@ -585,19 +541,25 @@ this.updateContainerPositionRelativeToCamera(
 
   const boxConfig: DangerConfig = {
     texture: "Enemy",
-    pos: {x: 1500, y: 1740 },
-    scale: { width: 1, height: 1 },
+    pos: {x: 1500, y: 1640 },
+    scale: { width: 0.7, height: 0.7 },
     width: 170,
     height: 170,
     attackSpriteSheet: "EnemyAttack",
     particleSpriteSheet: "EnemyParticles",
-    animation:{
+    /*animation:{
       xAxis:{
         xDistance:100,
         xVel:20,
       }
     },
-    
+    attackBurst:{
+      yAxis:{
+        yDistance:20,
+        yVel:100,
+      }
+    },*/
+    color:0x00feff,
   }
   const box = new Danger(this.scene, boxConfig, this.obstacle);
   //box.setTint(0xff0000);
@@ -633,7 +595,7 @@ this.updateContainerPositionRelativeToCamera(
       width: 40,
       height: 18,
       fix: 25,
-      aura:"auraTuto",
+      //aura:"auraTuto",
       shield:"auraAnim"
     }
     const coll1 = new Collectable(this.scene, coll1Config, this.invincible).setBodySize(140,180);

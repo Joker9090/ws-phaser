@@ -63,6 +63,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.tankAnimSprite.setVisible(false).setDepth(900);
 
     this.auraAnimSprite = this.scene.add.sprite(this.x, this.y, "invincibleAura");
+    this.auraAnimSprite.setScale(0.7, 1.1);
+    this.auraAnimSprite.setAlpha(0.8);
     this.auraAnimSprite.setVisible(false);
 
     const playerJumpFrames = scene.anims.generateFrameNumbers("player", {
@@ -168,13 +170,13 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     };
 
     const invincibleAuraFrames = scene.anims.generateFrameNumbers("auraAnim", {
-      frames: Array.from({ length: 16 }, (_, i) => i),
+      frames: Array.from({ length: 6 }, (_, i) => i),
     });
 
     const invincibleAuraConfig = {
       key: "auraAnim",
       frames: invincibleAuraFrames,
-      frameRate: frameRate,
+      frameRate: 12,
       repeat: -1,
     };
 

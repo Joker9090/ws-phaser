@@ -197,7 +197,7 @@ export const loadAssets = {
       [
         "spritesheet",
         "auraAnim",
-        "/game/player/auraAnim.png",
+        "/game/player/proteccionluzsprite 1.png",
         { frameWidth: 201, frameHeight: 201 },
       ],
       // [
@@ -227,12 +227,12 @@ export const loadAssets = {
       //DANGER
       ["spritesheet",
         "EnemyAttack",
-        "/game/planeta1/EnemyAttack.png",
+        "/game/planeta1/EnemyByN.png",
         { frameWidth: 170, frameHeight: 170 },
       ],
       ["spritesheet",
         "EnemyParticles",
-        "/game/planeta1/EnemyParticles.png",
+        "/game/planeta1/BolitasIdle_ByN.png",
         { frameWidth: 170, frameHeight: 170 },
       ],
       

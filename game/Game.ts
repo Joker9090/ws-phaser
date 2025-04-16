@@ -684,7 +684,8 @@ class Game extends Phaser.Scene {
     );
     this.UICamera?.ignore(this.player);
     this.player.gravityAnimSprite && this.UICamera?.ignore(this.player.gravityAnimSprite);
-    
+    this.player.tankAnimSprite && this.UICamera?.ignore(this.player.tankAnimSprite);
+    this.player.auraAnimSprite && this.UICamera?.ignore(this.player.auraAnimSprite);
 
     this.UIClass = new UIClass(this, this.levelIs, this.lifes, this.timeLevel);
 

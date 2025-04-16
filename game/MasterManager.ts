@@ -4,6 +4,7 @@ import Ticker from "./movies/Ticker";
 import Game from "./Game";
 import CODES from "../public/game/codigos.json"
 import CinematographyModular from "./movies/Cinematography-modular";
+import UI from "./assets/UI";
 
 
 export type enterCodeType = {
@@ -129,7 +130,14 @@ export default class MasterManager extends Phaser.Scene {
   resumeGame() {
     const gameScene = this.scene.get("Game");
     if (gameScene) {
-      (gameScene as Game).UIClass?.settingsModal?.animationOfModal(false)
+      (gameScene as Game).UIClass?.settingsModal?.animationOfModal(false);
+      (gameScene as Game).UIClass?.container.each((child: any) => {
+        if(child  instanceof UI){ {
+            child.setVisible(true)
+          }
+        } 
+      });
+      (gameScene as Game).UIClass?.collText?.setVisible(true)
       this.time.delayedCall(600, () => {
         gameScene.physics.world.resume();
         gameScene.tweens.resumeAll();

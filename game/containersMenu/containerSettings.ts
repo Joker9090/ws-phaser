@@ -433,58 +433,61 @@ class containerSettings extends Phaser.GameObjects.Container {
         this.settingsButtonUi?.setVisible(true)
         this.destroy()
     }
-
-    createSlider(scene: Phaser.Scene, x: number, y: number, onChange: (value: number) => void, initialValue: number) {
-        const slider = scene.add.container(x, y);
-        const bar = scene.add.image(0 * this.scaleFactor, 0* this.scaleFactor, 'settingsSlider').setOrigin(0.5).setScale(this.scaleFactor * .8);
-        const fillBar = scene.add.rectangle(-140 * this.scaleFactor, 0 * this.scaleFactor, 0, 24, 57055).setOrigin(0, 0.5).setScale(this.scaleFactor * 1);
-        const fillBarStart = scene.add.image(-141 * this.scaleFactor, 0 * this.scaleFactor, 'fillBarStart').setOrigin(0.5).setScale(this.scaleFactor * .8);
-        const control = scene.add.circle(-125 * this.scaleFactor, 0 * this.scaleFactor, 13, 0xffffff).setOrigin(0.5).setScale(this.scaleFactor * 1);
-
-
-
-
-        // this.scene.tweens.add({
-        //     targets: [bar, fillBarStart],
-        //     duration: 500,
-        //     scale: 0.8,
-        //     ease: 'power2',
-        // })
-        // this.scene.tweens.add({
-        //     targets: [fillBar, control],
-        //     duration: 500,
-        //     scale: 1,
-        //     ease: 'power2',
-        // })
-
-        control.setInteractive({ draggable: true });
-        control.on('pointerover', () => {
-            control.setScale(1.2);
-        });
-        control.on('pointerout', () => {
-            control.setScale(1.0);
-        });
-
-        const initialX = Phaser.Math.Clamp((initialValue * 280) - 140, -140, 140);
-        fillBar.width = initialX + 140;
-        slider.add([bar, fillBarStart, fillBar, control]);
-
-        control.x = initialX;
-        scene.input.setDraggable(control);
-        control.on('drag', (pointer: any, dragX: number) => {
-            control.x = Phaser.Math.Clamp(dragX, -136, 142);
-            const value = Phaser.Math.Clamp((control.x + 140) / 280, 0, 1);
-            fillBar.width = control.x + 140;
-            onChange(value);
-        });
-        control.on('pointerdown', () => {
-            this.masterManager.playSound('buttonSound', false);
-        });
-
-        control.setDepth(10);
-        this.settingsModal.add(slider);
-        return { slider, control, fillBar };
-    }
+    createSlider(
+        scene: Phaser.Scene,
+        x: number,
+        y: number,
+        onChange: (value: number) => void,
+        initialValue: number
+      ) {
+          const slider = scene.add.container(x, y);
+          const barWidth = 280 * this.scaleFactor; // el ancho total utilizable del slider
+          const halfBar = barWidth / 2;
+      
+          const bar = scene.add.image(0, 0, 'settingsSlider').setOrigin(0.5).setScale(this.scaleFactor * 0.8);
+      
+          const fillBar = scene.add.rectangle(-halfBar, 0, 0, 24,  0x00dedf).setOrigin(0, 0.5).setScale(1,this.scaleFactor);
+      
+          const fillBarStart = scene.add.image(-halfBar - 1 * this.scaleFactor, 0, 'fillBarStart').setOrigin(0.5).setScale(this.scaleFactor * 0.8);
+      
+          const control = scene.add.circle(-halfBar + initialValue * barWidth , 0, 13, 0xffffff) .setOrigin(0.5).setScale(this.scaleFactor);
+      
+          control.setInteractive({ draggable: true });
+      
+          control.on('pointerover', () => {
+              control.setScale(1.2 * this.scaleFactor);
+          });
+      
+          control.on('pointerout', () => {
+              control.setScale(1.0 * this.scaleFactor);
+          });
+      
+          // Inicializa el fillBar con el valor inicial
+          fillBar.width = (control.x + halfBar);
+      
+          control.on('drag', (_: any, dragX: number) => {
+              const minX = -halfBar;
+              const maxX = halfBar;
+              control.x = Phaser.Math.Clamp(dragX, minX, maxX);
+              console.log(control.x, "control x", fillBar.width, "fillbar width")
+              // Actualiza el fillBar y calcula el nuevo valor (de 0 a 1)
+              const normalizedValue = (control.x + halfBar ) / barWidth;
+              fillBar.width = control.x + halfBar -7;
+      
+              onChange(normalizedValue);
+          });
+      
+          control.on('pointerdown', () => {
+              this.masterManager.playSound('buttonSound', false);
+          });
+      
+          control.setDepth(10);
+          slider.add([bar, fillBarStart, fillBar, control]);
+          this.settingsModal.add(slider);
+      
+          return { slider, control, fillBar };
+      }
+      
 
 }
 export default containerSettings;

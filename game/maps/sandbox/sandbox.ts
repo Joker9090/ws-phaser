@@ -40,6 +40,7 @@ class Sandbox extends MapCreator {
   cristal?: Floor;
   collected: Boolean = false;
   rotate?: boolean = true;
+
   constructor(scene: Game, player: Player, data?: GamePlayDataType) {
     super(scene, player, data);
     this.scene = scene;
@@ -53,6 +54,34 @@ class Sandbox extends MapCreator {
     );
 
     this.player.setPlayerWithTank(true);
+
+    this.worldSize = {
+      width: 10000,
+      height: 1800,
+    };
+    this.cameraBounds = {
+      x: 0,
+      y: 0,
+      width: 10000,
+      height: 1800,
+    };
+    this.scene.physics.world.setBounds(
+      this.cameraBounds.x,
+      this.cameraBounds.y,
+      this.cameraBounds.width,
+      this.cameraBounds.height
+    );
+    this.scene.cameras.main.setBounds(
+      this.cameraBounds.x,
+      this.cameraBounds.y,
+      this.cameraBounds.width,
+      this.cameraBounds.height
+    );
+
+    this.startingPoint = {
+      x: 500, //500
+      y: this.worldSize.height - 600, //800
+    };
   }
 
   createMap(data: { level: number; lifes: number }) {
@@ -198,7 +227,7 @@ class Sandbox extends MapCreator {
       {
         ...baseLargePlatformsConf,
         pos: { x: 300, y: this.worldSize.height-400 },
-        large: 10,
+        large: 100,
         group: this.floor
       },
       {
@@ -216,7 +245,7 @@ class Sandbox extends MapCreator {
     
       //portales
       { type: "subPortal",  x: 2000, y: 800, version: 1, sameScene: false, group: this.teleport, otherSceneConf: otherSceneConf },
-      { type: "finalPortal", pos: { x: 5500, y: 1090 }, texture: "plataformaFinalP1", width: 100, height: 100, group: this.portal }
+      { type: "finalPortal", pos: { x: 5500, y: 1200 }, texture: "plataformaFinalP1", width: 100, height: 100, group: this.portal }
     
     ]
     
@@ -323,7 +352,7 @@ class Sandbox extends MapCreator {
     const fireball3Config: FloorConfig = {
       spriteSheet: "meteorito",
       texture: "meteorito",
-      pos: { x: this.startingPoint.x + 200, y: this.startingPoint.y - 100 }, // 500 1580
+      pos: { x: this.startingPoint.x + 200, y: this.startingPoint.y - 600 }, // 500 1580
       width: 100,
       height: 100,
       rotated: true, // rotated define si esta en vertical o horizontal
@@ -374,7 +403,6 @@ class Sandbox extends MapCreator {
     if (this.scene.physics.world.debugGraphic) {
       this.scene.UICamera?.ignore(this.scene.physics.world.debugGraphic);
     }
-
   }
 
   update() {
@@ -382,7 +410,7 @@ class Sandbox extends MapCreator {
     // if (this.scene.player) this.animateBackground(this.scene.player);
     if (this.scene.player)
       if (this.scene.initialScroll.x === 0 && this.scene.initialScroll.y === 0) this.setInitialScroll(this.scene.cameras.main.scrollX, this.scene.cameras.main.scrollY);
-      this.animateBackground(this.scene.cameras.main.midPoint);
+      this.animateBackground();
   }
 }
 export default Sandbox;

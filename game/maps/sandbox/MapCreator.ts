@@ -178,11 +178,11 @@ export default class MapCreator {
     // );
     // this.scene.cameras.main.scrollX = 0;
     // this.scene.cameras.main.scrollY = 0;
-    this.setInitialScroll(0, 0);
-    const originPoint = { x: 0, y: 0 };//{ x: 0, y: this.worldSize.height };
-    this.backContainer.setPosition(originPoint.x, originPoint.y).setSize(this.worldSize.width, this.worldSize.height)
-    this.middleContainer.setPosition(originPoint.x, originPoint.y).setSize(this.worldSize.width, this.worldSize.height)
-    this.frontContainer.setPosition(originPoint.x, originPoint.y).setSize(this.worldSize.width, this.worldSize.height);
+    // this.setInitialScroll(0, 0);
+    // const originPoint = { x: 0, y: 0 };//{ x: 0, y: this.worldSize.height };
+    // this.backContainer.setPosition(originPoint.x, originPoint.y).setSize(this.worldSize.width, this.worldSize.height)
+    // this.middleContainer.setPosition(originPoint.x, originPoint.y).setSize(this.worldSize.width, this.worldSize.height)
+    // this.frontContainer.setPosition(originPoint.x, originPoint.y).setSize(this.worldSize.width, this.worldSize.height);
     this.createMapGroups();
 
   }
@@ -245,43 +245,32 @@ export default class MapCreator {
     // this.initialScroll = { x: scrollX, y: scrollY };
   }
 
-  animateBackground(player: Phaser.GameObjects.Sprite | Phaser.Math.Vector2) {
+  animateBackground() {
+    const camera = this.scene.cameras.main;
+    console.log(camera.midPoint, "midpoint", camera.scrollX, camera.scrollY);
+    this.updateParallaxLayer(this.backContainer, camera, 0.8, 0.8);   // Farthest, moves slowest
+    this.updateParallaxLayer(this.middleContainer, camera, 0.3, 0.3); // Middle layer
+    this.updateParallaxLayer(this.frontContainer, camera, 0, 0);  // Closest, moves faster
 
-    // console.log("animateBackground");
-    this.updateContainerPositionRelativeToCamera(
-      this.backContainer,
-      this.scene.cameras.main,
-      { x: 0, y: 0 },
-      { fixX: 1.1, fixY: 1.1 }
-    );
     
-    this.updateContainerPositionRelativeToCamera(
-      this.middleContainer,
-      this.scene.cameras.main,
-      { x: 0, y: 0 },
-      { fixX: 2, fixY: 2 }
-    );
-
-    this.updateContainerPositionRelativeToCamera(
-      this.frontContainer,
-      this.scene.cameras.main,
-      { x: 0, y: 0 },
-      { fixX: 20, fixY: 30 }
-    );
-
   }
-  updateContainerPositionRelativeToCamera(
+  
+  updateParallaxLayer(
     container: Phaser.GameObjects.Container,
     camera: Phaser.Cameras.Scene2D.Camera,
-    fixedPoint: { x: number; y: number },
-    ponderation: { fixX: number; fixY: number }
+    parallaxFactorX: number,
+    parallaxFactorY: number
   ) {
-    const offsetX = ((camera.scrollX - this.scene.initialScroll.x) - fixedPoint.x) / ponderation.fixX;
-    const offsetY = ((camera.scrollY - this.scene.initialScroll.y) - fixedPoint.y) / ponderation.fixY;
-    // Update the container's position
-    // console.log("updateContainerPositionRelativeToCamera", camera.scrollX, camera.scrollY);
-    container?.setPosition(fixedPoint.x + offsetX, fixedPoint.y + offsetY, 0, 0);
+    if (!container || !camera) return;
+    const offsetY = this.scene.player?.body?.height! - (this.scene.player?.body?.height! * camera.lerp.y * camera.followOffset.y);
+    const maxScrollY = camera.getBounds().bottom - camera.height - offsetY;
+
+    container.setPosition(
+      (camera.scrollX) * parallaxFactorX,
+      (camera.scrollY - (maxScrollY)) * parallaxFactorY + 4 // El 4 es por un microcorte quizas generado por excedentes en los assets
+    );
   }
+  
 
   addColliders() {
     if (this.scene.player) {
@@ -296,7 +285,11 @@ export default class MapCreator {
           //     this.scene.player.tank.isCharging = this.scene.player.tank.chargeValue;
           //   }
           // },
-          () => true,
+          () => {
+            // if (this.scene.player) 
+            //   this.scene.player.touchedFloor = true;
+            //   this.setInitialScroll(this.scene.cameras.main.scrollX, this.scene.cameras.main.scrollY);
+          },
           this.scene
         );
       if (this.gravityTile)

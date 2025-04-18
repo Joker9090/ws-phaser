@@ -58,6 +58,7 @@ class Game extends Phaser.Scene {
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   EscKeyboard?: Phaser.Input.Keyboard.Key;
   player?: Player;
+  touchedFloor?: boolean = false;
   graphics?: Phaser.GameObjects.Graphics;
   map?: PossibleMaps;
 
@@ -288,18 +289,21 @@ class Game extends Phaser.Scene {
   }
 
   changeScene(obj: GamePlayDataType){
-
     if (!this.scene.get("MultiScene")) {
+      console.log("changing scene", obj, this.scene.get("MultiScene"));
       const multiScene = new MultiScene("Game",obj);
       const scene = this.scene.add("MultiScene", multiScene, true);
       this.scene.start("MultiScene").bringToTop("MultiScene");
       this.masterManagerScene?.stopMusic();
+
     }
   }
 
   win() {
-    this.initialScroll = { x: 0, y: 0 };
-
+    // this.initialScroll = { x: 0, y: 0 };
+    if (this.scene.get("MultiScene")) {
+      this.scene.remove("MultiScene");
+    }
     if (this.player && this.map) {
       console.log(this.levelIs, "LEVEL IS JOTITA");
       this.cameraNormal = true;
@@ -373,7 +377,7 @@ class Game extends Phaser.Scene {
 
   lose() {
     console.log("[Game] lose()");
-    this.initialScroll = { x: 0, y: 0 };
+    // this.initialScroll = { x: 0, y: 0 };
     this.canRot = true;
     if (this.map) {
       //@ts-ignore
@@ -384,16 +388,17 @@ class Game extends Phaser.Scene {
         if (this.lifes === 0) {
           this.cameraNormal = true;
           this.checkPoint === 0;
-          var multiScene= new MultiScene();
-          if(this.levelIs != 0){
-            multiScene = new MultiScene("Game", {
+          if (!this.scene.get("MultiScene")) {
+            var multiScene= new MultiScene("Game", {
               level: this.levelIs,
               lifes: this.lifes ? this.lifes : 3,
             });
-          }
-          console.log("[Game] lose(): "+ this.levelIs+" , new lifes"+multiScene.sceneData?.lifes);
-          const scene = this.scene.add("MultiScene", multiScene, true);
-          this.scene.start("MultiScene").bringToTop("MultiScene");
+            if(this.levelIs != 0){
+              const scene = this.scene.add("MultiScene", multiScene, true);
+              this.scene.start("MultiScene").bringToTop("MultiScene");
+            }
+            console.log("[Game] lose(): "+ this.levelIs+" , new lifes"+multiScene.sceneData?.lifes);
+          } else this.scene
         } else if (this.lifes > 0 && this.player) {
           // UI changes
           this.UIClass?.loseLife(this.lifes);
@@ -508,8 +513,8 @@ class Game extends Phaser.Scene {
     /* CHOSE LEVEL, LIFES AND AUDIO */
     switch (data.level) {
       case 999:
+        
         this.player = new Player(this, 0, 0, "character", 2);
-
         this.map = new Sandbox(this, this.player!);
         this.loopMusic = "planet0LoopMusic";
         break;
@@ -679,6 +684,7 @@ class Game extends Phaser.Scene {
       x = data.startingPositionFromOtherScene.x;
       y = data.startingPositionFromOtherScene.y;
     }
+    console.log("x y", x, y);
     this.player.setPosition(x, y);
     /* Audio */
     this.masterManagerScene = this.game.scene.getScene(
@@ -738,6 +744,8 @@ class Game extends Phaser.Scene {
       0,
       this.cameraHeight / 2 - 350
     );
+    // this.cameras.main.setScroll(0, 0);
+    // this.initialScroll = { x: 0, y: 0 };
     /* COLLIDERS */
     //@ts-ignore
     this.map.addColliders();
@@ -772,6 +780,8 @@ class Game extends Phaser.Scene {
     //     },
     //     this
     //   );
+    // this.initialScroll = { x: 0, y: 0 };
+
   }
 
   update(this: Game) {

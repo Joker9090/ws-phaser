@@ -288,12 +288,14 @@ class CinematographyModular extends Phaser.Scene {
       // this.UIClass = new UIClass(this, this.nextLevel ? this.nextLevel : 0, lifes ? lifes : 3, 0);
   }
   pauseDialogue(){
-    this.playingCine.dialogue.stop();
+    if (this.playingCine?.dialogue) 
+      this.playingCine.dialogue.stop();
     // this.playingCine.dialogue.stopAudio();
   }
 
   resumeDialogue(){
-    this.playingCine.dialogue.resume();
+    if (this.playingCine?.dialogue) 
+      this.playingCine.dialogue.resume();
     // this.playingCine.dialogue.resumeAudio();
   }
   update(time: number, delta: number) {

@@ -406,6 +406,13 @@ export const loadAssets = {
       ["image", "pSimple2p1", "/game/planeta2/pSimple2.png"],
       ["image", "comida", "/game/planeta2/comida.png"],
       ["image", "cuevap1", "/game/planeta2/cuevap1.png"],
+      ["image", "fill_texture_p2","/game/planeta2/platforms/fill_texture.png"],
+      ["image", "fill_texture2_p2","/game/planeta2/platforms/fill_texture2.png"],
+      ["image", "fill_texture3_p2","/game/planeta2/platforms/fill_texture3.png"],
+      ["image", "fill_texture4_p2","/game/planeta2/platforms/fill_texture4.png"],
+      ["image", "platform_center_p2","/game/planeta2/platforms/platform_center.png"],
+      ["image", "platform_der_p2","/game/planeta2/platforms/platform_der.png"],
+      ["image", "platform_izq_p2","/game/planeta2/platforms/platform_izq.png"],
     ],
   },
   GamePlay3: {

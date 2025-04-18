@@ -127,7 +127,8 @@ export default class MasterManager extends Phaser.Scene {
     }
   }
   resumeGame() {
-    const gameScene = this.scene.get("Game");
+    if (this.scene) {
+      const gameScene = this.scene?.get("Game");
     if (gameScene) {
       (gameScene as Game).UIClass?.settingsModal?.animationOfModal(false)
       this.time.delayedCall(600, () => {
@@ -136,6 +137,7 @@ export default class MasterManager extends Phaser.Scene {
         gameScene.input.enabled = true;
         gameScene.time.paused = false
       }, [], this)
+    }
     }
   }
 

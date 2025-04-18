@@ -249,7 +249,7 @@ this.frontContainer = this.scene.add.container().setDepth(999999999999);
         );
       });
     };
-  animateBackground(player: Phaser.GameObjects.Sprite | Phaser.Math.Vector2) {
+  animateBackground() {
     this.updateContainerPositionRelativeToCamera(
       this.backContainer,
       this.scene.cameras.main,
@@ -817,7 +817,7 @@ this.updateContainerPositionRelativeToCamera(
     /* Attach background anim */
     // if (this.scene.player) this.animateBackground(this.scene.player);
     if (this.scene.player)
-      this.animateBackground(this.scene.cameras.main.midPoint);
+      this.animateBackground();
   }
 }
 export default Mapa0;

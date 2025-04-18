@@ -11,21 +11,28 @@ class subSandbox extends MapCreator {
         this.player = player;
         this.worldSize = {
             width: 5000,
-            height: 3000,
+            height: 5000,
           };
           this.cameraBounds = {
             x: 0,
             y: 0,
             width: 5000,
-            height: 3000,
+            height: 5000,
           };
     
-        this.scene.physics.world.setBounds(
-          0,
-          0,
-          this.worldSize.width,
-          this.worldSize.height
-        );
+          this.scene.physics.world.setBounds(
+            this.cameraBounds.x,
+            this.cameraBounds.y,
+            this.cameraBounds.width,
+            this.cameraBounds.height
+          );
+          this.scene.cameras.main.setBounds(
+            this.cameraBounds.x,
+            this.cameraBounds.y,
+            this.cameraBounds.width,
+            this.cameraBounds.height
+          );
+        
     
         this.player.setPlayerWithTank(true);
       }
@@ -36,7 +43,6 @@ class subSandbox extends MapCreator {
         const { width: farWidth, height: farHeight } = this.farBackgroundReference;
         const downScaledMiddleWidth = width * 0.7;
         const downScaledFrontWidth = width * 0.5;
-    
         const backImage = this.scene.textures.get("background0P1").getSourceImage()
         this.backSize = { width: backImage.width, height: backImage.height }
     
@@ -189,6 +195,7 @@ class subSandbox extends MapCreator {
         this.scene.UICamera?.ignore(this.backContainer)
         this.scene.UICamera?.ignore(this.middleContainer)
         this.scene.UICamera?.ignore(this.frontContainer)
+        this.scene.UICamera?.ignore(this.obstacle!)
     
     
         if (this.scene.physics.world.debugGraphic) {
@@ -202,7 +209,7 @@ class subSandbox extends MapCreator {
         // if (this.scene.player) this.animateBackground(this.scene.player);
         if (this.scene.player)
           if (this.scene.initialScroll.x === 0 && this.scene.initialScroll.y === 0) this.setInitialScroll(this.scene.cameras.main.scrollX, this.scene.cameras.main.scrollY);
-          this.animateBackground(this.scene.cameras.main.midPoint);
+          this.animateBackground();
       }
 }
 

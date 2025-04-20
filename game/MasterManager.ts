@@ -46,7 +46,7 @@ export default class MasterManager extends Phaser.Scene {
     super({ key: "MasterManager" });
     const tickerMS = 100;
     this.ticker = new Ticker(tickerMS);
-    console.log("JOTA MUSIC",this.volumeMusic, "JOTA SOUND",this.volumeSound, "JOTA SOUND 2", this.sound)
+    console.log("JOTA MUSIC", this.volumeMusic, "JOTA SOUND", this.volumeSound, "JOTA SOUND 2", this.sound)
   }
 
   preload() {
@@ -127,15 +127,32 @@ export default class MasterManager extends Phaser.Scene {
       }, [], this)
     }
   }
+  resumeFromBlur() {
+    const gameScene = this.scene.get("Game");
+
+    if (gameScene) {
+      const settingsVisible = (gameScene as Game).UIClass?.settingsVisible
+      if (!settingsVisible) {
+        this.time.delayedCall(600, () => {
+          gameScene.physics.world.resume();
+          gameScene.tweens.resumeAll();
+          gameScene.input.enabled = true;
+          gameScene.time.paused = false
+        }, [], this)
+      }
+
+    }
+  }
   resumeGame() {
     const gameScene = this.scene.get("Game");
     if (gameScene) {
       (gameScene as Game).UIClass?.settingsModal?.animationOfModal(false);
       (gameScene as Game).UIClass?.container.each((child: any) => {
-        if(child  instanceof UI){ {
+        if (child instanceof UI) {
+          {
             child.setVisible(true)
           }
-        } 
+        }
       });
       (gameScene as Game).UIClass?.collText?.setVisible(true)
       this.time.delayedCall(600, () => {
@@ -147,7 +164,7 @@ export default class MasterManager extends Phaser.Scene {
     }
   }
 
-  pauseCinemato(cine:CinematographyModular, timeEvent:Phaser.Time.TimerEvent) {
+  pauseCinemato(cine: CinematographyModular, timeEvent: Phaser.Time.TimerEvent) {
     // timeEvent.paused = true;
     // cine.scene.pause(); 
   }

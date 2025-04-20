@@ -486,7 +486,7 @@ class Game extends Phaser.Scene {
       if (document.visibilityState === "hidden") {
         this.masterManagerScene?.pauseGame();
       } else {
-        this.masterManagerScene?.resumeGame();
+        this.masterManagerScene?.resumeFromBlur();
       }
     })
 
@@ -495,7 +495,7 @@ class Game extends Phaser.Scene {
     });
   
     window.addEventListener("focus", () => {
-        this.masterManagerScene?.resumeGame();
+        this.masterManagerScene?.resumeFromBlur();
     });
     /* CHOSE LEVEL, LIFES AND AUDIO */
     switch (data.level) {

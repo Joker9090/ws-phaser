@@ -22,8 +22,8 @@ export type globalPlatformsConfigType = {
 
 export type mapFloorConfig = {
   pos?: { x: number; y: number };
-  x?:number,
-  y?:number,
+  x?: number,
+  y?: number,
   rotate?: boolean;
   flipY?: boolean;
   group?: Phaser.Physics.Arcade.Group;
@@ -31,7 +31,7 @@ export type mapFloorConfig = {
   width?: number | { textureA: number; textureB: number; textureC: number };
   height?: number;
   scale?: { width: number; height: number };
-  
+
   animation?: {
     xAxis?: {
       xDistance: number;
@@ -54,7 +54,7 @@ export type mapLargeFloorConfig = {
   colors?: number[];
   width?: {
     textureA: number;
-    textureB: number; 
+    textureB: number;
     textureC: number;
   }
   height?: number;
@@ -140,9 +140,14 @@ export default class MapCreator {
   endPortal?: Phaser.Physics.Arcade.Group;
   ratioReference: { width: number; height: number } = { width: 1920, height: 1080 };
   farBackgroundReference: { width: number; height: number } = { width: 3840, height: 2160 };
-
+  totalCoins?:number
   constructor(scene: Game, player: Player, data?: GamePlayDataType) {
     this.scene = scene;
+    this.totalCoins =  this.coin?.getChildren().length
+
+    if (this.scene.input.keyboard) {
+      this.scene.input.keyboard.enabled = true;
+    }
     this.player = player;
     this.mapGroup = scene.physics.add.group({
       allowGravity: false,
@@ -190,19 +195,19 @@ export default class MapCreator {
       this.scene.UICamera?.ignore(this.scene.physics.world.debugGraphic);
     }
   }
-  
+
   createBackgrounds(_backgroundsBack: Phaser.GameObjects.Image[], _backgroundsMiddle: Phaser.GameObjects.Image[], _backgroundsFront: Phaser.GameObjects.Image[]) {
     console.log("createBackgrounds", _backgroundsBack, _backgroundsMiddle, _backgroundsFront);
     this.backgroundsBack = _backgroundsBack;
     this.backgroundsMiddle = _backgroundsMiddle;
     this.backgroundsFront = _backgroundsFront;
-    
+
     /*this.backContainer.list = backgroundsBack;
     this.middleContainer.list = backgroundsMiddle;
     this.frontContainer.list = backgroundsFront;*/
-    
+
     //console.log("createBackgrounds-container", this.backContainer, this.middleContainer, this.frontContainer);
-    
+
     this.backContainer.add(this.backgroundsBack);
     this.middleContainer.add(this.backgroundsMiddle);
     this.frontContainer.add(this.backgroundsFront).setDepth(9999999999999);
@@ -230,7 +235,7 @@ export default class MapCreator {
       { x: -this.backSize.width * 2, y: -this.backSize.height * 2 },
       { fixX: 1.1, fixY: 1.1 }
     );
-    
+
     this.updateContainerPositionRelativeToCamera(
       this.middleContainer,
       this.scene.cameras.main,
@@ -319,24 +324,24 @@ export default class MapCreator {
           () => true,
           this.scene
         );
-        if (this.invincible) {
-          this.scene.physics.add.overlap(
-            this.scene.player,
-            this.invincible,
-            (a, b: any) => {
-              if (!this.player?.invincible) {
-                this.player?.setPlayerInvicinible(true);
-                b?.turnTo(false);
-                this.invincibilityTimer = this.scene.time.delayedCall(30000, () => {
-                  this.player?.setPlayerInvicinible(false);
-                  b?.turnTo(true);
-                });
-              }
-            },
-            () => true,
-            this.scene
-          );
-        }
+      if (this.invincible) {
+        this.scene.physics.add.overlap(
+          this.scene.player,
+          this.invincible,
+          (a, b: any) => {
+            if (!this.player?.invincible) {
+              this.player?.setPlayerInvicinible(true);
+              b?.turnTo(false);
+              this.invincibilityTimer = this.scene.time.delayedCall(30000, () => {
+                this.player?.setPlayerInvicinible(false);
+                b?.turnTo(true);
+              });
+            }
+          },
+          () => true,
+          this.scene
+        );
+      }
       if (this.portal)
         this.scene.physics.add.overlap(
           this.scene.player,
@@ -365,7 +370,7 @@ export default class MapCreator {
         this.scene.physics.add.overlap(
           this.scene.player,
           this.obstacle,
-          (a,b) => {
+          (a, b) => {
             //this.scene.touchItem("fireball");
             //this.scene.player?.setVelocity(0);
             const danger = b as Danger;

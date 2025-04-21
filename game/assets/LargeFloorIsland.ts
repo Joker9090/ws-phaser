@@ -7,7 +7,7 @@ export type LargeFloorIslandConfig = {
   textureA: string,
   textureB: string,
   textureC: string,
-  textureFill?: string,
+  textureFill?: string[],
   width: {
     textureA: number,
     textureB: number,
@@ -25,6 +25,7 @@ export type LargeFloorIslandConfig = {
   },
   large: number,
   rotated: boolean,
+  type?: string,
 }
 // Scene in class
 class LargeFloorIsland extends Phaser.GameObjects.Container {
@@ -75,7 +76,7 @@ class LargeFloorIsland extends Phaser.GameObjects.Container {
     }
 
     // Overlap tiles by 1px to avoid micro gaps
-    if (config.withTextureToAbove && config.textureFill && config.textureFill?.length) {
+    if (config.withTextureToAbove && config.textureFill && config.textureFill?.length && config.large) {
       const tileWidth = config.width.textureA;
       const tileHeight = tileWidth; // Ajusta si no es cuadrado
       const areaWidth = tileWidth * config.large;

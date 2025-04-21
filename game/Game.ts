@@ -759,6 +759,7 @@ class Game extends Phaser.Scene {
         right: boolean
       ) => {
         //@ts-ignore
+        console.log("worldbounds", body, top, down, left, right, this.physics.world.bounds);
         this.lose();
       },
       this

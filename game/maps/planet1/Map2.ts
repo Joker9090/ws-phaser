@@ -11,6 +11,22 @@ class Map2 extends MapCreator {
         this.scene = scene;
         this.player = player;
 
+        this.worldSize = {
+            width: 10000,
+            height: 2000,
+        };
+        this.cameraBounds = {
+            x: 0,
+            y: 0,
+            width: 10000,
+            height: 2000,
+        };
+
+        this.startingPoint = {
+            x: 500, //500
+            y: this.worldSize.height-200, //800
+        };
+
         this.scene.physics.world.setBounds(
             0,
             0,
@@ -45,18 +61,18 @@ class Map2 extends MapCreator {
         ]
 
         this.backgroundsMiddle = [
-            this.scene.add.image(-this.startingPoint.x, this.startingPoint.y, "middleCombo").setOrigin(0, 1).setScale(0.7),
-            this.scene.add.image(-this.startingPoint.x + downScaledMiddleWidth, this.startingPoint.y, "middleCombo2").setOrigin(0, 1).setScale(0.7),
-            this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 2), this.startingPoint.y, "middleCombo3").setOrigin(0, 1).setScale(0.7),
-            this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 3), this.startingPoint.y, "middleCombo4").setOrigin(0, 1).setScale(0.7),
-            this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 4), this.startingPoint.y, "middleCombo2").setOrigin(0, 1).setScale(0.7),
-            this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 5), this.startingPoint.y, "middleCombo2").setOrigin(0, 1).setScale(0.7),
+            this.scene.add.image(-this.startingPoint.x, this.worldSize.height, "middleCombo").setOrigin(0, 1).setScale(0.7),
+            this.scene.add.image(-this.startingPoint.x + downScaledMiddleWidth, this.worldSize.height, "middleCombo2").setOrigin(0, 1).setScale(0.7),
+            this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 2), this.worldSize.height, "middleCombo3").setOrigin(0, 1).setScale(0.7),
+            this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 3), this.worldSize.height, "middleCombo4").setOrigin(0, 1).setScale(0.7),
+            this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 4), this.worldSize.height, "middleCombo2").setOrigin(0, 1).setScale(0.7),
+            this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 5), this.worldSize.height, "middleCombo2").setOrigin(0, 1).setScale(0.7),
         ]
 
         this.backgroundsFront = [
-            this.scene.add.image(this.startingPoint.x + this.backSize.width - 15, this.worldSize.height - 700, "montaña3"),
-            this.scene.add.image(this.startingPoint.x - 70, this.worldSize.height - 700, "montaña5"),
-            this.scene.add.image(1200, this.worldSize.height - 700, "montaña3")
+            this.scene.add.image(this.startingPoint.x + this.backSize.width - 15, this.worldSize.height, "montaña3"),
+            this.scene.add.image(this.startingPoint.x - 70, this.worldSize.height, "montaña5"),
+            this.scene.add.image(1200, this.worldSize.height, "montaña3")
         ]
 
         this.createBackgrounds(this.backgroundsBack, this.backgroundsMiddle, this.backgroundsFront);
@@ -118,7 +134,6 @@ class Map2 extends MapCreator {
                 large: 20,
                 group: this.floor
             },
-            { ...basePlatformsConfig, pos: { x: 1500, y: 1000 } },
             {
                 ...baseLargePlatformsConf,
                 pos: { x: 1300, y: 1200 },
@@ -131,8 +146,49 @@ class Map2 extends MapCreator {
                 large: 20,
                 group: this.floor
             },
-            { ...baseDangerConf, pos: { x: 1800, y: 1150 }, width: 170, height: 170, animation:{ xAxis:{ xDistance:350, xVel:150 } }, },
+            { ...baseDangerConf, pos: { x: 1700, y: 1150 }, width: 170, height: 170, animation:{ xAxis:{ xDistance:400, xVel:150 } }, },
             { ...basePlatformsConfig, pos: { x: 2100, y: 1000 } },
+            { ...basePlatformsConfig, pos: { x: 2500, y: 800 } },
+            { ...basePlatformsConfig, pos: { x: 3100, y: 800 } },
+            {
+                ...basePlatformsConfig, pos: { x: 3600, y: 800 }, animation: {
+                    xAxis: {
+                        xDistance: 200,
+                        xVel: 100
+                    }
+                }
+            },
+            {
+                ...baseLargePlatformsConf,
+                pos: { x: 3800, y: 800 },
+                width: {
+                    textureA: 90,
+                    textureB: 67,
+                    textureC: 115,
+                },
+                height: 127,
+                large: 15,
+                group: this.floor
+            },
+            { ...baseDangerConf, pos: { x: 4150, y: 750 }, width: 170, height: 170, animation:{ xAxis:{ xDistance:400, xVel:150 } }, },
+            { ...baseCristalConf, pos: { x: 4150, y: 750 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
+            {
+                ...basePlatformsConfig, pos: { x: 4800, y: 1000 }, animation: {
+                    xAxis: {
+                        xDistance: 200,
+                        xVel: 100
+                    }
+                }
+            },
+            {
+                ...basePlatformsConfig, pos: { x: 5300, y: 1000 }, animation: {
+                    xAxis: {
+                    xDistance: 200,
+                    xVel: 100
+                    }
+                }
+            },
+            
 
             // { ...baseDangerConf, pos: { x: 9350, y: 950 }, width: 170, height: 170, animation:{ xAxis:{ xDistance:350, xVel:150 } }, },
             // { type: "finalPortal", pos: { x: 9900, y: 900 }, texture: "plataformaFinalP1", width: 100, height: 100, group: this.portal }

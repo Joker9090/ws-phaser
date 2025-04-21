@@ -28,6 +28,9 @@ class cine3Movie3 {
     this.playCine();
     // music & sound
     // this.cine.sound.add("C2_4").setVolume(0.25).play();
+    this.cine.sound.add("c3Radio1").setVolume(0.1).play()
+
+    
 
   }
  stopDialogue(){
@@ -128,17 +131,17 @@ class cine3Movie3 {
       this.dialogue = new DialogueManager(
         this.cine,
         
-        ["I can't wait to leave this planet..."],
+        ["Hey!...are you there?"],
         [""],
         [
           {
-            delay: 1500,
+            delay: 3000,
             withTapping: {
               audios: ["key01", "key01", "key02"],
-              count: 18,
+              count: 10,
               delay: 180,
             },
-            keepAlive: 1500,
+            keepAlive: 3000,
             position: {
               width: 700,
             },

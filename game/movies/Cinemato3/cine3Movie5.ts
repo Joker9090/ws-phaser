@@ -22,7 +22,7 @@ class cine3Movie5 {
     this.ticker = new Ticker(tickerMS);
     this.playCine();
     // music & sound
-    // this.cine.sound.add("C2_4").setVolume(0.25).play();
+    this.cine.sound.add("c3Final").setVolume(0.25).play();
 
   }
 
@@ -103,17 +103,17 @@ class cine3Movie5 {
       this.dialogue = new DialogueManager(
         this.cine,
         // [""],
-        ["I've never seen something like this..."],
+        ["Dann!! Dann, is that you!? "],
         [""],
         [
           {
-            delay: 1500,
+            delay: 2000,
             withTapping: {
               audios: ["key01", "key01", "key02"],
               count: 24,
               delay: 180,
             },
-            keepAlive: 1500,
+            keepAlive: 3800,
             position: {
               width: 750,
             },

@@ -27,6 +27,9 @@ class cine3Movie4 {
         // setTimeout(() => {
         //     this.cine.sound.add("C2_7").setVolume(0.25).play()
         // }, 500)
+        this.cine.sound.add("c3Radio2").setVolume(0.5).play()
+     
+
     }
 
      stopDialogue(){
@@ -116,18 +119,30 @@ class cine3Movie4 {
 
             this.dialogue = new DialogueManager(
                 this.cine,
+                ["Wait... what?!"],
                 [""],
-                [""],
-                [],
+                [{
+                    delay:900,
+                    withTapping: {
+                        audios: ["key01", "key01", "key02"],
+                        count: 10,
+                        delay: 180,
+                      },
+                      keepAlive:3000,
+                      position: {
+                        width: 700,
+                      },
+
+                }],
                 80
             );
-            // this.dialogue?.play();
+            this.dialogue?.play();
 
             this.cine.tweens.add({
                 targets: [this.astroFrontC4S4],
                 scale: 1,
                 delay: 0,
-                duration: 4000,
+                duration: 2000,
                 onComplete: () => {
                     this.cine.tweens.add({
                         targets: [this.astroFrontC4S4],

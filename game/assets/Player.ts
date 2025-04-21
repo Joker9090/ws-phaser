@@ -5,7 +5,7 @@ import PreLoadScene from "../PreLoadScene";
 
 // Scene in class
 class Player extends Phaser.Physics.Arcade.Sprite {
-
+  touchedFloor: boolean = false;
   gravityGroup: Phaser.Physics.Arcade.Group;
   isJumping: boolean = false;
   isRotating: boolean = false;

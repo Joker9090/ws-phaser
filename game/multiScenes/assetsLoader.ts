@@ -134,6 +134,11 @@ export const loadAssets = {
       // AUDIOS
       ["audio", "planet0LoopMusic", "/game/planeta1/loopMusic.mp3"],
       //BACKGROUNDS
+      //FAR
+      ["image", "gradient", "/game/planeta1/backgrounds/far/gradient.svg"],
+      ["image", "stars", "/game/planeta1/backgrounds/far/stars.svg"],
+      ["image", "curvedVector", "/game/planeta1/backgrounds/far/curvedVector.svg"],
+      ["image", "curvedVector2", "/game/planeta1/backgrounds/far/curvedVector2.svg"],
       //MIDDLE
       ["image", "middleCombo", "/game/planeta1/backgrounds/middle/middleCombo.svg"],
       ["image", "middleCombo2", "/game/planeta1/backgrounds/middle/middleCombo2.svg"],
@@ -319,9 +324,13 @@ export const loadAssets = {
       ["image", "shield", "game/logo proteccion.png"],
       ["image", "Enemy","game/Enemy.png"],
       ["image", "Enemy2","game/Enemy2.png"],
-      ["image", "platform_center","/game/planeta1/platforms/plataform_center.png"],
-      ["image", "platform_der","/game/planeta1/platforms/plataform_der.png"],
-      ["image", "platform_izq","/game/planeta1/platforms/plataform_izq.png"],
+      ["image", "fill_texture","/game/planeta1/platforms/fill_texture.png"],
+      ["image", "fill_texture2","/game/planeta1/platforms/fill_texture2.png"],
+      ["image", "fill_texture3","/game/planeta1/platforms/fill_texture3.png"],
+      ["image", "fill_texture4","/game/planeta1/platforms/fill_texture4.png"],
+      ["image", "platform_center","/game/planeta1/platforms/platform_center.png"],
+      ["image", "platform_der","/game/planeta1/platforms/platform_der.png"],
+      ["image", "platform_izq","/game/planeta1/platforms/platform_izq.png"],
     ],
   },
   GamePlay2: {
@@ -397,6 +406,13 @@ export const loadAssets = {
       ["image", "pSimple2p1", "/game/planeta2/pSimple2.png"],
       ["image", "comida", "/game/planeta2/comida.png"],
       ["image", "cuevap1", "/game/planeta2/cuevap1.png"],
+      ["image", "fill_texture_p2","/game/planeta2/platforms/fill_texture.png"],
+      ["image", "fill_texture2_p2","/game/planeta2/platforms/fill_texture2.png"],
+      ["image", "fill_texture3_p2","/game/planeta2/platforms/fill_texture3.png"],
+      ["image", "fill_texture4_p2","/game/planeta2/platforms/fill_texture4.png"],
+      ["image", "platform_center_p2","/game/planeta2/platforms/platform_center.png"],
+      ["image", "platform_der_p2","/game/planeta2/platforms/platform_der.png"],
+      ["image", "platform_izq_p2","/game/planeta2/platforms/platform_izq.png"],
     ],
   },
   GamePlay3: {

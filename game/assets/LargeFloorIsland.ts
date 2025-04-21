@@ -7,6 +7,7 @@ export type LargeFloorIslandConfig = {
   textureA: string,
   textureB: string,
   textureC: string,
+  textureFill?: string,
   width: {
     textureA: number,
     textureB: number,
@@ -73,27 +74,62 @@ class LargeFloorIsland extends Phaser.GameObjects.Container {
       this.setScale(config.scale.width, config.scale.height)
     }
 
-
-    if(config.withTextureToAbove){
-      // new graphics,
-      //draw a black rectangule from the top left of the position of the asset to the bottom.right and add 1000 px on height above
-      const graphics = scene.add.graphics();
-      graphics.fillStyle(0x152226, 1);
-      // put this behind the asset
-      console.log('graphics', graphics)
+    // Overlap tiles by 1px to avoid micro gaps
+    if (config.withTextureToAbove && config.textureFill && config.textureFill?.length) {
+      const tileWidth = config.width.textureA;
+      const tileHeight = tileWidth; // Ajusta si no es cuadrado
+      const areaWidth = tileWidth * config.large;
+      const areaHeight = 1000;
+      const startX = config.pos.x;
+      const startY = config.pos.y - 10;
+    
+      const fillSprite = scene.add.renderTexture(startX, startY, areaWidth, areaHeight).setOrigin(0, 0);
+    
+      const tilesX = Math.ceil(areaWidth / tileWidth);
+      const tilesY = Math.ceil(areaHeight / tileHeight);
+    
+      Array.from({ length: tilesY }).forEach((_, y) => {
+        Array.from({ length: tilesX }).forEach((_, x) => {
+          const randomTexture = config.textureFill![Math.floor(Math.random() * config.textureFill!.length)];
+          fillSprite.draw(randomTexture, x * tileWidth, y * tileHeight);
+        });
+      });
+    
+      console.log(this.originX, this.originY, 'origin');
+    
       if (config.scale) {
-        graphics.fillRect(config.pos.x + 20, config.pos.y, (sizeWidth * config.scale.width) - 40, 1000);
-      } else {
-        graphics.fillRect(config.pos.x + 20, config.pos.y, (sizeWidth) - 40, 1000);
-
+        fillSprite.setScale(config.scale.width, config.scale.height);
       }
-      // create a sprite with the same size
-      // const s = scene.add.sprite(
-      //   config.pos.x, config.pos.y, "7")
-      //  s.setDisplaySize(sizeWidth, 1000).setOrigin(0, 0).setAlpha(0.4)
-      if(this.scene.UICamera) this.scene.UICamera.ignore(graphics)
-
+    
+      this.add(fillSprite);
+      this.setDepth(0);
+      fillSprite.setDepth(1); // Ensure it is behind the asset
+      scene.add.existing(fillSprite);
+      console.log(this.depth, fillSprite.depth, 'depth');
+    
+      if (this.scene.UICamera) this.scene.UICamera.ignore(fillSprite);
+    
+      // Opcional: Fondo negro dibujado con Graphics
+      // const graphics = scene.add.graphics();
+      // graphics.fillStyle(0x152226, 1);
+      // if (config.scale) {
+      //   graphics.fillRect(
+      //     config.pos.x + tileWidth,
+      //     config.pos.y,
+      //     (sizeWidth * config.scale.width) - config.width.textureC - tileWidth,
+      //     1000
+      //   );
+      // } else {
+      //   graphics.fillRect(
+      //     config.pos.x + tileWidth,
+      //     config.pos.y,
+      //     sizeWidth - config.width.textureC - tileWidth,
+      //     1000
+      //   );
+      // }
+      // if (this.scene.UICamera) this.scene.UICamera.ignore(graphics);
     }
+    
 
       if(this.scene.UICamera) this.scene.UICamera.ignore(this)
     

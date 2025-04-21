@@ -30,12 +30,11 @@ class cine3Movie2 {
     this.dialogue = undefined;
   }
   playCine(this: cine3Movie2) {
-    this.cine.time.addEvent({
+   const timeEvent = this.cine.time.addEvent({
       delay: this.ticker.ms,
       callback: this.ticker.runTicker,
       loop: true,
     });
-
     this.cursors = this.cine.input.keyboard?.createCursorKeys();
 
     const middlePoint = {

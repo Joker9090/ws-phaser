@@ -249,7 +249,6 @@ export default class MapCreator {
 
   animateBackground() {
     const camera = this.scene.cameras.main;
-    console.log(camera.midPoint, "midpoint", camera.scrollX, camera.scrollY);
     this.updateParallaxLayer(this.backContainer, camera, 0.8, 0.8);   // Farthest, moves slowest
     this.updateParallaxLayer(this.middleContainer, camera, 0.3, 0.3); // Middle layer
     this.updateParallaxLayer(this.frontContainer, camera, 0, 0);  // Closest, moves faster

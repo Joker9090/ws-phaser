@@ -12,22 +12,6 @@ class Map1 extends MapCreator {
         this.scene = scene;
         this.player = player;
 
-        this.worldSize = {
-            width: 10000,
-            height: 2000,
-        };
-        this.cameraBounds = {
-            x: 0,
-            y: 0,
-            width: 10000,
-            height: 2000,
-        };
-
-        this.startingPoint = {
-            x: 500, //500
-            y: this.worldSize.height-200, //800
-          };
-
         this.scene.physics.world.setBounds(
             0,
             0,
@@ -36,6 +20,34 @@ class Map1 extends MapCreator {
         );
 
         this.player.setPlayerWithTank(true);
+
+        this.worldSize = {
+            width: 10000,
+            height: 2000,
+          };
+          this.cameraBounds = {
+            x: 0,
+            y: 100,
+            width: 10000,
+            height: 1800,
+          };
+          this.scene.physics.world.setBounds(
+            0,
+            0,
+            this.worldSize.width,
+            this.worldSize.height
+          );
+          this.scene.cameras.main.setBounds(
+            this.cameraBounds.x,
+            this.cameraBounds.y,
+            this.cameraBounds.width,
+            this.cameraBounds.height
+          );
+      
+          this.startingPoint = {
+            x: 500, //500
+            y: this.worldSize.height - 600, //800
+          };
     }
 
     createMap(data: { level: number; lifes: number }) {
@@ -49,31 +61,35 @@ class Map1 extends MapCreator {
         this.backSize = { width: backImage.width, height: backImage.height }
 
         const { width, height } = this.ratioReference;
+        const { width: farWidth, height: farHeight } = this.farBackgroundReference;
         const downScaledMiddleWidth = width * 0.7;
         const downScaledFrontWidth = width * 0.5;
 
         this.backgroundsBack = [
-            this.scene.add.image(0, this.worldSize.height, "background0P1").setOrigin(0, 1).setScale(1.3),
-            this.scene.add.image(0, this.worldSize.height, "backgroundStars").setOrigin(0, 1).setScale(1.3),
-            this.scene.add.image(0 + backImage.width, this.worldSize.height, "background0P1").setOrigin(0, 1),
-            this.scene.add.image(0 + backImage.width, this.worldSize.height, "backgroundStars").setOrigin(0, 1),
-            this.scene.add.image(0 + (backImage.width * 2), this.worldSize.height, "background0P1").setOrigin(0, 1),
-            this.scene.add.image(0 + (backImage.width * 2), this.worldSize.height, "backgroundStars").setOrigin(0, 1),
+        this.scene.add.image(-this.startingPoint.x, this.worldSize.height, "gradient").setOrigin(0, 1),
+        this.scene.add.image(-this.startingPoint.x + farWidth, this.worldSize.height, "gradient").setOrigin(0, 1),
+        this.scene.add.image(-this.startingPoint.x, this.worldSize.height, "stars").setOrigin(0, 1),
+        this.scene.add.image(-this.startingPoint.x + farWidth, this.worldSize.height, "stars").setOrigin(0, 1),
+        this.scene.add.image(-this.startingPoint.x, this.worldSize.height, "curvedVector").setOrigin(0, 1),
+        this.scene.add.image(-this.startingPoint.x + farWidth, this.worldSize.height, "curvedVector2").setOrigin(0, 1),
         ]
 
         this.backgroundsMiddle = [
-            this.scene.add.image(-this.startingPoint.x, this.worldSize.height, "middleCombo").setOrigin(0, 1).setScale(0.7),
-            this.scene.add.image(-this.startingPoint.x + downScaledMiddleWidth, this.worldSize.height, "middleCombo2").setOrigin(0, 1).setScale(0.7),
-            this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 2), this.worldSize.height, "middleCombo3").setOrigin(0, 1).setScale(0.7),
-            this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 3), this.worldSize.height, "middleCombo4").setOrigin(0, 1).setScale(0.7),
-            this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 4), this.worldSize.height, "middleCombo2").setOrigin(0, 1).setScale(0.7),
-            this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 5), this.worldSize.height, "middleCombo2").setOrigin(0, 1).setScale(0.7),
+        this.scene.add.image(-this.startingPoint.x, this.worldSize.height, "middleCombo").setOrigin(0, 1).setScale(0.7),
+        this.scene.add.image(-this.startingPoint.x + downScaledMiddleWidth, this.worldSize.height, "middleCombo2").setOrigin(0, 1).setScale(0.7),
+        this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 2), this.worldSize.height, "middleCombo3").setOrigin(0, 1).setScale(0.7),
+        this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 3), this.worldSize.height, "middleCombo4").setOrigin(0, 1).setScale(0.7),
+        this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 4), this.worldSize.height, "middleCombo2").setOrigin(0, 1).setScale(0.7),
+        this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 5), this.worldSize.height, "middleCombo2").setOrigin(0, 1).setScale(0.7),
         ]
 
         this.backgroundsFront = [
-            this.scene.add.image(this.startingPoint.x + this.backSize.width - 15, this.worldSize.height, "montaña3"),
-            this.scene.add.image(this.startingPoint.x - 70, this.worldSize.height, "montaña5"),
-            this.scene.add.image(1200, this.worldSize.height, "montaña3")
+            this.scene.add.image(-this.startingPoint.x, this.worldSize.height, "frontCombo").setOrigin(0, 1).setScale(0.5),
+            this.scene.add.image(-this.startingPoint.x + downScaledFrontWidth, this.worldSize.height, "frontCombo2").setOrigin(0, 1).setScale(0.5),
+            this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 2), this.worldSize.height, "frontCombo3").setOrigin(0, 1).setScale(0.5),
+            this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 3), this.worldSize.height, "frontCombo4").setOrigin(0, 1).setScale(0.5),
+            this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 4), this.worldSize.height, "frontCombo2").setOrigin(0, 1).setScale(0.5),
+            this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 5), this.worldSize.height, "frontCombo2").setOrigin(0, 1).setScale(0.5),
         ]
 
         this.createBackgrounds(this.backgroundsBack, this.backgroundsMiddle, this.backgroundsFront);
@@ -94,15 +110,22 @@ class Map1 extends MapCreator {
         }
 
         const baseLargePlatformsConf = {
-            withTextureToAbove: false,
+            withTextureToAbove: true,
             texture: "plataformaNuevaA",
-            textureA: "plataformaNuevaLargaA",
-            textureB: "plataformaNuevaLargaB",
-            textureC: "plataformaNuevaLargaC",
-            scale: { width: 0.7, height: 0.7 },
+            textureA: "platform_izq",
+            textureB: "platform_center",
+            textureC: "platform_der",
+            textureFill: ["fill_texture", "fill_texture2", "fill_texture3", "fill_texture4"],
+            width: {
+              textureA: 96,
+              textureB: 96,
+              textureC: 96,
+            },
+            height: 96,
+            scale: { width: 1, height: 1 },
             rotated: false,
             type: "largeFloor",
-        };
+          };
 
         const baseCristalConf = {
             type: "collectable",
@@ -281,7 +304,8 @@ class Map1 extends MapCreator {
         /* Attach background anim */
         // if (this.scene.player) this.animateBackground(this.scene.player);
         if (this.scene.player)
-            this.animateBackground(this.scene.cameras.main.midPoint);
+            if (this.scene.initialScroll.x === 0 && this.scene.initialScroll.y === 0) this.setInitialScroll(this.scene.cameras.main.scrollX, this.scene.cameras.main.scrollY);
+            this.animateBackground();
     }
 
 }

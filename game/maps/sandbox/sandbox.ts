@@ -157,10 +157,10 @@ class Sandbox extends MapCreator {
     const baseLargePlatformsConf = {
       withTextureToAbove: true,
       texture: "plataformaNuevaA",
-      textureA: "platform_izq",
-      textureB: "platform_center",
-      textureC: "platform_der",
-      textureFill: ["fill_texture", "fill_texture2", "fill_texture3", "fill_texture4"],
+      textureA: "platform_izq_p2",
+      textureB: "platform_center_p2",
+      textureC: "platform_der_p2",
+      textureFill: ["fill_texture_p2", "fill_texture2_p2", "fill_texture3_p2", "fill_texture4_p2"],
       width: {
         textureA: 96,
         textureB: 96,
@@ -227,7 +227,7 @@ class Sandbox extends MapCreator {
       {
         ...baseLargePlatformsConf,
         pos: { x: 300, y: this.worldSize.height-400 },
-        large: 100,
+        large: 50,
         group: this.floor
       },
       {

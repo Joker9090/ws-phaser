@@ -171,7 +171,6 @@ export default class MapCreator {
     this.middleContainer = this.scene.add.container();
     // this.mapContainer = this.middleContainer;
     this.frontContainer = this.scene.add.container();
-    console.log(this.scene.cameras.main.midPoint);
     // this.scene.cameras.main.midPoint.setTo(
     //   0,
     //   this.worldSize.height
@@ -236,6 +235,7 @@ export default class MapCreator {
   createPlatforms(gameObjects: mapFloorConfig[]) {
     gameObjects.forEach((element) => {
       const tile: any = Factory(this.scene, element, this.floor!);
+      this.mapGroup.add(tile);
     })
   }
 
@@ -247,7 +247,6 @@ export default class MapCreator {
 
   animateBackground() {
     const camera = this.scene.cameras.main;
-    console.log(camera.midPoint, "midpoint", camera.scrollX, camera.scrollY);
     this.updateParallaxLayer(this.backContainer, camera, 0.8, 0.8);   // Farthest, moves slowest
     this.updateParallaxLayer(this.middleContainer, camera, 0.3, 0.3); // Middle layer
     this.updateParallaxLayer(this.frontContainer, camera, 0, 0);  // Closest, moves faster

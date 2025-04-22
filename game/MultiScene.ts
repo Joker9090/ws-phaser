@@ -23,7 +23,7 @@ export default class MultiScene extends Phaser.Scene {
 
 
   constructor(scenekey?: string, sceneData?: GamePlayDataType | CinematoDataType, loadKey?: string) {
-    super({ key: "MultiScene" });
+    super("MultiScene");
     this.scenekey = scenekey;
     this.sceneData = sceneData;
   }
@@ -34,13 +34,18 @@ export default class MultiScene extends Phaser.Scene {
     // this.load.image("fondoCarga", "/menu/initial/fondoCarga.png");
     
     // this.load.spritesheet("player",  "/game/player/playerSpriteSheet.png",  { frameWidth: 200, frameHeight: 200 });
+    if (this.scene.get("MultiScene")) {
+      console.warn("MultiScene is already active. Stopping the current instance before proceeding.");
+    }
 
  
     this.assetLoaderClass = new AssetsLoader(this, ["BaseLoad","Cinemato0", "Cinemato1", "Cinemato2", "Cinemato3","GamePlay1", "GamePlay2", "GamePlay3"]);
     this.assetLoaderClass.runPreload(() => {
+    console.log(this.scene.get("MultiScene"), "CAMBIANDO ESCENA 2", this.scenekey, this.sceneData);
       if (this.scenekey) {
         this.makeTransition(this.scenekey, this.sceneData ?? undefined);
       } else {
+          const a = this.scene.get("Game");
           // this.makeTransition("CinematographyMod", { keyname: "cine_3_movie_1", loadKey: ["Postales","Cinemato0", "Cinemato1", "Cinemato2", "Cinemato3"]});
           this.makeTransition("Game", { level: 1, lifes: 3, loadKey: ["GamePlay1", "GamePlay2", "GamePlay3", "Postales","Cinemato0", "Cinemato1", "Cinemato2", "Cinemato3", "Postales"] });
           // this.makeTransition("Game", { level:1, lifes: 3, loadKey: ["GamePlay1", "GamePlay2", "GamePlay3", "Postales","Cinemato0", "Cinemato1", "Cinemato2", "Cinemato3", "Postales"] });

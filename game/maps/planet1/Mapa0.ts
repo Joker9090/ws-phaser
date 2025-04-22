@@ -119,12 +119,29 @@ class Mapa0 extends MapCreator {
     this.player.setPlayerWithTank(true);
 
     /* World size*/
+    this.worldSize = {
+      width: 10000,
+      height: 2200,
+    };
+    this.cameraBounds = {
+      x: 0,
+      y: 100,
+      width: 10000,
+      height: 2000,
+    };
     this.scene.physics.world.setBounds(
       0,
       0,
       this.worldSize.width,
       this.worldSize.height
     );
+    this.scene.cameras.main.setBounds(
+      this.cameraBounds.x,
+      this.cameraBounds.y,
+      this.cameraBounds.width,
+      this.cameraBounds.height
+    );
+
 /*
 this.frontContainer = this.scene.add.container().setDepth(999999999999);
 const backBackgroundsContainer = this.scene.add.container() 
@@ -249,7 +266,7 @@ this.frontContainer = this.scene.add.container().setDepth(999999999999);
         );
       });
     };
-  animateBackground(player: Phaser.GameObjects.Sprite | Phaser.Math.Vector2) {
+  animateBackground() {
     this.updateContainerPositionRelativeToCamera(
       this.backContainer,
       this.scene.cameras.main,
@@ -441,23 +458,41 @@ this.updateContainerPositionRelativeToCamera(
       yoyo: true,
       repeat: -1,
     });*/
+    const baseLargePlatformsConf = {
+      pos: { x: 200, y: 1900 },
 
-    const p1Config: LargeFloorIslandConfig = {
+      withTextureToAbove: true,
       textureA: "platform_izq",
       textureB: "platform_center",
       textureC: "platform_der",
-      pos: { x: 200, y: 1900 },
+      textureFill: ["fill_texture", "fill_texture2", "fill_texture3", "fill_texture4"],
       width: {
         textureA: 96,
         textureB: 96,
         textureC: 96,
       },
-      //scale: { width: 0.7, height: 0.7 },
-      height: 327,
-      large: 21,
+      height: 96,
+      scale: { width: 1, height: 1 },
+      large: 50,
       rotated: false,
+      type: "largeFloor",
     };
-    const p1 = new LargeFloorIsland(this.scene, p1Config, this.floor);
+    // const p1Config: LargeFloorIslandConfig = {
+    //   textureA: "platform_izq",
+    //   textureB: "platform_center",
+    //   textureC: "platform_der",
+    //   pos: { x: 200, y: 1900 },
+    //   width: {
+    //     textureA: 96,
+    //     textureB: 96,
+    //     textureC: 96,
+    //   },
+    //   //scale: { width: 0.7, height: 0.7 },
+    //   height: 327,
+    //   large: 21,
+    //   rotated: false,
+    // };
+    const p1 = new LargeFloorIsland(this.scene, (baseLargePlatformsConf as any), this.floor);
     //PlatformsRama
     const p2Config: LargeFloorIslandConfig = {
       textureA: "plataformaNuevaLargaA",
@@ -817,7 +852,7 @@ this.updateContainerPositionRelativeToCamera(
     /* Attach background anim */
     // if (this.scene.player) this.animateBackground(this.scene.player);
     if (this.scene.player)
-      this.animateBackground(this.scene.cameras.main.midPoint);
+      this.animateBackground();
   }
 }
 export default Mapa0;

@@ -225,7 +225,7 @@ class MapaTest extends MapCreator {
         /* Attach background anim */
         // if (this.scene.player) this.animateBackground(this.scene.player);
         if (this.scene.player)
-            this.animateBackground(this.scene.cameras.main.midPoint);
+            this.animateBackground();
     }
 
 }

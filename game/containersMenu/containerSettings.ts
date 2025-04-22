@@ -56,6 +56,7 @@ class containerSettings extends Phaser.GameObjects.Container {
     scaledContainer?: Phaser.GameObjects.Container;
     dinamicPosition:boolean = false;
     scaleFactor:number =( window.innerWidth/1920 )*0.9
+    finalScale?:number;
     constructor(scene: MenuScene | Game | CinematographyModular, config: ContainerMenuConfigType, changeContainer?: () => void, changeVisible?: () => void, settingsButtonUi?: Phaser.GameObjects.Image) {
         super(scene, config.x, config.y)
         if(config.dinamicPosition){
@@ -362,14 +363,31 @@ class containerSettings extends Phaser.GameObjects.Container {
         this.settingsModal.add(arr);
         this.add([this.screenBlack,this.settingsModal]);
         scene.add.existing(this);
+        // this.resizeElements()
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+
+        const proportionWidth = 1920
+        const proportionHeight = 1080
+
+        let newScaleX = width / proportionWidth
+        let newScaleY = height / proportionHeight
+
+
+        let finalScale = (newScaleX > newScaleY) ? newScaleX : newScaleY
+       
+        // console.log("container scael from create",this.settingsModal.scale, "finalScale from create:", finalScale) 
+        // this.settingsModal.setScale(finalScale)
         this.scene.scale.on("resize", this.resizeElements, this);
+        console.log(this.settingsModal, 'settings from creator')
         this.resizeElements.bind(this)()
+        console.log(this.settingsModal.scale, 'scale from creator')
         const destroy = () => {
             this.removeAll(true)
             this.destroy()
         }
-
-        this.animationOfModal()
+      
+        this.animationOfModal(true, finalScale);
     }
  
 
@@ -387,28 +405,24 @@ class containerSettings extends Phaser.GameObjects.Container {
         const proportionWidth = 1920
         const proportionHeight = 1080
 
-        // scale scaledContainer to fit in width and height. scale proportional
-
         let newScaleX = width / proportionWidth
         let newScaleY = height / proportionHeight
         if (!this.settingsModal) return
         let finalScale = (newScaleX > newScaleY) ? newScaleX : newScaleY
-        this.settingsModal!.setScale(finalScale *1.2).setPosition(0,0)
+
+        this.settingsModal!.setScale(finalScale ).setPosition(0,0)
+        console.log('modal scale:', this.settingsModal.scale, 'finalScale:', finalScale)
         if(this.screenBlack){
             this.screenBlack.setScale(width, height)   
         }
-        console.log(midPoint, "MIDPOINT")
-        // this.background?.setPosition(midPoint.x, midPoint.y).setScale(finalScale)
-        // re pos scaledContainer in the middle
-
     }
 
-    animationOfModal(open: boolean = true) {
-        this.settingsModal.setScale(open ? 0 : 1)
+    animationOfModal(open: boolean = true, scale:number) {
+        this.settingsModal.setScale(open ? 0 : scale )
         this.scene.tweens.add({
             targets: this.settingsModal,
             duration: 500,
-            scale: open ? 1 : 0,
+            scale: open ? scale  : 0,
             onStart: () => {
                 console.log("ENTRO ACA ARIEL")
             },

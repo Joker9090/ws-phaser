@@ -95,7 +95,7 @@ class cine3Movie2 {
     const part1 = (job: TickerJob) => {
       this.dialogue = new DialogueManager(
         this.cine,
-        ["Why the heck did you sing this like that? You always liked riddles, didn't you?"],
+        ["Why the heck did you sign this like that? You always liked riddles, didn't you?"],
         [""],
         [
           {
@@ -105,13 +105,13 @@ class cine3Movie2 {
               count: 30,
               delay: 180,
             },
-            keepAlive: 1500,
+            keepAlive: 1000,
             position: {
               width: 700,
             },
           },
         ],
-        30
+        80
       );
       this.dialogue?.play();
       this.cine.tweens.add({

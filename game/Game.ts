@@ -697,6 +697,10 @@ class Game extends Phaser.Scene {
       if (this.loopMusic)
         this.masterManagerScene.playMusic(this.loopMusic, true);
     }
+    /* FAR BG CAMERA */
+
+    this.cameras.add(0, 0, window.innerWidth, window.innerHeight, false, "backgroundCamera");
+    
     /* UI SCENE  */
     
     this.UICamera = this.cameras.add(

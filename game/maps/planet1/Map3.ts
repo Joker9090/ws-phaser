@@ -167,11 +167,6 @@ export default class Map3 extends MapCreator {
           group: this.floor,
           withTextureToAbove: false,
         },
-
-
-
-
-
       ]
 
       this.createPlatforms(mapPlatforms)

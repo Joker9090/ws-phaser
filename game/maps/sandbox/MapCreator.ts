@@ -74,7 +74,7 @@ export type mapLargeFloorConfig = {
   };
 }
 export default class MapCreator {
-  mapGroup: Phaser.Physics.Arcade.Group;
+  mapItems: Phaser.GameObjects.GameObject[] = [];
   isJumping = false;
   scene: Game;
   worldSize = {
@@ -147,11 +147,11 @@ export default class MapCreator {
   constructor(scene: Game, player: Player, data?: GamePlayDataType) {
     this.scene = scene;
     this.player = player;
-    this.mapGroup = scene.physics.add.group({
-      allowGravity: false,
-      immovable: true,
-      collideWorldBounds: true,
-    });
+    // this.mapGroup = scene.physics.add.group({
+    //   allowGravity: false,
+    //   immovable: true,
+    //   collideWorldBounds: true,
+    // });
     this.startingPoint = {
       x: 500, //500
       y: this.worldSize.height-600, //800
@@ -195,7 +195,7 @@ export default class MapCreator {
     this.floor = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.gravityTile = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.rotationTile = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
-    this.fallingTile = this.scene.physics.add.group({ allowGravity: true, immovable: true, collideWorldBounds: true });
+    this.fallingTile = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.teleport = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.obstacle = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.scene.UICamera?.ignore(this.floor)
@@ -239,7 +239,8 @@ export default class MapCreator {
   createPlatforms(gameObjects: mapFloorConfig[]) {
     gameObjects.forEach((element) => {
       const tile: any = Factory(this.scene, element, this.floor!);
-      this.mapGroup.add(tile);
+      // this.mapGroup.add(tile);
+      this.mapItems.push(tile);
     })
   }
 
@@ -318,8 +319,12 @@ export default class MapCreator {
   // }
 
   cameraIgnore () {
-    this.scene.UICamera?.ignore(this.mapGroup);
-    this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.mapGroup);
+    this.mapItems.forEach((item) => {
+      this.scene.UICamera?.ignore(item);
+      this.scene.cameras.getCamera('backgroundCamera')?.ignore(item);
+    })
+    // this.scene.UICamera?.ignore(this.mapGroup);
+    // this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.mapGroup);
     this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.scene.player!);
   }
 

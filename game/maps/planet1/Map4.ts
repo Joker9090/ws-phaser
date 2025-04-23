@@ -156,19 +156,9 @@ export default class Map4 extends MapCreator {
           group: this.floor,
           withTextureToAbove: false,
         },
-
-
-
-
-
       ]
 
       this.createPlatforms(mapPlatforms)
-      this.uiCameraIgnore()
-    }
-
-    uiCameraIgnore () {
-      this.scene.UICamera?.ignore(this.mapGroup);
     }
 
     update() {

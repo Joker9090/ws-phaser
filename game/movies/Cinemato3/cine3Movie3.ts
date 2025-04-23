@@ -135,7 +135,7 @@ class cine3Movie3 {
         [""],
         [
           {
-            delay: 3000,
+            delay: 3500,
             withTapping: {
               audios: ["key01", "key01", "key02"],
               count: 10,

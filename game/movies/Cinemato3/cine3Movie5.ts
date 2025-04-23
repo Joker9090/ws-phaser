@@ -107,15 +107,15 @@ class cine3Movie5 {
         [""],
         [
           {
-            delay: 2000,
+            delay: 1000,
             withTapping: {
               audios: ["key01", "key01", "key02"],
-              count: 24,
+              count: 20,
               delay: 180,
             },
             keepAlive: 3800,
             position: {
-              width: 750,
+              width: 500,
             },
           },
         ],

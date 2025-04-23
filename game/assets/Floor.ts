@@ -131,7 +131,9 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
 
     if (config.animation) {
       if (config.animation.xAxis) {
+        console.log('xAxis', config.animation.xAxis.xDistance, config.animation.xAxis.xVel, this.x, config.pos.x, config.animation.xAxis.xDistance / 2)
         this.setVelocityX(config.animation.xAxis.xVel);
+        console.log(this.body?.velocity.x, this.body?.velocity.y, 'velocity')
       }
       if (config.animation.yAxis) {
         this.setVelocityY(config.animation.yAxis.yVel);
@@ -152,6 +154,8 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
     if (config.animation) {
       if (config.animation.xAxis) {
         if (this.x >= config.pos.x + config.animation.xAxis.xDistance / 2 && this.animState.x === 'start') {
+        console.log('xAxis', config.animation.xAxis.xDistance, config.animation.xAxis.xVel)
+          
           this.setVelocityX(-config.animation.xAxis.xVel);
           if (config.animation.yAxis) {
             if (this.scene.player && this.scene.player.body?.touching.down){
@@ -161,6 +165,8 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
           }
           this.animState.x = 'reverse'
         } else if (this.x <= config.pos.x - config.animation.xAxis.xDistance / 2 && this.animState.x === 'reverse') {
+        console.log('xAxis', config.animation.xAxis.xDistance, config.animation.xAxis.xVel)
+          
           this.setVelocityX(config.animation.xAxis.xVel);
           if (config.animation.yAxis) {
             if (this.scene.player && this.scene.player.body?.touching.down){

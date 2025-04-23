@@ -214,14 +214,24 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.setDepth(999);
    
 
-    if(this.scene instanceof Game) {
-      this.scene.UICamera?.ignore(this)
-      this.gravityAnimSprite = this.scene.add.sprite(this.x, this.y, "gravityAnim", 0).setVisible(false).setDepth(999);
-      this.scene.UICamera?.ignore(this.gravityAnimSprite)
-      this.scene.UICamera?.ignore(this.tankAnimSprite)
-      this.scene.UICamera?.ignore(this.auraAnimSprite)
+    if (this.scene instanceof Game) {
+      this.scene.UICamera?.ignore(this);
+      this.scene.cameras.getCamera('backgroundCamera')?.ignore(this);
     }
-   
+    this.gravityAnimSprite = this.scene.add.sprite(this.x, this.y, "gravityAnim", 0).setVisible(false).setDepth(999);
+    if (this.scene instanceof Game) {
+      this.scene.UICamera?.ignore(this.gravityAnimSprite);
+      this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.gravityAnimSprite);
+    }
+      
+    if (this.scene instanceof Game) {
+      this.scene.UICamera?.ignore(this.tankAnimSprite);
+      this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.tankAnimSprite);
+    }
+    if (this.scene instanceof Game) {
+      this.scene.UICamera?.ignore(this.auraAnimSprite);
+      this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.auraAnimSprite);
+    }
     // this.scene.add.rectangle(this.x, this.y, 100, 100, 0xffffff).setVisible(true)
     /* player Collission with end of map */
     this.setCollideWorldBounds(true);
@@ -288,7 +298,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     else this.tankGraphics = this.scene.add.graphics()
     this.tankGraphics.fillStyle(0x000000, 1)
     const gameScene = this.scene as Game
-    if(gameScene.UICamera) gameScene.UICamera.ignore(this.tankGraphics)
+    if (gameScene.UICamera) gameScene.UICamera.ignore(this.tankGraphics);
+    if (gameScene.cameras.getCamera('backgroundCamera')) gameScene.cameras.getCamera('backgroundCamera')?.ignore(this.tankGraphics);
 
     let barSize = 100
     const limit0 = (this.tank.fuel - this.tank.fuelConditionToStart < 0) ? 0 : this.tank.fuel - this.tank.fuelConditionToStart

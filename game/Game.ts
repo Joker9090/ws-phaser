@@ -9,6 +9,7 @@ import p1Map1 from "./maps/planet1/Map1";
 import p1Map2 from "./maps/planet1/Map2";
 import p1Map3 from "./maps/planet1/Map3";
 
+import p1Mapa4 from "./maps/planet1/Map4";
 // MAPAS PLANETA 2
 import p2Mapa1 from "./maps/planet2/Mapa4";
 import p2Mapa2 from "./maps/planet2/Mapa5";
@@ -41,6 +42,7 @@ export type PossibleMaps =
   | p1Mapa1
   | p1Mapa2
   | p1Mapa3
+  | p1Mapa4
   | p2Mapa1
   | p2Mapa2
   | p2Mapa3
@@ -704,6 +706,10 @@ class Game extends Phaser.Scene {
       if (this.loopMusic)
         this.masterManagerScene.playMusic(this.loopMusic, true);
     }
+    /* FAR BG CAMERA */
+
+    this.cameras.add(0, 0, window.innerWidth, window.innerHeight, false, "backgroundCamera");
+
     /* UI SCENE  */
     
     this.UICamera = this.cameras.add(

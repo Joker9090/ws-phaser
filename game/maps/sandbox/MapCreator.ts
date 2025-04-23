@@ -125,6 +125,7 @@ export default class MapCreator {
   pisosBack?: Phaser.Physics.Arcade.Group;
   gravityTile?: Phaser.Physics.Arcade.Group;
   rotationTile?: Phaser.Physics.Arcade.Group;
+  fallingTile?: Phaser.Physics.Arcade.Group;
   coin?: Phaser.Physics.Arcade.Group;
   coinAura?: Phaser.GameObjects.Sprite;
   invincible?: Phaser.Physics.Arcade.Group;
@@ -171,7 +172,6 @@ export default class MapCreator {
     this.middleContainer = this.scene.add.container();
     // this.mapContainer = this.middleContainer;
     this.frontContainer = this.scene.add.container();
-    console.log(this.scene.cameras.main.midPoint);
     // this.scene.cameras.main.midPoint.setTo(
     //   0,
     //   this.worldSize.height
@@ -195,12 +195,14 @@ export default class MapCreator {
     this.floor = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.gravityTile = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.rotationTile = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
+    this.fallingTile = this.scene.physics.add.group({ allowGravity: true, immovable: true, collideWorldBounds: true });
     this.teleport = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.obstacle = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.firegroup = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.scene.UICamera?.ignore(this.floor)
     this.scene.UICamera?.ignore(this.gravityTile)
     this.scene.UICamera?.ignore(this.rotationTile)
+    this.scene.UICamera?.ignore(this.fallingTile)
     this.scene.UICamera?.ignore(this.teleport)
     this.scene.UICamera?.ignore(this.obstacle)
     this.scene.UICamera?.ignore(this.firegroup)
@@ -230,6 +232,7 @@ export default class MapCreator {
     this.scene.add.existing(this.frontContainer);
 
     this.scene.UICamera?.ignore(this.backContainer);
+    this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.backContainer);
     this.scene.UICamera?.ignore(this.middleContainer);
     this.scene.UICamera?.ignore(this.frontContainer);
     this.scene.cameras.main.setScroll(0, 0);
@@ -238,6 +241,7 @@ export default class MapCreator {
   createPlatforms(gameObjects: mapFloorConfig[]) {
     gameObjects.forEach((element) => {
       const tile: any = Factory(this.scene, element, this.floor!);
+      this.mapGroup.add(tile);
     })
   }
 
@@ -247,31 +251,80 @@ export default class MapCreator {
     // this.initialScroll = { x: scrollX, y: scrollY };
   }
 
-  animateBackground() {
-    const camera = this.scene.cameras.main;
-    this.updateParallaxLayer(this.backContainer, camera, 0.8, 0.8);   // Farthest, moves slowest
-    this.updateParallaxLayer(this.middleContainer, camera, 0.3, 0.3); // Middle layer
-    this.updateParallaxLayer(this.frontContainer, camera, 0, 0);  // Closest, moves faster
+   updatePositionsRelativeToCamera = (
+      images: Phaser.GameObjects.Container,
+      camera: Phaser.Cameras.Scene2D.Camera,
+      fixedPoint: { x: number; y: number },
+      ponderation: { fixX: number; fixY: number }
+    ) => {
+      const offsetX = (camera.midPoint.x - fixedPoint.x) / ponderation.fixX;
+      const offsetY = (camera.midPoint.y - fixedPoint.y) / ponderation.fixY;
+      images.setPosition(
+          (this.scene.player?.body?.x! - this.startingPoint.x),
+          (this.scene.player?.body?.y! - this.startingPoint.y)
+        );
+    };
+  
+    animateBackground() {
+      this.updatePositionsRelativeToCamera(
+        this.backContainer,
+        this.scene.cameras.main,
+        { x: this.startingPoint.x, y: this.worldSize.height },
+        { fixX: 1.1, fixY: 1.1 }
+      );
+      // this.updatePositionsRelativeToCamera(
+      //   this.middleContainer,
+      //   this.scene.cameras.main,
+      //   { x: this.startingPoint.x, y: this.worldSize.height },
+      //   { fixX: 2, fixY: 4 }
+      // );
+      // this.updatePositionsRelativeToCamera(
+      //   this.frontContainer,
+      //   this.scene.cameras.main,
+      //   { x: this.startingPoint.x, y: this.worldSize.height },
+      //   { fixX: -20, fixY: -30 }
+      // );
+    };
+  
+  
 
-    
-  }
+  // animateBackground() {
+  //   const camera = this.scene.cameras.main;
+  //   this.updateParallaxLayer(this.backContainer, camera, 0.8, 0.8);   // Farthest, moves slowest
+  //   this.updateParallaxLayer(this.middleContainer, camera, 0.3, 0.3); // Middle layer
+  //   this.updateParallaxLayer(this.frontContainer, camera, 0, 0);  // Closest, moves faster
+  // }
   
-  updateParallaxLayer(
-    container: Phaser.GameObjects.Container,
-    camera: Phaser.Cameras.Scene2D.Camera,
-    parallaxFactorX: number,
-    parallaxFactorY: number
-  ) {
-    if (!container || !camera) return;
-    const offsetY = this.scene.player?.body?.height! - (this.scene.player?.body?.height! * camera.lerp.y * camera.followOffset.y);
-    const maxScrollY = camera.getBounds().bottom - camera.height - offsetY;
-    const worldBottomMargin = this.worldSize.height - this.cameraBounds.height - this.cameraBounds.y;
-    container.setPosition(
-      (camera.scrollX) * parallaxFactorX,
-      (camera.scrollY - (maxScrollY)) * parallaxFactorY + 4 - (worldBottomMargin) // El 4 es por un microcorte quizas generado por excedentes en los assets
-    );
+  // updateParallaxLayer(
+  //   container: Phaser.GameObjects.Container,
+  //   camera: Phaser.Cameras.Scene2D.Camera,
+  //   parallaxFactorX: number,
+  //   parallaxFactorY: number
+  // ) {
+  //   if (!container || !camera) return;
+  //   const windowScaleX = window.innerWidth / this.ratioReference.width;
+  //   const windowScaleY = window.innerHeight / this.ratioReference.height;
+  //   console.log("windowScaleX", windowScaleX, windowScaleY);
+  //   const offsetY = this.scene.player?.body?.height! - (this.scene.player?.body?.height! * camera.lerp.y * camera.followOffset.y);
+  //   const maxScrollY = camera.getBounds().bottom - camera.height - offsetY;
+  //   const worldBottomMargin = this.worldSize.height - this.cameraBounds.height - this.cameraBounds.y;
+  //   console.log("maxScrollY", maxScrollY, camera.getBounds().bottom, camera.height * windowScaleY, offsetY);
+  //    2560x1080	
+  //   maxScrollY 2510 1700 1080 -1890
+  //   1920x1080
+  //   maxScrollY 908.6000518798828 1700 703.2000122070312 88.19993591308594
+  //   container.setPosition(
+  //     (camera.scrollX) * parallaxFactorX,
+  //     (camera.scrollY - (maxScrollY)) * parallaxFactorY + 4 - (worldBottomMargin) // El 4 es por un microcorte quizas generado por excedentes en los assets
+  //   );
+  // }
+
+  cameraIgnore () {
+    this.scene.UICamera?.ignore(this.mapGroup);
+    this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.mapGroup);
+    this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.scene.player!);
   }
-  
+
 
   addColliders() {
     if (this.scene.player) {
@@ -324,7 +377,22 @@ export default class MapCreator {
           () => true,
           this.scene
         );
-
+        if (this.fallingTile)
+          this.scene.physics.add.collider(
+            this.scene.player,
+            this.fallingTile,
+            (a, b) => {
+              if (
+                this.scene.player?.touchingFeet(b as Phaser.Physics.Arcade.Sprite)
+              ) {
+                this.scene.touch()
+                //@ts-ignore
+                b.body.allowGravity = true;
+              }
+            },
+            () => true,
+            this.scene
+          );
       if (this.coin)
         this.scene.physics.add.overlap(
           this.scene.player,

@@ -4,7 +4,7 @@ import { GamePlayDataType } from "@/game/Types";
 import Game from "@/game/Game";
 import { group } from "console";
 
-export default class Map3 extends MapCreator {
+export default class Map4 extends MapCreator {
   constructor(scene: Game, player: Player, data?: GamePlayDataType) {
     super(scene, player, data);
     this.scene = scene;

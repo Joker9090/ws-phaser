@@ -3,7 +3,8 @@ import Phaser from "phaser";
 import p1Mapa0 from "./maps/planet1/Mapa0";
 import p1Mapa1 from "./maps/planet1/Mapa1";
 import p1Mapa2 from "./maps/planet1/Mapa2";
-import p1Mapa3 from "./maps/planet1/Map3";
+import p1Mapa3 from "./maps/planet1/Mapa3";
+import p1Mapa4 from "./maps/planet1/Map4";
 // MAPAS PLANETA 2
 import p2Mapa1 from "./maps/planet2/Mapa4";
 import p2Mapa2 from "./maps/planet2/Mapa5";
@@ -36,6 +37,7 @@ export type PossibleMaps =
   | p1Mapa1
   | p1Mapa2
   | p1Mapa3
+  | p1Mapa4
   | p2Mapa1
   | p2Mapa2
   | p2Mapa3
@@ -700,7 +702,7 @@ class Game extends Phaser.Scene {
     /* FAR BG CAMERA */
 
     this.cameras.add(0, 0, window.innerWidth, window.innerHeight, false, "backgroundCamera");
-    
+
     /* UI SCENE  */
     
     this.UICamera = this.cameras.add(

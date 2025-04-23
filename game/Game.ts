@@ -5,11 +5,10 @@ import p1Mapa1 from "./maps/planet1/Mapa1";
 import p1Mapa2 from "./maps/planet1/Mapa2";
 import p1Mapa3 from "./maps/planet1/Mapa3";
 
+import p1Map0 from "./maps/planet1/Map0";
 import p1Map1 from "./maps/planet1/Map1";
 import p1Map2 from "./maps/planet1/Map2";
 import p1Map3 from "./maps/planet1/Map3";
-
-import p1Mapa4 from "./maps/planet1/Map4";
 // MAPAS PLANETA 2
 import p2Mapa1 from "./maps/planet2/Mapa4";
 import p2Mapa2 from "./maps/planet2/Mapa5";
@@ -42,7 +41,6 @@ export type PossibleMaps =
   | p1Mapa1
   | p1Mapa2
   | p1Mapa3
-  | p1Mapa4
   | p2Mapa1
   | p2Mapa2
   | p2Mapa3
@@ -50,6 +48,7 @@ export type PossibleMaps =
   | p3Mapa1
   | p3Mapa2
   | Sandbox
+  | p1Map0
   | p1Map1
   | p1Map2
   | p1Map3;

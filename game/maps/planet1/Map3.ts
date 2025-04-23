@@ -1,261 +1,185 @@
-import Game from "@/game/Game";
 import MapCreator from "../sandbox/MapCreator";
 import Player from "@/game/assets/Player";
 import { GamePlayDataType } from "@/game/Types";
-import colors from "@/game/assets/PlatformColors";
+import Game from "@/game/Game";
 import { group } from "console";
 
-class Map3 extends MapCreator {
-    constructor(scene: Game, player: Player, data?: GamePlayDataType) {
-        super(scene, player, data);
-        this.scene = scene;
-        this.player = player;
+export default class Map3 extends MapCreator {
+  constructor(scene: Game, player: Player, data?: GamePlayDataType) {
+    super(scene, player, data);
+    this.scene = scene;
+    this.player = player;
 
-        this.scene.physics.world.setBounds(
-            0,
-            0,
-            this.worldSize.width,
-            this.worldSize.height
-        );
+    this.worldSize = {
+      width: 5000,
+      height: 3000,
+    };
+    this.cameraBounds = {
+      x: 0,
+      y: 0,
+      width: 4800,
+      height: 2800,
+    };
 
-        this.player.setPlayerWithTank(true);
+    this.scene.physics.world.setBounds(
+        0,
+        0,
+        5000,
+        3000
+      );
+    this.scene.cameras.main.setBounds(
+        100,
+        100,
+        4800,
+        2800
+    );
 
-        this.worldSize = {
-            width: 10000,
-            height: 2000,
-          };
-          this.cameraBounds = {
-            x: 0,
-            y: 100,
-            width: 10000,
-            height: 1800,
-          };
-          this.scene.physics.world.setBounds(
-            0,
-            0,
-            this.worldSize.width,
-            this.worldSize.height
-          );
-          this.scene.cameras.main.setBounds(
-            this.cameraBounds.x,
-            this.cameraBounds.y,
-            this.cameraBounds.width,
-            this.cameraBounds.height
-          );
-      
-          this.startingPoint = {
-            x: 500, //500
-            y: this.worldSize.height - 600, //800
-          };
+    this.player.setPlayerWithTank(true);
+  }
+
+    createBgRow(x: number, y: number, texture: string, assetWidth: number, scale: number) {
+        const scaledWidth: number = assetWidth * scale;
+        return Array(Math.ceil(this.worldSize.width / scaledWidth)).fill(0).map((_, index) => {
+            return this.scene.add.image(x + index * scaledWidth, y, texture).setOrigin(0, 1).setScale(scale);
+        });
     }
 
     createMap(data: { level: number; lifes: number }) {
-        this.mapContainer = this.scene.add.container();
-        this.coin = this.scene.physics.add.group({ allowGravity: false });
-        this.pisosBack = this.scene.physics.add.group({ allowGravity: false });
-        this.flyingPiso = this.scene.physics.add.group({ allowGravity: false, immovable: true });
-        this.portal = this.scene.physics.add.group({ allowGravity: false });
+      const { width, height } = this.ratioReference;
+      const { width: farWidth, height: farHeight } = this.farBackgroundReference;
+      const downScaledMiddleWidth = width * 0.7;
+      const downScaledFrontWidth = width * 0.5;
+  
+      // this.backgroundsBack = [
+      //     ...this.createBgRow(this.cameraBounds.x-200, this.worldSize.height, "gradient", farWidth, 1),
+      //     ...this.createBgRow(this.cameraBounds.x-200, this.worldSize.height, "stars", farWidth, 1),
+      //     ...this.createBgRow(this.cameraBounds.x-200, this.worldSize.height, "curvedVector2", farWidth, 0.6),
+      //   // this.scene.add.image(this.cameraBounds.x-200 + farWidth, this.worldSize.height, "curvedVector2").setOrigin(0, 1).setScale(0.7),
+      // ]
 
-        const backImage = this.scene.textures.get("background0P1").getSourceImage()
-        this.backSize = { width: backImage.width, height: backImage.height }
+      const bgContainerArr = [
+        this.scene.add.image(0, 0, "gradient").setOrigin(0.5),
+        this.scene.add.image(0, 0, "stars").setOrigin(0.5),
+        this.scene.add.image(0, 300, "curvedVector").setOrigin(0.5),
+      ]
+      const bgContainer = this.scene.add.container(0, 0, bgContainerArr);
+      this.scene.UICamera?.ignore(bgContainer);
+      const newMainCamera = this.scene.cameras.add(0, 0, window.innerWidth, window.innerHeight, true, "mainCamera");
+      // this.scene.children.sendToBack(bgContainer);
+      this.scene.cameras.main.ignore(bgContainer);
+  
+      this.backgroundsMiddle = [
+        ...this.createBgRow(this.cameraBounds.x-200, this.worldSize.height, "middleCombo", width, 0.7),
+      ]
+  
+      this.backgroundsFront = [
+          this.scene.add.image(-this.startingPoint.x, this.worldSize.height, "frontCombo").setOrigin(0, 1).setScale(0.5),
+          this.scene.add.image(-this.startingPoint.x + downScaledFrontWidth, this.worldSize.height, "frontCombo2").setOrigin(0, 1).setScale(0.5),
+          this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 2), this.worldSize.height, "frontCombo3").setOrigin(0, 1).setScale(0.5),
+          this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 3), this.worldSize.height, "frontCombo4").setOrigin(0, 1).setScale(0.5),
+          this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 4), this.worldSize.height, "frontCombo2").setOrigin(0, 1).setScale(0.5),
+          this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 5), this.worldSize.height, "frontCombo2").setOrigin(0, 1).setScale(0.5),
+      ]
+  
+      this.createBackgrounds(this.backgroundsBack, this.backgroundsMiddle, this.backgroundsFront);
+  
+      // this.scene.UICamera?.ignore(this.mapContainer);
+      this.scene.UICamera?.ignore(this.frontContainer);
+      this.scene.player?.setDepth(999);
+      
+  
+      const basePlatformsConfig = {
+        texture: "plataformaNuevaA",
+        scale: { width: 0.7, height: 0.7 },
+        rotated: false,
+        type: "floor",
+        width: 140,
+        height: 40,
+        group: this.floor,
+      }
+  
+      const baseLargePlatformsConf = {
+        withTextureToAbove: true,
+        texture: "plataformaNuevaA",
+        textureA: "platform_izq",
+        textureB: "platform_center",
+        textureC: "platform_der",
+        textureFill: ["fill_texture", "fill_texture2", "fill_texture3", "fill_texture4"],
+        width: {
+          textureA: 96,
+          textureB: 96,
+          textureC: 96,
+        },
+        height: 96,
+        scale: { width: 1, height: 1 },
+        rotated: false,
+        type: "largeFloor",
+        group: this.floor
+      };
 
-        const { width, height } = this.ratioReference;
-        const downScaledMiddleWidth = width * 0.7;
-        const downScaledFrontWidth = width * 0.5;
+      const mapFloor =  this.cameraBounds.height; 
+      const mapLeft = this.cameraBounds.x;
+  
+      const mapPlatforms = [
+        {
+          ...baseLargePlatformsConf,
+          pos: { x: mapLeft, y: mapFloor - 100 },
+          large: 15,
+          group: this.floor
+        },
+        {
+          ...basePlatformsConfig, pos: { x: 1000, y: mapFloor-400 }, animation: {
+            xAxis: {
+              xDistance: 1000,
+              xVel: 100
+            }
+          }
+        },
+        {
+          ...basePlatformsConfig, pos: { x: 1000, y: mapFloor-500 }, animation: {
+            yAxis: {
+              yDistance: 1000,
+              yVel: 100
+            }
+          }
+        },
+        { ...basePlatformsConfig, pos: { x: 1400, y: mapFloor-600 } },
+        { ...basePlatformsConfig, pos: { x: 1800, y: mapFloor-600 } },
+        { ...basePlatformsConfig, pos: { x: 2200, y: mapFloor-600 } },
+        {
+          ...baseLargePlatformsConf,
+          pos: { x: 3000, y: mapFloor - 100 },
+          large: 15,
+          group: this.floor
+        },
+        { ...basePlatformsConfig, pos: { x: 3400, y: mapFloor-100 } },
+        { ...basePlatformsConfig, pos: { x: 3700, y: mapFloor-400 } },
+        { ...basePlatformsConfig, pos: { x: 4000, y: mapFloor-600 } },
+        { ...basePlatformsConfig, pos: { x: 4300, y: mapFloor-800 } },
+        { ...basePlatformsConfig, pos: { x: 4600, y: mapFloor-1200 } },
+        { ...basePlatformsConfig, pos: { x: 4900, y: mapFloor-1200 } },
+        { ...basePlatformsConfig, pos: { x: 5200, y: mapFloor-1200 } },
+        { ...basePlatformsConfig, pos: { x: 5500, y: mapFloor-1200 } },
+        {
+          ...baseLargePlatformsConf,
+          pos: { x: 6000, y: mapFloor - 1200 },
+          large: 10,
+          group: this.floor,
+          withTextureToAbove: false,
+        },
 
-        this.backgroundsBack = [
-            this.scene.add.image(0, this.worldSize.height, "background0P1").setOrigin(0, 1).setScale(1.3),
-            this.scene.add.image(0, this.worldSize.height, "backgroundStars").setOrigin(0, 1).setScale(1.3),
-            this.scene.add.image(0 + backImage.width, this.worldSize.height, "background0P1").setOrigin(0, 1),
-            this.scene.add.image(0 + backImage.width, this.worldSize.height, "backgroundStars").setOrigin(0, 1),
-            this.scene.add.image(0 + (backImage.width * 2), this.worldSize.height, "background0P1").setOrigin(0, 1),
-            this.scene.add.image(0 + (backImage.width * 2), this.worldSize.height, "backgroundStars").setOrigin(0, 1),
-        ]
 
-        this.backgroundsMiddle = [
-            this.scene.add.image(-this.startingPoint.x, this.worldSize.height, "middleCombo").setOrigin(0, 1).setScale(0.7),
-            this.scene.add.image(-this.startingPoint.x + downScaledMiddleWidth, this.worldSize.height, "middleCombo2").setOrigin(0, 1).setScale(0.7),
-            this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 2), this.worldSize.height, "middleCombo3").setOrigin(0, 1).setScale(0.7),
-            this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 3), this.worldSize.height, "middleCombo4").setOrigin(0, 1).setScale(0.7),
-            this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 4), this.worldSize.height, "middleCombo2").setOrigin(0, 1).setScale(0.7),
-            this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 5), this.worldSize.height, "middleCombo2").setOrigin(0, 1).setScale(0.7),
-        ]
 
-        this.backgroundsFront = [
-            this.scene.add.image(this.startingPoint.x + this.backSize.width - 15, this.worldSize.height, "montaña3"),
-            this.scene.add.image(this.startingPoint.x - 70, this.worldSize.height, "montaña5"),
-            this.scene.add.image(1200, this.worldSize.height, "montaña3")
-        ]
 
-        this.createBackgrounds(this.backgroundsBack, this.backgroundsMiddle, this.backgroundsFront);
 
-        this.scene.UICamera?.ignore(this.mapContainer);
-        this.scene.UICamera?.ignore(this.frontContainer);
+      ]
 
-        this.scene.player?.setDepth(9999999999999);
-
-        const basePlatformsConfig = {
-            withTextureToAbove: true,
-            texture: "plataformaNuevaA",
-            scale: { width: 0.7, height: 0.7 },
-            rotated: false,
-            type: "floor",
-            width: 140,
-            height: 40
-        }
-
-        const baseLargePlatformsConf = {
-            withTextureToAbove: false,
-            texture: "plataformaNuevaA",
-            textureA: "plataformaNuevaLargaA",
-            textureB: "plataformaNuevaLargaB",
-            textureC: "plataformaNuevaLargaC",
-            scale: { width: 0.7, height: 0.7 },
-            rotated: false,
-            type: "largeFloor",
-        };
-
-        const baseCristalConf = {
-            type: "collectable",
-            texture: "shield",
-            scale: { width: 0.7, height: 0.7 },
-            width: 10,
-            height: 18,
-            fix: 10,
-        }
-
-        const baseDangerConf = {
-            type: "danger",
-            texture: "Enemy",
-            scale: { width: 1, height: 1 },
-            attackSpriteSheet: "EnemyAttack",
-            particleSpriteSheet: "EnemyParticles",
-            group: this.obstacle,
-        }
-
-        const baseFireballConf = {
-            type: "fireball",
-            spriteSheet: "meteorito",
-            texture: "meteorito",
-            width: 100,
-            height: 100,
-            group: this.firegroup,
-            scale: { width: 0.5, height: 0.5 },
-        }
-
-        const mapPlatforms = [
-            {
-                ...baseLargePlatformsConf,
-                pos: { x: 0, y: this.worldSize.height - 600 },
-                width: {
-                    textureA: 90,
-                    textureB: 67,
-                    textureC: 115,
-                },
-                height: 127,
-                large: 15,
-                group: this.floor
-            },
-            { ...basePlatformsConfig, pos: { x: 1100, y: this.worldSize.height - 600 } }, //TIENE QUE SER PLATAFORMA QUE SE CAE
-            {
-                ...baseLargePlatformsConf,
-                pos: { x: 1600, y: this.worldSize.height - 200 },
-                width: {
-                    textureA: 90,
-                    textureB: 67,
-                    textureC: 115,
-                },
-                height: 127,
-                large: 40,
-                group: this.floor
-            },
-            { ...baseDangerConf, pos: { x: 2100, y: this.worldSize.height - 250 }, width: 170, height: 170, animation:{ xAxis:{ xDistance:500, xVel:350 } }, },
-            { ...baseDangerConf, pos: { x: 2600, y: this.worldSize.height - 500 }, width: 170, height: 170, animation:{ yAxis:{ yDistance:500, yVel:400 } }, },
-            { ...baseDangerConf, pos: { x: 3000, y: this.worldSize.height - 450 }, width: 170, height: 170, animation:{ yAxis:{ yDistance:350, yVel:350 } }, },
-            {
-                ...baseLargePlatformsConf,
-                pos: { x: 3800, y: this.worldSize.height - 500 },
-                width: {
-                    textureA: 90,
-                    textureB: 67,
-                    textureC: 115,
-                },
-                height: 127,
-                large: 15,
-                group: this.floor
-            },
-            { ...basePlatformsConfig, pos: { x: 4200, y: this.worldSize.height - 1200 } }, 
-            { ...basePlatformsConfig, pos: { x: 4700, y: this.worldSize.height - 1200 } }, //TIENE QUE SER PLATAFORMA QUE SE CAE
-            {
-                ...baseLargePlatformsConf,
-                pos: { x: 5200, y: this.worldSize.height - 1200 },
-                width: {
-                    textureA: 90,
-                    textureB: 67,
-                    textureC: 115,
-                },
-                height: 127,
-                large: 15,
-                group: this.floor
-            },
-            { ...basePlatformsConfig, pos: { x: 6300, y: this.worldSize.height - 1200 } }, //TIENE QUE SER PLATAFORMA QUE SE CAE
-            { ...basePlatformsConfig, pos: { x: 6700, y: this.worldSize.height - 1200 } }, //TIENE QUE SER PLATAFORMA QUE SE CAE
-            { ...basePlatformsConfig, pos: { x: 7100, y: this.worldSize.height - 1200 } }, //TIENE QUE SER PLATAFORMA QUE SE CAE
-            {
-                ...baseLargePlatformsConf,
-                pos: { x: 7400, y: this.worldSize.height - 400 },
-                width: {
-                    textureA: 90,
-                    textureB: 67,
-                    textureC: 115,
-                },
-                height: 127,
-                large: 30,
-                group: this.floor
-            },
-            // ACA VA DANGER
-            {
-                ...baseLargePlatformsConf,
-                pos: { x: 9200, y: this.worldSize.height - 700 },
-                width: {
-                    textureA: 90,
-                    textureB: 67,
-                    textureC: 115,
-                },
-                height: 127,
-                large: 15,
-                group: this.floor
-            },
-
-            // { ...baseCristalConf, pos: { x: 700, y:  this.worldSize.height - 200 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
-            
-
-        ]
-        this.createPlatforms(mapPlatforms)
-
-        this.scene.UICamera?.ignore(this.floor!);
-        this.scene.UICamera?.ignore(this.mapContainer)
-        this.scene.UICamera?.ignore(this.frontContainer)
-        this.scene.UICamera?.ignore(this.backContainer)
-        this.scene.UICamera?.ignore(this.middleContainer)
-        this.scene.UICamera?.ignore(this.frontContainer)
-        this.scene.UICamera?.ignore(this.coin)
-        this.scene.UICamera?.ignore(this.pisosBack)
-        this.scene.UICamera?.ignore(this.gravityTile!)
-
-        this.scene.UICamera?.ignore(this.backContainer)
-        this.scene.UICamera?.ignore(this.middleContainer)
-        this.scene.UICamera?.ignore(this.frontContainer)
+      this.createPlatforms(mapPlatforms)
+      this.cameraIgnore()
     }
 
     update() {
-        /* Attach background anim */
-        // if (this.scene.player) this.animateBackground(this.scene.player);
-        if (this.scene.player)
-            if (this.scene.initialScroll.x === 0 && this.scene.initialScroll.y === 0) this.setInitialScroll(this.scene.cameras.main.scrollX, this.scene.cameras.main.scrollY);
-            this.animateBackground();
+      if (this.scene.player)
+        this.animateBackground();
     }
-
 }
-
-export default Map3;

@@ -195,7 +195,7 @@ export default class MapCreator {
     this.floor = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.gravityTile = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.rotationTile = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
-    this.fallingTile = this.scene.physics.add.group({ allowGravity: true, immovable: true, collideWorldBounds: true });
+    this.fallingTile = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.teleport = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.obstacle = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.firegroup = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
@@ -241,7 +241,7 @@ export default class MapCreator {
   createPlatforms(gameObjects: mapFloorConfig[]) {
     gameObjects.forEach((element) => {
       const tile: any = Factory(this.scene, element, this.floor!);
-      this.mapGroup.add(tile);
+      // this.mapGroup.add(tile);
     })
   }
 

@@ -249,7 +249,7 @@ export default class MapCreator {
     // this.initialScroll = { x: scrollX, y: scrollY };
   }
 
-   updatePositionsRelativeToCamera = (
+   updatePositions = (
       images: Phaser.GameObjects.Container,
       camera: Phaser.Cameras.Scene2D.Camera,
       fixedPoint: { x: number; y: number },
@@ -264,19 +264,19 @@ export default class MapCreator {
     };
   
     animateBackground() {
-      this.updatePositionsRelativeToCamera(
+      this.updatePositions(
         this.backContainer,
         this.scene.cameras.main,
         { x: this.startingPoint.x, y: this.worldSize.height },
         { fixX: 1.1, fixY: 1.1 }
       );
-      // this.updatePositionsRelativeToCamera(
+      // this.updatePositions(
       //   this.middleContainer,
       //   this.scene.cameras.main,
       //   { x: this.startingPoint.x, y: this.worldSize.height },
       //   { fixX: 2, fixY: 4 }
       // );
-      // this.updatePositionsRelativeToCamera(
+      // this.updatePositions(
       //   this.frontContainer,
       //   this.scene.cameras.main,
       //   { x: this.startingPoint.x, y: this.worldSize.height },

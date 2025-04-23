@@ -264,10 +264,10 @@ export default class MapCreator {
     if (!container || !camera) return;
     const offsetY = this.scene.player?.body?.height! - (this.scene.player?.body?.height! * camera.lerp.y * camera.followOffset.y);
     const maxScrollY = camera.getBounds().bottom - camera.height - offsetY;
-
+    const worldBottomMargin = this.worldSize.height - this.cameraBounds.height - this.cameraBounds.y;
     container.setPosition(
       (camera.scrollX) * parallaxFactorX,
-      (camera.scrollY - (maxScrollY)) * parallaxFactorY + 4 // El 4 es por un microcorte quizas generado por excedentes en los assets
+      (camera.scrollY - (maxScrollY)) * parallaxFactorY + 4 - (worldBottomMargin) // El 4 es por un microcorte quizas generado por excedentes en los assets
     );
   }
   
@@ -386,7 +386,7 @@ export default class MapCreator {
             //this.scene.touchItem("fireball");
             //this.scene.player?.setVelocity(0);
             const danger = b as Danger;
-            danger.Attack();
+            danger.DoDamage();
           },
           () => true,
           this.scene

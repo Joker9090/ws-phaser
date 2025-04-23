@@ -61,15 +61,15 @@ class Sandbox extends MapCreator {
     };
     this.cameraBounds = {
       x: 0,
-      y: 0,
+      y: 100,
       width: 10000,
-      height: 1800,
+      height: 1600,
     };
     this.scene.physics.world.setBounds(
-      this.cameraBounds.x,
-      this.cameraBounds.y,
-      this.cameraBounds.width,
-      this.cameraBounds.height
+      0,
+      0,
+      this.worldSize.width,
+      this.worldSize.height
     );
     this.scene.cameras.main.setBounds(
       this.cameraBounds.x,
@@ -233,6 +233,7 @@ class Sandbox extends MapCreator {
       {
         // ...globalPlatformsConfig,
         ...baseLargePlatformsConf,
+        withTextureToAbove: false,
         pos: { x: 6000, y: 500 },
         large: 30,
         group: this.floor
@@ -245,7 +246,7 @@ class Sandbox extends MapCreator {
     
       //portales
       { type: "subPortal",  x: 2000, y: 800, version: 1, sameScene: false, group: this.teleport, otherSceneConf: otherSceneConf },
-      { type: "finalPortal", pos: { x: 5500, y: 1200 }, texture: "plataformaFinalP1", width: 100, height: 100, group: this.portal }
+      { type: "finalPortal", pos: { x: 5500, y: 1300 }, texture: "plataformaFinalP1", width: 100, height: 100, group: this.portal }
     
     ]
     

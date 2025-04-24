@@ -4,7 +4,7 @@ import { GamePlayDataType } from "@/game/Types";
 import Game from "@/game/Game";
 import { group } from "console";
 
-export default class Map4 extends MapCreator {
+export default class Map3 extends MapCreator {
   constructor(scene: Game, player: Player, data?: GamePlayDataType) {
     super(scene, player, data);
     this.scene = scene;
@@ -50,12 +50,23 @@ export default class Map4 extends MapCreator {
       const downScaledMiddleWidth = width * 0.7;
       const downScaledFrontWidth = width * 0.5;
   
-      this.backgroundsBack = [
-          ...this.createBgRow(this.cameraBounds.x-200, this.worldSize.height, "gradient", farWidth, 1),
-          ...this.createBgRow(this.cameraBounds.x-200, this.worldSize.height, "stars", farWidth, 1),
-          ...this.createBgRow(this.cameraBounds.x-200, this.worldSize.height, "curvedVector2", farWidth, 0.6),
-        // this.scene.add.image(this.cameraBounds.x-200 + farWidth, this.worldSize.height, "curvedVector2").setOrigin(0, 1).setScale(0.7),
+      // this.backgroundsBack = [
+      //     ...this.createBgRow(this.cameraBounds.x-200, this.worldSize.height, "gradient", farWidth, 1),
+      //     ...this.createBgRow(this.cameraBounds.x-200, this.worldSize.height, "stars", farWidth, 1),
+      //     ...this.createBgRow(this.cameraBounds.x-200, this.worldSize.height, "curvedVector2", farWidth, 0.6),
+      //   // this.scene.add.image(this.cameraBounds.x-200 + farWidth, this.worldSize.height, "curvedVector2").setOrigin(0, 1).setScale(0.7),
+      // ]
+
+      const bgContainerArr = [
+        this.scene.add.image(0, 0, "gradient").setOrigin(0.5),
+        this.scene.add.image(0, 0, "stars").setOrigin(0.5),
+        this.scene.add.image(0, 300, "curvedVector").setOrigin(0.5),
       ]
+      const bgContainer = this.scene.add.container(0, 0, bgContainerArr);
+      this.scene.UICamera?.ignore(bgContainer);
+      const newMainCamera = this.scene.cameras.add(0, 0, window.innerWidth, window.innerHeight, true, "mainCamera");
+      // this.scene.children.sendToBack(bgContainer);
+      this.scene.cameras.main.ignore(bgContainer);
   
       this.backgroundsMiddle = [
         ...this.createBgRow(this.cameraBounds.x-200, this.worldSize.height, "middleCombo", width, 0.7),
@@ -159,6 +170,7 @@ export default class Map4 extends MapCreator {
       ]
 
       this.createPlatforms(mapPlatforms)
+      this.cameraIgnore()
     }
 
     update() {

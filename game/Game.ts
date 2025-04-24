@@ -4,7 +4,11 @@ import p1Mapa0 from "./maps/planet1/Mapa0";
 import p1Mapa1 from "./maps/planet1/Mapa1";
 import p1Mapa2 from "./maps/planet1/Mapa2";
 import p1Mapa3 from "./maps/planet1/Mapa3";
-import p1Mapa4 from "./maps/planet1/Map4";
+
+import p1Map0 from "./maps/planet1/Map0";
+import p1Map1 from "./maps/planet1/Map1";
+import p1Map2 from "./maps/planet1/Map2";
+import p1Map3 from "./maps/planet1/Map3";
 // MAPAS PLANETA 2
 import p2Mapa1 from "./maps/planet2/Mapa4";
 import p2Mapa2 from "./maps/planet2/Mapa5";
@@ -38,7 +42,6 @@ export type PossibleMaps =
   | (p1Mapa1 & { totalCoins?: number })
   | (p1Mapa2 & { totalCoins?: number })
   | (p1Mapa3 & { totalCoins?: number })
-  | (p1Mapa4 & { totalCoins?: number })
   | (p2Mapa1 & { totalCoins?: number })
   | (p2Mapa2 & { totalCoins?: number })
   | (p2Mapa3 & { totalCoins?: number })
@@ -46,7 +49,10 @@ export type PossibleMaps =
   | (p3Mapa1 & { totalCoins?: number })
   | (p3Mapa2 & { totalCoins?: number })
   | Sandbox
-  | subSandbox
+  | p1Map0
+  | p1Map1
+  | p1Map2
+  | p1Map3;
 // Scene in class
 export const keyCodesAWSD = {
   w: Phaser.Input.Keyboard.KeyCodes.W,
@@ -556,7 +562,7 @@ class Game extends Phaser.Scene {
       case 1:
         this.player = new Player(this, 0, 0, "character", 2);
 
-        this.map = new p1Mapa1(this, this.player!);
+        this.map = new p1Map1(this, this.player!);
         this.loopMusic = "planet0LoopMusic";
         if (this.masterManagerScene) {
           this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1"];
@@ -565,7 +571,7 @@ class Game extends Phaser.Scene {
       case 2:
         this.player = new Player(this, 0, 0, "character", 2);
 
-        this.map = new p1Mapa2(this, this.player!);
+        this.map = new p1Map2(this, this.player!);
         this.loopMusic = "planet0LoopMusic";
         if (this.masterManagerScene) {
           this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1"];
@@ -574,7 +580,7 @@ class Game extends Phaser.Scene {
       case 3:
         this.player = new Player(this, 0, 0, "character", 2);
 
-        this.map = new p1Mapa3(this, this.player!);
+        this.map = new p1Map3(this, this.player!);
         this.loopMusic = "planet0LoopMusic";
         if (this.masterManagerScene) {
           this.masterManagerScene.imagenesDesbloqueadas = [
@@ -738,8 +744,9 @@ class Game extends Phaser.Scene {
     );
     this.UICamera?.ignore(this.player);
     this.player.gravityAnimSprite && this.UICamera?.ignore(this.player.gravityAnimSprite);
-    
-    
+    this.player.tankAnimSprite && this.UICamera?.ignore(this.player.tankAnimSprite);
+    this.player.auraAnimSprite && this.UICamera?.ignore(this.player.auraAnimSprite);
+      
     this.UIClass = new UIClass(this, this.levelIs, this.lifes, this.timeLevel);
     
     /* CONTROLS */

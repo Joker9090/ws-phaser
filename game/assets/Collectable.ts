@@ -83,8 +83,11 @@ class Collectable extends Phaser.Physics.Arcade.Sprite {
     this.group.add(this);
     this.setImmovable(true);
     this.setCollideWorldBounds(true);
-    if(config.aura) this.aura = scene.add.sprite(config.pos.x, config.pos.y, config.aura).setScale(0.6);
-   
+    if(config.aura) {
+      this.aura = scene.add.sprite(config.pos.x, config.pos.y, config.aura).setScale(0.6);
+      this.scene.UICamera?.ignore(this.aura)
+    }
+    
     this.scene.tweens.add({
       targets: this.aura,
       alpha: 0.4,

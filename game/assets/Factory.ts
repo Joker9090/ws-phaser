@@ -4,6 +4,7 @@ import Game from "../Game";
 import Collectable from "./Collectable";
 import Teleport from "./Teleport";
 import Danger from "./Danger";
+import Fireball from "./Fireball";
 
 export default function Factory(scene: Game, config: any, floorGroup: Phaser.Physics.Arcade.Group) {
   let { type, ...rest } = config;
@@ -41,6 +42,9 @@ export default function Factory(scene: Game, config: any, floorGroup: Phaser.Phy
             // finalPortal.setBodySize(140, 20)
             finalPortal.setFlipY(rest.flipY ?? false)
       return finalPortal;  
+    case "fireball":
+        let fireball = new Fireball(scene, rest, rest.group);
+        return fireball;
     default:
         break;
   }

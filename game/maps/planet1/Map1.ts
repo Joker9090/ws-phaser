@@ -4,6 +4,7 @@ import Player from "@/game/assets/Player";
 import { GamePlayDataType } from "@/game/Types";
 import colors from "@/game/assets/PlatformColors";
 import { group } from "console";
+import { DangerConfig } from "@/game/assets/Danger";
 
 class Map1 extends MapCreator {
     constructor(scene: Game, player: Player, data?: GamePlayDataType) {
@@ -139,6 +140,8 @@ class Map1 extends MapCreator {
             type: "danger",
             texture: "Enemy",
             scale: { width: 1, height: 1 },
+            width: 170,
+            height: 170,
             attackSpriteSheet: "EnemyAttack",
             particleSpriteSheet: "EnemyParticles",
             group: this.obstacle,
@@ -180,7 +183,12 @@ class Map1 extends MapCreator {
                 large: 20,
                 group: this.floor
             },
-            { ...baseDangerConf, pos: { x: 1600, y: this.worldSize.height - 450 }, width: 170, height: 170, animation:{ xAxis:{ xDistance:500, xVel:150 } }, },
+            { ...baseDangerConf, pos: { x: 1600, y: this.worldSize.height - 450 }, width: 170, height: 170, patrol:{
+                patrolType: "LinealX",
+                distance: 500,
+                speed: 150,
+                attackInterval: 0,
+              } },
             { ...basePlatformsConfig, pos: { x: 2100, y: this.worldSize.height - 600 } },
             { ...baseCristalConf, pos: { x: 2100, y:  this.worldSize.height - 700 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
             { ...basePlatformsConfig, pos: { x: 2500, y: this.worldSize.height - 800 } },

@@ -703,6 +703,10 @@ class Game extends Phaser.Scene {
 
     this.cameras.add(0, 0, window.innerWidth, window.innerHeight, false, "backgroundCamera");
 
+    /* CREATE NEW MAIN CAMERA TO FIX ORDER */
+
+    this.cameras.add(0, 0, window.innerWidth, window.innerHeight, true, "mainCamera");
+
     /* UI SCENE  */
     
     this.UICamera = this.cameras.add(

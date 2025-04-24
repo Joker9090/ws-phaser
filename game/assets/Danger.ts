@@ -138,26 +138,26 @@ class Danger extends Phaser.Physics.Arcade.Sprite {
             attackInteval: config.patrol.attackInterval ?? 0,
           };
           if(this.patrol.patrolType==="LinealX"){
-            console.log("[Danger] patrol lineal x:"+this.patrol.distance);
+            //console.log("[Danger] patrol lineal x:"+this.patrol.distance);
               this.patrolTween = this.scene.tweens.add({
                   targets:this,
                   props:{
                     x: this.x + this.patrol.distance,
                   },
                   duration: (this.patrol.distance / this.patrol.speed)*1000,
-                  ease: 'cubic.inout',
+                  ease: 'Bounce.easeIn',
                   yoyo:true,
                   repeat: -1,
                 });
           }else if(this.patrol.patrolType==='LinealY'){
-            console.log("[Danger] patrol lineal y:"+this.patrol.distance);
+            //console.log("[Danger] patrol lineal y:"+this.patrol.distance);
               this.patrolTween = this.scene.tweens.add({
                   targets:this,
                   props:{
                     y: this.y - this.patrol.distance,
                   },
                   duration: (this.patrol.distance / this.patrol.speed)*1000,
-                  ease: 'cubic.inout',
+                  ease: 'Bounce.easeIn',
                   yoyo:true,
                   repeat: -1,
                 });
@@ -169,12 +169,12 @@ class Danger extends Phaser.Physics.Arcade.Sprite {
     startInterruption() {
       if(this.currentState==="patrol"){
         var timer;
-        
+
         if(this.patrol.attackInteval > 0) timer = this.patrol.attackInteval*1000;
         else timer = Phaser.Math.Between(2000, 5000); 
 
         this.scene.time.delayedCall(timer, () => {
-          console.log("[Danger] Interruption started");
+          //console.log("[Danger] Interruption started");
           this.patrolTween?.pause();
           this.AttackState();
         });
@@ -183,7 +183,7 @@ class Danger extends Phaser.Physics.Arcade.Sprite {
    
     DoDamage(){
       if(this.config.attackSpriteSheet && this.scene.player?.isDead===false){
-        console.log("[Danger] DoDamage animation started");
+        //console.log("[Danger] DoDamage animation started");
         this.scene.player!.isDead = true;
         this.anims.play("Attack",true);
         this.scene.time.delayedCall(200, () => {
@@ -197,19 +197,23 @@ class Danger extends Phaser.Physics.Arcade.Sprite {
 
     PatrolState(){
       this.currentState = "patrol";
-      console.log("[Danger] PatrolState");
+      //console.log("[Danger] PatrolState");
       this.patrolTween?.play()
       this.startInterruption();
     }
     AttackState(){
       this.currentState = "attack";
       if(this.config.attackSpriteSheet){
-        console.log("[Danger] AttackState");
+       // console.log("[Danger] AttackState");
         this.anims.play("Attack",true);
         this.scene.time.delayedCall(500,()=>{
-          this.setTexture(this.config.attackSpriteSheet!);
-          this.setFrame(0);
-          this.PatrolState();
+          this.anims.stop();
+          this.anims.play("Attack-",true);
+          this.scene.time.delayedCall(500, ()=>{
+            this.PatrolState();
+          });
+          //this.setTexture(this.config.attackSpriteSheet!);
+          //this.setFrame(0);
         });
       }
     }

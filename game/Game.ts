@@ -556,7 +556,7 @@ class Game extends Phaser.Scene {
       case 0:
         this.player = new Player(this, 0, 0, "character", 2);
         
-        this.map = new p1Mapa0(this, this.player!);
+        this.map = new p1Map0(this, this.player!);
         this.loopMusic = "planet0LoopMusic";
         break;
       case 1:

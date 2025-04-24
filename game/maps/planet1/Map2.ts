@@ -139,6 +139,8 @@ class Map2 extends MapCreator {
             type: "danger",
             texture: "Enemy",
             scale: { width: 1, height: 1 },
+            width: 170,
+            height: 170,
             attackSpriteSheet: "EnemyAttack",
             particleSpriteSheet: "EnemyParticles",
             group: this.obstacle,
@@ -181,10 +183,31 @@ class Map2 extends MapCreator {
                 large: 40,
                 group: this.floor
             },
-            { ...baseDangerConf, pos: { x: 2100, y: this.worldSize.height - 250 }, width: 170, height: 170, animation:{ xAxis:{ xDistance:500, xVel:350 } }, },
+            { ...baseDangerConf, pos: { x: 1900, y: this.worldSize.height - 250 }, width: 170, height: 170, 
+                patrol:{
+                    patrolType: "LinealX",
+                    distance: 400,
+                    speed: 200,
+                    attackInterval: 0,
+                }
+            },
             { ...baseCristalConf, pos: { x: 2100, y:  this.worldSize.height - 400 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
-            { ...baseDangerConf, pos: { x: 2600, y: this.worldSize.height - 500 }, width: 170, height: 170, animation:{ yAxis:{ yDistance:500, yVel:400 } }, },
-            { ...baseDangerConf, pos: { x: 3000, y: this.worldSize.height - 450 }, width: 170, height: 170, animation:{ yAxis:{ yDistance:350, yVel:350 } }, },
+            { ...baseDangerConf, pos: { x: 2600, y: this.worldSize.height - 250 }, width: 170, height: 170, 
+                patrol:{
+                    patrolType: "LinealY",
+                    distance: 500,
+                    speed: 300,
+                    attackInterval: 0,
+                }
+            },
+            { ...baseDangerConf, pos: { x: 3000, y: this.worldSize.height - 250 }, width: 170, height: 170, 
+                patrol:{
+                    patrolType: "LinealY",
+                    distance: 350,
+                    speed: 250,
+                    attackInterval: 0,
+                }
+            },
             {
                 ...baseLargePlatformsConf,
                 pos: { x: 3800, y: this.worldSize.height - 500 },
@@ -236,15 +259,27 @@ class Map2 extends MapCreator {
                 large: 25,
                 group: this.floor
             },
-            { ...baseDangerConf, pos: { x: 7750, y: this.worldSize.height - 550 }, width: 170, height: 170, animation:{ yAxis:{ yDistance:200, yVel:200 } }, },
+            { ...baseDangerConf, pos: { x: 7750, y: this.worldSize.height - 450 }, width: 170, height: 170, 
+                patrol:{
+                    patrolType: "LinealY",
+                    distance: 200,
+                    speed: 100,
+                    attackInterval: 0,
+                }
+            },
             { ...baseCristalConf, pos: { x: 7750, y:  this.worldSize.height - 750 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
-            { ...baseDangerConf, pos: { x: 8200, y: this.worldSize.height - 550 }, width: 170, height: 170, animation:{ yAxis:{ yDistance:200, yVel:300 } }, },
+            { ...baseDangerConf, pos: { x: 8200, y: this.worldSize.height - 450 }, width: 170, height: 170, 
+                patrol:{
+                    patrolType: "LinealY",
+                    distance: 200,
+                    speed: 200,
+                    attackInterval: 0,
+                }
+            },
             { ...baseCristalConf, pos: { x: 8200, y:  this.worldSize.height - 750 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
 
             { ...baseFireballConf, pos: { x: 9000, y:  this.worldSize.height - 1300 }, tween: { duration: 1600, repeat: -1, y: "+=1000", yoyo: true  }, rotated: false },
             { ...baseCristalConf, pos: { x: 9100, y:  this.worldSize.height - 900 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
-
-            // ACA VA DANGER
             {
                 ...baseLargePlatformsConf,
                 pos: { x: 9200, y: this.worldSize.height - 700 },

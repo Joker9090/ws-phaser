@@ -27,13 +27,16 @@ class cine3Movie4 {
         // setTimeout(() => {
         //     this.cine.sound.add("C2_7").setVolume(0.25).play()
         // }, 500)
+        this.cine.sound.add("c3Radio2").setVolume(0.5).play()
+
+
     }
 
-     stopDialogue(){
-     this.dialogue?.stop();
-      this.dialogue?.destroyContainer();
-    this.dialogue = undefined;
-  }
+    stopDialogue() {
+        this.dialogue?.stop();
+        this.dialogue?.destroyContainer();
+        this.dialogue = undefined;
+    }
 
     playCine(this: cine3Movie4) {
         // START ticker
@@ -61,21 +64,21 @@ class cine3Movie4 {
             .image(100, 100, "astroFrontC4S4")
             .setOrigin(0.5)
             .setPosition(30, 0);
-            this.background1C3S4 = this.cine.add
+        this.background1C3S4 = this.cine.add
             .image(0, 0, "background1C3S4")
             .setOrigin(0.5)
-            this.background2C3S4 = this.cine.add
+        this.background2C3S4 = this.cine.add
             .image(0, 0, "background2C3S4")
             .setOrigin(0.5)
-            this.shipC3S4 = this.cine.add
+        this.shipC3S4 = this.cine.add
             .image(0, 0, "shipC3S4")
             .setOrigin(0.5)
-      
+
         const darkMask = this.cine.add.rectangle(
             0,
             0,
-            window.innerWidth*2,
-            window.innerHeight*2,
+            window.innerWidth * 2,
+            window.innerHeight * 2,
             0,
             0.3
         );
@@ -116,18 +119,31 @@ class cine3Movie4 {
 
             this.dialogue = new DialogueManager(
                 this.cine,
-                [""],
-                [""],
-                [],
-                80
+                ["Wait... what?!"],
+                [],//["intro1audio1"],
+                [
+                    {
+                        delay: 0,
+                        withTapping: {
+                            audios: ["key01", "key01", "key02"],
+                            count: 15,
+                            delay: 180,
+                        },
+                        keepAlive: 1000,
+                        position: {
+                            width: 500
+                        }
+                    },
+                ],
+                90
             );
-            // this.dialogue?.play();
+            this.dialogue?.play();
 
             this.cine.tweens.add({
                 targets: [this.astroFrontC4S4],
                 scale: 1,
                 delay: 0,
-                duration: 4000,
+                duration: 2500,
                 onComplete: () => {
                     this.cine.tweens.add({
                         targets: [this.astroFrontC4S4],
@@ -135,17 +151,74 @@ class cine3Movie4 {
                         delay: 0,
                         duration: 300,
                         ease: "ease",
-                      });
-                      this.cine.tweens.add({
+                    });
+                    this.cine.tweens.add({
                         targets: [this.astroC3S4],
                         alpha: 1,
                         delay: 0,
                         duration: 300,
                         ease: "ease",
-                      });
+                    });
                 },
                 ease: "bounce",
-              });
+            });
+
+            const dialogueListener = (newState: string, nextText?: string) => {
+                if (newState === "CONTINUE") {
+                } else if (newState === "FINISHED") {
+                    this.ticker.deleteJob(job.id);
+                }
+            };
+            this.dialogue?.killState(dialogueListener);
+            this.dialogue?.getState(dialogueListener);
+        };
+
+        const part2 = (job: TickerJob) => {
+
+            this.dialogue = new DialogueManager(
+                this.cine,
+                ["Dann!"],
+                [""],
+                [{
+                    delay: 100,
+                    withTapping: {
+                        audios: ["key01", "key01", "key02"],
+                        count: 5,
+                        delay: 180,
+                    },
+                    keepAlive: 1500,
+                    position: {
+                        width: 300,
+                    },
+
+                }],
+                80
+            );
+            this.dialogue?.play();
+
+            this.cine.tweens.add({
+                targets: [this.astroFrontC4S4],
+                scale: 1,
+                delay: 0,
+                duration: 2000,
+                onComplete: () => {
+                    this.cine.tweens.add({
+                        targets: [this.astroFrontC4S4],
+                        alpha: 0,
+                        delay: 0,
+                        duration: 300,
+                        ease: "ease",
+                    });
+                    this.cine.tweens.add({
+                        targets: [this.astroC3S4],
+                        alpha: 1,
+                        delay: 0,
+                        duration: 300,
+                        ease: "ease",
+                    });
+                },
+                ease: "bounce",
+            });
 
             const dialogueListener = (newState: string, nextText?: string) => {
                 if (newState === "CONTINUE") {
@@ -159,10 +232,24 @@ class cine3Movie4 {
 
 
         this.ticker.addJob(
-            new TickerJob(1, 10, part1, false, 8000, true, (job: TickerJob) => {
-                this.nextCine = true;
+            new TickerJob(1, 10, part1, false, 500, false, (job: TickerJob) => {
+                this.ticker.addNextJob(
+                    new TickerJob(
+                        2,
+                        10,
+                        part2,
+                        false,
+                        undefined,
+                        true,
+                        (job: TickerJob) => {
+                            this.nextCine = true
+                        }
+                    )
+                );
             })
         );
+
+
     }
 
     update(this: cine3Movie4, time: number, delta: number) {

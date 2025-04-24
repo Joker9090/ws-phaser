@@ -27,23 +27,24 @@ import subSandbox from "./maps/subLevels/subSandbox";
 import CODES from "../public/game/codigos.json";
 import Collectable from "./assets/Collectable";
 
+
 interface CodeType {
   mapa?: number;
   imagenes?: string[];
 }
-
+// a medida que los mapas pasen al nuevo modo esto se deberia poder eliminar ya que totalcoins existe en mapCreator
 export type PossibleMaps =
-  | p1Mapa0
-  | p1Mapa1
-  | p1Mapa2
-  | p1Mapa3
-  | p1Mapa4
-  | p2Mapa1
-  | p2Mapa2
-  | p2Mapa3
-  | p2Mapa4
-  | p3Mapa1
-  | p3Mapa2
+  | (p1Mapa0 & { totalCoins?: number })
+  | (p1Mapa1 & { totalCoins?: number })
+  | (p1Mapa2 & { totalCoins?: number })
+  | (p1Mapa3 & { totalCoins?: number })
+  | (p1Mapa4 & { totalCoins?: number })
+  | (p2Mapa1 & { totalCoins?: number })
+  | (p2Mapa2 & { totalCoins?: number })
+  | (p2Mapa3 & { totalCoins?: number })
+  | (p2Mapa4 & { totalCoins?: number })
+  | (p3Mapa1 & { totalCoins?: number })
+  | (p3Mapa2 & { totalCoins?: number })
   | Sandbox
   | subSandbox
 // Scene in class
@@ -69,7 +70,7 @@ class Game extends Phaser.Scene {
   timeLevel: number = 0;
   goingBack: boolean = false;
 
-  canWin: boolean = false;
+  canWin: boolean = true;
   canNextLevel: boolean = false;
   canRot: boolean = true;
 
@@ -91,6 +92,8 @@ class Game extends Phaser.Scene {
   UICamera?: Phaser.Cameras.Scene2D.Camera;
   masterManagerScene?: MasterManager;
   stopMov: boolean = false;
+
+  
   constructor() {
     super({ key: "Game" });
   }
@@ -314,8 +317,22 @@ class Game extends Phaser.Scene {
           level: 0,
           lifes: this.lifes ? this.lifes : 3,
         });
-        const scene = this.scene.add("MultiScene", multiScene, true);
-        this.scene.start("MultiScene").bringToTop("MultiScene");
+        this.stopMov =true
+        if(this.canWin){
+          this.add.rectangle(window.innerWidth/2,window.innerHeight/2, 500,250, 0xff0000).setOrigin(0.5).setAlpha(0.2)
+          const collText = this.UIClass?.collText?.text ?? "0";
+          const coinCount = this.map.totalCoins ?? 0;
+          this.add.text(window.innerWidth / 2, window.innerHeight / 2, `${collText}/${coinCount + 1}`);
+          this.canWin = false;
+      
+          if (this.input.keyboard) {
+            this.input.keyboard.enabled = false;
+          }
+        }
+
+
+        // const scene = this.scene.add("MultiScene", multiScene, true);
+        // this.scene.start("MultiScene").bringToTop("MultiScene");
       }
       else if (this.map?.nextScene) {
         // if (this.levelIs === 7){
@@ -339,6 +356,10 @@ class Game extends Phaser.Scene {
           level: this.levelIs + 1,
           lifes: this.lifes ? this.lifes : 3,
         });
+         
+ 
+        
+
         const scene = this.scene.add("MultiScene", multiScene, true);
         this.scene.start("MultiScene").bringToTop("MultiScene");
       } else {
@@ -501,7 +522,7 @@ class Game extends Phaser.Scene {
       if (document.visibilityState === "hidden") {
         this.masterManagerScene?.pauseGame();
       } else {
-        this.masterManagerScene?.resumeGame();
+        this.masterManagerScene?.resumeFromBlur();
       }
     })
 
@@ -510,7 +531,7 @@ class Game extends Phaser.Scene {
     });
   
     window.addEventListener("focus", () => {
-        this.masterManagerScene?.resumeGame();
+        this.masterManagerScene?.resumeFromBlur();
     });
     /* CHOSE LEVEL, LIFES AND AUDIO */
     switch (data.level) {
@@ -730,7 +751,7 @@ class Game extends Phaser.Scene {
     // FINALIZA EL MAPA
     
     // ARRANCA EL MAPA
-    this.canWin = false;
+
     /* CREATE MAP */
     this.map.createMap(data);
     console.log("rotating camera", this.cameraNormal);

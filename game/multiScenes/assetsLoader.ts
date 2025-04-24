@@ -873,6 +873,11 @@ export const loadAssets = {
         "key02",
         "/sounds/bs13.mp3",
       ],
+      ["audio", "c3Background", "/movies/cinemato3/audios/background.mp3"],
+      ["audio", "c3Radio1", "/movies/cinemato3/audios/radio1.mp3"],
+      ["audio", "c3Radio2", "/movies/cinemato3/audios/radio2.mp3"],
+      ["audio", "c3Final", "/movies/cinemato3/audios/final.mp3"],
+
       // SCENE 1
       ["image", "backgroundC3S1", "/movies/cinemato3/scene1/backgroundC3S1.png"],
       ["image", "bubblesC3S1", "/movies/cinemato3/scene1/bubblesC3S1.png"],

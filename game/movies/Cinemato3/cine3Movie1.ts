@@ -29,6 +29,10 @@ class cine3Movie1 {
     this.playCine();
     // music & sound
     // this.cine.sound.add("C2_4").setVolume(0.25).play();
+    this.cine.time.delayedCall(1300, ()=>{
+      this.cine.sound.add("c3Background").setVolume(0.7).play()
+    })
+
 
   }
 
@@ -144,18 +148,18 @@ class cine3Movie1 {
     const part1 = (job: TickerJob) => {
       this.dialogue = new DialogueManager(
         this.cine,
-        ["well, this should be enough for now"],
+        ["I hope you guys are ok... where do you think I should go now Dann?"],
         [""],
         [
           {
-            delay: 2000,
+            delay: 1500,
             withTapping: {
               audios: ["key01", "key01", "key02"],
-              count: 14,
+              count: 28,
               delay: 180,
             },
 
-            keepAlive: 1500,
+            keepAlive: 1000,
             position: {
               width: 700,
             },

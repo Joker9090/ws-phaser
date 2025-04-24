@@ -113,7 +113,7 @@ class cine3Movie5 {
               count: 20,
               delay: 180,
             },
-            keepAlive: 3800,
+            keepAlive: 5800,
             position: {
               width: 500,
             },
@@ -122,13 +122,35 @@ class cine3Movie5 {
         80
       );
       this.dialogue?.play();
+      // this.cine.tweens.add({
+      //   targets: [camera],
+      //   zoom: 1.1,
+      //   delay: 0,
+      //   duration: 17000,
+      //   ease: "ease",
+      // });
       this.cine.tweens.add({
-        targets: [camera],
-        zoom: 1.1,
-        delay: 0,
-        duration: 17000,
+        targets: [this.backgroundC3S5, this.dialogue],
+        alpha:0,
+        delay: 3000,
+        duration: 2000,
         ease: "ease",
+        onComplete:()=>{
+          this.dialogue?.destroyContainer()
+          const text = this.cine.add.text(window.innerWidth/2,window.innerHeight/2,"to Be continued...").setOrigin(0.5).setAlpha(0).setFontFamily('arcade').setFontSize(150)
+          this.cine.tweens.add({
+            targets:text,
+            alpha:1,
+            duration:500,
+            onComplete:()=>{
+              this.cine.time.delayedCall(2000,()=>{
+                this.cine.scene.restart({ keyname: "cine_3_movie_1" });
+              })
+            }
+          })
+        }
       });
+
 
       const dialogueListener = (newState: string, nextText?: string) => {
         if (newState === "CONTINUE") {
@@ -142,14 +164,14 @@ class cine3Movie5 {
 
     this.ticker.addJob(
       new TickerJob(1, 10, part1, false, undefined, true, (job: TickerJob) => {
-        this.nextCine = true;
+       
       })
     );
   }
 
   update(this: cine3Movie5, time: number, delta: number) {
     if (this.dialogue) this.dialogue.update();
-    if (this.nextCine) this.cine.scene.restart({ keyname: "cine_3_movie_1" });
+    if (this.nextCine) this.cine.scene.restart({ keyname: "cine_3_movie_5" });
   }
 }
 

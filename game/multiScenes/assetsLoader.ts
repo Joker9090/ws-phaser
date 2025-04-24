@@ -191,6 +191,12 @@ export const loadAssets = {
       //TANK SMOKE
       [
         "spritesheet",
+        "floatingSmoke",
+        "/game/player/FloatingSmoke.png",
+        {frameWidth: 86,frameHeight: 141,},
+      ],
+      [
+        "spritesheet",
         "tankActivate",
         "/game/player/tankActivate.png",
         { frameWidth: 121, frameHeight: 121 },

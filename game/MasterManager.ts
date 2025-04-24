@@ -56,7 +56,9 @@ export default class MasterManager extends Phaser.Scene {
   stopMusic() {
     if (this.music) {
       this.music.stop();
-      this.music.destroy();
+      console.log(this.music, "jp music destroy")
+      if (this.music) this.music.destroy();
+      console.log(this.music, "jp music destroy2")
     }
   }
 

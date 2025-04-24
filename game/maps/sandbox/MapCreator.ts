@@ -114,7 +114,8 @@ export default class MapCreator {
   backSize: { width: number; height: number } = { width: 0, height: 0 };
   frontSize: { width: number; height: number } = { width: 0, height: 0 };
   middleWidth: { width: number; height: number } = { width: 0, height: 0 };
-  nextScene: string | undefined = "postal1_planeta1";
+  // nextScene: string | undefined = "postal1_planeta1";
+  nextScene: string | undefined;
   postalCode: string | undefined = "adjns";
   UIItemToGrab: string = "cristal3";
   UIItemScale?: number;

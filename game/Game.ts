@@ -312,9 +312,9 @@ class Game extends Phaser.Scene {
 
   win() {
     // this.initialScroll = { x: 0, y: 0 };
-    if (this.scene.get("MultiScene")) {
-      this.scene.remove("MultiScene");
-    }
+    // if (this.scene.get("MultiScene")) {
+    //   this.scene.remove("MultiScene");
+    // }
     if (this.player && this.map) {
       console.log(this.levelIs, "LEVEL IS JOTITA");
       this.cameraNormal = true;
@@ -362,16 +362,16 @@ class Game extends Phaser.Scene {
           level: this.levelIs + 1,
           lifes: this.lifes ? this.lifes : 3,
         });
-         
- 
-        
 
         const scene = this.scene.add("MultiScene", multiScene, true);
         this.scene.start("MultiScene").bringToTop("MultiScene");
       } else {
         const multiScene = new MultiScene("MenuScene", undefined);
+        console.log('jp test 1', multiScene)
         const scene = this.scene.add("MultiScene", multiScene, true);
+        console.log('jp test 2', multiScene, scene)
         this.scene.start("MultiScene").bringToTop("MultiScene");
+        console.log('jp test 3', multiScene, scene)
         this.masterManagerScene?.stopMusic();
       }
     }

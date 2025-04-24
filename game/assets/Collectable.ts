@@ -100,15 +100,17 @@ class Collectable extends Phaser.Physics.Arcade.Sprite {
       console.log("[Collectable] shield");
       this.shield = scene.add.sprite(config.pos.x, config.pos.y, config.shield);
       this.shield.setDepth(999);
+      this.shield.setScale(0.6);
+      this.shield.setAlpha(0.8);
       this.shield.setVisible(true);
       const invincibleAuraFrames = scene.anims.generateFrameNumbers("auraAnim", {
-      frames: Array.from({ length: 16 }, (_, i) => i),
+      frames: Array.from({ length: 6 }, (_, i) => i),
       });
 
       const invincibleAuraConfig = {
         key: "auraAnim",
         frames: invincibleAuraFrames,
-        frameRate: 24,
+        frameRate: 12,
         repeat: -1,
       };
       scene.anims.create(invincibleAuraConfig);

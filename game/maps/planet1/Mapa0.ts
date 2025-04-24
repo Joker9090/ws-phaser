@@ -626,13 +626,12 @@ this.updateContainerPositionRelativeToCamera(
     height: 170,
     attackSpriteSheet: "EnemyAttack",
     particleSpriteSheet: "EnemyParticles",
-    animation:{
-      xAxis:{
-        xDistance:100,
-        xVel:20,
-      }
-    },
-    
+    patrol:{
+      patrolType:"LinealY",
+      distance:200,
+      speed: 100,
+      attackInterval:2,
+    }
   }
   const box = new Danger(this.scene, boxConfig, this.obstacle);
   //box.setTint(0xff0000);

@@ -466,7 +466,7 @@ export default class MapCreator {
             //this.scene.touchItem("fireball");
             //this.scene.player?.setVelocity(0);
             const danger = b as Danger;
-            danger.Attack();
+            danger.DoDamage();
           },
           () => true,
           this.scene

@@ -125,6 +125,8 @@ export const loadAssets = {
       ["image", "planeta3_figu2", "/menu/album/figuritas/Planeta3_figu2.png"],
       ["image", "lock", "/menu/album/lock.png"],
 
+
+
     ]
 
 
@@ -226,9 +228,12 @@ export const loadAssets = {
       [
         "spritesheet",
         "teleport_1",
-        "/game/portal1.png",
+        "/game/portalVioleta.png",
         { frameWidth: 100, frameHeight: 150 },
       ],
+
+     
+
       //DANGER
       ["spritesheet",
         "EnemyAttack",

@@ -366,19 +366,27 @@ class Game extends Phaser.Scene {
         const scene = this.scene.add("MultiScene", multiScene, true);
         this.scene.start("MultiScene").bringToTop("MultiScene");
       } else {
-        const multiScene = new MultiScene("MenuScene", undefined);
-        console.log('jp test 1', multiScene);
+        try {
+          const multiSceneKey = "MultiScene";
       
-        // Add the scene
-        this.scene.add("MultiScene", multiScene, true);
-        console.log('jp test 2', multiScene);
+          // If MultiScene exists and is active, just bring it to top and reuse it
+          if (this.scene.get(multiSceneKey) && this.scene.isActive(multiSceneKey)) {
+            console.warn("⚠️ MultiScene is already active — reusing it.");
+            this.scene.bringToTop(multiSceneKey);
+          } else {
+            // If it's not active, create and start a new MultiScene instance
+            const multiScene = new MultiScene("MenuScene", undefined);
+            console.log("✅ jp test 1 — creating MultiScene:", multiScene);
       
-        // Bring to top separately
-        this.scene.bringToTop("MultiScene");
-        console.log('jp test 3', multiScene);
+            const scene = this.scene.add(multiSceneKey, multiScene, true);
+            console.log("✅ jp test 2 — added MultiScene:", multiScene, scene);
+          }
       
-        // Stop music
-        this.masterManagerScene?.stopMusic();
+          this.masterManagerScene?.stopMusic();
+          console.log("✅ jp test 3 — continued with music stop or other logic");
+        } catch (e) {
+          console.error("💥 Error handling MultiScene:", e);
+        }
       }
       
     }

@@ -367,13 +367,20 @@ class Game extends Phaser.Scene {
         this.scene.start("MultiScene").bringToTop("MultiScene");
       } else {
         const multiScene = new MultiScene("MenuScene", undefined);
-        console.log('jp test 1', multiScene)
-        const scene = this.scene.add("MultiScene", multiScene, true);
-        console.log('jp test 2', multiScene, scene)
-        this.scene.start("MultiScene").bringToTop("MultiScene");
-        console.log('jp test 3', multiScene, scene)
+        console.log('jp test 1', multiScene);
+      
+        // Add the scene
+        this.scene.add("MultiScene", multiScene, true);
+        console.log('jp test 2', multiScene);
+      
+        // Bring to top separately
+        this.scene.bringToTop("MultiScene");
+        console.log('jp test 3', multiScene);
+      
+        // Stop music
         this.masterManagerScene?.stopMusic();
       }
+      
     }
 
     // lógica para pasar a movie dependiendo el nivel

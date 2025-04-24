@@ -183,7 +183,7 @@ class Map1 extends MapCreator {
                 large: 20,
                 group: this.floor
             },
-            { ...baseDangerConf, pos: { x: 1600, y: this.worldSize.height - 450 }, width: 170, height: 170, patrol:{
+            { ...baseDangerConf, pos: { x: 1450, y: this.worldSize.height - 450 }, width: 170, height: 170, patrol:{
                 patrolType: "LinealX",
                 distance: 500,
                 speed: 150,
@@ -216,7 +216,12 @@ class Map1 extends MapCreator {
                 large: 15,
                 group: this.floor
             },
-            { ...baseDangerConf, pos: { x: 4150, y: this.worldSize.height - 850 }, width: 170, height: 170, animation:{ xAxis:{ xDistance:400, xVel:150 } }, },
+            { ...baseDangerConf, pos: { x: 4000, y: this.worldSize.height - 850 }, width: 170, height: 170, patrol:{
+                patrolType: "LinealX",
+                distance: 400,
+                speed: 150,
+                attackInterval: 0,
+              }, },
             { ...baseCristalConf, pos: { x: 4150, y: this.worldSize.height - 850 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
             {
                 ...basePlatformsConfig, pos: { x: 4800, y: this.worldSize.height - 600 }, animation: {

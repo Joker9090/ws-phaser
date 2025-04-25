@@ -4,6 +4,7 @@ import Ticker from "./movies/Ticker";
 import Game from "./Game";
 import CODES from "../public/game/codigos.json"
 import CinematographyModular from "./movies/Cinematography-modular";
+import UI from "./assets/UI";
 
 
 export type enterCodeType = {
@@ -45,7 +46,7 @@ export default class MasterManager extends Phaser.Scene {
     super({ key: "MasterManager" });
     const tickerMS = 100;
     this.ticker = new Ticker(tickerMS);
-    console.log("JOTA MUSIC",this.volumeMusic, "JOTA SOUND",this.volumeSound, "JOTA SOUND 2", this.sound)
+    console.log("JOTA MUSIC", this.volumeMusic, "JOTA SOUND", this.volumeSound, "JOTA SOUND 2", this.sound)
   }
 
   preload() {
@@ -55,7 +56,9 @@ export default class MasterManager extends Phaser.Scene {
   stopMusic() {
     if (this.music) {
       this.music.stop();
-      this.music.destroy;
+      console.log(this.music, "jp music destroy")
+      if (this.music) this.music.destroy();
+      console.log(this.music, "jp music destroy2")
     }
   }
 
@@ -126,10 +129,35 @@ export default class MasterManager extends Phaser.Scene {
       }, [], this)
     }
   }
-  resumeGame() {
+  resumeFromBlur() {
     const gameScene = this.scene.get("Game");
+
     if (gameScene) {
-      (gameScene as Game).UIClass?.settingsModal?.animationOfModal(false)
+      const settingsVisible = (gameScene as Game).UIClass?.settingsVisible
+      if (!settingsVisible) {
+        this.time.delayedCall(600, () => {
+          gameScene.physics.world.resume();
+          gameScene.tweens.resumeAll();
+          gameScene.input.enabled = true;
+          gameScene.time.paused = false
+        }, [], this)
+      }
+
+    }
+  }
+  resumeGame() {
+    if (this.scene) {
+      const gameScene = this.scene?.get("Game");
+    if (gameScene) {
+      (gameScene as Game).UIClass?.settingsModal?.animationOfModal(false, 0);
+      (gameScene as Game).UIClass?.container.each((child: any) => {
+        if (child instanceof UI) {
+          {
+            child.setVisible(true)
+          }
+        }
+      });
+      (gameScene as Game).UIClass?.collText?.setVisible(true)
       this.time.delayedCall(600, () => {
         gameScene.physics.world.resume();
         gameScene.tweens.resumeAll();
@@ -137,9 +165,10 @@ export default class MasterManager extends Phaser.Scene {
         gameScene.time.paused = false
       }, [], this)
     }
+    }
   }
 
-  pauseCinemato(cine:CinematographyModular, timeEvent:Phaser.Time.TimerEvent) {
+  pauseCinemato(cine: CinematographyModular, timeEvent: Phaser.Time.TimerEvent) {
     // timeEvent.paused = true;
     // cine.scene.pause(); 
   }
@@ -169,8 +198,6 @@ export default class MasterManager extends Phaser.Scene {
 
   create() {
     this.brightnessScreen = this.add.rectangle(window.innerWidth / 2, window.innerHeight / 2, window.innerWidth * 4, window.innerHeight * 4, 0x000000, 1).setAlpha(0);
-    // this.codigos = this.cache.json.get('codigos');
-    // this.registry.set('codigos', this.codigos)
   }
 
   update() {

@@ -1,6 +1,8 @@
 import Phaser from "phaser";
 import Game from "../Game";
+import { Tweens } from "phaser";
 import { TURBO_TRACE_DEFAULT_MEMORY_LIMIT } from "next/dist/shared/lib/constants";
+import { Console } from "console";
 
 export type DangerTween =
   | Phaser.Tweens.Tween
@@ -11,16 +13,6 @@ export type DangerConfig = {
   texture: string | Phaser.Textures.Texture;
   width?: number;
   height?: number;
-  animation?: {
-    xAxis?: {
-      xDistance: number;
-      xVel: number
-    }
-    yAxis?: {
-      yDistance: number;
-      yVel: number
-    }
-  }
   pos: {
     x: number;
     y: number;
@@ -29,83 +21,98 @@ export type DangerConfig = {
     width: number;
     height: number;
   };
-  attackBurst?:{
-    xAxis?: {
-      xDistance: number;
-      xVel: number
-    }
-    yAxis?: {
-      yDistance: number;
-      yVel: number
-    }
-  };
+  
   attackSpriteSheet?: string;
   particleSpriteSheet?: string;
   particleFrames?: number[]
+  color?:number;
+  patrol?:{
+    patrolType: "LinealX"|"LinealY"|"Sine",
+    distance: number,
+    distanceOrt?:number,
+    speed?: number,
+    attackInterval?: number,
+  }
 };
 class Danger extends Phaser.Physics.Arcade.Sprite {
     scene: Game;
     group: Phaser.Physics.Arcade.Group;
-    animState: {
-      x: 'start' | 'reverse',
-      y: 'start' | 'reverse'
-    } = {
-      x: 'start',
-      y: 'start'
-    }
     particleSprite?: Phaser.GameObjects.Sprite;
     config: DangerConfig;
-    isIdle:boolean=true;
-    burstAnimState: {
-      x: 'start' | 'reverse',
-      y: 'start' | 'reverse'
+    preBurstPos:{
+      x:number,
+      y:number,
     } = {
-      x: 'start',
-      y: 'start'
+      x:0,y:0
+    };
+    
+    currentState: 'none'|'patrol'|'attack' = 'none';
+    
+    patrol:{
+      patrolType: string,
+      distance: number,
+      distanceOrt?:number,
+      speed: number,
+      attackInteval: number,
+    }={
+      patrolType: "LinealX",
+      distance: 0,
+      speed: 1,
+      attackInteval:0,
     }
+    patrolTween:Phaser.Tweens.Tween|undefined;
     constructor( scene: Game, config: DangerConfig, group: Phaser.Physics.Arcade.Group){
         super(scene, config.pos.x, config.pos.y, config.texture, 0);
         this.scene = scene;
         this.group = group;
         this.config = config;
-        const width = config.width ?? 120;
-        const height = config.height ?? 108;
+        const width = config.width ?? 170;
+        const height = config.height ?? 170;
         if (config.scale) {
             this.setScale(config.scale.width, config.scale.height);
         }
         scene.physics.add.existing(this);
         scene.add.existing(this);
         this.setDepth(10);
-        this.body?.setSize(width, height);
+        if(config.scale) this.body?.setSize(config.width! * config.scale.width, config.height! * config.scale.height).setOffset(20, 20);
         this.setBounce(0);
         this.group?.add(this);
         this.setImmovable(true);
         this.setCollideWorldBounds(true);
-
+        this.preBurstPos={
+          x:config.pos.x,
+          y:config.pos.y,
+        }
+        if(this.config.color)this.setTint(this.config.color);
         if (config.attackSpriteSheet) {
             const portFrames = this.scene.anims.generateFrameNumbers(config.attackSpriteSheet, 
                 {start:0 , end: this.scene.textures.get(config.attackSpriteSheet).frameTotal - 2});
+            
+            const otherFrames = this.scene.anims.generateFrameNumbers(config.attackSpriteSheet, 
+                {start:this.scene.textures.get(config.attackSpriteSheet).frameTotal - 2 , end:0 });
+            
             const portAnimConfig = {
                 key: "Attack",
                 frames: portFrames,
-                frameRate: 24,
+                frameRate: 48,
+            }
+            const otherAnimConfig = {
+                key: "Attack-",
+                frames: otherFrames,
+                frameRate: 48,
             }
             this.anims.create(portAnimConfig);
+            this.anims.create(otherAnimConfig);
             this.setTexture(config.attackSpriteSheet);
+            if(this.config.color) this.setTint(this.config.color);
             this.setFrame(0);
-
-            this.on("animationcomplete", () => {
-                console.log("[Danger] Attack animation complete");
-                this.scene.player!.isDead = false;
-                this.scene.touchItem("fireball");
-                this.setTexture(this.config.attackSpriteSheet!);
-                this.setFrame(0);
-            });
         }
         if (config.particleSpriteSheet) {
             this.particleSprite = scene.add.sprite(config.pos.x, config.pos.y, config.particleSpriteSheet);
             this.particleSprite.setVisible(true);
             this.particleSprite.setDepth(11);
+            if(this.config.color) this.particleSprite.setTint(this.config.color);
+            if (config.scale) this.particleSprite.setScale(config.scale.width, config.scale.height);
             this.scene.add.existing(this.particleSprite);
             const partFrames= scene.anims.generateFrameNumbers(config.particleSpriteSheet, {
                 start:1 , end: this.scene.textures.get(config.particleSpriteSheet).frameTotal - 2});
@@ -122,130 +129,93 @@ class Danger extends Phaser.Physics.Arcade.Sprite {
                 this.particleSprite!.setPosition(this.x, this.y);
             })
         }
-        
-        if (config.animation) {
-          if (config.animation.xAxis) {
-            this.setVelocityX(config.animation.xAxis.xVel);
+        if(config.patrol){
+          this.patrol={
+            patrolType:  config.patrol.patrolType,
+            distance: config.patrol.distance,
+            distanceOrt: config.patrol.distanceOrt ?? 0,  
+            speed: config.patrol.speed ?? 1,
+            attackInteval: config.patrol.attackInterval ?? 0,
+          };
+          if(this.patrol.patrolType==="LinealX"){
+            //console.log("[Danger] patrol lineal x:"+this.patrol.distance);
+              this.patrolTween = this.scene.tweens.add({
+                  targets:this,
+                  props:{
+                    x: this.x + this.patrol.distance,
+                  },
+                  duration: (this.patrol.distance / this.patrol.speed)*1000,
+                  ease: 'Bounce.easeIn',
+                  yoyo:true,
+                  repeat: -1,
+                });
+          }else if(this.patrol.patrolType==='LinealY'){
+            //console.log("[Danger] patrol lineal y:"+this.patrol.distance);
+              this.patrolTween = this.scene.tweens.add({
+                  targets:this,
+                  props:{
+                    y: this.y - this.patrol.distance,
+                  },
+                  duration: (this.patrol.distance / this.patrol.speed)*1000,
+                  ease: 'Bounce.easeIn',
+                  yoyo:true,
+                  repeat: -1,
+                });
           }
-          if (config.animation.yAxis) {
-            this.setVelocityY(config.animation.yAxis.yVel);
-          }
-          
-          scene.events.on("update", () => {
-            if(this.isIdle){
-              this.IdleAnimation(config)
-            }
-          })
-          scene.events.on("shutdown", () => {
-            scene.events.off("update");
-          })
-
-          if(config.attackBurst){
-            scene.events.on("update", () => {
-              if(!this.isIdle){
-                this.AttackBurstAnimation(config)
-              }
-            })
-            scene.events.on("shutdown", () => {
-              scene.events.off("update");
-            })
-            this.startInterruption();
-          }
+          this.PatrolState();
         }
+
     }
     startInterruption() {
-      const randomTime1 = Phaser.Math.Between(2000, 5000); 
-      this.scene.time.delayedCall(randomTime1, () => {
-        this.interruptIdleAnimation();
-      });
-    }
-    interruptIdleAnimation() {
-      if (this.isIdle) {
-        this.isIdle = false;
-        if (this.config.attackBurst?.xAxis) {
-            this.setVelocityX(this.config.attackBurst.xAxis.xVel);
-          }
-        if (this.config.attackBurst?.yAxis) {
-          this.setVelocityY(this.config.attackBurst.yAxis.yVel);
-        }
-        console.log("[Danger] Interrupting IdleAnimation");
-        const randomTime2 = Phaser.Math.Between(2000, 5000);
-        this.scene.time.delayedCall(randomTime2, () => {
-          this.resumeIdleAnimation();
+      if(this.currentState==="patrol"){
+        var timer;
+
+        if(this.patrol.attackInteval > 0) timer = this.patrol.attackInteval*1000;
+        else timer = Phaser.Math.Between(2000, 5000); 
+
+        this.scene.time.delayedCall(timer, () => {
+          //console.log("[Danger] Interruption started");
+          this.patrolTween?.pause();
+          this.AttackState();
         });
-    } 
-  }
-  resumeIdleAnimation() {
-    console.log("[Danger] Resuming IdleAnimation");
-    this.isIdle = true;
-    if (this.config.animation?.xAxis) {
-      this.setVelocityX(this.config.animation.xAxis.xVel);
+      }
     }
-    if (this.config.animation?.yAxis) {
-      this.setVelocityY(this.config.animation.yAxis.yVel);
+   
+    DoDamage(){
+      if(this.config.attackSpriteSheet && this.scene.player?.isDead===false){
+        //console.log("[Danger] DoDamage animation started");
+        this.scene.player!.isDead = true;
+        this.anims.play("Attack",true);
+        this.scene.time.delayedCall(200, () => {
+          this.scene.player!.isDead = false;
+          this.scene.touchItem("fireball");
+          this.setTexture(this.config.attackSpriteSheet!);
+          this.setFrame(0);
+        });
+      }
     }
-    this.startInterruption();
-  }
-    Attack(){
-        if(this.config.attackSpriteSheet && this.scene.player?.isDead===false){
-          console.log("[Danger] Attack animation started");
-          this.scene.player!.isDead = true;
-          this.anims.play("Attack",true);
-        }
+
+    PatrolState(){
+      this.currentState = "patrol";
+      //console.log("[Danger] PatrolState");
+      this.patrolTween?.play()
+      this.startInterruption();
     }
-    IdleAnimation = (config: DangerConfig) => {
-        if (config.animation) {
-          if (config.animation.xAxis) {
-            if (this.x >= config.pos.x + config.animation.xAxis.xDistance / 2 && this.animState.x === 'start') {
-              this.setVelocityX(-config.animation.xAxis.xVel);
-              if (config.animation.yAxis) {
-                this.setVelocityY(-config.animation.yAxis.yVel);
-              }
-              this.animState.x = 'reverse'
-            } else if (this.x <= config.pos.x - config.animation.xAxis.xDistance / 2 && this.animState.x === 'reverse') {
-              this.setVelocityX(config.animation.xAxis.xVel);
-              if (config.animation.yAxis) {
-                this.setVelocityY(config.animation.yAxis.yVel);
-              }
-              this.animState.x = 'start'
-            } 
-          } else if (config.animation.yAxis) {
-            if (this.y >= config.pos.y + config.animation.yAxis.yDistance / 2 && this.animState.y === 'start') {
-              this.setVelocityY(-config.animation.yAxis.yVel);
-              this.animState.y = 'reverse';
-            } else if (this.y <= config.pos.y - config.animation.yAxis.yDistance / 2 && this.animState.y === 'reverse') {
-              this.setVelocityY(config.animation.yAxis.yVel);
-              this.animState.y = 'start';
-            }
-          }
-        }
-    }
-    AttackBurstAnimation = (config: DangerConfig) => {
-        if (config.attackBurst) {
-          if (config.attackBurst.xAxis) {
-            if (this.x >= config.pos.x + config.attackBurst.xAxis.xDistance / 2 && this.burstAnimState.x === 'start') {
-              this.setVelocityX(-config.attackBurst.xAxis.xVel);
-              if (config.attackBurst.yAxis) {
-                this.setVelocityY(-config.attackBurst.yAxis.yVel);
-              }
-              this.burstAnimState.x = 'reverse'
-            } else if (this.x <= config.pos.x - config.attackBurst.xAxis.xDistance / 2 && this.burstAnimState.x === 'reverse') {
-              this.setVelocityX(config.attackBurst.xAxis.xVel);
-              if (config.attackBurst.yAxis) {
-                this.setVelocityY(config.attackBurst.yAxis.yVel);
-              }
-              this.burstAnimState.x = 'start'
-            } 
-          } else if (config.attackBurst.yAxis) {
-            if (this.y >= config.pos.y + config.attackBurst.yAxis.yDistance / 2 && this.burstAnimState.y === 'start') {
-              this.setVelocityY(-config.attackBurst.yAxis.yVel);
-              this.burstAnimState.y = 'reverse';
-            } else if (this.y <= config.pos.y - config.attackBurst.yAxis.yDistance / 2 && this.burstAnimState.y === 'reverse') {
-              this.setVelocityY(config.attackBurst.yAxis.yVel);
-              this.burstAnimState.y = 'start';
-            }
-          }
-        }
+    AttackState(){
+      this.currentState = "attack";
+      if(this.config.attackSpriteSheet){
+       // console.log("[Danger] AttackState");
+        this.anims.play("Attack",true);
+        this.scene.time.delayedCall(500,()=>{
+          this.anims.stop();
+          this.anims.play("Attack-",true);
+          this.scene.time.delayedCall(500, ()=>{
+            this.PatrolState();
+          });
+          //this.setTexture(this.config.attackSpriteSheet!);
+          //this.setFrame(0);
+        });
+      }
     }
 }
 export default Danger;

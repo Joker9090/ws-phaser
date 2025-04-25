@@ -2,10 +2,11 @@ import Phaser from "phaser";
 import Game from "../Game";
 import MultiScene from "../MultiScene";
 import PreLoadScene from "../PreLoadScene";
+import MapCreator from "@/game/maps/sandbox/MapCreator";
 
 // Scene in class
 class Player extends Phaser.Physics.Arcade.Sprite {
-
+  touchedFloor: boolean = false;
   gravityGroup: Phaser.Physics.Arcade.Group;
   isJumping: boolean = false;
   isRotating: boolean = false;
@@ -63,6 +64,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.tankAnimSprite.setVisible(false).setDepth(900);
 
     this.auraAnimSprite = this.scene.add.sprite(this.x, this.y, "invincibleAura");
+    this.auraAnimSprite.setScale(0.7, 1.1);
+    this.auraAnimSprite.setAlpha(0.8);
     this.auraAnimSprite.setVisible(false);
 
     const playerJumpFrames = scene.anims.generateFrameNumbers("player", {
@@ -167,14 +170,24 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       repeat: 0,
     };
 
+    const gravityActiveFrames= scene.anims.generateFrameNumbers("floatingSmoke",{
+      frames: Array.from({length:10}, (_, i) => i),
+    });
+    const gravityActiveConfig = {
+      key: "gravityActiveAnim",
+      frames: gravityActiveFrames,
+      frameRate: frameRate*1.2,
+      repeat: -1,
+    };
+
     const invincibleAuraFrames = scene.anims.generateFrameNumbers("auraAnim", {
-      frames: Array.from({ length: 16 }, (_, i) => i),
+      frames: Array.from({ length: 6 }, (_, i) => i),
     });
 
     const invincibleAuraConfig = {
       key: "auraAnim",
       frames: invincibleAuraFrames,
-      frameRate: frameRate,
+      frameRate: 12,
       repeat: -1,
     };
 
@@ -190,6 +203,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     scene.anims.create(playerRotateReverseConfig);
     scene.anims.create(gravityAnimConfig);
     //TANK SMOKE
+    scene.anims.create(gravityActiveConfig);
     scene.anims.create(tankActivateConfig);
     scene.anims.create(invincibleAuraConfig);
 
@@ -214,12 +228,24 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.setDepth(999);
    
 
-    if(this.scene instanceof Game) this.scene.UICamera?.ignore(this)
+    if (this.scene instanceof Game) {
+      this.scene.UICamera?.ignore(this);
+      this.scene.cameras.getCamera('backgroundCamera')?.ignore(this);
+    }
     this.gravityAnimSprite = this.scene.add.sprite(this.x, this.y, "gravityAnim", 0).setVisible(false).setDepth(999);
-    if(this.scene instanceof Game)  this.scene.UICamera?.ignore(this.gravityAnimSprite)
+    if (this.scene instanceof Game) {
+      this.scene.UICamera?.ignore(this.gravityAnimSprite);
+      this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.gravityAnimSprite);
+    }
       
-    if (this.scene instanceof Game) this.scene.UICamera?.ignore(this.tankAnimSprite)
-    if (this.scene instanceof Game) this.scene.UICamera?.ignore(this.auraAnimSprite)
+    if (this.scene instanceof Game) {
+      this.scene.UICamera?.ignore(this.tankAnimSprite);
+      this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.tankAnimSprite);
+    }
+    if (this.scene instanceof Game) {
+      this.scene.UICamera?.ignore(this.auraAnimSprite);
+      this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.auraAnimSprite);
+    }
     // this.scene.add.rectangle(this.x, this.y, 100, 100, 0xffffff).setVisible(true)
     /* player Collission with end of map */
     this.setCollideWorldBounds(true);
@@ -253,6 +279,16 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.isFlying = value
     this.gravityGroup.world.gravity.y = value ? 0 : this.gravity
     this.setAcceleration(0, 0)
+
+    if (!this.tankAnimSprite)return;
+    this.tankAnimSprite.setVisible(true);
+    this.tankAnimSprite.anims.play("gravityActiveAnim");
+    
+    this.tankAnimSprite.on("animationupdate", () => {
+    let xF = this.x - 15;
+    if (this.flipX) xF = this.x + 15;
+      this.tankAnimSprite?.setPosition(xF, this.y + 60);
+    });
   }
   setCameraState(state: "NORMAL" | "ROTATED") {
     this.cameraState = state
@@ -286,7 +322,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     else this.tankGraphics = this.scene.add.graphics()
     this.tankGraphics.fillStyle(0x000000, 1)
     const gameScene = this.scene as Game
-    if(gameScene.UICamera) gameScene.UICamera.ignore(this.tankGraphics)
+    if (gameScene.UICamera) gameScene.UICamera.ignore(this.tankGraphics);
+    if (gameScene.cameras.getCamera('backgroundCamera')) gameScene.cameras.getCamera('backgroundCamera')?.ignore(this.tankGraphics);
 
     let barSize = 100
     const limit0 = (this.tank.fuel - this.tank.fuelConditionToStart < 0) ? 0 : this.tank.fuel - this.tank.fuelConditionToStart
@@ -301,7 +338,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   }
   //TANK SMOKE
   activateTankAnimation() {
-  if (!this.tankAnimSprite) return;
+  if (!this.tankAnimSprite||this.isFlying===true) return;
 
   /*let xF = this.x - 10;
     if (this.flipX) xF = this.x + 10;

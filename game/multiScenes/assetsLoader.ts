@@ -125,6 +125,8 @@ export const loadAssets = {
       ["image", "planeta3_figu2", "/menu/album/figuritas/Planeta3_figu2.png"],
       ["image", "lock", "/menu/album/lock.png"],
 
+
+
     ]
 
 
@@ -189,6 +191,12 @@ export const loadAssets = {
       //TANK SMOKE
       [
         "spritesheet",
+        "floatingSmoke",
+        "/game/player/FloatingSmoke.png",
+        {frameWidth: 86,frameHeight: 141,},
+      ],
+      [
+        "spritesheet",
         "tankActivate",
         "/game/player/tankActivate.png",
         { frameWidth: 121, frameHeight: 121 },
@@ -202,7 +210,7 @@ export const loadAssets = {
       [
         "spritesheet",
         "auraAnim",
-        "/game/player/auraAnim.png",
+        "/game/player/proteccionluzsprite 1.png",
         { frameWidth: 201, frameHeight: 201 },
       ],
       // [
@@ -226,18 +234,21 @@ export const loadAssets = {
       [
         "spritesheet",
         "teleport_1",
-        "/game/portal1.png",
+        "/game/portalVioleta.png",
         { frameWidth: 100, frameHeight: 150 },
       ],
+
+     
+
       //DANGER
       ["spritesheet",
         "EnemyAttack",
-        "/game/planeta1/EnemyAttack.png",
+        "/game/planeta1/EnemyByN.png",
         { frameWidth: 170, frameHeight: 170 },
       ],
       ["spritesheet",
         "EnemyParticles",
-        "/game/planeta1/EnemyParticles.png",
+        "/game/planeta1/BolitasIdle_ByN.png",
         { frameWidth: 170, frameHeight: 170 },
       ],
       
@@ -324,9 +335,13 @@ export const loadAssets = {
       ["image", "shield", "game/logo proteccion.png"],
       ["image", "Enemy","game/Enemy.png"],
       ["image", "Enemy2","game/Enemy2.png"],
-      ["image", "platform_center","/game/planeta1/platforms/plataform_center.png"],
-      ["image", "platform_der","/game/planeta1/platforms/plataform_der.png"],
-      ["image", "platform_izq","/game/planeta1/platforms/plataform_izq.png"],
+      ["image", "fill_texture","/game/planeta1/platforms/fill_texture.png"],
+      ["image", "fill_texture2","/game/planeta1/platforms/fill_texture2.png"],
+      ["image", "fill_texture3","/game/planeta1/platforms/fill_texture3.png"],
+      ["image", "fill_texture4","/game/planeta1/platforms/fill_texture4.png"],
+      ["image", "platform_center","/game/planeta1/platforms/platform_center.png"],
+      ["image", "platform_der","/game/planeta1/platforms/platform_der.png"],
+      ["image", "platform_izq","/game/planeta1/platforms/platform_izq.png"],
     ],
   },
   GamePlay2: {
@@ -402,6 +417,13 @@ export const loadAssets = {
       ["image", "pSimple2p1", "/game/planeta2/pSimple2.png"],
       ["image", "comida", "/game/planeta2/comida.png"],
       ["image", "cuevap1", "/game/planeta2/cuevap1.png"],
+      ["image", "fill_texture_p2","/game/planeta2/platforms/fill_texture.png"],
+      ["image", "fill_texture2_p2","/game/planeta2/platforms/fill_texture2.png"],
+      ["image", "fill_texture3_p2","/game/planeta2/platforms/fill_texture3.png"],
+      ["image", "fill_texture4_p2","/game/planeta2/platforms/fill_texture4.png"],
+      ["image", "platform_center_p2","/game/planeta2/platforms/platform_center.png"],
+      ["image", "platform_der_p2","/game/planeta2/platforms/platform_der.png"],
+      ["image", "platform_izq_p2","/game/planeta2/platforms/platform_izq.png"],
     ],
   },
   GamePlay3: {
@@ -429,6 +451,14 @@ export const loadAssets = {
       ["image", "planta2p3", "/game/planeta3/planta2p3.png"], 
       ["image", "nube1p3", "/game/planeta3/nube1p3.png"], 
       ["image", "nube2p3", "/game/planeta3/nube2p3.png"], 
+      //LARGE TILE
+      ["image", "fill_texture_p3","/game/planeta3/platforms/fill_texture.png"],
+      ["image", "fill_texture2_p3","/game/planeta3/platforms/fill_texture2.png"],
+      ["image", "fill_texture3_p3","/game/planeta3/platforms/fill_texture3.png"],
+      ["image", "fill_texture4_p3","/game/planeta3/platforms/fill_texture4.png"],
+      ["image", "platform_center_p3","/game/planeta3/platforms/platform_center.png"],
+      ["image", "platform_der_p3","/game/planeta3/platforms/platform_der.png"],
+      ["image", "platform_izq_p3","/game/planeta3/platforms/platform_izq.png"],
       [
         "spritesheet",
         "meteoritop3",
@@ -854,6 +884,11 @@ export const loadAssets = {
         "key02",
         "/sounds/bs13.mp3",
       ],
+      ["audio", "c3Background", "/movies/cinemato3/audios/background.mp3"],
+      ["audio", "c3Radio1", "/movies/cinemato3/audios/radio1.mp3"],
+      ["audio", "c3Radio2", "/movies/cinemato3/audios/radio2.mp3"],
+      ["audio", "c3Final", "/movies/cinemato3/audios/final.mp3"],
+
       // SCENE 1
       ["image", "backgroundC3S1", "/movies/cinemato3/scene1/backgroundC3S1.png"],
       ["image", "bubblesC3S1", "/movies/cinemato3/scene1/bubblesC3S1.png"],

@@ -56,6 +56,7 @@ class containerSettings extends Phaser.GameObjects.Container {
     scaledContainer?: Phaser.GameObjects.Container;
     dinamicPosition:boolean = false;
     scaleFactor:number =( window.innerWidth/1920 )*0.9
+    finalScale?:number;
     constructor(scene: MenuScene | Game | CinematographyModular, config: ContainerMenuConfigType, changeContainer?: () => void, changeVisible?: () => void, settingsButtonUi?: Phaser.GameObjects.Image) {
         super(scene, config.x, config.y)
         if(config.dinamicPosition){
@@ -362,14 +363,31 @@ class containerSettings extends Phaser.GameObjects.Container {
         this.settingsModal.add(arr);
         this.add([this.screenBlack,this.settingsModal]);
         scene.add.existing(this);
+        // this.resizeElements()
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+
+        const proportionWidth = 1920
+        const proportionHeight = 1080
+
+        let newScaleX = width / proportionWidth
+        let newScaleY = height / proportionHeight
+
+
+        let finalScale = (newScaleX > newScaleY) ? newScaleX : newScaleY
+       
+        // console.log("container scael from create",this.settingsModal.scale, "finalScale from create:", finalScale) 
+        // this.settingsModal.setScale(finalScale)
         this.scene.scale.on("resize", this.resizeElements, this);
+        console.log(this.settingsModal, 'settings from creator')
         this.resizeElements.bind(this)()
+        console.log(this.settingsModal.scale, 'scale from creator')
         const destroy = () => {
             this.removeAll(true)
             this.destroy()
         }
-
-        this.animationOfModal()
+      
+        this.animationOfModal(true, finalScale);
     }
  
 
@@ -387,28 +405,24 @@ class containerSettings extends Phaser.GameObjects.Container {
         const proportionWidth = 1920
         const proportionHeight = 1080
 
-        // scale scaledContainer to fit in width and height. scale proportional
-
         let newScaleX = width / proportionWidth
         let newScaleY = height / proportionHeight
         if (!this.settingsModal) return
         let finalScale = (newScaleX > newScaleY) ? newScaleX : newScaleY
-        this.settingsModal!.setScale(finalScale *1.2).setPosition(0,0)
+
+        this.settingsModal!.setScale(finalScale ).setPosition(0,0)
+        console.log('modal scale:', this.settingsModal.scale, 'finalScale:', finalScale)
         if(this.screenBlack){
             this.screenBlack.setScale(width, height)   
         }
-        console.log(midPoint, "MIDPOINT")
-        // this.background?.setPosition(midPoint.x, midPoint.y).setScale(finalScale)
-        // re pos scaledContainer in the middle
-
     }
 
-    animationOfModal(open: boolean = true) {
-        this.settingsModal.setScale(open ? 0 : 1)
+    animationOfModal(open: boolean = true, scale:number) {
+        this.settingsModal.setScale(open ? 0 : scale )
         this.scene.tweens.add({
             targets: this.settingsModal,
             duration: 500,
-            scale: open ? 1 : 0,
+            scale: open ? scale  : 0,
             onStart: () => {
                 console.log("ENTRO ACA ARIEL")
             },
@@ -433,58 +447,61 @@ class containerSettings extends Phaser.GameObjects.Container {
         this.settingsButtonUi?.setVisible(true)
         this.destroy()
     }
-
-    createSlider(scene: Phaser.Scene, x: number, y: number, onChange: (value: number) => void, initialValue: number) {
-        const slider = scene.add.container(x, y);
-        const bar = scene.add.image(0 * this.scaleFactor, 0* this.scaleFactor, 'settingsSlider').setOrigin(0.5).setScale(this.scaleFactor * .8);
-        const fillBar = scene.add.rectangle(-140 * this.scaleFactor, 0 * this.scaleFactor, 0, 24, 57055).setOrigin(0, 0.5).setScale(this.scaleFactor * 1);
-        const fillBarStart = scene.add.image(-141 * this.scaleFactor, 0 * this.scaleFactor, 'fillBarStart').setOrigin(0.5).setScale(this.scaleFactor * .8);
-        const control = scene.add.circle(-125 * this.scaleFactor, 0 * this.scaleFactor, 13, 0xffffff).setOrigin(0.5).setScale(this.scaleFactor * 1);
-
-
-
-
-        // this.scene.tweens.add({
-        //     targets: [bar, fillBarStart],
-        //     duration: 500,
-        //     scale: 0.8,
-        //     ease: 'power2',
-        // })
-        // this.scene.tweens.add({
-        //     targets: [fillBar, control],
-        //     duration: 500,
-        //     scale: 1,
-        //     ease: 'power2',
-        // })
-
-        control.setInteractive({ draggable: true });
-        control.on('pointerover', () => {
-            control.setScale(1.2);
-        });
-        control.on('pointerout', () => {
-            control.setScale(1.0);
-        });
-
-        const initialX = Phaser.Math.Clamp((initialValue * 280) - 140, -140, 140);
-        fillBar.width = initialX + 140;
-        slider.add([bar, fillBarStart, fillBar, control]);
-
-        control.x = initialX;
-        scene.input.setDraggable(control);
-        control.on('drag', (pointer: any, dragX: number) => {
-            control.x = Phaser.Math.Clamp(dragX, -136, 142);
-            const value = Phaser.Math.Clamp((control.x + 140) / 280, 0, 1);
-            fillBar.width = control.x + 140;
-            onChange(value);
-        });
-        control.on('pointerdown', () => {
-            this.masterManager.playSound('buttonSound', false);
-        });
-
-        control.setDepth(10);
-        this.settingsModal.add(slider);
-        return { slider, control, fillBar };
-    }
+    createSlider(
+        scene: Phaser.Scene,
+        x: number,
+        y: number,
+        onChange: (value: number) => void,
+        initialValue: number
+      ) {
+          const slider = scene.add.container(x, y);
+          const barWidth = 280 * this.scaleFactor; // el ancho total utilizable del slider
+          const halfBar = barWidth / 2;
+      
+          const bar = scene.add.image(0, 0, 'settingsSlider').setOrigin(0.5).setScale(this.scaleFactor * 0.8);
+      
+          const fillBar = scene.add.rectangle(-halfBar, 0, 0, 24,  0x00dedf).setOrigin(0, 0.5).setScale(1,this.scaleFactor);
+      
+          const fillBarStart = scene.add.image(-halfBar - 1 * this.scaleFactor, 0, 'fillBarStart').setOrigin(0.5).setScale(this.scaleFactor * 0.8);
+      
+          const control = scene.add.circle(-halfBar + initialValue * barWidth , 0, 13, 0xffffff) .setOrigin(0.5).setScale(this.scaleFactor);
+      
+          control.setInteractive({ draggable: true });
+      
+          control.on('pointerover', () => {
+              control.setScale(1.2 * this.scaleFactor);
+          });
+      
+          control.on('pointerout', () => {
+              control.setScale(1.0 * this.scaleFactor);
+          });
+      
+          // Inicializa el fillBar con el valor inicial
+          fillBar.width = (control.x + halfBar);
+      
+          control.on('drag', (_: any, dragX: number) => {
+              const minX = -halfBar;
+              const maxX = halfBar;
+              control.x = Phaser.Math.Clamp(dragX, minX, maxX);
+              console.log(control.x, "control x", fillBar.width, "fillbar width")
+              // Actualiza el fillBar y calcula el nuevo valor (de 0 a 1)
+              const normalizedValue = (control.x + halfBar ) / barWidth;
+              fillBar.width = control.x + halfBar -7;
+      
+              onChange(normalizedValue);
+          });
+      
+          control.on('pointerdown', () => {
+              this.masterManager.playSound('buttonSound', false);
+          });
+      
+          control.setDepth(10);
+          slider.add([bar, fillBarStart, fillBar, control]);
+          this.settingsModal.add(slider);
+      
+          return { slider, control, fillBar };
+      }
+      
 
 }
 export default containerSettings;

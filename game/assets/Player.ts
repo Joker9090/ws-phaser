@@ -463,6 +463,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   checkFly(cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined) {
+    //console.log("[Player] FlyingMode CheckFly");
     let velocity = 500;
     let limit = 500;
     /* Keywords press */

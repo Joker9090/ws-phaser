@@ -437,6 +437,11 @@ class Game extends Phaser.Scene {
             return true;
           });
         }
+        if(this.player?.isFlying){
+          this.player?.setPlayerWithTank(false);
+          this.player?.setPlayerFlying(true);
+          this.player?.tankGraphics?.clear()
+        }
         // this.cameraNormal = config.cameraDirection === "NORMAL" ? true : false
       }
     }

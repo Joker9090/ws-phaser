@@ -26,7 +26,11 @@ export default class BetweenScenesScene extends Phaser.Scene {
       this.newSceneName = sceneName;
       this.newSceneWith = data;
       this.status = BetweenScenesStatus.PROCCESSING;
+      console.log("BetweenScenesScene launch");
+      console.log(this.scene)
       this.scene.launch(this);
+      console.log("BetweenScenesScene after launch");
+
     }
   }
 

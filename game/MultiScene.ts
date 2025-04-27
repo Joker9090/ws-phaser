@@ -44,12 +44,12 @@ export default class MultiScene extends Phaser.Scene {
     this.assetLoaderClass.runPreload(() => {
     console.log(this.scene.get("MultiScene"), "CAMBIANDO ESCENA 2", this.scenekey, this.sceneData);
       if (this.scenekey) {
-        // this.makeTransition(this.scenekey, this.sceneData ?? undefined);
-        this.makeTransition("Game", { level: 999, lifes: 3, loadKey: ["GamePlay1", "GamePlay2", "GamePlay3", "Postales","Cinemato0", "Cinemato1", "Cinemato2", "Cinemato3", "Postales"] });
+        this.makeTransition(this.scenekey, this.sceneData ?? undefined);
+        // this.makeTransition("Game", { level: 999, lifes: 3, loadKey: ["GamePlay1", "GamePlay2", "GamePlay3", "Postales","Cinemato0", "Cinemato1", "Cinemato2", "Cinemato3", "Postales"] });
 
       } else {
           // this.makeTransition("CinematographyMod", { keyname: "cine_3_movie_1", loadKey: ["Postales","Cinemato0", "Cinemato1", "Cinemato2", "Cinemato3"]});
-          this.makeTransition("Game", { level: 999, lifes: 3, loadKey: ["GamePlay1", "GamePlay2", "GamePlay3", "Postales","Cinemato0", "Cinemato1", "Cinemato2", "Cinemato3", "Postales"] });
+          this.makeTransition("Game", { level: 0, lifes: 3, loadKey: ["GamePlay1", "GamePlay2", "GamePlay3", "Postales","Cinemato0", "Cinemato1", "Cinemato2", "Cinemato3", "Postales"] });
           // this.makeTransition("Game", { level:1, lifes: 3, loadKey: ["GamePlay1", "GamePlay2", "GamePlay3", "Postales","Cinemato0", "Cinemato1", "Cinemato2", "Cinemato3", "Postales"] });
 
           //  this.makeTransition("MenuScene", undefined);
@@ -69,10 +69,8 @@ export default class MultiScene extends Phaser.Scene {
       if (getBetweenScenesScene.status != BetweenScenesStatus.IDLE)
         return false;
 
-      console.log("CONTINUA POR ACA")
       getBetweenScenesScene.changeSceneTo(sceneName, data);
       this.time.delayedCall(1000, () => {
-        console.log("CONTINUA POR ACA 2")
         this.scene.stop();
       });
     } else {

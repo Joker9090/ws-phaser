@@ -28,7 +28,14 @@ export default class BetweenScenesScene extends Phaser.Scene {
       this.status = BetweenScenesStatus.PROCCESSING;
       console.log("BetweenScenesScene launch");
       console.log(this.scene)
-      // this.scene.launch(this);
+      // check if this scene is already running
+      if (this.scene.get("BetweenScenes")) {
+        console.log("BetweenScenesScene PreLoadScene running");
+        this.scene.bringToTop("BetweenScenes");
+      } else {
+        console.log("BetweenScenesScene PreLoadScene not running");
+        this.scene.launch("BetweenScenes");
+      }
       console.log("BetweenScenesScene after launch");
 
     }

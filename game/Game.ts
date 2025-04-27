@@ -346,6 +346,8 @@ class Game extends Phaser.Scene {
         //   const scene = this.scene.add("MultiScene", multiScene, true);
         //   this.scene.start("MultiScene").bringToTop("MultiScene");
         // } else {;
+
+        console.log("CAMBIANDO ESCENA", this.map.nextScene);
         const multiScene = new MultiScene("CinematographyMod", {
           keyname: this.map.nextScene,
           lifes: this.lifes ? this.lifes : 3,

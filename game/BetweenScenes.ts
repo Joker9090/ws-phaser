@@ -82,6 +82,7 @@ export default class BetweenScenesScene extends Phaser.Scene {
   }
   
   onTurnOnComplete() {
+    console.log("BetweenScenesScene onTurnOnComplete");
   
     // start PreLoadScene to load the next scene
     const preloadScene = new PreLoadScene(this.newSceneWith && this.newSceneWith.loadKey ? this.newSceneWith.loadKey : undefined, () => {
@@ -98,6 +99,7 @@ export default class BetweenScenesScene extends Phaser.Scene {
 
   }
   turnOn() {
+    console.log("BetweenScenesScene turnOn");
     const self = this;
     let i = 0;
     let ii = 0;
@@ -129,6 +131,7 @@ export default class BetweenScenesScene extends Phaser.Scene {
   }
 
   create() {
+    console.log("BetweenScenesScene create");
     this.firstRender = true
     // this.blocks = this.add.group({
     //   key: "block",
@@ -156,7 +159,7 @@ export default class BetweenScenesScene extends Phaser.Scene {
     });
 
     const { width, height } = this.cameras.main;
-
+    
     //@ts-ignore
     this.blocks.getChildren().forEach((child: Phaser.GameObjects.Sprite, i) => {
       child.setOrigin(0.5, 0.5);
@@ -187,6 +190,8 @@ export default class BetweenScenesScene extends Phaser.Scene {
 
     if (this.firstRender && time - this.startTime >980) {
       this.firstRender = false
+      console.log("BetweenScenesScene update");
+
       this.turnOn();
       
     }

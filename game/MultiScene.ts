@@ -64,7 +64,7 @@ export default class MultiScene extends Phaser.Scene {
     const getBetweenScenesScene = this.game.scene.getScene(
       "BetweenScenes"
     ) as BetweenScenes;
-    console.log("getBetweenScenesScene", getBetweenScenesScene);
+    console.log("getBetweenScenesScene", getBetweenScenesScene, (getBetweenScenesScene.status != BetweenScenesStatus.IDLE));
     if (getBetweenScenesScene) {
       if (getBetweenScenesScene.status != BetweenScenesStatus.IDLE)
         return false;

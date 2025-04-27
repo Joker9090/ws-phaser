@@ -44,7 +44,9 @@ export default class MultiScene extends Phaser.Scene {
     this.assetLoaderClass.runPreload(() => {
     console.log(this.scene.get("MultiScene"), "CAMBIANDO ESCENA 2", this.scenekey, this.sceneData);
       if (this.scenekey) {
-        this.makeTransition(this.scenekey, this.sceneData ?? undefined);
+        // this.makeTransition(this.scenekey, this.sceneData ?? undefined);
+        this.makeTransition("Game", { level: 0, lifes: 3, loadKey: ["GamePlay1", "GamePlay2", "GamePlay3", "Postales","Cinemato0", "Cinemato1", "Cinemato2", "Cinemato3", "Postales"] });
+
       } else {
           // this.makeTransition("CinematographyMod", { keyname: "cine_3_movie_1", loadKey: ["Postales","Cinemato0", "Cinemato1", "Cinemato2", "Cinemato3"]});
           this.makeTransition("Game", { level: 0, lifes: 3, loadKey: ["GamePlay1", "GamePlay2", "GamePlay3", "Postales","Cinemato0", "Cinemato1", "Cinemato2", "Cinemato3", "Postales"] });
@@ -52,7 +54,7 @@ export default class MultiScene extends Phaser.Scene {
 
           //  this.makeTransition("MenuScene", undefined);
           //  this.makeTransition("TestScene", undefined);
-      }
+      }CAMBIANDO ESCENA
     });
 
   }
@@ -62,6 +64,7 @@ export default class MultiScene extends Phaser.Scene {
     const getBetweenScenesScene = this.game.scene.getScene(
       "BetweenScenes"
     ) as BetweenScenes;
+    console.log("getBetweenScenesScene", getBetweenScenesScene);
     if (getBetweenScenesScene) {
       if (getBetweenScenesScene.status != BetweenScenesStatus.IDLE)
         return false;

@@ -68,6 +68,8 @@ export default class MultiScene extends Phaser.Scene {
     if (getBetweenScenesScene) {
       if (getBetweenScenesScene.status != BetweenScenesStatus.IDLE)
         return false;
+
+      console.log("CONTINUA POR ACA")
       getBetweenScenesScene.changeSceneTo(sceneName, data);
       this.time.delayedCall(1000, () => {
         this.scene.stop();

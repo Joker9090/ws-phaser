@@ -54,7 +54,7 @@ export default class MultiScene extends Phaser.Scene {
 
           //  this.makeTransition("MenuScene", undefined);
           //  this.makeTransition("TestScene", undefined);
-      }CAMBIANDO ESCENA
+      }
     });
 
   }

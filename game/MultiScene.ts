@@ -72,6 +72,7 @@ export default class MultiScene extends Phaser.Scene {
       console.log("CONTINUA POR ACA")
       getBetweenScenesScene.changeSceneTo(sceneName, data);
       this.time.delayedCall(1000, () => {
+        console.log("CONTINUA POR ACA 2")
         this.scene.stop();
       });
     } else {

@@ -21,6 +21,7 @@ export default class BetweenScenesScene extends Phaser.Scene {
   }
 
   changeSceneTo(sceneName: string, data: CinematoDataType | GamePlayDataType | undefined) {
+    console.log("BetweenScenesScene changeSceneTo", sceneName, data, (this.status == BetweenScenesStatus.IDLE));
     if (this.status == BetweenScenesStatus.IDLE) {
       this.newSceneName = sceneName;
       this.newSceneWith = data;

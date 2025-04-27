@@ -62,6 +62,7 @@ class Teleport extends Phaser.GameObjects.Sprite {
             }) as Teleport;
             if (otherTp?.body && this.scene.player) this.scene.player.setPosition(otherTp.body.position.x, otherTp.body.position.y)
         } else if (this.config.otherSceneConf) {
+            console.log(this.config.otherSceneConf, "otherSceneConf");
             this.scene.changeScene(this.config.otherSceneConf) // data
         }
 

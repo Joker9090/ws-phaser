@@ -40,10 +40,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     fuel: 300,
     isCharging: 0,
     fuelLimit: 300,
-    fuelConditionToStart: 120,
+    // fuelConditionToStart: 120,
+    // consume: 70,
     chargeValue: 2,
-    consume: 70,
-    extraJumpAt: 300
+    extraJumpAt: 300,
+    fuelConditionToStart: 12,
+    consume: 7,
   }
 
   constructor(

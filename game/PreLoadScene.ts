@@ -11,7 +11,7 @@ export default class PreLoadScene extends Phaser.Scene {
   keyLoad: SceneKeys[] | undefined
   
   constructor(keyLoad: SceneKeys[] | undefined, callback: Function) {
-    super({ key: "PreLoadScene" });
+    super({ key: "PreLoadScene", active: true });
     this.keyLoad = keyLoad
     this.callback = callback
   }

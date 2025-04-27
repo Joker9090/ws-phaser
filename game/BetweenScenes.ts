@@ -89,8 +89,12 @@ export default class BetweenScenesScene extends Phaser.Scene {
       this.turnOff()
     });
 
-    const scene = this.scene.add("PreLoadScene", preloadScene, true);
-    this.game.scene.start("PreLoadScene").bringToTop("PreLoadScene");
+    this.scene.add("PreLoadScene", preloadScene, true)
+    console.log(22222)
+
+    this.time.delayedCall(1000, () => {
+      this.game.scene.bringToTop("PreLoadScene");
+    })
 
   }
   turnOn() {

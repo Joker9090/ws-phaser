@@ -35,6 +35,7 @@ export default class MultiScene extends Phaser.Scene {
     
     // this.load.spritesheet("player",  "/game/player/playerSpriteSheet.png",  { frameWidth: 200, frameHeight: 200 });
     if (this.scene.get("MultiScene")) {
+      console.log(111111111111)
       console.warn("MultiScene is already active. Stopping the current instance before proceeding.");
     }
 
@@ -65,14 +66,14 @@ export default class MultiScene extends Phaser.Scene {
       if (getBetweenScenesScene.status != BetweenScenesStatus.IDLE)
         return false;
       getBetweenScenesScene.changeSceneTo(sceneName, data);
-      // this.time.delayedCall(1000, () => {
-      //   this.scene.stop();
-      // });
+      this.time.delayedCall(1000, () => {
+        this.scene.stop();
+      });
     } else {
       this.scene.start(sceneName, data);
-      // this.time.delayedCall(1000, () => {
-      //   this.scene.stop();
-      // });
+      this.time.delayedCall(1000, () => {
+        this.scene.stop();
+      });
     }
   }
 

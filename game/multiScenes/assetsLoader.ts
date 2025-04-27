@@ -430,7 +430,7 @@ export const loadAssets = {
     assets: [
       // IMAGES
       ["image", "pSimple1p3", "/game/planeta3/pSimple1.png"],
-      ["image", "pSimple2p3", "/game/planeta3/pSimple2.png"],
+      ["image", "pSimple2p3", "/game/planeta3/pSImple2.png"],
       ["image", "pDoblep3", "/game/planeta3/pDoblep3.png"],
       ["image", "longFloorLeftp3", "/game/planeta3/longFloorLeft.png"],
       ["image", "longFloorRightp3", "/game/planeta3/longFloorRight.png"],
@@ -455,7 +455,7 @@ export const loadAssets = {
       ["image", "fill_texture_p3","/game/planeta3/platforms/fill_texture.png"],
       ["image", "fill_texture2_p3","/game/planeta3/platforms/fill_texture2.png"],
       ["image", "fill_texture3_p3","/game/planeta3/platforms/fill_texture3.png"],
-      ["image", "fill_texture4_p3","/game/planeta3/platforms/fill_texture4.png"],
+      ["image", "fill_texture4_p3","/game/planeta2/platforms/fill_texture4.png"],
       ["image", "platform_center_p3","/game/planeta3/platforms/platform_center.png"],
       ["image", "platform_der_p3","/game/planeta3/platforms/platform_der.png"],
       ["image", "platform_izq_p3","/game/planeta3/platforms/platform_izq.png"],

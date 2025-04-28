@@ -150,12 +150,13 @@ class Map0 extends MapCreator {
         const baseDangerConf = {
             type: "danger",
             texture: "Enemy",
-            scale: { width: 1, height: 1 },
+            scale: { width: 0.6, height: 0.6 },
             width: 170,
             height: 170,
             attackSpriteSheet: "EnemyAttack",
             particleSpriteSheet: "EnemyParticles",
             group: this.obstacle,
+            color: parseInt('0x00feff'),
         }
 
         const baseFireballConf = {

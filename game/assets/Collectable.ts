@@ -130,7 +130,14 @@ class Collectable extends Phaser.Physics.Arcade.Sprite {
   // ESTE OVERRIDE ES EL QUE ESTA ROMPIENDO EL JUEGO EN PRODUCCON
   // EL PROBLEMA ES QUE AL FINALIZAR LA SCENA O APAGARLA, SE CORRE EL DESTROY DE TODOS LOS HIJOS DE LA SCENA. ENTONCES SE INTENTA CORRER ESTE METODO Y SE ROMPE
   // TRATAR DE CREAR UN NUEVO DESTROY METOD PERO CON NOMBRE DIFERENTE; USARLO DONDE SE NECESITE Y DEJAR EL DESTROY ORIGINAL PARA EL FLUJO NORMAL DE PHASER
-
+  destroyItem(fromScene?: boolean): void {
+      // Call the OnDestroy method for cleanup
+      this.aura?.destroy();
+      this.shield?.destroy();
+      // Call the parent class's destroy method
+      super.destroy(fromScene);
+    }
+    
   // Override the destroy method
   // destroy(fromScene?: boolean): void {
   //   // Call the OnDestroy method for cleanup

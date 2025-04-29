@@ -112,10 +112,17 @@ class Map2 extends MapCreator {
         const baseLargePlatformsConf = {
             withTextureToAbove: false,
             texture: "plataformaNuevaA",
-            textureA: "plataformaNuevaLargaA",
-            textureB: "plataformaNuevaLargaB",
-            textureC: "plataformaNuevaLargaC",
-            scale: { width: 0.7, height: 0.7 },
+            textureA: "platform_izq",
+            textureB: "platform_center",
+            textureC: "platform_der",
+            textureFill: ["fill_texture", "fill_texture2", "fill_texture3", "fill_texture4"],
+            width: {
+              textureA: 96,
+              textureB: 96,
+              textureC: 96,
+            },
+            height: 96,
+            scale: { width: 1, height: 1 },
             rotated: false,
             type: "largeFloor",
         };
@@ -154,12 +161,6 @@ class Map2 extends MapCreator {
             {
                 ...baseLargePlatformsConf,
                 pos: { x: 0, y: this.worldSize.height - 600 },
-                width: {
-                    textureA: 90,
-                    textureB: 67,
-                    textureC: 115,
-                },
-                height: 127,
                 large: 15,
                 group: this.floor
             },
@@ -168,12 +169,6 @@ class Map2 extends MapCreator {
             {
                 ...baseLargePlatformsConf,
                 pos: { x: 1600, y: this.worldSize.height - 200 },
-                width: {
-                    textureA: 90,
-                    textureB: 67,
-                    textureC: 115,
-                },
-                height: 127,
                 large: 40,
                 group: this.floor
             },
@@ -205,12 +200,6 @@ class Map2 extends MapCreator {
             {
                 ...baseLargePlatformsConf,
                 pos: { x: 3800, y: this.worldSize.height - 500 },
-                width: {
-                    textureA: 90,
-                    textureB: 67,
-                    textureC: 115,
-                },
-                height: 127,
                 large: 15,
                 group: this.floor
             },
@@ -224,12 +213,6 @@ class Map2 extends MapCreator {
             {
                 ...baseLargePlatformsConf,
                 pos: { x: 5300, y: this.worldSize.height - 1200 },
-                width: {
-                    textureA: 90,
-                    textureB: 67,
-                    textureC: 115,
-                },
-                height: 127,
                 large: 10,
                 group: this.floor
             },
@@ -244,12 +227,6 @@ class Map2 extends MapCreator {
             {
                 ...baseLargePlatformsConf,
                 pos: { x: 7400, y: this.worldSize.height - 400 },
-                width: {
-                    textureA: 90,
-                    textureB: 67,
-                    textureC: 115,
-                },
-                height: 127,
                 large: 25,
                 group: this.floor
             },
@@ -277,12 +254,6 @@ class Map2 extends MapCreator {
             {
                 ...baseLargePlatformsConf,
                 pos: { x: 9200, y: this.worldSize.height - 700 },
-                width: {
-                    textureA: 90,
-                    textureB: 67,
-                    textureC: 115,
-                },
-                height: 127,
                 large: 15,
                 group: this.floor
             },

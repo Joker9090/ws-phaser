@@ -202,7 +202,7 @@ export default class MapCreator {
     this.floor = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.gravityTile = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.rotationTile = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
-    this.fallingTile = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
+    this.fallingTile = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: false });
     this.teleport = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.obstacle = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.firegroup = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
@@ -337,6 +337,19 @@ export default class MapCreator {
     this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.scene.player!);
   }
 
+  resetMap() {
+    console.log("resetMap", this.mapItems, 'inside');
+    this.fallingTile?.getChildren().forEach((tile) => {
+      const fallingTile = tile as Phaser.Physics.Arcade.Sprite;
+      if (fallingTile.body) {
+        //@ts-ignore
+        fallingTile.body.allowGravity = false;
+        //@ts-ignore
+        fallingTile.body.reset(fallingTile.config.pos.x, fallingTile.config.pos.y);
+      }
+    });
+  }
+
 
   addColliders() {
     if (this.scene.player) {
@@ -399,6 +412,8 @@ export default class MapCreator {
               ) {
                 this.scene.touch()
                 //@ts-ignore
+                b.setCollideWorldBounds(false);
+                //@ts-ignore
                 b.body.allowGravity = true;
               }
             },
@@ -411,7 +426,8 @@ export default class MapCreator {
           this.coin,
           (a, b) => {
             this.scene.touchItem("coin");
-            b.destroy();
+            //@ts-ignore
+            if (b.destroyItem) b.destroyItem();
             this.coinAura?.destroy();
           },
           () => true,

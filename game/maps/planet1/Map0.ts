@@ -164,12 +164,6 @@ class Map0 extends MapCreator {
             {
                 ...baseLargePlatformsConf,
                 pos: { x: 0, y: this.worldSize.height - 200 },
-                width: {
-                    textureA: 90,
-                    textureB: 67,
-                    textureC: 115,
-                },
-                height: 127,
                 large: 20,
                 group: this.floor
             },
@@ -195,12 +189,6 @@ class Map0 extends MapCreator {
             {
                 ...baseLargePlatformsConf,
                 pos: { x: 2700, y: this.worldSize.height - 400 },
-                width: {
-                    textureA: 90,
-                    textureB: 67,
-                    textureC: 115,
-                },
-                height: 127,
                 large: 15,
                 group: this.floor
             },
@@ -224,12 +212,6 @@ class Map0 extends MapCreator {
             {
                 ...baseLargePlatformsConf,
                 pos: { x: 3900, y: this.worldSize.height - 800 },
-                width: {
-                    textureA: 90,
-                    textureB: 67,
-                    textureC: 115,
-                },
-                height: 127,
                 large: 15,
                 group: this.floor
             },
@@ -258,12 +240,6 @@ class Map0 extends MapCreator {
             {
                 ...baseLargePlatformsConf,
                 pos: { x: 6500, y: this.worldSize.height - 1300 },
-                width: {
-                    textureA: 90,
-                    textureB: 67,
-                    textureC: 115,
-                },
-                height: 127,
                 large: 15,
                 group: this.floor
             },
@@ -294,12 +270,6 @@ class Map0 extends MapCreator {
             {
                 ...baseLargePlatformsConf,
                 pos: { x: 9300, y: this.worldSize.height - 500  },
-                width: {
-                    textureA: 90,
-                    textureB: 67,
-                    textureC: 115,
-                },
-                height: 127,
                 large: 20,
                 group: this.floor
             },

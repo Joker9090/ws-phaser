@@ -30,6 +30,7 @@ import Sandbox from "./maps/sandbox/sandbox";
 import subSandbox from "./maps/subLevels/subSandbox";
 import CODES from "../public/game/codigos.json";
 import Collectable from "./assets/Collectable";
+import MapCreator from "./maps/sandbox/MapCreator";
 
 
 interface CodeType {
@@ -52,7 +53,8 @@ export type PossibleMaps =
   | p1Map0
   | p1Map1
   | p1Map2
-  | p1Map3;
+  | p1Map3
+  | MapCreator
 // Scene in class
 export const keyCodesAWSD = {
   w: Phaser.Input.Keyboard.KeyCodes.W,
@@ -425,6 +427,11 @@ class Game extends Phaser.Scene {
     this.canRot = true;
     if (this.map) {
       //@ts-ignore
+      if (this.map.resetMap) {
+        //@ts-ignore
+        this.map.resetMap();
+      }
+      //@ts-ignore
       this.map.rotate = true;
       const config = this.map.loseConfig[this.checkPoint];
       if (this.lifes) {
@@ -775,6 +782,7 @@ class Game extends Phaser.Scene {
     // ARRANCA EL MAPA
 
     /* CREATE MAP */
+    //@ts-ignore
     this.map.createMap(data);
     console.log("rotating camera", this.cameraNormal);
     

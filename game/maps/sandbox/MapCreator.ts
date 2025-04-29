@@ -102,7 +102,8 @@ export default class MapCreator {
       positions: { x: 500, y: 800 },
       cameraDirection: "NORMAL",
       PlayerDirection: "NORMAL",
-      gravityDown: true,
+      gravityDown: this.player ? this.player.isFlying : false
+      ,
     },
   ];
   backgroundsBack: Phaser.GameObjects.Image[] = [];

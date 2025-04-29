@@ -170,14 +170,14 @@ class Danger extends Phaser.Physics.Arcade.Sprite {
       if(this.currentState==="patrol"){
         var timer;
 
-        if(this.patrol.attackInteval > 0) timer = this.patrol.attackInteval*1000;
-        else timer = Phaser.Math.Between(2000, 5000); 
-
-        this.scene.time.delayedCall(timer, () => {
-          //console.log("[Danger] Interruption started");
-          this.patrolTween?.pause();
-          this.AttackState();
-        });
+        if(this.patrol.attackInteval > 0){
+          timer = this.patrol.attackInteval*1000;
+          this.scene.time.delayedCall(timer, () => {
+            //console.log("[Danger] Interruption started");
+            this.patrolTween?.pause();
+            this.AttackState();
+          });
+        }
       }
     }
    

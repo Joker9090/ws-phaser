@@ -16,7 +16,7 @@ export type TeleportConfig = {
 class Teleport extends Phaser.GameObjects.Sprite {
     scene: Game;
     config: TeleportConfig;
-    version: number;
+    version: number | string;
     objType: string = 'teleport';
     
     constructor(scene: Game, config: TeleportConfig) {

@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import Game from "../Game";
 import MultiScene from "../MultiScene";
 import PreLoadScene from "../PreLoadScene";
+import MapCreator from "@/game/maps/sandbox/MapCreator";
 
 // Scene in class
 class Player extends Phaser.Physics.Arcade.Sprite {
@@ -169,6 +170,16 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       repeat: 0,
     };
 
+    const gravityActiveFrames= scene.anims.generateFrameNumbers("floatingSmoke",{
+      frames: Array.from({length:10}, (_, i) => i),
+    });
+    const gravityActiveConfig = {
+      key: "gravityActiveAnim",
+      frames: gravityActiveFrames,
+      frameRate: frameRate*1.2,
+      repeat: -1,
+    };
+
     const invincibleAuraFrames = scene.anims.generateFrameNumbers("auraAnim", {
       frames: Array.from({ length: 6 }, (_, i) => i),
     });
@@ -192,6 +203,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     scene.anims.create(playerRotateReverseConfig);
     scene.anims.create(gravityAnimConfig);
     //TANK SMOKE
+    scene.anims.create(gravityActiveConfig);
     scene.anims.create(tankActivateConfig);
     scene.anims.create(invincibleAuraConfig);
 
@@ -267,6 +279,16 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.isFlying = value
     this.gravityGroup.world.gravity.y = value ? 0 : this.gravity
     this.setAcceleration(0, 0)
+
+    if (!this.tankAnimSprite)return;
+    this.tankAnimSprite.setVisible(true);
+    this.tankAnimSprite.anims.play("gravityActiveAnim");
+    
+    this.tankAnimSprite.on("animationupdate", () => {
+    let xF = this.x - 15;
+    if (this.flipX) xF = this.x + 15;
+      this.tankAnimSprite?.setPosition(xF, this.y + 60);
+    });
   }
   setCameraState(state: "NORMAL" | "ROTATED") {
     this.cameraState = state
@@ -316,7 +338,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   }
   //TANK SMOKE
   activateTankAnimation() {
-  if (!this.tankAnimSprite) return;
+  if (!this.tankAnimSprite||this.isFlying===true) return;
 
   /*let xF = this.x - 10;
     if (this.flipX) xF = this.x + 10;

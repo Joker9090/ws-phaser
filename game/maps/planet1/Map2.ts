@@ -60,46 +60,40 @@ class Map2 extends MapCreator {
         // this.backSize = { width: backImage.width, height: backImage.height }
 
         const { width, height } = this.ratioReference;
+        const { width: farWidth, height: farHeight } = this.farBackgroundReference;
         const downScaledMiddleWidth = width * 0.7;
         const downScaledFrontWidth = width * 0.5;
-
-        // this.backgroundsBack = [
-        //     this.scene.add.image(0, this.worldSize.height, "background0P1").setOrigin(0, 1).setScale(1.3),
-        //     this.scene.add.image(0, this.worldSize.height, "backgroundStars").setOrigin(0, 1).setScale(1.3),
-        //     this.scene.add.image(0 + backImage.width, this.worldSize.height, "background0P1").setOrigin(0, 1),
-        //     this.scene.add.image(0 + backImage.width, this.worldSize.height, "backgroundStars").setOrigin(0, 1),
-        //     this.scene.add.image(0 + (backImage.width * 2), this.worldSize.height, "background0P1").setOrigin(0, 1),
-        //     this.scene.add.image(0 + (backImage.width * 2), this.worldSize.height, "backgroundStars").setOrigin(0, 1),
-        // ]
-
-        const bgContainerArr = [
-            this.scene.add.image(0, 0, "gradient").setOrigin(0.5),
-            this.scene.add.image(0, 0, "stars").setOrigin(0.5),
-            this.scene.add.image(0, 300, "curvedVector").setOrigin(0.5),
-          ]
-          const bgContainer = this.scene.add.container(0, 0, bgContainerArr);
-          this.scene.UICamera?.ignore(bgContainer);
-          const newMainCamera = this.scene.cameras.add(0, 0, window.innerWidth, window.innerHeight, true, "mainCamera");
-          // this.scene.children.sendToBack(bgContainer);
-          this.scene.cameras.main.ignore(bgContainer);
-
+    
+        this.backgroundsBack = [
+          this.scene.add.image(0, 0, "gradient").setOrigin(0.5),
+          this.scene.add.image(0, 0, "stars").setOrigin(0.5),
+          this.scene.add.image(0, 300, "curvedVector").setOrigin(0.5),
+        ]
+        
         this.backgroundsMiddle = [
-            this.scene.add.image(-this.startingPoint.x, this.cameraBounds.height + 100, "middleCombo").setOrigin(0, 1).setScale(0.7),
-            this.scene.add.image(-this.startingPoint.x + downScaledMiddleWidth, this.cameraBounds.height + 100, "middleCombo2").setOrigin(0, 1).setScale(0.7),
-            this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 2), this.cameraBounds.height + 100, "middleCombo3").setOrigin(0, 1).setScale(0.7),
-            this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 3), this.cameraBounds.height + 100, "middleCombo4").setOrigin(0, 1).setScale(0.7),
-            this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 4), this.cameraBounds.height + 100, "middleCombo2").setOrigin(0, 1).setScale(0.7),
-            this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 5), this.cameraBounds.height + 100, "middleCombo2").setOrigin(0, 1).setScale(0.7),
+          this.scene.add.image(-this.startingPoint.x, this.cameraBounds.height+100, "middleCombo").setOrigin(0, 1).setScale(0.7),
+          this.scene.add.image(-this.startingPoint.x + downScaledMiddleWidth, this.cameraBounds.height+100, "middleCombo2").setOrigin(0, 1).setScale(0.7),
+          this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 2), this.cameraBounds.height+100, "middleCombo3").setOrigin(0, 1).setScale(0.7),
+          this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 3), this.cameraBounds.height+100, "middleCombo4").setOrigin(0, 1).setScale(0.7),
+          this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 4), this.cameraBounds.height+100, "middleCombo2").setOrigin(0, 1).setScale(0.7),
+          this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 5), this.cameraBounds.height+100, "middleCombo2").setOrigin(0, 1).setScale(0.7),
         ]
-
+        
         this.backgroundsFront = [
-            this.scene.add.image(this.startingPoint.x + this.backSize.width - 15, this.cameraBounds.height + 100, "montaña3"),
-            this.scene.add.image(this.startingPoint.x - 70, this.cameraBounds.height + 100, "montaña5"),
-            this.scene.add.image(1200, this.cameraBounds.height + 100, "montaña3")
+          this.scene.add.image(-this.startingPoint.x, this.cameraBounds.height+100, "frontCombo").setOrigin(0, 1).setScale(0.5),
+          this.scene.add.image(-this.startingPoint.x + downScaledFrontWidth, this.cameraBounds.height+100, "frontCombo2").setOrigin(0, 1).setScale(0.5),
+          this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 2), this.cameraBounds.height+100, "frontCombo3").setOrigin(0, 1).setScale(0.5),
+          this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 3), this.cameraBounds.height+100, "frontCombo4").setOrigin(0, 1).setScale(0.5),
+          this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 4), this.cameraBounds.height+100, "frontCombo2").setOrigin(0, 1).setScale(0.5),
+          this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 5), this.cameraBounds.height+100, "frontCombo2").setOrigin(0, 1).setScale(0.5),
         ]
-
+        
         this.createBackgrounds(this.backgroundsBack, this.backgroundsMiddle, this.backgroundsFront);
-
+        
+        const bgContainer = this.scene.add.container(0, 0, this.backgroundsBack);
+        this.scene.UICamera?.ignore(bgContainer);
+        this.scene.cameras.main.ignore(bgContainer);
+        
         this.scene.UICamera?.ignore(this.mapContainer);
         this.scene.UICamera?.ignore(this.frontContainer);
 
@@ -118,10 +112,17 @@ class Map2 extends MapCreator {
         const baseLargePlatformsConf = {
             withTextureToAbove: false,
             texture: "plataformaNuevaA",
-            textureA: "plataformaNuevaLargaA",
-            textureB: "plataformaNuevaLargaB",
-            textureC: "plataformaNuevaLargaC",
-            scale: { width: 0.7, height: 0.7 },
+            textureA: "platform_izq",
+            textureB: "platform_center",
+            textureC: "platform_der",
+            textureFill: ["fill_texture", "fill_texture2", "fill_texture3", "fill_texture4"],
+            width: {
+              textureA: 96,
+              textureB: 96,
+              textureC: 96,
+            },
+            height: 96,
+            scale: { width: 1, height: 1 },
             rotated: false,
             type: "largeFloor",
         };
@@ -161,12 +162,6 @@ class Map2 extends MapCreator {
             {
                 ...baseLargePlatformsConf,
                 pos: { x: 0, y: this.worldSize.height - 600 },
-                width: {
-                    textureA: 90,
-                    textureB: 67,
-                    textureC: 115,
-                },
-                height: 127,
                 large: 15,
                 group: this.floor
             },
@@ -175,12 +170,6 @@ class Map2 extends MapCreator {
             {
                 ...baseLargePlatformsConf,
                 pos: { x: 1600, y: this.worldSize.height - 200 },
-                width: {
-                    textureA: 90,
-                    textureB: 67,
-                    textureC: 115,
-                },
-                height: 127,
                 large: 40,
                 group: this.floor
             },
@@ -212,12 +201,6 @@ class Map2 extends MapCreator {
             {
                 ...baseLargePlatformsConf,
                 pos: { x: 3800, y: this.worldSize.height - 500 },
-                width: {
-                    textureA: 90,
-                    textureB: 67,
-                    textureC: 115,
-                },
-                height: 127,
                 large: 15,
                 group: this.floor
             },
@@ -231,12 +214,6 @@ class Map2 extends MapCreator {
             {
                 ...baseLargePlatformsConf,
                 pos: { x: 5300, y: this.worldSize.height - 1200 },
-                width: {
-                    textureA: 90,
-                    textureB: 67,
-                    textureC: 115,
-                },
-                height: 127,
                 large: 10,
                 group: this.floor
             },
@@ -251,12 +228,6 @@ class Map2 extends MapCreator {
             {
                 ...baseLargePlatformsConf,
                 pos: { x: 7400, y: this.worldSize.height - 400 },
-                width: {
-                    textureA: 90,
-                    textureB: 67,
-                    textureC: 115,
-                },
-                height: 127,
                 large: 25,
                 group: this.floor
             },
@@ -284,12 +255,6 @@ class Map2 extends MapCreator {
             {
                 ...baseLargePlatformsConf,
                 pos: { x: 9200, y: this.worldSize.height - 700 },
-                width: {
-                    textureA: 90,
-                    textureB: 67,
-                    textureC: 115,
-                },
-                height: 127,
                 large: 15,
                 group: this.floor
             },

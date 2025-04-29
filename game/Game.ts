@@ -30,6 +30,7 @@ import Sandbox from "./maps/sandbox/sandbox";
 import subSandbox from "./maps/subLevels/subSandbox";
 import CODES from "../public/game/codigos.json";
 import Collectable from "./assets/Collectable";
+import MapCreator from "./maps/sandbox/MapCreator";
 
 
 interface CodeType {
@@ -52,7 +53,8 @@ export type PossibleMaps =
   | p1Map0
   | p1Map1
   | p1Map2
-  | p1Map3;
+  | p1Map3
+  | MapCreator
 // Scene in class
 export const keyCodesAWSD = {
   w: Phaser.Input.Keyboard.KeyCodes.W,
@@ -312,9 +314,9 @@ class Game extends Phaser.Scene {
 
   win() {
     // this.initialScroll = { x: 0, y: 0 };
-    if (this.scene.get("MultiScene")) {
-      this.scene.remove("MultiScene");
-    }
+    // if (this.scene.get("MultiScene")) {
+    //   this.scene.remove("MultiScene");
+    // }
     if (this.player && this.map) {
       console.log(this.levelIs, "LEVEL IS JOTITA");
       this.cameraNormal = true;
@@ -362,18 +364,33 @@ class Game extends Phaser.Scene {
           level: this.levelIs + 1,
           lifes: this.lifes ? this.lifes : 3,
         });
-         
- 
-        
 
         const scene = this.scene.add("MultiScene", multiScene, true);
         this.scene.start("MultiScene").bringToTop("MultiScene");
       } else {
-        const multiScene = new MultiScene("MenuScene", undefined);
-        const scene = this.scene.add("MultiScene", multiScene, true);
-        this.scene.start("MultiScene").bringToTop("MultiScene");
-        this.masterManagerScene?.stopMusic();
+        try {
+          const multiSceneKey = "MultiScene";
+      
+          // If MultiScene exists and is active, just bring it to top and reuse it
+          if (this.scene.get(multiSceneKey) && this.scene.isActive(multiSceneKey)) {
+            console.warn("⚠️ MultiScene is already active — reusing it.");
+            this.scene.bringToTop(multiSceneKey);
+          } else {
+            // If it's not active, create and start a new MultiScene instance
+            const multiScene = new MultiScene("MenuScene", undefined);
+            console.log("✅ jp test 1 — creating MultiScene:", multiScene);
+      
+            const scene = this.scene.add(multiSceneKey, multiScene, true);
+            console.log("✅ jp test 2 — added MultiScene:", multiScene, scene);
+          }
+      
+          this.masterManagerScene?.stopMusic();
+          console.log("✅ jp test 3 — continued with music stop or other logic");
+        } catch (e) {
+          console.error("💥 Error handling MultiScene:", e);
+        }
       }
+      
     }
 
     // lógica para pasar a movie dependiendo el nivel
@@ -409,6 +426,11 @@ class Game extends Phaser.Scene {
     // this.initialScroll = { x: 0, y: 0 };
     this.canRot = true;
     if (this.map) {
+      //@ts-ignore
+      if (this.map.resetMap) {
+        //@ts-ignore
+        this.map.resetMap();
+      }
       //@ts-ignore
       this.map.rotate = true;
       const config = this.map.loseConfig[this.checkPoint];
@@ -760,6 +782,7 @@ class Game extends Phaser.Scene {
     // ARRANCA EL MAPA
 
     /* CREATE MAP */
+    //@ts-ignore
     this.map.createMap(data);
     console.log("rotating camera", this.cameraNormal);
     

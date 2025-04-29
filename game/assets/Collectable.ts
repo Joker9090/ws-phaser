@@ -128,7 +128,7 @@ class Collectable extends Phaser.Physics.Arcade.Sprite {
     }
   }
   // Override the destroy method
-  destroy(fromScene?: boolean): void {
+  destroyItem(fromScene?: boolean): void {
     // Call the OnDestroy method for cleanup
     this.aura?.destroy();
     this.shield?.destroy();

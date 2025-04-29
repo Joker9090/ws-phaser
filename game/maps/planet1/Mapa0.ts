@@ -115,9 +115,7 @@ class Mapa0 extends MapCreator {
     super(scene,player, data);
     this.scene = scene;
     this.player = player;
-    //Tank
-    this.player.setPlayerWithTank(true);
-
+    
     /* World size*/
     this.worldSize = {
       width: 10000,
@@ -428,6 +426,12 @@ this.updateContainerPositionRelativeToCamera(
       immovable: true,
     });
     this.portal = this.scene.physics.add.group({ allowGravity: false });
+
+    //Tank
+    this.player?.setPlayerWithTank(false);
+    //FLYING TEST
+    this.player?.setPlayerFlying(true);
+    
     //const aura = this.scene.add.sprite(3700, 300, "auraTuto").setScale(0.6);
     //this.aura.add(aura);
 
@@ -621,16 +625,16 @@ this.updateContainerPositionRelativeToCamera(
   const boxConfig: DangerConfig = {
     texture: "Enemy",
     pos: {x: 1500, y: 1740 },
-    scale: { width: 1, height: 1 },
+    scale: { width:0.6, height: 0.6 },
     width: 170,
     height: 170,
     attackSpriteSheet: "EnemyAttack",
     particleSpriteSheet: "EnemyParticles",
     patrol:{
-      patrolType:"LinealY",
-      distance:200,
+      patrolType:"LinealX",
+      distance:400,
       speed: 100,
-      attackInterval:2,
+      attackInterval:4,
     }
   }
   const box = new Danger(this.scene, boxConfig, this.obstacle);
@@ -830,6 +834,7 @@ this.updateContainerPositionRelativeToCamera(
     this.scene.UICamera?.ignore(this.backContainer);
     this.scene.UICamera?.ignore(this.middleContainer);
     this.scene.UICamera?.ignore(this.frontContainer);
+    if(this.player?.tankAnimSprite) this.scene.UICamera?.ignore(this.player.tankAnimSprite);
   }
 
   update() {

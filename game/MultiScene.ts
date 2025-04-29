@@ -45,7 +45,6 @@ export default class MultiScene extends Phaser.Scene {
       if (this.scenekey) {
         this.makeTransition(this.scenekey, this.sceneData ?? undefined);
       } else {
-          const a = this.scene.get("Game");
           // this.makeTransition("CinematographyMod", { keyname: "cine_3_movie_1", loadKey: ["Postales","Cinemato0", "Cinemato1", "Cinemato2", "Cinemato3"]});
           this.makeTransition("Game", { level:0, lifes: 3, loadKey: ["GamePlay1", "GamePlay2", "GamePlay3", "Postales","Cinemato0", "Cinemato1", "Cinemato2", "Cinemato3", "Postales"] });
           // this.makeTransition("Game", { level:1, lifes: 3, loadKey: ["GamePlay1", "GamePlay2", "GamePlay3", "Postales","Cinemato0", "Cinemato1", "Cinemato2", "Cinemato3", "Postales"] });

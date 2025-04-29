@@ -4,6 +4,11 @@ import p1Mapa0 from "./maps/planet1/Mapa0";
 import p1Mapa1 from "./maps/planet1/Mapa1";
 import p1Mapa2 from "./maps/planet1/Mapa2";
 import p1Mapa3 from "./maps/planet1/Mapa3";
+
+import p1Map0 from "./maps/planet1/Map0";
+import p1Map1 from "./maps/planet1/Map1";
+import p1Map2 from "./maps/planet1/Map2";
+import p1Map3 from "./maps/planet1/Map3";
 // MAPAS PLANETA 2
 import p2Mapa1 from "./maps/planet2/Mapa4";
 import p2Mapa2 from "./maps/planet2/Mapa5";
@@ -25,25 +30,31 @@ import Sandbox from "./maps/sandbox/sandbox";
 import subSandbox from "./maps/subLevels/subSandbox";
 import CODES from "../public/game/codigos.json";
 import Collectable from "./assets/Collectable";
+import MapCreator from "./maps/sandbox/MapCreator";
+
 
 interface CodeType {
   mapa?: number;
   imagenes?: string[];
 }
-
+// a medida que los mapas pasen al nuevo modo esto se deberia poder eliminar ya que totalcoins existe en mapCreator
 export type PossibleMaps =
-  | p1Mapa0
-  | p1Mapa1
-  | p1Mapa2
-  | p1Mapa3
-  | p2Mapa1
-  | p2Mapa2
-  | p2Mapa3
-  | p2Mapa4
-  | p3Mapa1
-  | p3Mapa2
+  | (p1Mapa0 & { totalCoins?: number })
+  | (p1Mapa1 & { totalCoins?: number })
+  | (p1Mapa2 & { totalCoins?: number })
+  | (p1Mapa3 & { totalCoins?: number })
+  | (p2Mapa1 & { totalCoins?: number })
+  | (p2Mapa2 & { totalCoins?: number })
+  | (p2Mapa3 & { totalCoins?: number })
+  | (p2Mapa4 & { totalCoins?: number })
+  | (p3Mapa1 & { totalCoins?: number })
+  | (p3Mapa2 & { totalCoins?: number })
   | Sandbox
-  | subSandbox
+  | p1Map0
+  | p1Map1
+  | p1Map2
+  | p1Map3
+  | MapCreator
 // Scene in class
 export const keyCodesAWSD = {
   w: Phaser.Input.Keyboard.KeyCodes.W,
@@ -67,7 +78,7 @@ class Game extends Phaser.Scene {
   timeLevel: number = 0;
   goingBack: boolean = false;
 
-  canWin: boolean = false;
+  canWin: boolean = true;
   canNextLevel: boolean = false;
   canRot: boolean = true;
 
@@ -89,6 +100,8 @@ class Game extends Phaser.Scene {
   UICamera?: Phaser.Cameras.Scene2D.Camera;
   masterManagerScene?: MasterManager;
   stopMov: boolean = false;
+
+  
   constructor() {
     super({ key: "Game" });
   }
@@ -301,9 +314,9 @@ class Game extends Phaser.Scene {
 
   win() {
     // this.initialScroll = { x: 0, y: 0 };
-    if (this.scene.get("MultiScene")) {
-      this.scene.remove("MultiScene");
-    }
+    // if (this.scene.get("MultiScene")) {
+    //   this.scene.remove("MultiScene");
+    // }
     if (this.player && this.map) {
       console.log(this.levelIs, "LEVEL IS JOTITA");
       this.cameraNormal = true;
@@ -312,8 +325,22 @@ class Game extends Phaser.Scene {
           level: 0,
           lifes: this.lifes ? this.lifes : 3,
         });
-        const scene = this.scene.add("MultiScene", multiScene, true);
-        this.scene.start("MultiScene").bringToTop("MultiScene");
+        this.stopMov =true
+        if(this.canWin){
+          this.add.rectangle(window.innerWidth/2,window.innerHeight/2, 500,250, 0xff0000).setOrigin(0.5).setAlpha(0.2)
+          const collText = this.UIClass?.collText?.text ?? "0";
+          const coinCount = this.map.totalCoins ?? 0;
+          this.add.text(window.innerWidth / 2, window.innerHeight / 2, `${collText}/${coinCount + 1}`);
+          this.canWin = false;
+      
+          if (this.input.keyboard) {
+            this.input.keyboard.enabled = false;
+          }
+        }
+
+
+        // const scene = this.scene.add("MultiScene", multiScene, true);
+        // this.scene.start("MultiScene").bringToTop("MultiScene");
       }
       else if (this.map?.nextScene) {
         // if (this.levelIs === 7){
@@ -337,14 +364,33 @@ class Game extends Phaser.Scene {
           level: this.levelIs + 1,
           lifes: this.lifes ? this.lifes : 3,
         });
+
         const scene = this.scene.add("MultiScene", multiScene, true);
         this.scene.start("MultiScene").bringToTop("MultiScene");
       } else {
-        const multiScene = new MultiScene("MenuScene", undefined);
-        const scene = this.scene.add("MultiScene", multiScene, true);
-        this.scene.start("MultiScene").bringToTop("MultiScene");
-        this.masterManagerScene?.stopMusic();
+        try {
+          const multiSceneKey = "MultiScene";
+      
+          // If MultiScene exists and is active, just bring it to top and reuse it
+          if (this.scene.get(multiSceneKey) && this.scene.isActive(multiSceneKey)) {
+            console.warn("⚠️ MultiScene is already active — reusing it.");
+            this.scene.bringToTop(multiSceneKey);
+          } else {
+            // If it's not active, create and start a new MultiScene instance
+            const multiScene = new MultiScene("MenuScene", undefined);
+            console.log("✅ jp test 1 — creating MultiScene:", multiScene);
+      
+            const scene = this.scene.add(multiSceneKey, multiScene, true);
+            console.log("✅ jp test 2 — added MultiScene:", multiScene, scene);
+          }
+      
+          this.masterManagerScene?.stopMusic();
+          console.log("✅ jp test 3 — continued with music stop or other logic");
+        } catch (e) {
+          console.error("💥 Error handling MultiScene:", e);
+        }
       }
+      
     }
 
     // lógica para pasar a movie dependiendo el nivel
@@ -380,6 +426,11 @@ class Game extends Phaser.Scene {
     // this.initialScroll = { x: 0, y: 0 };
     this.canRot = true;
     if (this.map) {
+      //@ts-ignore
+      if (this.map.resetMap) {
+        //@ts-ignore
+        this.map.resetMap();
+      }
       //@ts-ignore
       this.map.rotate = true;
       const config = this.map.loseConfig[this.checkPoint];
@@ -504,7 +555,7 @@ class Game extends Phaser.Scene {
       if (document.visibilityState === "hidden") {
         this.masterManagerScene?.pauseGame();
       } else {
-        this.masterManagerScene?.resumeGame();
+        this.masterManagerScene?.resumeFromBlur();
       }
     })
 
@@ -513,7 +564,7 @@ class Game extends Phaser.Scene {
     });
   
     window.addEventListener("focus", () => {
-        this.masterManagerScene?.resumeGame();
+        this.masterManagerScene?.resumeFromBlur();
     });
     /* CHOSE LEVEL, LIFES AND AUDIO */
     switch (data.level) {
@@ -532,13 +583,13 @@ class Game extends Phaser.Scene {
       case 0:
         this.player = new Player(this, 0, 0, "character", 2);
         
-        this.map = new p1Mapa0(this, this.player!);
+        this.map = new p1Map0(this, this.player!);
         this.loopMusic = "planet0LoopMusic";
         break;
       case 1:
         this.player = new Player(this, 0, 0, "character", 2);
 
-        this.map = new p1Mapa1(this, this.player!);
+        this.map = new p1Map1(this, this.player!);
         this.loopMusic = "planet0LoopMusic";
         if (this.masterManagerScene) {
           this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1"];
@@ -547,7 +598,7 @@ class Game extends Phaser.Scene {
       case 2:
         this.player = new Player(this, 0, 0, "character", 2);
 
-        this.map = new p1Mapa2(this, this.player!);
+        this.map = new p1Map2(this, this.player!);
         this.loopMusic = "planet0LoopMusic";
         if (this.masterManagerScene) {
           this.masterManagerScene.imagenesDesbloqueadas = ["planeta1_figu1"];
@@ -556,7 +607,7 @@ class Game extends Phaser.Scene {
       case 3:
         this.player = new Player(this, 0, 0, "character", 2);
 
-        this.map = new p1Mapa3(this, this.player!);
+        this.map = new p1Map3(this, this.player!);
         this.loopMusic = "planet0LoopMusic";
         if (this.masterManagerScene) {
           this.masterManagerScene.imagenesDesbloqueadas = [
@@ -702,6 +753,14 @@ class Game extends Phaser.Scene {
       if (this.loopMusic)
         this.masterManagerScene.playMusic(this.loopMusic, true);
     }
+    /* FAR BG CAMERA */
+
+    this.cameras.add(0, 0, window.innerWidth, window.innerHeight, false, "backgroundCamera");
+
+    /* CREATE NEW MAIN CAMERA TO FIX ORDER */
+
+    this.cameras.add(0, 0, window.innerWidth, window.innerHeight, true, "mainCamera");
+
     /* UI SCENE  */
     
     this.UICamera = this.cameras.add(
@@ -712,8 +771,9 @@ class Game extends Phaser.Scene {
     );
     this.UICamera?.ignore(this.player);
     this.player.gravityAnimSprite && this.UICamera?.ignore(this.player.gravityAnimSprite);
-    
-    
+    this.player.tankAnimSprite && this.UICamera?.ignore(this.player.tankAnimSprite);
+    this.player.auraAnimSprite && this.UICamera?.ignore(this.player.auraAnimSprite);
+      
     this.UIClass = new UIClass(this, this.levelIs, this.lifes, this.timeLevel);
     
     /* CONTROLS */
@@ -725,8 +785,9 @@ class Game extends Phaser.Scene {
     // FINALIZA EL MAPA
     
     // ARRANCA EL MAPA
-    this.canWin = false;
+
     /* CREATE MAP */
+    //@ts-ignore
     this.map.createMap(data);
     console.log("rotating camera", this.cameraNormal);
     

@@ -22,8 +22,8 @@ export type globalPlatformsConfigType = {
 
 export type mapFloorConfig = {
   pos?: { x: number; y: number };
-  x?:number,
-  y?:number,
+  x?: number,
+  y?: number,
   rotate?: boolean;
   flipY?: boolean;
   group?: Phaser.Physics.Arcade.Group;
@@ -31,7 +31,7 @@ export type mapFloorConfig = {
   width?: number | { textureA: number; textureB: number; textureC: number };
   height?: number;
   scale?: { width: number; height: number };
-  
+
   animation?: {
     xAxis?: {
       xDistance: number;
@@ -54,7 +54,7 @@ export type mapLargeFloorConfig = {
   colors?: number[];
   width?: {
     textureA: number;
-    textureB: number; 
+    textureB: number;
     textureC: number;
   }
   height?: number;
@@ -74,7 +74,7 @@ export type mapLargeFloorConfig = {
   };
 }
 export default class MapCreator {
-  mapGroup: Phaser.Physics.Arcade.Group;
+  mapItems: Phaser.GameObjects.GameObject[] = [];
   isJumping = false;
   scene: Game;
   worldSize = {
@@ -115,7 +115,8 @@ export default class MapCreator {
   backSize: { width: number; height: number } = { width: 0, height: 0 };
   frontSize: { width: number; height: number } = { width: 0, height: 0 };
   middleWidth: { width: number; height: number } = { width: 0, height: 0 };
-  nextScene: string | undefined = "postal1_planeta1";
+  // nextScene: string | undefined = "postal1_planeta1";
+  nextScene: string | undefined;
   postalCode: string | undefined = "adjns";
   UIItemToGrab: string = "cristal3";
   UIItemScale?: number;
@@ -126,6 +127,7 @@ export default class MapCreator {
   pisosBack?: Phaser.Physics.Arcade.Group;
   gravityTile?: Phaser.Physics.Arcade.Group;
   rotationTile?: Phaser.Physics.Arcade.Group;
+  fallingTile?: Phaser.Physics.Arcade.Group;
   coin?: Phaser.Physics.Arcade.Group;
   coinAura?: Phaser.GameObjects.Sprite;
   invincible?: Phaser.Physics.Arcade.Group;
@@ -144,14 +146,20 @@ export default class MapCreator {
   savePoint?: {x: number; y: number};
   initialScroll:  { x: number; y: number } = { x: 0, y: 0 };
 
+  totalCoins?:number
   constructor(scene: Game, player: Player, data?: GamePlayDataType) {
     this.scene = scene;
+    this.totalCoins =  this.coin?.getChildren().length
+
+    if (this.scene.input.keyboard) {
+      this.scene.input.keyboard.enabled = true;
+    }
     this.player = player;
-    this.mapGroup = scene.physics.add.group({
-      allowGravity: false,
-      immovable: true,
-      collideWorldBounds: true,
-    });
+    // this.mapGroup = scene.physics.add.group({
+    //   allowGravity: false,
+    //   immovable: true,
+    //   collideWorldBounds: true,
+    // });
     this.startingPoint = {
       x: 500, //500
       y: this.worldSize.height-600, //800
@@ -172,7 +180,6 @@ export default class MapCreator {
     this.middleContainer = this.scene.add.container();
     // this.mapContainer = this.middleContainer;
     this.frontContainer = this.scene.add.container();
-    console.log(this.scene.cameras.main.midPoint);
     // this.scene.cameras.main.midPoint.setTo(
     //   0,
     //   this.worldSize.height
@@ -196,30 +203,34 @@ export default class MapCreator {
     this.floor = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.gravityTile = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.rotationTile = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
+    this.fallingTile = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: false });
     this.teleport = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.obstacle = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
+    this.firegroup = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.scene.UICamera?.ignore(this.floor)
     this.scene.UICamera?.ignore(this.gravityTile)
     this.scene.UICamera?.ignore(this.rotationTile)
+    this.scene.UICamera?.ignore(this.fallingTile)
     this.scene.UICamera?.ignore(this.teleport)
     this.scene.UICamera?.ignore(this.obstacle)
+    this.scene.UICamera?.ignore(this.firegroup)
     if (this.scene.physics.world.debugGraphic) {
       this.scene.UICamera?.ignore(this.scene.physics.world.debugGraphic);
     }
   }
-  
+
   createBackgrounds(_backgroundsBack: Phaser.GameObjects.Image[], _backgroundsMiddle: Phaser.GameObjects.Image[], _backgroundsFront: Phaser.GameObjects.Image[]) {
     console.log("createBackgrounds", _backgroundsBack, _backgroundsMiddle, _backgroundsFront);
     this.backgroundsBack = _backgroundsBack;
     this.backgroundsMiddle = _backgroundsMiddle;
     this.backgroundsFront = _backgroundsFront;
-    
+
     /*this.backContainer.list = backgroundsBack;
     this.middleContainer.list = backgroundsMiddle;
     this.frontContainer.list = backgroundsFront;*/
-    
+
     //console.log("createBackgrounds-container", this.backContainer, this.middleContainer, this.frontContainer);
-    
+
     this.backContainer.add(this.backgroundsBack);
     this.middleContainer.add(this.backgroundsMiddle);
     this.frontContainer.add(this.backgroundsFront).setDepth(9999999999999);
@@ -229,6 +240,7 @@ export default class MapCreator {
     this.scene.add.existing(this.frontContainer);
 
     this.scene.UICamera?.ignore(this.backContainer);
+    this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.backContainer);
     this.scene.UICamera?.ignore(this.middleContainer);
     this.scene.UICamera?.ignore(this.frontContainer);
     this.scene.cameras.main.setScroll(0, 0);
@@ -237,6 +249,8 @@ export default class MapCreator {
   createPlatforms(gameObjects: mapFloorConfig[]) {
     gameObjects.forEach((element) => {
       const tile: any = Factory(this.scene, element, this.floor!);
+      // this.mapGroup.add(tile);
+      this.mapItems.push(tile);
     })
   }
 
@@ -246,32 +260,97 @@ export default class MapCreator {
     // this.initialScroll = { x: scrollX, y: scrollY };
   }
 
-  animateBackground() {
-    const camera = this.scene.cameras.main;
-    console.log(camera.midPoint, "midpoint", camera.scrollX, camera.scrollY);
-    this.updateParallaxLayer(this.backContainer, camera, 0.8, 0.8);   // Farthest, moves slowest
-    this.updateParallaxLayer(this.middleContainer, camera, 0.3, 0.3); // Middle layer
-    this.updateParallaxLayer(this.frontContainer, camera, 0, 0);  // Closest, moves faster
+   updatePositions = (
+      images: Phaser.GameObjects.Container,
+      camera: Phaser.Cameras.Scene2D.Camera,
+      fixedPoint: { x: number; y: number },
+      ponderation: { fixX: number; fixY: number }
+    ) => {
+      const offsetX = (camera.midPoint.x - fixedPoint.x) / ponderation.fixX;
+      const offsetY = (camera.midPoint.y - fixedPoint.y) / ponderation.fixY;
+      images.setPosition(
+          (this.scene.player?.body?.x! - this.startingPoint.x),
+          (this.scene.player?.body?.y! - this.startingPoint.y)
+        );
+    };
+  
+    animateBackground() {
+      // this.updatePositions(
+      //   this.backContainer,
+      //   this.scene.cameras.main,
+      //   { x: this.startingPoint.x, y: this.worldSize.height },
+      //   { fixX: 1.1, fixY: 1.1 }
+      // );
+      // this.updatePositions(
+      //   this.middleContainer,
+      //   this.scene.cameras.main,
+      //   { x: this.startingPoint.x, y: this.worldSize.height },
+      //   { fixX: 2, fixY: 4 }
+      // );
+      // this.updatePositions(
+      //   this.frontContainer,
+      //   this.scene.cameras.main,
+      //   { x: this.startingPoint.x, y: this.worldSize.height },
+      //   { fixX: -20, fixY: -30 }
+      // );
+    };
+  
+  
 
-    
-  }
+  // animateBackground() {
+  //   const camera = this.scene.cameras.main;
+  //   this.updateParallaxLayer(this.backContainer, camera, 0.8, 0.8);   // Farthest, moves slowest
+  //   this.updateParallaxLayer(this.middleContainer, camera, 0.3, 0.3); // Middle layer
+  //   this.updateParallaxLayer(this.frontContainer, camera, 0, 0);  // Closest, moves faster
+  // }
   
-  updateParallaxLayer(
-    container: Phaser.GameObjects.Container,
-    camera: Phaser.Cameras.Scene2D.Camera,
-    parallaxFactorX: number,
-    parallaxFactorY: number
-  ) {
-    if (!container || !camera) return;
-    const offsetY = this.scene.player?.body?.height! - (this.scene.player?.body?.height! * camera.lerp.y * camera.followOffset.y);
-    const maxScrollY = camera.getBounds().bottom - camera.height - offsetY;
-    const worldBottomMargin = this.worldSize.height - this.cameraBounds.height - this.cameraBounds.y;
-    container.setPosition(
-      (camera.scrollX) * parallaxFactorX,
-      (camera.scrollY - (maxScrollY)) * parallaxFactorY + 4 - (worldBottomMargin) // El 4 es por un microcorte quizas generado por excedentes en los assets
-    );
+  // updateParallaxLayer(
+  //   container: Phaser.GameObjects.Container,
+  //   camera: Phaser.Cameras.Scene2D.Camera,
+  //   parallaxFactorX: number,
+  //   parallaxFactorY: number
+  // ) {
+  //   if (!container || !camera) return;
+  //   const windowScaleX = window.innerWidth / this.ratioReference.width;
+  //   const windowScaleY = window.innerHeight / this.ratioReference.height;
+  //   console.log("windowScaleX", windowScaleX, windowScaleY);
+  //   const offsetY = this.scene.player?.body?.height! - (this.scene.player?.body?.height! * camera.lerp.y * camera.followOffset.y);
+  //   const maxScrollY = camera.getBounds().bottom - camera.height - offsetY;
+  //   const worldBottomMargin = this.worldSize.height - this.cameraBounds.height - this.cameraBounds.y;
+  //   console.log("maxScrollY", maxScrollY, camera.getBounds().bottom, camera.height * windowScaleY, offsetY);
+  //    2560x1080	
+  //   maxScrollY 2510 1700 1080 -1890
+  //   1920x1080
+  //   maxScrollY 908.6000518798828 1700 703.2000122070312 88.19993591308594
+  //   container.setPosition(
+  //     (camera.scrollX) * parallaxFactorX,
+  //     (camera.scrollY - (maxScrollY)) * parallaxFactorY + 4 - (worldBottomMargin) // El 4 es por un microcorte quizas generado por excedentes en los assets
+  //   );
+  // }
+
+  cameraIgnore () {
+    this.mapItems.forEach((item) => {
+      this.scene.UICamera?.ignore(item);
+      this.scene.cameras.getCamera('backgroundCamera')?.ignore(item);
+    })
+    // this.scene.UICamera?.ignore(this.mapGroup);
+    // this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.mapGroup);
+    this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.scene.player!);
   }
-  
+
+  resetMap() {
+    console.log("resetMap", this.mapItems, 'inside');
+    this.fallingTile?.getChildren().forEach((tile) => {
+      const fallingTile = tile as Phaser.Physics.Arcade.Sprite;
+      if (fallingTile.body) {
+        //@ts-ignore
+        fallingTile.body.allowGravity = false;
+        //@ts-ignore
+        fallingTile.body.reset(fallingTile.config.pos.x, fallingTile.config.pos.y);
+      }
+    });
+  }
+
 
   addColliders() {
     if (this.scene.player) {
@@ -324,37 +403,55 @@ export default class MapCreator {
           () => true,
           this.scene
         );
-
+        if (this.fallingTile)
+          this.scene.physics.add.collider(
+            this.scene.player,
+            this.fallingTile,
+            (a, b) => {
+              if (
+                this.scene.player?.touchingFeet(b as Phaser.Physics.Arcade.Sprite)
+              ) {
+                this.scene.touch()
+                //@ts-ignore
+                b.setCollideWorldBounds(false);
+                //@ts-ignore
+                b.body.allowGravity = true;
+              }
+            },
+            () => true,
+            this.scene
+          );
       if (this.coin)
         this.scene.physics.add.overlap(
           this.scene.player,
           this.coin,
           (a, b) => {
             this.scene.touchItem("coin");
-            b.destroy();
+            //@ts-ignore
+            if (b.destroyItem) b.destroyItem();
             this.coinAura?.destroy();
           },
           () => true,
           this.scene
         );
-        if (this.invincible) {
-          this.scene.physics.add.overlap(
-            this.scene.player,
-            this.invincible,
-            (a, b: any) => {
-              if (!this.player?.invincible) {
-                this.player?.setPlayerInvicinible(true);
-                b?.turnTo(false);
-                this.invincibilityTimer = this.scene.time.delayedCall(30000, () => {
-                  this.player?.setPlayerInvicinible(false);
-                  b?.turnTo(true);
-                });
-              }
-            },
-            () => true,
-            this.scene
-          );
-        }
+      if (this.invincible) {
+        this.scene.physics.add.overlap(
+          this.scene.player,
+          this.invincible,
+          (a, b: any) => {
+            if (!this.player?.invincible) {
+              this.player?.setPlayerInvicinible(true);
+              b?.turnTo(false);
+              this.invincibilityTimer = this.scene.time.delayedCall(30000, () => {
+                this.player?.setPlayerInvicinible(false);
+                b?.turnTo(true);
+              });
+            }
+          },
+          () => true,
+          this.scene
+        );
+      }
       if (this.portal)
         this.scene.physics.add.overlap(
           this.scene.player,
@@ -383,7 +480,7 @@ export default class MapCreator {
         this.scene.physics.add.overlap(
           this.scene.player,
           this.obstacle,
-          (a,b) => {
+          (a, b) => {
             //this.scene.touchItem("fireball");
             //this.scene.player?.setVelocity(0);
             const danger = b as Danger;

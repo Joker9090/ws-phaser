@@ -15,9 +15,9 @@ class subSandbox extends MapCreator {
           };
           this.cameraBounds = {
             x: 0,
-            y: 0,
+            y: 100,
             width: 5000,
-            height: 5000,
+            height: 4800,
           };
     
           this.scene.physics.world.setBounds(
@@ -56,21 +56,21 @@ class subSandbox extends MapCreator {
         ]
     
         this.backgroundsMiddle = [
-          this.scene.add.image(-this.startingPoint.x,  this.worldSize.height, "middleCombo").setOrigin(0, 1).setScale(0.7),
-          this.scene.add.image(-this.startingPoint.x + downScaledMiddleWidth,  this.worldSize.height, "middleCombo2").setOrigin(0, 1).setScale(0.7),
-          this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 2),  this.worldSize.height, "middleCombo3").setOrigin(0, 1).setScale(0.7),
-          this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 3),  this.worldSize.height, "middleCombo4").setOrigin(0, 1).setScale(0.7),
-          this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 4),  this.worldSize.height, "middleCombo2").setOrigin(0, 1).setScale(0.7),
-          this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 5),  this.worldSize.height, "middleCombo2").setOrigin(0, 1).setScale(0.7),
+          this.scene.add.image(-this.startingPoint.x, this.cameraBounds.height+100, "middleCombo").setOrigin(0, 1).setScale(0.7),
+          this.scene.add.image(-this.startingPoint.x + downScaledMiddleWidth, this.cameraBounds.height+100, "middleCombo2").setOrigin(0, 1).setScale(0.7),
+          this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 2), this.cameraBounds.height+100, "middleCombo3").setOrigin(0, 1).setScale(0.7),
+          this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 3), this.cameraBounds.height+100, "middleCombo4").setOrigin(0, 1).setScale(0.7),
+          this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 4), this.cameraBounds.height+100, "middleCombo2").setOrigin(0, 1).setScale(0.7),
+          this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 5), this.cameraBounds.height+100, "middleCombo2").setOrigin(0, 1).setScale(0.7),
         ]
     
         this.backgroundsFront = [
-            this.scene.add.image(-this.startingPoint.x,  this.worldSize.height, "frontCombo").setOrigin(0, 1).setScale(0.5),
-            this.scene.add.image(-this.startingPoint.x + downScaledFrontWidth,  this.worldSize.height, "frontCombo2").setOrigin(0, 1).setScale(0.5),
-            this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 2),  this.worldSize.height, "frontCombo3").setOrigin(0, 1).setScale(0.5),
-            this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 3),  this.worldSize.height, "frontCombo4").setOrigin(0, 1).setScale(0.5),
-            this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 4),  this.worldSize.height, "frontCombo2").setOrigin(0, 1).setScale(0.5),
-            this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 5),  this.worldSize.height, "frontCombo2").setOrigin(0, 1).setScale(0.5),
+            this.scene.add.image(-this.startingPoint.x, this.cameraBounds.height+100, "frontCombo").setOrigin(0, 1).setScale(0.5),
+            this.scene.add.image(-this.startingPoint.x + downScaledFrontWidth, this.cameraBounds.height+100, "frontCombo2").setOrigin(0, 1).setScale(0.5),
+            this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 2), this.cameraBounds.height+100, "frontCombo3").setOrigin(0, 1).setScale(0.5),
+            this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 3), this.cameraBounds.height+100, "frontCombo4").setOrigin(0, 1).setScale(0.5),
+            this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 4), this.cameraBounds.height+100, "frontCombo2").setOrigin(0, 1).setScale(0.5),
+            this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 5), this.cameraBounds.height+100, "frontCombo2").setOrigin(0, 1).setScale(0.5),
         ]
     
         this.createBackgrounds(this.backgroundsBack, this.backgroundsMiddle, this.backgroundsFront);
@@ -197,6 +197,7 @@ class subSandbox extends MapCreator {
         this.scene.UICamera?.ignore(this.frontContainer)
         this.scene.UICamera?.ignore(this.obstacle!)
     
+        this.cameraIgnore()
     
         if (this.scene.physics.world.debugGraphic) {
           this.scene.UICamera?.ignore(this.scene.physics.world.debugGraphic);

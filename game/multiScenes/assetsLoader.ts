@@ -125,6 +125,8 @@ export const loadAssets = {
       ["image", "planeta3_figu2", "/menu/album/figuritas/Planeta3_figu2.png"],
       ["image", "lock", "/menu/album/lock.png"],
 
+
+
     ]
 
 
@@ -232,9 +234,12 @@ export const loadAssets = {
       [
         "spritesheet",
         "teleport_1",
-        "/game/portal1.png",
+        "/game/portalVioleta.png",
         { frameWidth: 100, frameHeight: 150 },
       ],
+
+     
+
       //DANGER
       ["spritesheet",
         "EnemyAttack",
@@ -446,6 +451,14 @@ export const loadAssets = {
       ["image", "planta2p3", "/game/planeta3/planta2p3.png"], 
       ["image", "nube1p3", "/game/planeta3/nube1p3.png"], 
       ["image", "nube2p3", "/game/planeta3/nube2p3.png"], 
+      //LARGE TILE
+      ["image", "fill_texture_p3","/game/planeta3/platforms/fill_texture.png"],
+      ["image", "fill_texture2_p3","/game/planeta3/platforms/fill_texture2.png"],
+      ["image", "fill_texture3_p3","/game/planeta3/platforms/fill_texture3.png"],
+      ["image", "fill_texture4_p3","/game/planeta3/platforms/fill_texture4.png"],
+      ["image", "platform_center_p3","/game/planeta3/platforms/platform_center.png"],
+      ["image", "platform_der_p3","/game/planeta3/platforms/platform_der.png"],
+      ["image", "platform_izq_p3","/game/planeta3/platforms/platform_izq.png"],
       [
         "spritesheet",
         "meteoritop3",
@@ -871,6 +884,11 @@ export const loadAssets = {
         "key02",
         "/sounds/bs13.mp3",
       ],
+      ["audio", "c3Background", "/movies/cinemato3/audios/background.mp3"],
+      ["audio", "c3Radio1", "/movies/cinemato3/audios/radio1.mp3"],
+      ["audio", "c3Radio2", "/movies/cinemato3/audios/radio2.mp3"],
+      ["audio", "c3Final", "/movies/cinemato3/audios/final.mp3"],
+
       // SCENE 1
       ["image", "backgroundC3S1", "/movies/cinemato3/scene1/backgroundC3S1.png"],
       ["image", "bubblesC3S1", "/movies/cinemato3/scene1/bubblesC3S1.png"],

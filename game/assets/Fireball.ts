@@ -38,7 +38,7 @@ export type FloorConfig = {
 };
 
 // Scene in class
-class Floor extends Phaser.Physics.Arcade.Sprite {
+class Fireball extends Phaser.Physics.Arcade.Sprite {
   isJumping = false;
   scene: Game;
   hasEvent?: string;
@@ -51,7 +51,6 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
     y: 'start'
   }
   rotate: boolean = false;
-  config: FloorConfig;
   constructor(
     scene: Game,
     config: any,
@@ -63,13 +62,12 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
     this.scene = scene;
     this.group = group;
     this.rotate = config.rotate;
-    this.config = config;
     const width = config.width ?? 120;
     const height = config.height ?? 108;
     const fix = config.fix ?? 20;
-    const rota = config.rotated ?? false;
-    const invrt = config.inverted ?? false
-    const friction = config.friction ?? 1;
+    // const rota = config.rotated ?? false;
+    // const invrt = config.inverted ?? false
+    // const friction = config.friction ?? 1;
     if (config.scale) {
       this.setScale(config.scale.width, config.scale.height);
     }
@@ -79,22 +77,38 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
     scene.add.existing(this);
 
     this.setDepth(10);
-    this.body?.setSize(width, height).setOffset(fix, 0);
+    this.body?.setSize(width, height);
     this.setBounce(0);
     this.group?.add(this);
     this.setImmovable(true);
     this.setCollideWorldBounds(true);
 
-    if (friction) this.setFriction(friction)
+    // if (friction) this.setFriction(friction)
     if (config.tween) {
       const tween = this.scene.tweens.add({
         ...config.tween,
         targets: this,
+        onYoyo: () => {
+            this.scene.tweens.add({
+                targets: this,
+                rotation: this.rotation + Math.PI, // Rota 180 grados
+                duration: 200, // Duración de la rotación en milisegundos
+                ease: "Linear",
+            });
+        },
+        onRepeat: () => {
+            this.scene.tweens.add({
+              targets: this,
+              rotation: this.rotation + Math.PI, // Rota 180 grados
+              duration: 200, // Duración de la rotación en milisegundos
+              ease: "Linear",
+            });
+        },
       });
     }
     if (config.spriteSheet) {
       const portFrames = this.scene.anims.generateFrameNumbers(config.spriteSheet, {
-        frames: config.frames
+        start:0 , end: this.scene.textures.get(config.spriteSheet).frameTotal - 1,
       })
       const portAnimConfig = {
         key: config.spriteSheet,
@@ -109,21 +123,22 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
     if (this.body) {
       const body = this.body as Phaser.Physics.Arcade.Body;
       body.setImmovable(true);
+
       // hitboxes largefloors
-      if (rota) {
+      if (config.rotated) {
         body.setOffset(-50, -200);
       } else {
         body.setOffset(-200, -50);
       }
 
-      if (rota && body) {
+      if (config.rotated && body) {
         body.setSize(height + fix, width);
         this.setRotation(Math.PI / 2);
       } else {
         body.setSize(width + fix, height + fix);
       }
 
-      if (invrt && body) {
+      if (config.inverted && body) {
         // body.setSize(height, width);
         this.setRotation(Math.PI);
       } else {
@@ -133,9 +148,7 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
 
     if (config.animation) {
       if (config.animation.xAxis) {
-        console.log('xAxis', config.animation.xAxis.xDistance, config.animation.xAxis.xVel, this.x, config.pos.x, config.animation.xAxis.xDistance / 2)
         this.setVelocityX(config.animation.xAxis.xVel);
-        console.log(this.body?.velocity.x, this.body?.velocity.y, 'velocity')
       }
       if (config.animation.yAxis) {
         this.setVelocityY(config.animation.yAxis.yVel);
@@ -156,8 +169,6 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
     if (config.animation) {
       if (config.animation.xAxis) {
         if (this.x >= config.pos.x + config.animation.xAxis.xDistance / 2 && this.animState.x === 'start') {
-        console.log('xAxis', config.animation.xAxis.xDistance, config.animation.xAxis.xVel)
-          
           this.setVelocityX(-config.animation.xAxis.xVel);
           if (config.animation.yAxis) {
             if (this.scene.player && this.scene.player.body?.touching.down){
@@ -167,8 +178,6 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
           }
           this.animState.x = 'reverse'
         } else if (this.x <= config.pos.x - config.animation.xAxis.xDistance / 2 && this.animState.x === 'reverse') {
-        console.log('xAxis', config.animation.xAxis.xDistance, config.animation.xAxis.xVel)
-          
           this.setVelocityX(config.animation.xAxis.xVel);
           if (config.animation.yAxis) {
             if (this.scene.player && this.scene.player.body?.touching.down){
@@ -229,4 +238,4 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
   // }
 
 }
-export default Floor;
+export default Fireball;

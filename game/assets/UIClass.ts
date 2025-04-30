@@ -30,7 +30,7 @@ export default class UIClass {
   container: Phaser.GameObjects.Container;
   progressParam: number = 0;
   settingsVisible: boolean = false;
-  settingsModal: containerSettings | resultContainer |undefined = undefined 
+  settingsModal: containerSettings |undefined = undefined 
   quitGame?: Phaser.GameObjects.Image
   cross?: Phaser.GameObjects.Image
   check?: Phaser.GameObjects.Image

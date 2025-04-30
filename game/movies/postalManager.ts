@@ -93,13 +93,13 @@ class postalManager {
         const assetsScenes = [
             background,
             darkMask,
-            this.code
+            this.code!
         ];
 
         this.container = this.cine.add
             .container(middlePoint.x, middlePoint.y)
             .setSize(1920, 927);
-        this.container.add(assetsScenes.filter((i) => i !== undefined));
+        this.container.add(assetsScenes);
         this.container.setScale(
             gameObjectScaler.x < gameObjectScaler.y
                 ? gameObjectScaler.y

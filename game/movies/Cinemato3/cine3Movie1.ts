@@ -96,15 +96,14 @@ class cine3Movie1 {
     this.treeFrontC3S1 = this.cine.add
       .image(0, 0, "treeFrontC3S1")
       .setOrigin(0.5);
-
     const gameObjects = [
       this.backgroundC3S1,
       this.starsC3S1,
       this.cloud1C3S1,
       this.cloud2C3S1,
       this.bubblesC3S1,
-      this.shipAndAstro,
       this.shipLightsC3S1,
+      this.shipAndAstro,
       this.treeFrontC3S1,
     ];
 
@@ -177,6 +176,14 @@ class cine3Movie1 {
         duration: 17000,
         ease: "ease",
       });
+      this.cine.tweens.add({
+        targets:this.shipLightsC3S1,
+        alpha:0,
+        duration:1000,
+        ease:'ease',
+        yoyo:true,
+        loop:-1
+      })
 
       this.cine.tweens.add({
         targets: [this.bubblesC3S1],

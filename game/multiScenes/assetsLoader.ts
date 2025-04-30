@@ -913,7 +913,17 @@ export const loadAssets = {
       ["image", "astroFrontC4S4", "/movies/cinemato3/scene4/astroFrontC4S4.png"],
       ["image", "background1C3S4", "/movies/cinemato3/scene4/background1C3S4.png"],
       ["image", "background2C3S4", "/movies/cinemato3/scene4/background2C3S4.png"],
-      ["image", "shipC3S4", "/movies/cinemato3/scene4/shipC3S4.png"],
+      ["image", "shipLightC3S4", "/movies/cinemato3/scene4/shipC3S4.png"],
+
+      ["image", "shipC3S4", "/movies/cinemato3/scene4/nave.png"],
+      ["image", "backgroundPart1C3S4", "/movies/cinemato3/scene4/montañasfondo1.png"],
+      ["image", "backgroundPart2C3S4", "/movies/cinemato3/scene4/montañasfondo2.png"],
+      ["image", "backgroundPart3C3S4", "/movies/cinemato3/scene4/montañasfondo3.png"],
+      ["image", "backgroundPart4C3S4", "/movies/cinemato3/scene4/fondoColorS3.png"],
+
+      ["image", "frontGroundS3", "/movies/cinemato3/scene4/frontGroundS3.png"],
+      ["image", "starsS3", "/movies/cinemato3/scene4/starsS3.png"],
+
       // SCENE 5
       ["image", "backgroundC3S5", "/movies/cinemato3/scene5/backgroundC3S5.png"],
     ]

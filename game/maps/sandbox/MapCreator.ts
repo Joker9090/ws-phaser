@@ -102,7 +102,7 @@ export default class MapCreator {
       positions: { x: 500, y: 800 },
       cameraDirection: "NORMAL",
       PlayerDirection: "NORMAL",
-      gravityDown: this.player ? this.player.isFlying : false
+      gravityDown: true
       ,
     },
   ];
@@ -339,7 +339,7 @@ export default class MapCreator {
   }
 
   resetMap() {
-    console.log("resetMap", this.mapItems, 'inside');
+    //console.log("resetMap", this.mapItems, 'inside');
     this.fallingTile?.getChildren().forEach((tile) => {
       const fallingTile = tile as Phaser.Physics.Arcade.Sprite;
       if (fallingTile.body) {

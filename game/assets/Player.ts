@@ -246,6 +246,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       this.scene.UICamera?.ignore(this.auraAnimSprite);
       this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.auraAnimSprite);
     }
+    
     // this.scene.add.rectangle(this.x, this.y, 100, 100, 0xffffff).setVisible(true)
     /* player Collission with end of map */
     this.setCollideWorldBounds(true);
@@ -279,16 +280,17 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.isFlying = value
     this.gravityGroup.world.gravity.y = value ? 0 : this.gravity
     this.setAcceleration(0, 0)
-
-    if (!this.tankAnimSprite)return;
-    this.tankAnimSprite.setVisible(true);
-    this.tankAnimSprite.anims.play("gravityActiveAnim");
+    if(value ==true){
+      if (!this.tankAnimSprite)return;
+      this.tankAnimSprite.setVisible(true);
+      this.tankAnimSprite.anims.play("gravityActiveAnim");
     
-    this.tankAnimSprite.on("animationupdate", () => {
-    let xF = this.x - 15;
-    if (this.flipX) xF = this.x + 15;
-      this.tankAnimSprite?.setPosition(xF, this.y + 60);
-    });
+      this.tankAnimSprite.on("animationupdate", () => {
+      let xF = this.x - 17;
+      if (this.flipX) xF = this.x + 17;
+        this.tankAnimSprite?.setPosition(xF, this.y + 100);
+      });
+    }
   }
   setCameraState(state: "NORMAL" | "ROTATED") {
     this.cameraState = state

@@ -4,6 +4,8 @@ import Ticker, { TickerJob } from "./Ticker";
 import BetweenScenes, { BetweenScenesStatus } from "@/game/BetweenScenes";
 import TextBox from "../assets/TextBox";
 import MultiScene from "../MultiScene";
+import CODES from "../../public/game/codigos.json"
+
 
 
 class postalManager {
@@ -26,7 +28,6 @@ class postalManager {
         this.postal = postal
         this.nextLevel = nextLevel
         this.lifes = lifes ? lifes : 3
-        this.codeString= code
         
         const tickerMS = 100;
         this.ticker = new Ticker(tickerMS);
@@ -70,18 +71,24 @@ class postalManager {
             0
         );
 
-        this.code = new TextBox(this.cine, "Save this code to keep track of your progress: " + this.codeString, 0, 0, 500).setScale(0)
+        CODES.CODES.forEach((i)=>{
+            if(i.postalRef === this.postal){
+                this.codeString = i.codigo
+                console.log(this.codeString,"CODE STRING")
+                this.code = new TextBox(this.cine, "Save this code to keep track of your progress: " + this.codeString, 0, 0, 500).setScale(0);
+                const midScreen = {
+                    x: this.code.width / -2,
+                    y: this.code.height / -2
+                }
+                this.code.setPosition(midScreen.x , midScreen.y)
+            }
+        })
         this.cine.tweens.add({
             targets:this.code,
             delay:3000,
             scale:1,
             ease:'power2'
         })
-        const midScreen = {
-            x: this.code.width / -2,
-            y: this.code.height / -2
-        }
-        this.code.setPosition(midScreen.x , midScreen.y)
 
         const assetsScenes = [
             background,
@@ -92,7 +99,7 @@ class postalManager {
         this.container = this.cine.add
             .container(middlePoint.x, middlePoint.y)
             .setSize(1920, 927);
-        this.container.add(assetsScenes);
+        this.container.add(assetsScenes.filter((i) => i !== undefined));
         this.container.setScale(
             gameObjectScaler.x < gameObjectScaler.y
                 ? gameObjectScaler.y

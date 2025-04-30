@@ -57,11 +57,12 @@ export default class Map3 extends MapCreator {
     ]
     
     this.backgroundsMiddle = [
+      // ...this.createBgRow(-this.startingPoint.x, this.cameraBounds.height+100, "middleCombo4", width, 0.7),
       this.scene.add.image(-this.startingPoint.x, this.cameraBounds.height+100, "middleCombo").setOrigin(0, 1).setScale(0.7),
       this.scene.add.image(-this.startingPoint.x + downScaledMiddleWidth, this.cameraBounds.height+100, "middleCombo2").setOrigin(0, 1).setScale(0.7),
-      this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 2), this.cameraBounds.height+100, "middleCombo3").setOrigin(0, 1).setScale(0.7),
+      this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 2), this.cameraBounds.height+100, "middleCombo").setOrigin(0, 1).setScale(0.7),
       this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 3), this.cameraBounds.height+100, "middleCombo4").setOrigin(0, 1).setScale(0.7),
-      this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 4), this.cameraBounds.height+100, "middleCombo2").setOrigin(0, 1).setScale(0.7),
+      this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 4), this.cameraBounds.height+100, "middleCombo3").setOrigin(0, 1).setScale(0.7),
       this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 5), this.cameraBounds.height+100, "middleCombo2").setOrigin(0, 1).setScale(0.7),
     ]
     
@@ -164,6 +165,7 @@ export default class Map3 extends MapCreator {
           group: this.floor,
           withTextureToAbove: false,
         },
+        { type: "finalPortal", pos: { x: 1000, y: mapFloor - 200 }, texture: "plataformaFinalP1", width: 100, height: 100, group: this.portal }
       ]
 
       this.createPlatforms(mapPlatforms)

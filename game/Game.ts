@@ -65,7 +65,7 @@ export const keyCodesAWSD = {
 class Game extends Phaser.Scene {
   //creative mode
   cursorsAWSD?: object;
-
+  isTouchDevice?: boolean = false;
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   EscKeyboard?: Phaser.Input.Keyboard.Key;
   player?: Player;
@@ -553,6 +553,24 @@ class Game extends Phaser.Scene {
         this.masterManagerScene?.resumeFromBlur();
       }
     })
+
+    const updateTouchDeviceStatus = () => {
+      const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+      if (isTouchDevice) {
+        console.log("Touch device detected");
+      this.isTouchDevice = true; // Set a property in the Game class
+      } else {
+        console.log("Non-touch device detected");
+      this.isTouchDevice = false; // Set a property in the Game class
+      }
+    };
+
+    // Initial check
+    updateTouchDeviceStatus();
+
+    // Add a listener for resize events
+    window.addEventListener("resize", updateTouchDeviceStatus);
 
     window.addEventListener("blur", () => {
       this.masterManagerScene?.pauseGame();

@@ -13,13 +13,12 @@ export default function Home() {
   };
 
   React.useEffect(() => {
-    checkOrientation(); // Initial check
-    window.addEventListener('resize', checkOrientation); // Listen for changes
+    checkOrientation();
+    window.addEventListener('resize', checkOrientation);
     return () => window.removeEventListener('resize', checkOrientation);
   }, []);
 
   React.useEffect(() => {
-    // Destroy any existing game instance (for dev hot-reloading)
     if (game) {
       game.destroy(true);
       setGame(undefined);
@@ -73,18 +72,43 @@ export default function Home() {
       setGame(gameInstance);
 
       const handleResize = () => {
-        setTimeout(() => {
-          // Optional resize logic if needed
-        }, 10);
+        if (!gameInstance) return;
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        gameInstance.scale.resize(width, height);
+        gameInstance.scene.scenes.forEach(scene => {
+          if (scene.cameras && scene.cameras.main) {
+            scene.cameras.main.setSize(width, height);
+          }
+          if (scene.cameras) {
+            const backgroundCamera = scene.cameras.getCamera('backgroundCamera');
+            if (backgroundCamera) {
+              backgroundCamera.setSize(width, height);
+            }
+          }
+        });
       };
+      
+      setTimeout(handleResize, 50); // Ensure correct sizing on init
+      window.addEventListener("resize", () => setTimeout(handleResize, 50));
+      window.addEventListener("load", handleResize);
 
-      window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
+      return () => {
+        window.removeEventListener("resize", () => setTimeout(handleResize, 50));
+        window.removeEventListener("load", handleResize);
+      };
     }
-  }, [phaser, scenes, overlayVisible]); // Re-run when overlayVisible becomes false
+  }, [phaser, scenes, overlayVisible]);
 
   return (
-    <div id="game-container" style={{ width: '100vw', height: '100vh', overflow: 'hidden', position: 'relative' }}>
+    <div id="game-container" style={{
+      width: '100vw',
+      height: '100vh',
+      overflow: 'hidden',
+      position: 'relative',
+      margin: 0,
+      padding: 0
+    }}>
       {overlayVisible && (
         <div
           style={{

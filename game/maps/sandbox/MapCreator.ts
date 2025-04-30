@@ -206,6 +206,7 @@ export default class MapCreator {
     this.teleport = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.obstacle = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.firegroup = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
+    this.portal = this.scene.physics.add.group({ allowGravity: false });
     this.scene.UICamera?.ignore(this.floor)
     this.scene.UICamera?.ignore(this.gravityTile)
     this.scene.UICamera?.ignore(this.rotationTile)
@@ -213,6 +214,7 @@ export default class MapCreator {
     this.scene.UICamera?.ignore(this.teleport)
     this.scene.UICamera?.ignore(this.obstacle)
     this.scene.UICamera?.ignore(this.firegroup)
+    this.scene.UICamera?.ignore(this.portal)
     if (this.scene.physics.world.debugGraphic) {
       this.scene.UICamera?.ignore(this.scene.physics.world.debugGraphic);
     }
@@ -456,6 +458,7 @@ export default class MapCreator {
           this.scene.player,
           this.portal,
           () => {
+            console.log("portal", this.portal);
             this.scene.win();
           },
           () => true,

@@ -65,14 +65,14 @@ export default class MultiScene extends Phaser.Scene {
       if (getBetweenScenesScene.status != BetweenScenesStatus.IDLE)
         return false;
       getBetweenScenesScene.changeSceneTo(sceneName, data);
-      this.time.delayedCall(1000, () => {
-        this.scene.stop();
-      });
+      // this.time.delayedCall(1000, () => {
+      //   this.scene.stop();
+      // });
     } else {
       this.scene.start(sceneName, data);
-      this.time.delayedCall(1000, () => {
-        this.scene.stop();
-      });
+      // this.time.delayedCall(1000, () => {
+      //   this.scene.stop();
+      // });
     }
   }
 

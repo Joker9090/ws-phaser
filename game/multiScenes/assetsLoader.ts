@@ -126,7 +126,24 @@ export const loadAssets = {
       ["image", "lock", "/menu/album/lock.png"],
 
 
-
+      //result modal
+      ["image", "resultModal", "/menu/result/resultModal.png"] ,
+      ["image", "resultVictory", "/menu/result/resultVictory.png"], 
+      ["image", "resultVictoryAstro", "/menu/result/resultVictoryAstro.png"],
+      ["image", "itemPlaneta1", "/menu/result/item_planeta01.png"],
+      ["image", "itemPlaneta2", "/menu/result/item_planeta02.png"],
+      ["image", "itemPlaneta3", "/menu/result/item_planeta03.png"],
+      ["image", "contenedorReloj", "/menu/result/contenedorReloj.png"],
+      ["image", "deaths", "/menu/result/deaths.png"],
+      ["image", "resultContinue", "/menu/result/resultContinue.png"],
+      ["image", "resultContinueHover", "/menu/result/resultContinueHover.png"],
+      ["image", "resultContinuePressed", "/menu/result/resultContinuePressed.png"],
+      ["image", "resultRetry", "/menu/result/resultRetry.png"],
+      ["image", "resultRetryHover", "/menu/result/resultRetryHover.png"],
+      ["image", "resultRetryPressed", "/menu/result/resultRetryPressed.png"],
+      ["image", "botonHome", "/menu/result/home.svg"],
+      ["image", "botonHomeHover", "/menu/result/botonHomeHover.png"],
+      ["image", "botonHomePressed", "/menu/result/botonHomePressed.png"],
     ]
 
 
@@ -429,7 +446,7 @@ export const loadAssets = {
     assets: [
       // IMAGES
       ["image", "pSimple1p3", "/game/planeta3/pSimple1.png"],
-      ["image", "pSimple2p3", "/game/planeta3/pSimple2.png"],
+      ["image", "pSimple2p3", "/game/planeta3/pSImple2.png"],
       ["image", "pDoblep3", "/game/planeta3/pDoblep3.png"],
       ["image", "longFloorLeftp3", "/game/planeta3/longFloorLeft.png"],
       ["image", "longFloorRightp3", "/game/planeta3/longFloorRight.png"],
@@ -911,7 +928,17 @@ export const loadAssets = {
       ["image", "astroFrontC4S4", "/movies/cinemato3/scene4/astroFrontC4S4.png"],
       ["image", "background1C3S4", "/movies/cinemato3/scene4/background1C3S4.png"],
       ["image", "background2C3S4", "/movies/cinemato3/scene4/background2C3S4.png"],
-      ["image", "shipC3S4", "/movies/cinemato3/scene4/shipC3S4.png"],
+      ["image", "shipLightC3S4", "/movies/cinemato3/scene4/shipC3S4.png"],
+
+      ["image", "shipC3S4", "/movies/cinemato3/scene4/nave.png"],
+      ["image", "backgroundPart1C3S4", "/movies/cinemato3/scene4/montañasfondo1.png"],
+      ["image", "backgroundPart2C3S4", "/movies/cinemato3/scene4/montañasfondo2.png"],
+      ["image", "backgroundPart3C3S4", "/movies/cinemato3/scene4/montañasfondo3.png"],
+      ["image", "backgroundPart4C3S4", "/movies/cinemato3/scene4/fondoColorS3.png"],
+
+      ["image", "frontGroundS3", "/movies/cinemato3/scene4/frontGroundS3.png"],
+      ["image", "starsS3", "/movies/cinemato3/scene4/starsS3.png"],
+
       // SCENE 5
       ["image", "backgroundC3S5", "/movies/cinemato3/scene5/backgroundC3S5.png"],
     ]

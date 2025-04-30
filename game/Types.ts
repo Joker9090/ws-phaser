@@ -1,3 +1,5 @@
+import UIClass from "./assets/UIClass";
+import resultContainer from "./containersMenu/resultContainer";
 import { SceneKeys } from "./multiScenes/assetsLoader";
 
 export type loseConfigFromMapType = {
@@ -52,4 +54,15 @@ export type ContainerMenuConfigType = {
     y:number
   },
   changeContainer?:()=>void
+}
+
+export type resultContainerConfigType = {
+  collText?:string,
+  coinCount?:number,
+  x:number,
+  y:number,
+  lifes?:number,
+  victory:boolean,
+  planeta:number,
+
 }

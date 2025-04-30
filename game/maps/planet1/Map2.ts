@@ -204,7 +204,16 @@ class Map2 extends MapCreator {
                 large: 15,
                 group: this.floor
             },
-            { ...baseFireballConf, pos: { x: 4500, y: this.worldSize.height - 800 }, tween: { duration: 1400, repeat: -1, x: "-=600", yoyo: true  }, rotated: true },
+            //replace
+            //{ ...baseFireballConf, pos: { x: 4500, y: this.worldSize.height - 800 }, tween: { duration: 1400, repeat: -1, x: "-=600", yoyo: true  }, rotated: true },
+            { ...baseDangerConf, pos: { x: 4500, y: this.worldSize.height - 800 }, width: 170, height: 170, 
+                patrol:{
+                    patrolType: "LinealX",
+                    distance: 200,
+                    speed: 80,
+                    attackInterval: 0,
+                }
+            },
             { ...baseCristalConf, pos: { x: 4000, y:  this.worldSize.height - 1000 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
             { ...baseCristalConf, pos: { x: 4400, y:  this.worldSize.height - 1000 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
 
@@ -218,7 +227,16 @@ class Map2 extends MapCreator {
                 group: this.floor
             },
             { ...baseCristalConf, pos: { x: 5400, y:  this.worldSize.height - 1400 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
-            { ...baseFireballConf, pos: { x: 5800, y: this.worldSize.height - 1300 }, tween: { duration: 1500, repeat: -1, x: "-=500", yoyo: true  }, rotated: true },
+            //replace
+            //{ ...baseFireballConf, pos: { x: 5800, y: this.worldSize.height - 1300 }, tween: { duration: 1500, repeat: -1, x: "-=500", yoyo: true  }, rotated: true },
+            { ...baseDangerConf, pos: { x: 5800, y: this.worldSize.height - 1300 }, width: 170, height: 170, 
+                patrol:{
+                    patrolType: "LinealX",
+                    distance: 200,
+                    speed: 80,
+                    attackInterval: 0,
+                }
+            },
             { ...baseCristalConf, pos: { x: 5700, y:  this.worldSize.height - 1400 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
 
 
@@ -250,7 +268,7 @@ class Map2 extends MapCreator {
             },
             { ...baseCristalConf, pos: { x: 8200, y:  this.worldSize.height - 750 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
 
-            { ...baseFireballConf, pos: { x: 9000, y:  this.worldSize.height - 1300 }, tween: { duration: 1600, repeat: -1, y: "+=1000", yoyo: true  }, rotated: false },
+            { ...baseFireballConf, pos: { x: 9000, y:  this.worldSize.height - 1300 }, tween: { duration: 1600, repeat: -1, y: "+=1000"}, rotated: false },
             { ...baseCristalConf, pos: { x: 9100, y:  this.worldSize.height - 900 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
             {
                 ...baseLargePlatformsConf,

@@ -227,8 +227,16 @@ class Map0 extends MapCreator {
                     attackInterval: 0,
                 }
             },
-            { ...baseFireballConf, pos: { x: 4800, y: this.worldSize.height - 1250 }, tween: { duration: 5000, repeat: -1, x: "-=1000", yoyo: true  }, rotated: true },
-
+            //replace
+            //{ ...baseFireballConf, pos: { x: 4800, y: this.worldSize.height - 1250 }, tween: { duration: 5000, repeat: -1, x: "-=1000", yoyo: true  }, rotated: true },
+            { ...baseDangerConf, pos: { x: 4800, y: this.worldSize.height - 1250 }, width: 170, height: 170, 
+                patrol:{
+                    patrolType: "LinealX",
+                    distance: 500,
+                    speed: 80,
+                    attackInterval: 0,
+                }
+            },
             { ...basePlatformsConfig, pos: { x: 4500, y: this.worldSize.height - 1000 } },
             { ...baseCristalConf, pos: { x: 4500, y: this.worldSize.height - 1100 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
 

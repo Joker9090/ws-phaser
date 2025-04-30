@@ -108,7 +108,7 @@ class Map1 extends MapCreator {
             textureA: "platform_izq_p2",
             textureB: "platform_center_p2",
             textureC: "platform_der_p2",
-            textureFill: ["fill_texture_p2", "fill_texture2_p2", "fill_texture3_p2", "fill_texture4_p2"],
+            textureFill: ["fill_texture_p2", "fill_texture2_p2", "fill_texture3_p2"],
             width: {
               textureA: 96,
               textureB: 96,

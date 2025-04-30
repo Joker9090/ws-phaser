@@ -14,6 +14,10 @@ import p2Mapa1 from "./maps/planet2/Mapa4";
 import p2Mapa2 from "./maps/planet2/Mapa5";
 import p2Mapa3 from "./maps/planet2/Mapa6";
 import p2Mapa4 from "./maps/planet2/Mapa7";
+
+import p2Map0 from "./maps/planet2/Map0";
+import p2Map1 from "./maps/planet2/Map1";
+import p2SubMap1 from "./maps/planet2/SubMap1";
 //MAPAS PLANETA 3
 import p3Mapa1 from "./maps/planet3/Mapa8";
 import p3Mapa2 from "./maps/planet3/Mapa9";
@@ -55,6 +59,9 @@ export type PossibleMaps =
   | p1Map2
   | p1Map3
   | MapCreator
+  | p2Map0
+  | p2Map1
+  | p2SubMap1;
 // Scene in class
 export const keyCodesAWSD = {
   w: Phaser.Input.Keyboard.KeyCodes.W,
@@ -614,7 +621,7 @@ class Game extends Phaser.Scene {
       case 4:
         this.player = new Player(this, 0, 0, "character", 2);
 
-        this.map = new p2Mapa1(this, this.player!);
+        this.map = new p2Map0(this, this.player!);
         this.loopMusic = "planet1LoopMusic";
         if (this.masterManagerScene) {
           this.masterManagerScene.imagenesDesbloqueadas = [
@@ -626,7 +633,7 @@ class Game extends Phaser.Scene {
       case 5:
         this.player = new Player(this, 0, 0, "character", 2);
 
-        this.map = new p2Mapa2(this, this.player!);
+        this.map = new p2Map1(this, this.player!);
         this.loopMusic = "planet1LoopMusic";
         if (this.masterManagerScene) {
           this.masterManagerScene.imagenesDesbloqueadas = [
@@ -722,6 +729,19 @@ class Game extends Phaser.Scene {
         }
         this.loopMusic = "planet3LoopMusic";
         break;
+      case 20101:
+          this.player = new Player(this, 0, 0, "character", 2);
+  
+          this.map = new p2SubMap1(this, this.player!);
+          this.loopMusic = "planet1LoopMusic";
+          if (this.masterManagerScene) {
+            this.masterManagerScene.imagenesDesbloqueadas = [
+              "planeta1_figu1",
+              "planeta1_figu2",
+              "planeta2_figu1",
+            ];
+          }
+          break;
       default:
         this.player = new Player(this, 0, 0, "character", 2);
         

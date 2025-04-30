@@ -30,6 +30,9 @@ import Sandbox from "./maps/sandbox/sandbox";
 import subSandbox from "./maps/subLevels/subSandbox";
 import CODES from "../public/game/codigos.json";
 import Collectable from "./assets/Collectable";
+import resultContainer from "./containersMenu/resultContainer";
+
+
 
 
 interface CodeType {
@@ -98,8 +101,8 @@ class Game extends Phaser.Scene {
   UICamera?: Phaser.Cameras.Scene2D.Camera;
   masterManagerScene?: MasterManager;
   stopMov: boolean = false;
-
-  
+  resultModal?:resultContainer;
+  container?:Phaser.GameObjects.Container
   constructor() {
     super({ key: "Game" });
   }
@@ -325,10 +328,18 @@ class Game extends Phaser.Scene {
         });
         this.stopMov =true
         if(this.canWin){
-          this.add.rectangle(window.innerWidth/2,window.innerHeight/2, 500,250, 0xff0000).setOrigin(0.5).setAlpha(0.2)
-          const collText = this.UIClass?.collText?.text ?? "0";
-          const coinCount = this.map.totalCoins ?? 0;
-          this.add.text(window.innerWidth / 2, window.innerHeight / 2, `${collText}/${coinCount + 1}`);
+          const resultConfig = {
+            collText:this.UIClass?.collText?.text ?? "0",
+            coinCount: this.map.totalCoins ?? 0,
+            x:window.innerWidth/2,
+            y:window.innerHeight/2,
+            planeta:1,
+            victory:true,
+          }
+          this.resultModal = new resultContainer(this, resultConfig);
+          this.UICamera?.ignore(this.resultModal)
+            
+            
           this.canWin = false;
       
           if (this.input.keyboard) {

@@ -126,7 +126,24 @@ export const loadAssets = {
       ["image", "lock", "/menu/album/lock.png"],
 
 
-
+      //result modal
+      ["image", "resultModal", "/menu/result/resultModal.png"] ,
+      ["image", "resultVictory", "/menu/result/resultVictory.png"], 
+      ["image", "resultVictoryAstro", "/menu/result/resultVictoryAstro.png"],
+      ["image", "itemPlaneta1", "/menu/result/item_planeta01.png"],
+      ["image", "itemPlaneta2", "/menu/result/item_planeta02.png"],
+      ["image", "itemPlaneta3", "/menu/result/item_planeta03.png"],
+      ["image", "contenedorReloj", "/menu/result/contenedorReloj.png"],
+      ["image", "deaths", "/menu/result/deaths.png"],
+      ["image", "resultContinue", "/menu/result/resultContinue.png"],
+      ["image", "resultContinueHover", "/menu/result/resultContinueHover.png"],
+      ["image", "resultContinuePressed", "/menu/result/resultContinuePressed.png"],
+      ["image", "resultRetry", "/menu/result/resultRetry.png"],
+      ["image", "resultRetryHover", "/menu/result/resultRetryHover.png"],
+      ["image", "resultRetryPressed", "/menu/result/resultRetryPressed.png"],
+      ["image", "botonHome", "/menu/result/home.svg"],
+      ["image", "botonHomeHover", "/menu/result/botonHomeHover.png"],
+      ["image", "botonHomePressed", "/menu/result/botonHomePressed.png"],
     ]
 
 

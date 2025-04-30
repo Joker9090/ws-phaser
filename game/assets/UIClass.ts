@@ -5,6 +5,7 @@ import containerSettings from "../containersMenu/containerSettings";
 import CinematographyModular from "../movies/Cinematography-modular";
 import ContainerCredits from "../containersMenu/containerCredits";
 import MasterManager from "../MasterManager";
+import resultContainer from "../containersMenu/resultContainer";
 
 export default class UIClass {
   scene: Game | CinematographyModular;
@@ -29,7 +30,7 @@ export default class UIClass {
   container: Phaser.GameObjects.Container;
   progressParam: number = 0;
   settingsVisible: boolean = false;
-  settingsModal: containerSettings | undefined = undefined
+  settingsModal: containerSettings | resultContainer |undefined = undefined 
   quitGame?: Phaser.GameObjects.Image
   cross?: Phaser.GameObjects.Image
   check?: Phaser.GameObjects.Image

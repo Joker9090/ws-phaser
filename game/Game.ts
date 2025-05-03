@@ -86,6 +86,9 @@ class Game extends Phaser.Scene {
   touchedFloor?: boolean = false;
   graphics?: Phaser.GameObjects.Graphics;
   map?: PossibleMaps;
+  joystickBase?: Phaser.GameObjects.Arc;
+  joystickKnob?: Phaser.GameObjects.Arc;
+  joystickPointerId: number | null = null; // Store the pointer ID for the joystick
 
   lifes?: number;
   levelIs: number = 0;
@@ -583,14 +586,17 @@ class Game extends Phaser.Scene {
     })
 
     const updateTouchDeviceStatus = () => {
-      const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      const isTouchDevice = navigator.maxTouchPoints > 0;
+      console.log("isTouchDevice", isTouchDevice, navigator.maxTouchPoints);
 
       if (isTouchDevice) {
         console.log("Touch device detected");
-      this.isTouchDevice = true; // Set a property in the Game class
+        this.isTouchDevice = true; // Set a property in the Game class
       } else {
         console.log("Non-touch device detected");
-      this.isTouchDevice = false; // Set a property in the Game class
+        this.isTouchDevice = false; // Set a property in the Game class
+        this.joystickBase?.setAlpha(0); // Hide the joystick base when not in use
+        this.joystickKnob?.setAlpha(0); // Hide the joystick knob when not in use
       }
     };
 
@@ -599,6 +605,99 @@ class Game extends Phaser.Scene {
 
     // Add a listener for resize events
     window.addEventListener("resize", updateTouchDeviceStatus);
+
+    // Add a listener for orientation change events
+    this.joystickBase = this.add.circle(100, this.cameras.main.height - 100, 50, 0x888888).setScrollFactor(0).setDepth(10);
+    this.joystickKnob = this.add.circle(100, this.cameras.main.height - 100, 30, 0xcccccc).setScrollFactor(0).setDepth(11);
+  
+    // const joystickKnob = this.add.circle(100, this.cameras.main.height - 100, 30, 0xcccccc).setScrollFactor(0).setDepth(11);
+    this.joystickBase.setAlpha(0); // Hide the joystick base when not in use
+    this.joystickKnob.setAlpha(0); // Hide the joystick knob when not in use  
+    let isDragging = false;
+
+    this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
+      if (!this.isTouchDevice) return;
+    
+      if (pointer.x < this.cameras.main.width / 2 && pointer.y > this.cameras.main.height / 2) {
+        // Sólo asignar si ningún dedo controla ya el joystick
+        if (this.joystickPointerId === null) {
+          this.joystickPointerId = pointer.id;
+          isDragging = true;
+    
+          this.joystickBase?.setPosition(pointer.x, pointer.y);
+          this.joystickKnob?.setPosition(pointer.x, pointer.y);
+    
+          this.joystickBase?.setAlpha(1);
+          this.joystickKnob?.setAlpha(1);
+        }
+      } else if (pointer.x > this.cameras.main.width / 2 && pointer.y > this.cameras.main.height / 2) {
+        // Cualquier otro dedo puede saltar
+        console.log("Right bottom part touched");
+        this.player?.jump();
+      }
+    });
+    //DELETE THIS LATER
+    // this.time.delayedCall(3000, () => {
+    //   this.input.emit('pointerdown', {
+    //     x: this.cameras.main.width / 2 + 100,
+    //     y: this.cameras.main.height / 2 + 100,
+    //     id: 0, // Use a unique ID for the pointer
+    //   } as Phaser.Input.Pointer);
+    // })
+
+    // this.time.delayedCall(6000, () => {
+    //   this.input.emit('pointerdown', {
+    //     x: this.cameras.main.width / 2 + 100,
+    //     y: this.cameras.main.height / 2 + 100,
+    //     id: 0, // Use a unique ID for the pointer
+    //   } as Phaser.Input.Pointer);
+    // })
+
+    // this.time.delayedCall(9000, () => {
+    //   this.input.emit('pointerdown', {
+    //     x: this.cameras.main.width / 2 + 100,
+    //     y: this.cameras.main.height / 2 + 100,
+    //     id: 0, // Use a unique ID for the pointer
+    //   } as Phaser.Input.Pointer);
+    // })
+
+    this.input.on('pointermove', (pointer: Phaser.Input.Pointer) => {
+      if (isDragging && this.isTouchDevice && pointer.id === this.joystickPointerId) {
+        const angle = Phaser.Math.Angle.Between(this.joystickBase!.x, this.joystickBase!.y, pointer.x, pointer.y);
+        const distance = Phaser.Math.Clamp(
+          Phaser.Math.Distance.Between(this.joystickBase!.x, this.joystickBase!.y, pointer.x, pointer.y),
+          0,
+          this.joystickBase!.radius
+        );
+    
+        const offsetX = Math.cos(angle) * distance;
+        const offsetY = Math.sin(angle) * distance;
+    
+        this.joystickKnob!.setPosition(this.joystickBase!.x + offsetX, this.joystickBase!.y + offsetY);
+    
+        // Convert angle to directional flags
+        this.cursors!.left.isDown = offsetX < -10;
+        this.cursors!.right.isDown = offsetX > 10;
+        this.cursors!.up.isDown = offsetY < -10;
+        this.cursors!.down.isDown = offsetY > 10;
+      }
+    });
+
+    this.input.on('pointerup', (pointer: Phaser.Input.Pointer) => {
+      if (pointer.id === this.joystickPointerId) {
+        this.joystickPointerId = null;
+        isDragging = false;
+    
+        this.joystickKnob!.setPosition(this.joystickBase!.x, this.joystickBase!.y);
+        this.joystickBase!.setAlpha(0);
+        this.joystickKnob!.setAlpha(0);
+    
+        this.cursors!.left.isDown = false;
+        this.cursors!.right.isDown = false;
+        this.cursors!.up.isDown = false;
+        this.cursors!.down.isDown = false;
+      }
+    });
 
     window.addEventListener("blur", () => {
       this.masterManagerScene?.pauseGame();
@@ -833,6 +932,11 @@ class Game extends Phaser.Scene {
     this.player.gravityAnimSprite && this.UICamera?.ignore(this.player.gravityAnimSprite);
     this.player.tankAnimSprite && this.UICamera?.ignore(this.player.tankAnimSprite);
     this.player.auraAnimSprite && this.UICamera?.ignore(this.player.auraAnimSprite);
+
+    this.cameras.main.ignore(this.joystickBase)
+    this.cameras.main.ignore(this.joystickKnob)
+    this.cameras.getCamera("backgroundCamera")?.ignore(this.joystickBase)
+    this.cameras.getCamera("backgroundCamera")?.ignore(this.joystickKnob)
       
     this.UIClass = new UIClass(this, this.levelIs, this.lifes, this.timeLevel);
     

@@ -467,7 +467,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         if (!this.isJumping && !this.isRotating) this.anims.play("playerIdle", true);
       }
       /* Up / Jump */
-      if (up.isDown || space.isDown) {
+      if ((up.isDown || space.isDown) && this.scene instanceof Game && !this.scene.isTouchDevice) {
         this.jump()
       }
 

@@ -57,6 +57,12 @@ export default function Home() {
           width: window.innerWidth,
           height: window.innerHeight,
         },
+        input: {
+          gamepad: true,
+          keyboard: true,
+          mouse: true,
+          touch: true,
+        },
         scene: scenes,
         physics: {
           default: "arcade",

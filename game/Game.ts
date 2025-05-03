@@ -606,6 +606,8 @@ class Game extends Phaser.Scene {
     // Add a listener for resize events
     window.addEventListener("resize", updateTouchDeviceStatus);
 
+    this.input.addPointer(2);
+
     // Add a listener for orientation change events
     this.joystickBase = this.add.circle(100, this.cameras.main.height - 100, 50, 0x888888).setScrollFactor(0).setDepth(10);
     this.joystickKnob = this.add.circle(100, this.cameras.main.height - 100, 30, 0xcccccc).setScrollFactor(0).setDepth(11);

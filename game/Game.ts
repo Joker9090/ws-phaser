@@ -92,7 +92,7 @@ class Game extends Phaser.Scene {
   cameraWidth: number = 0;
   cameraHeight: number = 0;
 
-  initialScroll:  { x: number; y: number } = { x: 0, y: 0 };
+  initialScroll: { x: number; y: number } = { x: 0, y: 0 };
 
   mapShown: boolean = false;
 
@@ -101,8 +101,8 @@ class Game extends Phaser.Scene {
   UICamera?: Phaser.Cameras.Scene2D.Camera;
   masterManagerScene?: MasterManager;
   stopMov: boolean = false;
-  resultModal?:resultContainer;
-  container?:Phaser.GameObjects.Container
+  resultModal?: resultContainer;
+  container?: Phaser.GameObjects.Container
   constructor() {
     super({ key: "Game" });
   }
@@ -302,10 +302,10 @@ class Game extends Phaser.Scene {
     }
   }
 
-  changeScene(obj: GamePlayDataType){
+  changeScene(obj: GamePlayDataType) {
     if (!this.scene.get("MultiScene")) {
       console.log("changing scene", obj, this.scene.get("MultiScene"));
-      const multiScene = new MultiScene("Game",obj);
+      const multiScene = new MultiScene("Game", obj);
       const scene = this.scene.add("MultiScene", multiScene, true);
       this.scene.start("MultiScene").bringToTop("MultiScene");
       this.masterManagerScene?.stopMusic();
@@ -326,48 +326,49 @@ class Game extends Phaser.Scene {
           level: 0,
           lifes: this.lifes ? this.lifes : 3,
         });
-        this.stopMov =true
-        if(this.canWin){
+        this.stopMov = true
+        if (this.canWin) {
           const resultConfig = {
-            collText:this.UIClass?.collText?.text ?? "0",
+            collText: this.UIClass?.collText?.text ?? "0",
             coinCount: this.map.totalCoins ?? 0,
-            x:window.innerWidth/2,
-            y:window.innerHeight/2,
-            planeta:1,
-            victory:true,
+            x: window.innerWidth / 2,
+            y: window.innerHeight / 2,
+            planeta: 1,
+            victory: true,
           }
-          this.resultModal = new resultContainer(this, resultConfig);
-          this.UICamera?.ignore(this.resultModal)
-            
-            
+          // this.resultModal = new resultContainer(this, resultConfig);
+          // this.UICamera?.ignore(this.resultModal)
+
+
           this.canWin = false;
-      
+
           if (this.input.keyboard) {
             this.input.keyboard.enabled = false;
           }
         }
 
 
-        // const scene = this.scene.add("MultiScene", multiScene, true);
-        // this.scene.start("MultiScene").bringToTop("MultiScene");
-      }
-      else if (this.map?.nextScene) {
-        // if (this.levelIs === 7){
-        //   const multiScene = new MultiScene("Game", { level: 4, lifes: 3 });
-        //   const scene = this.scene.add("MultiScene", multiScene, true);
-        //   this.scene.start("MultiScene").bringToTop("MultiScene");
-        // } else {;
-        const multiScene = new MultiScene("CinematographyMod", {
-          keyname: this.map.nextScene,
-          lifes: this.lifes ? this.lifes : 3,
-          loadKey: ["Postales", "Cinemato1", "Cinemato2"],
-          code: this.map.postalCode,
-        });
         const scene = this.scene.add("MultiScene", multiScene, true);
         this.scene.start("MultiScene").bringToTop("MultiScene");
-        this.masterManagerScene?.stopMusic();
       }
-      // }
+      else if (this.map?.nextScene) {
+        if (this.levelIs === 7) {
+          const multiScene = new MultiScene("Game", { level: 4, lifes: 3 });
+          const scene = this.scene.add("MultiScene", multiScene, true);
+          this.scene.start("MultiScene").bringToTop("MultiScene");
+        } else {
+          ;
+          const multiScene = new MultiScene("CinematographyMod", {
+            keyname: this.map.nextScene,
+            lifes: this.lifes ? this.lifes : 3,
+            loadKey: ["Postales", "Cinemato1", "Cinemato2"],
+            code: this.map.postalCode,
+          });
+          const scene = this.scene.add("MultiScene", multiScene, true);
+          this.scene.start("MultiScene").bringToTop("MultiScene");
+          this.masterManagerScene?.stopMusic();
+        }
+      }
       else if (this.levelIs !== 11) {
         const multiScene = new MultiScene("Game", {
           level: this.levelIs + 1,
@@ -379,7 +380,7 @@ class Game extends Phaser.Scene {
       } else {
         try {
           const multiSceneKey = "MultiScene";
-      
+
           // If MultiScene exists and is active, just bring it to top and reuse it
           if (this.scene.get(multiSceneKey) && this.scene.isActive(multiSceneKey)) {
             console.warn("⚠️ MultiScene is already active — reusing it.");
@@ -388,18 +389,18 @@ class Game extends Phaser.Scene {
             // If it's not active, create and start a new MultiScene instance
             const multiScene = new MultiScene("MenuScene", undefined);
             console.log("✅ jp test 1 — creating MultiScene:", multiScene);
-      
+
             const scene = this.scene.add(multiSceneKey, multiScene, true);
             console.log("✅ jp test 2 — added MultiScene:", multiScene, scene);
           }
-      
+
           this.masterManagerScene?.stopMusic();
           console.log("✅ jp test 3 — continued with music stop or other logic");
         } catch (e) {
           console.error("💥 Error handling MultiScene:", e);
         }
       }
-      
+
     }
 
     // lógica para pasar a movie dependiendo el nivel
@@ -444,15 +445,15 @@ class Game extends Phaser.Scene {
           this.cameraNormal = true;
           this.checkPoint === 0;
           if (!this.scene.get("MultiScene")) {
-            var multiScene= new MultiScene("Game", {
+            var multiScene = new MultiScene("Game", {
               level: this.levelIs,
               lifes: this.lifes ? this.lifes : 3,
             });
-            if(this.levelIs != 0){
+            if (this.levelIs != 0) {
               const scene = this.scene.add("MultiScene", multiScene, true);
               this.scene.start("MultiScene").bringToTop("MultiScene");
             }
-            console.log("[Game] lose(): "+ this.levelIs+" , new lifes"+multiScene.sceneData?.lifes);
+            console.log("[Game] lose(): " + this.levelIs + " , new lifes" + multiScene.sceneData?.lifes);
           } else this.scene
         } else if (this.lifes > 0 && this.player) {
           // UI changes
@@ -561,14 +562,14 @@ class Game extends Phaser.Scene {
     window.addEventListener("blur", () => {
       this.masterManagerScene?.pauseGame();
     });
-  
+
     window.addEventListener("focus", () => {
-        this.masterManagerScene?.resumeFromBlur();
+      this.masterManagerScene?.resumeFromBlur();
     });
     /* CHOSE LEVEL, LIFES AND AUDIO */
     switch (data.level) {
       case 999:
-        
+
         this.player = new Player(this, 0, 0, "character", 2);
         this.map = new Sandbox(this, this.player!);
         this.loopMusic = "planet0LoopMusic";
@@ -581,7 +582,7 @@ class Game extends Phaser.Scene {
         break;
       case 0:
         this.player = new Player(this, 0, 0, "character", 2);
-        
+
         this.map = new p1Map0(this, this.player!);
         this.loopMusic = "planet0LoopMusic";
         break;
@@ -728,14 +729,14 @@ class Game extends Phaser.Scene {
         break;
       default:
         this.player = new Player(this, 0, 0, "character", 2);
-        
+
         this.map = new p1Mapa0(this, this.player!, data);
         this.loopMusic = "planet0LoopMusic";
         break;
     }
-    
+
     let { x, y } = this.map.startingPoint;
-    if(data.startingPositionFromOtherScene){
+    if (data.startingPositionFromOtherScene) {
       x = data.startingPositionFromOtherScene.x;
       y = data.startingPositionFromOtherScene.y;
     }
@@ -761,7 +762,7 @@ class Game extends Phaser.Scene {
     this.cameras.add(0, 0, window.innerWidth, window.innerHeight, true, "mainCamera");
 
     /* UI SCENE  */
-    
+
     this.UICamera = this.cameras.add(
       0,
       0,
@@ -772,23 +773,23 @@ class Game extends Phaser.Scene {
     this.player.gravityAnimSprite && this.UICamera?.ignore(this.player.gravityAnimSprite);
     this.player.tankAnimSprite && this.UICamera?.ignore(this.player.tankAnimSprite);
     this.player.auraAnimSprite && this.UICamera?.ignore(this.player.auraAnimSprite);
-      
+
     this.UIClass = new UIClass(this, this.levelIs, this.lifes, this.timeLevel);
-    
+
     /* CONTROLS */
     this.EscKeyboard = this.input.keyboard?.addKey(
       Phaser.Input.Keyboard.KeyCodes.ESC
     );
-    
-    
+
+
     // FINALIZA EL MAPA
-    
+
     // ARRANCA EL MAPA
 
     /* CREATE MAP */
     this.map.createMap(data);
     console.log("rotating camera", this.cameraNormal);
-    
+
     const {
       x: boundX,
       y: boundY,

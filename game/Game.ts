@@ -357,12 +357,10 @@ class Game extends Phaser.Scene {
           const scene = this.scene.add("MultiScene", multiScene, true);
           this.scene.start("MultiScene").bringToTop("MultiScene");
         } else {
-          ;
           const multiScene = new MultiScene("CinematographyMod", {
             keyname: this.map.nextScene,
             lifes: this.lifes ? this.lifes : 3,
             loadKey: ["Postales", "Cinemato1", "Cinemato2"],
-            code: this.map.postalCode,
           });
           const scene = this.scene.add("MultiScene", multiScene, true);
           this.scene.start("MultiScene").bringToTop("MultiScene");

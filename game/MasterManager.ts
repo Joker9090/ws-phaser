@@ -121,7 +121,7 @@ export default class MasterManager extends Phaser.Scene {
   pauseGame() {
     const gameScene = this.scene.get("Game");
     if (gameScene) {
-      this.time.delayedCall(600, () => {
+      this.time.delayedCall(300, () => {
         gameScene.physics.world.pause();
         gameScene.tweens.pauseAll();
         gameScene.input.enabled = true;
@@ -132,7 +132,7 @@ export default class MasterManager extends Phaser.Scene {
   resumeFromBlur() {
     const gameScene = this.scene.get("Game");
 
-    if (gameScene) {
+    if (gameScene ) {
       const settingsVisible = (gameScene as Game).UIClass?.settingsVisible
       if (!settingsVisible) {
         this.time.delayedCall(600, () => {
@@ -158,11 +158,13 @@ export default class MasterManager extends Phaser.Scene {
         }
       });
       (gameScene as Game).UIClass?.collText?.setVisible(true)
-      this.time.delayedCall(600, () => {
+     
+      this.time.delayedCall(500, () => {
         gameScene.physics.world.resume();
         gameScene.tweens.resumeAll();
         gameScene.input.enabled = true;
         gameScene.time.paused = false
+      
       }, [], this)
     }
     }

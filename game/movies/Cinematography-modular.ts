@@ -38,6 +38,7 @@ import UIClass from "../assets/UIClass";
 import cine2Movie4b from "./Cinemato2/cine2Movie4b";
 
 class CinematographyModular extends Phaser.Scene {
+  canWin:boolean =true;
   ticker: Ticker;
   playingCine: cineIntro1 | any;
   nextLevel?: number | undefined;

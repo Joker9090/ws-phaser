@@ -147,32 +147,35 @@ export default class UIClass {
   }
 
   toggleSettings() {
-    if (this.settingsVisible) {
-      this.container.each((child: any) => {
-        if (child instanceof containerSettings) {
-          child.crossPress()
-          this.settingsModal = undefined
-        }else if(child instanceof UI){
-          child.setVisible(true)
-        }
-      })
-      this.collText?.setVisible(true)
-      this.settingsVisible = false
-    } else {
-      this.settingsModal = new containerSettings(this.scene, { x: window.innerWidth / 2, y: window.innerHeight / 2, dinamicPosition:true }, undefined, () => { this.settingsVisible = !this.settingsVisible }, this.settings)
-      this.masterManager.playSound('buttonSound', false)
-      this.masterManager.pauseGame()
-      this.settings?.setVisible(false)
-      this.container.each((child: any) => {
-        if(child  instanceof UI){ {
-            child.setVisible(false)
+    if(this.scene.canWin){
+      if (this.settingsVisible) {
+        this.container.each((child: any) => {
+          if (child instanceof containerSettings) {
+            child.crossPress()
+            this.settingsModal = undefined
+          }else if(child instanceof UI){
+            child.setVisible(true)
           }
-        } 
-      })
-      this.collText?.setVisible(false)
-      this.container.add(this.settingsModal)
-      this.settingsVisible = true
+        })
+        this.collText?.setVisible(true)
+        this.settingsVisible = false
+      } else {
+        this.settingsModal = new containerSettings(this.scene, { x: window.innerWidth / 2, y: window.innerHeight / 2, dinamicPosition:true }, undefined, () => { this.settingsVisible = !this.settingsVisible }, this.settings)
+        this.masterManager.playSound('buttonSound', false)
+        this.masterManager.pauseGame()
+        this.settings?.setVisible(false)
+        this.container.each((child: any) => {
+          if(child  instanceof UI){ {
+              child.setVisible(false)
+            }
+          } 
+        })
+        this.collText?.setVisible(false)
+        this.container.add(this.settingsModal)
+        this.settingsVisible = true
+      }
     }
+    
   }
   rotateArrow(direction: string) {
     if (direction == "down") {

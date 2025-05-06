@@ -311,11 +311,25 @@ class Game extends Phaser.Scene {
 
     }
   }
+
+  retry() {
+    if (!this.scene.get("MultiScene")) {
+      var multiScene = new MultiScene("Game", {
+        level: this.levelIs,
+        lifes: 3,
+      });
+      if (this.levelIs != 0) {
+        const scene = this.scene.add("MultiScene", multiScene, true);
+        this.scene.start("MultiScene").bringToTop("MultiScene");
+      }
+      console.log("[Game] lose(): " + this.levelIs + " , new lifes" + multiScene.sceneData?.lifes);
+    } else this.scene
+  }
   checkNextScene() {
     if (this.levelIs === 999) {
       const multiScene = new MultiScene("Game", {
         level: 0,
-        lifes:3,
+        lifes: 3,
       });
       this.stopMov = true
       if (this.canWin) {
@@ -338,7 +352,7 @@ class Game extends Phaser.Scene {
       } else {
         const multiScene = new MultiScene("CinematographyMod", {
           keyname: this.map.nextScene,
-          lifes:3,
+          lifes: 3,
           loadKey: ["Postales", "Cinemato1", "Cinemato2"],
         });
         const scene = this.scene.add("MultiScene", multiScene, true);
@@ -349,7 +363,7 @@ class Game extends Phaser.Scene {
     else if (this.levelIs !== 11) {
       const multiScene = new MultiScene("Game", {
         level: this.levelIs + 1,
-        lifes:3,
+        lifes: 3,
       });
 
       const scene = this.scene.add("MultiScene", multiScene, true);
@@ -395,18 +409,22 @@ class Game extends Phaser.Scene {
           y: window.innerHeight / 2,
           planeta: 1,
           victory: true,
-          timerText: this.timerText
+          timerText: this.timerText,
+          lifes: this.lifes
+        }
+        this.masterManagerScene?.pauseGame()
+        if (this.player && this.player.body) {
+          this.player.body.gravity.y = 0;
+          this.player.body.gravity.x = 0;
         }
 
         this.resultModal = new resultContainer(this, resultConfig);
         this.UICamera?.ignore(this.resultModal)
 
-        this.events.on('continue', () => {
 
-        });
-        
+
       }
-     
+
 
     }
 
@@ -451,17 +469,25 @@ class Game extends Phaser.Scene {
         if (this.lifes === 0) {
           this.cameraNormal = true;
           this.checkPoint === 0;
-          if (!this.scene.get("MultiScene")) {
-            var multiScene = new MultiScene("Game", {
-              level: this.levelIs,
-              lifes: this.lifes ? this.lifes : 3,
-            });
-            if (this.levelIs != 0) {
-              const scene = this.scene.add("MultiScene", multiScene, true);
-              this.scene.start("MultiScene").bringToTop("MultiScene");
-            }
-            console.log("[Game] lose(): " + this.levelIs + " , new lifes" + multiScene.sceneData?.lifes);
-          } else this.scene
+          this.canWin = false
+          const resultConfig = {
+            collText: this.UIClass?.collText?.text ?? "0",
+            coinCount: this.map.totalCoins ?? 0,
+            x: window.innerWidth / 2,
+            y: window.innerHeight / 2,
+            planeta: 1,
+            victory: false,
+            timerText: this.timerText,
+            lifes: this.lifes
+          }
+          this.masterManagerScene?.pauseGame()
+          if (this.player && this.player.body) {
+            this.player.body.gravity.y = 0;
+            this.player.body.gravity.x = 0;
+          }
+
+          this.resultModal = new resultContainer(this, resultConfig);
+          this.UICamera?.ignore(this.resultModal)
         } else if (this.lifes > 0 && this.player) {
           // UI changes
           this.UIClass?.loseLife(this.lifes);
@@ -543,11 +569,22 @@ class Game extends Phaser.Scene {
     //   this.animCameraPan(2000, 500)
     // })
 
+    this.canWin = true
+    this.player?.setVisible(true)
+    this.player?.tankGraphics?.setVisible(true)
 
     this.events.on('continue', () => {
-      this.checkNextScene(),
-      console.log("entro evento")
+      this.checkNextScene()
     });
+    this.events.on('retry', () => {
+      this.retry()
+    });
+
+    this.events.on('home', () => {
+      const multiScene = new MultiScene("MenuScene");
+      const scene = this.scene.add("MultiScene", multiScene, true);
+      this.scene.start("MultiScene").bringToTop("MultiScene");
+    })
 
     console.log("ARIEL TEST", data);
 
@@ -586,7 +623,9 @@ class Game extends Phaser.Scene {
       if (document.visibilityState === "hidden") {
         this.masterManagerScene?.pauseGame();
       } else {
-        this.masterManagerScene?.resumeFromBlur();
+        if (this.canWin) {
+          this.masterManagerScene?.resumeFromBlur();
+        }
       }
     })
 
@@ -595,7 +634,9 @@ class Game extends Phaser.Scene {
     });
 
     window.addEventListener("focus", () => {
-      this.masterManagerScene?.resumeFromBlur();
+      if (this.canWin) {
+        this.masterManagerScene?.resumeFromBlur();
+      }
     });
     /* CHOSE LEVEL, LIFES AND AUDIO */
     switch (data.level) {

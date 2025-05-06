@@ -10,7 +10,7 @@ class resultContainer extends Phaser.GameObjects.Container {
     masterManager?: MasterManager;
     collText?: string;
     coinCount?: number;
-    lifes?: number;
+    lifes: number = 3;
     victory?: boolean
     time?:string;
     modal?:Phaser.GameObjects.Image
@@ -18,17 +18,21 @@ class resultContainer extends Phaser.GameObjects.Container {
     resultAstro?: Phaser.GameObjects.Image;
     item?:Phaser.GameObjects.Image;
     contenedorReloj?:Phaser.GameObjects.Image;
-    deaths?:Phaser.GameObjects.Image;
+    death1?:Phaser.GameObjects.Image;
+    death2?:Phaser.GameObjects.Image;
+    death3?:Phaser.GameObjects.Image;
     container?:Phaser.GameObjects.Container;
-    continueButton?: Phaser.GameObjects.Image
-    retryButton?: Phaser.GameObjects.Image
-    homeButton?:Phaser.GameObjects.Image
+    continueButton?: Phaser.GameObjects.Image;
+    retryButton?: Phaser.GameObjects.Image;
+    homeButton?:Phaser.GameObjects.Image;
+    timeText?:Phaser.GameObjects.Text;
+  
     constructor(scene: Phaser.Scene, config: resultContainerConfigType) {
         super(scene, config.x, config.y)
         const offsetY = 100
             this.collText = config.collText,
             this.coinCount = config.coinCount ?? 1,
-            this.lifes = config.lifes,
+            this.lifes = config.lifes ?? 3,
             this.victory = config.victory,
             this.time = config.timerText
             console.log(config.timerText, "timerText from modal")
@@ -52,13 +56,23 @@ class resultContainer extends Phaser.GameObjects.Container {
            
            
             this.contenedorReloj = scene.add.image(window.innerWidth /2, window.innerHeight/2 -10, 'contenedorReloj')
-            scene.add.text(window.innerWidth /2, window.innerHeight/2 -10,this.time?? 'n/a').setFontSize(20).setFontFamily('arcade').setDepth(3)
+            this.timeText =  scene.add.text(window.innerWidth /2 - 60, window.innerHeight/2 -35,this.time?? 'n/a').setFontSize(40).setFontFamily('arcade').setDepth(3)
+          
+            this.death1 = scene.add.image(window.innerWidth/2 -80, window.innerHeight/2 + 110, "deaths").setAlpha(0.5);
+            this.death2 = scene.add.image(window.innerWidth/2 , window.innerHeight/2 + 110, "deaths").setAlpha(0.5);
+            this.death3 = scene.add.image(window.innerWidth/2 + 80, window.innerHeight/2 + 110, "deaths").setAlpha(0.5);
+            const deaths = [this.death3,this.death2,this.death1]
 
-            this.deaths = scene.add.image(window.innerWidth/2 -40, window.innerHeight/2 + 110, "deaths")
+            deaths.forEach((death, index) => {
+                if (index  < this.lifes) {
+                    death.setAlpha(1);
+                }
+            });
+
+            // scene.add.text(window.innerWidth/2 + 15, window.innerHeight/2 + 85, this.lifes.toString()).setFontSize(45).setFontFamily('arcade').setDepth(3)
+           
             this.continueButton = scene.add.image (window.innerWidth /2 -100, window.innerHeight/2 + 200 , "resultContinue").setDepth(4).setInteractive()
             this.retryButton = scene.add.image (window.innerWidth /2 +100, window.innerHeight/2 + 200, "resultRetry").setDepth(4).setInteractive()
-            scene.add.text(window.innerWidth/2 + 15, window.innerHeight/2 + 85, "3").setFontSize(45).setFontFamily('arcade').setDepth(3)
-            scene.add.rectangle(window.innerWidth / 2, window.innerHeight / 2, 1, window.innerHeight, 0xffffff).setDepth(3);
             this.homeButton = scene.add.image(window.innerWidth/2 -250, window.innerHeight/2 + 200, "botonHome").setScale(0.7).setInteractive()
 
             this.retryButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, ()=>{
@@ -74,6 +88,7 @@ class resultContainer extends Phaser.GameObjects.Container {
             })
             this.retryButton.on("pointerup",()=>{
                 this.retryButton?.setTexture("resultRetryHover")
+                this.scene.events.emit('retry')
             })
 
             this.continueButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, ()=>{
@@ -113,13 +128,71 @@ class resultContainer extends Phaser.GameObjects.Container {
             const assets = [
                 this.resultAstro,
                 this.modal,
-                this.resultTitle
+                this.resultTitle,
+                this.item,
+                this.homeButton,
+                this.retryButton,
+                this.continueButton,
+                this.death1,
+                this.death2,
+                this.death3,
+                this.timeText
             ]
             this.container?.add(assets)
         }else{
             this.modal = scene.add.image(window.innerWidth/2,window.innerHeight/2,"modalDefeat").setDepth(2).setScale(0.9);
-            this.resultTitle = scene.add.image(window.innerWidth / 2, window.innerHeight / 2 - 190, 'titleDefeat').setScale(0.9).setDepth(3)
+            this.resultTitle = scene.add.image(window.innerWidth / 2, window.innerHeight / 2 - 170, 'titleDefeat').setScale(0.8).setDepth(3)
+            this.resultAstro = scene.add.image(window.innerWidth/2, window.innerHeight/2, 'astroDefeat').setScale(0.8).setDepth(3)
+           
+            this.homeButton = scene.add.image(window.innerWidth/2 -290, window.innerHeight/2 + 180, "botonHome").setScale(0.7).setInteractive()
+            this.retryButton = scene.add.image (window.innerWidth /2 , window.innerHeight/2 + 180, "resultRetry").setDepth(4).setInteractive()
 
+
+            this.retryButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, ()=>{
+                this.retryButton?.setTexture("resultRetryHover")
+            })
+            this.retryButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT,()=>{
+                this.retryButton?.setTexture("resultRetry")
+
+            })
+            this.retryButton.on("pointerdown", ()=>{
+                this.retryButton?.setTexture("resultRetryPressed")
+                
+            })
+            this.retryButton.on("pointerup",()=>{
+                this.retryButton?.setTexture("resultRetryHover")
+                this.scene.events.emit('retry')
+            })
+
+
+            
+            this.homeButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, ()=>{
+                this.homeButton?.setTexture("botonHomeHover")
+            })
+            this.homeButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT,()=>{
+                this.homeButton?.setTexture("botonHome")
+
+            })
+            this.homeButton.on("pointerdown", ()=>{
+                this.homeButton?.setTexture("botonHomePressed")
+                
+            })
+            this.homeButton.on("pointerup",()=>{
+                this.homeButton?.setTexture("botonHomeHover")
+                this.scene.events.emit('home')
+
+            })
+
+             
+            const assets = [
+                this.resultAstro,
+                this.modal,
+                this.resultTitle,
+                this.item,
+                this.homeButton,
+                this.retryButton,
+                this.continueButton,
+            ]
         }
         console.log("entro")
 

@@ -115,6 +115,23 @@ class Map1 extends MapCreator {
         }
 
         const baseLargePlatformsConf = {
+            withTextureToAbove: true,
+            texture: "plataformaNuevaA",
+            textureA: "platform_izq",
+            textureB: "platform_center",
+            textureC: "platform_der",
+            textureFill: ["fill_texture", "fill_texture2", "fill_texture3", "fill_texture4"],
+            width: {
+              textureA: 96,
+              textureB: 96,
+              textureC: 96,
+            },
+            height: 96,
+            scale: { width: 1, height: 1 },
+            rotated: false,
+            type: "largeFloor",
+        };
+        const baseLongPlatformsConf = {
             withTextureToAbove: false,
             texture: "plataformaNuevaA",
             textureA: "platform_izq",
@@ -131,7 +148,6 @@ class Map1 extends MapCreator {
             rotated: false,
             type: "largeFloor",
         };
-
         const baseCristalConf = {
             type: "collectable",
             texture: "shield",
@@ -172,7 +188,7 @@ class Map1 extends MapCreator {
             },
             { ...baseCristalConf, pos: { x: 1100, y:  this.worldSize.height - 500 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
             {
-                ...baseLargePlatformsConf,
+                ...baseLongPlatformsConf,
                 pos: { x: 1300, y: this.worldSize.height - 400 },
                 large: 20,
                 group: this.floor
@@ -187,7 +203,7 @@ class Map1 extends MapCreator {
             { ...baseCristalConf, pos: { x: 2100, y:  this.worldSize.height - 700 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
             { ...basePlatformsConfig, pos: { x: 2500, y: this.worldSize.height - 800 } },
             { ...baseCristalConf, pos: { x: 2800, y:  this.worldSize.height - 1000 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
-            { ...baseFireballConf, pos: { x: 2900, y:  this.worldSize.height - 1300 }, tween: { duration: 2000, repeat: -1, y: "+=1000"}, rotated: false },
+            { ...baseFireballConf, pos: { x: 2900, y:  0 }, tween: { duration: 5000, repeat: -1, y: "+=2000"}, rotated: false },
             { ...basePlatformsConfig, pos: { x: 3100, y: this.worldSize.height - 800 } },
             { ...baseCristalConf, pos: { x: 3600, y:  this.worldSize.height - 900 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
             {
@@ -199,30 +215,30 @@ class Map1 extends MapCreator {
                 }
             },
             {
-                ...baseLargePlatformsConf,
-                pos: { x: 3800, y: this.worldSize.height - 800 },
-                large: 15,
+                ...baseLongPlatformsConf,
+                pos: { x: 4200, y: this.worldSize.height - 800 },
+                large: 10,
                 group: this.floor
             },
-            { ...baseDangerConf, pos: { x: 4000, y: this.worldSize.height - 850 }, width: 170, height: 170, patrol:{
+            { ...baseDangerConf, pos: { x: 4250, y: this.worldSize.height - 850 }, width: 170, height: 170, patrol:{
                 patrolType: "LinealX",
                 distance: 400,
                 speed: 150,
                 attackInterval: 0,
               }, },
-            { ...baseCristalConf, pos: { x: 4150, y: this.worldSize.height - 850 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
+            { ...baseCristalConf, pos: { x: 4375, y: this.worldSize.height - 1050 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
             {
-                ...basePlatformsConfig, pos: { x: 4800, y: this.worldSize.height - 600 }, animation: {
+                ...basePlatformsConfig, pos: { x: 5300, y: this.worldSize.height - 600 }, animation: {
                     xAxis: {
                         xDistance: 200,
                         xVel: 100
                     }
                 }
             },
-            { ...baseCristalConf, pos: { x: 5050, y: this.worldSize.height - 1000 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
+            { ...baseCristalConf, pos: { x: 5050, y: this.worldSize.height - 1050 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
             //REPLACE
             //{ ...baseFireballConf, pos: { x: 5200, y: this.worldSize.height - 800 }, tween: { duration: 2000, repeat: -1, x: "-=500", yoyo: true  }, rotated: true },
-            { ...baseDangerConf, pos: { x: 5200, y: this.worldSize.height - 800 }, width: 170, height: 170, 
+            { ...baseDangerConf, pos: { x: 5300, y: this.worldSize.height - 800 }, width: 170, height: 170, 
                 patrol:{
                     patrolType: "LinealX",
                     distance: 200,
@@ -231,7 +247,7 @@ class Map1 extends MapCreator {
                 }
             },
             {
-                ...basePlatformsConfig, pos: { x: 5300, y: this.worldSize.height - 600 }, animation: {
+                ...basePlatformsConfig, pos: { x: 5800, y: this.worldSize.height - 600 }, animation: {
                     xAxis: {
                     xDistance: 200,
                     xVel: 100
@@ -260,7 +276,7 @@ class Map1 extends MapCreator {
             {
                 ...baseLargePlatformsConf,
                 pos: { x: 6300, y: this.worldSize.height - 800 },
-                large: 15,
+                large: 10,
                 group: this.floor
             },
             { ...baseCristalConf, pos: { x: 6700, y: this.worldSize.height - 1100 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
@@ -283,18 +299,18 @@ class Map1 extends MapCreator {
             },
             { ...baseCristalConf, pos: { x: 8000, y: this.worldSize.height - 1300 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
             {
-                ...basePlatformsConfig, pos: { x: 8200, y: this.worldSize.height - 700 }, animation: {
+                ...basePlatformsConfig, pos: { x: 8200, y: this.worldSize.height - 900 }, animation: {
                     yAxis: {
                         yDistance: 800,
                         yVel: 400
                     }
                 }
             },
-            { ...baseFireballConf, pos: { x: 8400, y:  this.worldSize.height - 1300 }, tween: { duration: 2000, repeat: -1, y: "+=1000"}, rotated: false },
+            { ...baseFireballConf, pos: { x: 8400, y:0 }, tween: { duration: 5000, repeat: -1, y: "+=2000"}, rotated: false },
 
             { ...baseDangerConf, pos: { x: 8800, y: this.worldSize.height - 1250 }, width: 170, height: 170 },
             {
-                ...baseLargePlatformsConf,
+                ...baseLongPlatformsConf,
                 pos: { x: 8700, y: this.worldSize.height - 1200 },
                 large: 10,
                 group: this.floor
@@ -304,7 +320,7 @@ class Map1 extends MapCreator {
 
             {
                 ...baseLargePlatformsConf,
-                pos: { x: 8600, y: this.worldSize.height - 300 },
+                pos: { x: 8900, y: this.worldSize.height - 300 },
                 large: 25,
                 group: this.floor
             },

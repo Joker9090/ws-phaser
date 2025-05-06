@@ -99,7 +99,7 @@ class Fireball extends Phaser.Physics.Arcade.Sprite {
         onRepeat: () => {
             this.scene.tweens.add({
               targets: this,
-              rotation: this.rotation + Math.PI, // Rota 180 grados
+              //rotation: this.rotation + Math.PI, // Rota 180 grados
               duration: 200, // Duración de la rotación en milisegundos
               ease: "Linear",
             });

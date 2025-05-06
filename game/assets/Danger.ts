@@ -74,7 +74,8 @@ class Danger extends Phaser.Physics.Arcade.Sprite {
         scene.physics.add.existing(this);
         scene.add.existing(this);
         this.setDepth(10);
-        if(config.scale) this.body?.setSize(config.width! * config.scale.width, config.height! * config.scale.height).setOffset(20, 20);
+        if(config.scale) this.body?.setSize(config.width! * config.scale.width, config.height! * config.scale.height);
+        this.body?.setOffset(40, 40);
         this.setBounce(0);
         this.group?.add(this);
         this.setImmovable(true);

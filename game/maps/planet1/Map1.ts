@@ -183,7 +183,7 @@ class Map1 extends MapCreator {
             {
                 ...baseLargePlatformsConf,
                 pos: { x: 0, y: this.worldSize.height - 200 },
-                large: 20,
+                large: 15,
                 group: this.floor
             },
             { ...baseCristalConf, pos: { x: 1100, y:  this.worldSize.height - 500 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },

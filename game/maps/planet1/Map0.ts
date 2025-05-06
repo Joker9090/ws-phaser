@@ -214,7 +214,7 @@ class Map0 extends MapCreator {
             {
                 ...baseLargePlatformsConf,
                 pos: { x: 2700, y: this.worldSize.height - 400 },
-                large: 15,
+                large: 10,
                 group: this.floor
             },
             { ...baseDangerConf, pos: { x: 2800, y: this.worldSize.height - 450 }, width: 150, height: 150, 

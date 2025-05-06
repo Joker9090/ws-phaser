@@ -41,16 +41,16 @@ interface CodeType {
 }
 // a medida que los mapas pasen al nuevo modo esto se deberia poder eliminar ya que totalcoins existe en mapCreator
 export type PossibleMaps =
-  | (p1Mapa0 & { totalCoins?: number })
-  | (p1Mapa1 & { totalCoins?: number })
-  | (p1Mapa2 & { totalCoins?: number })
-  | (p1Mapa3 & { totalCoins?: number })
-  | (p2Mapa1 & { totalCoins?: number })
-  | (p2Mapa2 & { totalCoins?: number })
-  | (p2Mapa3 & { totalCoins?: number })
-  | (p2Mapa4 & { totalCoins?: number })
-  | (p3Mapa1 & { totalCoins?: number })
-  | (p3Mapa2 & { totalCoins?: number })
+  | (p1Mapa0 & { totalCoins?: number } & { timerText?: string })
+  | (p1Mapa1 & { totalCoins?: number } & { timerText?: string })
+  | (p1Mapa2 & { totalCoins?: number } & { timerText?: string })
+  | (p1Mapa3 & { totalCoins?: number } & { timerText?: string })
+  | (p2Mapa1 & { totalCoins?: number } & { timerText?: string })
+  | (p2Mapa2 & { totalCoins?: number } & { timerText?: string })
+  | (p2Mapa3 & { totalCoins?: number } & { timerText?: string })
+  | (p2Mapa4 & { totalCoins?: number } & { timerText?: string })
+  | (p3Mapa1 & { totalCoins?: number } & { timerText?: string })
+  | (p3Mapa2 & { totalCoins?: number } & { timerText?: string })
   | Sandbox
   | p1Map0
   | p1Map1
@@ -93,9 +93,8 @@ class Game extends Phaser.Scene {
   cameraHeight: number = 0;
 
   initialScroll: { x: number; y: number } = { x: 0, y: 0 };
-
   mapShown: boolean = false;
-
+  timerText: string = '00:00'
   loopMusic?: string;
   UIClass?: UIClass;
   UICamera?: Phaser.Cameras.Scene2D.Camera;
@@ -312,7 +311,73 @@ class Game extends Phaser.Scene {
 
     }
   }
+  checkNextScene() {
+    if (this.levelIs === 999) {
+      const multiScene = new MultiScene("Game", {
+        level: 0,
+        lifes:3,
+      });
+      this.stopMov = true
+      if (this.canWin) {
+        this.canWin = false;
 
+        if (this.input.keyboard) {
+          this.input.keyboard.enabled = false;
+        }
+      }
+
+
+      const scene = this.scene.add("MultiScene", multiScene, true);
+      this.scene.start("MultiScene").bringToTop("MultiScene");
+    }
+    else if (this.map?.nextScene) {
+      if (this.levelIs === 7) {
+        const multiScene = new MultiScene("Game", { level: 4, lifes: 3 });
+        const scene = this.scene.add("MultiScene", multiScene, true);
+        this.scene.start("MultiScene").bringToTop("MultiScene");
+      } else {
+        const multiScene = new MultiScene("CinematographyMod", {
+          keyname: this.map.nextScene,
+          lifes:3,
+          loadKey: ["Postales", "Cinemato1", "Cinemato2"],
+        });
+        const scene = this.scene.add("MultiScene", multiScene, true);
+        this.scene.start("MultiScene").bringToTop("MultiScene");
+        this.masterManagerScene?.stopMusic();
+      }
+    }
+    else if (this.levelIs !== 11) {
+      const multiScene = new MultiScene("Game", {
+        level: this.levelIs + 1,
+        lifes:3,
+      });
+
+      const scene = this.scene.add("MultiScene", multiScene, true);
+      this.scene.start("MultiScene").bringToTop("MultiScene");
+    } else {
+      try {
+        const multiSceneKey = "MultiScene";
+
+        // If MultiScene exists and is active, just bring it to top and reuse it
+        if (this.scene.get(multiSceneKey) && this.scene.isActive(multiSceneKey)) {
+          console.warn("⚠️ MultiScene is already active — reusing it.");
+          this.scene.bringToTop(multiSceneKey);
+        } else {
+          // If it's not active, create and start a new MultiScene instance
+          const multiScene = new MultiScene("MenuScene", undefined);
+          console.log("✅ jp test 1 — creating MultiScene:", multiScene);
+
+          const scene = this.scene.add(multiSceneKey, multiScene, true);
+          console.log("✅ jp test 2 — added MultiScene:", multiScene, scene);
+        }
+
+        this.masterManagerScene?.stopMusic();
+        console.log("✅ jp test 3 — continued with music stop or other logic");
+      } catch (e) {
+        console.error("💥 Error handling MultiScene:", e);
+      }
+    }
+  }
   win() {
     // this.initialScroll = { x: 0, y: 0 };
     // if (this.scene.get("MultiScene")) {
@@ -321,83 +386,27 @@ class Game extends Phaser.Scene {
     if (this.player && this.map) {
       console.log(this.levelIs, "LEVEL IS JOTITA");
       this.cameraNormal = true;
-      if (this.levelIs === 999) {
-        const multiScene = new MultiScene("Game", {
-          level: 0,
-          lifes: this.lifes ? this.lifes : 3,
+      if (this.canWin) {
+        this.canWin = false
+        const resultConfig = {
+          collText: this.UIClass?.collText?.text ?? "0",
+          coinCount: this.map.totalCoins ?? 0,
+          x: window.innerWidth / 2,
+          y: window.innerHeight / 2,
+          planeta: 1,
+          victory: true,
+          timerText: this.timerText
+        }
+
+        this.resultModal = new resultContainer(this, resultConfig);
+        this.UICamera?.ignore(this.resultModal)
+
+        this.events.on('continue', () => {
+
         });
-        this.stopMov = true
-        if (this.canWin) {
-          const resultConfig = {
-            collText: this.UIClass?.collText?.text ?? "0",
-            coinCount: this.map.totalCoins ?? 0,
-            x: window.innerWidth / 2,
-            y: window.innerHeight / 2,
-            planeta: 1,
-            victory: true,
-          }
-          // this.resultModal = new resultContainer(this, resultConfig);
-          // this.UICamera?.ignore(this.resultModal)
-
-
-          this.canWin = false;
-
-          if (this.input.keyboard) {
-            this.input.keyboard.enabled = false;
-          }
-        }
-
-
-        const scene = this.scene.add("MultiScene", multiScene, true);
-        this.scene.start("MultiScene").bringToTop("MultiScene");
+        
       }
-      else if (this.map?.nextScene) {
-        if (this.levelIs === 7) {
-          const multiScene = new MultiScene("Game", { level: 4, lifes: 3 });
-          const scene = this.scene.add("MultiScene", multiScene, true);
-          this.scene.start("MultiScene").bringToTop("MultiScene");
-        } else {
-          const multiScene = new MultiScene("CinematographyMod", {
-            keyname: this.map.nextScene,
-            lifes: this.lifes ? this.lifes : 3,
-            loadKey: ["Postales", "Cinemato1", "Cinemato2"],
-          });
-          const scene = this.scene.add("MultiScene", multiScene, true);
-          this.scene.start("MultiScene").bringToTop("MultiScene");
-          this.masterManagerScene?.stopMusic();
-        }
-      }
-      else if (this.levelIs !== 11) {
-        const multiScene = new MultiScene("Game", {
-          level: this.levelIs + 1,
-          lifes: this.lifes ? this.lifes : 3,
-        });
-
-        const scene = this.scene.add("MultiScene", multiScene, true);
-        this.scene.start("MultiScene").bringToTop("MultiScene");
-      } else {
-        try {
-          const multiSceneKey = "MultiScene";
-
-          // If MultiScene exists and is active, just bring it to top and reuse it
-          if (this.scene.get(multiSceneKey) && this.scene.isActive(multiSceneKey)) {
-            console.warn("⚠️ MultiScene is already active — reusing it.");
-            this.scene.bringToTop(multiSceneKey);
-          } else {
-            // If it's not active, create and start a new MultiScene instance
-            const multiScene = new MultiScene("MenuScene", undefined);
-            console.log("✅ jp test 1 — creating MultiScene:", multiScene);
-
-            const scene = this.scene.add(multiSceneKey, multiScene, true);
-            console.log("✅ jp test 2 — added MultiScene:", multiScene, scene);
-          }
-
-          this.masterManagerScene?.stopMusic();
-          console.log("✅ jp test 3 — continued with music stop or other logic");
-        } catch (e) {
-          console.error("💥 Error handling MultiScene:", e);
-        }
-      }
+     
 
     }
 
@@ -533,7 +542,31 @@ class Game extends Phaser.Scene {
     // this.time.delayedCall(4000, () => {
     //   this.animCameraPan(2000, 500)
     // })
+
+
+    this.events.on('continue', () => {
+      this.checkNextScene(),
+      console.log("entro evento")
+    });
+
     console.log("ARIEL TEST", data);
+
+    // timer
+    let seconds = 0;
+    let minutes = 0;
+    this.time.addEvent({
+      delay: 1000,
+      callback: () => {
+        if (seconds < 59) {
+          seconds++;
+        } else {
+          seconds = 0;
+          minutes++;
+        }
+        this.timerText = seconds <= 9 ? `${minutes} : 0${seconds}` : `${minutes} : ${seconds}`
+      },
+      loop: true,
+    });
 
     this.cursorsAWSD = this.input.keyboard?.addKeys({
       w: Phaser.Input.Keyboard.KeyCodes.W,

@@ -12,6 +12,7 @@ class resultContainer extends Phaser.GameObjects.Container {
     coinCount?: number;
     lifes?: number;
     victory?: boolean
+    time?:string;
     modal?:Phaser.GameObjects.Image
     resultTitle?: Phaser.GameObjects.Image;
     resultAstro?: Phaser.GameObjects.Image;
@@ -28,7 +29,9 @@ class resultContainer extends Phaser.GameObjects.Container {
             this.collText = config.collText,
             this.coinCount = config.coinCount ?? 1,
             this.lifes = config.lifes,
-            this.victory = config.victory
+            this.victory = config.victory,
+            this.time = config.timerText
+            console.log(config.timerText, "timerText from modal")
         let masterManagerScene = scene.game.scene.getScene("MasterManager") as MasterManager;
         if (!masterManagerScene) {
             this.masterManager = new MasterManager();
@@ -49,7 +52,7 @@ class resultContainer extends Phaser.GameObjects.Container {
            
            
             this.contenedorReloj = scene.add.image(window.innerWidth /2, window.innerHeight/2 -10, 'contenedorReloj')
-            scene.add.text(window.innerWidth /2, window.innerHeight/2 -10, "hola" ).setFontSize(20).setFontFamily('arcade').setDepth(3)
+            scene.add.text(window.innerWidth /2, window.innerHeight/2 -10,this.time?? 'n/a').setFontSize(20).setFontFamily('arcade').setDepth(3)
 
             this.deaths = scene.add.image(window.innerWidth/2 -40, window.innerHeight/2 + 110, "deaths")
             this.continueButton = scene.add.image (window.innerWidth /2 -100, window.innerHeight/2 + 200 , "resultContinue").setDepth(4).setInteractive()
@@ -86,6 +89,7 @@ class resultContainer extends Phaser.GameObjects.Container {
             })
             this.continueButton.on("pointerup",()=>{
                 this.continueButton?.setTexture("resultContinueHover")
+                this.scene.events.emit('continue');
             })
 
 
@@ -112,6 +116,10 @@ class resultContainer extends Phaser.GameObjects.Container {
                 this.resultTitle
             ]
             this.container?.add(assets)
+        }else{
+            this.modal = scene.add.image(window.innerWidth/2,window.innerHeight/2,"modalDefeat").setDepth(2).setScale(0.9);
+            this.resultTitle = scene.add.image(window.innerWidth / 2, window.innerHeight / 2 - 190, 'titleDefeat').setScale(0.9).setDepth(3)
+
         }
         console.log("entro")
 

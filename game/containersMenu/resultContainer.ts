@@ -28,7 +28,8 @@ class resultContainer extends Phaser.GameObjects.Container {
     timeText?:Phaser.GameObjects.Text;
   
     constructor(scene: Phaser.Scene, config: resultContainerConfigType) {
-        super(scene, config.x, config.y)
+        super(scene, config.x, config.y);
+        this.container = this.scene.add.container(0, 0);
         const offsetY = 100
             this.collText = config.collText,
             this.coinCount = config.coinCount ?? 1,
@@ -125,20 +126,7 @@ class resultContainer extends Phaser.GameObjects.Container {
 
 
             
-            const assets = [
-                this.resultAstro,
-                this.modal,
-                this.resultTitle,
-                this.item,
-                this.homeButton,
-                this.retryButton,
-                this.continueButton,
-                this.death1,
-                this.death2,
-                this.death3,
-                this.timeText
-            ]
-            this.container?.add(assets)
+           
         }else{
             this.modal = scene.add.image(window.innerWidth/2,window.innerHeight/2,"modalDefeat").setDepth(2).setScale(0.9);
             this.resultTitle = scene.add.image(window.innerWidth / 2, window.innerHeight / 2 - 170, 'titleDefeat').setScale(0.8).setDepth(3)
@@ -184,28 +172,41 @@ class resultContainer extends Phaser.GameObjects.Container {
             })
 
              
-            const assets = [
-                this.resultAstro,
-                this.modal,
-                this.resultTitle,
-                this.item,
-                this.homeButton,
-                this.retryButton,
-                this.continueButton,
-            ]
+           
+
         }
-        console.log("entro")
+        const assets = [
+            this.resultAstro,
+            this.modal,
+            this.resultTitle,
+            this.item,
+            this.homeButton,
+            this.retryButton,
+            this.continueButton,
+            this.death1,
+            this.death2,
+            this.death3,
+            this.timeText
+        ]
 
-
-
+        assets.forEach((a)=>{
+            if(a !== undefined){
+                this.container?.add(a)
+            }
+        })
+        console.log(this.container , "container result")
+        this.container.setDepth(55)
+    
         // const arr = [
 
         // ]
 
         // this.add(arr)
         scene.add.existing(this)
-    }
 
+        // this.scene.scale.on("resize", this.resizeElements, this);
+        // this.resizeElements.bind(this)()
+    }
 
 }
 export default resultContainer;

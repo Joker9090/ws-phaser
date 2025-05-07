@@ -51,11 +51,13 @@ export default class UIClass {
   constructor(scene: Game | CinematographyModular, level: number, lifes: number, time: number) {
     this.scene = scene
     this.container = this.scene.add.container(-window.innerWidth, 0);
+
     this.scene.tweens.add({
       targets: this.container,
       x: 0,
       duration: 1300,
-      ease: 'Power2'
+      delay:1000,
+      ease: 'Bounce.easeOut'
     })
 
     this.createUIContainer({ level, lifes, time })
@@ -121,7 +123,7 @@ export default class UIClass {
       this.settings.setInteractive()
       const bg = this.scene.add.rectangle(0, 0, window.innerWidth, window.innerHeight, 0x000000, 0.3).setVisible(false).setOrigin(0);
       this.container.add(bg);
-      this.container.add(this.settings);
+      // this.container.add(this.settings);
 
       this.settings.on('pointerup', () => {
         this.toggleSettings()
@@ -282,6 +284,8 @@ export default class UIClass {
       this.container.add([this.collText]);
     }
     this.scene.cameras.main.ignore(this.container)
+ 
+
   }
   sumCollectable(){
     this.collected++;

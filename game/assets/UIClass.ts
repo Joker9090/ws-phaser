@@ -51,11 +51,13 @@ export default class UIClass {
   constructor(scene: Game | CinematographyModular, level: number, lifes: number, time: number) {
     this.scene = scene
     this.container = this.scene.add.container(-window.innerWidth, 0);
+
     this.scene.tweens.add({
       targets: this.container,
       x: 0,
       duration: 1300,
-      ease: 'Power2'
+      delay:1000,
+      ease: 'Bounce.easeOut'
     })
 
     this.createUIContainer({ level, lifes, time })
@@ -121,7 +123,7 @@ export default class UIClass {
       this.settings.setInteractive()
       const bg = this.scene.add.rectangle(0, 0, window.innerWidth, window.innerHeight, 0x000000, 0.3).setVisible(false).setOrigin(0);
       this.container.add(bg);
-      this.container.add(this.settings);
+      // this.container.add(this.settings);
 
       this.settings.on('pointerup', () => {
         this.toggleSettings()
@@ -147,32 +149,35 @@ export default class UIClass {
   }
 
   toggleSettings() {
-    if (this.settingsVisible) {
-      this.container.each((child: any) => {
-        if (child instanceof containerSettings) {
-          child.crossPress()
-          this.settingsModal = undefined
-        }else if(child instanceof UI){
-          child.setVisible(true)
-        }
-      })
-      this.collText?.setVisible(true)
-      this.settingsVisible = false
-    } else {
-      this.settingsModal = new containerSettings(this.scene, { x: window.innerWidth / 2, y: window.innerHeight / 2, dinamicPosition:true }, undefined, () => { this.settingsVisible = !this.settingsVisible }, this.settings)
-      this.masterManager.playSound('buttonSound', false)
-      this.masterManager.pauseGame()
-      this.settings?.setVisible(false)
-      this.container.each((child: any) => {
-        if(child  instanceof UI){ {
-            child.setVisible(false)
+    if(this.scene.canWin){
+      if (this.settingsVisible) {
+        this.container.each((child: any) => {
+          if (child instanceof containerSettings) {
+            child.crossPress()
+            this.settingsModal = undefined
+          }else if(child instanceof UI){
+            child.setVisible(true)
           }
-        } 
-      })
-      this.collText?.setVisible(false)
-      this.container.add(this.settingsModal)
-      this.settingsVisible = true
+        })
+        this.collText?.setVisible(true)
+        this.settingsVisible = false
+      } else {
+        this.settingsModal = new containerSettings(this.scene, { x: window.innerWidth / 2, y: window.innerHeight / 2, dinamicPosition:true }, undefined, () => { this.settingsVisible = !this.settingsVisible }, this.settings)
+        this.masterManager.playSound('buttonSound', false)
+        this.masterManager.pauseGame()
+        this.settings?.setVisible(false)
+        this.container.each((child: any) => {
+          if(child  instanceof UI){ {
+              child.setVisible(false)
+            }
+          } 
+        })
+        this.collText?.setVisible(false)
+        this.container.add(this.settingsModal)
+        this.settingsVisible = true
+      }
     }
+    
   }
   rotateArrow(direction: string) {
     if (direction == "down") {
@@ -279,6 +284,8 @@ export default class UIClass {
       this.container.add([this.collText]);
     }
     this.scene.cameras.main.ignore(this.container)
+ 
+
   }
   sumCollectable(){
     this.collected++;

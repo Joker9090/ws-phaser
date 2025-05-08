@@ -64,5 +64,5 @@ export type resultContainerConfigType = {
   lifes?:number,
   victory:boolean,
   planeta:number,
-
+  timerText?:string,
 }

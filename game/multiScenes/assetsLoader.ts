@@ -144,6 +144,11 @@ export const loadAssets = {
       ["image", "botonHome", "/menu/result/home.svg"],
       ["image", "botonHomeHover", "/menu/result/botonHomeHover.png"],
       ["image", "botonHomePressed", "/menu/result/botonHomePressed.png"],
+
+      ["image", "modalDefeat", "/menu/result/resultDefeat.png"],
+      ["image", "titleDefeat", "/menu/result/titleDefeat.png"],
+      ["image", "astroDefeat", "/menu/result/astroDefeat.png"],
+
     ]
 
 

@@ -23,7 +23,7 @@ class postalManager {
     cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
 
 
-    constructor(cine: CinematographyModular, postal: string, nextLevel: number, lifes?: number, code?:string, loadKey?: string ) {
+    constructor(cine: CinematographyModular, postal: string, nextLevel: number, lifes?: number) {
         this.cine = cine
         this.postal = postal
         this.nextLevel = nextLevel

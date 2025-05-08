@@ -82,6 +82,8 @@ class Sandbox extends MapCreator {
       x: 500, //500
       y: this.worldSize.height - 600, //800
     };
+
+    // this.startingPoint =  { x: 5500, y: 1100 }
   }
 
   createMap(data: { level: number; lifes: number }) {

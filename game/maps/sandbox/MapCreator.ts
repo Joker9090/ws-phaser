@@ -93,6 +93,7 @@ export default class MapCreator {
   sideGrav: boolean = false;
   goingBack: boolean = false;
   player?: Player;
+  timerText?:string
   startingPoint = {
     x: 500, //500
     y: 800, //800
@@ -198,7 +199,7 @@ export default class MapCreator {
   // createMap() {
   //     // Logic to create a new map
   // }
-
+  
   createMapGroups() {
     this.floor = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.gravityTile = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
@@ -251,6 +252,7 @@ export default class MapCreator {
   }
 
   createPlatforms(gameObjects: mapFloorConfig[]) {
+   
     gameObjects.forEach((element) => {
       const tile: any = Factory(this.scene, element, this.floor!);
       // this.mapGroup.add(tile);

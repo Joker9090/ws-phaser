@@ -26,9 +26,9 @@ class Map0 extends MapCreator {
             height: 2000,
           };
           this.cameraBounds = {
-            x: 0,
+            x: 100,
             y: 100,
-            width: 10000,
+            width: 9800,
             height: 1800,
           };
           this.scene.physics.world.setBounds(
@@ -48,6 +48,8 @@ class Map0 extends MapCreator {
             x: 500, //500
             y: this.worldSize.height - 600, //800
           };
+          this.nextScene= "postal1_planeta1";
+            this.postalCode = "postl1";
     }
 
     createMap(data: { level: number; lifes: number }) {
@@ -71,14 +73,7 @@ class Map0 extends MapCreator {
       this.scene.add.image(0, 300, "curvedVector").setOrigin(0.5),
     ]
     
-    this.backgroundsMiddle = [
-      this.scene.add.image(-this.startingPoint.x, this.cameraBounds.height+100, "middleCombo").setOrigin(0, 1).setScale(0.7),
-      this.scene.add.image(-this.startingPoint.x + downScaledMiddleWidth, this.cameraBounds.height+100, "middleCombo2").setOrigin(0, 1).setScale(0.7),
-      this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 2), this.cameraBounds.height+100, "middleCombo3").setOrigin(0, 1).setScale(0.7),
-      this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 3), this.cameraBounds.height+100, "middleCombo4").setOrigin(0, 1).setScale(0.7),
-      this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 4), this.cameraBounds.height+100, "middleCombo2").setOrigin(0, 1).setScale(0.7),
-      this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 5), this.cameraBounds.height+100, "middleCombo2").setOrigin(0, 1).setScale(0.7),
-    ]
+    this.backgroundsMiddle = this.createBgRow(100, this.cameraBounds.height+100, ["middleCombo", "middleCombo2", "middleCombo3", "middleCombo4"], width, 0.7),
     
     this.backgroundsFront = [
       this.scene.add.image(-this.startingPoint.x, this.cameraBounds.height+100, "frontCombo").setOrigin(0, 1).setScale(0.5),

@@ -10,6 +10,7 @@ export default function Home() {
     const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     const isPortrait = window.innerHeight > window.innerWidth;
     setOverlayVisible(isTouch && isPortrait);
+    console.log("isTouch", isTouch, "isPortrait", isPortrait);
   };
 
   React.useEffect(() => {
@@ -69,7 +70,7 @@ export default function Home() {
           arcade: {
             overlapBias: 10,
             gravity: { y: 1000, x: 0 },
-            debug: true,
+            debug: false,
           },
         },
       };
@@ -78,30 +79,39 @@ export default function Home() {
       setGame(gameInstance);
 
       const handleResize = () => {
+        console.log("handleResize", window.innerWidth, window.innerHeight, gameInstance,);
         if (!gameInstance) return;
         const width = window.innerWidth;
         const height = window.innerHeight;
-        gameInstance.scale.resize(width, height);
-        gameInstance.scene.scenes.forEach(scene => {
-          if (scene.cameras && scene.cameras.main) {
-            scene.cameras.main.setSize(width, height);
-          }
-          if (scene.cameras) {
-            const backgroundCamera = scene.cameras.getCamera('backgroundCamera');
-            if (backgroundCamera) {
-              backgroundCamera.setSize(width, height);
+        if (width > height) {
+          console.log("width", width, "height", height);
+
+          gameInstance.scale.resize(width, height);
+          gameInstance.scene.scenes.forEach(scene => {
+            console.log("scene", scene.cameras, scene.cameras.main);
+            if (scene.cameras && scene.cameras.main) {
+              scene.cameras.main.setSize(height, width);
+              setTimeout(() => {
+                scene.cameras.main.setSize(width, height);
+              }, 50); 
             }
-          }
-        });
+            if (scene.cameras) {
+              const backgroundCamera = scene.cameras.getCamera('backgroundCamera');
+              if (backgroundCamera) {
+                backgroundCamera.setSize(width, height);
+              }
+            }
+          });
+        }
       };
-      
+      handleResize(); // Initial resize to set the correct size
       setTimeout(handleResize, 50); // Ensure correct sizing on init
       window.addEventListener("resize", () => setTimeout(handleResize, 50));
-      window.addEventListener("load", handleResize);
+      window.addEventListener("load", () => setTimeout(handleResize, 50));
 
       return () => {
         window.removeEventListener("resize", () => setTimeout(handleResize, 50));
-        window.removeEventListener("load", handleResize);
+        window.removeEventListener("load", () => setTimeout(handleResize, 50));
       };
     }
   }, [phaser, scenes, overlayVisible]);

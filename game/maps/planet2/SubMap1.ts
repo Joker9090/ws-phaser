@@ -70,14 +70,15 @@ class SubMap1 extends MapCreator {
           // this.scene.children.sendToBack(bgContainer);
           this.scene.cameras.main.ignore(bgContainer);
 
-        this.backgroundsMiddle = [
+        /*this.backgroundsMiddle = [
             this.scene.add.image(-this.startingPoint.x, this.cameraBounds.height + 100, "middleCombo").setOrigin(0, 1).setScale(0.7),
             this.scene.add.image(-this.startingPoint.x + downScaledMiddleWidth, this.cameraBounds.height + 100, "middleCombo2").setOrigin(0, 1).setScale(0.7),
             this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 2), this.cameraBounds.height + 100, "middleCombo3").setOrigin(0, 1).setScale(0.7),
             this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 3), this.cameraBounds.height + 100, "middleCombo4").setOrigin(0, 1).setScale(0.7),
             this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 4), this.cameraBounds.height + 100, "middleCombo2").setOrigin(0, 1).setScale(0.7),
             this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 5), this.cameraBounds.height + 100, "middleCombo2").setOrigin(0, 1).setScale(0.7),
-        ]
+        ]*/
+       this.backgroundsMiddle = this.createBgRow(100, this.cameraBounds.height+100, ["middleCombo", "middleCombo2", "middleCombo3", "middleCombo4"], width, 0.7),
 
         this.backgroundsFront = [
             this.scene.add.image(this.startingPoint.x + this.backSize.width - 15, this.cameraBounds.height + 100, "montaña3"),
@@ -143,8 +144,8 @@ class SubMap1 extends MapCreator {
 
         const baseFireballConf = {
             type: "fireball",
-            spriteSheet: "meteorito",
-            texture: "meteorito",
+            spriteSheet: "meteoritop1",
+            texture: "meteoritop1",
             width: 100,
             height: 100,
             group: this.firegroup,

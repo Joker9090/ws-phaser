@@ -99,7 +99,7 @@ export default class MapCreator {
   };
   loseConfig: loseConfigFromMapType = [
     {
-      positions: { x: 500, y: 800 },
+      positions: { x: this.startingPoint.x , y: this.startingPoint.y },
       cameraDirection: "NORMAL",
       PlayerDirection: "NORMAL",
       gravityDown: true
@@ -208,6 +208,7 @@ export default class MapCreator {
     this.obstacle = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.firegroup = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.portal = this.scene.physics.add.group({ allowGravity: false });
+    this.coin = this.scene.physics.add.group({ allowGravity: false });
     this.scene.UICamera?.ignore(this.floor)
     this.scene.UICamera?.ignore(this.gravityTile)
     this.scene.UICamera?.ignore(this.rotationTile)
@@ -216,6 +217,7 @@ export default class MapCreator {
     this.scene.UICamera?.ignore(this.obstacle)
     this.scene.UICamera?.ignore(this.firegroup)
     this.scene.UICamera?.ignore(this.portal)
+    this.scene.UICamera?.ignore(this.coin)
     if (this.scene.physics.world.debugGraphic) {
       this.scene.UICamera?.ignore(this.scene.physics.world.debugGraphic);
     }
@@ -355,6 +357,13 @@ export default class MapCreator {
     });
   }
 
+  createBgRow(x: number, y: number, textures: string[], assetWidth: number, scale: number) {
+    const scaledWidth: number = assetWidth * scale;
+    return Array(Math.ceil(this.worldSize.width / scaledWidth)).fill(0).map((_, index) => {
+      const randomTexture = textures[Math.floor(Math.random() * textures.length)];
+      return this.scene.add.image(x + index * scaledWidth, y, randomTexture).setOrigin(0, 1).setScale(scale);
+    });
+  }
 
   addColliders() {
     if (this.scene.player) {

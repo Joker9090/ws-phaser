@@ -46,6 +46,7 @@ class Map1 extends MapCreator {
             x: 6900, //500
             y: this.worldSize.height - 900, //800
           };
+          this.UIItemToGrab="comida";
     }
 
     createMap(data: { level: number; lifes: number }) {
@@ -60,9 +61,9 @@ class Map1 extends MapCreator {
         const downScaledFrontWidth = width * 0.5;
 
         const bgContainerArr = [
-            this.scene.add.image(0, 0, "gradient").setOrigin(0.5),
-            this.scene.add.image(0, 0, "stars").setOrigin(0.5),
-            this.scene.add.image(0, 300, "curvedVector").setOrigin(0.5),
+            this.scene.add.image(0, 0, "p1backgroundNoche").setOrigin(0.5),
+            this.scene.add.image(0, 0, "p1Stars").setOrigin(0.5),
+            this.scene.add.image(0, 0, "p1capaOscuridad").setOrigin(0.5),
           ]
           const bgContainer = this.scene.add.container(0, 0, bgContainerArr);
           this.scene.UICamera?.ignore(bgContainer);
@@ -70,19 +71,23 @@ class Map1 extends MapCreator {
           // this.scene.children.sendToBack(bgContainer);
           this.scene.cameras.main.ignore(bgContainer);
 
-        this.backgroundsMiddle = [
+        /*this.backgroundsMiddle = [
             this.scene.add.image(-this.startingPoint.x, this.cameraBounds.height + 100, "middleCombo").setOrigin(0, 1).setScale(0.7),
             this.scene.add.image(-this.startingPoint.x + downScaledMiddleWidth, this.cameraBounds.height + 100, "middleCombo2").setOrigin(0, 1).setScale(0.7),
             this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 2), this.cameraBounds.height + 100, "middleCombo3").setOrigin(0, 1).setScale(0.7),
             this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 3), this.cameraBounds.height + 100, "middleCombo4").setOrigin(0, 1).setScale(0.7),
             this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 4), this.cameraBounds.height + 100, "middleCombo2").setOrigin(0, 1).setScale(0.7),
             this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 5), this.cameraBounds.height + 100, "middleCombo2").setOrigin(0, 1).setScale(0.7),
-        ]
+        ]*/
+       this.backgroundsMiddle = this.createBgRow(100, this.cameraBounds.height+100, ["frontground1p1", "frontground2p1", "frontground1p1", "frontground2p1"], width, 0.7),
 
         this.backgroundsFront = [
-            this.scene.add.image(this.startingPoint.x + this.backSize.width - 15, this.cameraBounds.height + 100, "montaña3"),
-            this.scene.add.image(this.startingPoint.x - 70, this.cameraBounds.height + 100, "montaña5"),
-            this.scene.add.image(1200, this.cameraBounds.height + 100, "montaña3")
+          this.scene.add.image(-this.startingPoint.x, this.cameraBounds.height+100, "montaña1p1").setOrigin(0, 1).setScale(0.5),
+          this.scene.add.image(-this.startingPoint.x + downScaledFrontWidth, this.cameraBounds.height+100, "montaña2p1").setOrigin(0, 1).setScale(0.5),
+          this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 2), this.cameraBounds.height+100, "huesoFrontp1").setOrigin(0, 1).setScale(0.5),
+          this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 3), this.cameraBounds.height+100, "montaña4p1").setOrigin(0, 1).setScale(0.5),
+          this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 4), this.cameraBounds.height+100, "montaña5p1").setOrigin(0, 1).setScale(0.5),
+          this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 5), this.cameraBounds.height+100, "montaña3p1").setOrigin(0, 1).setScale(0.5),
         ]
 
         this.createBackgrounds(this.backgroundsBack, this.backgroundsMiddle, this.backgroundsFront);
@@ -126,7 +131,7 @@ class Map1 extends MapCreator {
             scale: { width: 0.7, height: 0.7 },
             width: 10,
             height: 18,
-            fix: 10,
+            //fix: 10,
         }
 
         const baseDangerConf = {
@@ -138,13 +143,13 @@ class Map1 extends MapCreator {
             attackSpriteSheet: "EnemyAttack",
             particleSpriteSheet: "EnemyParticles",
             group: this.obstacle,
-            color: parseInt('0x00feff'),
+            color: 0xff9600,
         }
 
         const baseFireballConf = {
             type: "fireball",
-            spriteSheet: "meteorito",
-            texture: "meteorito",
+            spriteSheet: "meteoritop1",
+            texture: "meteoritop1",
             width: 100,
             height: 100,
             group: this.firegroup,
@@ -167,7 +172,7 @@ class Map1 extends MapCreator {
                 large: 8,
                 group: this.floor
             },
-            { ...baseFireballConf, pos: { x: 500, y: this.worldSize.height - 100 }, tween: { duration: 2000, repeat: -1, y: "-=1000", yoyo: false  }, rotated: false },
+            { ...baseFireballConf, pos: { x: 500, y: 0 }, tween: { duration: 2000, repeat: -1, y: "+=2000", yoyo: false  }, rotated: false },
 
 
             {
@@ -190,8 +195,8 @@ class Map1 extends MapCreator {
                     attackInterval: 0,
                 }
             },
-            { ...baseCristalConf, pos: { x: 1100, y: this.worldSize.height - 600 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
-            { ...baseCristalConf, pos: { x: 1650, y: this.worldSize.height - 600 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
+            { ...baseCristalConf, pos: { x: 1100, y: this.worldSize.height - 600 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
+            { ...baseCristalConf, pos: { x: 1650, y: this.worldSize.height - 600 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
 
 
             {
@@ -200,29 +205,29 @@ class Map1 extends MapCreator {
                 large: 8,
                 group: this.floor
             },
-            { ...baseFireballConf, pos: { x: 2400, y: this.worldSize.height - 100 }, tween: { duration: 2000, repeat: -1, y: "-=1000", yoyo: false  }, rotated: false },
+            { ...baseFireballConf, pos: { x: 2400, y: 0 }, tween: { duration: 2000, repeat: -1, y: "+=2000", yoyo: false  }, rotated: false },
 
 
             { ...basePlatformsConfig, pos: { x: 3100, y:  this.worldSize.height - 600 } },
-            { ...baseFireballConf, pos: { x: 3300, y: this.worldSize.height - 200 }, tween: { duration: 2000, repeat: -1, y: "-=1200", yoyo: false  }, rotated: false },
+            { ...baseFireballConf, pos: { x: 3300, y: 0 }, tween: { duration: 2000, repeat: -1, y: "+=2000", yoyo: false  }, rotated: false },
 
             { ...basePlatformsConfig, pos: { x: 3500, y: this.worldSize.height - 800 }, colors: [colors.falling], group: this.fallingTile },
-            { ...baseCristalConf, pos: { x: 3500, y: this.worldSize.height - 900 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
+            { ...baseCristalConf, pos: { x: 3500, y: this.worldSize.height - 900 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
 
             { ...basePlatformsConfig, pos: { x: 3800, y: this.worldSize.height - 600 }, colors: [colors.falling], group: this.fallingTile },
-            { ...baseCristalConf, pos: { x: 3800, y: this.worldSize.height - 700 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
+            { ...baseCristalConf, pos: { x: 3800, y: this.worldSize.height - 700 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
 
             { ...basePlatformsConfig, pos: { x: 4200, y: this.worldSize.height - 600 }, colors: [colors.falling], group: this.fallingTile },
-            { ...baseCristalConf, pos: { x: 4200, y: this.worldSize.height - 700 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
+            { ...baseCristalConf, pos: { x: 4200, y: this.worldSize.height - 700 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
 
             { ...basePlatformsConfig, pos: { x: 4600, y: this.worldSize.height - 600 }, colors: [colors.falling], group: this.fallingTile },
-            { ...baseCristalConf, pos: { x: 4600, y: this.worldSize.height - 700 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
+            { ...baseCristalConf, pos: { x: 4600, y: this.worldSize.height - 700 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
 
             { ...basePlatformsConfig, pos: { x: 4000, y: this.worldSize.height - 900 }, colors: [colors.falling], group: this.fallingTile },
-            { ...baseCristalConf, pos: { x: 4000, y: this.worldSize.height - 1000 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
+            { ...baseCristalConf, pos: { x: 4000, y: this.worldSize.height - 1000 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
 
             { ...basePlatformsConfig, pos: { x: 4400, y: this.worldSize.height - 900 }, colors: [colors.falling], group: this.fallingTile },
-            { ...baseCristalConf, pos: { x: 4400, y: this.worldSize.height - 1000 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
+            { ...baseCristalConf, pos: { x: 4400, y: this.worldSize.height - 1000 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
 
             
             {
@@ -241,9 +246,9 @@ class Map1 extends MapCreator {
                 large: 8,
                 group: this.floor
             },
-            { ...baseCristalConf, pos: { x: 5600, y: this.worldSize.height - 800 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
-            { ...baseCristalConf, pos: { x: 5750, y: this.worldSize.height - 1000 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
-            { ...baseCristalConf, pos: { x: 5900, y: this.worldSize.height - 800 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
+            { ...baseCristalConf, pos: { x: 5600, y: this.worldSize.height - 800 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
+            { ...baseCristalConf, pos: { x: 5750, y: this.worldSize.height - 1000 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
+            { ...baseCristalConf, pos: { x: 5900, y: this.worldSize.height - 800 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
 
 
             {
@@ -270,9 +275,9 @@ class Map1 extends MapCreator {
                 large: 10,
                 group: this.floor
             },
-            { ...baseCristalConf, pos: { x: 7000, y: this.worldSize.height - 700 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
-            { ...baseCristalConf, pos: { x: 7300, y: this.worldSize.height - 900 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
-            { ...baseCristalConf, pos: { x: 7600, y: this.worldSize.height - 700 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
+            { ...baseCristalConf, pos: { x: 7000, y: this.worldSize.height - 700 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
+            { ...baseCristalConf, pos: { x: 7300, y: this.worldSize.height - 900 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
+            { ...baseCristalConf, pos: { x: 7600, y: this.worldSize.height - 700 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
 
             
             {
@@ -289,8 +294,8 @@ class Map1 extends MapCreator {
                 attackInterval: 0,
               }
             },
-            { ...baseCristalConf, pos: { x: 8550, y: this.worldSize.height - 700 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
-            { ...baseCristalConf, pos: { x: 8650, y: this.worldSize.height - 700 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
+            { ...baseCristalConf, pos: { x: 8550, y: this.worldSize.height - 700 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
+            { ...baseCristalConf, pos: { x: 8650, y: this.worldSize.height - 700 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
             { ...baseDangerConf, pos: { x: 8800, y: this.worldSize.height - 650 }, width: 170, height: 170, patrol:{
                 patrolType: "LinealY",
                 distance: 300,
@@ -298,8 +303,8 @@ class Map1 extends MapCreator {
                 attackInterval: 0,
               }
             },
-            { ...baseCristalConf, pos: { x: 8950, y: this.worldSize.height - 700 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
-            { ...baseCristalConf, pos: { x: 9050, y: this.worldSize.height - 700 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
+            { ...baseCristalConf, pos: { x: 8950, y: this.worldSize.height - 700 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
+            { ...baseCristalConf, pos: { x: 9050, y: this.worldSize.height - 700 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
             { ...baseDangerConf, pos: { x: 9200, y: this.worldSize.height - 650 }, width: 170, height: 170, patrol:{
                 patrolType: "LinealY",
                 distance: 300,
@@ -317,10 +322,10 @@ class Map1 extends MapCreator {
                 withTextureToAbove: false,
             },
             { ...basePlatformsConfig, pos: { x: 9900, y:  this.worldSize.height - 600 } },
-            { ...baseCristalConf, pos: { x: 10200, y: this.worldSize.height - 400 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
+            { ...baseCristalConf, pos: { x: 10200, y: this.worldSize.height - 400 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
 
             { ...basePlatformsConfig, pos: { x: 10500, y:  this.worldSize.height - 600 } },
-            { ...baseCristalConf, pos: { x: 10800, y: this.worldSize.height - 400 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
+            { ...baseCristalConf, pos: { x: 10800, y: this.worldSize.height - 400 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
 
 
             {

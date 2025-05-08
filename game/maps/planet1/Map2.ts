@@ -222,10 +222,10 @@ class Map2 extends MapCreator {
             },
             //replace
             //{ ...baseFireballConf, pos: { x: 4500, y: this.worldSize.height - 800 }, tween: { duration: 1400, repeat: -1, x: "-=600", yoyo: true  }, rotated: true },
-            { ...baseDangerConf, pos: { x: 4600, y: this.worldSize.height - 1450 }, width: 170, height: 170, 
+            { ...baseDangerConf, pos: { x: 4000, y: this.worldSize.height - 1500 }, width: 170, height: 170, 
                 patrol:{
                     patrolType: "LinealX",
-                    distance: 200,
+                    distance: 400,
                     speed: 80,
                     attackInterval: 0,
                 }
@@ -235,7 +235,8 @@ class Map2 extends MapCreator {
 
             { ...basePlatformsConfig, pos: { x: 4200, y: this.worldSize.height - 1200 } }, 
             { ...baseCristalConf, pos: { x: 4450, y:  this.worldSize.height - 1400 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
-            { ...basePlatformsConfig, pos: { x: 4700, y: this.worldSize.height - 1200 }, colors: [colors.falling], group: this.fallingTile  }, //TIENE QUE SER PLATAFORMA QUE SE CAE
+            { ...basePlatformsConfig, pos: { x: 4700, y: this.worldSize.height - 1200 }, colors: [colors.falling], group: this.fallingTile  },
+            { ...basePlatformsConfig, pos: { x: 5000, y: this.worldSize.height - 1200 }, colors: [colors.falling], group: this.fallingTile  }, //TIENE QUE SER PLATAFORMA QUE SE CAE
             {
                 ...baseLongPlatformsConf,
                 pos: { x: 5300, y: this.worldSize.height - 1200 },

@@ -308,7 +308,14 @@ class Map1 extends MapCreator {
             },
             { ...baseFireballConf, pos: { x: 8400, y:0 }, tween: { duration: 5000, repeat: -1, y: "+=2000"}, rotated: false },
 
-            { ...baseDangerConf, pos: { x: 8800, y: this.worldSize.height - 1250 }, width: 170, height: 170 },
+            { ...baseDangerConf, pos: { x: 8800, y: this.worldSize.height - 1250 }, width: 170, height: 170, 
+                patrol:{
+                    patrolType: "LinealY",
+                    distance: 100,
+                    speed: 80,
+                    attackInterval: 0,
+                }
+            },
             {
                 ...baseLongPlatformsConf,
                 pos: { x: 8700, y: this.worldSize.height - 1200 },
@@ -316,7 +323,14 @@ class Map1 extends MapCreator {
                 group: this.floor
             },
             { ...baseCristalConf, pos: { x: 8950, y: this.worldSize.height - 1300 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
-            { ...baseDangerConf, pos: { x: 9100, y: this.worldSize.height - 1250 }, width: 170, height: 170 },
+            { ...baseDangerConf, pos: { x: 9100, y: this.worldSize.height - 1250 }, width: 170, height: 170,
+                patrol:{
+                    patrolType: "LinealY",
+                    distance: 100,
+                    speed: 80,
+                    attackInterval: 0,
+                }
+            },
 
             {
                 ...baseLargePlatformsConf,

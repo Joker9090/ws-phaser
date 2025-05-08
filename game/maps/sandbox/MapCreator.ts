@@ -339,7 +339,7 @@ export default class MapCreator {
     // this.scene.UICamera?.ignore(this.mapGroup);
     // this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.mapGroup);
     this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.scene.player!);
-    if(this.scene.UIClass?.collText)this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.scene.UIClass.collText);
+    this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.scene.UIClass?.container!);
   }
 
   resetMap() {

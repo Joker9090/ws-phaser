@@ -66,7 +66,7 @@ class Map0 extends MapCreator {
           ]
           const bgContainer = this.scene.add.container(0, 0, bgContainerArr);
           this.scene.UICamera?.ignore(bgContainer);
-          const newMainCamera = this.scene.cameras.add(0, 0, window.innerWidth, window.innerHeight, true, "mainCamera");
+          //const newMainCamera = this.scene.cameras.add(0, 0, window.innerWidth, window.innerHeight, true, "mainCamera");
           // this.scene.children.sendToBack(bgContainer);
           this.scene.cameras.main.ignore(bgContainer);
 

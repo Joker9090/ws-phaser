@@ -3,6 +3,7 @@ import Player from "@/game/assets/Player";
 import { GamePlayDataType } from "@/game/Types";
 import Game from "@/game/Game";
 import { group } from "console";
+import colors from "@/game/assets/PlatformColors";
 
 export default class Map3 extends MapCreator {
   constructor(scene: Game, player: Player, data?: GamePlayDataType) {
@@ -11,38 +12,46 @@ export default class Map3 extends MapCreator {
     this.player = player;
 
     this.worldSize = {
-      width: 5000,
+      width: 12400,
       height: 3000,
     };
     this.cameraBounds = {
       x: 100,
       y: 100,
-      width: 4800,
+      width: 12200,
       height: 2800,
     };
 
     this.scene.physics.world.setBounds(
         0,
         0,
-        5000,
-        3000
+        this.worldSize.width,
+        this.worldSize.height
       );
     this.scene.cameras.main.setBounds(
         100,
         100,
-        4800,
-        2800
+        this.cameraBounds.width,
+        this.cameraBounds.height
     );
+    this.startingPoint = {
+      x: 400,
+      y: this.cameraBounds.height - 600,
+    };
+    this.loseConfig = [
+      {
+        positions: {
+          x: this.startingPoint.x,
+          y: this.startingPoint.y,
+        },
+        cameraDirection: "NORMAL",
+        PlayerDirection: "NORMAL",
+        gravityDown: true
+      }
+    ]
 
     this.player.setPlayerWithTank(true);
   }
-
-    createBgRow(x: number, y: number, texture: string, assetWidth: number, scale: number) {
-        const scaledWidth: number = assetWidth * scale;
-        return Array(Math.ceil(this.worldSize.width / scaledWidth)).fill(0).map((_, index) => {
-            return this.scene.add.image(x + index * scaledWidth, y, texture).setOrigin(0, 1).setScale(scale);
-        });
-    }
 
     createMap(data: { level: number; lifes: number }) {
       const { width, height } = this.ratioReference;
@@ -56,15 +65,7 @@ export default class Map3 extends MapCreator {
       this.scene.add.image(0, 300, "curvedVector").setOrigin(0.5),
     ]
     
-    this.backgroundsMiddle = [
-      // ...this.createBgRow(-this.startingPoint.x, this.cameraBounds.height+100, "middleCombo4", width, 0.7),
-      this.scene.add.image(-this.startingPoint.x, this.cameraBounds.height+100, "middleCombo").setOrigin(0, 1).setScale(0.7),
-      this.scene.add.image(-this.startingPoint.x + downScaledMiddleWidth, this.cameraBounds.height+100, "middleCombo2").setOrigin(0, 1).setScale(0.7),
-      this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 2), this.cameraBounds.height+100, "middleCombo").setOrigin(0, 1).setScale(0.7),
-      this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 3), this.cameraBounds.height+100, "middleCombo4").setOrigin(0, 1).setScale(0.7),
-      this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 4), this.cameraBounds.height+100, "middleCombo3").setOrigin(0, 1).setScale(0.7),
-      this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 5), this.cameraBounds.height+100, "middleCombo2").setOrigin(0, 1).setScale(0.7),
-    ]
+    this.backgroundsMiddle = this.createBgRow(100, this.cameraBounds.height+100, ["middleCombo", "middleCombo2", "middleCombo3", "middleCombo4"], width, 0.7),
     
     this.backgroundsFront = [
       this.scene.add.image(-this.startingPoint.x, this.cameraBounds.height+100, "frontCombo").setOrigin(0, 1).setScale(0.5),
@@ -115,6 +116,39 @@ export default class Map3 extends MapCreator {
         group: this.floor
       };
 
+      const baseDangerConf = {
+        type: "danger",
+        texture: "Enemy",
+        scale: { width: 0.6, height: 0.6 },
+        width: 170,
+        height: 170,
+        attackSpriteSheet: "EnemyAttack",
+        particleSpriteSheet: "EnemyParticles",
+        group: this.obstacle,
+        color: parseInt('0x00feff'),
+      }
+
+      const baseFireballConf = {
+        type: "fireball",
+        spriteSheet: "meteorito",
+        texture: "meteorito",
+        width: 100,
+        height: 100,
+        group: this.firegroup,
+        scale: { width: 0.5, height: 0.5 },
+      }
+
+      const baseCristalConf = {
+        type: "collectable",
+        texture: "cristal3",
+        scale: { width: 0.7, height: 0.7 },
+        width: 140,
+        height: 180,
+        fix: 10,
+        group: this.coin,
+        aura: 'auraTuto'
+      }
+
       const mapFloor =  this.cameraBounds.height; 
       const mapLeft = this.cameraBounds.x;
   
@@ -122,50 +156,135 @@ export default class Map3 extends MapCreator {
         {
           ...baseLargePlatformsConf,
           pos: { x: mapLeft, y: mapFloor - 100 },
-          large: 15,
+          large: 10,
           group: this.floor
         },
+        { ...baseCristalConf, pos: { x: 1300, y: mapFloor - 600 }},
         {
-          ...basePlatformsConfig, pos: { x: 1000, y: mapFloor-400 }, animation: {
+          ...basePlatformsConfig, pos: { x: 1300, y: mapFloor - 400 }, animation: {
             xAxis: {
-              xDistance: 1000,
+              xDistance: 400,
               xVel: 100
             }
           }
         },
+        { ...basePlatformsConfig, pos: { x: 1900, y: mapFloor - 600 } },
+        { ...basePlatformsConfig, pos: { x: 2300, y: mapFloor - 600 }, group: this.fallingTile, colors: [colors.falling],  },
         {
-          ...basePlatformsConfig, pos: { x: 1000, y: mapFloor-500 }, animation: {
-            yAxis: {
-              yDistance: 1000,
-              yVel: 100
-            }
+          ...baseDangerConf, pos: { x: 2700, y: mapFloor - 600 }, patrol: {
+            patrolType: "LinealY",
+            distance: 100,
+            speed: 200,
+            attackInterval: 2,
           }
         },
-        { ...basePlatformsConfig, pos: { x: 1400, y: mapFloor-600 } },
-        { ...basePlatformsConfig, pos: { x: 1800, y: mapFloor-600 } },
-        { ...basePlatformsConfig, pos: { x: 2200, y: mapFloor-600 } },
+        { ...baseCristalConf, pos: { x: 2800, y: mapFloor - 400 }},
         {
           ...baseLargePlatformsConf,
-          pos: { x: 3000, y: mapFloor - 100 },
-          large: 15,
+          pos: { x: 2800, y: mapFloor - 200 },
+          large: 8,
           group: this.floor
         },
-        { ...basePlatformsConfig, pos: { x: 3400, y: mapFloor-100 } },
-        { ...basePlatformsConfig, pos: { x: 3700, y: mapFloor-400 } },
-        { ...basePlatformsConfig, pos: { x: 4000, y: mapFloor-600 } },
-        { ...basePlatformsConfig, pos: { x: 4300, y: mapFloor-800 } },
-        { ...basePlatformsConfig, pos: { x: 4600, y: mapFloor-1200 } },
-        { ...basePlatformsConfig, pos: { x: 4900, y: mapFloor-1200 } },
-        { ...basePlatformsConfig, pos: { x: 5200, y: mapFloor-1200 } },
-        { ...basePlatformsConfig, pos: { x: 5500, y: mapFloor-1200 } },
+        { ...baseFireballConf, pos: { x: 3900, y:  mapFloor-800 }, tween: { duration: 3000, repeat: -1, y: "+=1500"}, rotated: false },
+        { ...basePlatformsConfig, pos: { x: 4200, y: mapFloor-200 } },
+        { ...baseFireballConf, pos: { x: 4500, y:  mapFloor-800 }, tween: { duration: 3000, repeat: -1, y: "+=1500"}, rotated: false },
+        { ...basePlatformsConfig, pos: { x: 4800, y: mapFloor-600 }, animation: {
+          yAxis: {
+            yDistance: 300,
+            yVel: 100
+          }
+        } },
+        { ...baseCristalConf, pos: { x: 4950, y: mapFloor - 800 }},
+        { ...basePlatformsConfig, pos: { x: 5100, y: mapFloor-1000 }, animation: {
+          yAxis: {
+            yDistance: 300,
+            yVel: 100
+          }
+        } },
+        { ...baseCristalConf, pos: { x: 5250, y: mapFloor - 1200 }},
+        { ...basePlatformsConfig, pos: { x: 5400, y: mapFloor-1400 }, animation: {
+          yAxis: {
+            yDistance: 300,
+            yVel: 100
+          }
+        } },
+        { ...baseCristalConf, pos: { x: 5700, y: mapFloor-1600 }},
+        { ...basePlatformsConfig, pos: { x: 5700, y: mapFloor-1400 } },
+        { ...basePlatformsConfig, pos: { x: 6000, y: mapFloor-1400 }, group: this.fallingTile, colors: [colors.falling],  },
+        { ...baseCristalConf, pos: { x: 6150, y: mapFloor-1600 }},
+        { ...basePlatformsConfig, pos: { x: 6300, y: mapFloor-1400 }, group: this.fallingTile, colors: [colors.falling],  },
+        { ...baseCristalConf, pos: { x: 6450, y: mapFloor-1600 }},
+        { ...basePlatformsConfig, pos: { x: 6600, y: mapFloor-1400 }, group: this.fallingTile, colors: [colors.falling],  },
         {
           ...baseLargePlatformsConf,
-          pos: { x: 6000, y: mapFloor - 1200 },
-          large: 10,
+          pos: { x: 6900, y: mapFloor - 1400 },
+          large: 5,
           group: this.floor,
           withTextureToAbove: false,
         },
-        { type: "finalPortal", pos: { x: 1000, y: mapFloor - 200 }, texture: "plataformaFinalP1", width: 100, height: 100, group: this.portal }
+        {
+          ...baseDangerConf, pos: { x: 7600, y: mapFloor - 1400 }, patrol: {
+            patrolType: "LinealY",
+            distance: 100,
+            speed: 200,
+            attackInterval: 2,
+          }
+        },
+        {
+          ...baseDangerConf, pos: { x: 7900, y: mapFloor - 1400 }, patrol: {
+            patrolType: "LinealY",
+            distance: 100,
+            speed: 200,
+            attackInterval: 2,
+          }
+        },
+        { ...basePlatformsConfig, pos: { x: 8200, y: mapFloor - 1000 }, animation: {
+          yAxis: {
+            yDistance: 300,
+            yVel: 100
+          }
+        } },
+        { ...baseCristalConf, pos: { x: 8300, y: mapFloor - 800 }},
+        {
+          ...baseLargePlatformsConf,
+          pos: { x: 8400, y: mapFloor - 600 },
+          large: 7,
+          group: this.floor,
+        },
+        { ...basePlatformsConfig, pos: { x: 9300, y: mapFloor - 600 }, group: this.fallingTile, colors: [colors.falling],  },
+        {
+          ...baseDangerConf, pos: { x: 9500, y: mapFloor - 600 }, patrol: {
+            patrolType: "LinealY",
+            distance: 100,
+            speed: 200,
+            attackInterval: 2,
+          }
+        },
+        { ...basePlatformsConfig, pos: { x: 9700, y: mapFloor - 600 }, group: this.fallingTile, colors: [colors.falling],  },
+        {
+          ...baseDangerConf, pos: { x: 9900, y: mapFloor - 600 }, patrol: {
+            patrolType: "LinealY",
+            distance: 100,
+            speed: 200,
+            attackInterval: 2,
+          }
+        },
+        { ...basePlatformsConfig, pos: { x: 10100, y: mapFloor - 600 }, group: this.fallingTile, colors: [colors.falling],  },
+        { ...basePlatformsConfig, pos: { x: 10500, y: mapFloor - 600 } },
+        { ...basePlatformsConfig, pos: { x: 11100, y: mapFloor - 600 }, animation: {
+          xAxis: {
+            xDistance: 500,
+            xVel: 100
+          }
+        } },
+        { ...baseCristalConf, pos: { x: 11400, y: mapFloor - 700 }},
+        {
+          ...baseLargePlatformsConf,
+          pos: { x: 11600, y: mapFloor - 500 },
+          large: 8,
+          group: this.floor,
+        },
+        { type: "finalPortal", pos: { x: 12100, y: mapFloor - 600 }, texture: "plataformaFinalP1", width: 100, height: 100, group: this.portal }
       ]
 
       this.createPlatforms(mapPlatforms)

@@ -428,7 +428,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   checkMove(cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined) {
+    const scene = this.scene as Game
     let velocity = 300;
+    let mobileVelocity = { x: scene.normalizedDragX * 350, y: scene.normalizedDragY * 350 };
     this.gravityAnimSprite?.setPosition(this.x, this.y)
     if(this.isFlying) {
       this.checkFly(cursors)
@@ -454,12 +456,20 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       const { left, right, up, space } = cursors;
       /* Left*/
       if (left.isDown) {
-        this.setVelocityX(this.cameraState === 'NORMAL' ? -velocity : velocity);
-        this.setFlipX(this.cameraState === 'NORMAL' ? true : false);
+        if (scene.isTouchDevice) {
+          this.setVelocityX(this.cameraState === 'NORMAL' ? mobileVelocity.x : -mobileVelocity.x);
+        } else {
+          this.setVelocityX(this.cameraState === 'NORMAL' ? -velocity : velocity);
+        }
         if (!this.isJumping && !this.isRotating) this.anims.play("playerMove", true);
+        this.setFlipX(this.cameraState === 'NORMAL' ? true : false);
       } else if (right.isDown) {
         /* Right*/
-        this.setVelocityX(this.cameraState === 'NORMAL' ? velocity : -velocity);
+        if (scene.isTouchDevice) {
+          this.setVelocityX(this.cameraState === 'NORMAL' ? mobileVelocity.x : -mobileVelocity.x);
+        } else {
+          this.setVelocityX(this.cameraState === 'NORMAL' ? velocity : -velocity);
+        }
         this.setFlipX(this.cameraState === 'NORMAL' ? false : true);
         if (!this.isJumping && !this.isRotating) this.anims.play("playerMove", true);
       } else {

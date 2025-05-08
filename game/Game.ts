@@ -89,6 +89,8 @@ class Game extends Phaser.Scene {
   joystickBase?: Phaser.GameObjects.Arc;
   joystickKnob?: Phaser.GameObjects.Arc;
   joystickPointerId: number | null = null; // Store the pointer ID for the joystick
+  normalizedDragX: number = 0;
+  normalizedDragY: number = 0;
 
   lifes?: number;
   levelIs: number = 0;
@@ -204,6 +206,25 @@ class Game extends Phaser.Scene {
     //   yoyo: true,
     // })
   }
+
+  handleResize = () => {
+    console.log("handleResize", window.innerWidth, window.innerHeight, this.game, 'game', this.cameras);
+    
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    this.game.scale.resize(width, height);
+    this.game.scene.scenes.forEach(scene => {
+      if (scene.cameras && scene.cameras.main) {
+        scene.cameras.main.setSize(width, height);
+      }
+      if (scene.cameras) {
+        const backgroundCamera = scene.cameras.getCamera('backgroundCamera');
+        if (backgroundCamera) {
+          backgroundCamera.setSize(width, height);
+        }
+      }
+    });
+  };
 
   moveCameraOffset(position: "up" | "down", instant: boolean = false) {
     setTimeout(() => {
@@ -562,7 +583,6 @@ class Game extends Phaser.Scene {
     //   this.animCameraPan(2000, 500)
     // })
     console.log("ARIEL TEST", data);
-
     this.cursorsAWSD = this.input.keyboard?.addKeys({
       w: Phaser.Input.Keyboard.KeyCodes.W,
       a: Phaser.Input.Keyboard.KeyCodes.A,
@@ -665,26 +685,54 @@ class Game extends Phaser.Scene {
 
     this.input.on('pointermove', (pointer: Phaser.Input.Pointer) => {
       if (isDragging && this.isTouchDevice && pointer.id === this.joystickPointerId) {
-        const angle = Phaser.Math.Angle.Between(this.joystickBase!.x, this.joystickBase!.y, pointer.x, pointer.y);
-        const distance = Phaser.Math.Clamp(
-          Phaser.Math.Distance.Between(this.joystickBase!.x, this.joystickBase!.y, pointer.x, pointer.y),
-          0,
-          this.joystickBase!.radius
-        );
+        const baseX = this.joystickBase!.x;
+        const baseY = this.joystickBase!.y;
     
-        const offsetX = Math.cos(angle) * distance;
-        const offsetY = Math.sin(angle) * distance;
+        const angle = Phaser.Math.Angle.Between(baseX, baseY, pointer.x, pointer.y);
+        const rawDistance = Phaser.Math.Distance.Between(baseX, baseY, pointer.x, pointer.y);
+        const maxDistance = this.joystickBase!.radius;
+        const deadZoneRadius = 20;
     
-        this.joystickKnob!.setPosition(this.joystickBase!.x + offsetX, this.joystickBase!.y + offsetY);
+        const distance = Phaser.Math.Clamp(rawDistance, 0, maxDistance);
+        const effectiveDistance = Math.max(0, distance - deadZoneRadius);
     
-        // Convert angle to directional flags
-        this.cursors!.left.isDown = offsetX < -10;
-        this.cursors!.right.isDown = offsetX > 10;
-        this.cursors!.up.isDown = offsetY < -10;
-        this.cursors!.down.isDown = offsetY > 10;
+        // Drag distances in X and Y (excluding dead zone)
+        const dragX = Math.cos(angle) * effectiveDistance;
+        const dragY = Math.sin(angle) * effectiveDistance;
+
+        const maxEffectiveDistance = this.joystickBase!.radius - deadZoneRadius;
+        this.normalizedDragX = Phaser.Math.Clamp(dragX / maxEffectiveDistance, -1, 1);
+        this.normalizedDragY = Phaser.Math.Clamp(dragY / maxEffectiveDistance, -1, 1);
+
+
+        // console.log("normalizedDragX", normalizedDragX, "normalizedDragY", normalizedDragY);
+
+    
+        if (distance > deadZoneRadius) {
+          this.joystickKnob!.setPosition(baseX + dragX, baseY + dragY);
+    
+          // Optionally set cursor keys for legacy movement handling
+          this.cursors!.left.isDown = dragX < -10;
+          this.cursors!.right.isDown = dragX > 10;
+          this.cursors!.up.isDown = dragY < -10;
+          this.cursors!.down.isDown = dragY > 10;
+    
+          // 💡 Save dragX and dragY for velocity application
+          // this.playerVelocityX = dragX;
+          // this.playerVelocityY = dragY;
+        } else {
+          this.joystickKnob!.setPosition(baseX, baseY);
+          this.cursors!.left.isDown = false;
+          this.cursors!.right.isDown = false;
+          this.cursors!.up.isDown = false;
+          this.cursors!.down.isDown = false;
+    
+          // this.playerVelocityX = 0;
+          // this.playerVelocityY = 0;
+        }
       }
     });
-
+    
     this.input.on('pointerup', (pointer: Phaser.Input.Pointer) => {
       if (pointer.id === this.joystickPointerId) {
         this.joystickPointerId = null;
@@ -1014,10 +1062,27 @@ class Game extends Phaser.Scene {
     //     this
     //   );
     // this.initialScroll = { x: 0, y: 0 };
-
+    // this.scale.on('resize', this.handleResize, this);
+    // this.scale.setGameSize(window.innerWidth-1, window.innerHeight-1);
+    // setTimeout(() => {
+    //   this.handleResize();
+    // }
+    // , 50);
+    // this.handleResize()
+    // this.events.on("resize", () => setTimeout(this.handleResize, 50), this);
+    // setTimeout(() => {
+    //   this.handleResize();
+    // }, 50);
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    this.cameras.main.setSize(height, width);
+    setTimeout(() => {
+      this.cameras.main.setSize(width, height);
+    }, 50); 
   }
 
   update(this: Game) {
+    
     if (this.player) {
     }
     if (this.cameras.main.width < this.cameras.main.height) {

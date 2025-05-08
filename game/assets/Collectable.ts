@@ -66,7 +66,7 @@ class Collectable extends Phaser.Physics.Arcade.Sprite {
     this.group = group;
     const width = config.width ?? 120;
     const height = config.height ?? 108;
-    const fix = config.fix ?? 20;
+    const fix = config.fix ?? -20;
     const rota = config.rotated ?? false;
     const invrt = config.inverted ?? false
     const friction = config.friction ?? 1;

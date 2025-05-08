@@ -100,7 +100,7 @@ export default class MapCreator {
   };
   loseConfig: loseConfigFromMapType = [
     {
-      positions: { x: 500, y: 800 },
+      positions: { x: this.startingPoint.x , y: this.startingPoint.y },
       cameraDirection: "NORMAL",
       PlayerDirection: "NORMAL",
       gravityDown: true
@@ -244,10 +244,11 @@ export default class MapCreator {
     this.scene.add.existing(this.middleContainer);
     this.scene.add.existing(this.frontContainer);
 
-    this.scene.UICamera?.ignore(this.backContainer);
     this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.backContainer);
+    this.scene.UICamera?.ignore(this.backContainer);
     this.scene.UICamera?.ignore(this.middleContainer);
     this.scene.UICamera?.ignore(this.frontContainer);
+    if(this.scene.player) this.scene.UICamera?.ignore(this.scene.player);
     this.scene.cameras.main.setScroll(0, 0);
   }
 
@@ -342,6 +343,7 @@ export default class MapCreator {
     // this.scene.UICamera?.ignore(this.mapGroup);
     // this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.mapGroup);
     this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.scene.player!);
+    this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.scene.UIClass?.container!);
   }
 
   resetMap() {

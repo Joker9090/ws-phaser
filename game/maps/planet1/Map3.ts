@@ -51,6 +51,7 @@ export default class Map3 extends MapCreator {
     ]
 
     this.player.setPlayerWithTank(true);
+    this.nextScene="cine_movie_1";
   }
 
     createMap(data: { level: number; lifes: number }) {

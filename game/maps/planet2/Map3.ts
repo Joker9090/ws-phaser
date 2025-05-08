@@ -50,6 +50,7 @@ class Map3 extends MapCreator {
             x: 500, //500
             y: this.worldSize.height - 1200, //800
           };
+          this.UIItemToGrab="comida";
     }
 
     createMap(data: { level: number; lifes: number }) {
@@ -70,12 +71,12 @@ class Map3 extends MapCreator {
     const downScaledFrontWidth = width * 0.5;
 
     this.backgroundsBack = [
-      this.scene.add.image(0, 0, "gradient").setOrigin(0.5),
-      this.scene.add.image(0, 0, "stars").setOrigin(0.5),
-      this.scene.add.image(0, 300, "curvedVector").setOrigin(0.5),
+      this.scene.add.image(0, 0, "p1backgroundNoche").setOrigin(0.5),
+      this.scene.add.image(0, 0, "p1Stars").setOrigin(0.5),
+      this.scene.add.image(0, 0, "p1capaOscuridad").setOrigin(0.5),
     ]
     
-    this.backgroundsMiddle = [
+    /*this.backgroundsMiddle = [
       this.scene.add.image(-this.startingPoint.x, this.cameraBounds.height+100, "middleCombo").setOrigin(0, 1).setScale(0.7),
       this.scene.add.image(-this.startingPoint.x + downScaledMiddleWidth, this.cameraBounds.height+100, "middleCombo2").setOrigin(0, 1).setScale(0.7),
       this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 2), this.cameraBounds.height+100, "middleCombo3").setOrigin(0, 1).setScale(0.7),
@@ -86,19 +87,17 @@ class Map3 extends MapCreator {
       this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 7), this.cameraBounds.height+100, "middleCombo2").setOrigin(0, 1).setScale(0.7),
       this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 8), this.cameraBounds.height+100, "middleCombo3").setOrigin(0, 1).setScale(0.7),
       this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 9), this.cameraBounds.height+100, "middleCombo4").setOrigin(0, 1).setScale(0.7),
-    ]
+    ]*/
     
     this.backgroundsFront = [
-      this.scene.add.image(-this.startingPoint.x, this.cameraBounds.height+100, "frontCombo").setOrigin(0, 1).setScale(0.5),
-      this.scene.add.image(-this.startingPoint.x + downScaledFrontWidth, this.cameraBounds.height+100, "frontCombo2").setOrigin(0, 1).setScale(0.5),
-      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 2), this.cameraBounds.height+100, "frontCombo3").setOrigin(0, 1).setScale(0.5),
-      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 3), this.cameraBounds.height+100, "frontCombo4").setOrigin(0, 1).setScale(0.5),
-      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 4), this.cameraBounds.height+100, "frontCombo2").setOrigin(0, 1).setScale(0.5),
-      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 5), this.cameraBounds.height+100, "frontCombo2").setOrigin(0, 1).setScale(0.5),
-      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 6), this.cameraBounds.height+100, "frontCombo3").setOrigin(0, 1).setScale(0.5),
-      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 7), this.cameraBounds.height+100, "frontCombo4").setOrigin(0, 1).setScale(0.5),
-      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 8), this.cameraBounds.height+100, "frontCombo2").setOrigin(0, 1).setScale(0.5),
-    ]
+          this.scene.add.image(-this.startingPoint.x, this.cameraBounds.height+100, "montaña1p1").setOrigin(0, 1).setScale(0.5),
+          this.scene.add.image(-this.startingPoint.x + downScaledFrontWidth, this.cameraBounds.height+100, "montaña2p1").setOrigin(0, 1).setScale(0.5),
+          this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 2), this.cameraBounds.height+100, "huesoFrontp1").setOrigin(0, 1).setScale(0.5),
+          this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 3), this.cameraBounds.height+100, "montaña4p1").setOrigin(0, 1).setScale(0.5),
+          this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 4), this.cameraBounds.height+100, "montaña5p1").setOrigin(0, 1).setScale(0.5),
+          this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 5), this.cameraBounds.height+100, "montaña3p1").setOrigin(0, 1).setScale(0.5),
+        ]
+    this.backgroundsMiddle = this.createBgRow(100, this.cameraBounds.height+100, ["frontground1p1", "middleCombo2", "frontground1p1", "middleCombo4"], width, 0.7),
     
     this.createBackgrounds(this.backgroundsBack, this.backgroundsMiddle, this.backgroundsFront);
     
@@ -163,7 +162,7 @@ class Map3 extends MapCreator {
             scale: { width: 0.7, height: 0.7 },
             width: 10,
             height: 18,
-            fix: 10,
+            //fix: 10,
         }
 
         const baseDangerConf = {
@@ -180,8 +179,8 @@ class Map3 extends MapCreator {
 
         const baseFireballConf = {
             type: "fireball",
-            spriteSheet: "meteorito",
-            texture: "meteorito",
+            spriteSheet: "meteoritop1",
+            texture: "meteoritop1",
             width: 100,
             height: 100,
             group: this.firegroup,

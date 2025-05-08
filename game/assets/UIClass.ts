@@ -284,8 +284,7 @@ export default class UIClass {
       this.container.add([this.collText]);
     }
     this.scene.cameras.main.ignore(this.container)
- 
-
+    this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.lifesGroup);
   }
   sumCollectable(){
     this.collected++;

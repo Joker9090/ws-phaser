@@ -907,7 +907,7 @@ class Game extends Phaser.Scene {
         break;
       case 6:
         this.player = new Player(this, 0, 0, "character", 2);
-        this.map = new p2Mapa4(this, this.player!);
+        this.map = new p2Map3(this, this.player!);
         this.loopMusic = "planet1LoopMusic";
         if (this.masterManagerScene) {
           this.masterManagerScene.imagenesDesbloqueadas = [
@@ -1147,12 +1147,14 @@ class Game extends Phaser.Scene {
     // setTimeout(() => {
     //   this.handleResize();
     // }, 50);
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    this.cameras.main.setSize(height, width);
-    setTimeout(() => {
-      this.cameras.main.setSize(width, height);
-    }, 50); 
+    if (this.isTouchDevice) {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      this.cameras.main.setSize(height, width);
+      setTimeout(() => {
+        this.cameras.main.setSize(width, height);
+      }, 50); 
+    }
   }
 
   update(this: Game) {

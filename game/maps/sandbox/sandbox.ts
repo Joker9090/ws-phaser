@@ -163,6 +163,22 @@ class Sandbox extends MapCreator {
       type: "largeFloor",
     };
 
+    const ObstacleFloorConf = {
+      textureA: "top_v1",
+      textureB: ["middle_v1", "middle_v1_2"],
+      textureC: "bottom_v1",
+      // width: {
+      //   textureA: 340,
+      //   textureB: 340,
+      //   textureC: 340,
+      // },
+      width: 340,
+      height: 180,
+      scale: { width: 1, height: 1 },
+      type: "obstacleFloor",
+      group: this.obstacleFloor,
+    };
+
     const baseCristalConf = {
       type: "collectable",
       texture: "shield",
@@ -236,7 +252,8 @@ class Sandbox extends MapCreator {
     
       //portales
       { type: "subPortal",  x: 2000, y: 800, version: 1, sameScene: false, group: this.teleport, otherSceneConf: otherSceneConf },
-      { type: "finalPortal", pos: { x: 5500, y: 1300 }, texture: "plataformaFinalP1", width: 100, height: 100, group: this.portal }
+      { type: "finalPortal", pos: { x: 5500, y: 1300 }, texture: "plataformaFinalP1", width: 100, height: 100, group: this.portal },
+      {...ObstacleFloorConf, pos: { x: 1300, y: this.worldSize.height-1000 }, large: 5}
     
     ]
     

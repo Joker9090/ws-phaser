@@ -119,27 +119,30 @@ export default class MasterManager extends Phaser.Scene {
     this.brightnessScreen?.setAlpha(0.3 * value);
   }
   pauseGame() {
-    const gameScene = this.scene.get("Game");
-    if (gameScene) {
-      this.time.delayedCall(300, () => {
-        gameScene.physics.world.pause();
-        gameScene.tweens.pauseAll();
-        gameScene.input.enabled = true;
-        gameScene.time.paused = true
-      }, [], this)
+    if (this.scene) {
+      const gameScene = this.scene.get("Game");
+      if (gameScene) {
+        this.time.delayedCall(300, () => {
+          gameScene.physics?.world?.pause();
+          // gameScene.tweens.pauseAll();
+          gameScene.input.enabled = true;
+          gameScene.time.paused = true
+        }, [], this)
+      }
     }
   }
   resumeFromBlur() {
-    const gameScene = this.scene.get("Game");
+    const gameScene = this.scene?.get("Game");
 
     if (gameScene ) {
       const settingsVisible = (gameScene as Game).UIClass?.settingsVisible
       if (!settingsVisible) {
         this.time.delayedCall(600, () => {
-          gameScene.physics.world.resume();
-          gameScene.tweens.resumeAll();
+          gameScene.physics?.world?.resume();
+          // gameScene.tweens.resumeAll();
           gameScene.input.enabled = true;
-          gameScene.time.paused = false
+          gameScene.time.paused = false;
+          window.removeEventListener("blur", this.resumeFromBlur);
         }, [], this)
       }
 
@@ -160,8 +163,8 @@ export default class MasterManager extends Phaser.Scene {
       (gameScene as Game).UIClass?.collText?.setVisible(true)
      
       this.time.delayedCall(500, () => {
-        gameScene.physics.world.resume();
-        gameScene.tweens.resumeAll();
+        gameScene.physics?.world?.resume();
+        // gameScene.tweens.resumeAll();
         gameScene.input.enabled = true;
         gameScene.time.paused = false
       

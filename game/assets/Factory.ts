@@ -5,6 +5,7 @@ import Collectable from "./Collectable";
 import Teleport from "./Teleport";
 import Danger from "./Danger";
 import Fireball from "./Fireball";
+import ObstacleFloor from "./ObstacleFloor";
 
 export default function Factory(scene: Game, config: any, floorGroup: Phaser.Physics.Arcade.Group) {
   let { type, ...rest } = config;
@@ -45,6 +46,8 @@ export default function Factory(scene: Game, config: any, floorGroup: Phaser.Phy
     case "fireball":
         let fireball = new Fireball(scene, rest, rest.group);
         return fireball;
+    case "obstacleFloor":
+      return new ObstacleFloor(scene, rest, rest.group);
     default:
         break;
   }

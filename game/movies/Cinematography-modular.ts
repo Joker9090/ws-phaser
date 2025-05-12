@@ -60,13 +60,13 @@ class CinematographyModular extends Phaser.Scene {
 
   onGameBlur() {
     console.log(this.playingCine, "playingCine")
-    this.scene.pause()
+    // this.scene.pause()
     this.pauseDialogue()
   }
 
   onGameResume() {
     console.log(this.playingCine, "playingCine", 'focus')
-    this.scene.resume()
+    // this.scene.resume()
     this.resumeDialogue()
   }
 

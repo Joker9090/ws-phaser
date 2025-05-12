@@ -148,7 +148,26 @@ export const loadAssets = {
       ["image", "modalDefeat", "/menu/result/resultDefeat.png"],
       ["image", "titleDefeat", "/menu/result/titleDefeat.png"],
       ["image", "astroDefeat", "/menu/result/astroDefeat.png"],
-
+      //VERTICAL LARGE TILES
+      ["image", "top_v1", "/game/generalAssets/verticalTiles/top-v1.png"],
+      ["image", "middle_v1", "/game/generalAssets/verticalTiles/middle-v1.png"],
+      ["image", "middle_v1_2", "/game/generalAssets/verticalTiles/middle-v1-2.png"],
+      ["image", "bottom_v1", "/game/generalAssets/verticalTiles/bottom-v1.png"],
+      //SUBLEVELS
+        //BACKGROUNDS
+          //FAR
+          ["image", "backComboSub", "/game/sub/backgrounds/far/backCombo.svg"],
+          ["image", "backComboSub2", "/game/sub/backgrounds/far/backCombo2.svg"],
+          //MIDDLE
+          //FRONT
+          ["image", "front_bottom", "/game/sub/backgrounds/front/front_bottom.svg"],
+          ["image", "front_bottom2", "/game/sub/backgrounds/front/front_bottom2.svg"],
+          ["image", "front_bottom3", "/game/sub/backgrounds/front/front_bottom3.svg"],
+          ["image", "front_bottom4", "/game/sub/backgrounds/front/front_bottom4.svg"],
+          ["image", "front_top", "/game/sub/backgrounds/front/front_top.svg"],
+          ["image", "front_top2", "/game/sub/backgrounds/front/front_top2.svg"],
+          ["image", "front_top3", "/game/sub/backgrounds/front/front_top3.svg"],
+          ["image", "front_top4", "/game/sub/backgrounds/front/front_top4.svg"],
     ]
 
 

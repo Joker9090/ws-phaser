@@ -228,21 +228,14 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.setDepth(999);
    
 
+    this.gravityAnimSprite = this.scene.add.sprite(this.x, this.y, "gravityAnim", 0).setVisible(false).setDepth(999);
     if (this.scene instanceof Game) {
       this.scene.UICamera?.ignore(this);
       this.scene.cameras.getCamera('backgroundCamera')?.ignore(this);
-    }
-    this.gravityAnimSprite = this.scene.add.sprite(this.x, this.y, "gravityAnim", 0).setVisible(false).setDepth(999);
-    if (this.scene instanceof Game) {
       this.scene.UICamera?.ignore(this.gravityAnimSprite);
       this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.gravityAnimSprite);
-    }
-      
-    if (this.scene instanceof Game) {
       this.scene.UICamera?.ignore(this.tankAnimSprite);
       this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.tankAnimSprite);
-    }
-    if (this.scene instanceof Game) {
       this.scene.UICamera?.ignore(this.auraAnimSprite);
       this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.auraAnimSprite);
     }

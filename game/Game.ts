@@ -1061,7 +1061,8 @@ class Game extends Phaser.Scene {
     this.cameras.main.ignore(this.joystickKnob)
     this.cameras.getCamera("backgroundCamera")?.ignore(this.joystickBase)
     this.cameras.getCamera("backgroundCamera")?.ignore(this.joystickKnob)
-      
+    this.cameras.getCamera("backgroundCamera")?.ignore(this.player);
+
     this.UIClass = new UIClass(this, this.levelIs, this.lifes, this.timeLevel);
 
     /* CONTROLS */

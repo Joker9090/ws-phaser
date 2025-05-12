@@ -248,7 +248,7 @@ export default class MapCreator {
     this.scene.UICamera?.ignore(this.backContainer);
     this.scene.UICamera?.ignore(this.middleContainer);
     this.scene.UICamera?.ignore(this.frontContainer);
-    if(this.scene.player) this.scene.UICamera?.ignore(this.scene.player);
+    this.scene.UICamera?.ignore(this.scene.player!);
     this.scene.cameras.main.setScroll(0, 0);
   }
 

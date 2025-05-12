@@ -331,6 +331,7 @@ class Map0 extends MapCreator {
         this.scene.UICamera?.ignore(this.coin)
         this.scene.UICamera?.ignore(this.pisosBack)
         this.scene.UICamera?.ignore(this.gravityTile!)
+        this.scene.UICamera?.ignore(this.firegroup!)
 
         this.scene.UICamera?.ignore(this.backContainer)
         this.scene.UICamera?.ignore(this.middleContainer)

@@ -193,9 +193,9 @@ export default class Map3 extends MapCreator {
           large: 8,
           group: this.floor
         },
-        { ...baseFireballConf, pos: { x: 3900, y:  0 }, tween: { duration: 3000, repeat: -1, y: "+=2000"}, rotated: false },
+        { ...baseFireballConf, pos: { x: 3900, y:  0 }, tween: { duration: 3000, repeat: -1, y: "+=3000"}, rotated: false },
         { ...basePlatformsConfig, pos: { x: 4200, y: mapFloor-200 } },
-        { ...baseFireballConf, pos: { x: 4500, y:  0 }, tween: { duration: 3000, repeat: -1, y: "+=2000"}, rotated: false },
+        { ...baseFireballConf, pos: { x: 4500, y:  0 }, tween: { duration: 3000, repeat: -1, y: "+=3000"}, rotated: false },
         { ...basePlatformsConfig, pos: { x: 4800, y: mapFloor-600 }, animation: {
           yAxis: {
             yDistance: 300,

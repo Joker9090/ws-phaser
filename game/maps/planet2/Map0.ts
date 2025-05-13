@@ -326,7 +326,7 @@ class Map0 extends MapCreator {
                 large: 10,
                 group: this.floor
             },
-            { type: "finalPortal", pos: { x: 13250, y: this.worldSize.height - 300 }, texture: "plataformaFinalP1", width: 100, height: 100, group: this.portal }
+            { type: "finalPortal", pos: { x: 13250, y: this.worldSize.height - 300 }, texture: "cuevap1", width: 100, height: 100, group: this.portal }
 
         ]
         this.createPlatforms(mapPlatforms)

@@ -43,7 +43,7 @@ class Map1 extends MapCreator {
           );
       
           this.startingPoint = {
-            x: 6900, //500
+            x: 300,
             y: this.worldSize.height - 900, //800
           };
           this.UIItemToGrab="comida";
@@ -275,7 +275,15 @@ class Map1 extends MapCreator {
                 withTextureToAbove: false,
             },
             { type: "subPortal",  x: 6600, y: this.worldSize.height - 1500, version: 1, sameScene: false, group: this.teleport, otherSceneConf: otherSceneConf },
-
+            //Agregar plataforma movil
+            {
+                ...basePlatformsConfig, pos: { x: 7800, y: this.worldSize.height - 1100 }, animation: {
+                    xAxis: {
+                        xDistance: 400,
+                        xVel: 100
+                    }
+                }
+            },
             {
                 ...baseLargePlatformsConf,
                 pos: { x: 6800, y: this.worldSize.height - 500 },
@@ -286,7 +294,9 @@ class Map1 extends MapCreator {
             { ...baseCristalConf, pos: { x: 7300, y: this.worldSize.height - 900 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
             { ...baseCristalConf, pos: { x: 7600, y: this.worldSize.height - 700 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
 
-            
+            //agregar plataforma qe cae
+            { ...basePlatformsConfig, pos: { x: 8000, y: this.worldSize.height - 800 }, colors: [colors.falling], group: this.fallingTile },
+
             {
                 ...baseLargePlatformsConf,
                 pos: { x: 8200, y: this.worldSize.height - 600 },
@@ -341,7 +351,7 @@ class Map1 extends MapCreator {
                 large: 7,
                 group: this.floor,
             },
-            { type: "finalPortal", pos: { x: 11550, y: this.worldSize.height - 500 }, texture: "plataformaFinalP1", width: 100, height: 100, group: this.portal }
+            { type: "finalPortal", pos: { x: 11550, y: this.worldSize.height - 500 }, texture: "cuevap1", width: 100, height: 100, group: this.portal }
 
         ]
         this.createPlatforms(mapPlatforms)

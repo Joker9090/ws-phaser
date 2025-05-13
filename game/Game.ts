@@ -357,10 +357,10 @@ class Game extends Phaser.Scene {
         level: this.levelIs,
         lifes: 3,
       });
-      if (this.levelIs != 0) {
+      // if (this.levelIs != 0) {
         const scene = this.scene.add("MultiScene", multiScene, true);
         this.scene.start("MultiScene").bringToTop("MultiScene");
-      }
+      // }
       console.log("[Game] lose(): " + this.levelIs + " , new lifes" + multiScene.sceneData?.lifes);
     } else this.scene
   }
@@ -458,10 +458,12 @@ class Game extends Phaser.Scene {
         }
 
         this.resultModal = new resultContainer(this, resultConfig);
+        this.stopMov = true
         this.UICamera?.ignore(this.resultModal)
-
-
-
+        if (this.resultModal.container) {
+          this.cameras.getCamera('backgroundCamera')?.ignore(this.resultModal.container)
+          this.cameras.main.ignore(this.resultModal.container);
+        }
       }
 
 
@@ -531,7 +533,12 @@ class Game extends Phaser.Scene {
           }
 
           this.resultModal = new resultContainer(this, resultConfig);
+          this.stopMov = true
           this.UICamera?.ignore(this.resultModal)
+          if (this.resultModal.container) {
+            this.cameras.getCamera('backgroundCamera')?.ignore(this.resultModal.container)
+            this.cameras.main.ignore(this.resultModal.container);
+          }
         } else if (this.lifes > 0 && this.player) {
           // UI changes
           this.UIClass?.loseLife(this.lifes);
@@ -1010,6 +1017,7 @@ class Game extends Phaser.Scene {
         this.player = new Player(this, 0, 0, "character", 2);
 
         this.map = new p2SubMap2(this, this.player!);
+        this.player.setVelocity(0, 0);
         this.loopMusic = "planet1LoopMusic";
         // if (this.masterManagerScene) {
         //   this.masterManagerScene.imagenesDesbloqueadas = [
@@ -1040,6 +1048,13 @@ class Game extends Phaser.Scene {
     }
     console.log("x y", x, y);
     this.player.setPosition(x, y);
+    this.player.setVelocity(0, 0);
+    if (this.player.body) {
+        this.player.body.gravity.y = 0;
+    }
+    if (this.player.body) {
+        this.player.body.gravity.x = 0;
+    }
     /* Audio */
     this.masterManagerScene = this.game.scene.getScene(
       "MasterManager"
@@ -1191,6 +1206,10 @@ class Game extends Phaser.Scene {
       this.player?.setVelocity(0, 17);
       this.player?.setAcceleration(0);
       this.player?.setGravityY(0);
+      if (this.player && this.player.body) {
+        this.player.body.gravity.y = 0;
+        this.player.body.gravity.x = 0;
+      }
     }
     // CREATIVE MODE
     this.handleCameraMovement();

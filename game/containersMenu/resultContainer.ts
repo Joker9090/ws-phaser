@@ -29,7 +29,7 @@ class resultContainer extends Phaser.GameObjects.Container {
   
     constructor(scene: Phaser.Scene, config: resultContainerConfigType) {
         super(scene, config.x, config.y);
-        this.container = this.scene.add.container(0, 0);
+        this.container = this.scene.add.container(window.innerWidth/2, window.innerHeight/2);
         const offsetY = 100
             this.collText = config.collText,
             this.coinCount = config.coinCount ?? 1,
@@ -48,21 +48,21 @@ class resultContainer extends Phaser.GameObjects.Container {
         
         if(this.victory){
             scene.time.paused = true
-            scene.add.text(window.innerWidth / 2 -20, window.innerHeight / 2 -130, `${this.collText} / ${this.coinCount + 1}`).setFontSize(45).setFontFamily('arcade').setDepth(3);
-            this.resultAstro = scene.add.image(window.innerWidth / 2, window.innerHeight / 2 -310, 'resultVictoryAstro').setDepth(1)
-            this.modal = scene.add.image(window.innerWidth/2,window.innerHeight/2,"resultModal").setDepth(2).setScale(0.9)
-            this.resultTitle = scene.add.image(window.innerWidth / 2, window.innerHeight / 2 - 190, 'resultVictory').setScale(0.9).setDepth(3)
+            scene.add.text(0 -20, 0 -130, `${this.collText} / ${this.coinCount + 1}`).setFontSize(45).setFontFamily('arcade').setDepth(3);
+            this.resultAstro = scene.add.image(0, 0 -310, 'resultVictoryAstro').setDepth(1).setScale(0.7)
+            this.modal = scene.add.image(0,0,"resultModal").setDepth(2).setScale(0.9)
+            this.resultTitle = scene.add.image(0, 0 - 150, 'resultVictory').setScale(0.9).setDepth(3)
             var texture = "itemPlaneta" + config.planeta
-            this.item = scene.add.image(window.innerWidth / 2 -80, window.innerHeight / 2 - 110,texture).setDepth(3),
+            this.item = scene.add.image(0 -80, 0 - 110,texture).setDepth(3),
            
            
-            this.contenedorReloj = scene.add.image(window.innerWidth /2, window.innerHeight/2 -10, 'contenedorReloj')
-            this.timeText =  scene.add.text(window.innerWidth /2 - 60, window.innerHeight/2 -35,this.time?? 'n/a').setFontSize(40).setFontFamily('arcade').setDepth(3)
+            this.contenedorReloj = scene.add.image(0, 0 -10, 'contenedorReloj')
+            this.timeText =  scene.add.text(0 - 60, 0 -35,this.time?? 'n/a').setFontSize(40).setFontFamily('arcade').setDepth(3)
           
-            this.death1 = scene.add.image(window.innerWidth/2 -80, window.innerHeight/2 + 110, "deaths").setAlpha(0.5);
-            this.death2 = scene.add.image(window.innerWidth/2 , window.innerHeight/2 + 110, "deaths").setAlpha(0.5);
-            this.death3 = scene.add.image(window.innerWidth/2 + 80, window.innerHeight/2 + 110, "deaths").setAlpha(0.5);
-            const deaths = [this.death3,this.death2,this.death1]
+            this.death1 = scene.add.image(0 -80, 0 + 110, "deaths").setAlpha(0.5);
+            this.death2 = scene.add.image(0 , 0 + 110, "deaths").setAlpha(0.5);
+            this.death3 = scene.add.image(0 + 80, 0 + 110, "deaths").setAlpha(0.5);
+            const deaths = [this.death1,this.death2,this.death3]
 
             deaths.forEach((death, index) => {
                 if (index  < this.lifes) {
@@ -72,9 +72,9 @@ class resultContainer extends Phaser.GameObjects.Container {
 
             // scene.add.text(window.innerWidth/2 + 15, window.innerHeight/2 + 85, this.lifes.toString()).setFontSize(45).setFontFamily('arcade').setDepth(3)
            
-            this.continueButton = scene.add.image (window.innerWidth /2 -100, window.innerHeight/2 + 200 , "resultContinue").setDepth(4).setInteractive()
-            this.retryButton = scene.add.image (window.innerWidth /2 +100, window.innerHeight/2 + 200, "resultRetry").setDepth(4).setInteractive()
-            this.homeButton = scene.add.image(window.innerWidth/2 -250, window.innerHeight/2 + 200, "botonHome").setScale(0.7).setInteractive()
+            this.continueButton = scene.add.image (0 -100, 0 + 200 , "resultContinue").setDepth(4).setInteractive()
+            this.retryButton = scene.add.image (0 +100, 0 + 200, "resultRetry").setDepth(4).setInteractive()
+            this.homeButton = scene.add.image(0 -250, 0 + 200, "botonHome").setScale(0.7).setInteractive()
 
             this.retryButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, ()=>{
                 this.retryButton?.setTexture("resultRetryHover")
@@ -122,18 +122,20 @@ class resultContainer extends Phaser.GameObjects.Container {
             })
             this.homeButton.on("pointerup",()=>{
                 this.homeButton?.setTexture("botonHomeHover")
+                this.scene.events.emit('home')
+
             })
 
 
             
            
         }else{
-            this.modal = scene.add.image(window.innerWidth/2,window.innerHeight/2,"modalDefeat").setDepth(2).setScale(0.9);
-            this.resultTitle = scene.add.image(window.innerWidth / 2, window.innerHeight / 2 - 170, 'titleDefeat').setScale(0.8).setDepth(3)
-            this.resultAstro = scene.add.image(window.innerWidth/2, window.innerHeight/2, 'astroDefeat').setScale(0.8).setDepth(3)
+            this.modal = scene.add.image(0,0,"modalDefeat").setDepth(2).setScale(0.9).setOrigin(0.5);
+            this.resultTitle = scene.add.image(0, 0 - 170, 'titleDefeat').setScale(0.8).setDepth(3)
+            this.resultAstro = scene.add.image(0, 0, 'astroDefeat').setScale(0.8).setDepth(3)
            
-            this.homeButton = scene.add.image(window.innerWidth/2 -290, window.innerHeight/2 + 180, "botonHome").setScale(0.7).setInteractive()
-            this.retryButton = scene.add.image (window.innerWidth /2 , window.innerHeight/2 + 180, "resultRetry").setDepth(4).setInteractive()
+            this.homeButton = scene.add.image(0 -290, 0 + 180, "botonHome").setScale(0.7).setInteractive()
+            this.retryButton = scene.add.image (0 , 0 + 180, "resultRetry").setDepth(4).setInteractive()
 
 
             this.retryButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, ()=>{
@@ -176,7 +178,6 @@ class resultContainer extends Phaser.GameObjects.Container {
 
         }
         const assets = [
-            this.resultAstro,
             this.modal,
             this.resultTitle,
             this.item,
@@ -186,7 +187,8 @@ class resultContainer extends Phaser.GameObjects.Container {
             this.death1,
             this.death2,
             this.death3,
-            this.timeText
+            this.timeText,
+            this.resultAstro,
         ]
 
         assets.forEach((a)=>{
@@ -196,7 +198,7 @@ class resultContainer extends Phaser.GameObjects.Container {
         })
         console.log(this.container , "container result")
         this.container.setDepth(55)
-    
+        this.container.setScale(0.8)
         // const arr = [
 
         // ]

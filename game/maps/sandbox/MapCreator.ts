@@ -151,7 +151,6 @@ export default class MapCreator {
   totalCoins?:number
   constructor(scene: Game, player: Player, data?: GamePlayDataType) {
     this.scene = scene;
-    this.totalCoins =  this.coin?.getChildren().length
 
     if (this.scene.input.keyboard) {
       this.scene.input.keyboard.enabled = true;
@@ -262,6 +261,8 @@ export default class MapCreator {
       // this.mapGroup.add(tile);
       this.mapItems.push(tile);
     })
+
+    this.totalCoins =  this.coin?.getChildren().length
   }
 
   setInitialScroll(scrollX: number, scrollY: number) {
@@ -339,6 +340,7 @@ export default class MapCreator {
   // }
 
   cameraIgnore () {
+    const bgCamera = this.scene.cameras.getCamera('backgroundCamera')
     this.mapItems.forEach((item) => {
       this.scene.UICamera?.ignore(item);
       this.scene.cameras.getCamera('backgroundCamera')?.ignore(item);
@@ -370,6 +372,18 @@ export default class MapCreator {
     // this.scene.UICamera?.ignore(this.backgroundsFront[0]);
     this.scene.UICamera?.ignore(this.backgroundsMiddle);
     // this.scene.UICamera?.ignore(this.backgroundsBack[0]);
+    if (this.scene.resultModal) bgCamera?.ignore(this.scene.resultModal)
+    if (this.scene.resultModal && this.scene.resultModal.modal) {
+      this.scene.resultModal.container?.list.forEach((item) => {
+        this.scene.cameras.main.ignore(item);
+        bgCamera?.ignore(item)
+      })
+      this.scene.cameras.main.ignore(this.scene.resultModal.modal);
+      bgCamera?.ignore(this.scene.resultModal.modal)
+      this.scene.cameras.main.ignore(this.scene.resultModal);
+      this.scene.cameras.main.ignore(this.middleContainer);
+      this.scene.cameras.main.ignore(this.frontContainer);
+    }
   }
 
   resetMap() {

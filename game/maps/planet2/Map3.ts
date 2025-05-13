@@ -64,7 +64,14 @@ class Map3 extends MapCreator {
         this.player?.tankGraphics?.clear()
         // const backImage = this.scene.textures.get("background0P1").getSourceImage()
         // this.backSize = { width: backImage.width, height: backImage.height }
-
+        this.loseConfig=[
+            { positions: { x: this.startingPoint.x , y: this.startingPoint.y },
+              cameraDirection: "NORMAL",
+              PlayerDirection: "NORMAL",
+              gravityDown: true
+              ,
+            },
+          ]
         const { width, height } = this.ratioReference;
     const { width: farWidth, height: farHeight } = this.farBackgroundReference;
     const downScaledMiddleWidth = width * 0.7;

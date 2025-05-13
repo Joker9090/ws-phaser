@@ -58,7 +58,14 @@ class Map0 extends MapCreator {
         this.pisosBack = this.scene.physics.add.group({ allowGravity: false });
         this.flyingPiso = this.scene.physics.add.group({ allowGravity: false, immovable: true });
         this.portal = this.scene.physics.add.group({ allowGravity: false });
-
+        this.loseConfig=[
+            { positions: { x: this.startingPoint.x , y: this.startingPoint.y },
+              cameraDirection: "NORMAL",
+              PlayerDirection: "NORMAL",
+              gravityDown: true
+              ,
+            },
+          ]
         // const backImage = this.scene.textures.get("background0P1").getSourceImage()
         // this.backSize = { width: backImage.width, height: backImage.height }
 
@@ -179,14 +186,6 @@ class Map0 extends MapCreator {
                 pos: { x: 0, y: (this.cameraBounds.height + this.cameraBounds.y) - 200 },
                 large: 20,
                 group: this.floor
-            },
-            { ...baseDangerConf, pos: { x: 950, y:  (this.cameraBounds.height + this.cameraBounds.y) - 250 }, width: 150, height: 150,
-             patrol:{
-                    patrolType: "LinealX",
-                    distance: 50,
-                    speed: 20,
-                    attackInterval: 0,
-                }
             },
             { ...basePlatformsConfig, pos: { x: 800, y:  (this.cameraBounds.height + this.cameraBounds.y) - 400 } },
             { ...basePlatformsConfig, pos: { x: 1100, y:  (this.cameraBounds.height + this.cameraBounds.y) - 550 } },

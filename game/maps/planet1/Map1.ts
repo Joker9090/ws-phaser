@@ -59,7 +59,14 @@ class Map1 extends MapCreator {
         this.pisosBack = this.scene.physics.add.group({ allowGravity: false });
         this.flyingPiso = this.scene.physics.add.group({ allowGravity: false, immovable: true });
         this.portal = this.scene.physics.add.group({ allowGravity: false });
-
+        this.loseConfig=[
+            { positions: { x: this.startingPoint.x , y: this.startingPoint.y },
+              cameraDirection: "NORMAL",
+              PlayerDirection: "NORMAL",
+              gravityDown: true
+              ,
+            },
+          ]
         // const backImage = this.scene.textures.get("background0P1").getSourceImage()
         // this.backSize = { width: backImage.width, height: backImage.height }
 
@@ -220,7 +227,7 @@ class Map1 extends MapCreator {
               }, },
             { ...baseCristalConf, pos: { x: 4375, y: this.worldSize.height - 1050 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
             {
-                ...basePlatformsConfig, pos: { x: 5300, y: this.worldSize.height - 600 }, animation: {
+                ...basePlatformsConfig, pos: { x: 5500, y: this.worldSize.height - 600 }, animation: {
                     xAxis: {
                         xDistance: 200,
                         xVel: 100
@@ -230,11 +237,11 @@ class Map1 extends MapCreator {
             { ...baseCristalConf, pos: { x: 5050, y: this.worldSize.height - 1050 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
             //REPLACE
             //{ ...baseFireballConf, pos: { x: 5200, y: this.worldSize.height - 800 }, tween: { duration: 2000, repeat: -1, x: "-=500", yoyo: true  }, rotated: true },
-            { ...baseDangerConf, pos: { x: 5300, y: this.worldSize.height - 800 }, width: 170, height: 170, 
+            { ...baseDangerConf, pos: { x: 5300, y: this.worldSize.height - 600 }, width: 170, height: 170, 
                 patrol:{
-                    patrolType: "LinealX",
-                    distance: 200,
-                    speed: 80,
+                    patrolType: "LinealY",
+                    distance: 400,
+                    speed:120,
                     attackInterval: 0,
                 }
             },

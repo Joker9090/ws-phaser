@@ -59,7 +59,14 @@ export default class Map3 extends MapCreator {
     const { width: farWidth, height: farHeight } = this.farBackgroundReference;
     const downScaledMiddleWidth = width * 0.7;
     const downScaledFrontWidth = width * 0.5;
-
+    this.loseConfig=[
+      { positions: { x: this.startingPoint.x , y: this.startingPoint.y },
+        cameraDirection: "NORMAL",
+        PlayerDirection: "NORMAL",
+        gravityDown: true
+        ,
+      },
+    ]
     this.backgroundsBack = [
       this.scene.add.image(0, 0, "gradient").setOrigin(0.5),
       this.scene.add.image(0, 0, "stars").setOrigin(0.5),
@@ -186,9 +193,9 @@ export default class Map3 extends MapCreator {
           large: 8,
           group: this.floor
         },
-        { ...baseFireballConf, pos: { x: 3900, y:  mapFloor-800 }, tween: { duration: 3000, repeat: -1, y: "+=1500"}, rotated: false },
+        { ...baseFireballConf, pos: { x: 3900, y:  0 }, tween: { duration: 3000, repeat: -1, y: "+=2000"}, rotated: false },
         { ...basePlatformsConfig, pos: { x: 4200, y: mapFloor-200 } },
-        { ...baseFireballConf, pos: { x: 4500, y:  mapFloor-800 }, tween: { duration: 3000, repeat: -1, y: "+=1500"}, rotated: false },
+        { ...baseFireballConf, pos: { x: 4500, y:  0 }, tween: { duration: 3000, repeat: -1, y: "+=2000"}, rotated: false },
         { ...basePlatformsConfig, pos: { x: 4800, y: mapFloor-600 }, animation: {
           yAxis: {
             yDistance: 300,

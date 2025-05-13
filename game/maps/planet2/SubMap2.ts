@@ -59,7 +59,14 @@ export default class SubMap2 extends MapCreator {
     const { width: farWidth, height: farHeight } = this.farBackgroundReference;
     const downScaledMiddleWidth = width * 0.7;
     const downScaledFrontWidth = width * 0.5;
-
+    this.loseConfig=[
+      { positions: { x: this.startingPoint.x , y: this.startingPoint.y },
+        cameraDirection: "NORMAL",
+        PlayerDirection: "NORMAL",
+        gravityDown: true
+        ,
+      },
+    ]
       
 
     this.backgroundsBack = [

@@ -510,6 +510,7 @@ class Game extends Phaser.Scene {
       //@ts-ignore
       this.map.rotate = true;
       const config = this.map.loseConfig[this.checkPoint];
+      console.log("[Game] lose() config ",config);
       if (this.lifes) {
         this.lifes -= 1;
         if (this.lifes === 0) {
@@ -563,6 +564,8 @@ class Game extends Phaser.Scene {
             : this.cameras.main.setRotation(Math.PI);
           this.player.x = config.positions.x;
           this.player.y = config.positions.y;
+
+          console.log("[Game] lose() playerPos ", this.player.x+" " + this.player.y);
         }
         this.player?.setPlayerInvicinible(false)
         this.map.invincible?.setVisible(true)

@@ -161,16 +161,24 @@ export default class MapCreator {
     //   immovable: true,
     //   collideWorldBounds: true,
     // });
-    this.startingPoint = {
+    /*this.startingPoint = {
       x: 500, //500
       y: this.worldSize.height-600, //800
-    };
+    };*/
     this.scene.physics.world.setBounds(
       0,
       0,
       this.worldSize.width,
       this.worldSize.height
     );
+    this.loseConfig=[
+      { positions: { x: this.startingPoint.x , y: this.startingPoint.y },
+        cameraDirection: "NORMAL",
+        PlayerDirection: "NORMAL",
+        gravityDown: true
+        ,
+      },
+    ]
     this.player.setPlayerWithTank(true);
 
     // this.scene.cameras.main.setPosition(
@@ -250,7 +258,7 @@ export default class MapCreator {
     this.scene.UICamera?.ignore(this.backContainer);
     this.scene.UICamera?.ignore(this.middleContainer);
     this.scene.UICamera?.ignore(this.frontContainer);
-    if(this.scene.player) this.scene.UICamera?.ignore(this.scene.player);
+    this.scene.UICamera?.ignore(this.scene.player!);
     this.scene.cameras.main.setScroll(0, 0);
   }
 

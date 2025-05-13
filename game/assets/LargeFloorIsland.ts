@@ -70,7 +70,8 @@ class LargeFloorIsland extends Phaser.GameObjects.Container {
       const body = (this.body as Phaser.Physics.Arcade.Body)
       body.setImmovable(true)
       //body.setOffset(sizeWidth/2 - 30, 10)
-      body.setOffset(sizeWidth/2 , 10)
+      body.setOffset(sizeWidth/2-35 , 10)
+      body.setSize(sizeWidth, height - 40)     
     }
     if (config.scale) {
       this.setScale(config.scale.width, config.scale.height)

@@ -187,14 +187,6 @@ class Map0 extends MapCreator {
                 large: 20,
                 group: this.floor
             },
-            { ...baseDangerConf, pos: { x: 950, y:  this.worldSize.height - 250 }, width: 150, height: 150,
-             patrol:{
-                    patrolType: "LinealX",
-                    distance: 50,
-                    speed: 20,
-                    attackInterval: 0,
-                }
-            },
             { ...basePlatformsConfig, pos: { x: 800, y:  this.worldSize.height - 400 } },
             { ...basePlatformsConfig, pos: { x: 1100, y:  this.worldSize.height - 550 } },
             { ...baseCristalConf, pos: { x: 1100, y:  this.worldSize.height - 650 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },

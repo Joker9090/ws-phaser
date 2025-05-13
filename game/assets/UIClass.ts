@@ -109,8 +109,8 @@ export default class UIClass {
           texture: this.scene.map?.UIItemToGrab,
           scale: this.scene.map?.UIItemScale ? this.scene.map?.UIItemScale : 0.55,
         };
-        this.coinUI = new UI(this.scene, coinConf)
-          .setTint(Phaser.Display.Color.GetColor(0, 0, 0));
+        this.coinUI = new UI(this.scene, coinConf);
+          //.setTint(Phaser.Display.Color.GetColor(0, 0, 0));
 
         this.container.add(this.coinUI);
       }

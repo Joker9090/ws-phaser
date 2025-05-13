@@ -298,7 +298,7 @@ export const loadAssets = {
       ["image", "plataformaNuevaLargaA", "/game/planeta1/platforms/newPlatA.png"],
       ["image", "plataformaNuevaLargaB", "/game/planeta1/platforms/newPlatB.png"],
       ["image", "plataformaNuevaLargaC", "/game/planeta1/platforms/newPlatC.png"],
-      ["image", "plataformaFinalP1", "/game/planeta1/platforms/plataformaFinal.png"],
+      ["image", "plataformaFinalP1", "/game/planeta1/platforms/cueva.png"],
       ["image", "frontGround1", "/game/planeta1/backgrounds/frontGround1.png"],
       ["image", "frontGround2", "/game/planeta1/backgrounds/frontGround2.png"],
       ["image", "cristal1", "/game/planeta1/cristal1.png"],

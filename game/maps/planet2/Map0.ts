@@ -1,9 +1,8 @@
 import Game from "@/game/Game";
 import MapCreator from "../sandbox/MapCreator";
 import Player from "@/game/assets/Player";
-import { GamePlayDataType } from "@/game/Types";
+import { GamePlayDataType, loseConfigFromMapType } from "@/game/Types";
 import colors from "@/game/assets/PlatformColors";
-
 class Map0 extends MapCreator {
     constructor(scene: Game, player: Player, data?: GamePlayDataType) {
         super(scene, player, data);
@@ -46,6 +45,7 @@ class Map0 extends MapCreator {
             x: 1000, //500
             y: this.worldSize.height - 1100, //800
           };
+
         this.UIItemToGrab="comida";
         this.nextScene= "postal1_planeta2";
             this.postalCode = "postl1";
@@ -57,6 +57,15 @@ class Map0 extends MapCreator {
         this.pisosBack = this.scene.physics.add.group({ allowGravity: false });
         this.flyingPiso = this.scene.physics.add.group({ allowGravity: false, immovable: true });
         this.portal = this.scene.physics.add.group({ allowGravity: false });
+        this.loseConfig=[
+            { positions: { x: this.startingPoint.x , y: this.startingPoint.y },
+              cameraDirection: "NORMAL",
+              PlayerDirection: "NORMAL",
+              gravityDown: true
+              ,
+            },
+          ]
+
 
         const { width, height } = this.ratioReference;
         const downScaledMiddleWidth = width * 0.7;

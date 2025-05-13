@@ -18,6 +18,7 @@ import p2Mapa4 from "./maps/planet2/Mapa7";
 import p2Map0 from "./maps/planet2/Map0";
 import p2Map1 from "./maps/planet2/Map1";
 import p2SubMap1 from "./maps/planet2/SubMap1";
+import p2SubMap2 from "./maps/planet2/SubMap2";
 import p2Map3 from "./maps/planet2/Map3"
 import p2m3sub1 from "./maps/planet2/m3sub1";
 //MAPAS PLANETA 3
@@ -68,7 +69,8 @@ export type PossibleMaps =
   | MapCreator
   | p2Map0
   | p2Map1
-  | p2SubMap1;
+  | p2SubMap1
+  | p2SubMap2;
 // Scene in class
 export const keyCodesAWSD = {
   w: Phaser.Input.Keyboard.KeyCodes.W,
@@ -208,7 +210,7 @@ class Game extends Phaser.Scene {
 
   handleResize = () => {
     console.log("handleResize", window.innerWidth, window.innerHeight, this.game, 'game', this.cameras);
-    
+
     const width = window.innerWidth;
     const height = window.innerHeight;
     this.game.scale.resize(width, height);
@@ -392,8 +394,8 @@ class Game extends Phaser.Scene {
           lifes: 3,
           loadKey: ["Postales", "Cinemato1", "Cinemato2"],
         });
-        const scene = this.scene.add("MultiScene", multiScene, true);
-        this.scene.start("MultiScene").bringToTop("MultiScene");
+        const scene = this.scene.add(this.map.nextScene, multiScene, true);
+        this.scene.start(this.map.nextScene).bringToTop(this.map.nextScene);
         this.masterManagerScene?.stopMusic();
       }
     }
@@ -506,6 +508,7 @@ class Game extends Phaser.Scene {
       //@ts-ignore
       this.map.rotate = true;
       const config = this.map.loseConfig[this.checkPoint];
+      console.log("[Game] lose() config ",config);
       if (this.lifes) {
         this.lifes -= 1;
         if (this.lifes === 0) {
@@ -554,6 +557,8 @@ class Game extends Phaser.Scene {
             : this.cameras.main.setRotation(Math.PI);
           this.player.x = config.positions.x;
           this.player.y = config.positions.y;
+
+          console.log("[Game] lose() playerPos ", this.player.x+" " + this.player.y);
         }
         this.player?.setPlayerInvicinible(false)
         this.map.invincible?.setVisible(true)
@@ -703,24 +708,24 @@ class Game extends Phaser.Scene {
     // Add a listener for orientation change events
     this.joystickBase = this.add.circle(100, this.cameras.main.height - 100, 50, 0x888888).setScrollFactor(0).setDepth(10);
     this.joystickKnob = this.add.circle(100, this.cameras.main.height - 100, 30, 0xcccccc).setScrollFactor(0).setDepth(11);
-  
+
     // const joystickKnob = this.add.circle(100, this.cameras.main.height - 100, 30, 0xcccccc).setScrollFactor(0).setDepth(11);
     this.joystickBase.setAlpha(0); // Hide the joystick base when not in use
-    this.joystickKnob.setAlpha(0); // Hide the joystick knob when not in use  
+    this.joystickKnob.setAlpha(0); // Hide the joystick knob when not in use
     let isDragging = false;
 
     this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
       if (!this.isTouchDevice) return;
-    
+
       if (pointer.x < this.cameras.main.width / 2 && pointer.y > this.cameras.main.height / 2) {
         // Sólo asignar si ningún dedo controla ya el joystick
         if (this.joystickPointerId === null) {
           this.joystickPointerId = pointer.id;
           isDragging = true;
-    
+
           this.joystickBase?.setPosition(pointer.x, pointer.y);
           this.joystickKnob?.setPosition(pointer.x, pointer.y);
-    
+
           this.joystickBase?.setAlpha(1);
           this.joystickKnob?.setAlpha(1);
         }
@@ -759,15 +764,15 @@ class Game extends Phaser.Scene {
       if (isDragging && this.isTouchDevice && pointer.id === this.joystickPointerId) {
         const baseX = this.joystickBase!.x;
         const baseY = this.joystickBase!.y;
-    
+
         const angle = Phaser.Math.Angle.Between(baseX, baseY, pointer.x, pointer.y);
         const rawDistance = Phaser.Math.Distance.Between(baseX, baseY, pointer.x, pointer.y);
         const maxDistance = this.joystickBase!.radius;
         const deadZoneRadius = 20;
-    
+
         const distance = Phaser.Math.Clamp(rawDistance, 0, maxDistance);
         const effectiveDistance = Math.max(0, distance - deadZoneRadius);
-    
+
         // Drag distances in X and Y (excluding dead zone)
         const dragX = Math.cos(angle) * effectiveDistance;
         const dragY = Math.sin(angle) * effectiveDistance;
@@ -779,16 +784,16 @@ class Game extends Phaser.Scene {
 
         // console.log("normalizedDragX", normalizedDragX, "normalizedDragY", normalizedDragY);
 
-    
+
         if (distance > deadZoneRadius) {
           this.joystickKnob!.setPosition(baseX + dragX, baseY + dragY);
-    
+
           // Optionally set cursor keys for legacy movement handling
           this.cursors!.left.isDown = dragX < -10;
           this.cursors!.right.isDown = dragX > 10;
           this.cursors!.up.isDown = dragY < -10;
           this.cursors!.down.isDown = dragY > 10;
-    
+
           // 💡 Save dragX and dragY for velocity application
           // this.playerVelocityX = dragX;
           // this.playerVelocityY = dragY;
@@ -798,22 +803,22 @@ class Game extends Phaser.Scene {
           this.cursors!.right.isDown = false;
           this.cursors!.up.isDown = false;
           this.cursors!.down.isDown = false;
-    
+
           // this.playerVelocityX = 0;
           // this.playerVelocityY = 0;
         }
       }
     });
-    
+
     this.input.on('pointerup', (pointer: Phaser.Input.Pointer) => {
       if (pointer.id === this.joystickPointerId) {
         this.joystickPointerId = null;
         isDragging = false;
-    
+
         this.joystickKnob!.setPosition(this.joystickBase!.x, this.joystickBase!.y);
         this.joystickBase!.setAlpha(0);
         this.joystickKnob!.setAlpha(0);
-    
+
         this.cursors!.left.isDown = false;
         this.cursors!.right.isDown = false;
         this.cursors!.up.isDown = false;
@@ -993,7 +998,7 @@ class Game extends Phaser.Scene {
         break;
       case 20101:
           this.player = new Player(this, 0, 0, "character", 2);
-  
+
           this.map = new p2SubMap1(this, this.player!);
           this.loopMusic = "planet1LoopMusic";
           if (this.masterManagerScene) {
@@ -1004,6 +1009,19 @@ class Game extends Phaser.Scene {
             ];
           }
           break;
+      case 20201:
+        this.player = new Player(this, 0, 0, "character", 2);
+
+        this.map = new p2SubMap2(this, this.player!);
+        this.loopMusic = "planet1LoopMusic";
+        // if (this.masterManagerScene) {
+        //   this.masterManagerScene.imagenesDesbloqueadas = [
+        //     "planeta1_figu1",
+        //     "planeta1_figu2",
+        //     "planeta2_figu1",
+        //   ];
+        // }
+        break;
       case 20301:
         this.player = new Player(this, 0, 0, "character", 2);
 
@@ -1039,6 +1057,8 @@ class Game extends Phaser.Scene {
     /* FAR BG CAMERA */
 
     this.cameras.add(0, 0, window.innerWidth, window.innerHeight, false, "backgroundCamera");
+    // this.cameras.getCamera("backgroundCamera")?.startFollow(this.player, true, 0.1, 0.1);
+    // this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
 
     /* CREATE NEW MAIN CAMERA TO FIX ORDER */
 
@@ -1061,7 +1081,6 @@ class Game extends Phaser.Scene {
     this.cameras.main.ignore(this.joystickKnob)
     this.cameras.getCamera("backgroundCamera")?.ignore(this.joystickBase)
     this.cameras.getCamera("backgroundCamera")?.ignore(this.joystickKnob)
-    this.cameras.getCamera("backgroundCamera")?.ignore(this.player);
 
     this.UIClass = new UIClass(this, this.levelIs, this.lifes, this.timeLevel);
 
@@ -1154,12 +1173,12 @@ class Game extends Phaser.Scene {
       this.cameras.main.setSize(height, width);
       setTimeout(() => {
         this.cameras.main.setSize(width, height);
-      }, 50); 
+      }, 50);
     }
   }
 
   update(this: Game) {
-    
+
     if (this.player) {
     }
     if (this.cameras.main.width < this.cameras.main.height) {

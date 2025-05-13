@@ -59,7 +59,14 @@ export default class Map3 extends MapCreator {
     const { width: farWidth, height: farHeight } = this.farBackgroundReference;
     const downScaledMiddleWidth = width * 0.7;
     const downScaledFrontWidth = width * 0.5;
-
+    this.loseConfig=[
+      { positions: { x: this.startingPoint.x , y: this.startingPoint.y },
+        cameraDirection: "NORMAL",
+        PlayerDirection: "NORMAL",
+        gravityDown: true
+        ,
+      },
+    ]
     this.backgroundsBack = [
       this.scene.add.image(0, 0, "gradient").setOrigin(0.5),
       this.scene.add.image(0, 0, "stars").setOrigin(0.5),

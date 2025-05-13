@@ -140,6 +140,7 @@ export default class MapCreator {
   flyingPiso?: Phaser.Physics.Arcade.Group;
   firegroup?: Phaser.Physics.Arcade.Group;
   obstacle?: Phaser.Physics.Arcade.Group;
+  obstacleFloor?: Phaser.Physics.Arcade.Group;
   invincibilityTimer?: Time.TimerEvent
   endPortal?: Phaser.Physics.Arcade.Group;
   ratioReference: { width: number; height: number } = { width: 1920, height: 1080 };
@@ -161,16 +162,24 @@ export default class MapCreator {
     //   immovable: true,
     //   collideWorldBounds: true,
     // });
-    this.startingPoint = {
+    /*this.startingPoint = {
       x: 500, //500
       y: this.worldSize.height-600, //800
-    };
+    };*/
     this.scene.physics.world.setBounds(
       0,
       0,
       this.worldSize.width,
       this.worldSize.height
     );
+    this.loseConfig=[
+      { positions: { x: this.startingPoint.x , y: this.startingPoint.y },
+        cameraDirection: "NORMAL",
+        PlayerDirection: "NORMAL",
+        gravityDown: true
+        ,
+      },
+    ]
     this.player.setPlayerWithTank(true);
 
     // this.scene.cameras.main.setPosition(
@@ -207,6 +216,7 @@ export default class MapCreator {
     this.fallingTile = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: false });
     this.teleport = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.obstacle = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
+    this.obstacleFloor = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: false });
     this.firegroup = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.portal = this.scene.physics.add.group({ allowGravity: false });
     this.coin = this.scene.physics.add.group({ allowGravity: false });
@@ -216,6 +226,7 @@ export default class MapCreator {
     this.scene.UICamera?.ignore(this.fallingTile)
     this.scene.UICamera?.ignore(this.teleport)
     this.scene.UICamera?.ignore(this.obstacle)
+    this.scene.UICamera?.ignore(this.obstacleFloor)
     this.scene.UICamera?.ignore(this.firegroup)
     this.scene.UICamera?.ignore(this.portal)
     this.scene.UICamera?.ignore(this.coin)
@@ -340,10 +351,33 @@ export default class MapCreator {
       this.scene.UICamera?.ignore(item);
       this.scene.cameras.getCamera('backgroundCamera')?.ignore(item);
     })
+    const bgItems = this.backgroundsBack.concat(this.backgroundsMiddle, this.backgroundsFront);
+    bgItems.forEach((item) => {
+      this.scene.UICamera?.ignore(item);
+      // this.scene.cameras.getCamera('backgroundCamera')?.ignore(item);
+    })
+    const bgItems2 = this.backgroundsFront.concat(this.backgroundsMiddle);
+    bgItems2.forEach((item) => {
+      this.scene.cameras.getCamera('backgroundCamera')?.ignore(item);
+    })
+    this.backgroundsBack.forEach((item) => {
+      this.scene.cameras.main?.ignore(item);
+    }
+    )
+    this.scene.cameras.main?.ignore(this.backContainer);
     // this.scene.UICamera?.ignore(this.mapGroup);
     // this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.mapGroup);
     this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.scene.player!);
     this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.scene.UIClass?.container!);
+    this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.middleContainer);
+    this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.backContainer);
+    console.log("cameraIgnore", this.scene.cameras);
+    this.scene.cameras.cameras.find((cam) => cam.id === 1)?.setAlpha(0);
+    this.scene.UICamera?.ignore(this.scene.player!);
+    this.scene.UICamera?.ignore(this.backContainer);
+    // this.scene.UICamera?.ignore(this.backgroundsFront[0]);
+    this.scene.UICamera?.ignore(this.backgroundsMiddle);
+    // this.scene.UICamera?.ignore(this.backgroundsBack[0]);
   }
 
   resetMap() {
@@ -359,11 +393,15 @@ export default class MapCreator {
     });
   }
 
-  createBgRow(x: number, y: number, textures: string[], assetWidth: number, scale: number) {
+  createBgRow(x: number, y: number, textures: string[], assetWidth: number, scale: number, origin?: number) {
     const scaledWidth: number = assetWidth * scale;
     return Array(Math.ceil(this.worldSize.width / scaledWidth)).fill(0).map((_, index) => {
       const randomTexture = textures[Math.floor(Math.random() * textures.length)];
-      return this.scene.add.image(x + index * scaledWidth, y, randomTexture).setOrigin(0, 1).setScale(scale);
+      const image = this.scene.add.image(x + index * scaledWidth, y, randomTexture).setOrigin(0, 1).setScale(scale);
+      if (origin || origin === 0) {
+        image.setOrigin(origin);
+      }
+      return image;
     });
   }
 
@@ -496,6 +534,20 @@ export default class MapCreator {
         this.scene.physics.add.overlap(
           this.scene.player,
           this.obstacle,
+          (a, b) => {
+            //this.scene.touchItem("fireball");
+            //this.scene.player?.setVelocity(0);
+            const danger = b as Danger;
+            danger.DoDamage();
+          },
+          () => true,
+          this.scene
+        );
+      }
+      if (this.obstacleFloor) {
+        this.scene.physics.add.overlap(
+          this.scene.player,
+          this.obstacleFloor,
           (a, b) => {
             //this.scene.touchItem("fireball");
             //this.scene.player?.setVelocity(0);

@@ -60,7 +60,15 @@ class Map3 extends MapCreator {
         this.portal = this.scene.physics.add.group({ allowGravity: false });
         this.player?.setPlayerWithTank(false);
         this.player?.setPlayerFlying(true);
-        this.player?.tankGraphics?.clear()
+        this.player?.tankGraphics?.clear(),
+        this.loseConfig=[
+          { positions: { x: this.startingPoint.x , y: this.startingPoint.y },
+            cameraDirection: "NORMAL",
+            PlayerDirection: "NORMAL",
+            gravityDown: true
+            ,
+          },
+        ]
         // const backImage = this.scene.textures.get("background0P1").getSourceImage()
         // this.backSize = { width: backImage.width, height: backImage.height }
 

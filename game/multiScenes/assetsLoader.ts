@@ -148,7 +148,26 @@ export const loadAssets = {
       ["image", "modalDefeat", "/menu/result/resultDefeat.png"],
       ["image", "titleDefeat", "/menu/result/titleDefeat.png"],
       ["image", "astroDefeat", "/menu/result/astroDefeat.png"],
-
+      //VERTICAL LARGE TILES
+      ["image", "top_v1", "/game/generalAssets/verticalTiles/top-v1.png"],
+      ["image", "middle_v1", "/game/generalAssets/verticalTiles/middle-v1.png"],
+      ["image", "middle_v1_2", "/game/generalAssets/verticalTiles/middle-v1-2.png"],
+      ["image", "bottom_v1", "/game/generalAssets/verticalTiles/bottom-v1.png"],
+      //SUBLEVELS
+        //BACKGROUNDS
+          //FAR
+          ["image", "backComboSub", "/game/sub/backgrounds/far/backCombo.svg"],
+          ["image", "backComboSub2", "/game/sub/backgrounds/far/backCombo2.svg"],
+          //MIDDLE
+          //FRONT
+          ["image", "front_bottom", "/game/sub/backgrounds/front/front_bottom.svg"],
+          ["image", "front_bottom2", "/game/sub/backgrounds/front/front_bottom2.svg"],
+          ["image", "front_bottom3", "/game/sub/backgrounds/front/front_bottom3.svg"],
+          ["image", "front_bottom4", "/game/sub/backgrounds/front/front_bottom4.svg"],
+          ["image", "front_top", "/game/sub/backgrounds/front/front_top.svg"],
+          ["image", "front_top2", "/game/sub/backgrounds/front/front_top2.svg"],
+          ["image", "front_top3", "/game/sub/backgrounds/front/front_top3.svg"],
+          ["image", "front_top4", "/game/sub/backgrounds/front/front_top4.svg"],
     ]
 
 
@@ -439,12 +458,12 @@ export const loadAssets = {
       ["image", "pSimple2p1", "/game/planeta2/pSimple2.png"],
       ["image", "comida", "/game/planeta2/comida.png"],
       ["image", "cuevap1", "/game/planeta2/cuevap1.png"],
-      ["image", "fill_texture_p2","/game/planeta2/platforms/fill_texture.png"],
-      ["image", "fill_texture2_p2","/game/planeta2/platforms/fill_texture2.png"],
-      ["image", "fill_texture3_p2","/game/planeta2/platforms/fill_texture3.png"],
-      ["image", "platform_center_p2","/game/planeta2/platforms/platform_center.png"],
-      ["image", "platform_der_p2","/game/planeta2/platforms/platform_der.png"],
-      ["image", "platform_izq_p2","/game/planeta2/platforms/platform_izq.png"],
+      ["image", "fill_texture_p2","/game/planeta2/NewPlat/decopiso_planeta2_02.png"],
+      ["image", "fill_texture2_p2","/game/planeta2/NewPlat/decopiso_planeta2_01.png"],
+      ["image", "fill_texture3_p2","/game/planeta2/NewPlat/decopiso_planeta2_03.png"],
+      ["image", "platform_center_p2","/game/planeta2/NewPlat/plataformaflotante_planeta2_med.png"],
+      ["image", "platform_der_p2","/game/planeta2/NewPlat/plataformaflotante_planeta2_der.png"],
+      ["image", "platform_izq_p2","/game/planeta2/NewPlat/plataformaflotante_planeta2_izq.png"],
     ],
   },
   GamePlay3: {

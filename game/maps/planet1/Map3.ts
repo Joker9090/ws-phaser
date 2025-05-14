@@ -133,7 +133,7 @@ export default class Map3 extends MapCreator {
         attackSpriteSheet: "EnemyAttack",
         particleSpriteSheet: "EnemyParticles",
         group: this.obstacle,
-        color: parseInt('0x00feff'),
+        color: 0x00feff,
       }
 
       const baseFireballConf = {
@@ -154,7 +154,8 @@ export default class Map3 extends MapCreator {
         height: 180,
         fix: 10,
         group: this.coin,
-        aura: 'auraTuto'
+        aura: 'auraTuto',
+        auraColor:0x00feff,
       }
 
       const mapFloor =  this.cameraBounds.height; 
@@ -231,19 +232,17 @@ export default class Map3 extends MapCreator {
           withTextureToAbove: false,
         },
         {
-          ...baseDangerConf, pos: { x: 7600, y: mapFloor - 1400 }, patrol: {
+          ...baseDangerConf, pos: { x: 7600, y: mapFloor - 1300 }, patrol: {
             patrolType: "LinealY",
-            distance: 100,
-            speed: 200,
-            attackInterval: 2,
+            distance: 400,
+            speed: 300,
           }
         },
         {
-          ...baseDangerConf, pos: { x: 7900, y: mapFloor - 1400 }, patrol: {
+          ...baseDangerConf, pos: { x: 7900, y: mapFloor - 1300 }, patrol: {
             patrolType: "LinealY",
-            distance: 100,
-            speed: 200,
-            attackInterval: 2,
+            distance: 400,
+            speed: 300,
           }
         },
         { ...basePlatformsConfig, pos: { x: 8200, y: mapFloor - 1000 }, animation: {
@@ -292,7 +291,7 @@ export default class Map3 extends MapCreator {
           large: 8,
           group: this.floor,
         },
-        { type: "finalPortal", pos: { x: 12100, y: mapFloor - 600 }, texture: "plataformaFinalP1", width: 100, height: 100, group: this.portal }
+        { type: "finalPortal", pos: { x: 12100, y: mapFloor - 670 }, texture: "plataformaFinalP1", width: 100, height: 100, group: this.portal }
       ]
 
       this.createPlatforms(mapPlatforms)

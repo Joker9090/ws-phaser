@@ -142,6 +142,7 @@ class Map0 extends MapCreator {
             scale: { width: 0.7, height: 0.7 },
             width: 10,
             height: 18,
+            auraColor:0xff9600,
             //fix: 10,
         }
 

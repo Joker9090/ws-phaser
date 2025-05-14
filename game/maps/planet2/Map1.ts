@@ -277,7 +277,7 @@ class Map1 extends MapCreator {
             { type: "subPortal",  x: 6600, y: this.worldSize.height - 1500, version: 1, sameScene: false, group: this.teleport, otherSceneConf: otherSceneConf },
             //Agregar plataforma movil
             {
-                ...basePlatformsConfig, pos: { x: 7800, y: this.worldSize.height - 1100 }, animation: {
+                ...basePlatformsConfig, pos: { x: 7800, y: this.worldSize.height - 1300 }, animation: {
                     xAxis: {
                         xDistance: 400,
                         xVel: 100

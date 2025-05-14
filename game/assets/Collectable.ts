@@ -30,6 +30,7 @@ export type CollectableConfig = {
     height: number;
   };
   aura?: string | Phaser.Textures.Texture;
+  auraColor?: number;
   shield?: string | Phaser.Textures.Texture;
 
   tween?: Partial<CollectableTween>;
@@ -54,6 +55,7 @@ class Collectable extends Phaser.Physics.Arcade.Sprite {
     y: 'start'
   };
   aura?: Phaser.GameObjects.Sprite;
+  auraColor?: number;
   shield?: Phaser.GameObjects.Sprite;
   constructor(
     scene: Game,
@@ -86,6 +88,9 @@ class Collectable extends Phaser.Physics.Arcade.Sprite {
     if(config.aura) {
       this.aura = scene.add.sprite(config.pos.x, config.pos.y, config.aura).setScale(0.6);
       this.scene.UICamera?.ignore(this.aura)
+      if (config.auraColor) {
+        this.aura.setTint(config.auraColor);
+      }
     }
     
     this.scene.tweens.add({

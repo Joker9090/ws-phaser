@@ -16,10 +16,10 @@ export default class SubMap2 extends MapCreator {
       height: 1800,
     };
     this.cameraBounds = {
-      x: 100,
-      y: 100,
-      width: 5100,
-      height: 1500,
+      x: 200,
+      y: 200,
+      width: 4900,
+      height: 1400,
     };
 
     this.scene.physics.world.setBounds(
@@ -75,18 +75,18 @@ export default class SubMap2 extends MapCreator {
     //   this.scene.add.image(0, 300, "curvedVector").setOrigin(0.5),
     ]
     
-    this.backgroundsMiddle = this.createBgRow(100, this.worldSize.height/2, ["backComboSub2"], width, 0.8, 0.5),
+    this.backgroundsMiddle = this.createBgRow(200, this.worldSize.height/2, ["backComboSub2"], width, 0.8, 0.5),
     
     this.backgroundsFront = [
-        ...this.createBgRow(100, this.cameraBounds.height+100, ["front_bottom", "front_bottom2", "front_bottom3", "front_bottom4"], width, 1.2),
-        ...this.createBgRow(100, 100, ["front_top", "front_top2", "front_top3", "front_top4"], width, 1.2, 0),
+        ...this.createBgRow(200, this.cameraBounds.height+200, ["front_bottom", "front_bottom2", "front_bottom3", "front_bottom4"], width, 1.2),
+        ...this.createBgRow(200, 200, ["front_top", "front_top2", "front_top3", "front_top4"], width, 1.2, 0),
 
-    //   this.scene.add.image(-this.startingPoint.x, this.cameraBounds.height+100, "frontCombo").setOrigin(0, 1).setScale(0.5),
-    //   this.scene.add.image(-this.startingPoint.x + downScaledFrontWidth, this.cameraBounds.height+100, "frontCombo2").setOrigin(0, 1).setScale(0.5),
-    //   this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 2), this.cameraBounds.height+100, "frontCombo3").setOrigin(0, 1).setScale(0.5),
-    //   this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 3), this.cameraBounds.height+100, "frontCombo4").setOrigin(0, 1).setScale(0.5),
-    //   this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 4), this.cameraBounds.height+100, "frontCombo2").setOrigin(0, 1).setScale(0.5),
-    //   this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 5), this.cameraBounds.height+100, "frontCombo2").setOrigin(0, 1).setScale(0.5),
+    //   this.scene.add.image(-this.startingPoint.x, this.cameraBounds.height+200, "frontCombo").setOrigin(0, 1).setScale(0.5),
+    //   this.scene.add.image(-this.startingPoint.x + downScaledFrontWidth, this.cameraBounds.height+200, "frontCombo2").setOrigin(0, 1).setScale(0.5),
+    //   this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 2), this.cameraBounds.height+200, "frontCombo3").setOrigin(0, 1).setScale(0.5),
+    //   this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 3), this.cameraBounds.height+200, "frontCombo4").setOrigin(0, 1).setScale(0.5),
+    //   this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 4), this.cameraBounds.height+200, "frontCombo2").setOrigin(0, 1).setScale(0.5),
+    //   this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 5), this.cameraBounds.height+200, "frontCombo2").setOrigin(0, 1).setScale(0.5),
     ]
     
     this.createBackgrounds(this.backgroundsBack, this.backgroundsMiddle, this.backgroundsFront);

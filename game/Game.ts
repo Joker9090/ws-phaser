@@ -19,7 +19,7 @@ import p2Map0 from "./maps/planet2/Map0";
 import p2Map1 from "./maps/planet2/Map1";
 import p2SubMap1 from "./maps/planet2/SubMap1";
 import p2SubMap2 from "./maps/planet2/SubMap2";
-import p2Map3 from "./maps/planet2/Map3"
+import p2Map2 from "./maps/planet2/Map2"
 import p2m3sub1 from "./maps/planet2/m3sub1";
 //MAPAS PLANETA 3
 import p3Mapa1 from "./maps/planet3/Mapa8";
@@ -64,7 +64,7 @@ export type PossibleMaps =
   | p1Map1
   | p1Map2
   | p1Map3
-  | p2Map3
+  | p2Map2
   | p2m3sub1
   | MapCreator
   | p2Map0
@@ -919,7 +919,7 @@ class Game extends Phaser.Scene {
         break;
       case 6:
         this.player = new Player(this, 0, 0, "character", 2);
-        this.map = new p2Map3(this, this.player!);
+        this.map = new p2Map2(this, this.player!);
         this.loopMusic = "planet1LoopMusic";
         if (this.masterManagerScene) {
           this.masterManagerScene.imagenesDesbloqueadas = [
@@ -932,7 +932,7 @@ class Game extends Phaser.Scene {
       case 7:
         this.player = new Player(this, 0, 0, "character", 2);
 
-        this.map = new p2Map3(this, this.player!);
+        this.map = new p2Map2(this, this.player!);
         this.loopMusic = "planet1LoopMusic";
         /*if (this.masterManagerScene) {
           this.masterManagerScene.imagenesDesbloqueadas = [

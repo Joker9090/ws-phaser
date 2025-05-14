@@ -53,7 +53,7 @@ class resultContainer extends Phaser.GameObjects.Container {
             this.modal = scene.add.image(0,0,"resultModal").setDepth(2).setScale(0.9)
             this.resultTitle = scene.add.image(0, 0 - 150, 'resultVictory').setScale(0.9).setDepth(3)
             var texture = "itemPlaneta" + config.planeta
-            this.item = scene.add.image(0 -80, 0 - 110,texture).setDepth(3),
+            this.item = scene.add.image(0 -80, 0 - 130,texture).setDepth(3),
            
            
             this.contenedorReloj = scene.add.image(0, 0 -10, 'contenedorReloj')

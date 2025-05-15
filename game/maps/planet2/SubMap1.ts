@@ -43,8 +43,8 @@ class SubMap1 extends MapCreator {
           );
       
           this.startingPoint = {
-            x: 399, //500
-            y: this.worldSize.height - 800, //800
+            x: 300,
+            y: 800,
           };
           this.UIItemToGrab="comida";
     }
@@ -136,6 +136,7 @@ class SubMap1 extends MapCreator {
             width: 10,
             height: 18,
             fix: 10,
+            auraColor: 0xff9600,
         }
 
         const baseDangerConf = {
@@ -232,8 +233,8 @@ class SubMap1 extends MapCreator {
                 withTextureToAbove: false,
             },
 
-            { ...baseFireballConf, pos: { x: 3700, y: this.worldSize.height - 200 }, tween: { duration: 2000, repeat: -1, y: "-=1000", yoyo: false  }, rotated: false },
-            { ...baseFireballConf, pos: { x: 4000, y: this.worldSize.height - 200 }, tween: { duration: 1500, repeat: -1, y: "-=1000", yoyo: false  }, rotated: false },
+            { ...baseFireballConf, pos: { x: 3700, y: 0 }, tween: { duration: 2000, repeat: -1, y: "+=2000", yoyo: false  }, rotated: false },
+            { ...baseFireballConf, pos: { x: 4000, y: 0 }, tween: { duration: 1500, repeat: -1, y: "+=2000", yoyo: false  }, rotated: false },
 
             {
                 ...baseLargePlatformsConf,

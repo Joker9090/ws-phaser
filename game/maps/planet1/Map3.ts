@@ -16,10 +16,10 @@ export default class Map3 extends MapCreator {
       height: 3000,
     };
     this.cameraBounds = {
-      x: 100,
-      y: 100,
-      width: 12200,
-      height: 2800,
+      x: 200,
+      y: 200,
+      width: 12000,
+      height: 2600,
     };
 
     this.scene.physics.world.setBounds(
@@ -29,8 +29,8 @@ export default class Map3 extends MapCreator {
         this.worldSize.height
       );
     this.scene.cameras.main.setBounds(
-        100,
-        100,
+        this.cameraBounds.x,
+        this.cameraBounds.y,
         this.cameraBounds.width,
         this.cameraBounds.height
     );
@@ -73,15 +73,15 @@ export default class Map3 extends MapCreator {
       this.scene.add.image(0, 300, "curvedVector").setOrigin(0.5),
     ]
     
-    this.backgroundsMiddle = this.createBgRow(100, this.cameraBounds.height+100, ["middleCombo", "middleCombo2", "middleCombo3", "middleCombo4"], width, 0.7),
+    this.backgroundsMiddle = this.createBgRow(200, this.cameraBounds.height+200, ["middleCombo", "middleCombo2", "middleCombo3", "middleCombo4"], width, 0.7),
     
     this.backgroundsFront = [
-      this.scene.add.image(-this.startingPoint.x, this.cameraBounds.height+100, "frontCombo").setOrigin(0, 1).setScale(0.5),
-      this.scene.add.image(-this.startingPoint.x + downScaledFrontWidth, this.cameraBounds.height+100, "frontCombo2").setOrigin(0, 1).setScale(0.5),
-      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 2), this.cameraBounds.height+100, "frontCombo3").setOrigin(0, 1).setScale(0.5),
-      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 3), this.cameraBounds.height+100, "frontCombo4").setOrigin(0, 1).setScale(0.5),
-      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 4), this.cameraBounds.height+100, "frontCombo2").setOrigin(0, 1).setScale(0.5),
-      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 5), this.cameraBounds.height+100, "frontCombo2").setOrigin(0, 1).setScale(0.5),
+      this.scene.add.image(-this.startingPoint.x, this.cameraBounds.height+200, "frontCombo").setOrigin(0, 1).setScale(0.5),
+      this.scene.add.image(-this.startingPoint.x + downScaledFrontWidth, this.cameraBounds.height+200, "frontCombo2").setOrigin(0, 1).setScale(0.5),
+      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 2), this.cameraBounds.height+200, "frontCombo3").setOrigin(0, 1).setScale(0.5),
+      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 3), this.cameraBounds.height+200, "frontCombo4").setOrigin(0, 1).setScale(0.5),
+      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 4), this.cameraBounds.height+200, "frontCombo2").setOrigin(0, 1).setScale(0.5),
+      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 5), this.cameraBounds.height+200, "frontCombo2").setOrigin(0, 1).setScale(0.5),
     ]
     
     this.createBackgrounds(this.backgroundsBack, this.backgroundsMiddle, this.backgroundsFront);
@@ -158,7 +158,7 @@ export default class Map3 extends MapCreator {
         auraColor:0x00feff,
       }
 
-      const mapFloor =  this.cameraBounds.height; 
+      const mapFloor =  (this.cameraBounds.height + this.cameraBounds.y); 
       const mapLeft = this.cameraBounds.x;
   
       const mapPlatforms = [
@@ -291,7 +291,7 @@ export default class Map3 extends MapCreator {
           large: 8,
           group: this.floor,
         },
-        { type: "finalPortal", pos: { x: 12100, y: mapFloor - 670 }, texture: "plataformaFinalP1", width: 100, height: 100, group: this.portal }
+        { type: "finalPortal", pos: { x: 12100, y: (this.cameraBounds.height + this.cameraBounds.y) - 670 }, texture: "plataformaFinalP1", width: 100, height: 100, group: this.portal }
       ]
 
       this.createPlatforms(mapPlatforms)

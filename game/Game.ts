@@ -19,7 +19,7 @@ import p2Map0 from "./maps/planet2/Map0";
 import p2Map1 from "./maps/planet2/Map1";
 import p2SubMap1 from "./maps/planet2/SubMap1";
 import p2SubMap2 from "./maps/planet2/SubMap2";
-import p2Map3 from "./maps/planet2/Map3"
+import p2Map2 from "./maps/planet2/Map2"
 import p2m3sub1 from "./maps/planet2/m3sub1";
 //MAPAS PLANETA 3
 import p3Mapa1 from "./maps/planet3/Mapa8";
@@ -64,7 +64,7 @@ export type PossibleMaps =
   | p1Map1
   | p1Map2
   | p1Map3
-  | p2Map3
+  | p2Map2
   | p2m3sub1
   | MapCreator
   | p2Map0
@@ -357,10 +357,10 @@ class Game extends Phaser.Scene {
         level: this.levelIs,
         lifes: 3,
       });
-      if (this.levelIs != 0) {
+      // if (this.levelIs != 0) {
         const scene = this.scene.add("MultiScene", multiScene, true);
         this.scene.start("MultiScene").bringToTop("MultiScene");
-      }
+      // }
       console.log("[Game] lose(): " + this.levelIs + " , new lifes" + multiScene.sceneData?.lifes);
     } else this.scene
   }
@@ -458,10 +458,12 @@ class Game extends Phaser.Scene {
         }
 
         this.resultModal = new resultContainer(this, resultConfig);
+        this.stopMov = true
         this.UICamera?.ignore(this.resultModal)
-
-
-
+        if (this.resultModal.container) {
+          this.cameras.getCamera('backgroundCamera')?.ignore(this.resultModal.container)
+          this.cameras.main.ignore(this.resultModal.container);
+        }
       }
 
 
@@ -532,7 +534,12 @@ class Game extends Phaser.Scene {
           }
 
           this.resultModal = new resultContainer(this, resultConfig);
+          this.stopMov = true
           this.UICamera?.ignore(this.resultModal)
+          if (this.resultModal.container) {
+            this.cameras.getCamera('backgroundCamera')?.ignore(this.resultModal.container)
+            this.cameras.main.ignore(this.resultModal.container);
+          }
         } else if (this.lifes > 0 && this.player) {
           // UI changes
           this.UIClass?.loseLife(this.lifes);
@@ -912,7 +919,7 @@ class Game extends Phaser.Scene {
         break;
       case 6:
         this.player = new Player(this, 0, 0, "character", 2);
-        this.map = new p2Map3(this, this.player!);
+        this.map = new p2Map2(this, this.player!);
         this.loopMusic = "planet1LoopMusic";
         if (this.masterManagerScene) {
           this.masterManagerScene.imagenesDesbloqueadas = [
@@ -925,7 +932,7 @@ class Game extends Phaser.Scene {
       case 7:
         this.player = new Player(this, 0, 0, "character", 2);
 
-        this.map = new p2Map3(this, this.player!);
+        this.map = new p2Map2(this, this.player!);
         this.loopMusic = "planet1LoopMusic";
         /*if (this.masterManagerScene) {
           this.masterManagerScene.imagenesDesbloqueadas = [
@@ -1013,6 +1020,7 @@ class Game extends Phaser.Scene {
         this.player = new Player(this, 0, 0, "character", 2);
 
         this.map = new p2SubMap2(this, this.player!);
+        this.player.setVelocity(0, 0);
         this.loopMusic = "planet1LoopMusic";
         // if (this.masterManagerScene) {
         //   this.masterManagerScene.imagenesDesbloqueadas = [
@@ -1043,6 +1051,13 @@ class Game extends Phaser.Scene {
     }
     console.log("x y", x, y);
     this.player.setPosition(x, y);
+    this.player.setVelocity(0, 0);
+    if (this.player.body) {
+        this.player.body.gravity.y = 0;
+    }
+    if (this.player.body) {
+        this.player.body.gravity.x = 0;
+    }
     /* Audio */
     this.masterManagerScene = this.game.scene.getScene(
       "MasterManager"
@@ -1194,6 +1209,10 @@ class Game extends Phaser.Scene {
       this.player?.setVelocity(0, 17);
       this.player?.setAcceleration(0);
       this.player?.setGravityY(0);
+      if (this.player && this.player.body) {
+        this.player.body.gravity.y = 0;
+        this.player.body.gravity.x = 0;
+      }
     }
     // CREATIVE MODE
     this.handleCameraMovement();

@@ -400,13 +400,13 @@ export const loadAssets = {
         "svg",
         "p1backgroundNoche",
         "/game/planeta2/bgnoche.svg",
-        { scale: 1.4 }
+        { scale: 2 }
       ],
       [
         "svg",
         "p1capaOscuridad",
         "/game/planeta2/capaOscuridad.svg",
-        { scale: 1.4 }
+        { scale: 2 }
       ],
       [
         "svg",
@@ -430,7 +430,7 @@ export const loadAssets = {
         "svg",
         "p1Stars",
         "/game/planeta2/starsBackground.svg",
-        { scale: 1.4 }
+        { scale: 2 }
       ],
       [
         "spritesheet",

@@ -45,7 +45,7 @@ class Map2 extends MapCreator {
       
           this.startingPoint = {
             x: 600, //500
-            y: this.worldSize.height - 700, //800
+            y: (this.cameraBounds.height + this.cameraBounds.y) - 700, //800
           };
           
           this.nextScene= "postal2_planeta1";

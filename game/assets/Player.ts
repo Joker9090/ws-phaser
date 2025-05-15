@@ -426,6 +426,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     let mobileVelocity = { x: scene.normalizedDragX * 350, y: scene.normalizedDragY * 350 };
     this.gravityAnimSprite?.setPosition(this.x, this.y)
     if(this.isFlying) {
+      this.body?.setOffset(75,40)
       this.checkFly(cursors)
       return
     }

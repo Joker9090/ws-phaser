@@ -90,12 +90,36 @@ export default class MasterManager extends Phaser.Scene {
     }
   }
 
-  playSound(name: string, loop: boolean = false) {
+  playSound(name: string, loop: boolean = false, baseVolume?: number, duration?: number) {
     this.sounds = this.sound.add(name, {
-      volume: this.volumeSound,
+      volume: baseVolume ? this.volumeSound * baseVolume : this.volumeSound,
       loop: loop,
     });
+    
     this.sounds.play();
+    if (duration) {
+      this.time.delayedCall(duration, () => {
+        if (!this.sounds?.isPlaying || this.sounds?.volume === 0) return;
+        this.tweens.add({
+            targets: this.sounds,
+            volume: 0,
+            duration: 200,
+            onUpdate: (tween, target) => {
+              if (
+          !target ||
+          typeof target.volume !== 'number' ||
+          target.manager == null
+        ) {
+          tween.stop();
+        }
+            },
+            onComplete: () => {
+              this.sounds?.stop();
+              // this.sounds?.destroy();
+            }
+          });
+        });
+    }
     console.log(this.volumeSound, "JOTA SOUNDS FROM FUNCTION")
   }
 

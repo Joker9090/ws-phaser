@@ -372,7 +372,7 @@ export default class MapCreator {
     this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.scene.player!);
     this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.scene.UIClass?.container!);
     this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.middleContainer);
-    this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.backContainer);
+    // this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.backContainer);
     console.log("cameraIgnore", this.scene.cameras);
     this.scene.cameras.cameras.find((cam) => cam.id === 1)?.setAlpha(0);
     this.scene.UICamera?.ignore(this.scene.player!);
@@ -389,8 +389,8 @@ export default class MapCreator {
       this.scene.cameras.main.ignore(this.scene.resultModal.modal);
       bgCamera?.ignore(this.scene.resultModal.modal)
       this.scene.cameras.main.ignore(this.scene.resultModal);
-      this.scene.cameras.main.ignore(this.middleContainer);
-      this.scene.cameras.main.ignore(this.frontContainer);
+      // this.scene.cameras.main.ignore(this.middleContainer);
+      // this.scene.cameras.main.ignore(this.frontContainer);
     }
   }
 
@@ -448,6 +448,7 @@ export default class MapCreator {
             if (
               this.scene.player?.touchingFeet(b as Phaser.Physics.Arcade.Sprite)
             ) {
+              this.scene.masterManagerScene?.playSound('cameraFlip')
               this.scene.changeGravity(true, 1000, 3);
             }
           },
@@ -463,6 +464,7 @@ export default class MapCreator {
               this.scene.player?.touchingFeet(b as Phaser.Physics.Arcade.Sprite)
             ) {
               this.scene.touch()
+              this.scene.masterManagerScene?.playSound('cameraFlip')
               //@ts-ignore
               this.scene.rotateCam(b.rotate, 10);
             }
@@ -479,6 +481,13 @@ export default class MapCreator {
                 this.scene.player?.touchingFeet(b as Phaser.Physics.Arcade.Sprite)
               ) {
                 this.scene.touch()
+                if (!this.scene.sound.get('fallingTile')?.isPlaying) {
+                  this.scene.sound.play('fallingTile', {
+                    volume: 0.4 * (this.scene.masterManagerScene?.volumeSound ?? 1),
+                    loop: false,
+                  });
+                  // this.scene.masterManagerScene?.playSound('fallingTile', false, 0.4);
+                }
                 //@ts-ignore
                 b.setCollideWorldBounds(false);
                 //@ts-ignore
@@ -492,9 +501,9 @@ export default class MapCreator {
         this.scene.physics.add.overlap(
           this.scene.player,
           this.coin,
-          (a, b) => {
+          (a, b: any) => {
             this.scene.touchItem("coin");
-            //@ts-ignore
+            this.scene.masterManagerScene?.playSound(b.soundKey)
             if (b.destroyItem) b.destroyItem();
             this.coinAura?.destroy();
           },
@@ -507,6 +516,7 @@ export default class MapCreator {
           this.invincible,
           (a, b: any) => {
             if (!this.player?.invincible) {
+              this.scene.masterManagerScene?.playSound(b.soundKey)
               this.player?.setPlayerInvicinible(true);
               b?.turnTo(false);
               this.invincibilityTimer = this.scene.time.delayedCall(30000, () => {
@@ -525,6 +535,7 @@ export default class MapCreator {
           this.portal,
           () => {
             console.log("portal", this.portal);
+            this.scene.masterManagerScene?.playSound('win')
             this.scene.win();
           },
           () => true,
@@ -536,6 +547,7 @@ export default class MapCreator {
           this.firegroup,
           () => {
             if (!this.player?.invincible) {
+              this.scene.masterManagerScene?.playSound('damage')
               this.scene.touchItem("fireball");
               this.scene.player?.setVelocity(0);
             }
@@ -565,6 +577,7 @@ export default class MapCreator {
           (a, b) => {
             //this.scene.touchItem("fireball");
             //this.scene.player?.setVelocity(0);
+            this.scene.masterManagerScene?.playSound('damage')
             const danger = b as Danger;
             danger.DoDamage();
           },

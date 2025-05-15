@@ -55,6 +55,7 @@ class Collectable extends Phaser.Physics.Arcade.Sprite {
   };
   aura?: Phaser.GameObjects.Sprite;
   shield?: Phaser.GameObjects.Sprite;
+  soundKey?: string;
   constructor(
     scene: Game,
     config: CollectableConfig,
@@ -64,6 +65,7 @@ class Collectable extends Phaser.Physics.Arcade.Sprite {
     super(scene, config.pos.x, config.pos.y, config.texture);
     this.scene = scene;
     this.group = group;
+    this.soundKey = config.shield ? 'shield' : 'collect';
     const width = config.width ?? 120;
     const height = config.height ?? 108;
     const fix = config.fix ?? -20;

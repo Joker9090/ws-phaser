@@ -438,6 +438,7 @@ class Game extends Phaser.Scene {
     // }
     if (this.player && this.map) {
       console.log(this.levelIs, "LEVEL IS JOTITA");
+      this.masterManagerScene?.playSound('win', false, 0.5, 2000);
       this.cameraNormal = true;
       if (this.canWin) {
         this.canWin = false
@@ -514,6 +515,7 @@ class Game extends Phaser.Scene {
       if (this.lifes) {
         this.lifes -= 1;
         if (this.lifes === 0) {
+          this.masterManagerScene?.playSound('lose', false, 0.7, 1000);
           this.cameraNormal = true;
           this.checkPoint === 0;
           this.canWin = false
@@ -1147,6 +1149,13 @@ class Game extends Phaser.Scene {
         left: boolean,
         right: boolean
       ) => {
+        if (!this.sound.get('fall')?.isPlaying) {
+          this.sound.play('fall', {
+            volume: 0.6 * (this.masterManagerScene?.volumeSound ?? 1),
+            loop: false,
+          });
+          // this.scene.masterManagerScene?.playSound('fallingTile', false, 0.4);
+        }
         //@ts-ignore
         console.log("worldbounds", body, top, down, left, right, this.physics.world.bounds);
         this.lose();
@@ -1190,6 +1199,8 @@ class Game extends Phaser.Scene {
         this.cameras.main.setSize(width, height);
       }, 50);
     }
+
+    this.masterManagerScene?.playSound('spawn', false, 0.5, 2000);
   }
 
   update(this: Game) {

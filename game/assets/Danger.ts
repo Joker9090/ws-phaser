@@ -185,6 +185,7 @@ class Danger extends Phaser.Physics.Arcade.Sprite {
     DoDamage(){
       if(this.config.attackSpriteSheet && this.scene.player?.isDead===false){
         //console.log("[Danger] DoDamage animation started");
+        this.scene.masterManagerScene?.playSound('danger', false, 1, 2000)
         this.scene.player!.isDead = true;
         this.anims.play("Attack",true);
         this.scene.time.delayedCall(200, () => {

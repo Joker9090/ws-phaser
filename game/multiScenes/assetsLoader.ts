@@ -168,9 +168,20 @@ export const loadAssets = {
           ["image", "front_top2", "/game/sub/backgrounds/front/front_top2.svg"],
           ["image", "front_top3", "/game/sub/backgrounds/front/front_top3.svg"],
           ["image", "front_top4", "/game/sub/backgrounds/front/front_top4.svg"],
+      //SOUND EFFECTS
+      ["audio", "collect", "/sounds/sfx/collect.mp3"],
+      ["audio", "cameraFlip", "/sounds/sfx/cameraflip.wav"],
+      ["audio", "damage", "/sounds/sfx/damage.wav"],
+      ["audio", "danger", "/sounds/sfx/danger.wav"],
+      ["audio", "fall", "/sounds/sfx/fall.wav"],
+      ["audio", "fallingTile", "/sounds/sfx/fallingtile.wav"],
+      ["audio", "lose", "/sounds/sfx/lose.wav"],
+      ["audio", "play", "/sounds/sfx/play.mp3"],
+      ["audio", "settings", "/sounds/sfx/settings.wav"],
+      ["audio", "shield", "/sounds/sfx/shield.wav"],
+      ["audio", "spawn", "/sounds/sfx/spawn.wav"],
+      ["audio", "win", "/sounds/sfx/win.ogg"],
     ]
-
-
   },
   GamePlay1: {
     assets: [

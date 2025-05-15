@@ -48,7 +48,6 @@ class Map0 extends MapCreator {
 
         this.UIItemToGrab="comida";
         this.nextScene= "postal1_planeta2";
-            this.postalCode = "postl1";
     }
 
     createMap(data: { level: number; lifes: number }) {
@@ -142,6 +141,7 @@ class Map0 extends MapCreator {
             scale: { width: 0.7, height: 0.7 },
             width: 10,
             height: 18,
+            auraColor:0xff9600,
             //fix: 10,
         }
 
@@ -326,7 +326,7 @@ class Map0 extends MapCreator {
                 large: 10,
                 group: this.floor
             },
-            { type: "finalPortal", pos: { x: 13250, y: (this.cameraBounds.height + this.cameraBounds.y) - 300 }, texture: "plataformaFinalP1", width: 100, height: 100, group: this.portal }
+            { type: "finalPortal", pos: { x: 13250, y: (this.cameraBounds.height + this.cameraBounds.y) - 370 }, texture: "cuevap1", width: 100, height: 100, group: this.portal }
 
         ]
         this.createPlatforms(mapPlatforms)

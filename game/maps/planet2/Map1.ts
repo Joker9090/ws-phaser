@@ -43,8 +43,8 @@ class Map1 extends MapCreator {
           );
       
           this.startingPoint = {
-            x: 6900, //500
             y: (this.cameraBounds.height + this.cameraBounds.y) - 900, //800
+            x: 300,
           };
           this.UIItemToGrab="comida";
     }
@@ -78,20 +78,13 @@ class Map1 extends MapCreator {
           // this.scene.children.sendToBack(bgContainer);
           this.scene.cameras.main.ignore(bgContainer);
 
-        /*this.backgroundsMiddle = [
-            this.scene.add.image(-this.startingPoint.x, this.cameraBounds.height + 100, "middleCombo").setOrigin(0, 1).setScale(0.7),
-            this.scene.add.image(-this.startingPoint.x + downScaledMiddleWidth, this.cameraBounds.height + 100, "middleCombo2").setOrigin(0, 1).setScale(0.7),
-            this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 2), this.cameraBounds.height + 100, "middleCombo3").setOrigin(0, 1).setScale(0.7),
-            this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 3), this.cameraBounds.height + 100, "middleCombo4").setOrigin(0, 1).setScale(0.7),
-            this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 4), this.cameraBounds.height + 100, "middleCombo2").setOrigin(0, 1).setScale(0.7),
-            this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 5), this.cameraBounds.height + 100, "middleCombo2").setOrigin(0, 1).setScale(0.7),
-        ]*/
+        
        this.backgroundsMiddle = this.createBgRow(200, this.cameraBounds.height+200, ["frontground1p1", "frontground2p1", "frontground1p1", "frontground2p1"], width, 0.7),
 
         this.backgroundsFront = [
           this.scene.add.image(-this.startingPoint.x, this.cameraBounds.height+200, "montaña1p1").setOrigin(0, 1).setScale(0.5),
-          this.scene.add.image(-this.startingPoint.x + downScaledFrontWidth, this.cameraBounds.height+200, "montaña2p1").setOrigin(0, 1).setScale(0.5),
-          this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 2), this.cameraBounds.height+200, "huesoFrontp1").setOrigin(0, 1).setScale(0.5),
+          this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 2), this.cameraBounds.height+200, "montaña2p1").setOrigin(0, 1).setScale(0.5),
+          this.scene.add.image(-this.startingPoint.x + downScaledFrontWidth, this.cameraBounds.height+200, "huesoFrontp1" ).setOrigin(0, 1).setScale(0.5),
           this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 3), this.cameraBounds.height+200, "montaña4p1").setOrigin(0, 1).setScale(0.5),
           this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 4), this.cameraBounds.height+200, "montaña5p1").setOrigin(0, 1).setScale(0.5),
           this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 5), this.cameraBounds.height+200, "montaña3p1").setOrigin(0, 1).setScale(0.5),
@@ -139,6 +132,7 @@ class Map1 extends MapCreator {
             width: 10,
             height: 18,
             //fix: 10,
+            auraColor: 0xff9600,
         }
 
         const baseDangerConf = {
@@ -190,15 +184,8 @@ class Map1 extends MapCreator {
             },
             { ...baseDangerConf, pos: { x: 800, y: (this.cameraBounds.height + this.cameraBounds.y) - 250 }, width: 170, height: 170, patrol:{
                     patrolType: "LinealX",
-                    distance: 600,
-                    speed: 200,
-                    attackInterval: 0,
-                }
-            },
-            { ...baseDangerConf, pos: { x: 1200, y: (this.cameraBounds.height + this.cameraBounds.y) - 250 }, width: 170, height: 170, patrol:{
-                    patrolType: "LinealX",
-                    distance: 700,
-                    speed: 250,
+                    distance: 1200,
+                    speed: 300,
                     attackInterval: 0,
                 }
             },
@@ -243,10 +230,17 @@ class Map1 extends MapCreator {
                 large: 5,
                 group: this.floor
             },
-            { ...baseDangerConf, pos: { x: 5000, y: (this.cameraBounds.height + this.cameraBounds.y) - 750 }, width: 170, height: 170 },
-            { ...baseDangerConf, pos: { x: 5150, y: (this.cameraBounds.height + this.cameraBounds.y) - 750 }, width: 170, height: 170 },
+            { ...baseDangerConf, pos: { x: 5000, y: (this.cameraBounds.height + this.cameraBounds.y) - 750 }, width: 170, height: 170 ,
+                patrol:{
+                    patrolType: "LinealX",
+                    distance: 300,
+                    speed: 80,
+                    attackInterval: 0,
+                }
+            },
+            /*{ ...baseDangerConf, pos: { x: 5150, y: (this.cameraBounds.height + this.cameraBounds.y) - 750 }, width: 170, height: 170 },
             { ...baseDangerConf, pos: { x: 5300, y: (this.cameraBounds.height + this.cameraBounds.y) - 750 }, width: 170, height: 170 },
-            
+            */
             {
                 ...baseLargePlatformsConf,
                 pos: { x: 5350, y: (this.cameraBounds.height + this.cameraBounds.y) - 500 },
@@ -275,7 +269,14 @@ class Map1 extends MapCreator {
                 withTextureToAbove: false,
             },
             { type: "subPortal",  x: 6600, y: (this.cameraBounds.height + this.cameraBounds.y) - 1500, version: 1, sameScene: false, group: this.teleport, otherSceneConf: otherSceneConf },
-
+            {
+                ...basePlatformsConfig, pos: { x: 7800, y: this.worldSize.height - 1300 }, animation: {
+                    xAxis: {
+                        xDistance: 400,
+                        xVel: 100
+                    }
+                }
+            },
             {
                 ...baseLargePlatformsConf,
                 pos: { x: 6800, y: (this.cameraBounds.height + this.cameraBounds.y) - 500 },
@@ -286,7 +287,9 @@ class Map1 extends MapCreator {
             { ...baseCristalConf, pos: { x: 7300, y: (this.cameraBounds.height + this.cameraBounds.y) - 900 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
             { ...baseCristalConf, pos: { x: 7600, y: (this.cameraBounds.height + this.cameraBounds.y) - 700 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
 
-            
+            //agregar plataforma qe cae
+            { ...basePlatformsConfig, pos: { x: 8000, y: this.worldSize.height - 800 }, colors: [colors.falling], group: this.fallingTile },
+
             {
                 ...baseLargePlatformsConf,
                 pos: { x: 8200, y: (this.cameraBounds.height + this.cameraBounds.y) - 600 },
@@ -341,7 +344,7 @@ class Map1 extends MapCreator {
                 large: 7,
                 group: this.floor,
             },
-            { type: "finalPortal", pos: { x: 11550, y: (this.cameraBounds.height + this.cameraBounds.y) - 500 }, texture: "plataformaFinalP1", width: 100, height: 100, group: this.portal }
+            { type: "finalPortal", pos: { x: 11550, y: (this.cameraBounds.height + this.cameraBounds.y) - 570 }, texture: "cuevap1", width: 100, height: 100, group: this.portal },
 
         ]
         this.createPlatforms(mapPlatforms)

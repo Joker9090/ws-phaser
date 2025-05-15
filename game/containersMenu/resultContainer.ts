@@ -26,7 +26,8 @@ class resultContainer extends Phaser.GameObjects.Container {
     retryButton?: Phaser.GameObjects.Image;
     homeButton?:Phaser.GameObjects.Image;
     timeText?:Phaser.GameObjects.Text;
-  
+    collectedText?: Phaser.GameObjects.Text;
+
     constructor(scene: Phaser.Scene, config: resultContainerConfigType) {
         super(scene, config.x, config.y);
         this.container = this.scene.add.container(window.innerWidth/2, window.innerHeight/2);
@@ -48,12 +49,12 @@ class resultContainer extends Phaser.GameObjects.Container {
         
         if(this.victory){
             scene.time.paused = true
-            scene.add.text(0 -20, 0 -130, `${this.collText} / ${this.coinCount + 1}`).setFontSize(45).setFontFamily('arcade').setDepth(3);
+            this.collectedText = scene.add.text(0 - 60, 0 -130, `${this.collText} / ${this.coinCount + 1}`).setFontSize(45).setFontFamily('arcade').setDepth(3);
             this.resultAstro = scene.add.image(0, 0 -310, 'resultVictoryAstro').setDepth(1).setScale(0.7)
             this.modal = scene.add.image(0,0,"resultModal").setDepth(2).setScale(0.9)
-            this.resultTitle = scene.add.image(0, 0 - 150, 'resultVictory').setScale(0.9).setDepth(3)
+            this.resultTitle = scene.add.image(0, 0 - 200, 'resultVictory').setScale(0.9).setDepth(3)
             var texture = "itemPlaneta" + config.planeta
-            this.item = scene.add.image(0 -80, 0 - 130,texture).setDepth(3),
+            this.item = scene.add.image(0 -90, 0 - 115,texture).setDepth(3),
            
            
             this.contenedorReloj = scene.add.image(0, 0 -10, 'contenedorReloj')
@@ -178,6 +179,7 @@ class resultContainer extends Phaser.GameObjects.Container {
 
         }
         const assets = [
+            this.resultAstro,
             this.modal,
             this.resultTitle,
             this.item,
@@ -187,8 +189,9 @@ class resultContainer extends Phaser.GameObjects.Container {
             this.death1,
             this.death2,
             this.death3,
+            this.contenedorReloj,
             this.timeText,
-            this.resultAstro,
+            this.collectedText,
         ]
 
         assets.forEach((a)=>{
@@ -205,7 +208,8 @@ class resultContainer extends Phaser.GameObjects.Container {
 
         // this.add(arr)
         scene.add.existing(this)
-
+        this.scene.cameras.main.ignore(this.container);
+        this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.container);
         // this.scene.scale.on("resize", this.resizeElements, this);
         // this.resizeElements.bind(this)()
     }

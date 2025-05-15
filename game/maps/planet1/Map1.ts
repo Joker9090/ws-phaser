@@ -153,6 +153,7 @@ class Map1 extends MapCreator {
             width: 10,
             height: 18,
             fix: 10,
+            auraColor:0x00feff,
         }
 
         const baseDangerConf = {
@@ -337,7 +338,7 @@ class Map1 extends MapCreator {
                 group: this.floor
             },
             { ...baseCristalConf, pos: { x: 9100, y: (this.cameraBounds.height + this.cameraBounds.y) - 700 }, group: this.coin, texture: "cristal3", width: 140, height: 180, aura: 'auraTuto' },
-            { type: "finalPortal", pos: { x: 9600, y: (this.cameraBounds.height + this.cameraBounds.y) - 400 }, texture: "plataformaFinalP1", width: 100, height: 100, group: this.portal }
+            { type: "finalPortal", pos: { x: 9600, y: (this.cameraBounds.height + this.cameraBounds.y) - 470 }, texture: "plataformaFinalP1", width: 100, height: 100, group: this.portal }
 
         ]
         this.createPlatforms(mapPlatforms)

@@ -154,6 +154,8 @@ class Map0 extends MapCreator {
             width: 10,
             height: 18,
             fix: -20,
+            
+            auraColor: 0x00feff,
         }
 
         const baseDangerConf = {
@@ -303,12 +305,12 @@ class Map0 extends MapCreator {
             { ...baseDangerConf, pos: { x: 9100, y: (this.cameraBounds.height + this.cameraBounds.y) - 550  }, width: 170, height: 170,
                 patrol:{
                     patrolType: "LinealX",
-                    distance: 350,
-                    speed: 150,
+                    distance: 300,
+                    speed: 100,
                     attackInterval: 0,
                 }
             },
-            { type: "finalPortal", pos: { x: 9750, y: (this.cameraBounds.height + this.cameraBounds.y) - 600  }, texture: "plataformaFinalP1", width: 100, height: 100, group: this.portal }
+            { type: "finalPortal", pos: { x: 9750, y: (this.cameraBounds.height + this.cameraBounds.y) - 670  }, texture: "plataformaFinalP1", width: 100, height: 100, group: this.portal }
 
         ]
         this.createPlatforms(mapPlatforms)

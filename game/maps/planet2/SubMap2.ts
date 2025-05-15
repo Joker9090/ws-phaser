@@ -120,13 +120,14 @@ export default class SubMap2 extends MapCreator {
 
       const baseCristalConf = {
         type: "collectable",
-        texture: "cristal3",
+        texture: "comida",
         scale: { width: 0.7, height: 0.7 },
         width: 140,
         height: 180,
         fix: 10,
         group: this.coin,
-        aura: 'auraTuto'
+        aura: 'auraTuto',
+        auraColor: 0xff9600,
       }
 
       const basePlatformsConfig = {
@@ -138,7 +139,15 @@ export default class SubMap2 extends MapCreator {
         width: 140,
         height: 40
     }
-
+    const backToLvl1Conf: GamePlayDataType = {
+      level: 6,
+      lifes: this.scene.lifes ? this.scene.lifes : 3,
+      loadKey: ["Postales", "Cinemato1", "Cinemato2"],
+      startingPositionFromOtherScene: {
+          x: 7700,
+          y: 1600,
+      },
+  }
       const bottomLimit = this.cameraBounds.height + this.cameraBounds.y;
       const topLimit = this.cameraBounds.y;
 
@@ -165,7 +174,7 @@ export default class SubMap2 extends MapCreator {
       {...ObstacleFloorConf, pos: {x: 4400, y: topLimit}, large: 5},
       {...ObstacleFloorConf, pos: {x: 4400, y: (bottomLimit - (4 * ObstacleFloorConf.height * 0.7))}, large: 4},
       {...ObstacleFloorConf, pos: {x: 4800, y: topLimit}, large: 6},
-
+      { type: "subPortal",  x: 4800, y:  this.cameraBounds.height-100, version: 1, sameScene: false, group: this.teleport, otherSceneConf: backToLvl1Conf },
 
 
       // {...ObstacleFloorConf, pos: {x: 800, y: topLimit}, large: 4},

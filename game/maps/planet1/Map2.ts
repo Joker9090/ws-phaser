@@ -153,6 +153,7 @@ class Map2 extends MapCreator {
             scale: { width: 0.7, height: 0.7 },
             width: 10,
             height: 18,
+            auraColor:0x00feff,
             //fix: 10,
         }
 
@@ -297,7 +298,7 @@ class Map2 extends MapCreator {
                 large: 15,
                 group: this.floor
             },
-            { type: "finalPortal", pos: { x: 9700, y: (this.cameraBounds.height + this.cameraBounds.y) - 800 }, texture: "plataformaFinalP1", width: 100, height: 100, group: this.portal }
+            { type: "finalPortal", pos: { x: 9700, y: (this.cameraBounds.height + this.cameraBounds.y) - 870 }, texture: "plataformaFinalP1", width: 100, height: 100, group: this.portal }
         ]
         this.createPlatforms(mapPlatforms)
 

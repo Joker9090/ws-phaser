@@ -365,6 +365,15 @@ class Game extends Phaser.Scene {
     } else this.scene
   }
   checkNextScene() {
+    if (this.levelIs === 6) {
+        const multiScene = new MultiScene("MenuScene", undefined);
+        const scene = this.scene.add('MultiScene', multiScene, true);
+        this.scene.start("MultiScene").bringToTop("MultiScene");
+        console.log("before JP33", this.levelIs);
+        return
+      }
+        console.log("after JP33", this.levelIs);
+
     if (this.levelIs === 999) {
       const multiScene = new MultiScene("Game", {
         level: 0,
@@ -384,9 +393,9 @@ class Game extends Phaser.Scene {
       this.scene.start("MultiScene").bringToTop("MultiScene");
     }
     else if (this.map?.nextScene) {
-      if (this.levelIs === 7) {
-        const multiScene = new MultiScene("Game", { level: 4, lifes: 3 });
-        const scene = this.scene.add("MultiScene", multiScene, true);
+      if (this.levelIs === 6) {
+        const multiScene = new MultiScene("MenuScene", undefined);
+        const scene = this.scene.add('MultiScene', multiScene, true);
         this.scene.start("MultiScene").bringToTop("MultiScene");
       } else {
         const multiScene = new MultiScene("CinematographyMod", {
@@ -461,6 +470,7 @@ class Game extends Phaser.Scene {
         this.resultModal = new resultContainer(this, resultConfig);
         this.stopMov = true
         this.UICamera?.ignore(this.resultModal)
+        this.cameras.getCamera('backgroundCamera')?.ignore(this.resultModal)
         if (this.resultModal.container) {
           this.cameras.getCamera('backgroundCamera')?.ignore(this.resultModal.container)
           this.cameras.main.ignore(this.resultModal.container);

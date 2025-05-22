@@ -26,6 +26,7 @@ export type LargeFloorIslandConfig = {
   large: number,
   rotated: boolean,
   type?: string,
+  fillBehind?: boolean,
 }
 // Scene in class
 class LargeFloorIsland extends Phaser.GameObjects.Container {
@@ -82,10 +83,15 @@ class LargeFloorIsland extends Phaser.GameObjects.Container {
       const tileWidth = config.width.textureA;
       const tileHeight = tileWidth; // Ajusta si no es cuadrado
       const areaWidth = tileWidth * config.large;
-      const areaHeight = 1000;
       const startX = config.pos.x;
-      const startY = config.pos.y - 10;
-    
+      const startY = config.pos.y - 6;
+      let areaHeight = 2000
+      if (this.scene.map?.cameraBounds) {
+        areaHeight = this.scene.map.cameraBounds.y + this.scene.map.cameraBounds.height - startY;
+      }
+      // const areaHeight = (this.scene.map?.cameraBounds.y + this.scene.map?.cameraBounds.height) - startY;
+      console.log(areaHeight, 'start', this.scene.map?.cameraBounds);
+
       const fillSprite = scene.add.renderTexture(startX, startY, areaWidth, areaHeight).setOrigin(0, 0);
     
       const tilesX = Math.ceil(areaWidth / tileWidth);
@@ -105,8 +111,8 @@ class LargeFloorIsland extends Phaser.GameObjects.Container {
       }
     
       this.add(fillSprite);
-      this.setDepth(0);
-      fillSprite.setDepth(1); // Ensure it is behind the asset
+      this.setDepth(1);
+      fillSprite.setDepth(config.fillBehind ? 0 : 2); // Ensure it is behind the asset
       scene.add.existing(fillSprite);
       console.log(this.depth, fillSprite.depth, 'depth');
     

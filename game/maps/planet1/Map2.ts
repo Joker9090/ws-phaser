@@ -146,6 +146,7 @@ class Map2 extends MapCreator {
             scale: { width: 1, height: 1 },
             rotated: false,
             type: "largeFloor",
+            fillBehind: false,
         };
         const baseCristalConf = {
             type: "collectable",

@@ -121,7 +121,8 @@ export default class Map3 extends MapCreator {
         scale: { width: 1, height: 1 },
         rotated: false,
         type: "largeFloor",
-        group: this.floor
+        group: this.floor,
+        fillBehind: false,
       };
 
       const baseDangerConf = {

@@ -128,6 +128,7 @@ class Map0 extends MapCreator {
             scale: { width: 1, height: 1 },
             rotated: false,
             type: "largeFloor",
+            fillBehind: false,
           };
           const baseLongPlatformsConf = {
             withTextureToAbove: false,

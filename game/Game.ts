@@ -21,6 +21,7 @@ import p2SubMap1 from "./maps/planet2/SubMap1";
 import p2SubMap2 from "./maps/planet2/SubMap2";
 import p2Map2 from "./maps/planet2/Map2"
 import p2m3sub1 from "./maps/planet2/m3sub1";
+import p2Map3 from "./maps/planet2/Map3";
 //MAPAS PLANETA 3
 import p3Mapa1 from "./maps/planet3/Mapa8";
 import p3Mapa2 from "./maps/planet3/Mapa9";
@@ -70,7 +71,8 @@ export type PossibleMaps =
   | p2Map0
   | p2Map1
   | p2SubMap1
-  | p2SubMap2;
+  | p2SubMap2
+  | p2Map3;
 // Scene in class
 export const keyCodesAWSD = {
   w: Phaser.Input.Keyboard.KeyCodes.W,
@@ -944,7 +946,7 @@ class Game extends Phaser.Scene {
       case 7:
         this.player = new Player(this, 0, 0, "character", 2);
 
-        this.map = new p2Map2(this, this.player!);
+        this.map = new p2Map3(this, this.player!);
         this.loopMusic = "planet1LoopMusic";
         /*if (this.masterManagerScene) {
           this.masterManagerScene.imagenesDesbloqueadas = [

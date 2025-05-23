@@ -4,13 +4,35 @@ export default function Home() {
   const [phaser, setPhaser] = React.useState<typeof Phaser | undefined>();
   const [game, setGame] = React.useState<Phaser.Game | undefined>();
   const [scenes, setScenes] = React.useState<typeof Phaser.Scene[]>([]);
-  const [overlayVisible, setOverlayVisible] = React.useState(false);
+  const [overlayVisible, setOverlayVisible] = React.useState<boolean | null>(null);
 
   const checkOrientation = () => {
     const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     const isPortrait = window.innerHeight > window.innerWidth;
-    setOverlayVisible(isTouch && isPortrait);
-    console.log("isTouch", isTouch, "isPortrait", isPortrait);
+    setOverlayVisible(isPortrait);
+    // const width = window.innerWidth;
+    //     const height = window.innerHeight;
+    //     if (width > height) {
+    //       console.log("width", width, "height", height);
+
+    //       game?.scale?.resize(width, height);
+    //       game?.scene.scenes.forEach(scene => {
+    //         console.log("scene", scene.cameras, scene.cameras.main);
+    //         if (scene.cameras && scene.cameras.main) {
+    //           // scene.cameras.main.setSize(height, width);
+    //           setTimeout(() => {
+    //             scene.cameras.main.setSize(width, height);
+    //           }, 20); 
+    //         }
+    //         if (scene.cameras) {
+    //           const backgroundCamera = scene.cameras.getCamera('backgroundCamera');
+    //           if (backgroundCamera) {
+    //             backgroundCamera.setSize(width, height);
+    //           }
+    //         }
+    //       });
+    //     }
+    // console.log("isTouch", isTouch, "isPortrait", isPortrait);
   };
 
   React.useEffect(() => {
@@ -81,40 +103,43 @@ export default function Home() {
       const handleResize = () => {
         console.log("handleResize", window.innerWidth, window.innerHeight, gameInstance,);
         if (!gameInstance) return;
+        if (!gameInstance.scene) return;
+        if (!gameInstance.scale) return;
         const width = window.innerWidth;
         const height = window.innerHeight;
         if (width > height) {
           console.log("width", width, "height", height);
 
-          gameInstance.scale.resize(width, height);
+          // gameInstance.scale?.resize(width, height);
           gameInstance.scene.scenes.forEach(scene => {
-            console.log("scene", scene.cameras, scene.cameras.main);
-            if (scene.cameras && scene.cameras.main) {
-              scene.cameras.main.setSize(height, width);
-              setTimeout(() => {
+            if (scene.scene.key === "Game") {
+              if (scene.cameras && scene.cameras.main) {
                 scene.cameras.main.setSize(width, height);
-              }, 50); 
-            }
-            if (scene.cameras) {
-              const backgroundCamera = scene.cameras.getCamera('backgroundCamera');
-              if (backgroundCamera) {
-                backgroundCamera.setSize(width, height);
+                scene.cameras.getCamera("backgroundCamera")?.setSize(width, height);
+                scene.cameras.main.setZoom(width / height / 3.4);
+              }
+            } else {
+              // Para las otras escenas, asegúrate de que NO se les cambia el zoom.
+              if (scene.cameras && scene.cameras.main) {
+                scene.cameras.main.setZoom(1); // o cualquier valor neutro
+                scene.scale.resize(width, height);
+                // scene.cameras.main.setSize(width, height);
               }
             }
           });
         }
       };
-      handleResize(); // Initial resize to set the correct size
+      // handleResize(); // Initial resize to set the correct size
       setTimeout(handleResize, 50); // Ensure correct sizing on init
-      window.addEventListener("resize", () => setTimeout(handleResize, 50));
-      window.addEventListener("load", () => setTimeout(handleResize, 50));
+      window.addEventListener("resize", () => setTimeout(handleResize));
+      window.addEventListener("load", () => setTimeout(handleResize));
 
       return () => {
-        window.removeEventListener("resize", () => setTimeout(handleResize, 50));
-        window.removeEventListener("load", () => setTimeout(handleResize, 50));
+        window.removeEventListener("resize", () => setTimeout(handleResize));
+        window.removeEventListener("load", () => setTimeout(handleResize));
       };
     }
-  }, [phaser, scenes, overlayVisible]);
+  }, [phaser, scenes, overlayVisible, game]);
 
   return (
     <div id="game-container" style={{

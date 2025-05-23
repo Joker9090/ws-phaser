@@ -213,20 +213,20 @@ class Game extends Phaser.Scene {
   handleResize = () => {
     console.log("handleResize", window.innerWidth, window.innerHeight, this.game, 'game', this.cameras);
 
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    this.game.scale.resize(width, height);
-    this.game.scene.scenes.forEach(scene => {
-      if (scene.cameras && scene.cameras.main) {
-        scene.cameras.main.setSize(width, height);
-      }
-      if (scene.cameras) {
-        const backgroundCamera = scene.cameras.getCamera('backgroundCamera');
-        if (backgroundCamera) {
-          backgroundCamera.setSize(width, height);
-        }
-      }
-    });
+    // const width = window.innerWidth;
+    // const height = window.innerHeight;
+    // this.game.scale.resize(width, height);
+    // this.game.scene.scenes.forEach(scene => {
+    //   if (scene.cameras && scene.cameras.main) {
+    //     scene.cameras.main.setSize(width, height);
+    //   }
+    //   if (scene.cameras) {
+    //     const backgroundCamera = scene.cameras.getCamera('backgroundCamera');
+    //     if (backgroundCamera) {
+    //       backgroundCamera.setSize(width, height);
+    //     }
+    //   }
+    // });
   };
 
   moveCameraOffset(position: "up" | "down", instant: boolean = false) {
@@ -1203,15 +1203,17 @@ class Game extends Phaser.Scene {
     // setTimeout(() => {
     //   this.handleResize();
     // }, 50);
-    if (this.isTouchDevice) {
-      const width = window.innerWidth;
-      const height = window.innerHeight;
-      this.cameras.main.setSize(height, width);
-      setTimeout(() => {
-        this.cameras.main.setSize(width, height);
-      }, 50);
-    }
+    // if (this.isTouchDevice) {
+      // const width = window.innerWidth;
+      // const height = window.innerHeight;
+      // this.cameras.main.setSize(height, width);
+      // setTimeout(() => {
+      //   this.cameras.main.setSize(width, height);
+      // }, 50);
+    // }
+    this.cameras.main.setZoom(window.innerWidth / window.innerHeight / 3.4);
 
+    console.log("this.cameras.main", this.cameras.main, window.innerWidth, window.innerHeight);
     this.masterManagerScene?.playSound('spawn', false, 0.5, 2000);
   }
 

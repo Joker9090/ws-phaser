@@ -116,13 +116,13 @@ export default class UIClass {
       }
       const settingsConf: UIConfig = {
         texture: "settingsButton",
-        pos: { x: window.innerWidth - 70, y: 70 },
+        pos: { x: window.innerWidth - 70, y: 50 },
         scale: 0.9,
       };
       this.settings = new UI(this.scene, settingsConf);
       this.settings.setInteractive()
-      const bg = this.scene.add.rectangle(0, 0, window.innerWidth, window.innerHeight, 0x000000, 0.3).setVisible(false).setOrigin(0);
-      this.container.add(bg);
+      // const bg = this.scene.add.rectangle(0, 0, window.innerWidth, window.innerHeight, 0x000000, 0.3).setVisible(false).setOrigin(0);
+      // this.container.add(bg);
       // this.container.add(this.settings);
 
       this.settings.on('pointerup', () => {
@@ -136,16 +136,24 @@ export default class UIClass {
     this.scene.scale.on("resize", ()=>{
       this.resizeElements()
     })
+    console.log(window.innerHeight / 1920, 'data22')
+    this.resizeElements();
   }
 
   resizeElements(){
-    if(window.innerWidth < 768){
-      this.settings?.setPosition(window.innerWidth - 50, 70)
-    }
-    else{
-      this.settings?.setPosition(window.innerWidth - 70, 70)
+    const scaleFactor = window.innerHeight / 1920;
+    // console.log("scaleFactor", scaleFactor)
+    this.container.setScale(scaleFactor + 0.5);
+    this.container.setPosition(0, 0);
+    this.uiContainer?.setPosition(200, 70);
+    this.settings?.setScale(scaleFactor + 0.5);
+    this.settings?.setPosition(window.innerWidth - 50, 50)
+    // if(window.innerWidth < 768){
+    // }
+    // else{
+    //   this.settings?.setPosition(window.innerWidth - 70, 70)
       
-    }
+    // }
   }
 
   toggleSettings() {
@@ -173,7 +181,7 @@ export default class UIClass {
           } 
         })
         this.collText?.setVisible(false)
-        this.container.add(this.settingsModal)
+        // this.container.add(this.settingsModal)
         this.settingsVisible = true
       }
     }
@@ -284,6 +292,7 @@ export default class UIClass {
       this.container.add([this.collText]);
     }
     this.scene.cameras.main.ignore(this.container)
+    this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.container);
     this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.lifesGroup);
   }
   sumCollectable(){

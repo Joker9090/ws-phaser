@@ -359,6 +359,7 @@ class containerSettings extends Phaser.GameObjects.Container {
             }
         });
         
+        const isMobile = window.innerWidth <= 768;
   
         this.settingsModal.add(arr);
         this.add([this.screenBlack,this.settingsModal]);
@@ -367,7 +368,8 @@ class containerSettings extends Phaser.GameObjects.Container {
         const width = window.innerWidth;
         const height = window.innerHeight;
 
-        const proportionWidth = 1920
+        const proportionWidth = isMobile ? 1200 : 1920
+
         const proportionHeight = 1080
 
         let newScaleX = width / proportionWidth
@@ -392,6 +394,7 @@ class containerSettings extends Phaser.GameObjects.Container {
  
 
     resizeElements() {
+        const isMobile = window.innerWidth <= 768;
         const width = window.innerWidth;
         const height = window.innerHeight;
         const midPoint = {
@@ -402,7 +405,7 @@ class containerSettings extends Phaser.GameObjects.Container {
         if(this.dinamicPosition){
             this.setPosition(midPoint.x, midPoint.y) 
         }
-        const proportionWidth = 1920
+        const proportionWidth = isMobile ? 1200 : 1920
         const proportionHeight = 1080
 
         let newScaleX = width / proportionWidth
@@ -415,6 +418,10 @@ class containerSettings extends Phaser.GameObjects.Container {
         if(this.screenBlack){
             this.screenBlack.setScale(width, height)   
         }
+        this.scene?.cameras.cameras.map(camera => {
+            if (camera === this.scene.cameras.main) return camera
+            camera.setViewport(0, 0, width, height);
+        });
     }
 
     animationOfModal(open: boolean = true, scale:number) {

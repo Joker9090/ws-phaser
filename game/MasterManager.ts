@@ -156,7 +156,8 @@ export default class MasterManager extends Phaser.Scene {
     }
   }
   resumeFromBlur() {
-    const gameScene = this.scene?.get("Game");
+    if (this.scene && this.scene.get) {
+      const gameScene = this.scene?.get("Game");
 
     if (gameScene ) {
       const settingsVisible = (gameScene as Game).UIClass?.settingsVisible
@@ -172,8 +173,9 @@ export default class MasterManager extends Phaser.Scene {
 
     }
   }
+  }
   resumeGame() {
-    if (this.scene) {
+    if (this.scene && this.scene.get) {
       const gameScene = this.scene?.get("Game");
     if (gameScene) {
       (gameScene as Game).UIClass?.settingsModal?.animationOfModal(false, 0);

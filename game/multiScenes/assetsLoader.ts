@@ -502,10 +502,16 @@ export const loadAssets = {
       ["image", "planta2p3", "/game/planeta3/planta2p3.png"], 
       ["image", "nube1p3", "/game/planeta3/nube1p3.png"], 
       ["image", "nube2p3", "/game/planeta3/nube2p3.png"], 
+
+      ["image", "p3gradient", "/game/planeta3/newAssets/planeta3_fondo pleno.png"],
+      ["image", "p3stars", "/game/planeta3/newAssets/planeta3_fondo estrella.png"],
+      ["image", "p3wave", "/game/planeta3/newAssets/planeta3_fondo nubes bajas01.png"],
+
+
       //LARGE TILE
-      ["image", "fill_texture_p3","/game/planeta3/platforms/fill_texture.png"],
-      ["image", "fill_texture2_p3","/game/planeta3/platforms/fill_texture2.png"],
-      ["image", "fill_texture3_p3","/game/planeta3/platforms/fill_texture3.png"],
+      ["image", "fill_texture_p3","/game/planeta3/fill_texture.png"],
+      ["image", "fill_texture2_p3","/game/planeta3/fill_texture2.png"],
+      ["image", "fill_texture3_p3","/game/planeta3/fill_texture3.png"],
       ["image", "platform_center_p3","/game/planeta3/platforms/platform_center.png"],
       ["image", "platform_der_p3","/game/planeta3/platforms/platform_der.png"],
       ["image", "platform_izq_p3","/game/planeta3/platforms/platform_izq.png"],

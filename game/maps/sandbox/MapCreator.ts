@@ -219,6 +219,7 @@ export default class MapCreator {
     this.firegroup = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.portal = this.scene.physics.add.group({ allowGravity: false });
     this.coin = this.scene.physics.add.group({ allowGravity: false });
+    this.invincible = this.scene.physics.add.group({ allowGravity: false, collideWorldBounds: true });
     this.scene.UICamera?.ignore(this.floor)
     this.scene.UICamera?.ignore(this.gravityTile)
     this.scene.UICamera?.ignore(this.rotationTile)
@@ -229,6 +230,7 @@ export default class MapCreator {
     this.scene.UICamera?.ignore(this.firegroup)
     this.scene.UICamera?.ignore(this.portal)
     this.scene.UICamera?.ignore(this.coin)
+    this.scene.UICamera?.ignore(this.invincible)
     if (this.scene.physics.world.debugGraphic) {
       this.scene.UICamera?.ignore(this.scene.physics.world.debugGraphic);
     }
@@ -262,7 +264,7 @@ export default class MapCreator {
     this.scene.cameras.main.setScroll(0, 0);
   }
 
-  createPlatforms(gameObjects: mapFloorConfig[]) {
+  /*createPlatforms(gameObjects: mapFloorConfig[]) {
    
     gameObjects.forEach((element) => {
       const tile: any = Factory(this.scene, element, this.floor!);
@@ -270,6 +272,18 @@ export default class MapCreator {
       this.mapItems.push(tile);
     })
 
+    this.totalCoins =  this.coin?.getChildren().length
+  }*/
+  createPlatforms(gameObjects: mapFloorConfig[]) {
+    gameObjects.forEach((element) => {
+      const tile: any = Factory(this.scene, element, this.floor!);
+      // this.mapGroup.add(tile);
+      if (Array.isArray(tile)) {
+        this.mapItems.push(...tile);
+      } else {
+        this.mapItems.push(tile);
+      }
+    });
     this.totalCoins =  this.coin?.getChildren().length
   }
 
@@ -516,6 +530,7 @@ export default class MapCreator {
           this.invincible,
           (a, b: any) => {
             if (!this.player?.invincible) {
+              console.log("TOCO invincible");
               this.scene.masterManagerScene?.playSound(b.soundKey)
               this.player?.setPlayerInvicinible(true);
               b?.turnTo(false);

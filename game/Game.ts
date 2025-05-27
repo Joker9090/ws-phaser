@@ -27,6 +27,7 @@ import p3Mapa1 from "./maps/planet3/Mapa8";
 import p3Mapa2 from "./maps/planet3/Mapa9";
 import p3Mapa3 from "./maps/planet3/Mapa10";
 import p3Mapa4 from "./maps/planet3/Mapa11";
+import p3Map1 from "./maps/planet3/Map0";
 // OTRAS COSAS
 import Player from "./assets/Player";
 import UIClass from "./assets/UIClass";
@@ -72,7 +73,8 @@ export type PossibleMaps =
   | p2Map1
   | p2SubMap1
   | p2SubMap2
-  | p2Map3;
+  | p2Map3
+  | p3Map1;
 // Scene in class
 export const keyCodesAWSD = {
   w: Phaser.Input.Keyboard.KeyCodes.W,
@@ -960,7 +962,7 @@ class Game extends Phaser.Scene {
       case 8:
         this.player = new Player(this, 0, 0, "character", 2);
 
-        this.map = new p3Mapa1(this, this.player!);
+        this.map = new p3Map1(this, this.player!);
         this.loopMusic = "planet3LoopMusic";
         if (this.masterManagerScene) {
           this.masterManagerScene.imagenesDesbloqueadas = [

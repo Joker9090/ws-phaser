@@ -1,4 +1,4 @@
-import Phaser from "phaser";
+import Phaser, { GameObjects } from "phaser";
 import { ContainerMenuConfigType } from "../Types";
 import CinematographyModular from "../movies/Cinematography-modular";
 import MenuScene from "../Menu";
@@ -57,12 +57,12 @@ class containerSettings extends Phaser.GameObjects.Container {
     dinamicPosition:boolean = false;
     scaleFactor:number =( window.innerWidth/1920 )*0.9
     finalScale?:number;
+    childArray: Phaser.GameObjects.GameObject[] = [];
     constructor(scene: MenuScene | Game | CinematographyModular, config: ContainerMenuConfigType, changeContainer?: () => void, changeVisible?: () => void, settingsButtonUi?: Phaser.GameObjects.Image) {
         super(scene, config.x, config.y)
         if(config.dinamicPosition){
             this.dinamicPosition = true
         }
-        const offsetY = 100
         this.scene = scene
         this.modal = scene.add.image(0, 0, "settingsModal").setScale(.9);
         // this.scene.tweens.add({
@@ -86,7 +86,7 @@ class containerSettings extends Phaser.GameObjects.Container {
         this.darkness = this.masterManager.brightness
 
         this.screenBlack = scene.add.rectangle(0, 0, window.innerWidth, window.innerHeight + 200, 0x000000, 0.5).setInteractive();
-        this.settingsModal = this.scene.add.container(0,0);
+        this.settingsModal = this.scene.add.container(0,0).setScale(0);
 
         this.title = this.scene.add.text(-70, -420, 'Settings', {
             fontSize: 17,
@@ -121,7 +121,9 @@ class containerSettings extends Phaser.GameObjects.Container {
         this.quitGame.on('pointerup', () => {
             this.quitGame.setTexture('settingQuitGameHover')
             const group: any[] = []
-            const background = this.scene.add.rectangle(this.scene.scale.width / 10 - 150, this.scene.scale.height / 8 - 100, this.scene.scale.width * 2, this.scene.scale.height * 2, 0x0000, 0.7).setInteractive()
+            const scene = this.scene;
+            const { scale } = this.getScaleValue();
+            const background =  scene.add.rectangle(0, 0, window.innerWidth / scale, (window.innerHeight + 200) / scale, 0x000000, 0.5).setInteractive();
             const modal = this.scene.add.image(0, 0, "codeModal")
             const cross = this.scene.add.image(-120, 140, "settingsCross")
             const check = this.scene.add.image(80, 140, "settingsCheck")
@@ -175,7 +177,8 @@ class containerSettings extends Phaser.GameObjects.Container {
                     const scene = this.scene.scene.add("MultiScene", multiScene, true);
                     this.scene.scene.start("MultiScene").bringToTop("MultiScene");
                 } else {
-                    destroy()
+                    this.destroyChildren(true)
+                    this.destroy()
                 }
                 if (changeContainer) {
                     changeContainer()
@@ -183,7 +186,7 @@ class containerSettings extends Phaser.GameObjects.Container {
                     changeVisible()
                 }
                 group.forEach(item => item.destroy());
-                this.scene.cameras.main.ignore(this);
+                
             })
             this.settingsModal.add(group)
         })
@@ -247,7 +250,10 @@ class containerSettings extends Phaser.GameObjects.Container {
             if (changeVisible) {
                 changeVisible()
             }
-            destroy()
+            this.animationOfModal(false)
+            this.destroyChildren(true)
+        this.destroy()
+            // destroy()
         })
         // this.album = scene.add.image(-this.modal.width / 2 + 120, 150, "settingsAlbum");
         // this.album.setOrigin(0.5);
@@ -321,21 +327,21 @@ class containerSettings extends Phaser.GameObjects.Container {
       
 
 
-        this.sliderMusic = this.createSlider(scene, -30 *this.scaleFactor , -170 *this.scaleFactor , (value) => {
+        this.sliderMusic = this.createSlider(scene, -30 , -170 , (value) => {
             this.masterManager.changeVolume(value, 'music');
         }, this.volumeMusic);
 
-        this.sliderSound = this.createSlider(scene, -30*this.scaleFactor , -70*this.scaleFactor , (value) => {
+        this.sliderSound = this.createSlider(scene, -30 , -70 , (value) => {
             this.masterManager.changeVolume(value, 'sound');
         }, this.volumeSound);
 
-        this.sliderBrightness = this.createSlider(scene, -30*this.scaleFactor , 30 *this.scaleFactor, (value) => {
+        this.sliderBrightness = this.createSlider(scene, -30 , 30, (value) => {
             this.masterManager.changeBrightness(1 - value);
         }, 1 - this.darkness);
 
 
 
-        const arr = [
+        this.childArray = [
             this.modal,
             this.quitGame,
             this.cross,
@@ -350,86 +356,106 @@ class containerSettings extends Phaser.GameObjects.Container {
             this.brightnessText,
             this._soundText,
             this.musicText,
-
         ]
-        arr.forEach((element) => {
-            if (element instanceof Phaser.GameObjects.Image || element instanceof Phaser.GameObjects.Text) {
-                element.setScale(element.scaleX * this.scaleFactor , element.scaleY * this.scaleFactor );
-                element.setPosition(element.x * this.scaleFactor , element.y * this.scaleFactor );
-            }
+        this.childArray.forEach((element) => {
+            this.settingsModal.add(element);
+            // if (element instanceof Phaser.GameObjects.Image || element instanceof Phaser.GameObjects.Text) {
+            //     // element.setScale(element.scaleX * this.scaleFactor , element.scaleY * this.scaleFactor );
+            //     // element.setPosition(element.x * this.scaleFactor , element.y * this.scaleFactor );
+            // }
         });
         
-        const isMobile = window.innerWidth <= 768;
-  
-        this.settingsModal.add(arr);
-        this.add([this.screenBlack,this.settingsModal]);
-        scene.add.existing(this);
-        // this.resizeElements()
-        const width = window.innerWidth;
-        const height = window.innerHeight;
-
-        const proportionWidth = isMobile ? 1200 : 1920
-
-        const proportionHeight = 1080
-
-        let newScaleX = width / proportionWidth
-        let newScaleY = height / proportionHeight
-
-
-        let finalScale = (newScaleX > newScaleY) ? newScaleX : newScaleY
+       
        
         // console.log("container scael from create",this.settingsModal.scale, "finalScale from create:", finalScale) 
         // this.settingsModal.setScale(finalScale)
         this.scene.scale.on("resize", this.resizeElements, this);
+                // ignore main camera
+        // this.scene.cameras.main.ignore(this.settingsModal);
         console.log(this.settingsModal, 'settings from creator')
-        this.resizeElements.bind(this)()
+       this.resizeElements.bind(this)()
+        
         console.log(this.settingsModal.scale, 'scale from creator')
-        const destroy = () => {
-            this.removeAll(true)
-            this.destroy()
-        }
-      
-        this.animationOfModal(true, finalScale);
+        this.setPosition(this.width / 2, this.height / 2);
+        this.animationOfModal(true);
+        this.scene.cameras.cameras.map(camera => {
+            if (camera !== this.scene.cameras.main && camera.name !== "backgroundCamera") return camera
+            camera.ignore(this.settingsModal);
+            camera.ignore(this.screenBlack);
+            this.childArray.forEach((element) => {
+                if (element instanceof Phaser.GameObjects.Image || element instanceof Phaser.GameObjects.Text) {
+                    camera.ignore(element);
+                }
+            })
+        })
+    } 
+    destroyChildren(withRemoveAll: boolean = false) {
+        this.childArray.forEach((element) => {
+            if (element instanceof Phaser.GameObjects.Image || element instanceof Phaser.GameObjects.Text) {
+                element.destroy();
+            }
+        });
+        this.sliderMusic.slider.destroy();
+        this.sliderSound.slider.destroy();
+        this.sliderBrightness.slider.destroy();
+        this.screenBlack.destroy();
+        this.settingsModal.destroy();
+        if(withRemoveAll) super.removeAll(true);
     }
- 
-
-    resizeElements() {
-        const isMobile = window.innerWidth <= 768;
+    isMobile() {
+        return window.innerWidth <= 768;
+    }
+    getScaleValue() {
+        const isMobile = this.isMobile();
         const width = window.innerWidth;
         const height = window.innerHeight;
-        const midPoint = {
-            x: width / 2,
-            y: height / 2,
+        const proportionWidth = isMobile ? 1920 : 1920;
+        const proportionHeight = isMobile ? 1080 : 1080;
+        let newScaleX = width / proportionWidth;
+        let newScaleY = height / proportionHeight;
+        console.log("newScaleX", newScaleX, "newScaleY", newScaleY, "width", width, "height", height)
+       return {
+            scale: (newScaleX > newScaleY) ? newScaleX : newScaleY,
+            width: width,
+            height: height
         }
-        
-        if(this.dinamicPosition){
-            this.setPosition(midPoint.x, midPoint.y) 
-        }
-        const proportionWidth = isMobile ? 1200 : 1920
-        const proportionHeight = 1080
 
-        let newScaleX = width / proportionWidth
-        let newScaleY = height / proportionHeight
-        if (!this.settingsModal) return
-        let finalScale = (newScaleX > newScaleY) ? newScaleX : newScaleY
-
-        this.settingsModal!.setScale(finalScale ).setPosition(0,0)
-        console.log('modal scale:', this.settingsModal.scale, 'finalScale:', finalScale)
-        if(this.screenBlack){
-            this.screenBlack.setScale(width, height)   
-        }
-        this.scene?.cameras.cameras.map(camera => {
-            if (camera === this.scene.cameras.main) return camera
-            camera.setViewport(0, 0, width, height);
-        });
     }
 
-    animationOfModal(open: boolean = true, scale:number) {
-        this.settingsModal.setScale(open ? 0 : scale )
+    resizeElements() {
+        const { scale: newScale, width, height } = this.getScaleValue();
+        if (!this.settingsModal) return
+
+        // window.test = this
+        this.setScale(newScale)
+       
+        if(this.screenBlack){
+            // this.screenBlack.setPosition(width / 2, height / 2)
+            this.screenBlack.setScale(width, height)
+            this.settingsModal.setPosition(width / 2, height / 2);
+        }
+       
+        // this.scene?.cameras.cameras.map(camera => {
+        //     if (camera === this.scene.cameras.main) return camera
+        //     if( camera.name === 'backgroundCamera') return camera
+        //     console.log("camera", camera, "position");
+        //     // camera.setViewport(0,0, width, height);
+        //     // center on 0, 0
+        // });
+    }
+
+    animationOfModal(open: boolean = true) {
+        // a su vez, aca tmb se setea el scale, y esto es parte de una animation,
+        // cuando la animacion ocurre, es como que durante muchisimos frames, se setean los valores que indican la animacion
+        // entonces esto overridea el scale original que queriamos poner del settings modal para que se vea bien
+        const { scale } = this.getScaleValue();
+        // this.settingsModal.setScale(open ? 0 : scale )
+        // final value
+        
         this.scene.tweens.add({
             targets: this.settingsModal,
             duration: 500,
-            scale: open ? scale  : 0,
+            scale: open ? scale : 0,
             onStart: () => {
                 console.log("ENTRO ACA ARIEL")
             },
@@ -452,7 +478,9 @@ class containerSettings extends Phaser.GameObjects.Container {
             this.masterManager.resumeGame()
         }
         this.settingsButtonUi?.setVisible(true)
+        this.destroyChildren(true)
         this.destroy()
+
     }
     createSlider(
         scene: Phaser.Scene,
@@ -462,25 +490,25 @@ class containerSettings extends Phaser.GameObjects.Container {
         initialValue: number
       ) {
           const slider = scene.add.container(x, y);
-          const barWidth = 280 * this.scaleFactor; // el ancho total utilizable del slider
+          const barWidth = 280; // el ancho total utilizable del slider
           const halfBar = barWidth / 2;
       
-          const bar = scene.add.image(0, 0, 'settingsSlider').setOrigin(0.5).setScale(this.scaleFactor * 0.8);
+          const bar = scene.add.image(0, 0, 'settingsSlider').setOrigin(0.5).setScale(0.8);
       
-          const fillBar = scene.add.rectangle(-halfBar, 0, 0, 24,  0x00dedf).setOrigin(0, 0.5).setScale(1,this.scaleFactor);
+          const fillBar = scene.add.rectangle(-halfBar, 0, 0, 24,  0x00dedf).setOrigin(0, 0.5)
       
-          const fillBarStart = scene.add.image(-halfBar - 1 * this.scaleFactor, 0, 'fillBarStart').setOrigin(0.5).setScale(this.scaleFactor * 0.8);
+          const fillBarStart = scene.add.image(-halfBar, 0, 'fillBarStart').setOrigin(0.5).setScale(0.8);
       
-          const control = scene.add.circle(-halfBar + initialValue * barWidth , 0, 13, 0xffffff) .setOrigin(0.5).setScale(this.scaleFactor);
+          const control = scene.add.circle(-halfBar + initialValue * barWidth , 0, 13, 0xffffff) .setOrigin(0.5)
       
           control.setInteractive({ draggable: true });
       
           control.on('pointerover', () => {
-              control.setScale(1.2 * this.scaleFactor);
+              control.setScale(1.2);
           });
       
           control.on('pointerout', () => {
-              control.setScale(1.0 * this.scaleFactor);
+              control.setScale(1.0);
           });
       
           // Inicializa el fillBar con el valor inicial

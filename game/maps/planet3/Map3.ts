@@ -1,0 +1,333 @@
+import Game from "@/game/Game";
+import MapCreator from "../sandbox/MapCreator";
+import Player from "@/game/assets/Player";
+import { GamePlayDataType } from "@/game/Types";
+import colors from "@/game/assets/PlatformColors";
+import { group } from "console";
+
+class Map3 extends MapCreator {
+
+    constructor(scene: Game, player: Player, data?: GamePlayDataType) {
+        super(scene, player, data);
+        this.scene = scene;
+        this.player = player;
+
+        this.scene.physics.world.setBounds(
+            0,
+            0,
+            this.worldSize.width,
+            this.worldSize.height
+        );
+
+        this.player.setPlayerWithTank(true);
+
+        this.worldSize = {
+            width: 7600,
+            height: 2600,
+          };
+          this.cameraBounds = {
+            x: 200,
+            y: 200,
+            width: 7000,
+            height: 2200,
+          };
+          this.scene.physics.world.setBounds(
+            0,
+            0,
+            this.worldSize.width,
+            this.worldSize.height
+          );
+          this.scene.cameras.main.setBounds(
+            this.cameraBounds.x,
+            this.cameraBounds.y,
+            this.cameraBounds.width,
+            this.cameraBounds.height
+          );
+      
+          this.startingPoint = {
+            x: 350, //500
+            y: this.worldSize.height - 800, //800
+          };
+
+          this.UIItemToGrab= "uiItemp3";
+        //   this.nextScene= "postal1_planeta3";
+    }
+
+    createMap(data: { level: number; lifes: number }) {
+        this.mapContainer = this.scene.add.container();
+        this.pisosBack = this.scene.physics.add.group({ allowGravity: false });
+        this.flyingPiso = this.scene.physics.add.group({ allowGravity: false, immovable: true });
+        this.portal = this.scene.physics.add.group({ allowGravity: false });
+        this.loseConfig=[
+            { positions: { x: this.startingPoint.x , y: this.startingPoint.y },
+              cameraDirection: "NORMAL",
+              PlayerDirection: "NORMAL",
+              gravityDown: true
+              ,
+            },
+          ]
+        // const backImage = this.scene.textures.get("background0P1").getSourceImage()
+        // this.backSize = { width: backImage.width, height: backImage.height }
+
+        const { width, height } = this.ratioReference;
+    const { width: farWidth, height: farHeight } = this.farBackgroundReference;
+    const downScaledMiddleWidth = width * 0.7;
+    const downScaledFrontWidth = width * 0.5;
+
+    this.backgroundsBack = [
+      this.scene.add.image(0, 0, "p3gradient").setOrigin(0.5),
+      this.scene.add.image(0, 0, "p3wave").setOrigin(0.5),
+      this.scene.add.image(0, 0, "p3stars").setOrigin(0.5),
+    ]
+    
+    this.backgroundsMiddle = this.createBgRow(200, this.cameraBounds.height+200, ["montaña1p3", "montaña2p3", "montaña3p3"], width, 0.7),
+    
+    this.backgroundsFront = [
+      this.scene.add.image(-this.startingPoint.x, this.cameraBounds.height+200, "background1p3").setOrigin(0, 1).setScale(0.5),
+      this.scene.add.image(-this.startingPoint.x + downScaledFrontWidth, this.cameraBounds.height+200, "background2p3").setOrigin(0, 1).setScale(0.5),
+      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 2), this.cameraBounds.height+200, "background3p3").setOrigin(0, 1).setScale(0.5),
+      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 3), this.cameraBounds.height+200, "background1p3").setOrigin(0, 1).setScale(0.5),
+      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 4), this.cameraBounds.height+200, "background2p3").setOrigin(0, 1).setScale(0.5),
+      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 5), this.cameraBounds.height+200, "background3p3").setOrigin(0, 1).setScale(0.5),
+    ]
+    
+    this.createBackgrounds(this.backgroundsBack, this.backgroundsMiddle, this.backgroundsFront);
+    
+    const bgContainer = this.scene.add.container(0, 0, this.backgroundsBack);
+    this.scene.UICamera?.ignore(bgContainer);
+    this.scene.cameras.main.ignore(bgContainer);
+
+        this.scene.UICamera?.ignore(this.mapContainer);
+        this.scene.UICamera?.ignore(this.frontContainer);
+
+        this.scene.player?.setDepth(9999999999999);
+
+        const basePlatformsConfig = {
+            withTextureToAbove: false,
+            texture: "pSimple1p3",
+            scale: { width: 0.7, height: 0.7 },
+            rotated: false,
+            type: "floor",
+            width: 140,
+            height: 40
+        }
+
+        const baseLargePlatformsConf = {
+            withTextureToAbove: true,
+            texture: "plataformaNuevaA",
+            textureA: "longFloorLeftp3",
+            textureB: "longFloorMiddlep3",
+            textureC: "longFloorRightp3",
+            textureFill: ["fill_texture_p3", "fill_texture2_p3", "fill_texture3_p3"],
+            width: {
+              textureA: 96,
+              textureB: 96,
+              textureC: 96,
+            },
+            height: 96,
+            scale: { width: 1, height: 1 },
+            rotated: false,
+            type: "largeFloor",
+            fillBehind: false,
+          };
+          const baseLongPlatformsConf = {
+            withTextureToAbove: false,
+            texture: "plataformaNuevaA",
+            textureA: "longFloorLeftp3",
+            textureB: "longFloorMiddlep3",
+            textureC: "longFloorRightp3",
+            textureFill: ["fill_texture_p3", "fill_texture2_p3", "fill_texture3_p3"],
+            width: {
+              textureA: 96,
+              textureB: 96,
+              textureC: 96,
+            },
+            height: 96,
+            scale: { width: 1, height: 1 },
+            rotated: false,
+            type: "largeFloor",
+          };
+
+        const baseCristalConf = {
+            type: "collectable",
+            texture: "plantap3",
+            scale: { width: 0.7, height: 0.7 },
+            width: 140,
+            height: 180,
+            fix: 20,
+            
+            auraColor: 0xff86f1,
+        }
+
+        const baseDangerConf = {
+            type: "danger",
+            texture: "Enemy",
+            scale: { width: 0.6, height: 0.6 },
+            width: 170,
+            height: 170,
+            attackSpriteSheet: "EnemyAttack",
+            particleSpriteSheet: "EnemyParticles",
+            group: this.obstacle,
+            color: 0xff86f1,
+        }
+
+        const baseFireballConf = {
+            type: "fireball",
+            spriteSheet: "meteoritop3",
+            texture: "meteoritop3",
+            width: 100,
+            height: 100,
+            group: this.firegroup,
+            scale: { width: 0.5, height: 0.5 },
+            
+            // frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+        }
+        const meteorshowerConf = {
+            type: "meteorshower",
+            quantity: 10,
+            spriteSheet: "meteoritop3",
+            texture: "meteoritop3",
+            width: 100,
+            height: 100,
+            group: this.firegroup,
+            scale: { width: 0.5, height: 0.5 },
+        }
+
+        const mapPlatforms = [
+            {...baseLargePlatformsConf, pos: { x: 0, y: (this.cameraBounds.height + this.cameraBounds.y) - 200 },
+                large: 16,
+                group: this.floor
+            },
+            {...basePlatformsConfig, pos: { x: 900, y: (this.cameraBounds.height + this.cameraBounds.y) - 400 }},
+            { ...baseDangerConf, pos: { x: 1050, y: (this.cameraBounds.height + this.cameraBounds.y) - 600 }, width: 150, height: 150, 
+               patrol:{
+                   patrolType: "LinealY",
+                   distance: 150,
+                   speed: 100,
+                   attackInterval: 0,
+               }, 
+           },
+            {...basePlatformsConfig, pos: { x: 1200, y: (this.cameraBounds.height + this.cameraBounds.y) - 800 }},
+             { ...baseDangerConf, pos: { x: 1450, y: (this.cameraBounds.height + this.cameraBounds.y) - 800 }, width: 150, height: 150, 
+                patrol:{
+                    patrolType: "LinealY",
+                    distance: 150,
+                    speed: 100,
+                    attackInterval: 0,
+                }, 
+            },
+                        { ...basePlatformsConfig, pos: { x: 1950, y: (this.cameraBounds.height + this.cameraBounds.y) - 1000 } ,animation:{
+                xAxis:{
+                    xDistance:700,
+                    xVel:150
+                }}
+            },    
+            { ...basePlatformsConfig, pos: { x: 2500, y:  (this.cameraBounds.height + this.cameraBounds.y) - 800 },group: this.fallingTile, colors: [colors.falling]  },
+            { ...basePlatformsConfig, pos: { x: 2700, y:  (this.cameraBounds.height + this.cameraBounds.y) - 1000 },group: this.fallingTile, colors: [colors.falling]  },
+            { ...basePlatformsConfig, pos: { x: 2900, y:  (this.cameraBounds.height + this.cameraBounds.y) - 800 },group: this.fallingTile, colors: [colors.falling]  },
+            { ...basePlatformsConfig, pos: { x: 3100, y:  (this.cameraBounds.height + this.cameraBounds.y) - 1000 },group: this.fallingTile, colors: [colors.falling]  },
+            { ...basePlatformsConfig, pos: { x: 3300, y:  (this.cameraBounds.height + this.cameraBounds.y) - 800 },group: this.fallingTile, colors: [colors.falling]  },
+            { ...baseCristalConf, pos: { x: 2700, y: (this.cameraBounds.height + this.cameraBounds.y) - 1100 }, group: this.coin, aura: 'auraTuto' },
+            { ...baseCristalConf, pos: { x: 3100, y: (this.cameraBounds.height + this.cameraBounds.y) - 1100 }, group: this.coin, aura: 'auraTuto' },
+            { ...basePlatformsConfig, pos: { x: 3600, y:  (this.cameraBounds.height + this.cameraBounds.y) - 800 }},
+            { ...basePlatformsConfig, pos: { x: 3900, y:  (this.cameraBounds.height + this.cameraBounds.y) - 800 }},
+            { ...basePlatformsConfig, pos: { x: 4200, y:  (this.cameraBounds.height + this.cameraBounds.y) - 800 }},
+            { ...baseDangerConf, pos: { x: 3750, y: (this.cameraBounds.height + this.cameraBounds.y) - 800 }, width: 150, height: 150, 
+                patrol:{
+                    patrolType: "LinealY",
+                    distance: 150,
+                    speed: 100,
+                    attackInterval: 0,
+                }, 
+            },
+            { ...baseDangerConf, pos: { x: 4050, y: (this.cameraBounds.height + this.cameraBounds.y) - 800 }, width: 150, height: 150, 
+                patrol:{
+                    patrolType: "LinealY",
+                    distance: 150,
+                    speed: 100,
+                    attackInterval: 0,
+                }, 
+            },
+            { ...basePlatformsConfig, pos: { x: 4500, y: (this.cameraBounds.height + this.cameraBounds.y) - 400 }, group: this.gravityTile, colors: [colors.gravity] },
+            { ...basePlatformsConfig, pos: { x: 4500, y: (this.cameraBounds.y) + 100 }, rotate: true, group: this.rotationTile, colors: [colors.rotate], flipY: true },
+            { type: "finalPortal", pos: { x: 2300, y: (this.cameraBounds.y) + 300  }, texture: "cuevap3", width: 100, height: 100, group: this.portal, flipY: true },
+            {...baseLargePlatformsConf, pos: { x: 2000, y: (this.cameraBounds.y) + 200 }, flipY: true, withTextureToAbove: false,
+                large: 8,
+                group: this.floor
+            }, 
+            { ...baseDangerConf, pos: { x: 2900, y: (this.cameraBounds.y) + 250 }, width: 150, height: 150, 
+                patrol:{
+                    patrolType: "LinealY",
+                    distance: 150,
+                    speed: 100,
+                    attackInterval: 0,
+                }, 
+            },
+            {...baseLargePlatformsConf, pos: { x: 3000, y: (this.cameraBounds.y) + 100 }, flipY: true, withTextureToAbove: false,
+                large: 6,
+                group: this.floor
+            }, 
+             { ...baseDangerConf, pos: { x: 3150, y: (this.cameraBounds.y) + 200 }, width: 150, height: 150, 
+                patrol:{
+                    patrolType: "LinealX",
+                    distance: 150,
+                    speed: 100,
+                    attackInterval: 0,
+                }, 
+            },
+            {...baseLargePlatformsConf, pos: { x: 3600, y: (this.cameraBounds.y) + 200 }, flipY: true, withTextureToAbove: false,
+                large: 8,
+                group: this.floor
+            },
+            { ...baseDangerConf, pos: { x: 3900, y: (this.cameraBounds.y) + 300 }, width: 150, height: 150, 
+                patrol:{
+                    patrolType: "LinealX",
+                    distance: 150,
+                    speed: 100,
+                    attackInterval: 0,
+                }, 
+            },
+            { ...basePlatformsConfig, pos: { x: 4800, y: (this.cameraBounds.height + this.cameraBounds.y) - 1200 } },
+            { ...baseFireballConf, pos: { x: 5000, y: 0 }, tween: { duration: 2000, repeat: -1, y: "+=2000", yoyo: false  }, rotated: false },
+            {...baseLargePlatformsConf, pos: { x: 5200, y: (this.cameraBounds.height + this.cameraBounds.y) - 1000 }, withTextureToAbove: false,
+                large: 20,
+                group: this.floor
+            },
+            { ...baseFireballConf, pos: { x: 5500, y: -1000 }, tween: { duration: 2000, repeat: -1, y: "+=3000", yoyo: false  }, rotated: false },
+            { ...baseFireballConf, pos: { x: 5900, y: 0 }, tween: { duration: 2000, repeat: -1, y: "+=2000", yoyo: false  }, rotated: false },
+            { ...baseFireballConf, pos: { x: 6300, y: -1000 }, tween: { duration: 2000, repeat: -1, y: "+=3000", yoyo: false  }, rotated: false },
+            { ...baseFireballConf, pos: { x: 6700, y: 0 }, tween: { duration: 2000, repeat: -1, y: "+=2000", yoyo: false  }, rotated: false },
+            { ...baseCristalConf, pos: { x: 5300, y: (this.cameraBounds.height + this.cameraBounds.y) - 1100 }, group: this.coin, aura: 'auraTuto' },
+            { ...baseCristalConf, pos: { x: 5700, y: (this.cameraBounds.height + this.cameraBounds.y) - 1100 }, group: this.coin, aura: 'auraTuto' },
+            { ...baseCristalConf, pos: { x: 6100, y: (this.cameraBounds.height + this.cameraBounds.y) - 1100 }, group: this.coin, aura: 'auraTuto' },
+            { ...baseCristalConf, pos: { x: 6500, y: (this.cameraBounds.height + this.cameraBounds.y) - 1100 }, group: this.coin, aura: 'auraTuto' },
+            //PORTAL
+            // { ...baseCristalConf, pos: { x: 6900, y: (this.cameraBounds.height + this.cameraBounds.y) - 1100 }, group: this.coin, aura: 'auraTuto' },
+
+        ]
+        this.createPlatforms(mapPlatforms)
+
+        this.scene.UICamera?.ignore(this.floor!);
+        this.scene.UICamera?.ignore(this.mapContainer)
+        this.scene.UICamera?.ignore(this.frontContainer)
+        this.scene.UICamera?.ignore(this.backContainer)
+        this.scene.UICamera?.ignore(this.middleContainer)
+        this.scene.UICamera?.ignore(this.frontContainer)
+        this.scene.UICamera?.ignore(this.pisosBack)
+        this.scene.UICamera?.ignore(this.gravityTile!)
+        this.scene.UICamera?.ignore(this.firegroup!)
+
+        this.scene.UICamera?.ignore(this.backContainer)
+        this.scene.UICamera?.ignore(this.middleContainer)
+        this.scene.UICamera?.ignore(this.frontContainer)
+
+        this.cameraIgnore()
+    }
+
+    // update() {
+
+    // }
+
+}
+
+export default Map3;

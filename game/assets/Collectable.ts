@@ -126,6 +126,7 @@ class Collectable extends Phaser.Physics.Arcade.Sprite {
     }
   }
   turnTo(value:boolean):void{
+    console.log("invincible? turnTo", value);
     this.setVisible(value),
     this.aura?.setVisible(value),
     this.shield?.setVisible(value)

@@ -27,6 +27,7 @@ export type LargeFloorIslandConfig = {
   rotated: boolean,
   type?: string,
   fillBehind?: boolean,
+  flipY?: boolean,
 }
 // Scene in class
 class LargeFloorIsland extends Phaser.GameObjects.Container {
@@ -57,7 +58,7 @@ class LargeFloorIsland extends Phaser.GameObjects.Container {
         0,
         t).setOrigin(0, 0.5)
       
-      if (config.rotated) s.setFlipY(true)
+      if (config.flipY) s.setFlipY(true)
       this.add(s)
 
     }

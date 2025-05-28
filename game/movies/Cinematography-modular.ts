@@ -12,7 +12,7 @@ import MasterManager from "../MasterManager";
 import cineIntro2B from "./Intro/cineIntro2B";
 import cineIntro2C from "./Intro/cineIntro2C";
 import postalManager from "./postalManager";
-import HoldableButton from "../assets/buttonHolder";
+import {HoldableButton} from "../assets/buttonHolder";
 import cineMovie1 from "./Cinemato1/cineMovie1";
 import cineMovie2 from "./Cinemato1/cineMovie2";
 import cineMovie3 from "./Cinemato1/cineMovie3";

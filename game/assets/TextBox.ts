@@ -47,17 +47,16 @@ class TextBox extends Phaser.GameObjects.Container {
 
     this.height = this.textDisplayed.height
 
-    const pressSpaceToContinue = this.scene.add.text(0, this.height, "Press SPACE to continue",
-      {
-        fontSize: 15,
-        padding: {
-          x: 20,
-          y: 20
-        },
-        color: "#34cceb",
-        stroke: "#34cceb",
-        align: "center",
-        fontFamily: "Arcade",
+    const pressSpaceToContinue = this.scene.add.text(0, this.height, `Press ${this.scene.sys.game.device.input.touch ? "your finger" : "SPACE"} to continue`, {
+      fontSize: 15,
+      padding: {
+        x: 20,
+        y: 20
+      },
+      color: "#34cceb",
+      stroke: "#34cceb",
+      align: "center",
+      fontFamily: "Arcade",
         fixedWidth: this.width,
 
       }

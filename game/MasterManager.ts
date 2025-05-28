@@ -178,7 +178,7 @@ export default class MasterManager extends Phaser.Scene {
     if (this.scene && this.scene.get) {
       const gameScene = this.scene?.get("Game");
     if (gameScene) {
-      (gameScene as Game).UIClass?.settingsModal?.animationOfModal(false, 0);
+      (gameScene as Game).UIClass?.settingsModal?.animationOfModal(false);
       (gameScene as Game).UIClass?.container.each((child: any) => {
         if (child instanceof UI) {
           {

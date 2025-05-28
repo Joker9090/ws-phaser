@@ -174,8 +174,8 @@ export default class LoaderScene extends Phaser.Scene {
       y: height / 2,
     }
     
-    const proportionWidth = 1024
-    const proportionHeight = 768
+    const proportionWidth = window.innerWidth
+    const proportionHeight = window.innerHeight;
 
     // scale scaledContainer to fit in width and height. scale proportional
 

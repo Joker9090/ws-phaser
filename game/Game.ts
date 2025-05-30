@@ -29,7 +29,9 @@ import p3Mapa3 from "./maps/planet3/Mapa10";
 import p3Mapa4 from "./maps/planet3/Mapa11";
 import p3Map1 from "./maps/planet3/Map0";
 import p3Map2 from "./maps/planet3/Map1";
+import p3Map3 from "./maps/planet3/Map2";
 import p3SubMap1 from "./maps/planet3/SubMap1";
+import p3SubMap2 from "./maps/planet3/SubMap2";
 // OTRAS COSAS
 import Player from "./assets/Player";
 import UIClass from "./assets/UIClass";
@@ -78,7 +80,9 @@ export type PossibleMaps =
   | p2Map3
   | p3Map1
   | p3Map2
-  |p3SubMap1;
+  |p3SubMap1
+  | p3SubMap2
+  |p3Map3;
 // Scene in class
 export const keyCodesAWSD = {
   w: Phaser.Input.Keyboard.KeyCodes.W,
@@ -996,7 +1000,7 @@ class Game extends Phaser.Scene {
       case 10:
         this.player = new Player(this, 0, 0, "character", 2);
 
-        this.map = new p3Mapa3(this, this.player!);
+        this.map = new p3Map3(this, this.player!);
         this.loopMusic = "planet3LoopMusic";
         if (this.masterManagerScene) {
           this.masterManagerScene.imagenesDesbloqueadas = [
@@ -1063,6 +1067,14 @@ class Game extends Phaser.Scene {
         this.map = new p3SubMap1(this, this.player!);
         this.loopMusic = "planet1LoopMusic";
         break;
+      case 30201:
+        this.player = new Player(this, 0, 0, "character", 2);
+        this.player.setPlayerWithTank(true);
+        this.player.isFlying = true;
+        this.map = new p3SubMap2(this, this.player!);
+        this.loopMusic = "planet1LoopMusic";
+        break;
+          
       default:
         this.player = new Player(this, 0, 0, "character", 2);
 

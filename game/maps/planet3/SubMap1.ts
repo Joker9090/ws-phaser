@@ -51,7 +51,6 @@ class Map1 extends MapCreator {
           };
 
           this.UIItemToGrab= "uiItemp3";
-          this.nextScene= "postal1_planeta3";
     }
 
     createMap(data: { level: number; lifes: number }) {
@@ -86,11 +85,42 @@ class Map1 extends MapCreator {
     
     this.backgroundsFront = [
       this.scene.add.image(-this.startingPoint.x, this.cameraBounds.height+200, "background1p3").setOrigin(0, 1).setScale(0.5),
+      this.scene.add.image(-this.startingPoint.x, this.cameraBounds.height+200, "background2p3").setOrigin(0, 1).setScale(0.5),
+      this.scene.add.image(-this.startingPoint.x, this.cameraBounds.height+200, "background3p3").setOrigin(0, 1).setScale(0.5),
+      
+      this.scene.add.image(-this.startingPoint.x + downScaledFrontWidth, this.cameraBounds.height+200, "background1p3").setOrigin(0, 1).setScale(0.5),
       this.scene.add.image(-this.startingPoint.x + downScaledFrontWidth, this.cameraBounds.height+200, "background2p3").setOrigin(0, 1).setScale(0.5),
+      this.scene.add.image(-this.startingPoint.x + downScaledFrontWidth, this.cameraBounds.height+200, "background3p3").setOrigin(0, 1).setScale(0.5),
+      
+      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 2), this.cameraBounds.height+200, "background1p3").setOrigin(0, 1).setScale(0.5),
+      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 2), this.cameraBounds.height+200, "background2p3").setOrigin(0, 1).setScale(0.5),
       this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 2), this.cameraBounds.height+200, "background3p3").setOrigin(0, 1).setScale(0.5),
+      
       this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 3), this.cameraBounds.height+200, "background1p3").setOrigin(0, 1).setScale(0.5),
+      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 3), this.cameraBounds.height+200, "background2p3").setOrigin(0, 1).setScale(0.5),
+      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 3), this.cameraBounds.height+200, "background3p3").setOrigin(0, 1).setScale(0.5),
+      
+      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 4), this.cameraBounds.height+200, "background1p3").setOrigin(0, 1).setScale(0.5),
       this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 4), this.cameraBounds.height+200, "background2p3").setOrigin(0, 1).setScale(0.5),
+      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 4), this.cameraBounds.height+200, "background3p3").setOrigin(0, 1).setScale(0.5),
+      
+      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 5), this.cameraBounds.height+200, "background1p3").setOrigin(0, 1).setScale(0.5),
+      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 5), this.cameraBounds.height+200, "background2p3").setOrigin(0, 1).setScale(0.5),
       this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 5), this.cameraBounds.height+200, "background3p3").setOrigin(0, 1).setScale(0.5),
+
+      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 6), this.cameraBounds.height+200, "background1p3").setOrigin(0, 1).setScale(0.5),
+      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 6), this.cameraBounds.height+200, "background2p3").setOrigin(0, 1).setScale(0.5),
+      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 6), this.cameraBounds.height+200, "background3p3").setOrigin(0, 1).setScale(0.5),
+    
+      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 7), this.cameraBounds.height+200, "background1p3").setOrigin(0, 1).setScale(0.5),
+      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 7), this.cameraBounds.height+200, "background2p3").setOrigin(0, 1).setScale(0.5),
+      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 7), this.cameraBounds.height+200, "background3p3").setOrigin(0, 1).setScale(0.5),
+      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 8), this.cameraBounds.height+200, "background1p3").setOrigin(0, 1).setScale(0.5),
+      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 8), this.cameraBounds.height+200, "background2p3").setOrigin(0, 1).setScale(0.5),
+      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 8), this.cameraBounds.height+200, "background3p3").setOrigin(0, 1).setScale(0.5),
+      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 9), this.cameraBounds.height+200, "background1p3").setOrigin(0, 1).setScale(0.5),
+      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 9), this.cameraBounds.height+200, "background2p3").setOrigin(0, 1).setScale(0.5),
+      this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 9), this.cameraBounds.height+200, "background3p3").setOrigin(0, 1).setScale(0.5),
     ]
     
     this.createBackgrounds(this.backgroundsBack, this.backgroundsMiddle, this.backgroundsFront);

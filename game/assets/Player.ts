@@ -416,8 +416,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   touchingFeet(collidingWthith: Phaser.Physics.Arcade.Sprite) {
-    return (this.body?.touching.down && this.playerState === "NORMAL") ||// !collidingWthith.flipY && this.playerState === "NORMAL") ||
-    (this.body?.touching.up && this.playerState === "ROTATED")//collidingWthith.flipY && this.playerState === "ROTATED")
+    return (this.body?.touching.down && this.playerState === "NORMAL") || // !collidingWthith.flipY && this.playerState === "NORMAL") ||
+    (this.body?.touching.up && this.playerState === "ROTATED") //collidingWthith.flipY && this.playerState === "ROTATED")
   }
 
   checkMove(cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined) {

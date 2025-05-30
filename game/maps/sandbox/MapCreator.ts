@@ -477,6 +477,7 @@ export default class MapCreator {
             if (
               this.scene.player?.touchingFeet(b as Phaser.Physics.Arcade.Sprite)
             ) {
+              this.scene.canRot = true
               this.scene.touch()
               this.scene.masterManagerScene?.playSound('cameraFlip')
               //@ts-ignore

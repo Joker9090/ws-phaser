@@ -113,9 +113,22 @@ class LargeFloorIsland extends Phaser.GameObjects.Container {
       this.add(fillSprite);
       this.setDepth(1);
       fillSprite.setDepth(config.fillBehind ? 0 : 2); // Ensure it is behind the asset
+      
+
       scene.add.existing(fillSprite);
       console.log(this.depth, fillSprite.depth, 'depth');
-    
+      //TEST
+      const physicsRect = scene.add.rectangle(
+        fillSprite.x + fillSprite.width / 2,
+        fillSprite.y + fillSprite.height / 2,
+        fillSprite.width,
+        fillSprite.height
+      ).setOrigin(0.5, 0.5).setVisible(false);
+      if (config.scale) {
+        physicsRect.setScale(config.scale.width, config.scale.height);
+      }
+      
+      scene.physics.add.existing(physicsRect, true);
       if (this.scene.UICamera) this.scene.UICamera.ignore(fillSprite);
     
       // Opcional: Fondo negro dibujado con Graphics

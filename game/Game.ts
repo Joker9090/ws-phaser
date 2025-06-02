@@ -1091,8 +1091,7 @@ class Game extends Phaser.Scene {
         break;
       case 30201:
         this.player = new Player(this, 0, 0, "character", 2);
-        this.player.setPlayerWithTank(true);
-        this.player.isFlying = true;
+
         this.map = new p3SubMap2(this, this.player!);
         this.loopMusic = "planet3LoopMusic";
         break;

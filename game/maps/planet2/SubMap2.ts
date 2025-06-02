@@ -50,8 +50,9 @@ export default class SubMap2 extends MapCreator {
       }
     ]
 
-    this.player.setPlayerWithTank(true);
-    this.player.isFlying = true;
+    //this.player.setPlayerWithTank(true);
+    //this.player.isFlying = true;
+    this.player.setPlayerFlying(true);
   }
 
     createMap(data: { level: number; lifes: number }) {

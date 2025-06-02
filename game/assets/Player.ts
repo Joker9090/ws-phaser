@@ -323,12 +323,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     let barSize = 100
     const limit0 = (this.tank.fuel - this.tank.fuelConditionToStart < 0) ? 0 : this.tank.fuel - this.tank.fuelConditionToStart
     const equivalent = (limit0 * barSize) / (this.tank.fuelLimit - this.tank.fuelConditionToStart)
-    this.tankGraphics.fillRect(this.x - 50, this.y - 100, barSize, 10)
+    this.tankGraphics.fillRect(this.x - 50, (this.playerState === "NORMAL" ? this.y - 100 : this.y + 100), barSize, 10)
     this.tankGraphics.fillStyle(0xff0000, 0.9)
     if(this.tank.extraJumpAt) {
       this.tankGraphics.fillStyle(0xffffff, 0.9)
     }
-    this.tankGraphics.fillRect(this.x - 50, this.y - 100, equivalent , 10)
+    this.tankGraphics.fillRect(this.x - 50, (this.playerState === "NORMAL" ? this.y - 100 : this.y + 100), equivalent , 10)
     this.tankGraphics.setDepth(99)
   }
   //TANK SMOKE
@@ -340,14 +340,16 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.tankAnimSprite.setPosition(xF, this.y + 10);*/
 
   // Make the sprite visible and play the animation
+  this.tankAnimSprite.setFlipY(this.playerState === "ROTATED");
   this.tankAnimSprite.setVisible(true);
   this.tankAnimSprite.anims.play("tankActivateAnim");
   // Update the position of the sprite based on the player's position
-  
+
   this.tankAnimSprite.on("animationupdate", () => {
     let xF = this.x - 15;
     if (this.flipX) xF = this.x + 15;
-    this.tankAnimSprite?.setPosition(xF, this.y + 60);
+    this.tankAnimSprite?.setPosition(xF, (this.playerState === "NORMAL" ? this.y + 60 : this.y - 60));
+    // this.tankAnimSprite?.setFlipY(this.playerState === "ROTATED");
   });
   
   // Hide the sprite after the animation completes

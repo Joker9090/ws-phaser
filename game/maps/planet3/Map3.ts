@@ -194,6 +194,9 @@ class Map3 extends MapCreator {
         }
 
         const mapPlatforms = [
+            // { ...basePlatformsConfig, pos: { x: 600, y: (this.cameraBounds.height + this.cameraBounds.y) - 400 }, rotate: true, group: this.gravityTile, colors: [colors.rotate], flipY: false },
+            // { ...basePlatformsConfig, pos: { x: 600, y: (this.cameraBounds.height + this.cameraBounds.y) - 900 }, rotate: true, group: this.gravityTile, colors: [colors.rotate], flipY: true },
+
             {...baseLargePlatformsConf, pos: { x: 0, y: (this.cameraBounds.height + this.cameraBounds.y) - 200 },
                 large: 16,
                 group: this.floor

@@ -3,6 +3,7 @@ import { ContainerMenuConfigType, resultContainerConfigType } from "../Types";
 import MasterManager from "../MasterManager";
 import containerSettings from "./containerSettings";
 import MenuScene from "../Menu";
+import { isTouchDevice } from "../assets/Services";
 
 class resultContainer extends Phaser.GameObjects.Container {
     width: number = window.innerWidth;
@@ -201,7 +202,8 @@ class resultContainer extends Phaser.GameObjects.Container {
         })
         console.log(this.container , "container result")
         this.container.setDepth(55)
-        this.container.setScale(0.8)
+        this.container.setScale(isTouchDevice() ? 0.6 : 0.8)
+        this.container.setPosition(window.innerWidth/2, window.innerHeight/2)
         // const arr = [
 
         // ]

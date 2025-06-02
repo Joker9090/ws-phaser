@@ -194,6 +194,11 @@ class containerInitial extends Phaser.GameObjects.Container {
             this.masterManager.playSound('buttonSound', false)
             this.settingsButton.setTexture('settingsButtonHover')
         })
+
+        // TO DO: SETTINGS BUTTON DEPRECATED
+        this.settingsButton.setVisible(false)
+        this.settingsButton.setInteractive(false);
+
         this.scene.input.keyboard?.on('keydown-ESC', () => {
             console.log(this.settingsVisible, "visible from menu")
             if(!this.scene.containerAlbum?.visible && !this.scene.containerCredits?.visible && !this.scene.containerPlay?.visible && !this.scene.containerCode?.visible){

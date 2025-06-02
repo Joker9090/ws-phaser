@@ -448,8 +448,20 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     /* Keywords press */
     if (cursors) {
       const { left, right, up, space } = cursors;
+      const isGrounded = this.playerState === "NORMAL" ? this.body?.touching.down : this.body?.touching.up;
+      // @ts-ignore
+      const masterVolume = this.scene.masterManagerScene.volumeSound;
       /* Left*/
-      if (left.isDown) {
+      if (!isGrounded || this.isDead) {
+        this.scene.sound.stopByKey('walk');
+        this.scene.sound.removeByKey('walk');
+      }
+      if (!this.isDead) {
+        if (left.isDown) {
+          if ((!this.scene.sound.get('walk') || !this.scene.sound.get('walk')?.isPlaying) && isGrounded) {
+
+        this.scene.sound.play('walk', { volume: masterVolume, loop: true });
+        }
         if (scene.isTouchDevice) {
           this.setVelocityX(this.cameraState === 'NORMAL' ? mobileVelocity.x : -mobileVelocity.x);
         } else {
@@ -458,6 +470,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         if (!this.isJumping && !this.isRotating) this.anims.play("playerMove", true);
         this.setFlipX(this.cameraState === 'NORMAL' ? true : false);
       } else if (right.isDown) {
+        // Only play the walk sound if it's not already playing
+        if ((!this.scene.sound.get('walk') || !this.scene.sound.get('walk')?.isPlaying) && isGrounded) {
+          this.scene.sound.play('walk', { volume: masterVolume, loop: true });
+        }
+
         /* Right*/
         if (scene.isTouchDevice) {
           this.setVelocityX(this.cameraState === 'NORMAL' ? mobileVelocity.x : -mobileVelocity.x);
@@ -467,6 +484,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.setFlipX(this.cameraState === 'NORMAL' ? false : true);
         if (!this.isJumping && !this.isRotating) this.anims.play("playerMove", true);
       } else {
+        this.scene.sound.stopByKey('walk');
+        this.scene.sound.removeByKey('walk');
         this.setVelocityX(0);
         if (!this.isJumping && !this.isRotating) this.anims.play("playerIdle", true);
       }
@@ -474,7 +493,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       if ((up.isDown || space.isDown) && this.scene instanceof Game && !this.scene.isTouchDevice) {
         this.jump()
       }
-
+    }
     }
   }
   moveOnLoader(){

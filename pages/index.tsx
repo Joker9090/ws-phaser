@@ -143,31 +143,19 @@ export default function Home() {
 
   return (
     <div id="game-container" style={{
-      width: '100vw',
-      height: '100vh',
-      overflow: 'hidden',
-      position: 'relative',
-      margin: 0,
-      padding: 0
+  
     }}>
       {overlayVisible && (
-        <div
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            color: 'white',
-            zIndex: 10,
-            fontSize: '1.5rem',
-          }}
-        >
-          Please rotate your device to landscape mode.
+        <div className='overlay'>
+          <video
+          className='rotate-video'
+        src="/rotatephone.webM"
+        autoPlay
+        loop
+        muted
+        playsInline
+      />
+          <p>Please rotate your device to landscape mode.</p>
         </div>
       )}
     </div>

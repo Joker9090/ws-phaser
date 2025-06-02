@@ -29,6 +29,7 @@ import p3Mapa3 from "./maps/planet3/Mapa10";
 import p3Mapa4 from "./maps/planet3/Mapa11";
 import p3Map1 from "./maps/planet3/Map0";
 import p3Map4 from "./maps/planet3/Map3";
+import p3SubMap3 from "./maps/planet3/SubMap3";
 // OTRAS COSAS
 import Player from "./assets/Player";
 import UIClass from "./assets/UIClass";
@@ -76,7 +77,8 @@ export type PossibleMaps =
   | p2SubMap2
   | p2Map3
   | p3Map1
-  | p3Map4;
+  | p3Map4
+  | p3SubMap3
 // Scene in class
 export const keyCodesAWSD = {
   w: Phaser.Input.Keyboard.KeyCodes.W,
@@ -358,6 +360,9 @@ class Game extends Phaser.Scene {
   }
 
   retry() {
+    if (this.player) {
+      this.player.isDead = false;
+    }
     if (!this.scene.get("MultiScene")) {
       var multiScene = new MultiScene("Game", {
         level: this.levelIs,
@@ -453,6 +458,10 @@ class Game extends Phaser.Scene {
     // }
     if (this.player && this.map) {
       console.log(this.levelIs, "LEVEL IS JOTITA");
+      if (this.player) {
+        this.sound.stopByKey('walk');
+        this.sound.removeByKey('walk');
+      }
       this.masterManagerScene?.playSound('win', false, 0.5, 2000);
       this.cameraNormal = true;
       if (this.canWin) {
@@ -531,6 +540,11 @@ class Game extends Phaser.Scene {
       if (this.lifes) {
         this.lifes -= 1;
         if (this.lifes === 0) {
+          if (this.player) {
+            this.player.isDead = true;
+            this.sound.stopByKey('walk');
+            this.sound.removeByKey('walk');
+          }
           this.masterManagerScene?.playSound('lose', false, 0.7, 1000);
           this.cameraNormal = true;
           this.checkPoint === 0;
@@ -1052,6 +1066,12 @@ class Game extends Phaser.Scene {
         this.player = new Player(this, 0, 0, "character", 2);
 
         this.map = new p2m3sub1(this, this.player!);
+        this.loopMusic = "planet1LoopMusic";
+        break;
+      case 30301:
+        this.player = new Player(this, 0, 0, "character", 2);
+
+        this.map = new p3SubMap3(this, this.player!);
         this.loopMusic = "planet1LoopMusic";
         break;
       default:

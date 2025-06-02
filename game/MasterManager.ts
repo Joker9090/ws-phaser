@@ -35,7 +35,7 @@ export default class MasterManager extends Phaser.Scene {
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   GameScene?: Game;
   brightnessScreen?: Phaser.GameObjects.Rectangle;
-  volumeMusic: number = this.music?.volume || 0.5;
+  volumeMusic: number = this.music?.volume || 0.2;
   volumeSound: number = this.sounds?.volume || 0.5;
   brightness: number = 0.5;
   MAX_VOLUME: number = 0.6;

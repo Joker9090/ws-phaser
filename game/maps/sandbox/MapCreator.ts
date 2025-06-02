@@ -462,7 +462,12 @@ export default class MapCreator {
             if (
               this.scene.player?.touchingFeet(b as Phaser.Physics.Arcade.Sprite)
             ) {
-              this.scene.masterManagerScene?.playSound('cameraFlip')
+              if (!this.scene.sound.get('cameraFlip')?.isPlaying) {
+                this.scene.sound.play('cameraFlip', {
+                    volume: 0.7 * (this.scene.masterManagerScene?.volumeSound ?? 1),
+                    loop: false,
+                  });
+              }
               this.scene.changeGravity(true, 1000, 3);
             }
           },
@@ -478,7 +483,12 @@ export default class MapCreator {
               this.scene.player?.touchingFeet(b as Phaser.Physics.Arcade.Sprite)
             ) {
               this.scene.touch()
-              this.scene.masterManagerScene?.playSound('cameraFlip')
+              if (!this.scene.sound.get('cameraFlip')?.isPlaying) {
+                this.scene.sound.play('cameraFlip', {
+                    volume: 0.7 * (this.scene.masterManagerScene?.volumeSound ?? 1),
+                    loop: false,
+                  });
+              }
               //@ts-ignore
               this.scene.rotateCam(b.rotate, 10);
             }

@@ -5,7 +5,7 @@ import { GamePlayDataType } from "@/game/Types";
 import colors from "@/game/assets/PlatformColors";
 import { group } from "console";
 
-class Map3 extends MapCreator {
+class SubMap3 extends MapCreator {
 
     constructor(scene: Game, player: Player, data?: GamePlayDataType) {
         super(scene, player, data);
@@ -46,7 +46,7 @@ class Map3 extends MapCreator {
       
           this.startingPoint = {
             x: 350, //500
-            y: this.worldSize.height - 800, //800
+            y: (this.cameraBounds.height + this.cameraBounds.y) / 2 - 600, //800
           };
 
           this.UIItemToGrab= "uiItemp3";
@@ -113,7 +113,7 @@ class Map3 extends MapCreator {
         }
 
         const baseLargePlatformsConf = {
-            withTextureToAbove: true,
+            withTextureToAbove: false,
             texture: "plataformaNuevaA",
             textureA: "longFloorLeftp3",
             textureB: "longFloorMiddlep3",
@@ -184,129 +184,77 @@ class Map3 extends MapCreator {
         }
 
         const otherSceneConf: GamePlayDataType = {
-          level: 30301,
+          level: 11,
           lifes: this.scene.lifes ? this.scene.lifes : 3,
           loadKey: ["Postales", "Cinemato1", "Cinemato2"],
           startingPositionFromOtherScene: {
             x: 350,
-            y: 600,
+            y: 1800,
           },
         }
 
         const mapPlatforms = [
-            {...baseLargePlatformsConf, pos: { x: 0, y: (this.cameraBounds.height + this.cameraBounds.y) - 200 },
-                large: 16,
+            {...baseLargePlatformsConf, pos: { x: 0, y: (this.cameraBounds.height + this.cameraBounds.y) / 2 },
+                large: 10,
                 group: this.floor
             },
-            {...basePlatformsConfig, pos: { x: 900, y: (this.cameraBounds.height + this.cameraBounds.y) - 400 }},
-            { ...baseDangerConf, pos: { x: 1050, y: (this.cameraBounds.height + this.cameraBounds.y) - 600 }, width: 150, height: 150, 
-               patrol:{
-                   patrolType: "LinealY",
-                   distance: 150,
-                   speed: 100,
-                   attackInterval: 0,
-               }, 
-           },
-            {...basePlatformsConfig, pos: { x: 1200, y: (this.cameraBounds.height + this.cameraBounds.y) - 800 }},
-             { ...baseDangerConf, pos: { x: 1450, y: (this.cameraBounds.height + this.cameraBounds.y) - 800 }, width: 150, height: 150, 
-                patrol:{
-                    patrolType: "LinealY",
-                    distance: 150,
-                    speed: 100,
-                    attackInterval: 0,
-                }, 
-            },
-                        { ...basePlatformsConfig, pos: { x: 1950, y: (this.cameraBounds.height + this.cameraBounds.y) - 1000 } ,animation:{
+            {...basePlatformsConfig, pos: { x: 1000, y: (this.cameraBounds.height + this.cameraBounds.y) / 2 + 800 }, group: this.floor, animation:{
                 xAxis:{
                     xDistance:700,
-                    xVel:150
-                }}
-            },    
-            { ...basePlatformsConfig, pos: { x: 2500, y:  (this.cameraBounds.height + this.cameraBounds.y) - 800 },group: this.fallingTile, colors: [colors.falling]  },
-            { ...basePlatformsConfig, pos: { x: 2700, y:  (this.cameraBounds.height + this.cameraBounds.y) - 1000 },group: this.fallingTile, colors: [colors.falling]  },
-            { ...basePlatformsConfig, pos: { x: 2900, y:  (this.cameraBounds.height + this.cameraBounds.y) - 800 },group: this.fallingTile, colors: [colors.falling]  },
-            { ...basePlatformsConfig, pos: { x: 3100, y:  (this.cameraBounds.height + this.cameraBounds.y) - 1000 },group: this.fallingTile, colors: [colors.falling]  },
-            { ...basePlatformsConfig, pos: { x: 3300, y:  (this.cameraBounds.height + this.cameraBounds.y) - 800 },group: this.fallingTile, colors: [colors.falling]  },
-            { ...baseCristalConf, pos: { x: 2700, y: (this.cameraBounds.height + this.cameraBounds.y) - 1100 }, group: this.coin, aura: 'auraTuto' },
-            { ...baseCristalConf, pos: { x: 3100, y: (this.cameraBounds.height + this.cameraBounds.y) - 1100 }, group: this.coin, aura: 'auraTuto' },
-            { ...basePlatformsConfig, pos: { x: 3600, y:  (this.cameraBounds.height + this.cameraBounds.y) - 800 }},
-            { ...basePlatformsConfig, pos: { x: 3900, y:  (this.cameraBounds.height + this.cameraBounds.y) - 800 }},
-            { ...basePlatformsConfig, pos: { x: 4200, y:  (this.cameraBounds.height + this.cameraBounds.y) - 800 }},
-            { ...baseDangerConf, pos: { x: 3750, y: (this.cameraBounds.height + this.cameraBounds.y) - 800 }, width: 150, height: 150, 
-                patrol:{
-                    patrolType: "LinealY",
-                    distance: 150,
-                    speed: 100,
-                    attackInterval: 0,
-                }, 
-            },
-            { ...baseDangerConf, pos: { x: 4050, y: (this.cameraBounds.height + this.cameraBounds.y) - 800 }, width: 150, height: 150, 
-                patrol:{
-                    patrolType: "LinealY",
-                    distance: 150,
-                    speed: 100,
-                    attackInterval: 0,
-                }, 
-            },
-            { ...basePlatformsConfig, pos: { x: 4500, y: (this.cameraBounds.height + this.cameraBounds.y) - 400 }, group: this.gravityTile, colors: [colors.gravity] },
-            { ...basePlatformsConfig, pos: { x: 4500, y: (this.cameraBounds.y) + 100 }, rotate: true, group: this.rotationTile, colors: [colors.rotate], flipY: true },
-            { type: "finalPortal", pos: { x: 2300, y: (this.cameraBounds.y) + 300  }, texture: "cuevap3", width: 100, height: 100, group: this.portal, flipY: true },
-            {...baseLargePlatformsConf, pos: { x: 2000, y: (this.cameraBounds.y) + 200 }, flipY: true, withTextureToAbove: false,
-                large: 8,
-                group: this.floor
-            }, 
-            { ...baseDangerConf, pos: { x: 2900, y: (this.cameraBounds.y) + 250 }, width: 150, height: 150, 
-                patrol:{
-                    patrolType: "LinealY",
-                    distance: 150,
-                    speed: 100,
-                    attackInterval: 0,
-                }, 
-            },
-            {...baseLargePlatformsConf, pos: { x: 3000, y: (this.cameraBounds.y) + 100 }, flipY: true, withTextureToAbove: false,
-                large: 6,
-                group: this.floor
-            }, 
-             { ...baseDangerConf, pos: { x: 3150, y: (this.cameraBounds.y) + 200 }, width: 150, height: 150, 
-                patrol:{
-                    patrolType: "LinealX",
-                    distance: 150,
-                    speed: 100,
-                    attackInterval: 0,
-                }, 
-            },
-            {...baseLargePlatformsConf, pos: { x: 3600, y: (this.cameraBounds.y) + 200 }, flipY: true, withTextureToAbove: false,
-                large: 8,
-                group: this.floor
-            },
-            { ...baseDangerConf, pos: { x: 3900, y: (this.cameraBounds.y) + 300 }, width: 150, height: 150, 
-                patrol:{
-                    patrolType: "LinealX",
-                    distance: 150,
-                    speed: 100,
-                    attackInterval: 0,
-                }, 
-            },
-            { ...basePlatformsConfig, pos: { x: 4800, y: (this.cameraBounds.height + this.cameraBounds.y) - 1200 } },
-            { ...baseFireballConf, pos: { x: 5000, y: 0 }, tween: { duration: 2000, repeat: -1, y: "+=2000", yoyo: false  }, rotated: false },
-            {...baseLargePlatformsConf, pos: { x: 5200, y: (this.cameraBounds.height + this.cameraBounds.y) - 1000 }, withTextureToAbove: false,
-                large: 20,
-                group: this.floor
-            },
-            { ...baseFireballConf, pos: { x: 5500, y: -1000 }, tween: { duration: 2000, repeat: -1, y: "+=3000", yoyo: false  }, rotated: false },
-            { ...baseFireballConf, pos: { x: 5900, y: 0 }, tween: { duration: 2000, repeat: -1, y: "+=2000", yoyo: false  }, rotated: false },
-            { ...baseFireballConf, pos: { x: 6300, y: -1000 }, tween: { duration: 2000, repeat: -1, y: "+=3000", yoyo: false  }, rotated: false },
-            { ...baseFireballConf, pos: { x: 6700, y: 0 }, tween: { duration: 2000, repeat: -1, y: "+=2000", yoyo: false  }, rotated: false },
-            { ...baseCristalConf, pos: { x: 5300, y: (this.cameraBounds.height + this.cameraBounds.y) - 1100 }, group: this.coin, aura: 'auraTuto' },
-            { ...baseCristalConf, pos: { x: 5700, y: (this.cameraBounds.height + this.cameraBounds.y) - 1100 }, group: this.coin, aura: 'auraTuto' },
-            { ...baseCristalConf, pos: { x: 6100, y: (this.cameraBounds.height + this.cameraBounds.y) - 1100 }, group: this.coin, aura: 'auraTuto' },
-            { ...baseCristalConf, pos: { x: 6500, y: (this.cameraBounds.height + this.cameraBounds.y) - 1100 }, group: this.coin, aura: 'auraTuto' },
-            //PORTAL
-            { type: "subPortal",  x: 6800, y: (this.cameraBounds.height + this.cameraBounds.y) / 2, version: 1, sameScene: false, group: this.teleport, otherSceneConf: otherSceneConf },
-
-            // { ...baseCristalConf, pos: { x: 6900, y: (this.cameraBounds.height + this.cameraBounds.y) - 1100 }, group: this.coin, aura: 'auraTuto' },
-
-        ]
+                    xVel:100
+                }} },
+                            {...basePlatformsConfig, pos: { x: 1500, y: (this.cameraBounds.height + this.cameraBounds.y) / 2 }, group: this.floor, animation:{
+                xAxis:{
+                    xDistance:700,
+                    xVel:200
+                }} },
+                            {...basePlatformsConfig, pos: { x: 2000, y: (this.cameraBounds.height + this.cameraBounds.y) / 2 + 400 }, group: this.floor, animation:{
+                xAxis:{
+                    xDistance:700,
+                    xVel:100
+                }} },
+                            {...basePlatformsConfig, pos: { x: 2500, y: (this.cameraBounds.height + this.cameraBounds.y) / 2 }, group: this.floor, animation:{
+                xAxis:{
+                    xDistance:700,
+                    xVel:200
+                }} },
+                            {...basePlatformsConfig, pos: { x: 3000, y: (this.cameraBounds.height + this.cameraBounds.y) / 2 + 800 }, group: this.floor, animation:{
+                xAxis:{
+                    xDistance:700,
+                    xVel:100
+                }} },
+                            {...basePlatformsConfig, pos: { x: 3500, y: (this.cameraBounds.height + this.cameraBounds.y) / 2 + 400 }, group: this.floor, animation:{
+                xAxis:{
+                    xDistance:700,
+                    xVel:200
+                }} },
+                            {...basePlatformsConfig, pos: { x: 4000, y: (this.cameraBounds.height + this.cameraBounds.y) / 2 }, group: this.floor, animation:{
+                xAxis:{
+                    xDistance:700,
+                    xVel:100
+                }} },
+                            {...basePlatformsConfig, pos: { x: 4500, y: (this.cameraBounds.height + this.cameraBounds.y) / 2 + 400 }, group: this.floor, animation:{
+                xAxis:{
+                    xDistance:700,
+                    xVel:200
+                }} },
+                            {...basePlatformsConfig, pos: { x: 5000, y: (this.cameraBounds.height + this.cameraBounds.y) / 2 + 800 }, group: this.floor, animation:{
+                xAxis:{
+                    xDistance:700,
+                    xVel:100
+                }} },
+                            {...basePlatformsConfig, pos: { x: 5500, y: (this.cameraBounds.height + this.cameraBounds.y) / 2 + 400 }, group: this.floor, animation:{
+                xAxis:{
+                    xDistance:700,
+                    xVel:200
+                }} },
+            { ...baseFireballConf, pos: { x: 1500, y: -1000 }, tween: { duration: 2000, repeat: -1, y: "+=3000", yoyo: false  }, rotated: false },
+            { ...baseFireballConf, pos: { x: 3000, y: 0 }, tween: { duration: 2000, repeat: -1, y: "+=2000", yoyo: false  }, rotated: false },
+            { ...baseFireballConf, pos: { x: 4500, y: -1000 }, tween: { duration: 2000, repeat: -1, y: "+=3000", yoyo: false  }, rotated: false },
+            { ...baseFireballConf, pos: { x: 6000, y: 0 }, tween: { duration: 2000, repeat: -1, y: "+=2000", yoyo: false  }, rotated: false },
+            { type: "subPortal",  x: 6500, y: (this.cameraBounds.height + this.cameraBounds.y) / 2, version: 1, sameScene: false, group: this.teleport, otherSceneConf: otherSceneConf },
+        
+          ]
         this.createPlatforms(mapPlatforms)
 
         this.scene.UICamera?.ignore(this.floor!);
@@ -332,4 +280,4 @@ class Map3 extends MapCreator {
 
 }
 
-export default Map3;
+export default SubMap3;

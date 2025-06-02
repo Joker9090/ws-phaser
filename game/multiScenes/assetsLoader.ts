@@ -181,6 +181,7 @@ export const loadAssets = {
       ["audio", "shield", "/sounds/sfx/shield.wav"],
       ["audio", "spawn", "/sounds/sfx/spawn.wav"],
       ["audio", "win", "/sounds/sfx/win.ogg"],
+      ["audio", "walk", "/sounds/sfx/walk.flac"],
     ]
   },
   GamePlay1: {

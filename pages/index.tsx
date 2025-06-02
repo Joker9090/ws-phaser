@@ -147,14 +147,14 @@ export default function Home() {
     }}>
       {overlayVisible && (
         <div className='overlay'>
-          <video
+          {/* <video
           className='rotate-video'
         src="/rotatephone.webM"
         autoPlay
         loop
         muted
         playsInline
-      />
+      /> */}
           <p>Please rotate your device to landscape mode.</p>
         </div>
       )}

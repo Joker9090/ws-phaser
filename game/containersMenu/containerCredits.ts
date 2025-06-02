@@ -18,6 +18,9 @@ class ContainerCredits extends Phaser.GameObjects.Container {
     credits_lu: Phaser.GameObjects.Image;
     credits_mai: Phaser.GameObjects.Image;
     credits_nano: Phaser.GameObjects.Image;
+    credits_rama: Phaser.GameObjects.Image;
+    credits_colo: Phaser.GameObjects.Image;
+    credits_juampi: Phaser.GameObjects.Image;
     creditsTitle: Phaser.GameObjects.Image;
     masterManager: MasterManager
 
@@ -34,7 +37,10 @@ class ContainerCredits extends Phaser.GameObjects.Container {
         this.credits_lu = scene.add.image(0, 0, "credits_lu").setAlpha(0.5).setScale(0)
         this.credits_mai = scene.add.image(0, 0, "credits_mai").setAlpha(0.5).setScale(0)
         this.credits_nano = scene.add.image(0, 0, "credits_nano").setAlpha(0.5).setScale(0)
-        this.creditsTitle = scene.add.image(0, -this.height/2 - 200, "creditsTitle").setAlpha(1)
+        this.credits_rama = scene.add.image(0, 0, "credits_rama").setAlpha(0.5).setScale(0)
+        this.credits_colo = scene.add.image(0, 0, "credits_colo").setAlpha(0.5).setScale(0)
+        this.credits_juampi = scene.add.image(0, 0, "credits_juampi").setAlpha(0.5).setScale(0)
+        this.creditsTitle = scene.add.image(0, -this.height/2, "creditsTitle").setAlpha(1)
        
         
           let masterManagerScene = scene.game.scene.getScene("MasterManager") as MasterManager;
@@ -55,6 +61,9 @@ class ContainerCredits extends Phaser.GameObjects.Container {
             this.credits_mai,
             this.credits_joaco,
             this.credits_clari,
+            this.credits_rama,
+            this.credits_colo,
+            this.credits_juampi
         ]
         this.setPositionCredits(creditsArray)
         this.handleInteractive(creditsArray)
@@ -71,7 +80,7 @@ class ContainerCredits extends Phaser.GameObjects.Container {
         }
         console.log("ARIEL TRANSFORM MATRIX", creditsArray[0].getLocalTransformMatrix())
 
-        const creditsPosY = -this.height/2 + 40
+        const creditsPosY = 0
         
         // this.creditsTitle.setPosition(0, creditsPosY)
         this.scene.tweens.add({
@@ -109,19 +118,19 @@ class ContainerCredits extends Phaser.GameObjects.Container {
     setPositionCredits(arr: Phaser.GameObjects.Image[]) {
         const width = arr[0].width
         const height = arr[0].height
-        const maxPaddingX = 80
-        const maxPaddingY = 60
-        let firstPosX = -(width + maxPaddingX) * 1.5
+        const maxPaddingX = 50
+        const maxPaddingY = 65
+        let firstPosX = -(width + maxPaddingX) * 2
         let firstPosY = -(height + maxPaddingY )* .5
         // let paddingX = (this.width - 4 * width) / 5
         // let paddingY = (this.height - 2 * height) / 3
         // firstPosX = (this.width - maxPaddingX * 3 - 4 * width) / 2
         // firstPosY = (this.height - paddingY - 2 * height) / 2
         arr.forEach((element: Phaser.GameObjects.Image, index: number) => {
-            if (index < 4) {
+            if (index < 5) {
                 element.setPosition(firstPosX + index * (width + maxPaddingX), firstPosY)
             } else {
-                element.setPosition(firstPosX + (index - 4) * (width + maxPaddingX), firstPosY + height + maxPaddingY)
+                element.setPosition(firstPosX + (index - 5.5) * (width + maxPaddingX), firstPosY + height + maxPaddingY)
             }
         })
     }

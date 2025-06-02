@@ -41,6 +41,9 @@ export const loadAssets = {
       ["image", "credits_lu", "/menu/credits/credits_lu.png"],
       ["image", "credits_mai", "/menu/credits/credits_mai.png"],
       ["image", "credits_nano", "/menu/credits/credits_nano.png"],
+      ["image", "credits_rama", "/menu/credits/credits_rama.png"],
+      ["image", "credits_colo", "/menu/credits/credits_colo.png"],
+      ["image", "credits_juampi", "/menu/credits/credits_juampi.png"],
       ["image", "creditsTitle", "/menu/credits/creditsTitle.png"],
       // menu credits
       ["image", "creditsButton", "/menu/initial/creditsButton.png"],

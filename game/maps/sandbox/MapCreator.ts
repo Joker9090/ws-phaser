@@ -482,6 +482,7 @@ export default class MapCreator {
             if (
               this.scene.player?.touchingFeet(b as Phaser.Physics.Arcade.Sprite)
             ) {
+              this.scene.canRot = true
               this.scene.touch()
               if (!this.scene.sound.get('cameraFlip')?.isPlaying) {
                 this.scene.sound.play('cameraFlip', {

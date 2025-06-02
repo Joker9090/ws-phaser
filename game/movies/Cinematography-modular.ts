@@ -275,7 +275,7 @@ class CinematographyModular extends Phaser.Scene {
         break;
       case "postal2_planeta3":
         this.playingCine = new postalManager(this, "postal2Planeta3", 11, lifes);
-        this.nextLevel = 11;
+        this.nextLevel = 10;
 
         break;
       default:

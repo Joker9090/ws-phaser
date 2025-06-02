@@ -30,6 +30,10 @@ import p3Mapa4 from "./maps/planet3/Mapa11";
 import p3Map1 from "./maps/planet3/Map0";
 import p3Map4 from "./maps/planet3/Map3";
 import p3SubMap3 from "./maps/planet3/SubMap3";
+import p3Map2 from "./maps/planet3/Map1";
+import p3Map3 from "./maps/planet3/Map2";
+import p3SubMap1 from "./maps/planet3/SubMap1";
+import p3SubMap2 from "./maps/planet3/SubMap2";
 // OTRAS COSAS
 import Player from "./assets/Player";
 import UIClass from "./assets/UIClass";
@@ -79,6 +83,10 @@ export type PossibleMaps =
   | p3Map1
   | p3Map4
   | p3SubMap3
+  | p3Map2
+  | p3SubMap1
+  | p3SubMap2
+  | p3Map3;
 // Scene in class
 export const keyCodesAWSD = {
   w: Phaser.Input.Keyboard.KeyCodes.W,
@@ -313,6 +321,7 @@ class Game extends Phaser.Scene {
 
   changeGravity(float: boolean, time: number, speed?: 1 | 2 | 3) {
     if (this.player) {
+      console.log("changing gravity", float, this.physics.world.gravity.y);
       this.physics.world.gravity.y =
         this.physics.world.gravity.y <= 0 ? 1000 : -1000;
       this.moveCameraOffset(this.physics.world.gravity.y <= 0 ? "up" : "down");
@@ -992,7 +1001,7 @@ class Game extends Phaser.Scene {
       case 9:
         this.player = new Player(this, 0, 0, "character", 2);
 
-        this.map = new p3Mapa2(this, this.player!);
+        this.map = new p3Map2(this, this.player!);
         this.loopMusic = "planet3LoopMusic";
         if (this.masterManagerScene) {
           this.masterManagerScene.imagenesDesbloqueadas = [
@@ -1007,7 +1016,7 @@ class Game extends Phaser.Scene {
       case 10:
         this.player = new Player(this, 0, 0, "character", 2);
 
-        this.map = new p3Mapa3(this, this.player!);
+        this.map = new p3Map3(this, this.player!);
         this.loopMusic = "planet3LoopMusic";
         if (this.masterManagerScene) {
           this.masterManagerScene.imagenesDesbloqueadas = [
@@ -1072,8 +1081,22 @@ class Game extends Phaser.Scene {
         this.player = new Player(this, 0, 0, "character", 2);
 
         this.map = new p3SubMap3(this, this.player!);
-        this.loopMusic = "planet1LoopMusic";
+        this.loopMusic = "planet3LoopMusic";
         break;
+      case 30101:
+        this.player = new Player(this, 0, 0, "character", 2);
+
+        this.map = new p3SubMap1(this, this.player!);
+        this.loopMusic = "planet3LoopMusic";
+        break;
+      case 30201:
+        this.player = new Player(this, 0, 0, "character", 2);
+        this.player.setPlayerWithTank(true);
+        this.player.isFlying = true;
+        this.map = new p3SubMap2(this, this.player!);
+        this.loopMusic = "planet3LoopMusic";
+        break;
+          
       default:
         this.player = new Player(this, 0, 0, "character", 2);
 

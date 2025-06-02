@@ -20,6 +20,7 @@ export type FloorConfig = {
       yDistance: number;
       yVel: number
     }
+    startInverted?:boolean;
   }
   pos: {
     x: number;
@@ -126,6 +127,7 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
       if (invrt && body) {
         // body.setSize(height, width);
         this.setRotation(Math.PI);
+        this.flipY = true;
       } else {
         body.setSize(width + fix, height + fix);
       }
@@ -140,7 +142,16 @@ class Floor extends Phaser.Physics.Arcade.Sprite {
       if (config.animation.yAxis) {
         this.setVelocityY(config.animation.yAxis.yVel);
       }
-      
+      if( config.animation.startInverted) {
+        this.animState.x = 'reverse';
+        this.animState.y = 'reverse';
+        if (config.animation.xAxis) {
+          this.setVelocityX(-config.animation.xAxis.xVel);
+        }
+        if (config.animation.yAxis) {
+          this.setVelocityY(-config.animation.yAxis.yVel);
+        }
+      }
       // on scene update run animation with config
       scene.events.on("update", () => {
         this.animation(config)

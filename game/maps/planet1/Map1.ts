@@ -178,8 +178,15 @@ class Map1 extends MapCreator {
             group: this.firegroup,
             scale: { width: 0.5, height: 0.5 },
         }
-
+        const cloudConfig = {
+            type: "cloudgen",
+            quantity: 6,
+            clouds: ["nube1","nube2","nube3","nube4","nube5"],
+            group: this.cloudsGroup,
+            scale: { width: 0.5, height: 0.5 },
+        }
         const mapPlatforms = [
+            { ...cloudConfig, pos: { x: 0, y:  (this.cameraBounds.height + this.cameraBounds.y) - 800 } },
             {
                 ...baseLargePlatformsConf,
                 pos: { x: 0, y: (this.cameraBounds.height + this.cameraBounds.y) - 200 },

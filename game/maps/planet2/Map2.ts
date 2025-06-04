@@ -197,6 +197,13 @@ class Map3 extends MapCreator {
             
             // frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
         }
+        const cloudConfig = {
+            type: "cloudgen",
+            quantity: 6,
+            clouds: ["nube1","nube2","nube3","nube4","nube5"],
+            group: this.cloudsGroup,
+            scale: { width: 0.5, height: 0.5 },
+        }
         const subLvl1Conf: GamePlayDataType = {
             level: 20201,
             lifes: this.scene.lifes ? this.scene.lifes : 3,
@@ -207,6 +214,7 @@ class Map3 extends MapCreator {
             },
         }
         const mapPlatforms = [
+            { ...cloudConfig, pos: { x: 0, y:  (this.cameraBounds.height + this.cameraBounds.y) - 800 } },
             {...baseLargePlatformsConf, pos: { x: 0, y: (this.cameraBounds.height + this.cameraBounds.y) - 200 }, large: 10,group: this.floor},
             { ...baseCristalConf, pos: { x: 290, y:  (this.cameraBounds.height + this.cameraBounds.y) - 400 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
             { ...baseCristalConf, pos: { x: 290, y:  (this.cameraBounds.height + this.cameraBounds.y) - 600 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },

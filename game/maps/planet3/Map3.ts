@@ -193,10 +193,18 @@ class Map3 extends MapCreator {
           },
         }
 
+        const cloudConfig = {
+            type: "cloudgen",
+            quantity: 6,
+            clouds: ["nube1","nube2","nube3","nube4","nube5"],
+            group: this.cloudsGroup,
+            scale: { width: 0.5, height: 0.5 },
+        }
+
         const mapPlatforms = [
             // { ...basePlatformsConfig, pos: { x: 600, y: (this.cameraBounds.height + this.cameraBounds.y) - 400 }, rotate: true, group: this.gravityTile, colors: [colors.rotate], flipY: false },
             // { ...basePlatformsConfig, pos: { x: 600, y: (this.cameraBounds.height + this.cameraBounds.y) - 900 }, rotate: true, group: this.gravityTile, colors: [colors.rotate], flipY: true },
-
+            { ...cloudConfig, pos: { x: 0, y:  (this.cameraBounds.height + this.cameraBounds.y) - 800 } },
             {...baseLargePlatformsConf, pos: { x: 0, y: (this.cameraBounds.height + this.cameraBounds.y) - 200 },
                 large: 16,
                 group: this.floor

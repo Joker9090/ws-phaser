@@ -234,7 +234,15 @@ class Map1 extends MapCreator {
                 y: 400,
             },
         }
+        const cloudConfig = {
+            type: "cloudgen",
+            quantity: 6,
+            clouds: ["nube1","nube2","nube3","nube4","nube5"],
+            group: this.cloudsGroup,
+            scale: { width: 0.5, height: 0.5 },
+        }
         const mapPlatforms = [
+            { ...cloudConfig, pos: { x: 0, y:  (this.cameraBounds.height + this.cameraBounds.y) - 800 } },
             { ...basePlatformsConfig, pos: { x: 400, y:  (this.cameraBounds.height + this.cameraBounds.y) - 1500 } },
             { ...baseCristalConf, pos: { x: 600, y: (this.cameraBounds.height + this.cameraBounds.y) - 1650 }, group: this.coin, aura: 'auraTuto' },
             { ...baseCristalConf, pos: { x: 600, y: (this.cameraBounds.height + this.cameraBounds.y) - 1350 }, group: this.coin, aura: 'auraTuto' },

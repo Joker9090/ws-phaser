@@ -159,10 +159,18 @@ export default class Map3 extends MapCreator {
         auraColor:0x00feff,
       }
 
+      const cloudConfig = {
+        type: "cloudgen",
+        quantity: 6,
+        clouds: ["nube1","nube2","nube3","nube4","nube5"],
+        group: this.cloudsGroup,
+        scale: { width: 0.5, height: 0.5 },
+    }
       const mapFloor =  (this.cameraBounds.height + this.cameraBounds.y); 
       const mapLeft = this.cameraBounds.x;
   
       const mapPlatforms = [
+        { ...cloudConfig, pos: { x: 0, y:  (this.cameraBounds.height + this.cameraBounds.y) - 800 } },
         {
           ...baseLargePlatformsConf,
           pos: { x: mapLeft, y: mapFloor - 100 },

@@ -139,6 +139,7 @@ export default class MapCreator {
   movingFloorRot?: Phaser.Physics.Arcade.Group;
   flyingPiso?: Phaser.Physics.Arcade.Group;
   firegroup?: Phaser.Physics.Arcade.Group;
+  cloudsGroup?: Phaser.Physics.Arcade.Group;
   obstacle?: Phaser.Physics.Arcade.Group;
   obstacleFloor?: Phaser.Physics.Arcade.Group;
   invincibilityTimer?: Time.TimerEvent
@@ -217,6 +218,7 @@ export default class MapCreator {
     this.obstacle = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.obstacleFloor = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: false });
     this.firegroup = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
+    this.cloudsGroup= this.scene.physics.add.group({ allowGravity: false});
     this.portal = this.scene.physics.add.group({ allowGravity: false });
     this.coin = this.scene.physics.add.group({ allowGravity: false });
     this.invincible = this.scene.physics.add.group({ allowGravity: false, collideWorldBounds: true });
@@ -228,6 +230,7 @@ export default class MapCreator {
     this.scene.UICamera?.ignore(this.obstacle)
     this.scene.UICamera?.ignore(this.obstacleFloor)
     this.scene.UICamera?.ignore(this.firegroup)
+    this.scene.UICamera?.ignore(this.cloudsGroup)
     this.scene.UICamera?.ignore(this.portal)
     this.scene.UICamera?.ignore(this.coin)
     this.scene.UICamera?.ignore(this.invincible)

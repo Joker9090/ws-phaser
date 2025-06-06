@@ -51,7 +51,10 @@ export default function Factory(scene: Game, config: any, floorGroup: Phaser.Phy
       const shower: Fireball[] = [];
         for (let i = 0; i < rest.quantity*10; i++) {
           let newConfig = {...rest};
-          newConfig.pos ={x: rest.pos.x + (Math.random()* rest.quantity * 10), y: rest.pos.y};
+            newConfig.pos = {
+            x: rest.pos.x + (Math.random() * 300),
+            y: rest.pos.y
+            };
           newConfig.tween = { duration: 3000, delay: i * 200 * Math.random(),repeat: -1, y: "+=3000"};
           let fireball = new Fireball(scene, newConfig, rest.group);
           shower.push(fireball);

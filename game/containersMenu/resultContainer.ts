@@ -50,7 +50,7 @@ class resultContainer extends Phaser.GameObjects.Container {
         
         if(this.victory){
             scene.time.paused = true
-            this.collectedText = scene.add.text(0 - 60, 0 -130, `${this.collText} / ${this.coinCount + 1}`).setFontSize(45).setFontFamily('arcade').setDepth(3);
+            this.collectedText = scene.add.text(0 - 60, 0 -130, `${this.collText} / ${this.coinCount}`).setFontSize(45).setFontFamily('arcade').setDepth(3);
             this.resultAstro = scene.add.image(0, 0 -310, 'resultVictoryAstro').setDepth(1).setScale(0.7)
             this.modal = scene.add.image(0,0,"resultModal").setDepth(2).setScale(0.9)
             this.resultTitle = scene.add.image(0, 0 - 200, 'resultVictory').setScale(0.9).setDepth(3)

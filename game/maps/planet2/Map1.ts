@@ -164,7 +164,7 @@ class Map1 extends MapCreator {
             width: 100,
             height: 100,
             group: this.firegroup,
-            scale: { width: 0.5, height: 0.5 },
+            scale: { width: 0.71, height: 0.71 },
         }
         const otherSceneConf: GamePlayDataType = {
             level: 20101,

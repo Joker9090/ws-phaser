@@ -147,7 +147,7 @@ export default class SubMap2 extends MapCreator {
         width: 100,
         height: 100,
         group: this.firegroup,
-        scale: { width: 0.7, height: 0.7 },
+        scale: { width: 0.71, height: 0.71 },
         
         // frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
     }

@@ -177,8 +177,7 @@ class Map1 extends MapCreator {
             width: 100,
             height: 100,
             group: this.firegroup,
-            scale: { width: 0.7, height: 0.7 },
-            
+            scale: { width: 0.71, height: 0.71 },           
             // frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
         }
         const meteorshowerConf = {
@@ -189,7 +188,7 @@ class Map1 extends MapCreator {
             width: 100,
             height: 100,
             group: this.firegroup,
-            scale: { width: 0.5, height: 0.5 },
+            scale: { width: 0.71, height: 0.71 },
         }
         const subLvl1Conf: GamePlayDataType = {
             level: 30101,//TO DO change to correct

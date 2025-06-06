@@ -385,15 +385,6 @@ class Game extends Phaser.Scene {
     } else this.scene
   }
   checkNextScene() {
-    if (this.levelIs === 6) {
-        const multiScene = new MultiScene("MenuScene", undefined);
-        const scene = this.scene.add('MultiScene', multiScene, true);
-        this.scene.start("MultiScene").bringToTop("MultiScene");
-        console.log("before JP33", this.levelIs);
-        return
-      }
-        console.log("after JP33", this.levelIs);
-
     if (this.levelIs === 999) {
       const multiScene = new MultiScene("Game", {
         level: 0,
@@ -413,20 +404,14 @@ class Game extends Phaser.Scene {
       this.scene.start("MultiScene").bringToTop("MultiScene");
     }
     else if (this.map?.nextScene) {
-      if (this.levelIs === 6) {
-        const multiScene = new MultiScene("MenuScene", undefined);
-        const scene = this.scene.add('MultiScene', multiScene, true);
-        this.scene.start("MultiScene").bringToTop("MultiScene");
-      } else {
-        const multiScene = new MultiScene("CinematographyMod", {
-          keyname: this.map.nextScene,
-          lifes: 3,
-          loadKey: ["Postales", "Cinemato1", "Cinemato2"],
-        });
-        const scene = this.scene.add(this.map.nextScene, multiScene, true);
-        this.scene.start(this.map.nextScene).bringToTop(this.map.nextScene);
-        this.masterManagerScene?.stopMusic();
-      }
+      const multiScene = new MultiScene("CinematographyMod", {
+        keyname: this.map.nextScene,
+        lifes: 3,
+        loadKey: ["Postales", "Cinemato1", "Cinemato2"],
+      });
+      const scene = this.scene.add(this.map.nextScene, multiScene, true);
+      this.scene.start(this.map.nextScene).bringToTop(this.map.nextScene);
+      this.masterManagerScene?.stopMusic();
     }
     else if (this.levelIs !== 11) {
       const multiScene = new MultiScene("Game", {

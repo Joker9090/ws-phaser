@@ -424,11 +424,11 @@ export default class MapCreator {
     });
   }
 
-  createBgRow(x: number, y: number, textures: string[], assetWidth: number, scale: number, origin?: number) {
+  createBgRow(x: number, y: number, textures: string[], assetWidth: number, scale: number, origin?: number, xOffset: number = 0, yOffset: number = 0): Phaser.GameObjects.Image[] {
     const scaledWidth: number = assetWidth * scale;
     return Array(Math.ceil(this.worldSize.width / scaledWidth)).fill(0).map((_, index) => {
       const randomTexture = textures[Math.floor(Math.random() * textures.length)];
-      const image = this.scene.add.image(x + index * scaledWidth, y, randomTexture).setOrigin(0, 1).setScale(scale);
+      const image = this.scene.add.image(x + index * scaledWidth + xOffset, y + yOffset, randomTexture).setOrigin(0, 1).setScale(scale);
       if (origin || origin === 0) {
         image.setOrigin(origin);
       }

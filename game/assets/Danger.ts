@@ -110,6 +110,8 @@ class Danger extends Phaser.Physics.Arcade.Sprite {
         }
         if (config.particleSpriteSheet) {
             this.particleSprite = scene.add.sprite(config.pos.x, config.pos.y, config.particleSpriteSheet);
+            this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.particleSprite);
+            this.scene.UICamera?.ignore(this.particleSprite);
             this.particleSprite.setVisible(true);
             this.particleSprite.setDepth(11);
             if(this.config.color) this.particleSprite.setTint(this.config.color);

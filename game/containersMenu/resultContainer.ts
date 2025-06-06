@@ -67,7 +67,7 @@ class resultContainer extends Phaser.GameObjects.Container {
             const deaths = [this.death1,this.death2,this.death3]
 
             deaths.forEach((death, index) => {
-                if (index  < this.lifes) {
+                if (index < (3 - this.lifes)) {
                     death.setAlpha(1);
                 }
             });

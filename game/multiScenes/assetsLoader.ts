@@ -404,6 +404,20 @@ export const loadAssets = {
     assets: [
       // AUDIOS
       ["audio", "planet1LoopMusic", "/game/planeta2/loopMusic.mp3"],
+      //BACKGROUNDS
+      //FAR
+      //MIDDLE
+      ["image", "middleCombo_p2", "/game/planeta2/backgrounds/middle/middle-1.svg"],
+      ["image", "middleCombo2_p2", "/game/planeta2/backgrounds/middle/middle-2.svg"],
+      ["image", "middleCombo_v2_p2", "/game/planeta2/backgrounds/middle/middle-v2-1.svg"],
+      ["image", "middleCombo_v2_2_p2", "/game/planeta2/backgrounds/middle/middle-v2-2.svg"],
+      //FRONT
+      ["image", "frontCombo_p2", "/game/planeta2/backgrounds/front/front-combo.svg"],
+      ["image", "frontCombo2_p2", "/game/planeta2/backgrounds/front/front-combo-2.svg"],
+      ["image", "frontCombo3_p2", "/game/planeta2/backgrounds/front/front-combo-3.svg"],
+      ["image", "frontCombo4_p2", "/game/planeta2/backgrounds/front/front-combo-4.svg"],
+      ["image", "front_base_p2", "/game/planeta2/backgrounds/front/front.svg"],
+      ["image", "front_shadow_p2", "/game/planeta2/backgrounds/front/front-shadow.svg"],
       // SVGs
       [
         "svg",
@@ -483,6 +497,16 @@ export const loadAssets = {
   },
   GamePlay3: {
     assets: [
+      //BACKGROUNDS
+      //FAR
+      //MIDDLE
+      ["image", "middleCombo_p3", "/game/planeta3/backgrounds/middle/middle-combo.svg"],
+      ["image", "middleCombo2_p3", "/game/planeta3/backgrounds/middle/middle-combo2.svg"],
+      ["image", "middleCombo3_p3", "/game/planeta3/backgrounds/middle/middle-combo3.svg"],
+      ["image", "middleCombo4_p3", "/game/planeta3/backgrounds/middle/middle-combo4.svg"],
+      //FRONT
+      ["image", "front_base_p3", "/game/planeta3/backgrounds/front/front-base.svg"],
+      ["image", "front_shadow_p3", "/game/planeta3/backgrounds/front/front-shadow.svg"],
       // IMAGES
       ["image", "pSimple1p3", "/game/planeta3/pSimple1.png"],
       ["image", "pSimple2p3", "/game/planeta3/pSImple2.png"],
@@ -513,12 +537,12 @@ export const loadAssets = {
 
 
       //LARGE TILE
-      ["image", "fill_texture_p3","/game/planeta3/fill_texture.png"],
-      ["image", "fill_texture2_p3","/game/planeta3/fill_texture2.png"],
-      ["image", "fill_texture3_p3","/game/planeta3/fill_texture3.png"],
-      ["image", "platform_center_p3","/game/planeta3/platforms/platform_center.png"],
-      ["image", "platform_der_p3","/game/planeta3/platforms/platform_der.png"],
-      ["image", "platform_izq_p3","/game/planeta3/platforms/platform_izq.png"],
+      ["image", "fill_texture_p3","/game/planeta2/platforms/fill_texture.png"],
+      ["image", "fill_texture2_p3","/game/planeta2/platforms/fill_texture2.png"],
+      ["image", "fill_texture3_p3","/game/planeta2/platforms/fill_texture3.png"],
+      ["image", "platform_center_p3","/game/planeta2/platforms/platform_center.png"],
+      ["image", "platform_der_p3","/game/planeta2/platforms/platform_der.png"],
+      ["image", "platform_izq_p3","/game/planeta2/platforms/platform_izq.png"],
       [
         "spritesheet",
         "meteoritop3",

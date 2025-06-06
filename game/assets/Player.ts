@@ -334,7 +334,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   //TANK SMOKE
   activateTankAnimation() {
   if (!this.tankAnimSprite||this.isFlying===true) return;
-
+  this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.tankAnimSprite);
+  if (this.scene instanceof Game) this.scene.UICamera?.ignore(this.tankAnimSprite);
   /*let xF = this.x - 10;
     if (this.flipX) xF = this.x + 10;
     this.tankAnimSprite.setPosition(xF, this.y + 10);*/

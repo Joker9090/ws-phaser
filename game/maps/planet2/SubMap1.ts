@@ -20,12 +20,12 @@ class SubMap1 extends MapCreator {
         this.player.setPlayerWithTank(true);
 
         this.worldSize = {
-            width: 7400,
-            height: 2000,
+            width: 7800,
+            height: 2200,
           };
           this.cameraBounds = {
-            x: 0,
-            y: 100,
+            x: 200,
+            y: 200,
             width: 7400,
             height: 1800,
           };
@@ -63,38 +63,43 @@ class SubMap1 extends MapCreator {
             ,
           },
         ]
-        const { width, height } = this.ratioReference;
-        const downScaledMiddleWidth = width * 0.7;
-        const downScaledFrontWidth = width * 0.5;
 
-        const bgContainerArr = [
+        const { width, height } = this.ratioReference;
+        const { width: farWidth, height: farHeight } = this.farBackgroundReference
+        const downScaledMiddleWidth = farWidth * 0.5;
+
+        this.backgroundsBack = [
           this.scene.add.image(0, 0, "p1backgroundNoche").setOrigin(0.5),
           this.scene.add.image(0, 0, "p1Stars").setOrigin(0.5),
-          this.scene.add.image(0, 0, "p1capaOscuridad").setOrigin(0.5),
+          this.scene.add.image(0, 300, "p1capaOscuridad").setOrigin(0.5),
         ]
-          const bgContainer = this.scene.add.container(0, 0, bgContainerArr);
-          this.scene.UICamera?.ignore(bgContainer);
-          //const newMainCamera = this.scene.cameras.add(0, 0, window.innerWidth, window.innerHeight, true, "mainCamera");
-          // this.scene.children.sendToBack(bgContainer);
-          this.scene.cameras.main.ignore(bgContainer);
-
-        /*this.backgroundsMiddle = [
-            this.scene.add.image(-this.startingPoint.x, this.cameraBounds.height + 100, "middleCombo").setOrigin(0, 1).setScale(0.7),
-            this.scene.add.image(-this.startingPoint.x + downScaledMiddleWidth, this.cameraBounds.height + 100, "middleCombo2").setOrigin(0, 1).setScale(0.7),
-            this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 2), this.cameraBounds.height + 100, "middleCombo3").setOrigin(0, 1).setScale(0.7),
-            this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 3), this.cameraBounds.height + 100, "middleCombo4").setOrigin(0, 1).setScale(0.7),
-            this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 4), this.cameraBounds.height + 100, "middleCombo2").setOrigin(0, 1).setScale(0.7),
-            this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 5), this.cameraBounds.height + 100, "middleCombo2").setOrigin(0, 1).setScale(0.7),
-        ]*/
-       this.backgroundsMiddle = this.createBgRow(100, this.cameraBounds.height+100, ["frontground1p1", "frontground2p1", "frontground1p1", "frontground2p1"], width, 0.7),
+        
+        this.backgroundsMiddle = [
+          this.scene.add.image(0, this.cameraBounds.height+200, "middleCombo_v2_p2").setOrigin(0, 1).setScale(0.5),
+          this.scene.add.image(0 + downScaledMiddleWidth, this.cameraBounds.height+200, "middleCombo_v2_p2").setOrigin(0, 1).setScale(0.5).setFlipX(true),
+          this.scene.add.image(0 + (downScaledMiddleWidth * 2), this.cameraBounds.height+200, "middleCombo_v2_p2").setOrigin(0, 1).setScale(0.5),
+          this.scene.add.image(0 + (downScaledMiddleWidth * 3), this.cameraBounds.height+200, "middleCombo_v2_p2").setOrigin(0, 1).setScale(0.5).setFlipX(true),
+          this.scene.add.image(0 + (downScaledMiddleWidth * 4), this.cameraBounds.height+200, "middleCombo_v2_p2").setOrigin(0, 1).setScale(0.5),
+          this.scene.add.image(0 + (downScaledMiddleWidth * 5), this.cameraBounds.height+200, "middleCombo_v2_p2").setOrigin(0, 1).setScale(0.5).setFlipX(true),
+          this.scene.add.image(0 + (downScaledMiddleWidth * 6), this.cameraBounds.height+200, "middleCombo_v2_p2").setOrigin(0, 1).setScale(0.5),
+          this.scene.add.image(0 + (downScaledMiddleWidth * 7), this.cameraBounds.height+200, "middleCombo_v2_p2").setOrigin(0, 1).setScale(0.5).setFlipX(true),
+          this.scene.add.image(0 + (downScaledMiddleWidth * 8), this.cameraBounds.height+200, "middleCombo_v2_p2").setOrigin(0, 1).setScale(0.5),
+          this.scene.add.image(0 + (downScaledMiddleWidth * 5), this.cameraBounds.height+200, "middleCombo_v2_p2").setOrigin(0, 1).setScale(0.5).setFlipX(true),
+          this.scene.add.image(0 + (downScaledMiddleWidth * 9), this.cameraBounds.height+200, "middleCombo_v2_p2").setOrigin(0, 1).setScale(0.5),
+          this.scene.add.image(0 + (downScaledMiddleWidth * 10), this.cameraBounds.height+200, "middleCombo_v2_p2").setOrigin(0, 1).setScale(0.5).setFlipX(true),
+          ...this.createBgRow(200, this.cameraBounds.height+200, ["frontCombo_p2", "frontCombo2_p2", "frontCombo3_p2", "frontCombo4_p2"], width, 0.7, undefined, 0, 50),
+        ]
 
         this.backgroundsFront = [
-            this.scene.add.image(this.startingPoint.x + this.backSize.width - 15, this.cameraBounds.height + 100, "montaña1p1"),
-            this.scene.add.image(this.startingPoint.x - 70, this.cameraBounds.height + 100, "montaña2p1"),
-            this.scene.add.image(1200, this.cameraBounds.height + 100, "huesoFrontp1")
-        ]
-
+          ...this.createBgRow(200, this.cameraBounds.height+200, ["front_shadow_p2"], width, 0.7),
+          ...this.createBgRow(200, this.cameraBounds.height+200, ["front_base_p2"], width, 0.7),
+        ],
+        
         this.createBackgrounds(this.backgroundsBack, this.backgroundsMiddle, this.backgroundsFront);
+
+        const bgContainer = this.scene.add.container(0, 0, this.backgroundsBack);
+        this.scene.UICamera?.ignore(bgContainer);
+        this.scene.cameras.main.ignore(bgContainer);
 
         this.scene.UICamera?.ignore(this.mapContainer);
         this.scene.UICamera?.ignore(this.frontContainer);

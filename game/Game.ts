@@ -902,6 +902,12 @@ class Game extends Phaser.Scene {
 
         this.map = new p1Map0(this, this.player!);
         this.loopMusic = "planet0LoopMusic";
+                if (this.masterManagerScene) {
+          this.masterManagerScene.imagenesDesbloqueadas = [
+            "planeta1_figu1",
+            "planeta1_figu2",
+          ];
+        }
         break;
       case 1:
         this.player = new Player(this, 0, 0, "character", 2);

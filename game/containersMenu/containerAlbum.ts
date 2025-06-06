@@ -136,13 +136,15 @@ class containerAlbum extends Phaser.GameObjects.Container {
         this.figuritas.forEach((figurita) => figurita.destroy());
         this.figuritas = [];
         let posX = this.width / 3;
+        const { width } = this.scene.scale;
+        const scale = width / 1920;
         const showFiguritas = this.imagenes.slice(this.start, this.end);
         showFiguritas.forEach((child, index) => {
             const isUnlocked = this.masterManager.imagenesDesbloqueadas.includes(child);
             const figurita = new Figuritas(this.scene, posX * (index + 1), this.height / 1.7, child, isUnlocked).setScale(0).setAlpha(0.8);
             this.scene.tweens.add({
             targets: figurita,
-            scale: 0.8,
+            scale: scale,
             duration: 500,
             delay: 400 * index,
             ease: 'Bounce.easeOut'

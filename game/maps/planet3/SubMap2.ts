@@ -73,10 +73,10 @@ export default class SubMap2 extends MapCreator {
     this.backgroundsBack = [
       // this.scene.add.image((this.scene.cameras.getCamera("backgroundCamera")?.width ?? 0) / 2, (this.scene.cameras.getCamera("backgroundCamera")?.height ?? 0) / 2, "backComboSub").setOrigin(0.5).setScale(0.6),
     //   this.scene.add.image(0, 0, "stars").setOrigin(0.5),
-    //   this.scene.add.image(0, 300, "curvedVector").setOrigin(0.5),
+    //   this.scene.add.image(0, 0, "curvedVector").setOrigin(0.5),
     ]
     
-    this.backgroundsMiddle = this.createBgRow(200, this.worldSize.height/2, ["backComboSub2"], width, 0.8, 0.5),
+    this.backgroundsMiddle = this.createBgRow(200, this.worldSize.height/2, ["backComboSub"], width, 1.3, 0.5),
     
     this.backgroundsFront = [
         ...this.createBgRow(200, this.cameraBounds.height+200, ["front_bottom", "front_bottom2", "front_bottom3", "front_bottom4"], width, 1.2),

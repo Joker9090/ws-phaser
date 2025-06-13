@@ -90,7 +90,7 @@ class ContainerCredits extends Phaser.GameObjects.Container {
             ease: 'ease',
             delay: 1000
         })
-        this.backButton.setPosition(this.width/2 - this.backButton.width, this.height/2 - this.backButton.height)
+        this.backButton.setPosition(this.width / 2, -this.height / 2 + this.backButton.height / 2 + 32)
         this.backButton.setInteractive().on('pointerdown', () => {
             this.backButton.setTexture('backButtonPressed')
         })

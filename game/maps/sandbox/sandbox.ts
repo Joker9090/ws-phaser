@@ -109,7 +109,7 @@ class Sandbox extends MapCreator {
     this.backgroundsBack = [
       this.scene.add.image(0, 0, "gradient").setOrigin(0.5),
       this.scene.add.image(0, 0, "stars").setOrigin(0.5),
-      this.scene.add.image(0, 300, "curvedVector").setOrigin(0.5),
+      this.scene.add.image(0, 0, "curvedVector").setOrigin(0.5),
     ]
     
     this.backgroundsMiddle = this.createBgRow(100, this.cameraBounds.height+100, ["middleCombo", "middleCombo2", "middleCombo3", "middleCombo4"], width, 0.7),

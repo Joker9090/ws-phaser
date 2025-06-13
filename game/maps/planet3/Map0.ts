@@ -50,6 +50,7 @@ class Map0 extends MapCreator {
           };
 
           this.UIItemToGrab= "uiItemp3";
+          this.UIItemScale= 0.3;
           this.nextScene= "postal1_planeta3";
     }
 
@@ -77,7 +78,8 @@ class Map0 extends MapCreator {
         this.backgroundsBack = [
             this.scene.add.image(0, 0, "p3gradient").setOrigin(0.5),
             this.scene.add.image(0, 0, "p3wave").setOrigin(0.5),
-            this.scene.add.image(0, 300, "p3stars").setOrigin(0.5),
+            this.scene.add.image(0, 0, "p3stars").setOrigin(0.5)
+,
         ]
         
        this.backgroundsMiddle = [
@@ -324,7 +326,7 @@ class Map0 extends MapCreator {
                 group: this.floor
             },
             { ...meteorshowerConf, pos: { x: 8950, y:  0 },quantity: 20,  rotated: false },
-            { type: "finalPortal", pos: { x: 9750, y: (this.cameraBounds.height + this.cameraBounds.y) - 500  }, texture: "cuevap3", width: 100, height: 100, group: this.portal }
+            { type: "finalPortal", pos: { x: 9700, y: (this.cameraBounds.height + this.cameraBounds.y) - 515  }, texture: "cuevap3", width: 100, height: 100, group: this.portal }
 
         ]
         this.createPlatforms(mapPlatforms)

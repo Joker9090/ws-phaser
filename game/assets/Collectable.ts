@@ -91,7 +91,7 @@ class Collectable extends Phaser.Physics.Arcade.Sprite {
       this.aura = scene.add.sprite(config.pos.x, config.pos.y, config.aura).setScale(0.6);
       this.scene.UICamera?.ignore(this.aura)
       if (config.auraColor) {
-        this.aura.setTint(config.auraColor);
+        this.aura.setTint(config.texture === 'shield' ? 0x6DA574 : config.auraColor);
       }
     }
     

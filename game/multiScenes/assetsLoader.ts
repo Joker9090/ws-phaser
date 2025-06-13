@@ -522,7 +522,7 @@ export const loadAssets = {
       ["image", "montaña2p3", "/game/planeta3/montaña2p3.png"],
       ["image", "montaña3p3", "/game/planeta3/montaña3p3.png"], 
       ["image", "uiItemp3", "/game/planeta3/uiItemP3.png"], 
-      ["image", "plantap3", "/game/planeta3/plantaP3.png"], 
+      ["image", "plantap3", "/game/planeta3/bubble.svg"], 
       ["image", "plantaVaciap3", "/game/planeta3/plantaVaciaP3.png"], 
       ["image", "brilloPlantap3", "/game/planeta3/brilloPlantaP3.png"], 
       ["image", "burbujap3", "/game/planeta3/burbuja.png"], 

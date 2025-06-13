@@ -277,8 +277,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       if (!this.tankAnimSprite)return;
       this.tankAnimSprite.setVisible(true);
       this.tankAnimSprite.anims.play("gravityActiveAnim");
-    
+
       this.tankAnimSprite.on("animationupdate", () => {
+      if (this.tankAnimSprite) {
+        this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.tankAnimSprite);
+        if (this.scene instanceof Game) this.scene.UICamera?.ignore(this.tankAnimSprite);
+      }
       let xF = this.x - 17;
       if (this.flipX) xF = this.x + 17;
         this.tankAnimSprite?.setPosition(xF, this.y + 100);
@@ -297,7 +301,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.invincible = value
     if(this.invincible==true){
       console.log("[Player] Invincible")
-      this.auraAnimSprite?.setVisible(true).setDepth(1000);
+      this.auraAnimSprite?.setVisible(true).setDepth(this.depth + 1);
+      if (this.auraAnimSprite) {
+        this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.auraAnimSprite);
+        if (this.scene instanceof Game) this.scene.UICamera?.ignore(this.auraAnimSprite);
+      }
       this.auraAnimSprite?.anims.play("auraAnim");
       this.auraAnimSprite?.on("animationupdate", () => {
         this.auraAnimSprite?.setPosition(this.x, this.y);

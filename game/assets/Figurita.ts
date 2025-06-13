@@ -2,8 +2,8 @@ class Figuritas extends Phaser.GameObjects.Container {
   postal:string = "";
   modalBaseScale: number = (this.scene.scale.width / 1920);
   postalBaseScale: number = (this.scene.scale.width / 1920);
-  modalScaleFactor: number = 0.8;
-  postalScaleFactor: number = 0.15;
+  modalScaleFactor: number = 0.7;
+  postalScaleFactor: number = 0.12;
   postalPreviewScaleFactor: number = 0.3;
   modalZoomFactor: number = 1.3;
   postalZoomFactor: number = 1.2;

@@ -69,7 +69,7 @@ class containerAlbum extends Phaser.GameObjects.Container {
 
 
         
-        const nextButton = this.scene.add.image(this.width - 100, this.height / 1.7, "backButton").setInteractive().setScale(0.8);
+        const nextButton = this.scene.add.image(this.width - 100, this.height / 1.7, "backButton").setInteractive().setScale(0.8).setVisible(this.end < this.imagenes.length);
         nextButton.on("pointerup", () => {
             if (this.end < this.imagenes.length) {
                 this.start += this.step;
@@ -80,6 +80,8 @@ class containerAlbum extends Phaser.GameObjects.Container {
                 this.updateElements();
                 nextButton.setTexture('backButton')
             }
+            nextButton.setVisible(this.end < this.imagenes.length);
+            prevButton.setVisible(this.start > 0);
         });
         nextButton.setInteractive().on('pointerdown', () => {
             nextButton.setTexture('backButtonPressed')
@@ -94,7 +96,7 @@ class containerAlbum extends Phaser.GameObjects.Container {
 
 
 
-        const prevButton = this.scene.add.image(100, this.height / 1.7, "playBackButton").setInteractive().setScale(0.8);
+        const prevButton = this.scene.add.image(100, this.height / 1.7, "playBackButton").setInteractive().setScale(0.8).setVisible(this.start > 0);
         prevButton.on("pointerup", () => {
             if (this.start > 0) {
                 this.start -= this.step;
@@ -105,6 +107,8 @@ class containerAlbum extends Phaser.GameObjects.Container {
                 this.updateElements();
                 prevButton.setTexture('playBackButton')
             }
+            nextButton.setVisible(this.end < this.imagenes.length);
+            prevButton.setVisible(this.start > 0);
         });
         prevButton.setInteractive().on('pointerdown', () => {
             prevButton.setTexture('playBackButtonPressed')

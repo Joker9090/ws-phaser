@@ -50,8 +50,9 @@ class Map1 extends MapCreator {
             y: this.worldSize.height - 2400, //800
           };
 
-          this.UIItemToGrab= "uiItemp3";
-          this.nextScene= "postal2_planeta3";
+        this.UIItemToGrab= "uiItemp3";
+        this.UIItemScale= 0.3;
+        this.nextScene= "postal2_planeta3";
     }
 
     createMap(data: { level: number; lifes: number }) {
@@ -78,7 +79,8 @@ class Map1 extends MapCreator {
         this.backgroundsBack = [
             this.scene.add.image(0, 0, "p3gradient").setOrigin(0.5),
             this.scene.add.image(0, 0, "p3wave").setOrigin(0.5),
-            this.scene.add.image(0, 300, "p3stars").setOrigin(0.5),
+            this.scene.add.image(0, 0, "p3stars").setOrigin(0.5)
+,
         ]
         
        this.backgroundsMiddle = [

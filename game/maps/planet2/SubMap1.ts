@@ -20,13 +20,13 @@ class SubMap1 extends MapCreator {
         this.player.setPlayerWithTank(true);
 
         this.worldSize = {
-            width: 7800,
+            width: 8200,
             height: 2200,
           };
           this.cameraBounds = {
             x: 200,
             y: 200,
-            width: 7400,
+            width: 7800,
             height: 1800,
           };
           this.scene.physics.world.setBounds(
@@ -43,7 +43,7 @@ class SubMap1 extends MapCreator {
           );
       
           this.startingPoint = {
-            x: 300,
+            x: 350,
             y: 800,
           };
           this.UIItemToGrab="comida";
@@ -71,7 +71,8 @@ class SubMap1 extends MapCreator {
         this.backgroundsBack = [
           this.scene.add.image(0, 0, "p1backgroundNoche").setOrigin(0.5),
           this.scene.add.image(0, 0, "p1Stars").setOrigin(0.5),
-          this.scene.add.image(0, 300, "p1capaOscuridad").setOrigin(0.5),
+          this.scene.add.image(0, 0, "p1capaOscuridad").setOrigin(0.5),
+
         ]
         
         this.backgroundsMiddle = [
@@ -176,54 +177,54 @@ class SubMap1 extends MapCreator {
         }
 
         const mapPlatforms = [
-            { ...basePlatformsConfig, pos: { x: 300, y:  this.worldSize.height - 600 } },
+            { ...basePlatformsConfig, pos: { x: 350, y:  (this.cameraBounds.height + this.cameraBounds.y) - 600 } },
 
-            { ...basePlatformsConfig, pos: { x: 700, y: this.worldSize.height - 900 }, colors: [colors.falling], group: this.fallingTile },
-            { ...baseCristalConf, pos: { x: 700, y: this.worldSize.height - 1000 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
+            { ...basePlatformsConfig, pos: { x: 700, y: (this.cameraBounds.height + this.cameraBounds.y) - 900 }, colors: [colors.falling], group: this.fallingTile },
+            { ...baseCristalConf, pos: { x: 700, y: (this.cameraBounds.height + this.cameraBounds.y) - 1000 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
 
-            { ...basePlatformsConfig, pos: { x: 1100, y: this.worldSize.height - 900 }, colors: [colors.falling], group: this.fallingTile },
-            { ...baseCristalConf, pos: { x: 1100, y: this.worldSize.height - 1000 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
+            { ...basePlatformsConfig, pos: { x: 1100, y: (this.cameraBounds.height + this.cameraBounds.y) - 900 }, colors: [colors.falling], group: this.fallingTile },
+            { ...baseCristalConf, pos: { x: 1100, y: (this.cameraBounds.height + this.cameraBounds.y) - 1000 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
 
-            { ...basePlatformsConfig, pos: { x: 1500, y: this.worldSize.height - 900 }, colors: [colors.falling], group: this.fallingTile },
-            { ...baseCristalConf, pos: { x: 1500, y: this.worldSize.height - 1000 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
+            { ...basePlatformsConfig, pos: { x: 1500, y: (this.cameraBounds.height + this.cameraBounds.y) - 900 }, colors: [colors.falling], group: this.fallingTile },
+            { ...baseCristalConf, pos: { x: 1500, y: (this.cameraBounds.height + this.cameraBounds.y) - 1000 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
 
           
-            { ...basePlatformsConfig, pos: { x: 700, y:  this.worldSize.height - 300 } },
-            { ...basePlatformsConfig, pos: { x: 1100, y:  this.worldSize.height - 300 } },
-            { ...basePlatformsConfig, pos: { x: 1500, y:  this.worldSize.height - 300 } },
+            { ...basePlatformsConfig, pos: { x: 700, y:  (this.cameraBounds.height + this.cameraBounds.y) - 300 } },
+            { ...basePlatformsConfig, pos: { x: 1100, y:  (this.cameraBounds.height + this.cameraBounds.y) - 300 } },
+            { ...basePlatformsConfig, pos: { x: 1500, y:  (this.cameraBounds.height + this.cameraBounds.y) - 300 } },
 
             {
                 ...baseLargePlatformsConf,
-                pos: { x: 2000, y: this.worldSize.height - 400 },
+                pos: { x: 2000, y: (this.cameraBounds.height + this.cameraBounds.y) - 400 },
                 large: 15,
                 group: this.floor,
                 withTextureToAbove: false,
             },
-            { ...baseDangerConf, pos: { x: 2300, y: this.worldSize.height - 450 }, width: 170, height: 170, patrol:{
+            { ...baseDangerConf, pos: { x: 2300, y: (this.cameraBounds.height + this.cameraBounds.y) - 450 }, width: 170, height: 170, patrol:{
                 patrolType: "LinealY",
                 distance: 300,
                 speed: 200,
                 attackInterval: 0,
               }
             },
-            { ...baseCristalConf, pos: { x: 2450, y: this.worldSize.height - 500 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
-            { ...baseDangerConf, pos: { x: 2600, y: this.worldSize.height - 450 }, width: 170, height: 170, patrol:{
+            { ...baseCristalConf, pos: { x: 2450, y: (this.cameraBounds.height + this.cameraBounds.y) - 500 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
+            { ...baseDangerConf, pos: { x: 2600, y: (this.cameraBounds.height + this.cameraBounds.y) - 450 }, width: 170, height: 170, patrol:{
                 patrolType: "LinealY",
                 distance: 300,
                 speed: 230,
                 attackInterval: 0,
               }
             },
-            { ...baseCristalConf, pos: { x: 2750, y: this.worldSize.height - 500 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
-            { ...baseDangerConf, pos: { x: 2900, y: this.worldSize.height - 450 }, width: 170, height: 170, patrol:{
+            { ...baseCristalConf, pos: { x: 2750, y: (this.cameraBounds.height + this.cameraBounds.y) - 500 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
+            { ...baseDangerConf, pos: { x: 2900, y: (this.cameraBounds.height + this.cameraBounds.y) - 450 }, width: 170, height: 170, patrol:{
                 patrolType: "LinealY",
                 distance: 300,
                 speed: 260,
                 attackInterval: 0,
               }
             },
-            { ...baseCristalConf, pos: { x: 3050, y: this.worldSize.height - 500 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
-            { ...baseDangerConf, pos: { x: 3200, y: this.worldSize.height - 450 }, width: 170, height: 170, patrol:{
+            { ...baseCristalConf, pos: { x: 3050, y: (this.cameraBounds.height + this.cameraBounds.y) - 500 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
+            { ...baseDangerConf, pos: { x: 3200, y: (this.cameraBounds.height + this.cameraBounds.y) - 450 }, width: 170, height: 170, patrol:{
                 patrolType: "LinealY",
                 distance: 300,
                 speed: 290,
@@ -231,42 +232,50 @@ class SubMap1 extends MapCreator {
               }
             },
             {
-                ...baseLargePlatformsConf,
-                pos: { x: 2150, y: this.worldSize.height - 800 },
-                large: 12,
-                group: this.floor,
-                withTextureToAbove: false,
+              ...baseLargePlatformsConf,
+              pos: { x: 2150, y: (this.cameraBounds.height + this.cameraBounds.y) - 900 },
+              large: 12,
+              group: this.floor,
+              withTextureToAbove: false,
             },
 
-            { ...baseFireballConf, pos: { x: 3700, y: 0 }, tween: { duration: 2000, repeat: -1, y: "+=2000", yoyo: false  }, rotated: false },
-            { ...baseFireballConf, pos: { x: 4000, y: 0 }, tween: { duration: 1500, repeat: -1, y: "+=2000", yoyo: false  }, rotated: false },
+            { ...baseFireballConf, pos: { x: 3650, y: 0 }, tween: { duration: 3000, repeat: -1, y: "+=2000", yoyo: false  }, rotated: false },
+            {
+              ...basePlatformsConfig, pos: { x: 3850, y: (this.cameraBounds.height + this.cameraBounds.y) - 700 }, animation: {
+                  yAxis: {
+                      yDistance: 400,
+                      yVel: 400
+                  }
+              }
+            },
+            { ...baseFireballConf, pos: { x: 4050, y: 0 }, tween: { duration: 3000, repeat: -1, y: "+=2000", yoyo: false  }, rotated: false },
 
             {
                 ...baseLargePlatformsConf,
-                pos: { x: 4300, y: this.worldSize.height - 400 },
+                pos: { x: 4300, y: (this.cameraBounds.height + this.cameraBounds.y) - 400 },
                 large: 12,
                 group: this.floor,
                 withTextureToAbove: false,
             },
-            { ...baseDangerConf, pos: { x: 4500, y: this.worldSize.height - 450 }, width: 170, height: 170, patrol:{
+            { ...baseDangerConf, pos: { x: 4500, y: (this.cameraBounds.height + this.cameraBounds.y) - 450 }, width: 170, height: 170, patrol:{
                 patrolType: "LinealY",
                 distance: 350,
                 speed: 200,
                 attackInterval: 0,
               }
             },
-            { ...baseDangerConf, pos: { x: 4600, y: this.worldSize.height - 450 }, width: 170, height: 170, patrol:{
+            { ...baseDangerConf, pos: { x: 4600, y: (this.cameraBounds.height + this.cameraBounds.y) - 450 }, width: 170, height: 170, patrol:{
                 patrolType: "LinealX",
                 distance: 400,
                 speed: 100,
                 attackInterval: 0,
               }
             },
-            { ...baseCristalConf, pos: { x: 4800, y: this.worldSize.height - 800 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
-            { ...baseCristalConf, pos: { x: 4900, y: this.worldSize.height - 800 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
-            { ...baseCristalConf, pos: { x: 5000, y: this.worldSize.height - 800 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
+            // { ...baseCristalConf, pos: { x: 4800, y: (this.cameraBounds.height + this.cameraBounds.y) - 800 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
+            { ...baseCristalConf, pos: { x: 4900, y: (this.cameraBounds.height + this.cameraBounds.y) - 750 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
+            // { ...baseCristalConf, pos: { x: 5000, y: (this.cameraBounds.height + this.cameraBounds.y) - 800 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
 
-            { ...baseDangerConf, pos: { x: 5200, y: this.worldSize.height - 450 }, width: 170, height: 170, patrol:{
+            { ...baseDangerConf, pos: { x: 5200, y: (this.cameraBounds.height + this.cameraBounds.y) - 450 }, width: 170, height: 170, patrol:{
                 patrolType: "LinealY",
                 distance: 350,
                 speed: 200,
@@ -275,24 +284,40 @@ class SubMap1 extends MapCreator {
             },
             {
                 ...baseLargePlatformsConf,
-                pos: { x: 4400, y: this.worldSize.height - 900 },
+                pos: { x: 4400, y: (this.cameraBounds.height + this.cameraBounds.y) - 900 },
                 large: 10,
                 group: this.floor,
                 withTextureToAbove: false,
             },
+            {
+              ...basePlatformsConfig, pos: { x: 5800, y: (this.cameraBounds.height + this.cameraBounds.y) - 900 }, animation: {
+                  yAxis: {
+                      yDistance: 600,
+                      yVel: 400
+                  }
+              }
+            },
 
-            { ...basePlatformsConfig, pos: { x: 5800, y: this.worldSize.height - 1100 }, colors: [colors.falling], group: this.fallingTile },
-            { ...basePlatformsConfig, pos: { x: 6100, y: this.worldSize.height - 1100 }, colors: [colors.falling], group: this.fallingTile },
-            { ...basePlatformsConfig, pos: { x: 6400, y: this.worldSize.height - 1100 }, colors: [colors.falling], group: this.fallingTile },
-
+            // { ...basePlatformsConfig, pos: { x: 5800, y: (this.cameraBounds.height + this.cameraBounds.y) - 1100 }, colors: [colors.falling], group: this.fallingTile },
+            { ...basePlatformsConfig, pos: { x: 6100, y: (this.cameraBounds.height + this.cameraBounds.y) - 1200 }, colors: [colors.falling], group: this.fallingTile },
+            { ...basePlatformsConfig, pos: { x: 6400, y: (this.cameraBounds.height + this.cameraBounds.y) - 1100 }, colors: [colors.falling], group: this.fallingTile },
+            { ...basePlatformsConfig, pos: { x: 6700, y: (this.cameraBounds.height + this.cameraBounds.y) - 1000 }, colors: [colors.falling], group: this.fallingTile },
+            {
+              ...basePlatformsConfig, pos: { x: 7000, y: (this.cameraBounds.height + this.cameraBounds.y) - 900 }, animation: {
+                  yAxis: {
+                      yDistance: 600,
+                      yVel: 400
+                  }
+              }
+            },
             {
                 ...baseLargePlatformsConf,
-                pos: { x: 6850, y: this.worldSize.height - 1100 },
+                pos: { x: 7400, y: (this.cameraBounds.height + this.cameraBounds.y) - 1100 },
                 large: 5,
                 group: this.floor,
                 withTextureToAbove: false,
             },
-            { type: "subPortal",  x: 7100, y: this.worldSize.height - 1200, version: 1, sameScene: false, group: this.teleport, otherSceneConf: otherSceneConf },
+            { type: "subPortal",  x: 7700, y: (this.cameraBounds.height + this.cameraBounds.y) - 1250, version: 1, sameScene: false, group: this.teleport, otherSceneConf: otherSceneConf },
 
         ]
         this.createPlatforms(mapPlatforms)

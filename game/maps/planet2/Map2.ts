@@ -80,7 +80,8 @@ class Map3 extends MapCreator {
         this.backgroundsBack = [
           this.scene.add.image(0, 0, "p1backgroundNoche").setOrigin(0.5),
           this.scene.add.image(0, 0, "p1Stars").setOrigin(0.5),
-          this.scene.add.image(0, 300, "p1capaOscuridad").setOrigin(0.5),
+          this.scene.add.image(0, 0, "p1capaOscuridad").setOrigin(0.5),
+
         ]
         
         this.backgroundsMiddle = [

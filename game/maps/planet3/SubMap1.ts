@@ -51,6 +51,8 @@ class Map1 extends MapCreator {
           };
 
           this.UIItemToGrab= "uiItemp3";
+          this.UIItemScale= 0.3;
+
     }
 
     createMap(data: { level: number; lifes: number }) {
@@ -77,7 +79,8 @@ class Map1 extends MapCreator {
         this.backgroundsBack = [
             this.scene.add.image(0, 0, "p3gradient").setOrigin(0.5),
             this.scene.add.image(0, 0, "p3wave").setOrigin(0.5),
-            this.scene.add.image(0, 300, "p3stars").setOrigin(0.5),
+            this.scene.add.image(0, 0, "p3stars").setOrigin(0.5)
+,
         ]
         
         this.backgroundsMiddle = [

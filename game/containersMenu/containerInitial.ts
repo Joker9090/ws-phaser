@@ -66,7 +66,7 @@ class containerInitial extends Phaser.GameObjects.Container {
         })
         this.creditsButton = scene.add.image(0, 0, "creditsButton")
         const finalYCredits = 330
-        this.creditsButton.setPosition( -this.creditsButton.width/2 - 40, this.height/2 + 300)
+        this.creditsButton.setPosition(window.innerWidth <= 1024 ? -this.creditsButton.width/2 + 80 : -this.creditsButton.width/2 - 40, this.height/2 + 300)
         this.scene.tweens.add({
             targets: this.creditsButton,
             y: finalYCredits,
@@ -94,7 +94,7 @@ class containerInitial extends Phaser.GameObjects.Container {
         this.creditsButton.on('pointerdown', () => {
             this.creditsButton.setTexture('creditsButtonPressed')
         })
-        this.albumButton = scene.add.image(0, 0, "albumButton")
+        this.albumButton = scene.add.image(0, 0, "albumButton").setVisible(window.innerWidth > 1024);
         this.albumButton.setPosition(this.albumButton.width/2 + 40, this.height/2  + 300)
         this.scene.tweens.add({
             targets: this.albumButton,
@@ -194,6 +194,11 @@ class containerInitial extends Phaser.GameObjects.Container {
             this.masterManager.playSound('buttonSound', false)
             this.settingsButton.setTexture('settingsButtonHover')
         })
+
+        // TO DO: SETTINGS BUTTON DEPRECATED
+        this.settingsButton.setVisible(false)
+        this.settingsButton.setInteractive(false);
+
         this.scene.input.keyboard?.on('keydown-ESC', () => {
             console.log(this.settingsVisible, "visible from menu")
             if(!this.scene.containerAlbum?.visible && !this.scene.containerCredits?.visible && !this.scene.containerPlay?.visible && !this.scene.containerCode?.visible){

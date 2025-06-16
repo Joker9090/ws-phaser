@@ -74,7 +74,8 @@ class Danger extends Phaser.Physics.Arcade.Sprite {
         scene.physics.add.existing(this);
         scene.add.existing(this);
         this.setDepth(10);
-        if(config.scale) this.body?.setSize(config.width! * config.scale.width, config.height! * config.scale.height).setOffset(20, 20);
+        if(config.scale) this.body?.setSize(config.width! * config.scale.width, config.height! * config.scale.height);
+        this.body?.setOffset(40, 40);
         this.setBounce(0);
         this.group?.add(this);
         this.setImmovable(true);
@@ -109,6 +110,8 @@ class Danger extends Phaser.Physics.Arcade.Sprite {
         }
         if (config.particleSpriteSheet) {
             this.particleSprite = scene.add.sprite(config.pos.x, config.pos.y, config.particleSpriteSheet);
+            this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.particleSprite);
+            this.scene.UICamera?.ignore(this.particleSprite);
             this.particleSprite.setVisible(true);
             this.particleSprite.setDepth(11);
             if(this.config.color) this.particleSprite.setTint(this.config.color);
@@ -170,20 +173,21 @@ class Danger extends Phaser.Physics.Arcade.Sprite {
       if(this.currentState==="patrol"){
         var timer;
 
-        if(this.patrol.attackInteval > 0) timer = this.patrol.attackInteval*1000;
-        else timer = Phaser.Math.Between(2000, 5000); 
-
-        this.scene.time.delayedCall(timer, () => {
-          //console.log("[Danger] Interruption started");
-          this.patrolTween?.pause();
-          this.AttackState();
-        });
+        if(this.patrol.attackInteval > 0){
+          timer = this.patrol.attackInteval*1000;
+          this.scene.time.delayedCall(timer, () => {
+            //console.log("[Danger] Interruption started");
+            this.patrolTween?.pause();
+            this.AttackState();
+          });
+        }
       }
     }
    
     DoDamage(){
       if(this.config.attackSpriteSheet && this.scene.player?.isDead===false){
         //console.log("[Danger] DoDamage animation started");
+        this.scene.masterManagerScene?.playSound('danger', false, 1, 2000)
         this.scene.player!.isDead = true;
         this.anims.play("Attack",true);
         this.scene.time.delayedCall(200, () => {

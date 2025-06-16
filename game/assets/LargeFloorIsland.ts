@@ -26,6 +26,8 @@ export type LargeFloorIslandConfig = {
   large: number,
   rotated: boolean,
   type?: string,
+  fillBehind?: boolean,
+  flipY?: boolean,
 }
 // Scene in class
 class LargeFloorIsland extends Phaser.GameObjects.Container {
@@ -56,7 +58,7 @@ class LargeFloorIsland extends Phaser.GameObjects.Container {
         0,
         t).setOrigin(0, 0.5)
       
-      if (config.rotated) s.setFlipY(true)
+      if (config.flipY) s.setFlipY(true)
       this.add(s)
 
     }
@@ -69,7 +71,9 @@ class LargeFloorIsland extends Phaser.GameObjects.Container {
     if (this.body) {
       const body = (this.body as Phaser.Physics.Arcade.Body)
       body.setImmovable(true)
-      body.setOffset(sizeWidth/2 - 30, 10)
+      //body.setOffset(sizeWidth/2 - 30, 10)
+      body.setOffset(sizeWidth/2-35 , 10)
+      body.setSize(sizeWidth, height - 40)     
     }
     if (config.scale) {
       this.setScale(config.scale.width, config.scale.height)
@@ -80,10 +84,15 @@ class LargeFloorIsland extends Phaser.GameObjects.Container {
       const tileWidth = config.width.textureA;
       const tileHeight = tileWidth; // Ajusta si no es cuadrado
       const areaWidth = tileWidth * config.large;
-      const areaHeight = 1000;
       const startX = config.pos.x;
-      const startY = config.pos.y - 10;
-    
+      const startY = config.pos.y - 6;
+      let areaHeight = 2000
+      if (this.scene.map?.cameraBounds) {
+        areaHeight = this.scene.map.cameraBounds.y + this.scene.map.cameraBounds.height - startY;
+      }
+      // const areaHeight = (this.scene.map?.cameraBounds.y + this.scene.map?.cameraBounds.height) - startY;
+      console.log(areaHeight, 'start', this.scene.map?.cameraBounds);
+
       const fillSprite = scene.add.renderTexture(startX, startY, areaWidth, areaHeight).setOrigin(0, 0);
     
       const tilesX = Math.ceil(areaWidth / tileWidth);
@@ -103,11 +112,24 @@ class LargeFloorIsland extends Phaser.GameObjects.Container {
       }
     
       this.add(fillSprite);
-      this.setDepth(0);
-      fillSprite.setDepth(1); // Ensure it is behind the asset
+      this.setDepth(1);
+      fillSprite.setDepth(config.fillBehind ? 0 : 2); // Ensure it is behind the asset
+      
+
       scene.add.existing(fillSprite);
       console.log(this.depth, fillSprite.depth, 'depth');
-    
+      //TEST
+      const physicsRect = scene.add.rectangle(
+        fillSprite.x + fillSprite.width / 2,
+        fillSprite.y + fillSprite.height / 2,
+        fillSprite.width,
+        fillSprite.height
+      ).setOrigin(0.5, 0.5).setVisible(false);
+      if (config.scale) {
+        physicsRect.setScale(config.scale.width, config.scale.height);
+      }
+      
+      scene.physics.add.existing(physicsRect, true);
       if (this.scene.UICamera) this.scene.UICamera.ignore(fillSprite);
     
       // Opcional: Fondo negro dibujado con Graphics
@@ -133,7 +155,7 @@ class LargeFloorIsland extends Phaser.GameObjects.Container {
     
 
       if(this.scene.UICamera) this.scene.UICamera.ignore(this)
-    
+      
     
 
 

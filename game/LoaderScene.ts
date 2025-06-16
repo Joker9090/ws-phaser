@@ -156,7 +156,10 @@ export default class LoaderScene extends Phaser.Scene {
 
       // Automatically adjust elements on resize
       this.scale.on("resize", this.resizeElements, this);
-      this.resizeElements.bind(this)()
+      // this.resizeElements.bind(this)()
+      this.time.delayedCall(122, () => {
+        this.resizeElements();
+      }, [], this);
     }
     // this.cameras.main.setZoom(0.)
     
@@ -171,8 +174,8 @@ export default class LoaderScene extends Phaser.Scene {
       y: height / 2,
     }
     
-    const proportionWidth = 1024
-    const proportionHeight = 768
+    const proportionWidth = window.innerWidth
+    const proportionHeight = window.innerHeight;
 
     // scale scaledContainer to fit in width and height. scale proportional
 
@@ -184,13 +187,10 @@ export default class LoaderScene extends Phaser.Scene {
 
     this.background?.setPosition(midPoint.x, midPoint.y).setScale(finalScale)
     // re pos scaledContainer in the middle
+    console.log("scaledContainer", this.scaledContainer);
   }
 
   create() {
     console.log("LoaderScene created");
-
-    // Resize elements when the scene is created
-  
-    this.resizeElements();
   }
 }

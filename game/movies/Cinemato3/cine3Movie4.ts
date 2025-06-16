@@ -14,7 +14,14 @@ class cine3Movie4 {
     astroFrontC4S4?: Phaser.GameObjects.Image;
     background1C3S4?: Phaser.GameObjects.Image;
     background2C3S4?: Phaser.GameObjects.Image;
-    shipC3S4?: Phaser.GameObjects.Image;
+    shipLightC3S4?: Phaser.GameObjects.Image;
+    ship?: Phaser.GameObjects.Image;
+    background1?: Phaser.GameObjects.Image;
+    background2?: Phaser.GameObjects.Image;
+    background3?: Phaser.GameObjects.Image;
+    background4?: Phaser.GameObjects.Image;
+    frontGround?: Phaser.GameObjects.Image;
+    stars?: Phaser.GameObjects.Image;
     // controllers
     cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
 
@@ -64,14 +71,31 @@ class cine3Movie4 {
             .image(100, 100, "astroFrontC4S4")
             .setOrigin(0.5)
             .setPosition(30, 0);
-        this.background1C3S4 = this.cine.add
-            .image(0, 0, "background1C3S4")
-            .setOrigin(0.5)
-        this.background2C3S4 = this.cine.add
-            .image(0, 0, "background2C3S4")
-            .setOrigin(0.5)
-        this.shipC3S4 = this.cine.add
+      
+        this.ship = this.cine.add
             .image(0, 0, "shipC3S4")
+            .setOrigin(0.5)
+        this.background1 = this.cine.add
+            .image(0, 0, "backgroundPart1C3S4")
+            .setOrigin(0.5)
+        this.background2 = this.cine.add
+            .image(0, 0, "backgroundPart2C3S4")
+            .setOrigin(0.5)
+        this.background3 = this.cine.add
+            .image(0, 400, "backgroundPart3C3S4")
+            .setOrigin(0.5)
+        this.background4 = this.cine.add
+            .image(0, 0, "backgroundPart4C3S4")
+            .setOrigin(0.5)
+        this.frontGround = this.cine.add
+            .image(0,180, "frontGroundS3")
+            .setOrigin(0.5)
+        this.stars = this.cine.add
+            .image(0, 0, "starsS3")
+            .setOrigin(0.5)
+
+        this.shipLightC3S4 = this.cine.add
+            .image(0, 0, "shipLightC3S4")
             .setOrigin(0.5)
 
         const darkMask = this.cine.add.rectangle(
@@ -84,9 +108,14 @@ class cine3Movie4 {
         );
 
         const assetsScenes = [
-            this.background1C3S4,
-            this.background2C3S4,
-            this.shipC3S4,
+            this.background4,
+            this.stars,
+            this.background1,
+            this.background2,
+            this.background3,
+            this.frontGround,
+            this.shipLightC3S4,
+            this.ship,
             this.astroC3S4,
             this.astroFrontC4S4,
             darkMask
@@ -162,7 +191,13 @@ class cine3Movie4 {
                 },
                 ease: "bounce",
             });
-
+            this.cine.tweens.add({
+                targets:this.shipLightC3S4,
+                alpha:0,
+                duration:1000,
+                yoyo:true,
+                loop:-1
+            })
             const dialogueListener = (newState: string, nextText?: string) => {
                 if (newState === "CONTINUE") {
                 } else if (newState === "FINISHED") {

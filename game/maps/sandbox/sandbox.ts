@@ -60,9 +60,9 @@ class Sandbox extends MapCreator {
       height: 1800,
     };
     this.cameraBounds = {
-      x: 0,
+      x: 100,
       y: 100,
-      width: 10000,
+      width: 9800,
       height: 1600,
     };
     this.scene.physics.world.setBounds(
@@ -82,6 +82,8 @@ class Sandbox extends MapCreator {
       x: 500, //500
       y: this.worldSize.height - 600, //800
     };
+
+    // this.startingPoint =  { x: 5500, y: 1100 }
   }
 
   createMap(data: { level: number; lifes: number }) {
@@ -107,17 +109,10 @@ class Sandbox extends MapCreator {
     this.backgroundsBack = [
       this.scene.add.image(0, 0, "gradient").setOrigin(0.5),
       this.scene.add.image(0, 0, "stars").setOrigin(0.5),
-      this.scene.add.image(0, 300, "curvedVector").setOrigin(0.5),
+      this.scene.add.image(0, 0, "curvedVector").setOrigin(0.5),
     ]
     
-    this.backgroundsMiddle = [
-      this.scene.add.image(-this.startingPoint.x, this.cameraBounds.height+100, "middleCombo").setOrigin(0, 1).setScale(0.7),
-      this.scene.add.image(-this.startingPoint.x + downScaledMiddleWidth, this.cameraBounds.height+100, "middleCombo2").setOrigin(0, 1).setScale(0.7),
-      this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 2), this.cameraBounds.height+100, "middleCombo3").setOrigin(0, 1).setScale(0.7),
-      this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 3), this.cameraBounds.height+100, "middleCombo4").setOrigin(0, 1).setScale(0.7),
-      this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 4), this.cameraBounds.height+100, "middleCombo2").setOrigin(0, 1).setScale(0.7),
-      this.scene.add.image(-this.startingPoint.x + (downScaledMiddleWidth * 5), this.cameraBounds.height+100, "middleCombo2").setOrigin(0, 1).setScale(0.7),
-    ]
+    this.backgroundsMiddle = this.createBgRow(100, this.cameraBounds.height+100, ["middleCombo", "middleCombo2", "middleCombo3", "middleCombo4"], width, 0.7),
     
     this.backgroundsFront = [
       this.scene.add.image(-this.startingPoint.x, this.cameraBounds.height+100, "frontCombo").setOrigin(0, 1).setScale(0.5),
@@ -153,10 +148,10 @@ class Sandbox extends MapCreator {
     const baseLargePlatformsConf = {
       withTextureToAbove: true,
       texture: "plataformaNuevaA",
-      textureA: "platform_izq_p2",
-      textureB: "platform_center_p2",
-      textureC: "platform_der_p2",
-      textureFill: ["fill_texture_p2", "fill_texture2_p2", "fill_texture3_p2", "fill_texture4_p2"],
+      textureA: "platform_izq",
+      textureB: "platform_center",
+      textureC: "platform_der",
+      textureFill: ["fill_texture", "fill_texture2", "fill_texture3", "fill_texture4"],
       width: {
         textureA: 96,
         textureB: 96,
@@ -166,6 +161,22 @@ class Sandbox extends MapCreator {
       scale: { width: 1, height: 1 },
       rotated: false,
       type: "largeFloor",
+    };
+
+    const ObstacleFloorConf = {
+      textureA: "top_v1",
+      textureB: ["middle_v1", "middle_v1_2"],
+      textureC: "bottom_v1",
+      // width: {
+      //   textureA: 340,
+      //   textureB: 340,
+      //   textureC: 340,
+      // },
+      width: 340,
+      height: 180,
+      scale: { width: 1, height: 1 },
+      type: "obstacleFloor",
+      group: this.obstacleFloor,
     };
 
     const baseCristalConf = {
@@ -241,7 +252,8 @@ class Sandbox extends MapCreator {
     
       //portales
       { type: "subPortal",  x: 2000, y: 800, version: 1, sameScene: false, group: this.teleport, otherSceneConf: otherSceneConf },
-      { type: "finalPortal", pos: { x: 5500, y: 1300 }, texture: "plataformaFinalP1", width: 100, height: 100, group: this.portal }
+      { type: "finalPortal", pos: { x: 5500, y: 1300 }, texture: "plataformaFinalP1", width: 100, height: 100, group: this.portal },
+      {...ObstacleFloorConf, pos: { x: 1300, y: this.worldSize.height-1000 }, large: 5}
     
     ]
     

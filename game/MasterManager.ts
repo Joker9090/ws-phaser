@@ -35,7 +35,7 @@ export default class MasterManager extends Phaser.Scene {
   cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   GameScene?: Game;
   brightnessScreen?: Phaser.GameObjects.Rectangle;
-  volumeMusic: number = this.music?.volume || 0.5;
+  volumeMusic: number = this.music?.volume || 0.2;
   volumeSound: number = this.sounds?.volume || 0.5;
   brightness: number = 0.5;
   MAX_VOLUME: number = 0.6;
@@ -90,12 +90,36 @@ export default class MasterManager extends Phaser.Scene {
     }
   }
 
-  playSound(name: string, loop: boolean = false) {
+  playSound(name: string, loop: boolean = false, baseVolume?: number, duration?: number) {
     this.sounds = this.sound.add(name, {
-      volume: this.volumeSound,
+      volume: baseVolume ? this.volumeSound * baseVolume : this.volumeSound,
       loop: loop,
     });
+    
     this.sounds.play();
+    if (duration) {
+      this.time.delayedCall(duration, () => {
+        if (!this.sounds?.isPlaying || this.sounds?.volume === 0) return;
+        this.tweens.add({
+            targets: this.sounds,
+            volume: 0,
+            duration: 200,
+            onUpdate: (tween, target) => {
+              if (
+          !target ||
+          typeof target.volume !== 'number' ||
+          target.manager == null
+        ) {
+          tween.stop();
+        }
+            },
+            onComplete: () => {
+              this.sounds?.stop();
+              // this.sounds?.destroy();
+            }
+          });
+        });
+    }
     console.log(this.volumeSound, "JOTA SOUNDS FROM FUNCTION")
   }
 
@@ -119,37 +143,42 @@ export default class MasterManager extends Phaser.Scene {
     this.brightnessScreen?.setAlpha(0.3 * value);
   }
   pauseGame() {
-    const gameScene = this.scene.get("Game");
-    if (gameScene) {
-      this.time.delayedCall(600, () => {
-        gameScene.physics.world.pause();
-        gameScene.tweens.pauseAll();
-        gameScene.input.enabled = true;
-        gameScene.time.paused = true
-      }, [], this)
+    if (this.scene) {
+      const gameScene = this.scene.get("Game");
+      if (gameScene) {
+        this.time.delayedCall(300, () => {
+          gameScene.physics?.world?.pause();
+          // gameScene.tweens.pauseAll();
+          gameScene.input.enabled = true;
+          gameScene.time.paused = true
+        }, [], this)
+      }
     }
   }
   resumeFromBlur() {
-    const gameScene = this.scene.get("Game");
+    if (this.scene && this.scene.get) {
+      const gameScene = this.scene?.get("Game");
 
-    if (gameScene) {
+    if (gameScene ) {
       const settingsVisible = (gameScene as Game).UIClass?.settingsVisible
       if (!settingsVisible) {
         this.time.delayedCall(600, () => {
-          gameScene.physics.world.resume();
-          gameScene.tweens.resumeAll();
+          gameScene.physics?.world?.resume();
+          // gameScene.tweens.resumeAll();
           gameScene.input.enabled = true;
-          gameScene.time.paused = false
+          gameScene.time.paused = false;
+          window.removeEventListener("blur", this.resumeFromBlur);
         }, [], this)
       }
 
     }
   }
+  }
   resumeGame() {
-    if (this.scene) {
+    if (this.scene && this.scene.get) {
       const gameScene = this.scene?.get("Game");
     if (gameScene) {
-      (gameScene as Game).UIClass?.settingsModal?.animationOfModal(false, 0);
+      (gameScene as Game).UIClass?.settingsModal?.animationOfModal(false);
       (gameScene as Game).UIClass?.container.each((child: any) => {
         if (child instanceof UI) {
           {
@@ -158,11 +187,13 @@ export default class MasterManager extends Phaser.Scene {
         }
       });
       (gameScene as Game).UIClass?.collText?.setVisible(true)
-      this.time.delayedCall(600, () => {
-        gameScene.physics.world.resume();
-        gameScene.tweens.resumeAll();
+     
+      this.time.delayedCall(500, () => {
+        gameScene.physics?.world?.resume();
+        // gameScene.tweens.resumeAll();
         gameScene.input.enabled = true;
         gameScene.time.paused = false
+      
       }, [], this)
     }
     }
@@ -187,7 +218,7 @@ export default class MasterManager extends Phaser.Scene {
         this.scene.stop("MenuScene");
       } else if (codeFound.type === "postal") {
         this.imagenesDesbloqueadas = codeFound.imagenes
-        const multiScene2 = new MultiScene("CinematographyMod", { keyname: "postal1_planeta1", loadKey: ["Postales"], code: code });
+        const multiScene2 = new MultiScene("CinematographyMod", { keyname: codeFound.postalKey, loadKey: ["Postales"], code: codeFound.codigo });
         this.scene.add("MultiScene", multiScene2, true);
         this.scene.start("MultiScene").bringToTop("MultiScene");
         this.scene.stop("MenuScene");

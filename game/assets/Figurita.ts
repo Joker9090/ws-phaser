@@ -1,11 +1,18 @@
 class Figuritas extends Phaser.GameObjects.Container {
   postal:string = "";
+  modalBaseScale: number = (this.scene.scale.width / 1920);
+  postalBaseScale: number = (this.scene.scale.width / 1920);
+  modalScaleFactor: number = 0.7;
+  postalScaleFactor: number = 0.12;
+  postalPreviewScaleFactor: number = 0.3;
+  modalZoomFactor: number = 1.3;
+  postalZoomFactor: number = 1.2;
   constructor(scene: Phaser.Scene, x: number, y: number, postal: string, isUnlocked:boolean) {
       super(scene, x, y);
       this.postal =postal
-      const image1 = scene.add.image(0, 0, "modalFiguirita").setScale(0.8).setAlpha(0.8);
+      const image1 = scene.add.image(0, 0, "modalFiguirita").setScale(this.modalBaseScale * this.modalScaleFactor).setAlpha(0.8);
       this.add(image1);
-      const image2 = scene.add.image(0, 0, postal).setScale(0.1).setAlpha(0.7);
+      const image2 = scene.add.image(0, 0, postal).setScale(this.postalBaseScale * this.postalScaleFactor).setAlpha(0.7);
       let clicked = false
       this.add(image2);
       image1.setInteractive()
@@ -14,14 +21,14 @@ class Figuritas extends Phaser.GameObjects.Container {
         image1.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
           scene.tweens.add({
             targets: image1,
-            scale: 0.9,
+            scale: (this.modalBaseScale * this.modalScaleFactor) * this.modalZoomFactor,
             alpha: 1,
             duration: 300,
             ease: 'Power2'
           });
           scene.tweens.add({
             targets: image2,
-            scale: 0.18,
+            scale: (this.postalBaseScale * this.postalScaleFactor) * this.postalZoomFactor,
             alpha: 1,
             duration: 300,
             ease: 'Power2'
@@ -36,14 +43,14 @@ class Figuritas extends Phaser.GameObjects.Container {
           if(!clicked){
             scene.tweens.add({
               targets: image1,
-              scale: 0.8,
+              scale: this.modalBaseScale * this.modalScaleFactor,
               alpha: 0.7,
               duration: 300,
               ease: 'Power2'
             });
             scene.tweens.add({
               targets: image2,
-              scale: 0.1,
+              scale: this.postalBaseScale * this.postalScaleFactor,
               alpha: 0.7,
               duration: 300,
               ease: 'Power2'
@@ -63,7 +70,7 @@ class Figuritas extends Phaser.GameObjects.Container {
     console.log("hol")
     const group:any[] = []
     const background =this.scene.add.rectangle(this.scene.scale.width / 2,this.scene.scale.height /2,this.scene.scale.width,this.scene.scale.height, 0x0000, 0.7)
-    const downloadImage = this.scene.add.image(this.scene.scale.width / 2,this.scene.scale.height /4 + 300, this.postal).setScale(0.2)
+    const downloadImage = this.scene.add.image(this.scene.scale.width / 2,this.scene.scale.height / 2, this.postal).setScale(this.postalBaseScale * this.postalPreviewScaleFactor)
     const downloadButton = this.scene.add.image(this.scene.scale.width/2 + 300 , this.scene.scale.height/2 + 230, "downloadButton")
     const modal = this.scene.add.image(this.scene.scale.width / 2,this.scene.scale.height /4 + 300, "codeModal").setVisible(false)
     const cross = this.scene.add.image(this.scene.scale.width / 2 - 100,this.scene.scale.height /4 + 450, "settingsCross").setVisible(false)

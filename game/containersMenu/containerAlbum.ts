@@ -69,7 +69,7 @@ class containerAlbum extends Phaser.GameObjects.Container {
 
 
         
-        const nextButton = this.scene.add.image(this.width - 100, this.height / 1.7, "backButton").setInteractive().setScale(0.8);
+        const nextButton = this.scene.add.image(this.width - 100, this.height / 1.7, "backButton").setInteractive().setScale(0.8).setVisible(this.end < this.imagenes.length);
         nextButton.on("pointerup", () => {
             if (this.end < this.imagenes.length) {
                 this.start += this.step;
@@ -80,6 +80,8 @@ class containerAlbum extends Phaser.GameObjects.Container {
                 this.updateElements();
                 nextButton.setTexture('backButton')
             }
+            nextButton.setVisible(this.end < this.imagenes.length);
+            prevButton.setVisible(this.start > 0);
         });
         nextButton.setInteractive().on('pointerdown', () => {
             nextButton.setTexture('backButtonPressed')
@@ -94,7 +96,7 @@ class containerAlbum extends Phaser.GameObjects.Container {
 
 
 
-        const prevButton = this.scene.add.image(100, this.height / 1.7, "playBackButton").setInteractive().setScale(0.8);
+        const prevButton = this.scene.add.image(100, this.height / 1.7, "playBackButton").setInteractive().setScale(0.8).setVisible(this.start > 0);
         prevButton.on("pointerup", () => {
             if (this.start > 0) {
                 this.start -= this.step;
@@ -105,6 +107,8 @@ class containerAlbum extends Phaser.GameObjects.Container {
                 this.updateElements();
                 prevButton.setTexture('playBackButton')
             }
+            nextButton.setVisible(this.end < this.imagenes.length);
+            prevButton.setVisible(this.start > 0);
         });
         prevButton.setInteractive().on('pointerdown', () => {
             prevButton.setTexture('playBackButtonPressed')
@@ -136,13 +140,15 @@ class containerAlbum extends Phaser.GameObjects.Container {
         this.figuritas.forEach((figurita) => figurita.destroy());
         this.figuritas = [];
         let posX = this.width / 3;
+        const { width } = this.scene.scale;
+        const scale = width / 1920;
         const showFiguritas = this.imagenes.slice(this.start, this.end);
         showFiguritas.forEach((child, index) => {
             const isUnlocked = this.masterManager.imagenesDesbloqueadas.includes(child);
             const figurita = new Figuritas(this.scene, posX * (index + 1), this.height / 1.7, child, isUnlocked).setScale(0).setAlpha(0.8);
             this.scene.tweens.add({
             targets: figurita,
-            scale: 0.8,
+            scale: scale,
             duration: 500,
             delay: 400 * index,
             ease: 'Bounce.easeOut'

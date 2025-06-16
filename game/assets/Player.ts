@@ -228,24 +228,18 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.setDepth(999);
    
 
+    this.gravityAnimSprite = this.scene.add.sprite(this.x, this.y, "gravityAnim", 0).setVisible(false).setDepth(999);
     if (this.scene instanceof Game) {
       this.scene.UICamera?.ignore(this);
       this.scene.cameras.getCamera('backgroundCamera')?.ignore(this);
-    }
-    this.gravityAnimSprite = this.scene.add.sprite(this.x, this.y, "gravityAnim", 0).setVisible(false).setDepth(999);
-    if (this.scene instanceof Game) {
       this.scene.UICamera?.ignore(this.gravityAnimSprite);
       this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.gravityAnimSprite);
-    }
-      
-    if (this.scene instanceof Game) {
       this.scene.UICamera?.ignore(this.tankAnimSprite);
       this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.tankAnimSprite);
-    }
-    if (this.scene instanceof Game) {
       this.scene.UICamera?.ignore(this.auraAnimSprite);
       this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.auraAnimSprite);
     }
+    
     // this.scene.add.rectangle(this.x, this.y, 100, 100, 0xffffff).setVisible(true)
     /* player Collission with end of map */
     this.setCollideWorldBounds(true);
@@ -279,16 +273,21 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.isFlying = value
     this.gravityGroup.world.gravity.y = value ? 0 : this.gravity
     this.setAcceleration(0, 0)
+    if(value ==true){
+      if (!this.tankAnimSprite)return;
+      this.tankAnimSprite.setVisible(true);
+      this.tankAnimSprite.anims.play("gravityActiveAnim");
 
-    if (!this.tankAnimSprite)return;
-    this.tankAnimSprite.setVisible(true);
-    this.tankAnimSprite.anims.play("gravityActiveAnim");
-    
-    this.tankAnimSprite.on("animationupdate", () => {
-    let xF = this.x - 15;
-    if (this.flipX) xF = this.x + 15;
-      this.tankAnimSprite?.setPosition(xF, this.y + 60);
-    });
+      this.tankAnimSprite.on("animationupdate", () => {
+      if (this.tankAnimSprite) {
+        this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.tankAnimSprite);
+        if (this.scene instanceof Game) this.scene.UICamera?.ignore(this.tankAnimSprite);
+      }
+      let xF = this.x - 17;
+      if (this.flipX) xF = this.x + 17;
+        this.tankAnimSprite?.setPosition(xF, this.y + 100);
+      });
+    }
   }
   setCameraState(state: "NORMAL" | "ROTATED") {
     this.cameraState = state
@@ -302,7 +301,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.invincible = value
     if(this.invincible==true){
       console.log("[Player] Invincible")
-      this.auraAnimSprite?.setVisible(true).setDepth(1000);
+      this.auraAnimSprite?.setVisible(true).setDepth(this.depth + 1);
+      if (this.auraAnimSprite) {
+        this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.auraAnimSprite);
+        if (this.scene instanceof Game) this.scene.UICamera?.ignore(this.auraAnimSprite);
+      }
       this.auraAnimSprite?.anims.play("auraAnim");
       this.auraAnimSprite?.on("animationupdate", () => {
         this.auraAnimSprite?.setPosition(this.x, this.y);
@@ -328,31 +331,34 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     let barSize = 100
     const limit0 = (this.tank.fuel - this.tank.fuelConditionToStart < 0) ? 0 : this.tank.fuel - this.tank.fuelConditionToStart
     const equivalent = (limit0 * barSize) / (this.tank.fuelLimit - this.tank.fuelConditionToStart)
-    this.tankGraphics.fillRect(this.x - 50, this.y - 100, barSize, 10)
+    this.tankGraphics.fillRect(this.x - 50, (this.playerState === "NORMAL" ? this.y - 100 : this.y + 100), barSize, 10)
     this.tankGraphics.fillStyle(0xff0000, 0.9)
     if(this.tank.extraJumpAt) {
       this.tankGraphics.fillStyle(0xffffff, 0.9)
     }
-    this.tankGraphics.fillRect(this.x - 50, this.y - 100, equivalent , 10)
+    this.tankGraphics.fillRect(this.x - 50, (this.playerState === "NORMAL" ? this.y - 100 : this.y + 100), equivalent , 10)
     this.tankGraphics.setDepth(99)
   }
   //TANK SMOKE
   activateTankAnimation() {
   if (!this.tankAnimSprite||this.isFlying===true) return;
-
+  this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.tankAnimSprite);
+  if (this.scene instanceof Game) this.scene.UICamera?.ignore(this.tankAnimSprite);
   /*let xF = this.x - 10;
     if (this.flipX) xF = this.x + 10;
     this.tankAnimSprite.setPosition(xF, this.y + 10);*/
 
   // Make the sprite visible and play the animation
+  this.tankAnimSprite.setFlipY(this.playerState === "ROTATED");
   this.tankAnimSprite.setVisible(true);
   this.tankAnimSprite.anims.play("tankActivateAnim");
   // Update the position of the sprite based on the player's position
-  
+
   this.tankAnimSprite.on("animationupdate", () => {
     let xF = this.x - 15;
     if (this.flipX) xF = this.x + 15;
-    this.tankAnimSprite?.setPosition(xF, this.y + 60);
+    this.tankAnimSprite?.setPosition(xF, (this.playerState === "NORMAL" ? this.y + 60 : this.y - 60));
+    // this.tankAnimSprite?.setFlipY(this.playerState === "ROTATED");
   });
   
   // Hide the sprite after the animation completes
@@ -421,14 +427,17 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   touchingFeet(collidingWthith: Phaser.Physics.Arcade.Sprite) {
-    return (this.body?.touching.down && !collidingWthith.flipY && this.playerState === "NORMAL") ||
-    (this.body?.touching.up && collidingWthith.flipY && this.playerState === "ROTATED")
+    return (this.body?.touching.down && this.playerState === "NORMAL") || // !collidingWthith.flipY && this.playerState === "NORMAL") ||
+    (this.body?.touching.up && this.playerState === "ROTATED") //collidingWthith.flipY && this.playerState === "ROTATED")
   }
 
   checkMove(cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined) {
+    const scene = this.scene as Game
     let velocity = 300;
+    let mobileVelocity = { x: scene.normalizedDragX * 350, y: scene.normalizedDragY * 350 };
     this.gravityAnimSprite?.setPosition(this.x, this.y)
     if(this.isFlying) {
+      this.body?.setOffset(75,40)
       this.checkFly(cursors)
       return
     }
@@ -450,25 +459,52 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     /* Keywords press */
     if (cursors) {
       const { left, right, up, space } = cursors;
+      const isGrounded = this.playerState === "NORMAL" ? this.body?.touching.down : this.body?.touching.up;
+      // @ts-ignore
+      const masterVolume = this.scene.masterManagerScene.volumeSound;
       /* Left*/
-      if (left.isDown) {
-        this.setVelocityX(this.cameraState === 'NORMAL' ? -velocity : velocity);
-        this.setFlipX(this.cameraState === 'NORMAL' ? true : false);
+      if (!isGrounded || this.isDead) {
+        this.scene.sound.stopByKey('walk');
+        this.scene.sound.removeByKey('walk');
+      }
+      if (!this.isDead) {
+        if (left.isDown) {
+          if ((!this.scene.sound.get('walk') || !this.scene.sound.get('walk')?.isPlaying) && isGrounded) {
+
+        this.scene.sound.play('walk', { volume: masterVolume, loop: true });
+        }
+        if (scene.isTouchDevice) {
+          this.setVelocityX(this.cameraState === 'NORMAL' ? mobileVelocity.x : -mobileVelocity.x);
+        } else {
+          this.setVelocityX(this.cameraState === 'NORMAL' ? -velocity : velocity);
+        }
         if (!this.isJumping && !this.isRotating) this.anims.play("playerMove", true);
+        this.setFlipX(this.cameraState === 'NORMAL' ? true : false);
       } else if (right.isDown) {
+        // Only play the walk sound if it's not already playing
+        if ((!this.scene.sound.get('walk') || !this.scene.sound.get('walk')?.isPlaying) && isGrounded) {
+          this.scene.sound.play('walk', { volume: masterVolume, loop: true });
+        }
+
         /* Right*/
-        this.setVelocityX(this.cameraState === 'NORMAL' ? velocity : -velocity);
+        if (scene.isTouchDevice) {
+          this.setVelocityX(this.cameraState === 'NORMAL' ? mobileVelocity.x : -mobileVelocity.x);
+        } else {
+          this.setVelocityX(this.cameraState === 'NORMAL' ? velocity : -velocity);
+        }
         this.setFlipX(this.cameraState === 'NORMAL' ? false : true);
         if (!this.isJumping && !this.isRotating) this.anims.play("playerMove", true);
       } else {
+        this.scene.sound.stopByKey('walk');
+        this.scene.sound.removeByKey('walk');
         this.setVelocityX(0);
         if (!this.isJumping && !this.isRotating) this.anims.play("playerIdle", true);
       }
       /* Up / Jump */
-      if (up.isDown || space.isDown) {
+      if ((up.isDown || space.isDown) && this.scene instanceof Game && !this.scene.isTouchDevice) {
         this.jump()
       }
-
+    }
     }
   }
   moveOnLoader(){
@@ -476,6 +512,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   checkFly(cursors?: Phaser.Types.Input.Keyboard.CursorKeys | undefined) {
+    //console.log("[Player] FlyingMode CheckFly");
     let velocity = 500;
     let limit = 500;
     /* Keywords press */

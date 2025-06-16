@@ -93,16 +93,18 @@ export default class MapCreator {
   sideGrav: boolean = false;
   goingBack: boolean = false;
   player?: Player;
+  timerText?:string
   startingPoint = {
     x: 500, //500
     y: 800, //800
   };
   loseConfig: loseConfigFromMapType = [
     {
-      positions: { x: 500, y: 800 },
+      positions: { x: this.startingPoint.x , y: this.startingPoint.y },
       cameraDirection: "NORMAL",
       PlayerDirection: "NORMAL",
-      gravityDown: true,
+      gravityDown: true
+      ,
     },
   ];
   backgroundsBack: Phaser.GameObjects.Image[] = [];
@@ -137,7 +139,9 @@ export default class MapCreator {
   movingFloorRot?: Phaser.Physics.Arcade.Group;
   flyingPiso?: Phaser.Physics.Arcade.Group;
   firegroup?: Phaser.Physics.Arcade.Group;
+  cloudsGroup?: Phaser.Physics.Arcade.Group;
   obstacle?: Phaser.Physics.Arcade.Group;
+  obstacleFloor?: Phaser.Physics.Arcade.Group;
   invincibilityTimer?: Time.TimerEvent
   endPortal?: Phaser.Physics.Arcade.Group;
   ratioReference: { width: number; height: number } = { width: 1920, height: 1080 };
@@ -148,7 +152,6 @@ export default class MapCreator {
   totalCoins?:number
   constructor(scene: Game, player: Player, data?: GamePlayDataType) {
     this.scene = scene;
-    this.totalCoins =  this.coin?.getChildren().length
 
     if (this.scene.input.keyboard) {
       this.scene.input.keyboard.enabled = true;
@@ -159,16 +162,24 @@ export default class MapCreator {
     //   immovable: true,
     //   collideWorldBounds: true,
     // });
-    this.startingPoint = {
+    /*this.startingPoint = {
       x: 500, //500
       y: this.worldSize.height-600, //800
-    };
+    };*/
     this.scene.physics.world.setBounds(
       0,
       0,
       this.worldSize.width,
       this.worldSize.height
     );
+    this.loseConfig=[
+      { positions: { x: this.startingPoint.x , y: this.startingPoint.y },
+        cameraDirection: "NORMAL",
+        PlayerDirection: "NORMAL",
+        gravityDown: true
+        ,
+      },
+    ]
     this.player.setPlayerWithTank(true);
 
     // this.scene.cameras.main.setPosition(
@@ -197,22 +208,32 @@ export default class MapCreator {
   // createMap() {
   //     // Logic to create a new map
   // }
-
+  
   createMapGroups() {
     this.floor = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.gravityTile = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.rotationTile = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
-    this.fallingTile = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
+    this.fallingTile = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: false });
     this.teleport = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
     this.obstacle = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
+    this.obstacleFloor = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: false });
     this.firegroup = this.scene.physics.add.group({ allowGravity: false, immovable: true, collideWorldBounds: true });
+    this.cloudsGroup= this.scene.physics.add.group({ allowGravity: false});
+    this.portal = this.scene.physics.add.group({ allowGravity: false });
+    this.coin = this.scene.physics.add.group({ allowGravity: false });
+    this.invincible = this.scene.physics.add.group({ allowGravity: false, collideWorldBounds: true });
     this.scene.UICamera?.ignore(this.floor)
     this.scene.UICamera?.ignore(this.gravityTile)
     this.scene.UICamera?.ignore(this.rotationTile)
     this.scene.UICamera?.ignore(this.fallingTile)
     this.scene.UICamera?.ignore(this.teleport)
     this.scene.UICamera?.ignore(this.obstacle)
+    this.scene.UICamera?.ignore(this.obstacleFloor)
     this.scene.UICamera?.ignore(this.firegroup)
+    this.scene.UICamera?.ignore(this.cloudsGroup)
+    this.scene.UICamera?.ignore(this.portal)
+    this.scene.UICamera?.ignore(this.coin)
+    this.scene.UICamera?.ignore(this.invincible)
     if (this.scene.physics.world.debugGraphic) {
       this.scene.UICamera?.ignore(this.scene.physics.world.debugGraphic);
     }
@@ -238,19 +259,35 @@ export default class MapCreator {
     this.scene.add.existing(this.middleContainer);
     this.scene.add.existing(this.frontContainer);
 
-    this.scene.UICamera?.ignore(this.backContainer);
     this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.backContainer);
+    this.scene.UICamera?.ignore(this.backContainer);
     this.scene.UICamera?.ignore(this.middleContainer);
     this.scene.UICamera?.ignore(this.frontContainer);
+    this.scene.UICamera?.ignore(this.scene.player!);
     this.scene.cameras.main.setScroll(0, 0);
   }
 
-  createPlatforms(gameObjects: mapFloorConfig[]) {
+  /*createPlatforms(gameObjects: mapFloorConfig[]) {
+   
     gameObjects.forEach((element) => {
       const tile: any = Factory(this.scene, element, this.floor!);
       // this.mapGroup.add(tile);
       this.mapItems.push(tile);
     })
+
+    this.totalCoins =  this.coin?.getChildren().length
+  }*/
+  createPlatforms(gameObjects: mapFloorConfig[]) {
+    gameObjects.forEach((element) => {
+      const tile: any = Factory(this.scene, element, this.floor!);
+      // this.mapGroup.add(tile);
+      if (Array.isArray(tile)) {
+        this.mapItems.push(...tile);
+      } else {
+        this.mapItems.push(tile);
+      }
+    });
+    this.totalCoins =  this.coin?.getChildren().length
   }
 
   setInitialScroll(scrollX: number, scrollY: number) {
@@ -328,15 +365,76 @@ export default class MapCreator {
   // }
 
   cameraIgnore () {
+    const bgCamera = this.scene.cameras.getCamera('backgroundCamera')
     this.mapItems.forEach((item) => {
       this.scene.UICamera?.ignore(item);
       this.scene.cameras.getCamera('backgroundCamera')?.ignore(item);
     })
+    const bgItems = this.backgroundsBack.concat(this.backgroundsMiddle, this.backgroundsFront);
+    bgItems.forEach((item) => {
+      this.scene.UICamera?.ignore(item);
+      // this.scene.cameras.getCamera('backgroundCamera')?.ignore(item);
+    })
+    const bgItems2 = this.backgroundsFront.concat(this.backgroundsMiddle);
+    bgItems2.forEach((item) => {
+      this.scene.cameras.getCamera('backgroundCamera')?.ignore(item);
+    })
+    this.backgroundsBack.forEach((item) => {
+      this.scene.cameras.main?.ignore(item);
+    }
+    )
+    this.scene.cameras.main?.ignore(this.backContainer);
     // this.scene.UICamera?.ignore(this.mapGroup);
     // this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.mapGroup);
     this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.scene.player!);
+    this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.scene.UIClass?.container!);
+    this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.middleContainer);
+    // this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.backContainer);
+    console.log("cameraIgnore", this.scene.cameras);
+    this.scene.cameras.cameras.find((cam) => cam.id === 1)?.setAlpha(0);
+    this.scene.UICamera?.ignore(this.scene.player!);
+    this.scene.UICamera?.ignore(this.backContainer);
+    // this.scene.UICamera?.ignore(this.backgroundsFront[0]);
+    this.scene.UICamera?.ignore(this.backgroundsMiddle);
+    // this.scene.UICamera?.ignore(this.backgroundsBack[0]);
+    if (this.scene.resultModal) bgCamera?.ignore(this.scene.resultModal)
+    if (this.scene.resultModal && this.scene.resultModal.modal) {
+      this.scene.resultModal.container?.list.forEach((item) => {
+        this.scene.cameras.main.ignore(item);
+        bgCamera?.ignore(item)
+      })
+      this.scene.cameras.main.ignore(this.scene.resultModal.modal);
+      bgCamera?.ignore(this.scene.resultModal.modal)
+      this.scene.cameras.main.ignore(this.scene.resultModal);
+      // this.scene.cameras.main.ignore(this.middleContainer);
+      // this.scene.cameras.main.ignore(this.frontContainer);
+    }
   }
 
+  resetMap() {
+    //console.log("resetMap", this.mapItems, 'inside');
+    this.fallingTile?.getChildren().forEach((tile) => {
+      const fallingTile = tile as Phaser.Physics.Arcade.Sprite;
+      if (fallingTile.body) {
+        //@ts-ignore
+        fallingTile.body.allowGravity = false;
+        //@ts-ignore
+        fallingTile.body.reset(fallingTile.config.pos.x, fallingTile.config.pos.y);
+      }
+    });
+  }
+
+  createBgRow(x: number, y: number, textures: string[], assetWidth: number, scale: number, origin?: number, xOffset: number = 0, yOffset: number = 0): Phaser.GameObjects.Image[] {
+    const scaledWidth: number = assetWidth * scale;
+    return Array(Math.ceil(this.worldSize.width / scaledWidth)).fill(0).map((_, index) => {
+      const randomTexture = textures[Math.floor(Math.random() * textures.length)];
+      const image = this.scene.add.image(x + index * scaledWidth + xOffset, y + yOffset, randomTexture).setOrigin(0, 1).setScale(scale);
+      if (origin || origin === 0) {
+        image.setOrigin(origin);
+      }
+      return image;
+    });
+  }
 
   addColliders() {
     if (this.scene.player) {
@@ -367,6 +465,12 @@ export default class MapCreator {
             if (
               this.scene.player?.touchingFeet(b as Phaser.Physics.Arcade.Sprite)
             ) {
+              if (!this.scene.sound.get('cameraFlip')?.isPlaying) {
+                this.scene.sound.play('cameraFlip', {
+                    volume: 0.7 * (this.scene.masterManagerScene?.volumeSound ?? 1),
+                    loop: false,
+                  });
+              }
               this.scene.changeGravity(true, 1000, 3);
             }
           },
@@ -381,7 +485,14 @@ export default class MapCreator {
             if (
               this.scene.player?.touchingFeet(b as Phaser.Physics.Arcade.Sprite)
             ) {
+              this.scene.canRot = true
               this.scene.touch()
+              if (!this.scene.sound.get('cameraFlip')?.isPlaying) {
+                this.scene.sound.play('cameraFlip', {
+                    volume: 0.7 * (this.scene.masterManagerScene?.volumeSound ?? 1),
+                    loop: false,
+                  });
+              }
               //@ts-ignore
               this.scene.rotateCam(b.rotate, 10);
             }
@@ -398,8 +509,27 @@ export default class MapCreator {
                 this.scene.player?.touchingFeet(b as Phaser.Physics.Arcade.Sprite)
               ) {
                 this.scene.touch()
+                if (!this.scene.sound.get('fallingTile')?.isPlaying) {
+                  this.scene.sound.play('fallingTile', {
+                    volume: 0.4 * (this.scene.masterManagerScene?.volumeSound ?? 1),
+                    loop: false,
+                  });
+                  // this.scene.masterManagerScene?.playSound('fallingTile', false, 0.4);
+                }
+                //@ts-ignore
+                b.setCollideWorldBounds(false);
                 //@ts-ignore
                 b.body.allowGravity = true;
+                //@ts-ignore
+                this.scene.time.delayedCall(
+                  5000,
+                  () => {
+                    //@ts-ignore
+                    b.body.allowGravity = false;
+                    //@ts-ignore
+                    b.body.setVelocity(0);
+                  }
+                );
               }
             },
             () => true,
@@ -409,9 +539,10 @@ export default class MapCreator {
         this.scene.physics.add.overlap(
           this.scene.player,
           this.coin,
-          (a, b) => {
+          (a, b: any) => {
             this.scene.touchItem("coin");
-            b.destroy();
+            this.scene.masterManagerScene?.playSound(b.soundKey)
+            if (b.destroyItem) b.destroyItem();
             this.coinAura?.destroy();
           },
           () => true,
@@ -423,6 +554,8 @@ export default class MapCreator {
           this.invincible,
           (a, b: any) => {
             if (!this.player?.invincible) {
+              console.log("TOCO invincible");
+              this.scene.masterManagerScene?.playSound(b.soundKey)
               this.player?.setPlayerInvicinible(true);
               b?.turnTo(false);
               this.invincibilityTimer = this.scene.time.delayedCall(30000, () => {
@@ -440,6 +573,8 @@ export default class MapCreator {
           this.scene.player,
           this.portal,
           () => {
+            console.log("portal", this.portal);
+            this.scene.masterManagerScene?.playSound('win')
             this.scene.win();
           },
           () => true,
@@ -451,6 +586,7 @@ export default class MapCreator {
           this.firegroup,
           () => {
             if (!this.player?.invincible) {
+              this.scene.masterManagerScene?.playSound('damage')
               this.scene.touchItem("fireball");
               this.scene.player?.setVelocity(0);
             }
@@ -466,6 +602,21 @@ export default class MapCreator {
           (a, b) => {
             //this.scene.touchItem("fireball");
             //this.scene.player?.setVelocity(0);
+            const danger = b as Danger;
+            danger.DoDamage();
+          },
+          () => true,
+          this.scene
+        );
+      }
+      if (this.obstacleFloor) {
+        this.scene.physics.add.overlap(
+          this.scene.player,
+          this.obstacleFloor,
+          (a, b) => {
+            //this.scene.touchItem("fireball");
+            //this.scene.player?.setVelocity(0);
+            this.scene.masterManagerScene?.playSound('damage')
             const danger = b as Danger;
             danger.DoDamage();
           },

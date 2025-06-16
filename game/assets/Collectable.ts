@@ -30,6 +30,7 @@ export type CollectableConfig = {
     height: number;
   };
   aura?: string | Phaser.Textures.Texture;
+  auraColor?: number;
   shield?: string | Phaser.Textures.Texture;
 
   tween?: Partial<CollectableTween>;
@@ -54,7 +55,9 @@ class Collectable extends Phaser.Physics.Arcade.Sprite {
     y: 'start'
   };
   aura?: Phaser.GameObjects.Sprite;
+  auraColor?: number;
   shield?: Phaser.GameObjects.Sprite;
+  soundKey?: string;
   constructor(
     scene: Game,
     config: CollectableConfig,
@@ -64,9 +67,10 @@ class Collectable extends Phaser.Physics.Arcade.Sprite {
     super(scene, config.pos.x, config.pos.y, config.texture);
     this.scene = scene;
     this.group = group;
+    this.soundKey = config.shield ? 'shield' : 'collect';
     const width = config.width ?? 120;
     const height = config.height ?? 108;
-    const fix = config.fix ?? 20;
+    const fix = config.fix ?? -20;
     const rota = config.rotated ?? false;
     const invrt = config.inverted ?? false
     const friction = config.friction ?? 1;
@@ -86,6 +90,9 @@ class Collectable extends Phaser.Physics.Arcade.Sprite {
     if(config.aura) {
       this.aura = scene.add.sprite(config.pos.x, config.pos.y, config.aura).setScale(0.6);
       this.scene.UICamera?.ignore(this.aura)
+      if (config.auraColor) {
+        this.aura.setTint(config.texture === 'shield' ? 0x6DA574 : config.auraColor);
+      }
     }
     
     this.scene.tweens.add({
@@ -119,6 +126,7 @@ class Collectable extends Phaser.Physics.Arcade.Sprite {
     }
   }
   turnTo(value:boolean):void{
+    console.log("invincible? turnTo", value);
     this.setVisible(value),
     this.aura?.setVisible(value),
     this.shield?.setVisible(value)
@@ -128,7 +136,7 @@ class Collectable extends Phaser.Physics.Arcade.Sprite {
     }
   }
   // Override the destroy method
-  destroy(fromScene?: boolean): void {
+  destroyItem(fromScene?: boolean): void {
     // Call the OnDestroy method for cleanup
     this.aura?.destroy();
     this.shield?.destroy();

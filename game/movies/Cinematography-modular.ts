@@ -12,7 +12,7 @@ import MasterManager from "../MasterManager";
 import cineIntro2B from "./Intro/cineIntro2B";
 import cineIntro2C from "./Intro/cineIntro2C";
 import postalManager from "./postalManager";
-import HoldableButton from "../assets/buttonHolder";
+import {HoldableButton} from "../assets/buttonHolder";
 import cineMovie1 from "./Cinemato1/cineMovie1";
 import cineMovie2 from "./Cinemato1/cineMovie2";
 import cineMovie3 from "./Cinemato1/cineMovie3";
@@ -38,6 +38,7 @@ import UIClass from "../assets/UIClass";
 import cine2Movie4b from "./Cinemato2/cine2Movie4b";
 
 class CinematographyModular extends Phaser.Scene {
+  canWin:boolean =true;
   ticker: Ticker;
   playingCine: cineIntro1 | any;
   nextLevel?: number | undefined;
@@ -59,13 +60,13 @@ class CinematographyModular extends Phaser.Scene {
 
   onGameBlur() {
     console.log(this.playingCine, "playingCine")
-    this.scene.pause()
+    // this.scene.pause()
     this.pauseDialogue()
   }
 
   onGameResume() {
     console.log(this.playingCine, "playingCine", 'focus')
-    this.scene.resume()
+    // this.scene.resume()
     this.resumeDialogue()
   }
 
@@ -250,31 +251,31 @@ class CinematographyModular extends Phaser.Scene {
         // this.nextLevel = 0
         break;
       case "postal1_planeta1":
-        this.playingCine = new postalManager(this, "postal1Planeta1", 1, lifes,code);
+        this.playingCine = new postalManager(this, "postal1Planeta1", 1, lifes);
         this.nextLevel = 1;
         break;
       case "postal2_planeta1":
-        this.playingCine = new postalManager(this, "postal2Planeta1", 3, lifes,code);
+        this.playingCine = new postalManager(this, "postal2Planeta1", 3, lifes);
         this.nextLevel = 3;
         break;
       case "postal1_planeta2":
-        this.playingCine = new postalManager(this, "postal1Planeta2", 5, lifes,code);
+        this.playingCine = new postalManager(this, "postal1Planeta2", 5, lifes);
         this.nextLevel = 5;
 
         break;
       case "postal2_planeta2":
-        this.playingCine = new postalManager(this, "postal2Planeta2", 7, lifes,code);
+        this.playingCine = new postalManager(this, "postal2Planeta2", 7, lifes);
         this.nextLevel = 7;
 
         break;
       case "postal1_planeta3":
-        this.playingCine = new postalManager(this, "postal1Planeta3", 9, lifes,code);
+        this.playingCine = new postalManager(this, "postal1Planeta3", 9, lifes);
         this.nextLevel = 9;
 
         break;
       case "postal2_planeta3":
-        this.playingCine = new postalManager(this, "postal2Planeta3", 11, lifes,code);
-        this.nextLevel = 11;
+        this.playingCine = new postalManager(this, "postal2Planeta3", 11, lifes);
+        this.nextLevel = 10;
 
         break;
       default:

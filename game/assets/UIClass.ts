@@ -5,6 +5,7 @@ import containerSettings from "../containersMenu/containerSettings";
 import CinematographyModular from "../movies/Cinematography-modular";
 import ContainerCredits from "../containersMenu/containerCredits";
 import MasterManager from "../MasterManager";
+import resultContainer from "../containersMenu/resultContainer";
 
 export default class UIClass {
   scene: Game | CinematographyModular;
@@ -29,7 +30,7 @@ export default class UIClass {
   container: Phaser.GameObjects.Container;
   progressParam: number = 0;
   settingsVisible: boolean = false;
-  settingsModal: containerSettings | undefined = undefined
+  settingsModal: containerSettings |undefined = undefined 
   quitGame?: Phaser.GameObjects.Image
   cross?: Phaser.GameObjects.Image
   check?: Phaser.GameObjects.Image
@@ -50,11 +51,13 @@ export default class UIClass {
   constructor(scene: Game | CinematographyModular, level: number, lifes: number, time: number) {
     this.scene = scene
     this.container = this.scene.add.container(-window.innerWidth, 0);
+
     this.scene.tweens.add({
       targets: this.container,
       x: 0,
       duration: 1300,
-      ease: 'Power2'
+      delay:1000,
+      ease: 'Bounce.easeOut'
     })
 
     this.createUIContainer({ level, lifes, time })
@@ -106,21 +109,21 @@ export default class UIClass {
           texture: this.scene.map?.UIItemToGrab,
           scale: this.scene.map?.UIItemScale ? this.scene.map?.UIItemScale : 0.55,
         };
-        this.coinUI = new UI(this.scene, coinConf)
-          .setTint(Phaser.Display.Color.GetColor(0, 0, 0));
+        this.coinUI = new UI(this.scene, coinConf);
+          //.setTint(Phaser.Display.Color.GetColor(0, 0, 0));
 
         this.container.add(this.coinUI);
       }
       const settingsConf: UIConfig = {
         texture: "settingsButton",
-        pos: { x: window.innerWidth - 70, y: 70 },
+        pos: { x: window.innerWidth - 70, y: 50 },
         scale: 0.9,
       };
       this.settings = new UI(this.scene, settingsConf);
       this.settings.setInteractive()
-      const bg = this.scene.add.rectangle(0, 0, window.innerWidth, window.innerHeight, 0x000000, 0.3).setVisible(false).setOrigin(0);
-      this.container.add(bg);
-      this.container.add(this.settings);
+      // const bg = this.scene.add.rectangle(0, 0, window.innerWidth, window.innerHeight, 0x000000, 0.3).setVisible(false).setOrigin(0);
+      // this.container.add(bg);
+      // this.container.add(this.settings);
 
       this.settings.on('pointerup', () => {
         this.toggleSettings()
@@ -133,45 +136,56 @@ export default class UIClass {
     this.scene.scale.on("resize", ()=>{
       this.resizeElements()
     })
+    console.log(window.innerHeight / 1920, 'data22')
+    this.resizeElements();
   }
 
   resizeElements(){
-    if(window.innerWidth < 768){
-      this.settings?.setPosition(window.innerWidth - 50, 70)
-    }
-    else{
-      this.settings?.setPosition(window.innerWidth - 70, 70)
+    const scaleFactor = window.innerHeight / 1920;
+    // console.log("scaleFactor", scaleFactor)
+    this.container.setScale(scaleFactor + 0.5);
+    this.container.setPosition(0, 0);
+    this.uiContainer?.setPosition(200, 70);
+    this.settings?.setScale(scaleFactor + 0.5);
+    this.settings?.setPosition(window.innerWidth - 50, 50)
+    // if(window.innerWidth < 768){
+    // }
+    // else{
+    //   this.settings?.setPosition(window.innerWidth - 70, 70)
       
-    }
+    // }
   }
 
   toggleSettings() {
-    if (this.settingsVisible) {
-      this.container.each((child: any) => {
-        if (child instanceof containerSettings) {
-          child.crossPress()
-          this.settingsModal = undefined
-        }else if(child instanceof UI){
-          child.setVisible(true)
-        }
-      })
-      this.collText?.setVisible(true)
-      this.settingsVisible = false
-    } else {
-      this.settingsModal = new containerSettings(this.scene, { x: window.innerWidth / 2, y: window.innerHeight / 2, dinamicPosition:true }, undefined, () => { this.settingsVisible = !this.settingsVisible }, this.settings)
-      this.masterManager.playSound('buttonSound', false)
-      this.masterManager.pauseGame()
-      this.settings?.setVisible(false)
-      this.container.each((child: any) => {
-        if(child  instanceof UI){ {
-            child.setVisible(false)
+    if(this.scene.canWin){
+      if (this.settingsVisible) {
+        this.container.each((child: any) => {
+          if (child instanceof containerSettings) {
+            child.crossPress()
+            this.settingsModal = undefined
+          }else if(child instanceof UI){
+            child.setVisible(true)
           }
-        } 
-      })
-      this.collText?.setVisible(false)
-      this.container.add(this.settingsModal)
-      this.settingsVisible = true
+        })
+        this.collText?.setVisible(true)
+        this.settingsVisible = false
+      } else {
+        this.settingsModal = new containerSettings(this.scene, { x: window.innerWidth / 2, y: window.innerHeight / 2, dinamicPosition:true }, undefined, () => { this.settingsVisible = !this.settingsVisible }, this.settings)
+        this.masterManager.playSound('buttonSound', false)
+        this.masterManager.pauseGame()
+        this.settings?.setVisible(false)
+        this.container.each((child: any) => {
+          if(child  instanceof UI){ {
+              child.setVisible(false)
+            }
+          } 
+        })
+        this.collText?.setVisible(false)
+        // this.container.add(this.settingsModal)
+        this.settingsVisible = true
+      }
     }
+    
   }
   rotateArrow(direction: string) {
     if (direction == "down") {
@@ -278,6 +292,8 @@ export default class UIClass {
       this.container.add([this.collText]);
     }
     this.scene.cameras.main.ignore(this.container)
+    this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.container);
+    this.scene.cameras.getCamera('backgroundCamera')?.ignore(this.lifesGroup);
   }
   sumCollectable(){
     this.collected++;

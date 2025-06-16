@@ -427,10 +427,11 @@ this.updateContainerPositionRelativeToCamera(
     });
     this.portal = this.scene.physics.add.group({ allowGravity: false });
 
-    //Tank
-    this.player?.setPlayerWithTank(false);
+    
     //FLYING TEST
+    this.player?.setPlayerWithTank(false);
     this.player?.setPlayerFlying(true);
+    this.player?.tankGraphics?.clear()
     
     //const aura = this.scene.add.sprite(3700, 300, "auraTuto").setScale(0.6);
     //this.aura.add(aura);
@@ -631,7 +632,7 @@ this.updateContainerPositionRelativeToCamera(
     attackSpriteSheet: "EnemyAttack",
     particleSpriteSheet: "EnemyParticles",
     patrol:{
-      patrolType:"LinealX",
+      patrolType:"LinealY",
       distance:400,
       speed: 100,
       attackInterval:4,
@@ -838,7 +839,7 @@ this.updateContainerPositionRelativeToCamera(
   }
 
   update() {
-    if (this.scene.cursors?.space.isDown && this.scene.stopMov) {
+    /*if (this.scene.cursors?.space.isDown && this.scene.stopMov) {
       this.scene.stopMov = false;
       if (this.tutorialStep === 1 || this.tutorialStep === 3)
         this.tutorialStep++;
@@ -851,12 +852,14 @@ this.updateContainerPositionRelativeToCamera(
       this.textTutorial1?.setVisible(true);
       this.scene.stopMov = true;
       console.log("ACACA")
-    }
+    }*/
 
     /* Attach background anim */
     // if (this.scene.player) this.animateBackground(this.scene.player);
-    if (this.scene.player)
+    if (this.scene.player){
       this.animateBackground();
+    }
+    
   }
 }
 export default Mapa0;

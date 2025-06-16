@@ -41,6 +41,9 @@ export const loadAssets = {
       ["image", "credits_lu", "/menu/credits/credits_lu.png"],
       ["image", "credits_mai", "/menu/credits/credits_mai.png"],
       ["image", "credits_nano", "/menu/credits/credits_nano.png"],
+      ["image", "credits_rama", "/menu/credits/credits_rama.png"],
+      ["image", "credits_colo", "/menu/credits/credits_colo.png"],
+      ["image", "credits_juampi", "/menu/credits/credits_juampi.png"],
       ["image", "creditsTitle", "/menu/credits/creditsTitle.png"],
       // menu credits
       ["image", "creditsButton", "/menu/initial/creditsButton.png"],
@@ -126,10 +129,63 @@ export const loadAssets = {
       ["image", "lock", "/menu/album/lock.png"],
 
 
+      //result modal
+      ["image", "resultModal", "/menu/result/resultModal.png"] ,
+      ["image", "resultVictory", "/menu/result/resultVictory.png"], 
+      ["image", "resultVictoryAstro", "/menu/result/resultVictoryAstro.png"],
+      ["image", "itemPlaneta1", "/menu/result/item_planeta01.png"],
+      ["image", "itemPlaneta2", "/menu/result/item_planeta02.png"],
+      ["image", "itemPlaneta3", "/menu/result/item_planeta03.png"],
+      ["image", "contenedorReloj", "/menu/result/contenedorReloj.png"],
+      ["image", "deaths", "/menu/result/deaths.png"],
+      ["image", "resultContinue", "/menu/result/resultContinue.png"],
+      ["image", "resultContinueHover", "/menu/result/resultContinueHover.png"],
+      ["image", "resultContinuePressed", "/menu/result/resultContinuePressed.png"],
+      ["image", "resultRetry", "/menu/result/resultRetry.png"],
+      ["image", "resultRetryHover", "/menu/result/resultRetryHover.png"],
+      ["image", "resultRetryPressed", "/menu/result/resultRetryPressed.png"],
+      ["image", "botonHome", "/menu/result/home.svg"],
+      ["image", "botonHomeHover", "/menu/result/botonHomeHover.png"],
+      ["image", "botonHomePressed", "/menu/result/botonHomePressed.png"],
 
+      ["image", "modalDefeat", "/menu/result/resultDefeat.png"],
+      ["image", "titleDefeat", "/menu/result/titleDefeat.png"],
+      ["image", "astroDefeat", "/menu/result/astroDefeat.png"],
+      //VERTICAL LARGE TILES
+      ["image", "top_v1", "/game/generalAssets/verticalTiles/top-v1.png"],
+      ["image", "middle_v1", "/game/generalAssets/verticalTiles/middle-v1.png"],
+      ["image", "middle_v1_2", "/game/generalAssets/verticalTiles/middle-v1-2.png"],
+      ["image", "bottom_v1", "/game/generalAssets/verticalTiles/bottom-v1.png"],
+      //SUBLEVELS
+        //BACKGROUNDS
+          //FAR
+          ["image", "backComboSub", "/game/sub/backgrounds/far/backCombo.svg"],
+          ["image", "backComboSub2", "/game/sub/backgrounds/far/backCombo2.svg"],
+          //MIDDLE
+          //FRONT
+          ["image", "front_bottom", "/game/sub/backgrounds/front/front_bottom.svg"],
+          ["image", "front_bottom2", "/game/sub/backgrounds/front/front_bottom2.svg"],
+          ["image", "front_bottom3", "/game/sub/backgrounds/front/front_bottom3.svg"],
+          ["image", "front_bottom4", "/game/sub/backgrounds/front/front_bottom4.svg"],
+          ["image", "front_top", "/game/sub/backgrounds/front/front_top.svg"],
+          ["image", "front_top2", "/game/sub/backgrounds/front/front_top2.svg"],
+          ["image", "front_top3", "/game/sub/backgrounds/front/front_top3.svg"],
+          ["image", "front_top4", "/game/sub/backgrounds/front/front_top4.svg"],
+      //SOUND EFFECTS
+      ["audio", "collect", "/sounds/sfx/collect.mp3"],
+      ["audio", "cameraFlip", "/sounds/sfx/cameraflip.wav"],
+      ["audio", "damage", "/sounds/sfx/damage.wav"],
+      ["audio", "danger", "/sounds/sfx/danger.wav"],
+      ["audio", "fall", "/sounds/sfx/fall.wav"],
+      ["audio", "fallingTile", "/sounds/sfx/fallingtile.wav"],
+      ["audio", "lose", "/sounds/sfx/lose.wav"],
+      ["audio", "play", "/sounds/sfx/play.mp3"],
+      ["audio", "settings", "/sounds/sfx/settings.wav"],
+      ["audio", "shield", "/sounds/sfx/shield.wav"],
+      ["audio", "spawn", "/sounds/sfx/spawn.wav"],
+      ["audio", "win", "/sounds/sfx/win.ogg"],
+      ["audio", "walk", "/sounds/sfx/walk.flac"],
     ]
-
-
   },
   GamePlay1: {
     assets: [
@@ -257,7 +313,7 @@ export const loadAssets = {
       ["image", "plataformaNuevaLargaA", "/game/planeta1/platforms/newPlatA.png"],
       ["image", "plataformaNuevaLargaB", "/game/planeta1/platforms/newPlatB.png"],
       ["image", "plataformaNuevaLargaC", "/game/planeta1/platforms/newPlatC.png"],
-      ["image", "plataformaFinalP1", "/game/planeta1/platforms/plataformaFinal.png"],
+      ["image", "plataformaFinalP1", "/game/planeta1/platforms/cueva.png"],
       ["image", "frontGround1", "/game/planeta1/backgrounds/frontGround1.png"],
       ["image", "frontGround2", "/game/planeta1/backgrounds/frontGround2.png"],
       ["image", "cristal1", "/game/planeta1/cristal1.png"],
@@ -348,6 +404,20 @@ export const loadAssets = {
     assets: [
       // AUDIOS
       ["audio", "planet1LoopMusic", "/game/planeta2/loopMusic.mp3"],
+      //BACKGROUNDS
+      //FAR
+      //MIDDLE
+      ["image", "middleCombo_p2", "/game/planeta2/backgrounds/middle/middle-1.svg"],
+      ["image", "middleCombo2_p2", "/game/planeta2/backgrounds/middle/middle-2.svg"],
+      ["image", "middleCombo_v2_p2", "/game/planeta2/backgrounds/middle/middle-v2-1.svg"],
+      ["image", "middleCombo_v2_2_p2", "/game/planeta2/backgrounds/middle/middle-v2-2.svg"],
+      //FRONT
+      ["image", "frontCombo_p2", "/game/planeta2/backgrounds/front/front-combo.svg"],
+      ["image", "frontCombo2_p2", "/game/planeta2/backgrounds/front/front-combo-2.svg"],
+      ["image", "frontCombo3_p2", "/game/planeta2/backgrounds/front/front-combo-3.svg"],
+      ["image", "frontCombo4_p2", "/game/planeta2/backgrounds/front/front-combo-4.svg"],
+      ["image", "front_base_p2", "/game/planeta2/backgrounds/front/front.svg"],
+      ["image", "front_shadow_p2", "/game/planeta2/backgrounds/front/front-shadow.svg"],
       // SVGs
       [
         "svg",
@@ -359,13 +429,13 @@ export const loadAssets = {
         "svg",
         "p1backgroundNoche",
         "/game/planeta2/bgnoche.svg",
-        { scale: 1.4 }
+        { scale: 2 }
       ],
       [
         "svg",
         "p1capaOscuridad",
         "/game/planeta2/capaOscuridad.svg",
-        { scale: 1.4 }
+        { scale: 2 }
       ],
       [
         "svg",
@@ -389,7 +459,7 @@ export const loadAssets = {
         "svg",
         "p1Stars",
         "/game/planeta2/starsBackground.svg",
-        { scale: 1.4 }
+        { scale: 2 }
       ],
       [
         "spritesheet",
@@ -417,17 +487,26 @@ export const loadAssets = {
       ["image", "pSimple2p1", "/game/planeta2/pSimple2.png"],
       ["image", "comida", "/game/planeta2/comida.png"],
       ["image", "cuevap1", "/game/planeta2/cuevap1.png"],
-      ["image", "fill_texture_p2","/game/planeta2/platforms/fill_texture.png"],
-      ["image", "fill_texture2_p2","/game/planeta2/platforms/fill_texture2.png"],
-      ["image", "fill_texture3_p2","/game/planeta2/platforms/fill_texture3.png"],
-      ["image", "fill_texture4_p2","/game/planeta2/platforms/fill_texture4.png"],
-      ["image", "platform_center_p2","/game/planeta2/platforms/platform_center.png"],
-      ["image", "platform_der_p2","/game/planeta2/platforms/platform_der.png"],
-      ["image", "platform_izq_p2","/game/planeta2/platforms/platform_izq.png"],
+      ["image", "fill_texture_p2","/game/planeta2/NewPlat/decopiso_planeta2_02.png"],
+      ["image", "fill_texture2_p2","/game/planeta2/NewPlat/decopiso_planeta2_01.png"],
+      ["image", "fill_texture3_p2","/game/planeta2/NewPlat/decopiso_planeta2_03.png"],
+      ["image", "platform_center_p2","/game/planeta2/NewPlat/plataformaflotante_planeta2_med.png"],
+      ["image", "platform_der_p2","/game/planeta2/NewPlat/plataformaflotante_planeta2_der.png"],
+      ["image", "platform_izq_p2","/game/planeta2/NewPlat/plataformaflotante_planeta2_izq.png"],
     ],
   },
   GamePlay3: {
     assets: [
+      //BACKGROUNDS
+      //FAR
+      //MIDDLE
+      ["image", "middleCombo_p3", "/game/planeta3/backgrounds/middle/middle-combo.svg"],
+      ["image", "middleCombo2_p3", "/game/planeta3/backgrounds/middle/middle-combo2.svg"],
+      ["image", "middleCombo3_p3", "/game/planeta3/backgrounds/middle/middle-combo3.svg"],
+      ["image", "middleCombo4_p3", "/game/planeta3/backgrounds/middle/middle-combo4.svg"],
+      //FRONT
+      ["image", "front_base_p3", "/game/planeta3/backgrounds/front/front-base.svg"],
+      ["image", "front_shadow_p3", "/game/planeta3/backgrounds/front/front-shadow.svg"],
       // IMAGES
       ["image", "pSimple1p3", "/game/planeta3/pSimple1.png"],
       ["image", "pSimple2p3", "/game/planeta3/pSImple2.png"],
@@ -443,7 +522,7 @@ export const loadAssets = {
       ["image", "montaña2p3", "/game/planeta3/montaña2p3.png"],
       ["image", "montaña3p3", "/game/planeta3/montaña3p3.png"], 
       ["image", "uiItemp3", "/game/planeta3/uiItemP3.png"], 
-      ["image", "plantap3", "/game/planeta3/plantaP3.png"], 
+      ["image", "plantap3", "/game/planeta3/bubble.svg"], 
       ["image", "plantaVaciap3", "/game/planeta3/plantaVaciaP3.png"], 
       ["image", "brilloPlantap3", "/game/planeta3/brilloPlantaP3.png"], 
       ["image", "burbujap3", "/game/planeta3/burbuja.png"], 
@@ -451,14 +530,19 @@ export const loadAssets = {
       ["image", "planta2p3", "/game/planeta3/planta2p3.png"], 
       ["image", "nube1p3", "/game/planeta3/nube1p3.png"], 
       ["image", "nube2p3", "/game/planeta3/nube2p3.png"], 
+
+      ["image", "p3gradient", "/game/planeta3/newAssets/planeta3_fondo pleno.png"],
+      ["image", "p3stars", "/game/planeta3/newAssets/planeta3_fondo estrella.png"],
+      ["image", "p3wave", "/game/planeta3/newAssets/planeta3_fondo nubes bajas01.png"],
+
+
       //LARGE TILE
-      ["image", "fill_texture_p3","/game/planeta3/platforms/fill_texture.png"],
-      ["image", "fill_texture2_p3","/game/planeta3/platforms/fill_texture2.png"],
-      ["image", "fill_texture3_p3","/game/planeta3/platforms/fill_texture3.png"],
-      ["image", "fill_texture4_p3","/game/planeta2/platforms/fill_texture4.png"],
-      ["image", "platform_center_p3","/game/planeta3/platforms/platform_center.png"],
-      ["image", "platform_der_p3","/game/planeta3/platforms/platform_der.png"],
-      ["image", "platform_izq_p3","/game/planeta3/platforms/platform_izq.png"],
+      ["image", "fill_texture_p3","/game/planeta2/platforms/fill_texture.png"],
+      ["image", "fill_texture2_p3","/game/planeta2/platforms/fill_texture2.png"],
+      ["image", "fill_texture3_p3","/game/planeta2/platforms/fill_texture3.png"],
+      ["image", "platform_center_p3","/game/planeta2/platforms/platform_center.png"],
+      ["image", "platform_der_p3","/game/planeta2/platforms/platform_der.png"],
+      ["image", "platform_izq_p3","/game/planeta2/platforms/platform_izq.png"],
       [
         "spritesheet",
         "meteoritop3",
@@ -913,7 +997,17 @@ export const loadAssets = {
       ["image", "astroFrontC4S4", "/movies/cinemato3/scene4/astroFrontC4S4.png"],
       ["image", "background1C3S4", "/movies/cinemato3/scene4/background1C3S4.png"],
       ["image", "background2C3S4", "/movies/cinemato3/scene4/background2C3S4.png"],
-      ["image", "shipC3S4", "/movies/cinemato3/scene4/shipC3S4.png"],
+      ["image", "shipLightC3S4", "/movies/cinemato3/scene4/shipC3S4.png"],
+
+      ["image", "shipC3S4", "/movies/cinemato3/scene4/nave.png"],
+      ["image", "backgroundPart1C3S4", "/movies/cinemato3/scene4/montañasfondo1.png"],
+      ["image", "backgroundPart2C3S4", "/movies/cinemato3/scene4/montañasfondo2.png"],
+      ["image", "backgroundPart3C3S4", "/movies/cinemato3/scene4/montañasfondo3.png"],
+      ["image", "backgroundPart4C3S4", "/movies/cinemato3/scene4/fondoColorS3.png"],
+
+      ["image", "frontGroundS3", "/movies/cinemato3/scene4/frontGroundS3.png"],
+      ["image", "starsS3", "/movies/cinemato3/scene4/starsS3.png"],
+
       // SCENE 5
       ["image", "backgroundC3S5", "/movies/cinemato3/scene5/backgroundC3S5.png"],
     ]

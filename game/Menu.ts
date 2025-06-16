@@ -25,7 +25,7 @@ class MenuScene extends Phaser.Scene {
 
     containerCode?: Phaser.GameObjects.Container;
     centralPointCode: { x: number, y: number } = { x: this.width / 2 + this.width * 2, y: this.height / 2 }
-    containerCodeRendered:boolean = false;
+    containerCodeRendered: boolean = false;
 
     containerAlbum?: Phaser.GameObjects.Container;
     containerAlbumRendered: boolean = false;
@@ -97,7 +97,7 @@ class MenuScene extends Phaser.Scene {
             }
         }).setVisible(false)
         this.containerCode.setScale(scaleBy())
-        
+
         this.containerAlbumRendered = false
         this.containerAlbum = new containerAlbum(this, {
             x: 0,
@@ -112,6 +112,16 @@ class MenuScene extends Phaser.Scene {
         }).setVisible(false)
 
         this.events.removeAllListeners('shutdown')
+        this.resize();
+
+        window.addEventListener('resize', () => {
+            this.resize();
+        });
+
+        // Remove listeners on shutdown to avoid memory leaks
+        this.events.once('shutdown', () => {
+            window.removeEventListener('resize', this.resize);
+        });
     }
 
     createCreditsContainer() {
@@ -145,13 +155,13 @@ class MenuScene extends Phaser.Scene {
             onComplete: () => {
                 from.setVisible(false)
                 to.setVisible(true)
-                if(to instanceof containerAlbum && !this.containerAlbumRendered){
+                if (to instanceof containerAlbum && !this.containerAlbumRendered) {
                     // Este delay controla cuanto tardan en aparecer las figuritas
                     this.time.delayedCall(900, () => {
                         to.updateElements()
                     })
                     this.containerAlbumRendered = true
-                    }else if(to instanceof containerCode && !this.containerCodeRendered){
+                } else if (to instanceof containerCode && !this.containerCodeRendered) {
                     this.time.delayedCall(700, () => {
                         to.animateElements()
                     })
@@ -164,12 +174,44 @@ class MenuScene extends Phaser.Scene {
                     ease: 'Power2',
                     onComplete: () => {
                         circle.destroy()
-                       
+
                     }
                 })
             }
         });
     }
+
+    resize() {
+        this.width = window.innerWidth;
+        this.height = window.innerHeight;
+
+        // Update central points
+        this.centralPointInitial = { x: this.width / 2, y: this.height / 2 };
+        this.centralPointCredits = { x: this.width / 2 - this.width, y: this.height / 2 };
+        this.centralPointPlay = { x: this.width / 2 + this.width, y: this.height / 2 };
+        this.centralPointSettings = { x: this.width / 2, y: this.height / 2 + this.height };
+        this.centralPointCode = { x: this.width / 2 + this.width * 2, y: this.height / 2 };
+
+        // Update background
+        this.background?.setPosition(this.width / 2, this.height / 2);
+
+        // Update camera
+        this.cameras.cameras.map(camera => {
+            camera.setViewport(-this.width, 0, this.width * 3, this.height);
+            camera.centerOn(this.centralPointInitial.x, this.centralPointInitial.y);
+        });
+        // this.cameras.main.setViewport(-this.width, 0, this.width * 3, this.height);
+        // this.cameras.main.centerOn(this.centralPointInitial.x, this.centralPointInitial.y);
+
+        // Resize and reposition containers
+        this.containerInitial?.setPosition(this.width / 2, this.height / 2).setScale(scaleBy());
+        this.containerCredits?.setPosition(this.width / 2 - this.width, this.height / 2).setScale(scaleBy());
+        this.containerPlay?.setPosition(this.width + this.width / 2, this.height / 2).setScale(scaleBy());
+        this.containerSettings?.setPosition(this.width / 2, this.height / 2 + this.height).setScale(scaleBy());
+        this.containerCode?.setPosition(this.width * 1.5, this.height / 2).setScale(scaleBy());
+        // this.containerAlbum?.setPosition(0, 0).setScale(scaleBy());
+    }
+
 
     update() {
     }

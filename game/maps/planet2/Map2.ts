@@ -208,8 +208,8 @@ class Map3 extends MapCreator {
             lifes: this.scene.lifes ? this.scene.lifes : 3,
             loadKey: ["Postales", "Cinemato1", "Cinemato2"],
             startingPositionFromOtherScene: {
-                x: 0,
-                y: 400,
+                x: 400,
+                y: 700,
             },
         }
         const mapPlatforms = [
@@ -330,6 +330,8 @@ class Map3 extends MapCreator {
             { ...basePlatformsConfig, pos: { x: 7700, y: (this.cameraBounds.height + this.cameraBounds.y) - 1700 },group: this.fallingTile, colors: [colors.falling] },
             { ...basePlatformsConfig, pos: { x: 7700, y: (this.cameraBounds.height + this.cameraBounds.y) - 1000 }},
             { type: "subPortal",  x: 8100, y: (this.cameraBounds.height + this.cameraBounds.y) - 1850, version: 1, sameScene: false, group: this.teleport, otherSceneConf: subLvl1Conf },
+            // { type: "subPortal",  x: 600, y: (this.cameraBounds.height + this.cameraBounds.y) - 1350, version: 1, sameScene: false, group: this.teleport, otherSceneConf: subLvl1Conf },
+           
             { ...basePlatformsConfig, pos: { x: 8200, y: (this.cameraBounds.height + this.cameraBounds.y) - 1300 },
                 animation:{
                     xAxis:{
@@ -348,9 +350,9 @@ class Map3 extends MapCreator {
 
             { ...baseFireballConf, pos: { x: 8850, y:  0}, tween: { duration: 5000, repeat: -1, y: "+=3000"}, rotated: false},
             { ...baseFireballConf, pos: { x: 9050, y:  0}, tween: { duration: 5000, repeat: -1, y: "+=3000"}, rotated: false},
-            {...baseLargePlatformsConf, pos: { x: 9400, y: (this.cameraBounds.height + this.cameraBounds.y) - 500 }, large: 10 ,group: this.floor},
+            {...baseLargePlatformsConf, pos: { x: 9300, y: (this.cameraBounds.height + this.cameraBounds.y) - 500 }, large: 6,group: this.floor},
 
-            { type: "finalPortal", pos: { x: 9750, y: (this.cameraBounds.height + this.cameraBounds.y) - 670  }, texture: "cuevap1", width: 100, height: 100, group: this.portal }
+            { type: "finalPortal", pos: { x: 9700, y: (this.cameraBounds.height + this.cameraBounds.y) - 670  }, texture: "cuevap1", width: 100, height: 100, group: this.portal }
 
         ]
         this.createPlatforms(mapPlatforms)

@@ -236,6 +236,9 @@ export default class UIClass {
     this.lifesGroup = this.scene.add.group();
     this.createUI(data.lifes);
     this.timeLevel = 0;
+    if (this.scene instanceof Game) {
+      this.collected = this.scene.collectedItems.length || 0;
+    }
     // checkeo si estoy en game o cinemato 
     if (this.scene instanceof Game) {
       this.minutes = 0,

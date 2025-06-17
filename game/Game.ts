@@ -104,11 +104,13 @@ class Game extends Phaser.Scene {
   touchedFloor?: boolean = false;
   graphics?: Phaser.GameObjects.Graphics;
   map?: PossibleMaps;
+  subMap?: PossibleMaps;
   joystickBase?: Phaser.GameObjects.Arc;
   joystickKnob?: Phaser.GameObjects.Arc;
   joystickPointerId: number | null = null; // Store the pointer ID for the joystick
   normalizedDragX: number = 0;
   normalizedDragY: number = 0;
+  collectedItems: {x: number, y: number}[] = [];
 
   lifes?: number;
   levelIs: number = 0;
@@ -413,7 +415,7 @@ class Game extends Phaser.Scene {
       this.scene.start(this.map.nextScene).bringToTop(this.map.nextScene);
       this.masterManagerScene?.stopMusic();
     }
-    else if (this.levelIs !== 11) {
+    else if (this.levelIs !== 10) {
       const multiScene = new MultiScene("Game", {
         level: this.levelIs + 1,
         lifes: 3,
@@ -672,7 +674,8 @@ class Game extends Phaser.Scene {
       this.scene.start("MultiScene").bringToTop("MultiScene");
     })
 
-    console.log("ARIEL TEST", data);
+    console.log("ARIEL TEST", data, 'data33');
+    this.collectedItems = data.collectedItems || [];
 
     // timer
     let seconds = 0;
@@ -938,8 +941,9 @@ class Game extends Phaser.Scene {
         break;
       case 5:
         this.player = new Player(this, 0, 0, "character", 2);
-
-        this.map = new p2Map1(this, this.player!);
+        const subMapItems5 = new p2SubMap1(this, this.player!).preCreateItems;
+        const subTotalCoins5: number = subMapItems5.filter((item: any) => item.type === 'collectable' && item.texture !== 'shield').length;
+        this.map = new p2Map1(this, this.player!, {subTotalCoinCount: subTotalCoins5, lifes: this.lifes, level: this.levelIs});
         this.loopMusic = "planet1LoopMusic";
         if (this.masterManagerScene) {
           this.masterManagerScene.imagenesDesbloqueadas = [
@@ -951,7 +955,9 @@ class Game extends Phaser.Scene {
         break;
       case 6:
         this.player = new Player(this, 0, 0, "character", 2);
-        this.map = new p2Map2(this, this.player!);
+        const subMapItems6 = new p2SubMap2(this, this.player!).preCreateItems;
+        const subTotalCoins6: number = subMapItems6.filter((item: any) => item.type === 'collectable' && item.texture !== 'shield').length;
+        this.map = new p2Map2(this, this.player!, {subTotalCoinCount: subTotalCoins6, lifes: this.lifes, level: this.levelIs});
         this.loopMusic = "planet1LoopMusic";
         if (this.masterManagerScene) {
           this.masterManagerScene.imagenesDesbloqueadas = [
@@ -989,7 +995,7 @@ class Game extends Phaser.Scene {
           ];
         }
         break;
-      case 9:
+      case 945564:
         this.player = new Player(this, 0, 0, "character", 2);
 
         this.map = new p3Map2(this, this.player!);
@@ -1004,10 +1010,11 @@ class Game extends Phaser.Scene {
           ];
         }
         break;
-      case 10:
+      case 9:
         this.player = new Player(this, 0, 0, "character", 2);
-
-        this.map = new p3Map3(this, this.player!);
+        const subMapItems9 = new p3SubMap2(this, this.player!).preCreateItems;
+        const subTotalCoins9: number = subMapItems9.filter((item: any) => item.type === 'collectable' && item.texture !== 'shield').length;
+        this.map = new p3Map3(this, this.player!, {subTotalCoinCount: subTotalCoins9, lifes: this.lifes, level: this.levelIs});
         this.loopMusic = "planet3LoopMusic";
         if (this.masterManagerScene) {
           this.masterManagerScene.imagenesDesbloqueadas = [
@@ -1019,10 +1026,11 @@ class Game extends Phaser.Scene {
           ];
         }
         break;
-      case 11:
+      case 10:
         this.player = new Player(this, 0, 0, "character", 2);
-
-        this.map = new p3Map4(this, this.player!);
+        const subMapItems10 = new p3SubMap3(this, this.player!).preCreateItems;
+        const subTotalCoins10: number = subMapItems10.filter((item: any) => item.type === 'collectable' && item.texture !== 'shield').length;
+        this.map = new p3Map4(this, this.player!, {subTotalCoinCount: subTotalCoins10, lifes: this.lifes, level: this.levelIs});
         if (this.masterManagerScene) {
           this.masterManagerScene.imagenesDesbloqueadas = [
             "planeta1_figu1",

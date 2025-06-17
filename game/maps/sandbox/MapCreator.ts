@@ -75,6 +75,7 @@ export type mapLargeFloorConfig = {
 }
 export default class MapCreator {
   mapItems: Phaser.GameObjects.GameObject[] = [];
+  data?: GamePlayDataType;
   isJumping = false;
   scene: Game;
   worldSize = {
@@ -148,11 +149,11 @@ export default class MapCreator {
   farBackgroundReference: { width: number; height: number } = { width: 3840, height: 2160 };
   savePoint?: {x: number; y: number};
   initialScroll:  { x: number; y: number } = { x: 0, y: 0 };
-
-  totalCoins?:number
+  preCreateItems: any
+  totalCoins: number = 0;
   constructor(scene: Game, player: Player, data?: GamePlayDataType) {
     this.scene = scene;
-
+    this.data = data;
     if (this.scene.input.keyboard) {
       this.scene.input.keyboard.enabled = true;
     }
@@ -279,15 +280,32 @@ export default class MapCreator {
   }*/
   createPlatforms(gameObjects: mapFloorConfig[]) {
     gameObjects.forEach((element) => {
-      const tile: any = Factory(this.scene, element, this.floor!);
-      // this.mapGroup.add(tile);
-      if (Array.isArray(tile)) {
-        this.mapItems.push(...tile);
-      } else {
-        this.mapItems.push(tile);
+      console.log(this.scene.collectedItems, "collectedItems", element.pos, "element.pos");
+      if (element.pos && !this.scene.collectedItems.some(item => item.x === element.pos!.x && item.y === element.pos!.y)) {
+        const tile: any = Factory(this.scene, element, this.floor!);
+        // this.mapGroup.add(tile);
+        if (Array.isArray(tile)) {
+          this.mapItems.push(...tile);
+        } else {
+          this.mapItems.push(tile);
+        }
+      } else if (!element.pos) {
+        const tile: any = Factory(this.scene, element, this.floor!);
+        // this.mapGroup.add(tile);
+        if (Array.isArray(tile)) {
+          this.mapItems.push(...tile);
+        } else {
+          this.mapItems.push(tile);
+        }
       }
     });
-    this.totalCoins =  this.coin?.getChildren().length
+    if (this.coin)
+      this.totalCoins =  this.coin.getChildren().length
+    console.log('subMap', this.data?.subTotalCoinCount);
+    if (this.data?.subTotalCoinCount) {
+      this.totalCoins += this.data.subTotalCoinCount;
+      console.log("subMap coin", this.data.subTotalCoinCount, 'mapCoins', this.coin?.getChildren().length, 'totalCoins', this.totalCoins);
+    }
   }
 
   setInitialScroll(scrollX: number, scrollY: number) {
@@ -542,6 +560,7 @@ export default class MapCreator {
           (a, b: any) => {
             this.scene.touchItem("coin");
             this.scene.masterManagerScene?.playSound(b.soundKey)
+            this.scene.collectedItems.push({ x: b.x, y: b.y });
             if (b.destroyItem) b.destroyItem();
             this.coinAura?.destroy();
           },

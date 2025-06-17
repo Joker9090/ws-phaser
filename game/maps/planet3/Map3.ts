@@ -227,7 +227,7 @@ class Map3 extends MapCreator {
                     attackInterval: 0,
                 }, 
             },
-                        { ...basePlatformsConfig, pos: { x: 1950, y: (this.cameraBounds.height + this.cameraBounds.y) - 1000 } ,animation:{
+            { ...basePlatformsConfig, pos: { x: 1950, y: (this.cameraBounds.height + this.cameraBounds.y) - 1000 } ,animation:{
                 xAxis:{
                     xDistance:700,
                     xVel:150
@@ -260,8 +260,8 @@ class Map3 extends MapCreator {
                 }, 
             },
             { ...basePlatformsConfig, pos: { x: 4500, y: (this.cameraBounds.height + this.cameraBounds.y) - 400 }, group: this.gravityTile, colors: [colors.gravity] },
-            { ...basePlatformsConfig, pos: { x: 4500, y: (this.cameraBounds.y) + 100 }, rotate: true, group: this.rotationTile, colors: [colors.rotate], flipY: true },
-            { type: "finalPortal", pos: { x: 2300, y: (this.cameraBounds.y) + 300  }, texture: "cuevap3", width: 100, height: 100, group: this.portal, flipY: true },
+            { ...basePlatformsConfig, pos: { x: 4500, y: (this.cameraBounds.y) + 100 }, flipY: true },
+            { type: "finalPortal", pos: { x: 2300, y: (this.cameraBounds.y) + 315  }, texture: "cuevap3", width: 100, height: 100, group: this.portal, flipY: true },
             {...baseLargePlatformsConf, pos: { x: 2000, y: (this.cameraBounds.y) + 200 }, flipY: true, withTextureToAbove: false,
                 large: 8,
                 group: this.floor
@@ -299,6 +299,8 @@ class Map3 extends MapCreator {
                 }, 
             },
             { ...basePlatformsConfig, pos: { x: 4800, y: (this.cameraBounds.height + this.cameraBounds.y) - 1200 } },
+            { ...basePlatformsConfig, pos: { x: 4800, y: (this.cameraBounds.y) + 100 }, group: this.gravityTile, colors: [colors.gravity], flipY: true },
+
             { ...baseFireballConf, pos: { x: 5000, y: 0 }, tween: { duration: 2000, repeat: -1, y: "+=2000", yoyo: false  }, rotated: false },
             {...baseLargePlatformsConf, pos: { x: 5200, y: (this.cameraBounds.height + this.cameraBounds.y) - 1000 }, withTextureToAbove: false,
                 large: 20,

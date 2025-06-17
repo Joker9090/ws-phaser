@@ -49,7 +49,7 @@ export default function Factory(scene: Game, config: any, floorGroup: Phaser.Phy
         return fireball;
     case "meteorshower":
       const shower: Fireball[] = [];
-        for (let i = 0; i < rest.quantity*10; i++) {
+        for (let i = 0; i < rest.quantity; i++) {
           let newConfig = {...rest};
             newConfig.pos = {
             x: rest.pos.x + (Math.random() * 300),
@@ -66,8 +66,8 @@ export default function Factory(scene: Game, config: any, floorGroup: Phaser.Phy
       const cloudgen: Fireball[] = [];
         for (let i = 0; i < rest.quantity*10; i++) {
           let newConfig = {...rest};
-          newConfig.pos ={x: rest.pos.x , y: rest.pos.y - (Math.random()* rest.quantity * 100)};
-          newConfig.tween = { duration: 60000, delay: i * 10000, repeat: -1, x: "+=10000"};
+          newConfig.pos ={x: rest.pos.x - (Math.random()* rest.quantity * 100), y: rest.pos.y - (Math.random()* rest.quantity * 100)};
+          newConfig.tween = { duration: 60000, delay: i * 10000, repeat: -1, x: "+=15000"};
           newConfig.texture = newConfig.clouds[Math.random() * newConfig.clouds.length | 0];
           let fireball = new Fireball(scene, newConfig, rest.group);
           fireball.setAlpha(0);

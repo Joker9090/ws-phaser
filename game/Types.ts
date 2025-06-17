@@ -1,3 +1,4 @@
+import Collectable from "./assets/Collectable";
 import UIClass from "./assets/UIClass";
 import resultContainer from "./containersMenu/resultContainer";
 import { SceneKeys } from "./multiScenes/assetsLoader";
@@ -19,7 +20,9 @@ export type GamePlayDataType = {
   startingPositionFromOtherScene?: {
     x: number,
     y: number
-  }
+  },
+  collectedItems?: { x: number, y: number }[]
+  subTotalCoinCount?: number
 }
 
 export type CinematoDataType = {

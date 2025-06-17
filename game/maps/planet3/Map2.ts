@@ -220,16 +220,17 @@ class Map2 extends MapCreator {
             { ...baseCristalConf, pos: { x: 1150, y: (this.cameraBounds.height + this.cameraBounds.y) - 650 }, group: this.coin, aura: 'auraTuto' },
             { ...baseCristalConf, pos: { x: 1200, y: (this.cameraBounds.height + this.cameraBounds.y) - 1200 }, group: this.coin, aura: 'auraTuto' },
             { ...basePlatformsConfig, pos: { x: 1100, y:  (this.cameraBounds.height + this.cameraBounds.y) - 1400 }, group: this.gravityTile, colors: [colors.gravity] },
-            { ...basePlatformsConfig, pos: { x: 1100, y:  (this.cameraBounds.height + this.cameraBounds.y) - 2200 } },
+            { ...basePlatformsConfig, pos: { x: 1100, y:  (this.cameraBounds.height + this.cameraBounds.y) - 2200 }, flipY: true },
             { ...baseCristalConf, pos: { x: 1400, y: (this.cameraBounds.height + this.cameraBounds.y) - 2000 }, group: this.coin, aura: 'auraTuto' },
             { ...basePlatformsConfig, pos: { x: 1400, y:  (this.cameraBounds.height + this.cameraBounds.y) - 800 } },
             { ...basePlatformsConfig, pos: { x: 1600, y:  (this.cameraBounds.height + this.cameraBounds.y) - 2200 } , rotate: true , inverted: true, group: this.rotationTile, colors: [colors.rotate] },
             {...baseLongPlatformsConf, pos: { x: 1950, y: (this.cameraBounds.height + this.cameraBounds.y) - 2200 },
                 large: 10,
-                group: this.floor
+                group: this.floor,
+                flipY: true
             },
 
-            { ... baseLargePlatformsConf, pos:{ x: 2200, y: (this.cameraBounds.height + this.cameraBounds.y) - 1400 },
+            { ... baseLargePlatformsConf, pos:{ x: 2200, y: (this.cameraBounds.height + this.cameraBounds.y) - 1000 },
                 large: 4,
                 group: this.floor
             },
@@ -243,7 +244,8 @@ class Map2 extends MapCreator {
             },
             {...baseLongPlatformsConf, pos: { x: 2595, y: (this.cameraBounds.height + this.cameraBounds.y) - 1400 },
                 large: 10,
-                group: this.floor
+                group: this.floor,
+                flipY: true
             },
             { ...baseCristalConf, pos: { x: 2500, y: (this.cameraBounds.height + this.cameraBounds.y) - 1800 }, group: this.coin, aura: 'auraTuto' },
             
@@ -276,21 +278,22 @@ class Map2 extends MapCreator {
             { ...baseCristalConf, pos: { x: 3500, y: (this.cameraBounds.height + this.cameraBounds.y) - 1800 }, group: this.coin, aura: 'auraTuto' },
             { ...basePlatformsConfig, pos: { x: 3700, y:  (this.cameraBounds.height + this.cameraBounds.y) - 2200 },inverted: true,group: this.fallingTile, colors: [colors.falling]  },
             { ...baseCristalConf, pos: { x: 3900, y: (this.cameraBounds.height + this.cameraBounds.y) - 1800 }, group: this.coin, aura: 'auraTuto' },
-            { ...basePlatformsConfig, pos: { x: 4100, y:  (this.cameraBounds.height + this.cameraBounds.y) - 2200 }},
+            { ...basePlatformsConfig, pos: { x: 4100, y:  (this.cameraBounds.height + this.cameraBounds.y) - 2200 }, flipY: true},
             { ...basePlatformsConfig, pos: { x: 5000, y: (this.cameraBounds.height + this.cameraBounds.y) - 2200 } ,animation:{
                 xAxis:{
                     xDistance:700,
                     xVel:150
-                }}
+                }}, flipY: true
             },
             { ...baseCristalConf, pos: { x: 5000, y: (this.cameraBounds.height + this.cameraBounds.y) - 1800 }, group: this.coin, aura: 'auraTuto' },
-            { ...basePlatformsConfig, pos: { x: 5700, y:  (this.cameraBounds.height + this.cameraBounds.y) - 2200 } , rotate: false , inverted: false, group: this.rotationTile, colors: [colors.rotate] },
-            { ...basePlatformsConfig, pos: { x: 6200, y:  (this.cameraBounds.height + this.cameraBounds.y) - 2400 }},
+            { ...basePlatformsConfig, pos: { x: 5700, y:  (this.cameraBounds.height + this.cameraBounds.y) - 2200 } , rotate: false , inverted: false, group: this.rotationTile, colors: [colors.rotate], flipY: true },
+            { ...basePlatformsConfig, pos: { x: 6200, y:  (this.cameraBounds.height + this.cameraBounds.y) - 2400 }, flipY: true},
             
             { ...baseCristalConf, pos: { x: 6200, y: (this.cameraBounds.height + this.cameraBounds.y) - 2330 }, group: this.invincible, texture: "shield", width: 140, height: 180,fix:-10,shield:"auraAnim", aura: 'auraTuto' },
             {...baseLongPlatformsConf, pos: { x: 6600, y: (this.cameraBounds.height + this.cameraBounds.y) - 2400 },
                 large: 12,
-                group: this.floor
+                group: this.floor,
+                flipY: true
             },
             {...baseLargePlatformsConf, pos: { x: 6600, y: (this.cameraBounds.height + this.cameraBounds.y) - 600 },
                 large:15,
@@ -316,7 +319,7 @@ class Map2 extends MapCreator {
                     attackInterval: 0,
                 }, 
             },
-            { ...basePlatformsConfig, pos: { x: 8000, y:  (this.cameraBounds.height + this.cameraBounds.y) - 2400 } , rotate: false, group: this.gravityTile, colors: [colors.gravity] },
+            { ...basePlatformsConfig, pos: { x: 8000, y:  (this.cameraBounds.height + this.cameraBounds.y) - 2400 } , rotate: false, group: this.gravityTile, colors: [colors.gravity], flipY: true },
             { ...basePlatformsConfig, pos: { x: 6300, y:  (this.cameraBounds.height + this.cameraBounds.y) - 1000 } },
             { ...basePlatformsConfig, pos: { x: 5800, y:  (this.cameraBounds.height + this.cameraBounds.y) - 800 },group: this.fallingTile, colors: [colors.falling]  },
             { ...baseCristalConf, pos: { x: 5500, y: (this.cameraBounds.height + this.cameraBounds.y) - 700 }, group: this.coin, aura: 'auraTuto' },
@@ -325,7 +328,7 @@ class Map2 extends MapCreator {
             { ...basePlatformsConfig, pos: { x: 4800, y:  (this.cameraBounds.height + this.cameraBounds.y) - 600 },group: this.fallingTile, colors: [colors.falling]  },
             { ...baseCristalConf, pos: { x: 4600, y: (this.cameraBounds.height + this.cameraBounds.y) - 600 }, group: this.coin, aura: 'auraTuto' },
             {...baseLongPlatformsConf, pos: { x: 3500, y: (this.cameraBounds.height + this.cameraBounds.y) - 400 },
-                large: 6,
+                large: 10,
                 group: this.floor
             },
             { ...basePlatformsConfig, pos: { x: 2900, y:  (this.cameraBounds.height + this.cameraBounds.y) - 400 } , rotate: false, group: this.gravityTile, colors: [colors.gravity] },

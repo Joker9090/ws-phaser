@@ -53,57 +53,11 @@ export default class SubMap2 extends MapCreator {
     //this.player.setPlayerWithTank(true);
     //this.player.isFlying = true;
     this.player.setPlayerFlying(true);
+    this.defineItems();
   }
-
-    createMap(data: { level: number; lifes: number }) {
-      const { width, height } = this.ratioReference;
-    const { width: farWidth, height: farHeight } = this.farBackgroundReference;
-    const downScaledMiddleWidth = width * 0.7;
-    const downScaledFrontWidth = width * 0.5;
-    this.loseConfig=[
-      { positions: { x: this.startingPoint.x , y: this.startingPoint.y },
-        cameraDirection: "NORMAL",
-        PlayerDirection: "NORMAL",
-        gravityDown: true
-        ,
-      },
-    ]
-      
-
-    this.backgroundsBack = [
-      // this.scene.add.image((this.scene.cameras.getCamera("backgroundCamera")?.width ?? 0) / 2, (this.scene.cameras.getCamera("backgroundCamera")?.height ?? 0) / 2, "backComboSub").setOrigin(0.5).setScale(0.6),
-    //   this.scene.add.image(0, 0, "stars").setOrigin(0.5),
-    //   this.scene.add.image(0, 0, "curvedVector").setOrigin(0.5),
-    ]
-    
-    this.backgroundsMiddle = this.createBgRow(200, this.worldSize.height/2, ["backComboSub"], width, 1.3, 0.5),
-    
-    this.backgroundsFront = [
-        ...this.createBgRow(200, this.cameraBounds.height+200, ["front_bottom", "front_bottom2", "front_bottom3", "front_bottom4"], width, 1.2),
-        ...this.createBgRow(200, 200, ["front_top", "front_top2", "front_top3", "front_top4"], width, 1.2, 0),
-
-    //   this.scene.add.image(-this.startingPoint.x, this.cameraBounds.height+200, "frontCombo").setOrigin(0, 1).setScale(0.5),
-    //   this.scene.add.image(-this.startingPoint.x + downScaledFrontWidth, this.cameraBounds.height+200, "frontCombo2").setOrigin(0, 1).setScale(0.5),
-    //   this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 2), this.cameraBounds.height+200, "frontCombo3").setOrigin(0, 1).setScale(0.5),
-    //   this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 3), this.cameraBounds.height+200, "frontCombo4").setOrigin(0, 1).setScale(0.5),
-    //   this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 4), this.cameraBounds.height+200, "frontCombo2").setOrigin(0, 1).setScale(0.5),
-    //   this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 5), this.cameraBounds.height+200, "frontCombo2").setOrigin(0, 1).setScale(0.5),
-    ]
-    
-    this.createBackgrounds(this.backgroundsBack, this.backgroundsMiddle, this.backgroundsFront);
-    
-    const bgContainer = this.scene.add.container(0, 0, this.backgroundsBack);
-    this.scene.UICamera?.ignore(bgContainer);
-    // this.scene.UICamera?.ignore(this.backgroundsBack[0]);
-    this.scene.cameras.main.ignore(bgContainer);
-    // this.scene.cameras.main.ignore(this.backgroundsBack[0]);
-
   
-      // this.scene.UICamera?.ignore(this.mapContainer);
-      this.scene.UICamera?.ignore(this.frontContainer);
-      this.scene.player?.setDepth(999);
-
-      const ObstacleFloorConf = {
+  defineItems() {
+    const ObstacleFloorConf = {
         textureA: "top_v1",
         textureB: ["middle_v1", "middle_v1_2"],
         textureC: "bottom_v1",
@@ -176,14 +130,67 @@ export default class SubMap2 extends MapCreator {
       {...ObstacleFloorConf, pos: {x: 4400, y: (bottomLimit - (4 * ObstacleFloorConf.height * 0.7))}, large: 4},
       {...ObstacleFloorConf, pos: {x: 4800, y: topLimit}, large: 6},
       { type: "subPortal",  x: 4800, y:  this.cameraBounds.height-100, version: 1, sameScene: false, group: this.teleport, otherSceneConf: backToLvl1Conf },
+      // { type: "subPortal",  x: 500, y:  this.cameraBounds.height-100, version: 1, sameScene: false, group: this.teleport, otherSceneConf: backToLvl1Conf },
 
 
       // {...ObstacleFloorConf, pos: {x: 800, y: topLimit}, large: 4},
       // {...ObstacleFloorConf, pos: {x: 800, y: topLimit}, large: 4},
 
      ]
+    this.preCreateItems = mapPlatforms;
+  }
 
-      this.createPlatforms(mapPlatforms)
+    createMap(data: { level: number; lifes: number }) {
+      const { width, height } = this.ratioReference;
+    const { width: farWidth, height: farHeight } = this.farBackgroundReference;
+    const downScaledMiddleWidth = width * 0.7;
+    const downScaledFrontWidth = width * 0.5;
+    this.loseConfig=[
+      { positions: { x: this.startingPoint.x , y: this.startingPoint.y },
+        cameraDirection: "NORMAL",
+        PlayerDirection: "NORMAL",
+        gravityDown: true
+        ,
+      },
+    ]
+      
+
+    this.backgroundsBack = [
+      // this.scene.add.image((this.scene.cameras.getCamera("backgroundCamera")?.width ?? 0) / 2, (this.scene.cameras.getCamera("backgroundCamera")?.height ?? 0) / 2, "backComboSub").setOrigin(0.5).setScale(0.6),
+    //   this.scene.add.image(0, 0, "stars").setOrigin(0.5),
+    //   this.scene.add.image(0, 0, "curvedVector").setOrigin(0.5),
+    ]
+    
+    this.backgroundsMiddle = this.createBgRow(200, this.worldSize.height/2, ["backComboSub"], width, 1.3, 0.5),
+    
+    this.backgroundsFront = [
+        ...this.createBgRow(200, this.cameraBounds.height+200, ["front_bottom", "front_bottom2", "front_bottom3", "front_bottom4"], width, 1.2),
+        ...this.createBgRow(200, 200, ["front_top", "front_top2", "front_top3", "front_top4"], width, 1.2, 0),
+
+    //   this.scene.add.image(-this.startingPoint.x, this.cameraBounds.height+200, "frontCombo").setOrigin(0, 1).setScale(0.5),
+    //   this.scene.add.image(-this.startingPoint.x + downScaledFrontWidth, this.cameraBounds.height+200, "frontCombo2").setOrigin(0, 1).setScale(0.5),
+    //   this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 2), this.cameraBounds.height+200, "frontCombo3").setOrigin(0, 1).setScale(0.5),
+    //   this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 3), this.cameraBounds.height+200, "frontCombo4").setOrigin(0, 1).setScale(0.5),
+    //   this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 4), this.cameraBounds.height+200, "frontCombo2").setOrigin(0, 1).setScale(0.5),
+    //   this.scene.add.image(-this.startingPoint.x + (downScaledFrontWidth * 5), this.cameraBounds.height+200, "frontCombo2").setOrigin(0, 1).setScale(0.5),
+    ]
+    
+    this.createBackgrounds(this.backgroundsBack, this.backgroundsMiddle, this.backgroundsFront);
+    
+    const bgContainer = this.scene.add.container(0, 0, this.backgroundsBack);
+    this.scene.UICamera?.ignore(bgContainer);
+    // this.scene.UICamera?.ignore(this.backgroundsBack[0]);
+    this.scene.cameras.main.ignore(bgContainer);
+    // this.scene.cameras.main.ignore(this.backgroundsBack[0]);
+
+  
+      // this.scene.UICamera?.ignore(this.mapContainer);
+      this.scene.UICamera?.ignore(this.frontContainer);
+      this.scene.player?.setDepth(999);
+
+      
+
+      this.createPlatforms(this.preCreateItems)
       this.cameraIgnore()
     }
 

@@ -244,7 +244,7 @@ class Map1 extends MapCreator {
             { ...baseCristalConf, pos: { x: 3400, y: (this.cameraBounds.height + this.cameraBounds.y) - 1070 }, group: this.coin, aura: 'auraTuto' },
             
             
-            { type: "subPortal",  x: 3800, y: (this.cameraBounds.height + this.cameraBounds.y) - 1300, version: 1, sameScene: false, group: this.teleport, otherSceneConf: subLvl1Conf },
+            { type: "subPortal",  x: 3800, y: (this.cameraBounds.height + this.cameraBounds.y) - 1400, version: 1, sameScene: false, group: this.teleport, otherSceneConf: subLvl1Conf },
         ]
         this.createPlatforms(mapPlatforms)
 

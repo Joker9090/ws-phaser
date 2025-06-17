@@ -216,13 +216,13 @@ class Map3 extends MapCreator {
         const mapPlatforms = [
           { ...cloudConfig, pos: { x: 0, y:  (this.cameraBounds.height + this.cameraBounds.y) - 800 } },
             {...baseLargePlatformsConf, pos: { x: 200, y: (this.cameraBounds.height + this.cameraBounds.y) - 1200 }, large: 4,group: this.floor},
-            {...baseLargePlatformsConf, pos: { x: 550, y: (this.cameraBounds.height + this.cameraBounds.y) - 800 }, large: 4,group: this.floor},
-            {...baseLargePlatformsConf, pos: { x: 900, y: (this.cameraBounds.height + this.cameraBounds.y) - 400 }, large: 4,group: this.floor},
+            {...baseLargePlatformsConf, pos: { x: 580, y: (this.cameraBounds.height + this.cameraBounds.y) - 800 }, large: 4,group: this.floor},
+            {...baseLargePlatformsConf, pos: { x: 960, y: (this.cameraBounds.height + this.cameraBounds.y) - 400 }, large: 4,group: this.floor},
             { ...baseFireballConf, pos: { x: 1600, y:  0}, tween: { duration: 3000, repeat: -1, y: "+=3000"}, rotated: false},
             { ...baseCristalConf, pos: { x: 1800, y:  (this.cameraBounds.height + this.cameraBounds.y) - 300 }, group: this.coin, texture: "comida", width: 140, height: 180, aura: 'auraTuto' },
             { ...baseFireballConf, pos: { x: 2000, y:  0}, tween: { duration: 3000, repeat: -1, y: "+=3000"}, rotated: false},
-            {...baseLargePlatformsConf, pos: { x: 2400, y: (this.cameraBounds.height + this.cameraBounds.y) - 400 }, large: 4,group: this.floor},
-            {...baseLargePlatformsConf, pos: { x: 2750, y: (this.cameraBounds.height + this.cameraBounds.y) - 800 }, large: 4,group: this.floor},
+            {...baseLargePlatformsConf, pos: { x: 2340, y: (this.cameraBounds.height + this.cameraBounds.y) - 400 }, large: 4,group: this.floor},
+            {...baseLargePlatformsConf, pos: { x: 2720, y: (this.cameraBounds.height + this.cameraBounds.y) - 800 }, large: 4,group: this.floor},
             {...baseLargePlatformsConf, pos: { x: 3100, y: (this.cameraBounds.height + this.cameraBounds.y) - 1200 }, large: 4,group: this.floor},
 
             { ...basePlatformsConfig, pos: { x: 3800, y: (this.cameraBounds.height + this.cameraBounds.y) - 1200 } },

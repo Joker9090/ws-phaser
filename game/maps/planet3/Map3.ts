@@ -51,7 +51,8 @@ class Map3 extends MapCreator {
 
         this.UIItemToGrab= "uiItemp3";
         this.UIItemScale= 0.3;
-
+        this.planet = 3;
+        this.nextScene="cine_3_movie_1";
         //   this.nextScene= "postal1_planeta3";
     }
 

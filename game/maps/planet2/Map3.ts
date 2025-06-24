@@ -7,51 +7,53 @@ import { group } from "console";
 
 class Map3 extends MapCreator {
    
-    constructor(scene: Game, player: Player, data?: GamePlayDataType) {
-        super(scene, player, data);
-        this.scene = scene;
-        this.player = player;
+  constructor(scene: Game, player: Player, data?: GamePlayDataType) {
+    super(scene, player, data);
+    this.scene = scene;
+    this.player = player;
 
-        this.scene.physics.world.setBounds(
-            0,
-            0,
-            this.worldSize.width,
-            this.worldSize.height
-        );
+    this.scene.physics.world.setBounds(
+      0,
+      0,
+      this.worldSize.width,
+      this.worldSize.height
+    );
 
-        this.player.setPlayerWithTank(true);
-        this.player.setPlayerFlying(false);
-        this.player.tankGraphics?.clear();
+    this.player.setPlayerWithTank(true);
+    this.player.setPlayerFlying(false);
+    this.player.tankGraphics?.clear();
 
-        this.worldSize = {
-            width: 14100,
-            height: 3000,
-          };
-          this.cameraBounds = {
-            x: 200,
-            y: 200,
-            width: 13900,
-            height: 2600,
-          };
-          this.scene.physics.world.setBounds(
-            0,
-            0,
-            this.worldSize.width,
-            this.worldSize.height
-          );
-          this.scene.cameras.main.setBounds(
-            this.cameraBounds.x,
-            this.cameraBounds.y,
-            this.cameraBounds.width,
-            this.cameraBounds.height
-          );
-      
-          this.startingPoint = {
-            x: 400, //500
-            y: (this.cameraBounds.height + this.cameraBounds.y) - 1500, //800
-          };
-          this.UIItemToGrab="comida";
-    }
+    this.worldSize = {
+      width: 14100,
+      height: 3000,
+    };
+    this.cameraBounds = {
+      x: 200,
+      y: 200,
+      width: 13900,
+      height: 2600,
+    };
+    this.scene.physics.world.setBounds(
+      0,
+      0,
+      this.worldSize.width,
+      this.worldSize.height
+    );
+    this.scene.cameras.main.setBounds(
+      this.cameraBounds.x,
+      this.cameraBounds.y,
+      this.cameraBounds.width,
+      this.cameraBounds.height
+    );
+
+    this.startingPoint = {
+      x: 400, //500
+      y: (this.cameraBounds.height + this.cameraBounds.y) - 1500, //800
+    };
+    this.UIItemToGrab = "comida";
+    this.planet = 2;
+    this.nextScene="cine_2_movie_1";
+  }
 
     createMap(data: { level: number; lifes: number }) {
         this.mapContainer = this.scene.add.container();

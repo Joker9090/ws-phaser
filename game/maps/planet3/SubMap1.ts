@@ -52,7 +52,7 @@ class Map1 extends MapCreator {
 
           this.UIItemToGrab= "uiItemp3";
           this.UIItemScale= 0.3;
-
+          this.planet = 3;
     }
 
     createMap(data: { level: number; lifes: number }) {

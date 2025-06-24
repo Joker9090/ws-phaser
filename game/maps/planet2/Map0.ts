@@ -48,6 +48,7 @@ class Map0 extends MapCreator {
 
         this.UIItemToGrab="comida";
         this.nextScene= "postal1_planeta2";
+        this.planet = 2;
     }
 
     createMap(data: { level: number; lifes: number }) {

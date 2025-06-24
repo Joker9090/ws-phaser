@@ -26,31 +26,34 @@ class Map3 extends MapCreator {
         this.worldSize = {
             width: 10000,
             height: 3000,
-          };
-          this.cameraBounds = {
+        };
+        this.cameraBounds = {
             x: 200,
             y: 200,
             width: 9600,
             height: 2600,
-          };
-          this.scene.physics.world.setBounds(
+        };
+        this.scene.physics.world.setBounds(
             0,
             0,
             this.worldSize.width,
             this.worldSize.height
-          );
-          this.scene.cameras.main.setBounds(
+        );
+        this.scene.cameras.main.setBounds(
             this.cameraBounds.x,
             this.cameraBounds.y,
             this.cameraBounds.width,
             this.cameraBounds.height
-          );
-      
-          this.startingPoint = {
+        );
+
+        this.startingPoint = {
             x: 500, //500
             y: (this.cameraBounds.height + this.cameraBounds.y) - 1200, //800
-          };
-          this.UIItemToGrab="comida";
+        };
+        this.UIItemToGrab = "comida";
+        this.player.setPlayerWithTank(false);
+        this.planet = 2;
+        this.nextScene= "postal2_planeta2";
     }
 
     createMap(data: { level: number; lifes: number }) {

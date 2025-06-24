@@ -56,37 +56,39 @@ interface CodeType {
   imagenes?: string[];
 }
 // a medida que los mapas pasen al nuevo modo esto se deberia poder eliminar ya que totalcoins existe en mapCreator
-export type PossibleMaps =
-  | (p1Mapa0 & { totalCoins?: number } & { timerText?: string })
-  | (p1Mapa1 & { totalCoins?: number } & { timerText?: string })
-  | (p1Mapa2 & { totalCoins?: number } & { timerText?: string })
-  | (p1Mapa3 & { totalCoins?: number } & { timerText?: string })
-  | (p2Mapa1 & { totalCoins?: number } & { timerText?: string })
-  | (p2Mapa2 & { totalCoins?: number } & { timerText?: string })
-  | (p2Mapa3 & { totalCoins?: number } & { timerText?: string })
-  | (p2Mapa4 & { totalCoins?: number } & { timerText?: string })
-  | (p3Mapa1 & { totalCoins?: number } & { timerText?: string })
-  | (p3Mapa2 & { totalCoins?: number } & { timerText?: string })
-  | Sandbox
-  | p1Map0
-  | p1Map1
-  | p1Map2
-  | p1Map3
-  | p2Map2
-  | p2m3sub1
-  | MapCreator
-  | p2Map0
-  | p2Map1
-  | p2SubMap1
-  | p2SubMap2
-  | p2Map3
-  | p3Map1
-  | p3Map4
-  | p3SubMap3
-  | p3Map2
-  | p3SubMap1
-  | p3SubMap2
-  | p3Map3;
+export type PossibleMaps = MapCreator
+
+  // | (p1Mapa0 & { totalCoins?: number } & { timerText?: string })
+  // | (p1Mapa1 & { totalCoins?: number } & { timerText?: string })
+  // | (p1Mapa2 & { totalCoins?: number } & { timerText?: string })
+  // | (p1Mapa3 & { totalCoins?: number } & { timerText?: string })
+  // | (p2Mapa1 & { totalCoins?: number } & { timerText?: string })
+  // | (p2Mapa2 & { totalCoins?: number } & { timerText?: string })
+  // | (p2Mapa3 & { totalCoins?: number } & { timerText?: string })
+  // | (p2Mapa4 & { totalCoins?: number } & { timerText?: string })
+  // | (p3Mapa1 & { totalCoins?: number } & { timerText?: string })
+  // | (p3Mapa2 & { totalCoins?: number } & { timerText?: string })
+  // | Sandbox
+  // | p1Map0
+  // | p1Map1
+  // | p1Map2
+  // | p1Map3
+  // | p2Map2
+  // | p2m3sub1
+  // | MapCreator
+  // | p2Map0
+  // | p2Map1
+  // | p2SubMap1
+  // | p2SubMap2
+  // | p2Map3
+  // | p3Map1
+  // | p3Map4
+  // | p3SubMap3
+  // | p3Map2
+  // | p3SubMap1
+  // | p3SubMap2
+  // | p3Map3
+  // | MapCreator
 // Scene in class
 export const keyCodesAWSD = {
   w: Phaser.Input.Keyboard.KeyCodes.W,
@@ -115,6 +117,8 @@ class Game extends Phaser.Scene {
   lifes?: number;
   levelIs: number = 0;
   timeLevel: number = 0;
+  seconds: number = 0;
+  minutes: number = 0;
   goingBack: boolean = false;
 
   canWin: boolean = true;
@@ -460,6 +464,7 @@ class Game extends Phaser.Scene {
       }
       this.masterManagerScene?.playSound('win', false, 0.5, 2000);
       this.cameraNormal = true;
+      const planet = this.map.planet ?? 1;
       if (this.canWin) {
         this.canWin = false
         const resultConfig = {
@@ -467,7 +472,7 @@ class Game extends Phaser.Scene {
           coinCount: this.map.totalCoins ?? 0,
           x: window.innerWidth / 2,
           y: window.innerHeight / 2,
-          planeta: 1,
+          planeta: planet,
           victory: true,
           timerText: this.timerText,
           lifes: this.lifes
@@ -545,12 +550,13 @@ class Game extends Phaser.Scene {
           this.cameraNormal = true;
           this.checkPoint === 0;
           this.canWin = false
+          const planet = this.map.planet ?? 1;
           const resultConfig = {
             collText: this.UIClass?.collText?.text ?? "0",
             coinCount: this.map.totalCoins ?? 0,
             x: window.innerWidth / 2,
             y: window.innerHeight / 2,
-            planeta: 1,
+            planeta: planet,
             victory: false,
             timerText: this.timerText,
             lifes: this.lifes
@@ -676,20 +682,22 @@ class Game extends Phaser.Scene {
 
     console.log("ARIEL TEST", data, 'data33');
     this.collectedItems = data.collectedItems || [];
-
     // timer
-    let seconds = 0;
-    let minutes = 0;
+    // console.log("timeLevel", data.timePassed, 'data timeLevel', this.timePassed);
+    this.seconds = data.seconds || 0;
+    this.minutes = data.minutes || 0;
     this.time.addEvent({
       delay: 1000,
       callback: () => {
-        if (seconds < 59) {
-          seconds++;
+        if (this.seconds < 59) {
+          this.seconds++;
         } else {
-          seconds = 0;
-          minutes++;
+          this.seconds = 0;
+          this.minutes++;
         }
-        this.timerText = seconds <= 9 ? `${minutes} : 0${seconds}` : `${minutes} : ${seconds}`
+        // this.timePassed += seconds + minutes * 60;
+    console.log("data lvl time", data.seconds, data.minutes, 'data timeLevel', this.seconds, this.minutes);
+        this.timerText = this.seconds <= 9 ? `${this.minutes} : 0${this.seconds}` : `${this.minutes} : ${this.seconds}`
       },
       loop: true,
     });
@@ -1260,6 +1268,7 @@ class Game extends Phaser.Scene {
 
     console.log("this.cameras.main", this.cameras.main, window.innerWidth, window.innerHeight);
     this.masterManagerScene?.playSound('spawn', false, 0.5, 2000);
+    this.win()
   }
 
   update(this: Game) {

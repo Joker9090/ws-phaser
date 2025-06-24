@@ -22,31 +22,32 @@ class Map1 extends MapCreator {
         this.worldSize = {
             width: 15500,
             height: 2400,
-          };
-          this.cameraBounds = {
+        };
+        this.cameraBounds = {
             x: 200,
             y: 200,
             width: 15200,
             height: 2000,
-          };
-          this.scene.physics.world.setBounds(
+        };
+        this.scene.physics.world.setBounds(
             0,
             0,
             this.worldSize.width,
             this.worldSize.height
-          );
-          this.scene.cameras.main.setBounds(
+        );
+        this.scene.cameras.main.setBounds(
             this.cameraBounds.x,
             this.cameraBounds.y,
             this.cameraBounds.width,
             this.cameraBounds.height
-          );
-      
-          this.startingPoint = {
+        );
+
+        this.startingPoint = {
             y: (this.cameraBounds.height + this.cameraBounds.y) - 900, //800
             x: 300,
-          };
-          this.UIItemToGrab="comida";
+        };
+        this.UIItemToGrab = "comida";
+        this.planet = 2;
     }
 
     createMap(data: { level: number; lifes: number }) {

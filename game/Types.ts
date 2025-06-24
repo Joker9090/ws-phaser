@@ -23,6 +23,8 @@ export type GamePlayDataType = {
   },
   collectedItems?: { x: number, y: number }[]
   subTotalCoinCount?: number
+  seconds?: number
+  minutes?: number
 }
 
 export type CinematoDataType = {

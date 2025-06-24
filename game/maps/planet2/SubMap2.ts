@@ -52,7 +52,9 @@ export default class SubMap2 extends MapCreator {
 
     //this.player.setPlayerWithTank(true);
     //this.player.isFlying = true;
+    this.UIItemToGrab = "comida";
     this.player.setPlayerFlying(true);
+    this.planet = 2;
     this.defineItems();
   }
   

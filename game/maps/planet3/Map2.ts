@@ -52,7 +52,9 @@ class Map2 extends MapCreator {
 
         this.UIItemToGrab= "uiItemp3";
         this.UIItemScale= 0.3;
-
+        this.player.setPlayerFlying(false);
+        this.nextScene= "postal2_planeta3";
+        this.planet = 3;
     }
 
     createMap(data: { level: number; lifes: number }) {
@@ -69,6 +71,9 @@ class Map2 extends MapCreator {
               ,
             },
           ]
+        this.player?.setPlayerWithTank(true);
+        this.player?.setPlayerFlying(false);
+        this.player?.tankGraphics?.clear()
         // const backImage = this.scene.textures.get("background0P1").getSourceImage()
         // this.backSize = { width: backImage.width, height: backImage.height }
 

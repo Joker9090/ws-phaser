@@ -287,6 +287,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       if (this.flipX) xF = this.x + 17;
         this.tankAnimSprite?.setPosition(xF, this.y + 100);
       });
+    } else {
+      if (!this.tankAnimSprite)return;
+      this.tankAnimSprite.setVisible(false);
     }
   }
   setCameraState(state: "NORMAL" | "ROTATED") {

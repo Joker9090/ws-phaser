@@ -47,10 +47,11 @@ class CinematographyModular extends Phaser.Scene {
   holdableButton?: HoldableButton;
   keyname?:string;
   UIcontainer?: Phaser.GameObjects.Container;
-    UIClass?: UIClass;
-    UICamera?: Phaser.Cameras.Scene2D.Camera;
-   graphics?: Phaser.GameObjects.Graphics;
-   enabled:boolean = false;
+  UIClass?: UIClass;
+  UICamera?: Phaser.Cameras.Scene2D.Camera;
+  graphics?: Phaser.GameObjects.Graphics;
+  enabled:boolean = false;
+  finalCine: boolean = false;
   constructor() {
     super({ key: "CinematographyMod" });
 
@@ -86,6 +87,15 @@ class CinematographyModular extends Phaser.Scene {
       0xffffff,
       "#ffffff66",
       () => {
+        if (this.finalCine) {
+          const multiScene = new MultiScene("MenuScene", undefined);
+          const scene = this.scene.add("MultiScene", multiScene, true);
+          this.scene.start("MultiScene").bringToTop("MultiScene");
+          this.sound.stopAll();
+          this.scene.stop("CinematographyMod");  
+          this.finalCine = false;
+          return;
+        }
         if(!(this.playingCine instanceof postalManager)){
           this.playingCine.stopDialogue(); 
           this.playingCine = null;
@@ -249,6 +259,7 @@ class CinematographyModular extends Phaser.Scene {
       case "cine_3_movie_5":
         this.playingCine = new cine3Movie5(this);
         // this.nextLevel = 0
+        this.finalCine = true;
         break;
       case "postal1_planeta1":
         this.playingCine = new postalManager(this, "postal1Planeta1", 1, lifes);
@@ -274,7 +285,7 @@ class CinematographyModular extends Phaser.Scene {
 
         break;
       case "postal2_planeta3":
-        this.playingCine = new postalManager(this, "postal2Planeta3", 11, lifes);
+        this.playingCine = new postalManager(this, "postal2Planeta3", 10, lifes);
         this.nextLevel = 10;
 
         break;

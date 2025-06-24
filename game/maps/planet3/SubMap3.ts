@@ -52,6 +52,8 @@ class SubMap3 extends MapCreator {
           this.UIItemToGrab= "uiItemp3";
           this.UIItemScale= 0.3;
         //   this.nextScene= "postal1_planeta3";
+        this.UIItemToGrab= "uiItemp3";
+        this.planet = 3;
         this.defineItems();
     }
 

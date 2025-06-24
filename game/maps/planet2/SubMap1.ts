@@ -48,6 +48,7 @@ class SubMap1 extends MapCreator {
           };
           this.UIItemToGrab="comida";
           this.defineItems();
+          this.planet = 2;
     }
 
   defineItems() {
@@ -270,7 +271,7 @@ class SubMap1 extends MapCreator {
 
     createMap(data: { level: number; lifes: number }) {
         this.mapContainer = this.scene.add.container();
-        this.coin = this.scene.physics.add.group({ allowGravity: false });
+        // this.coin = this.scene.physics.add.group({ allowGravity: false });
         this.pisosBack = this.scene.physics.add.group({ allowGravity: false });
         this.flyingPiso = this.scene.physics.add.group({ allowGravity: false, immovable: true });
         this.portal = this.scene.physics.add.group({ allowGravity: false });
@@ -334,7 +335,7 @@ class SubMap1 extends MapCreator {
         this.scene.UICamera?.ignore(this.backContainer)
         this.scene.UICamera?.ignore(this.middleContainer)
         this.scene.UICamera?.ignore(this.frontContainer)
-        this.scene.UICamera?.ignore(this.coin)
+        // this.scene.UICamera?.ignore(this.coin)
         this.scene.UICamera?.ignore(this.pisosBack)
         this.scene.UICamera?.ignore(this.gravityTile!)
 

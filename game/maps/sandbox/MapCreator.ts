@@ -151,6 +151,7 @@ export default class MapCreator {
   initialScroll:  { x: number; y: number } = { x: 0, y: 0 };
   preCreateItems: any
   totalCoins: number = 0;
+  planet: number = 1;
   constructor(scene: Game, player: Player, data?: GamePlayDataType) {
     this.scene = scene;
     this.data = data;
@@ -278,8 +279,9 @@ export default class MapCreator {
 
     this.totalCoins =  this.coin?.getChildren().length
   }*/
-  createPlatforms(gameObjects: mapFloorConfig[]) {
+  createPlatforms(gameObjects: any[]) {
     gameObjects.forEach((element) => {
+      if (element.type === 'collectable' && element.texture !== 'shield') this.totalCoins += 1
       console.log(this.scene.collectedItems, "collectedItems", element.pos, "element.pos");
       if (element.pos && !this.scene.collectedItems.some(item => item.x === element.pos!.x && item.y === element.pos!.y)) {
         const tile: any = Factory(this.scene, element, this.floor!);
@@ -299,8 +301,6 @@ export default class MapCreator {
         }
       }
     });
-    if (this.coin)
-      this.totalCoins =  this.coin.getChildren().length
     console.log('subMap', this.data?.subTotalCoinCount);
     if (this.data?.subTotalCoinCount) {
       this.totalCoins += this.data.subTotalCoinCount;

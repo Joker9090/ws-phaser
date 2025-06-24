@@ -66,12 +66,6 @@
         "mapa": 10
     },
     {
-        "type": "planeta",
-        "codigo": "000012",
-        "imagenes": ["planeta1_figu1","planeta1_figu2","planeta2_figu1","planeta2_figu2","planeta3_figu1","planeta3_figu2"],
-        "mapa": 11
-    },
-    {
         "type": "postal",
         "codigo": "njx381",
         "imagenes": ["planeta1_figu1"],

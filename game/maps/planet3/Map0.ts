@@ -24,34 +24,35 @@ class Map0 extends MapCreator {
         this.worldSize = {
             width: 10000,
             height: 3000,
-          };
-          this.cameraBounds = {
+        };
+        this.cameraBounds = {
             x: 200,
             y: 200,
             width: 9600,
             height: 2600,
-          };
-          this.scene.physics.world.setBounds(
+        };
+        this.scene.physics.world.setBounds(
             0,
             0,
             this.worldSize.width,
             this.worldSize.height
-          );
-          this.scene.cameras.main.setBounds(
+        );
+        this.scene.cameras.main.setBounds(
             this.cameraBounds.x,
             this.cameraBounds.y,
             this.cameraBounds.width,
             this.cameraBounds.height
-          );
-      
-          this.startingPoint = {
+        );
+
+        this.startingPoint = {
             x: 350, //500
             y: this.worldSize.height - 800, //800
-          };
+        };
 
-          this.UIItemToGrab= "uiItemp3";
-          this.UIItemScale= 0.3;
-          this.nextScene= "postal1_planeta3";
+        this.UIItemToGrab = "uiItemp3";
+        this.UIItemScale = 0.3;
+        this.nextScene = "postal1_planeta3";
+        this.planet = 3;
     }
 
     createMap(data: { level: number; lifes: number }) {

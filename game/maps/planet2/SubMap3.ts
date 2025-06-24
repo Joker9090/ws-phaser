@@ -51,6 +51,7 @@ class SubMap3 extends MapCreator {
             y: (this.cameraBounds.height + this.cameraBounds.y) - 1500, //800
           };
           this.UIItemToGrab="comida";
+          this.planet = 2;
     }
 
     createMap(data: { level: number; lifes: number }) {

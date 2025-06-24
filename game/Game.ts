@@ -1268,7 +1268,7 @@ class Game extends Phaser.Scene {
 
     console.log("this.cameras.main", this.cameras.main, window.innerWidth, window.innerHeight);
     this.masterManagerScene?.playSound('spawn', false, 0.5, 2000);
-    this.win()
+    // this.win()
   }
 
   update(this: Game) {

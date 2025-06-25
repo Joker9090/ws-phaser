@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import Ticker, { TickerJob } from "../Ticker";
 import DialogueManager from "../DialogueManager";
 import CinematographyModular from "@/game/movies/Cinematography-modular";
+import MultiScene from "@/game/MultiScene";
 
 class cine2Movie6 {
   ticker: Ticker;
@@ -219,7 +220,11 @@ class cine2Movie6 {
 
   update(this: cine2Movie6, time: number, delta: number) {
     if (this.dialogue) this.dialogue.update();
-    if (this.nextCine) this.cine.scene.restart({ keyname: "cine_2_movie_1" });
+    if (this.nextCine) {
+      const multiScene = new MultiScene("Game", { level: 8, lifes: 3 });
+      const scene = this.cine.scene.add("MultiScene", multiScene, true);
+      this.cine.scene.start("MultiScene").bringToTop("MultiScene");
+    }
   }
 }
 

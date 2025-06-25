@@ -52,6 +52,7 @@ export default class SubMap2 extends MapCreator {
 
     //this.player.setPlayerWithTank(true);
     //this.player.isFlying = true;
+    this.UIItemScale = 0.3;
     this.UIItemToGrab= "uiItemp3";
     this.player.setPlayerFlying(true);
     this.planet = 3;

@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import Ticker, { TickerJob } from "../Ticker";
 import DialogueManager from "../DialogueManager";
 import CinematographyModular from "@/game/movies/Cinematography-modular";
+import MultiScene from "@/game/MultiScene";
 
 class cine3Movie5 {
   ticker: Ticker;
@@ -144,7 +145,8 @@ class cine3Movie5 {
             duration:500,
             onComplete:()=>{
               this.cine.time.delayedCall(2000,()=>{
-                this.cine.scene.restart({ keyname: "cine_3_movie_1" });
+                // this.cine.scene.restart({ keyname: "cine_3_movie_1" });
+                this.nextCine = true;
               })
             }
           })
@@ -164,14 +166,18 @@ class cine3Movie5 {
 
     this.ticker.addJob(
       new TickerJob(1, 10, part1, false, undefined, true, (job: TickerJob) => {
-       
+        this.nextCine = true;
       })
     );
   }
 
   update(this: cine3Movie5, time: number, delta: number) {
     if (this.dialogue) this.dialogue.update();
-    if (this.nextCine) this.cine.scene.restart({ keyname: "cine_3_movie_5" });
+    if (this.nextCine) {
+      const multiScene = new MultiScene("MenuScene", undefined);
+      const scene = this.cine.scene.add("MultiScene", multiScene, true);
+      this.cine.scene.start("MultiScene").bringToTop("MultiScene");
+    }
   }
 }
 

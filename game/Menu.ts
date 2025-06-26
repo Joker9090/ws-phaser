@@ -162,7 +162,7 @@ class MenuScene extends Phaser.Scene {
     }
 
     changeContainer(from: Phaser.GameObjects.Container, to: Phaser.GameObjects.Container) {
-        let circle 
+        let circle: Phaser.GameObjects.Arc
         // check this.scene.cameras.main with configPans and create a switch
         // centralPointInitial
         // centralPointCredits

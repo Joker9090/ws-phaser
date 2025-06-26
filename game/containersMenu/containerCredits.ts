@@ -10,13 +10,13 @@ class ContainerCredits extends Phaser.GameObjects.Container {
     width: number = window.innerWidth;
     height: number = window.innerHeight;
     backButton: Phaser.GameObjects.Image;
-    credits_barto: Phaser.GameObjects.Image;
+    // credits_barto: Phaser.GameObjects.Image;
     credits_clari: Phaser.GameObjects.Image;
     credits_hache: Phaser.GameObjects.Image;
     credits_jeimi: Phaser.GameObjects.Image;
     credits_joaco: Phaser.GameObjects.Image;
     credits_lu: Phaser.GameObjects.Image;
-    credits_mai: Phaser.GameObjects.Image;
+    // credits_mai: Phaser.GameObjects.Image;
     credits_nano: Phaser.GameObjects.Image;
     credits_rama: Phaser.GameObjects.Image;
     credits_colo: Phaser.GameObjects.Image;
@@ -29,13 +29,13 @@ class ContainerCredits extends Phaser.GameObjects.Container {
         super(scene, config.x, config.y)
         // this.setSize(1920,1080)
         this.backButton = scene.add.image(0, 0, "backButton")
-        this.credits_barto = scene.add.image(0, 0, "credits_barto").setAlpha(0.5).setScale(0)
+        // this.credits_barto = scene.add.image(0, 0, "credits_barto").setAlpha(0.5).setScale(0)
         this.credits_clari = scene.add.image(0, 0, "credits_clari").setAlpha(0.5).setScale(0)
         this.credits_hache = scene.add.image(0, 0, "credits_hache").setAlpha(0.5).setScale(0)
         this.credits_jeimi = scene.add.image(0, 0, "credits_jeimi").setAlpha(0.5).setScale(0)
         this.credits_joaco = scene.add.image(0, 0, "credits_joaco").setAlpha(0.5).setScale(0)
         this.credits_lu = scene.add.image(0, 0, "credits_lu").setAlpha(0.5).setScale(0)
-        this.credits_mai = scene.add.image(0, 0, "credits_mai").setAlpha(0.5).setScale(0)
+        // this.credits_mai = scene.add.image(0, 0, "credits_mai").setAlpha(0.5).setScale(0)
         this.credits_nano = scene.add.image(0, 0, "credits_nano").setAlpha(0.5).setScale(0)
         this.credits_rama = scene.add.image(0, 0, "credits_rama").setAlpha(0.5).setScale(0)
         this.credits_colo = scene.add.image(0, 0, "credits_colo").setAlpha(0.5).setScale(0)
@@ -55,10 +55,10 @@ class ContainerCredits extends Phaser.GameObjects.Container {
         const creditsArray = [
             this.credits_lu,
             this.credits_hache,
-            this.credits_barto,
+            // this.credits_barto,
             this.credits_nano,
             this.credits_jeimi,
-            this.credits_mai,
+            // this.credits_mai,
             this.credits_joaco,
             this.credits_clari,
             this.credits_rama,
@@ -70,27 +70,29 @@ class ContainerCredits extends Phaser.GameObjects.Container {
 
         for (let i = 0; i < creditsArray.length; i++) {
            const delay =  Math.random() * 1000
+           creditsArray[i].setAlpha(0)
            this.scene.tweens.add({
                targets: creditsArray[i],
                scale: 1,
+               alpha: 0.9,
                duration: 700,
-               ease: 'bounce',
+               ease: 'Power2',
                delay: delay,
            })
         }
         console.log("ARIEL TRANSFORM MATRIX", creditsArray[0].getLocalTransformMatrix())
 
-        const creditsPosY = 0
-        
-        // this.creditsTitle.setPosition(0, creditsPosY)
+        this.creditsTitle.setAlpha(0)
+        this.creditsTitle.setPosition(this.creditsTitle.x, 0)
         this.scene.tweens.add({
             targets: this.creditsTitle,
-            y: creditsPosY,
+            alpha: 1,
             duration: 1000,
-            ease: 'ease',
+            ease: 'Power2',
             delay: 1000
         })
-        this.backButton.setPosition(this.width / 2, -this.height / 2 + this.backButton.height / 2 + 32)
+        // this.backButton.setPosition(this.width / 2, -this.height / 2 + this.backButton.height / 2 + 32)
+        this.backButton.setPosition(this.width / 2 + 75, this.height / 2 - this.backButton.height / 2 - 32)
         this.backButton.setInteractive().on('pointerdown', () => {
             this.backButton.setTexture('backButtonPressed')
         })
@@ -121,7 +123,7 @@ class ContainerCredits extends Phaser.GameObjects.Container {
         const maxPaddingX = 50
         const maxPaddingY = 65
         let firstPosX = -(width + maxPaddingX) * 2
-        let firstPosY = -(height + maxPaddingY )* .5
+        let firstPosY = -(height + maxPaddingY )* .475
         // let paddingX = (this.width - 4 * width) / 5
         // let paddingY = (this.height - 2 * height) / 3
         // firstPosX = (this.width - maxPaddingX * 3 - 4 * width) / 2
@@ -130,7 +132,7 @@ class ContainerCredits extends Phaser.GameObjects.Container {
             if (index < 5) {
                 element.setPosition(firstPosX + index * (width + maxPaddingX), firstPosY)
             } else {
-                element.setPosition(firstPosX + (index - 5.5) * (width + maxPaddingX), firstPosY + height + maxPaddingY)
+                element.setPosition(firstPosX + (index - 4.5) * (width + maxPaddingX), firstPosY + height + maxPaddingY)
             }
         })
     }

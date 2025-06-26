@@ -71,7 +71,7 @@ class Figuritas extends Phaser.GameObjects.Container {
     const group:any[] = []
     const background =this.scene.add.rectangle(this.scene.scale.width / 2,this.scene.scale.height /2,this.scene.scale.width,this.scene.scale.height, 0x0000, 0.7)
     const downloadImage = this.scene.add.image(this.scene.scale.width / 2,this.scene.scale.height / 2, this.postal).setScale(this.postalBaseScale * this.postalPreviewScaleFactor)
-    const downloadButton = this.scene.add.image(this.scene.scale.width/2 + 300 , this.scene.scale.height/2 + 230, "downloadButton")
+    const downloadButton = this.scene.add.image(this.scene.scale.width/2 + 300 , this.scene.scale.height/2 + 230, "downloadButton").setVisible(false)
     const modal = this.scene.add.image(this.scene.scale.width / 2,this.scene.scale.height /4 + 300, "codeModal").setVisible(false)
     const cross = this.scene.add.image(this.scene.scale.width / 2 - 100,this.scene.scale.height /4 + 450, "settingsCross").setVisible(false)
     const check = this.scene.add.image(this.scene.scale.width / 2 + 100  ,this.scene.scale.height /4 +450, "settingsCheck").setVisible(false)
@@ -127,7 +127,7 @@ class Figuritas extends Phaser.GameObjects.Container {
       downloadImage.destroy()
       group.forEach(item => item.destroy());
     })
-    downloadButton.setInteractive()
+    // downloadButton.setInteractive() // COMENTADO EL BOTON! VER EL setVIsibile(false) tmb cualquier cosa
     downloadButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER,()=>{
       downloadButton.setTexture("downloadButtonHover")
     })

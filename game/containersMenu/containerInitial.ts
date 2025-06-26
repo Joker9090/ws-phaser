@@ -11,7 +11,7 @@ class containerInitial extends Phaser.GameObjects.Container {
     height: number = window.innerHeight;
     creditsButton: Phaser.GameObjects.Image;
     gameTitle: Phaser.GameObjects.Image;
-    logoNoswar: Phaser.GameObjects.Image;
+    logoNoswar: LogoNoswar;
     playButton: Phaser.GameObjects.Image;
     scoreButton: Phaser.GameObjects.Image;
     albumButton: Phaser.GameObjects.Image;
@@ -205,36 +205,36 @@ class containerInitial extends Phaser.GameObjects.Container {
                 this.toggleSettings();
             }
         });
-        this.logoNoswar = scene.add.image(0, 0, "logoNoswar").setOrigin(1, 1)
-        this.logoNoswar.setPosition(this.width/2 + 100, this.height/2 - 20)
+        this.logoNoswar = new LogoNoswar(scene,this.width/2 + 100, this.height/2 - 20)
         console.log(this.logoNoswar, "LOGO NOSWAR")
-        this.scene.tweens.add({
-            targets: this.logoNoswar,
-            x: this.width/2 - 20,
-            duration: 1000,
-            delay: 300*Math.random() + 700,
-            onComplete: () => {
-                this.scene.tweens.add({ 
-                    targets: this.logoNoswar,
-                    y: '-=30',
-                    duration: 600,
-                    delay: 800,
-                    repeat: -1,
-                    hold: 500*Math.random() ,
-                    yoyo: true,
-                    ease: 'bounce'
-                })
-            },
-            ease: 'ease',
-        })
+        // this.scene.tweens.add({
+        //     targets: this.logoNoswar,
+        //     x: this.width/2 - 20,
+        //     duration: 1000,
+        //     delay: 300*Math.random() + 700,
+        //     onComplete: () => {
+        //         this.scene.tweens.add({ 
+        //             targets: this.logoNoswar,
+        //             y: '-=30',
+        //             duration: 600,
+        //             delay: 800,
+        //             repeat: -1,
+        //             hold: 500*Math.random() ,
+        //             yoyo: true,
+        //             ease: 'bounce'
+        //         })
+        //     },
+        //     ease: 'ease',
+        // })
         this.arr = [
             this.creditsButton,
             this.gameTitle,
             this.playButton,
             this.scoreButton,
             this.settingsButton,
-            this.logoNoswar,
-            this.albumButton
+            this.albumButton,
+            ...this.logoNoswar.getAll().map((el: Phaser.GameObjects.GameObject) => el as Phaser.GameObjects.Image),
+
         ]
 
         this.add(this.arr)
@@ -260,3 +260,57 @@ class containerInitial extends Phaser.GameObjects.Container {
     }
 }
 export default containerInitial;
+
+
+
+export class LogoNoswar extends  Phaser.GameObjects.Container {
+    logoNoswar: Phaser.GameObjects.Image;
+    logoNoswarBack: Phaser.GameObjects.Image;
+    logoNoswarBack2: Phaser.GameObjects.Image;
+    constructor(scene: Phaser.Scene, x: number, y: number) {
+        super(scene, x, y);
+        
+        this.setScale(2);
+        this.setVisible(true);
+        this.logoNoswar = new Phaser.GameObjects.Image(scene, x, y, "logoNoswar");
+        this.logoNoswar.setOrigin(0.5);
+        this.logoNoswar.setScale(2);
+        this.logoNoswar.setVisible(true);
+
+        this.logoNoswarBack = new Phaser.GameObjects.Image(scene, x, y - 15, "logoNoswarBack");
+        this.logoNoswarBack.setOrigin(0.5);
+        this.logoNoswarBack.setScale(0.22);
+        this.logoNoswarBack.setAlpha(0.22);
+        this.logoNoswarBack.setTint(0xeeeeee);
+        this.logoNoswarBack.setVisible(true);
+        
+
+          this.logoNoswarBack2 = new Phaser.GameObjects.Image(scene, x, y - 15, "logoNoswarBack");
+        this.logoNoswarBack2.setOrigin(0.5);
+        this.logoNoswarBack2.setScale(0.22);
+        this.logoNoswarBack2.setAlpha(0.20);
+        this.logoNoswarBack2.setTint(0xeeeeee);
+        this.logoNoswarBack2.setVisible(true);
+
+        // start rotating logoNoswarBack
+        this.scene.tweens.add({
+            targets: this.logoNoswarBack,
+            angle: 360,
+            duration: 100000,
+            repeat: -1,
+            ease: 'Bounce.easeInOut',
+        });
+         this.scene.tweens.add({
+            targets: this.logoNoswarBack2,
+            angle: -360,
+            duration: 70000,
+            repeat: -1,
+            ease: 'Bounce.easeInOut',
+        });
+
+        this.add([this.logoNoswarBack2, this.logoNoswarBack, this.logoNoswar]);
+        this.scene.add.existing(this);
+        this.setScrollFactor(1);
+        this.setDepth(999999);
+    }
+}

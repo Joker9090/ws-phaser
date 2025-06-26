@@ -14,6 +14,8 @@ export default class BetweenScenesScene extends Phaser.Scene {
   newSceneName?: string;
   newSceneWith?: any;
   firstRender: boolean = true
+  planeta?: Phaser.GameObjects.Image;
+
   startTime: number = 0
   constructor() {
     super({ key: "BetweenScenes" });
@@ -50,6 +52,8 @@ export default class BetweenScenesScene extends Phaser.Scene {
   }
 
   turnOff() {
+    this.planeta?.setVisible(false);
+
     const self = this;
     let i = 0;
     let ii = 0;
@@ -82,11 +86,23 @@ export default class BetweenScenesScene extends Phaser.Scene {
   }
   
   onTurnOnComplete() {
-  
+    var width = this.cameras.main.width;
+    var height = this.cameras.main.height;
+    this.planeta = this.add.image(width/2, height/2, "planetaLoader").setScale(0.6).setOrigin(0.5).setVisible(true);
+    this.tweens.add({
+      targets:this.planeta,
+      alpha: 0.5,
+      yoyo: true,
+      repeat: -1,
+      duration: 700,
+    });
     // start PreLoadScene to load the next scene
     const preloadScene = new PreLoadScene(this.newSceneWith && this.newSceneWith.loadKey ? this.newSceneWith.loadKey : undefined, () => {
-      this.loadNewScene()
-      this.turnOff()
+      // set this.turnOff() after 2 seconds
+      this.time.delayedCall(2000, () => {
+        this.loadNewScene()
+        this.turnOff();
+      }, [], this);
     });
 
     const scene = this.scene.add("PreLoadScene", preloadScene, true);

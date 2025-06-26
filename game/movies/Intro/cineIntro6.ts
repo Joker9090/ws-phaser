@@ -94,7 +94,7 @@ class cineIntro6 {
     // this.VidrioVisorView2 = this.cine.add.image(92, 0, "VidrioVisorView").setOrigin(0.5).setAlpha(0)
     // this.AstroPerfilCorte = this.cine.add.image(-30, 0, "AstroPerfilCorte").setOrigin(0.5).setAlpha(0)
     this.Piso = this.cine.add
-      .image(-100, middlePoint.y, "PisoScene6")
+      .image(-100, middlePoint.y * 2, "PisoScene6")
       .setOrigin(0.5, 1)
       .setScale(1.15, 1);
     // this.Meteorito1 = this.cine.add.image(600, -150, "meteoritoTest").setOrigin(0.5, 0.5).setFlipX(true)
@@ -122,6 +122,8 @@ class cineIntro6 {
     const container = this.cine.add
       .container(middlePoint.x, middlePoint.y)
       .setSize(1920, 927);
+      // scale to fit width and height 
+    // SCENA 6, maskara de planeta ?
     container.add([
       this.background3,
       this.background2,

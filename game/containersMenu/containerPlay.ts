@@ -70,7 +70,7 @@ class containerPlay extends Phaser.GameObjects.Container {
         this.gameTitle.setPosition(0, -200)
 
         this.backButton = scene.add.image(0, 0, "playBackButton")
-        this.backButton.setPosition(-this.width/2 + 80, this.height/2 - this.backButton.height)
+        this.backButton.setPosition(-this.width/2 - 75 , this.height/2 - this.backButton.height / 2 - 32)
         this.backButton.setInteractive().on('pointerdown', () => {
             this.backButton.setTexture('playBackButtonPressed')
         })

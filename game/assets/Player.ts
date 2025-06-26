@@ -332,14 +332,16 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     if (gameScene.cameras.getCamera('backgroundCamera')) gameScene.cameras.getCamera('backgroundCamera')?.ignore(this.tankGraphics);
 
     let barSize = 100
+    let barDistance = 75
+    let barHeight = 13
     const limit0 = (this.tank.fuel - this.tank.fuelConditionToStart < 0) ? 0 : this.tank.fuel - this.tank.fuelConditionToStart
     const equivalent = (limit0 * barSize) / (this.tank.fuelLimit - this.tank.fuelConditionToStart)
-    this.tankGraphics.fillRect(this.x - 50, (this.playerState === "NORMAL" ? this.y - 100 : this.y + 100), barSize, 10)
+    this.tankGraphics.fillRoundedRect(this.x - (barSize / 2), (this.playerState === "NORMAL" ? this.y - barDistance : this.y + barDistance), barSize, barHeight,5)
     this.tankGraphics.fillStyle(0xff0000, 0.9)
     if(this.tank.extraJumpAt) {
       this.tankGraphics.fillStyle(0xffffff, 0.9)
     }
-    this.tankGraphics.fillRect(this.x - 50, (this.playerState === "NORMAL" ? this.y - 100 : this.y + 100), equivalent , 10)
+    this.tankGraphics.fillRoundedRect(this.x - (barSize / 2), (this.playerState === "NORMAL" ? this.y - barDistance : this.y + barDistance), equivalent , barHeight,5)
     this.tankGraphics.setDepth(99)
   }
   //TANK SMOKE

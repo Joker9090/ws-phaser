@@ -51,6 +51,7 @@ export const loadAssets = {
       ["image", "creditsButtonPressed", "/menu/initial/creditsButtonPressed.png"],
       // ["image", "gameTitle", "/menu/initial/gameTitle.png"],
       ["image", "logoNoswar", "/menu/initial/logoNoswar.png"],
+      ["image", "logoNoswarBack", "/menu/initial/nwblack.png"],
       ["image", "playButton", "/menu/initial/playButton.png"],
       ["image", "playButtonHover", "/menu/initial/playButtonHover.png"],
       ["image", "playButtonPressed", "/menu/initial/playButtonPressed.png"],
@@ -1020,16 +1021,12 @@ class AssetsLoader {
   loadKey: SceneKeys[] = ["BaseLoad"];
   progressBox?: Phaser.GameObjects.Graphics;
   progressBar?: Phaser.GameObjects.Graphics;
-  planeta?: Phaser.GameObjects.Image;
   firstLoad: boolean = true;
     constructor(scene: MultiScene | PreLoadScene, loadKey: SceneKeys[] = ["BaseLoad"], isFirstLoad: boolean = true) {
     this.scene = scene;
     this.loadKey = loadKey;
     this.firstLoad = isFirstLoad;
-    var width = this.scene.cameras.main.width;
-    var height = this.scene.cameras.main.height;
-    this.planeta = this.scene.add.image(width/2 -200, height/2 - 152, "planetaLoader").setOrigin(0).setVisible(true);
-
+  
   }
 
   runPreload(callback?: Function) {
@@ -1082,20 +1079,13 @@ class AssetsLoader {
      
       // });
 
-      this.scene.tweens.add({
-        targets:this.planeta,
-        alpha: 0.5,
-        yoyo: true,
-        repeat: -1,
-        duration: 700,
-      })
+     
       this.scene.load.once("complete", function (this: AssetsLoader) {
         // this.progressBar?.destroy();
         // this.progressBox?.destroy();
         // loadingText.destroy();
         // percentText.destroy();
         // assetText.destroy();
-        this.planeta?.setVisible(false);
         this.finished = true;
         if (callback) callback()
       });

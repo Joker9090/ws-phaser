@@ -33,11 +33,11 @@ class containerAlbum extends Phaser.GameObjects.Container {
             this.masterManager = masterManagerScene;
         }
 
-        this.background = scene.add.image(this.width / 2, this.height / 2, "backgroundAlbum").setScale(scaleBy(true))
+        this.background = scene.add.image(this.width / 2, this.height / 2, "backgroundAlbum").setScale(scaleBy(true)).setAlpha(0.8);
         // this.background.setInteractive()
         this.banner = scene.add.image(this.width / 2, this.height / 6, "bannerAlbum")
         let nivel = 1;
-        this.title = this.scene.add.text(100, 120 , `Level ${nivel}`, {
+        this.title = this.scene.add.text(100, 75 ,this.getPlanetName(nivel), {
             color: "#00feff",
             stroke: "#00feff",
             align: "center",
@@ -75,7 +75,7 @@ class containerAlbum extends Phaser.GameObjects.Container {
                 this.start += this.step;
                 this.end += this.step;
                 nivel += 1
-                this.title.setText(`Level ${nivel}`)
+                this.title.setText(this.getPlanetName(nivel))
                 this.masterManager.playSound('buttonSound', false)
                 this.updateElements();
                 nextButton.setTexture('backButton')
@@ -135,6 +135,20 @@ class containerAlbum extends Phaser.GameObjects.Container {
 
         // this.add(arr)
         scene.add.existing(this)
+    }
+    getPlanetName(nivel: number) {
+        switch (nivel) {
+            case 1:
+                return "PLANET 1";
+            case 2:
+                return "PLANET 2";
+            case 3: 
+                return "PLANET 3";
+            case 4: 
+                return "PLANET 4";
+            default:
+                return `PLANET ${nivel}`;
+        }
     }
     updateElements = () => {
         this.figuritas.forEach((figurita) => figurita.destroy());

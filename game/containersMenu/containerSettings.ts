@@ -126,7 +126,7 @@ class containerSettings extends Phaser.GameObjects.Container {
             const background =  scene.add.rectangle(0, 0, window.innerWidth / scale, (window.innerHeight + 200) / scale, 0x000000, 0.5).setInteractive();
             const modal = this.scene.add.image(0, 0, "codeModal")
             const cross = this.scene.add.image(-120, 140, "settingsCross")
-            const check = this.scene.add.image(80, 140, "settingsCheck")
+            const check = this.scene.add.image(80, 40, "settingsCheck")
             const text = this.scene.add.text(-190, -150, `Quit game?`, {
                 color: "#00feff",
                 stroke: "#00feff",

@@ -341,7 +341,7 @@ export default class MenuClass {
         });
         this.exit.on("selected", () => {
             // this.scene.makeTransition("Intro", { data: 1 });
-            window.alert("CLOSING GAME, ahre xD")
+            window.alert("CLOSING GAME, ahre xD") // JAJAJAJA, paso a decir que esto lo vio tu jefe !!
             this.selectedButtonIndex = 0;
         });
         this.scene.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {

@@ -282,7 +282,7 @@ class cineIntro2B {
       .setOrigin(0.5)
       .setFlipX(true);
     this.backgroundPanel = this.cine.add
-      .image(0, 0, "backgroundPanel") 
+      .image(0, 50, "backgroundPanel") 
       .setOrigin(0.5);
     let marker = 0;
     setInterval(() => {
@@ -426,6 +426,7 @@ class cineIntro2B {
     this.container = this.cine.add
       .container(middlePoint.x, middlePoint.y)
       .setSize(1920, 927);
+
     this.container.add(assetsScenes.concat(barrasArr, barrasContArr));
     this.container.setScale(
       gameObjectScaler.x < gameObjectScaler.y

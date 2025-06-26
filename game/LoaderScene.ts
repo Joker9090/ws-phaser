@@ -71,7 +71,7 @@ export default class LoaderScene extends Phaser.Scene {
         let loadingText = this.make.text({
           x: 0,
           y: 200,
-          text: "Loading...",
+          text: "", // "Loading...",
           style: {
             font: "30px monospace",
             color: "#ffffff",
@@ -98,7 +98,7 @@ export default class LoaderScene extends Phaser.Scene {
 
         progressContainer.add([this.progressBox, this.progressBar]); // Add graphics to the container
 
-        this.background = this.add.image(0, 0, "fondoCarga");
+        this.background = this.add.image(0, 0, "fondoCarga").setAlpha(0.8);
         this.background.setPosition(midPoint.x, midPoint.y).setDepth(-1);
 
 
@@ -129,7 +129,7 @@ export default class LoaderScene extends Phaser.Scene {
           repeat: -1,
         });
 
-        this.player = this.add.sprite(-152, 0, "player", 2).setDepth(999999999).setScale(0.8).setVisible(false);
+        this.player = this.add.sprite(-152, 47, "player", 2).setDepth(999999999).setScale(0.5).setVisible(false);
         this.scaledContainer?.add(this.player!)
 
         this.player.play("loading");
@@ -141,7 +141,7 @@ export default class LoaderScene extends Phaser.Scene {
           const segments = Math.floor((300 * value) / segmentWidth);
           for (let i = 0; i < segments; i++) {
             this.progressBar?.fillRoundedRect(-152 + i * segmentWidth, 110, segmentWidth - 2, 40, 5); // Adjusted to be relative to the container
-            this.player?.setPosition(-152 + (segments * segmentWidth),0).setVisible(true); // Adjusted to account for container position
+            this.player?.setPosition(-152 + (segments * segmentWidth),47).setVisible(true); // Adjusted to account for container position
           }
         });
       });

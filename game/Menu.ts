@@ -38,7 +38,26 @@ class MenuScene extends Phaser.Scene {
 
 
     create() {
-        this.background = this.add.image(window.innerWidth / 2, window.innerHeight / 2, "menuBackground").setOrigin(0.5, 0.5)
+        console.log("MenuScene created");
+        this.background = this.add.image(window.innerWidth / 2, window.innerHeight, "menuBackground").setOrigin(0.5, 1).setAlpha(0.8)
+        // background is 1880 x 540
+        const scale = window.innerHeight / 540;
+        this.background.setScale(scale);
+        // if actual width is less than  window.innerWidth * 2, try to fit that
+        if (this.background.width < window.innerWidth * 3) {
+            const newScale = window.innerWidth * 3 / this.background.width;
+            // if height is less than window.innerHeight, try to fit that
+            let newScaleHeight = 0
+            if (this.background.height < window.innerHeight) {
+                newScaleHeight = window.innerHeight / this.background.height;
+            }
+            const finalScale = newScale > newScaleHeight ? newScale : newScaleHeight;
+            this.background.setScale(finalScale);
+        }
+        // position background bottom center if the screen
+
+        
+       
         // set viewport and camera position
         this.cameras.main.setViewport(-this.width, 0, this.width * 3, this.height)
         this.cameras.main.centerOn(this.centralPointInitial.x, this.centralPointInitial.y)
@@ -143,10 +162,26 @@ class MenuScene extends Phaser.Scene {
     }
 
     changeContainer(from: Phaser.GameObjects.Container, to: Phaser.GameObjects.Container) {
-        const circle = from.scene.add.circle(window.innerWidth, window.innerHeight, 1, 0x000, 1)
+        let circle 
+        // check this.scene.cameras.main with configPans and create a switch
+        // centralPointInitial
+        // centralPointCredits
+        // centralPointPlay
+        // centralPointSettings
+        // centralPointCode
+
+                  circle = this.add.circle(from.x, from.y, 100, 0x010101).setAlpha(0.5).setScale(0).setOrigin(0.5, 0.5)
+
         circle.setInteractive()
+
         const diagonal = Math.sqrt(window.innerWidth ** 2 + window.innerHeight ** 2);
         const finalScale = diagonal / (circle.radius * 2)
+        from.scene.tweens.add({
+            targets: circle,
+            alpha: 1,
+            ease: 'Power2',
+            duration: 300,
+        });
         from.scene.tweens.add({
             targets: circle,
             scale: finalScale * 2,
@@ -177,6 +212,16 @@ class MenuScene extends Phaser.Scene {
 
                     }
                 })
+                 from.scene.tweens.add({
+                    targets: circle,
+                    alpha: 0.5,
+                    delay: 1250,
+                    duration: 150,
+                    ease: 'Power2',
+                    onComplete: () => {
+
+                    }
+                })
             }
         });
     }
@@ -193,7 +238,7 @@ class MenuScene extends Phaser.Scene {
         this.centralPointCode = { x: this.width / 2 + this.width * 2, y: this.height / 2 };
 
         // Update background
-        this.background?.setPosition(this.width / 2, this.height / 2);
+        this.background?.setPosition(this.width / 2, this.height);
 
         // Update camera
         this.cameras.cameras.map(camera => {

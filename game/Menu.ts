@@ -11,23 +11,23 @@ import containerAlbum from "./containersMenu/containerAlbum";
 class MenuScene extends Phaser.Scene {
     width: number = window.innerWidth;
     height: number = window.innerHeight;
-    containerInitial?: Phaser.GameObjects.Container;
+    containerInitial?: Phaser.GameObjects.Container & { resize: Function};
     centralPointInitial: { x: number, y: number } = { x: this.width / 2, y: this.height / 2 };
 
-    containerCredits?: Phaser.GameObjects.Container;
+    containerCredits?: Phaser.GameObjects.Container  & { resize: Function};
     centralPointCredits: { x: number, y: number } = { x: this.width / 2 - this.width, y: this.height / 2 };
 
-    containerPlay?: Phaser.GameObjects.Container;
+    containerPlay?: Phaser.GameObjects.Container  & { resize: Function};
     centralPointPlay: { x: number, y: number } = { x: this.width / 2 + this.width, y: this.height / 2 };
 
-    containerSettings?: containerSettings;
+    containerSettings?: containerSettings  & { resize: Function};
     centralPointSettings: { x: number, y: number } = { x: this.width / 2, y: this.height / 2 + this.height };
 
-    containerCode?: Phaser.GameObjects.Container;
+    containerCode?: Phaser.GameObjects.Container  & { resize: Function, setDefaultStatusOfElements: Function};
     centralPointCode: { x: number, y: number } = { x: this.width / 2 + this.width * 2, y: this.height / 2 }
     containerCodeRendered: boolean = false;
 
-    containerAlbum?: Phaser.GameObjects.Container;
+    containerAlbum?: Phaser.GameObjects.Container  & { resize: Function};
     containerAlbumRendered: boolean = false;
 
     background?: Phaser.GameObjects.Image;
@@ -134,7 +134,8 @@ class MenuScene extends Phaser.Scene {
         this.resize();
 
         window.addEventListener('resize', () => {
-            this.resize();
+            // restart scene on resize
+            this.scene.restart();
         });
 
         // Remove listeners on shutdown to avoid memory leaks
@@ -196,11 +197,16 @@ class MenuScene extends Phaser.Scene {
                         to.updateElements()
                     })
                     this.containerAlbumRendered = true
+                    this.containerCode?.setDefaultStatusOfElements()
+                    this.containerCodeRendered = false
                 } else if (to instanceof containerCode && !this.containerCodeRendered) {
                     this.time.delayedCall(700, () => {
                         to.animateElements()
                     })
                     this.containerCodeRendered = true
+                } else {
+                    this.containerCode?.setDefaultStatusOfElements()
+                    this.containerCodeRendered = false
                 }
                 from.scene.tweens.add({
                     targets: circle,
@@ -249,11 +255,15 @@ class MenuScene extends Phaser.Scene {
         // this.cameras.main.centerOn(this.centralPointInitial.x, this.centralPointInitial.y);
 
         // Resize and reposition containers
-        this.containerInitial?.setPosition(this.width / 2, this.height / 2).setScale(scaleBy());
-        this.containerCredits?.setPosition(this.width / 2 - this.width, this.height / 2).setScale(scaleBy());
-        this.containerPlay?.setPosition(this.width + this.width / 2, this.height / 2).setScale(scaleBy());
-        this.containerSettings?.setPosition(this.width / 2, this.height / 2 + this.height).setScale(scaleBy());
-        this.containerCode?.setPosition(this.width * 1.5, this.height / 2).setScale(scaleBy());
+        this.containerInitial?.resize(scaleBy())
+        this.containerCredits?.resize(scaleBy())
+        this.containerPlay?.resize(scaleBy())
+        this.containerSettings?.resize(scaleBy())
+        this.containerCode?.resize(scaleBy())
+        this.containerAlbum?.resize(scaleBy())
+        // this.containerPlay?.setPosition(this.width + this.width / 2, this.height / 2).setScale(scaleBy());
+        // this.containerSettings?.setPosition(this.width / 2, this.height / 2 + this.height).setScale(scaleBy());
+        // this.containerCode?.setPosition(this.width * 1.5, this.height / 2).setScale(scaleBy());
         // this.containerAlbum?.setPosition(0, 0).setScale(scaleBy());
     }
 

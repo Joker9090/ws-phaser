@@ -536,6 +536,9 @@ class containerSettings extends Phaser.GameObjects.Container {
       
           return { slider, control, fillBar };
       }
+      resize(newValue: number) {
+        this.setScale(newValue);
+      }
       
 
 }

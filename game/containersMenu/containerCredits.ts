@@ -92,7 +92,9 @@ class ContainerCredits extends Phaser.GameObjects.Container {
             delay: 1000
         })
         // this.backButton.setPosition(this.width / 2, -this.height / 2 + this.backButton.height / 2 + 32)
-        this.backButton.setPosition(this.width / 2 + 75, this.height / 2 - this.backButton.height / 2 - 32)
+        const width = this.backButton.width
+        const height = this.backButton.height
+        this.backButton.setPosition(-width,this.height - height)
         this.backButton.setInteractive().on('pointerdown', () => {
             this.backButton.setTexture('backButtonPressed')
         })
@@ -113,8 +115,10 @@ class ContainerCredits extends Phaser.GameObjects.Container {
             this.backButton.setTexture('backButton')
         })
         
-        this.add(creditsArray.concat([this.backButton, this.creditsTitle]))
+        this.add(creditsArray.concat([this.creditsTitle]))
+        scene.add.existing(this.backButton)
         scene.add.existing(this)
+        this.resize(scaleBy())
     }
 
     setPositionCredits(arr: Phaser.GameObjects.Image[]) {
@@ -137,6 +141,14 @@ class ContainerCredits extends Phaser.GameObjects.Container {
         })
     }
 
+    resize(newValue: number) {
+        this?.setScale(newValue);
+        console.log("ContainerCredits resize", newValue)
+        this.backButton.setScale(newValue);
+        // this.backButton.setPosition(this.backButton.width * newValue , this.backButton.height * newValue)
+      
+    }
+
     handleInteractive(arr: Phaser.GameObjects.Image[]) {
         arr.forEach((element: Phaser.GameObjects.Image) => {
             element.setInteractive()
@@ -156,3 +168,24 @@ class ContainerCredits extends Phaser.GameObjects.Container {
 
 }
 export default ContainerCredits;
+
+
+export const scaleBy = (isBackground: boolean = false) => {
+    const gameObjectScaler = {
+        x: window.innerWidth / 1920,
+        y: window.innerHeight / 1080,
+    };
+    if (window.innerWidth > 1920 && !isBackground) {
+        return (
+            gameObjectScaler.x > gameObjectScaler.y
+                ? gameObjectScaler.y
+                : gameObjectScaler.x
+        )
+    } else {
+        return (
+            gameObjectScaler.x < gameObjectScaler.y
+                ? gameObjectScaler.y
+                : gameObjectScaler.x
+        )
+    }
+}

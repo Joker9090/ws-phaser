@@ -171,6 +171,9 @@ class containerAlbum extends Phaser.GameObjects.Container {
         });      
         this.add(this.figuritas)
     };
+     resize(newValue: number) {
+        this.setScale(newValue);
+    }
     download(){
         console.log("hola hola")
     }

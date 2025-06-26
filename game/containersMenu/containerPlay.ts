@@ -70,7 +70,10 @@ class containerPlay extends Phaser.GameObjects.Container {
         this.gameTitle.setPosition(0, -200)
 
         this.backButton = scene.add.image(0, 0, "playBackButton")
-        this.backButton.setPosition(-this.width/2 - 75 , this.height/2 - this.backButton.height / 2 - 32)
+        const width = this.backButton.width
+        const height = this.backButton.height
+        this.backButton.setPosition(this.width + width, this.height - height)
+        // this.backButton.set
         this.backButton.setInteractive().on('pointerdown', () => {
             this.backButton.setTexture('playBackButtonPressed')
         })
@@ -95,12 +98,43 @@ class containerPlay extends Phaser.GameObjects.Container {
             this.enterCodeButton, 
             this.gameTitle, 
             this.newGameButton, 
-            this.backButton, 
+            // this.backButton, 
         ]
 
         this.add(arr)
         // Phaser.Actions.RotateAroundDistance([this], {config}, Math.PI/200, 250);
         scene.add.existing(this)
+        scene.add.existing(this.backButton)
+        this.resize(scaleBy())
+    }
+
+    resize(newValue: number) {
+        this?.setScale(newValue);
+        console.log("ContainerCredits resize", newValue)
+        this.backButton.setScale(newValue);
+        // this.backButton.setPosition(this.backButton.width * newValue , this.backButton.height * newValue)
+      
     }
 }
 export default containerPlay;
+
+
+export const scaleBy = (isBackground: boolean = false) => {
+    const gameObjectScaler = {
+        x: window.innerWidth / 1920,
+        y: window.innerHeight / 1080,
+    };
+    if (window.innerWidth > 1920 && !isBackground) {
+        return (
+            gameObjectScaler.x > gameObjectScaler.y
+                ? gameObjectScaler.y
+                : gameObjectScaler.x
+        )
+    } else {
+        return (
+            gameObjectScaler.x < gameObjectScaler.y
+                ? gameObjectScaler.y
+                : gameObjectScaler.x
+        )
+    }
+}

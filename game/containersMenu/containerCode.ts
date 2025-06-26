@@ -105,13 +105,23 @@ class containerCode extends Phaser.GameObjects.Container {
        
 
         this.backButton = scene.add.image(0, 0, "playBackButton")
-        this.backButton.setPosition(-this.width / 2 , this.height / 2 - this.backButton.height / 2 - offsetY)
+        const width = this.backButton.width
+        const height = this.backButton.height
+        this.backButton.setPosition(this.width + width  ,this.height - height).setDepth(1000).setAlpha(0)
 
            this.backButton.setInteractive().on('pointerdown', () => {
                this.backButton.setTexture('playBackButtonPressed')
            })
            this.backButton.on('pointerup',()=>{
                this.backButton.setTexture('playBackButton')
+               // tween alpha 0 on backButton
+                this.scene.tweens.add({
+                     targets: this.backButton,
+                     alpha: 0,
+                     duration: 300,
+                     ease: 'Power2',
+                })
+
                this.masterManager?.playSound('buttonSound', false)
                if(config.changeContainer){
                 config.changeContainer()
@@ -201,18 +211,29 @@ class containerCode extends Phaser.GameObjects.Container {
             this.input,
             this.title,
             this.displayText,
-            this.backButton,
+            // this.backButton,
             this.confirmButton,
             this.writingIndicator,
             // this.settingsButton,
             this.error
         ]
-
+        
         this.add(arr)
         scene.add.existing(this)
+        scene.add.existing(this.backButton)
     }
-    
+    resize(newValue: number) {
+        this.setScale(newValue);
+    }
+
+    setDefaultStatusOfElements() {
+        [this.modal, this.input, this.title, this.displayText, this.confirmButton, this.astroFront, this.astroBack].map((element: Phaser.GameObjects.Image) => {
+            element.setScale(0);
+        })
+        this.backButton.setAlpha(0);
+        }
     animateElements(){
+        this.backButton.setAlpha(1)
         this.scene.tweens.add({
             targets:[this.modal, this.input, this.title, this.displayText, this.confirmButton, this.astroFront, this.astroBack],
             scale:1,

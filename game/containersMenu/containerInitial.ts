@@ -205,8 +205,10 @@ class containerInitial extends Phaser.GameObjects.Container {
                 this.toggleSettings();
             }
         });
-        this.logoNoswar = new LogoNoswar(scene,this.width/2 + 100, this.height/2 - 20)
-        console.log(this.logoNoswar, "LOGO NOSWAR")
+        this.logoNoswar = new LogoNoswar(scene,this.width, this.height)
+        const logoNoswarWidth = this.logoNoswar.logoNoswar.width * this.logoNoswar.scaleX;
+        const logoNoswarHeight = this.logoNoswar.logoNoswar.height * this.logoNoswar.scaleY;
+        this.logoNoswar.setPosition2All(this.logoNoswar.x - logoNoswarWidth/2 - 50, this.logoNoswar.y - logoNoswarHeight/2 - 50);
         // this.scene.tweens.add({
         //     targets: this.logoNoswar,
         //     x: this.width/2 - 20,
@@ -233,12 +235,24 @@ class containerInitial extends Phaser.GameObjects.Container {
             this.scoreButton,
             this.settingsButton,
             this.albumButton,
-            ...this.logoNoswar.getAll().map((el: Phaser.GameObjects.GameObject) => el as Phaser.GameObjects.Image),
+            // ...this.logoNoswar.getAll().map((el: Phaser.GameObjects.GameObject) => el as Phaser.GameObjects.Image),
 
         ]
 
+        this.logoNoswar.getAll().map((el: Phaser.GameObjects.GameObject) => el as Phaser.GameObjects.Image).map((el: Phaser.GameObjects.Image) => {
+            scene.add.existing(el)
+        })
+        
         this.add(this.arr)
         scene.add.existing(this)
+        this.resize(scaleBy());
+    }
+
+    resize(newValue: number) {
+        this?.setPosition(this.width / 2, this.height / 2).setScale(newValue);
+        this.logoNoswar.scaleParts(newValue);
+
+
     }
 
     toggleSettings() {
@@ -269,25 +283,26 @@ export class LogoNoswar extends  Phaser.GameObjects.Container {
     logoNoswarBack2: Phaser.GameObjects.Image;
     constructor(scene: Phaser.Scene, x: number, y: number) {
         super(scene, x, y);
+        this.setSize(200, 200);
         
-        this.setScale(2);
+        // this.setScale(2);
         this.setVisible(true);
         this.logoNoswar = new Phaser.GameObjects.Image(scene, x, y, "logoNoswar");
         this.logoNoswar.setOrigin(0.5);
-        this.logoNoswar.setScale(2);
+        this.logoNoswar.setScale(1);
         this.logoNoswar.setVisible(true);
 
-        this.logoNoswarBack = new Phaser.GameObjects.Image(scene, x, y - 15, "logoNoswarBack");
+        this.logoNoswarBack = new Phaser.GameObjects.Image(scene, x, y - 7.5, "logoNoswarBack");
         this.logoNoswarBack.setOrigin(0.5);
-        this.logoNoswarBack.setScale(0.22);
+        this.logoNoswarBack.setScale(0.11);
         this.logoNoswarBack.setAlpha(0.22);
         this.logoNoswarBack.setTint(0xeeeeee);
         this.logoNoswarBack.setVisible(true);
         
 
-          this.logoNoswarBack2 = new Phaser.GameObjects.Image(scene, x, y - 15, "logoNoswarBack");
+          this.logoNoswarBack2 = new Phaser.GameObjects.Image(scene, x, y - 7.5, "logoNoswarBack");
         this.logoNoswarBack2.setOrigin(0.5);
-        this.logoNoswarBack2.setScale(0.22);
+        this.logoNoswarBack2.setScale(0.11);
         this.logoNoswarBack2.setAlpha(0.20);
         this.logoNoswarBack2.setTint(0xeeeeee);
         this.logoNoswarBack2.setVisible(true);
@@ -310,7 +325,22 @@ export class LogoNoswar extends  Phaser.GameObjects.Container {
 
         this.add([this.logoNoswarBack2, this.logoNoswarBack, this.logoNoswar]);
         this.scene.add.existing(this);
-        this.setScrollFactor(1);
-        this.setDepth(999999);
+    }
+    scaleParts(scale: number) {
+        this.setPosition2All(this.x, this.y, scale);
+        this.logoNoswar.setScale(scale);
+        this.logoNoswarBack.setScale((scale) * 0.11);
+        this.logoNoswarBack2.setScale((scale) * 0.11);
+    }
+
+    setPosition2All(x: number, y: number, scale?: number) {
+        this.logoNoswar.setPosition(x, y);
+        // consider scale diff
+        if(scale) {
+
+            this.logoNoswarBack.setPosition(x, y - (7.5 * scale));
+            this.logoNoswarBack2.setPosition(x, y - (7.5 * scale));
+        }
+        super.setPosition(x, y);
     }
 }

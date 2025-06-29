@@ -149,9 +149,7 @@ class containerSettings extends Phaser.GameObjects.Container {
                 cross.setTexture("settingsCrossPessed")
             })
             cross.on("pointerup", () => {
-                group.forEach((child) => {
-                    child.setVisible(false)
-                })
+                this.pressCross()
             })
             check.setInteractive()
             check.on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
@@ -389,6 +387,19 @@ class containerSettings extends Phaser.GameObjects.Container {
             })
         })
     } 
+
+    pressCross() {
+        this.cross.setTexture('settingsCrossHover')
+        this.masterManager.playSound('buttonSound', false)
+        if (this.scene instanceof Game) {
+            this.masterManager.resumeGame()
+        }
+        this.settingsButtonUi?.setVisible(true)
+        this.animationOfModal(false);
+        this.destroyChildren(true)
+        this.destroy()
+    }
+    
     destroyChildren(withRemoveAll: boolean = false) {
         this.childArray.forEach((element) => {
             if (element instanceof Phaser.GameObjects.Image || element instanceof Phaser.GameObjects.Text) {

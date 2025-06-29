@@ -329,58 +329,10 @@ export default class MapCreator {
     };
   
     animateBackground() {
-      // this.updatePositions(
-      //   this.backContainer,
-      //   this.scene.cameras.main,
-      //   { x: this.startingPoint.x, y: this.worldSize.height },
-      //   { fixX: 1.1, fixY: 1.1 }
-      // );
-      // this.updatePositions(
-      //   this.middleContainer,
-      //   this.scene.cameras.main,
-      //   { x: this.startingPoint.x, y: this.worldSize.height },
-      //   { fixX: 2, fixY: 4 }
-      // );
-      // this.updatePositions(
-      //   this.frontContainer,
-      //   this.scene.cameras.main,
-      //   { x: this.startingPoint.x, y: this.worldSize.height },
-      //   { fixX: -20, fixY: -30 }
-      // );
+    /// NOTHING
     };
   
-  
 
-  // animateBackground() {
-  //   const camera = this.scene.cameras.main;
-  //   this.updateParallaxLayer(this.backContainer, camera, 0.8, 0.8);   // Farthest, moves slowest
-  //   this.updateParallaxLayer(this.middleContainer, camera, 0.3, 0.3); // Middle layer
-  //   this.updateParallaxLayer(this.frontContainer, camera, 0, 0);  // Closest, moves faster
-  // }
-  
-  // updateParallaxLayer(
-  //   container: Phaser.GameObjects.Container,
-  //   camera: Phaser.Cameras.Scene2D.Camera,
-  //   parallaxFactorX: number,
-  //   parallaxFactorY: number
-  // ) {
-  //   if (!container || !camera) return;
-  //   const windowScaleX = window.innerWidth / this.ratioReference.width;
-  //   const windowScaleY = window.innerHeight / this.ratioReference.height;
-  //   console.log("windowScaleX", windowScaleX, windowScaleY);
-  //   const offsetY = this.scene.player?.body?.height! - (this.scene.player?.body?.height! * camera.lerp.y * camera.followOffset.y);
-  //   const maxScrollY = camera.getBounds().bottom - camera.height - offsetY;
-  //   const worldBottomMargin = this.worldSize.height - this.cameraBounds.height - this.cameraBounds.y;
-  //   console.log("maxScrollY", maxScrollY, camera.getBounds().bottom, camera.height * windowScaleY, offsetY);
-  //    2560x1080	
-  //   maxScrollY 2510 1700 1080 -1890
-  //   1920x1080
-  //   maxScrollY 908.6000518798828 1700 703.2000122070312 88.19993591308594
-  //   container.setPosition(
-  //     (camera.scrollX) * parallaxFactorX,
-  //     (camera.scrollY - (maxScrollY)) * parallaxFactorY + 4 - (worldBottomMargin) // El 4 es por un microcorte quizas generado por excedentes en los assets
-  //   );
-  // }
 
   cameraIgnore () {
     const bgCamera = this.scene.cameras.getCamera('backgroundCamera')

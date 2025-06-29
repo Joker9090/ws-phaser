@@ -146,6 +146,7 @@ class Game extends Phaser.Scene {
   container?: Phaser.GameObjects.Container
   constructor() {
     super({ key: "Game" });
+    console.log("BARTO 01")
   }
 
   init(this: Game, { stagePoint }: any) {
@@ -187,66 +188,10 @@ class Game extends Phaser.Scene {
       self
     );
 
-    // const originalOffset = { x: this.cameras.main.followOffset.x, y: this.cameras.main.followOffset.y }
-    // this.cameras.main.stopFollow();
-    // const originPos = { x: this.cameras.main.midPoint.x, y: this.cameras.main.midPoint.y }
-    // this.cameras.main.pan(x, y, duration / 2, "Linear", false, (cam, progress) => {
-    // if (progress === 1) {
-    //
-    //   this.time.delayedCall(hold, () => {
-    //
-
-    //     this.cameras.main.pan(originPos.x, originPos.y, duration / 2, "Linear", false, (cam, progress) => {
-    //
-
-    //       if (progress === 1) {
-
-    //         this.cameras.main.startFollow(
-    //           //@ts-ignore
-    //           this.player,
-    //           true,
-    //           0.1,
-    //           0.1,
-    //           originalOffset.x,
-    //           originalOffset.y
-    //         );
-    //         this.stopMov = false;
-    //       }
-    //     }, self)
-    //   })
-    // }
-    // }, self)
-    // this.tweens.add({
-    //   targets: this.cameras.main.followOffset,
-    //   x: offsetAnim.x,
-    //   y: offsetAnim.y,
-    //   duration: offsetAnim.duration ? offsetAnim.duration : 1000,
-    //   ease: "ease",
-    //   hold: offsetAnim.hold ? offsetAnim.hold : 500,
-    //   onComplete: () => {
-    //     this.stopMov = false;
-    //   },
-    //   yoyo: true,
-    // })
   }
 
   handleResize = () => {
-    console.log("handleResize", window.innerWidth, window.innerHeight, this.game, 'game', this.cameras);
-
-    // const width = window.innerWidth;
-    // const height = window.innerHeight;
-    // this.game.scale.resize(width, height);
-    // this.game.scene.scenes.forEach(scene => {
-    //   if (scene.cameras && scene.cameras.main) {
-    //     scene.cameras.main.setSize(width, height);
-    //   }
-    //   if (scene.cameras) {
-    //     const backgroundCamera = scene.cameras.getCamera('backgroundCamera');
-    //     if (backgroundCamera) {
-    //       backgroundCamera.setSize(width, height);
-    //     }
-    //   }
-    // });
+ 
   };
 
   moveCameraOffset(position: "up" | "down", instant: boolean = false) {
@@ -285,6 +230,7 @@ class Game extends Phaser.Scene {
 
     this.time.paused = true;
     setTimeout(() => {
+      console.log("moving camera from lateral", position, this.cameras.main.followOffset);
       if (position === "right") newWidth = -newWidth;
       if (zoomOut) this.cameras.main.zoom = zoomOut;
       if (instant) {
@@ -1190,16 +1136,23 @@ class Game extends Phaser.Scene {
     this.cameras.main.setBounds(boundX, boundY, boundWidth, boundHeight);
     /* CAMERAS */
     this.cameras.main.zoom = 0.8;
+    // change zoom for screen ratio
+
     this.cameraWidth = this.cameras.main.width;
     this.cameraHeight = this.cameras.main.height;
+
+    const bottomOfScreen = boundHeight
+
     this.cameras.main.startFollow(
       this.player,
-      false,
+      true,
       0.1,
       0.1,
       0,
-      this.cameraHeight / 2 - 350
+      0
     );
+    // this.cameras.main.setPosition(0,window.innerHeight / 2 - 30);
+    console.log("BARTO 02", this.cameras.main)
     // this.cameras.main.setScroll(0, 0);
     // this.initialScroll = { x: 0, y: 0 };
     /* COLLIDERS */
@@ -1264,7 +1217,8 @@ class Game extends Phaser.Scene {
       //   this.cameras.main.setSize(width, height);
       // }, 50);
     // }
-    this.cameras.main.setZoom(window.innerWidth / window.innerHeight / 3.4);
+
+    this.cameras.main.setZoom(0.65);
 
     console.log("this.cameras.main", this.cameras.main, window.innerWidth, window.innerHeight);
     this.masterManagerScene?.playSound('spawn', false, 0.5, 2000);

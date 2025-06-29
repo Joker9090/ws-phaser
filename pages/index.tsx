@@ -116,7 +116,9 @@ export default function Home() {
               if (scene.cameras && scene.cameras.main) {
                 scene.cameras.main.setSize(width, height);
                 scene.cameras.getCamera("backgroundCamera")?.setSize(width, height);
-                scene.cameras.main.setZoom(width / height / 3.4);
+                // scene.cameras.main.setZoom(width / height / 3.4);
+                scene.cameras.main.setZoom(0.65);
+
               }
             } else {
               // Para las otras escenas, asegúrate de que NO se les cambia el zoom.

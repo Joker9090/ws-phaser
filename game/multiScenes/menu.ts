@@ -33,6 +33,7 @@ export default class MenuClass {
     constructor(scene: MultiScene) {
         this.scene = scene
         this.createContainer()
+        console.log("BARO 03 MenuClass created");
 
     }
 

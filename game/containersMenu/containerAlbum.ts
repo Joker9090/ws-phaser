@@ -34,10 +34,18 @@ class containerAlbum extends Phaser.GameObjects.Container {
         }
 
         this.background = scene.add.image(this.width / 2, this.height / 2, "backgroundAlbum").setScale(scaleBy(true)).setAlpha(0.8);
+         const scaleW = window.innerWidth / this.background.width;
+        this.background.setScale(scaleW).setOrigin(0.5, 0.5);
+        if(this.background.height * scaleW < window.innerHeight) {
+            // if the background height is less than the screen height, scale it to fit the height
+            const scaleH = window.innerHeight / this.background.height;
+            this.background.setScale(scaleH).setOrigin(0.5, 0.5);
+        }
+
         // this.background.setInteractive()
         this.banner = scene.add.image(this.width / 2, this.height / 6, "bannerAlbum")
         let nivel = 1;
-        this.title = this.scene.add.text(100, 75 ,this.getPlanetName(nivel), {
+        this.title = this.scene.add.text(100, (this.height / 6) - 34 ,this.getPlanetName(nivel), {
             color: "#00feff",
             stroke: "#00feff",
             align: "center",
@@ -172,7 +180,7 @@ class containerAlbum extends Phaser.GameObjects.Container {
         this.add(this.figuritas)
     };
      resize(newValue: number) {
-        this.setScale(newValue);
+        // this.setScale(newValue);
     }
     download(){
         console.log("hola hola")

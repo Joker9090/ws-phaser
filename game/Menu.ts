@@ -41,19 +41,19 @@ class MenuScene extends Phaser.Scene {
         console.log("MenuScene created");
         this.background = this.add.image(window.innerWidth / 2, window.innerHeight, "menuBackground").setOrigin(0.5, 1).setAlpha(0.8)
         // background is 1880 x 540
-        const scale = window.innerHeight / 540;
-        this.background.setScale(scale);
-        // if actual width is less than  window.innerWidth * 2, try to fit that
-        if (this.background.width < window.innerWidth * 3) {
-            const newScale = window.innerWidth * 3 / this.background.width;
-            // if height is less than window.innerHeight, try to fit that
-            let newScaleHeight = 0
-            if (this.background.height < window.innerHeight) {
-                newScaleHeight = window.innerHeight / this.background.height;
-            }
-            const finalScale = newScale > newScaleHeight ? newScale : newScaleHeight;
-            this.background.setScale(finalScale);
+        const screenRatio = window.innerWidth / window.innerHeight;
+        const backgroundRatio = this.background.width / this.background.height;
+        // try to always fit height but also the final background width need to be at least 3 times screen width
+      
+        const scaleW = window.innerWidth / this.background.width * 3;
+        this.background.setScale(scaleW).setOrigin(0.5, 1);
+        if(this.background.height * scaleW < window.innerHeight) {
+            // if the background height is less than the screen height, scale it to fit the height
+            const scaleH = window.innerHeight / this.background.height;
+            this.background.setScale(scaleH).setOrigin(0.5, 1);
         }
+
+
         // position background bottom center if the screen
 
         

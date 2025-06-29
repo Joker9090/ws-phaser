@@ -427,6 +427,7 @@ export default class LevelClass {
 
     if (this.EscKeyboard)
       this.EscKeyboard.on("down", () => {
+    alert(222)
         // this.scene.makeTransition("MultiScene", { text: "menu" });
 
         this.scene.scene.restart({text: "menu"})
